@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantenphysik mit Pfeilen &ndash; Mathias Leonhardt</title>
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+
+  <!-- React 18 UMD -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Framer Motion (for ThreeLanguages component) -->
+  <script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js"></script>
+  <script>var framerMotion = window.Motion || {};</script>
+
+  <!-- Self-hosted Inter font (DSGVO-konform, kein Google-Server-Kontakt) -->
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+
+    /* Scroll offset for fixed nav */
+    section[id] { scroll-margin-top: 4.5rem; }
+
+    /* Progress bar */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; z-index: 100;
+      background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b);
+      transition: width 50ms linear;
+    }
+
+    /* KaTeX dark theme overrides */
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose,
+    .katex .mpunct, .katex .minner { color: #e2e8f0; }
+
+    /* Prose styling */
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 {
+      font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem;
+      background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .prose-dark h3 {
+      font-size: 1.25rem; font-weight: 600; color: #f1f5f9;
+      margin-top: 2.5rem; margin-bottom: 0.75rem;
+    }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+
+    /* Interactive prompt styling */
+    .try-it {
+      border-left: 3px solid #22d3ee; padding: 1rem 1.25rem;
+      background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0;
+      margin: 2rem 0;
+    }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+
+    /* Summary box */
+    .summary-box {
+      border: 1px solid #374151; padding: 1.25rem 1.5rem;
+      border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2);
+      margin: 2rem 0;
+    }
+
+    /* Glossary tooltip */
+    .glossary {
+      border-bottom: 1px dashed #60a5fa; cursor: help;
+      color: #93c5fd;
+    }
+    .glossary:hover { color: #bfdbfe; }
+
+    /* Section divider */
+    .section-divider {
+      width: 60px; height: 2px; margin: 3rem auto;
+      background: linear-gradient(90deg, #22d3ee, #f59e0b);
+      border-radius: 1px;
+    }
+
+    /* Nav active */
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+
+    /* Mobile nav */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* Blog layout: sidebar + content */
+    .blog-layout {
+      display: flex; max-width: 80rem; margin: 0 auto;
+    }
+
+    /* Sidebar TOC */
+    .sidebar {
+      display: none; /* hidden on mobile */
+      position: sticky; top: 4rem; align-self: flex-start;
+      width: 220px; min-width: 220px;
+      height: calc(100vh - 4rem); overflow-y: auto;
+      padding: 1.5rem 0.75rem 2rem 1rem;
+      border-right: 1px solid #1f2937;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+    @media (min-width: 1024px) {
+      .sidebar { display: block; }
+    }
+    .sidebar .toc-title {
+      font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: #6b7280; margin-bottom: 0.75rem; font-weight: 600;
+    }
+    .sidebar .toc-link {
+      display: block; font-size: 0.8rem; color: #6b7280;
+      padding: 0.3rem 0.5rem; border-radius: 0.25rem;
+      transition: color 0.15s, background 0.15s;
+      line-height: 1.3; margin-bottom: 0.1rem;
+    }
+    .sidebar .toc-link:hover { color: #d1d5db; background: rgba(255,255,255,0.03); }
+    .sidebar .toc-link.active { color: #22d3ee; background: rgba(34,211,238,0.08); }
+    .sidebar .toc-divider {
+      height: 1px; background: #1f2937; margin: 0.75rem 0.5rem;
+    }
+
+    /* Content area fills remaining space */
+    .blog-content {
+      flex: 1; min-width: 0; /* allow shrink */
+    }
+
+    /* Mobile TOC drawer */
+    #toc-drawer {
+      display: none; position: fixed; top: 3.5rem; left: 0; right: 0; bottom: 0; z-index: 45;
+    }
+    #toc-drawer.open { display: flex; }
+    #toc-drawer .toc-backdrop {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+    }
+    #toc-drawer .toc-panel {
+      position: relative; width: 280px; max-width: 80vw;
+      background: #0a0a14; border-right: 1px solid #1f2937;
+      padding: 1rem; overflow-y: auto;
+    }
+
+    /* Display math centering */
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+
+    /* Responsive component containers */
+    .component-wrap {
+      margin: 2.5rem -0.5rem;
+      padding: 0;
+    }
+    @media (min-width: 640px) {
+      .component-wrap { margin: 2.5rem -1rem; }
+    }
+
+    /* Illustration figures */
+    .illus {
+      margin: 2rem auto; border-radius: 0.75rem; overflow: hidden;
+      border: 1px solid #1f2937; background: #111827;
+    }
+    .illus img {
+      width: 100%; max-width: 100%; height: auto; display: block;
+      opacity: 0.92; transition: opacity 0.3s;
+      image-rendering: auto;
+    }
+    /* Never upscale beyond native resolution */
+    .illus { width: fit-content; }
+    .illus img:hover { opacity: 1; }
+    .illus figcaption {
+      padding: 0.5rem 0.75rem; font-size: 0.7rem; color: #6b7280;
+      line-height: 1.4; border-top: 1px solid #1f2937;
+    }
+    .illus figcaption a { color: #6b7280; text-decoration: underline; }
+    .illus figcaption a:hover { color: #9ca3af; }
+
+    /* Size variants */
+    .illus-sm { max-width: 260px; }
+    .illus-md { max-width: 420px; }
+    .illus-lg { max-width: 580px; }
+    /* full width is the default (no class needed) */
+
+    /* Float variants for inline placement */
+    @media (min-width: 640px) {
+      .illus-float-right { float: right; margin: 0.5rem 0 1rem 1.5rem; }
+      .illus-float-left  { float: left;  margin: 0.5rem 1.5rem 1rem 0; }
+    }
+
+    /* Clear floats */
+    .clearfix::after { content: ''; display: table; clear: both; }
+
+    .illus-row {
+      display: grid; gap: 1rem; margin: 2rem 0;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .illus-row { grid-template-columns: 1fr 1fr; }
+    }
+    .illus-row .illus { margin: 0; }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<!-- Progress bar -->
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- ============================================================ -->
+<!-- TOP NAV: Blog-level navigation -->
+<!-- ============================================================ -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-b border-gray-800/50">
+  <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+
+    <!-- Blog brand -->
+    <a href="index.html" class="flex items-center gap-2 text-white font-semibold text-sm whitespace-nowrap">
+      <span class="text-cyan-400 text-lg">&rang;</span> Mathias Leonhardt
+    </a>
+
+    <!-- Desktop blog nav -->
+    <div class="hidden sm:flex items-center gap-4 text-xs text-gray-400">
+      <a href="index.html" class="hover:text-white transition">Blog</a>
+      <a href="impressum.html" class="hover:text-white transition">Impressum</a>
+      <a href="datenschutz.html" class="hover:text-white transition">Datenschutz</a>
+    </div>
+
+    <!-- Mobile: TOC toggle + menu -->
+    <div class="flex items-center gap-1">
+      <!-- TOC toggle (shows chapter nav, hidden on desktop where sidebar is visible) -->
+      <button id="toc-toggle" class="lg:hidden p-2 text-gray-400 hover:text-white" title="Inhaltsverzeichnis">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h12M4 14h16M4 18h8"/>
+        </svg>
+      </button>
+      <!-- Hamburger (blog-level menu, mobile only) -->
+      <button id="menu-toggle" class="sm:hidden p-2 text-gray-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile blog menu (hamburger) -->
+  <div id="mobile-menu" class="sm:hidden flex-col bg-gray-950/95 border-b border-gray-800 px-4 pb-3 text-sm">
+    <a href="index.html" class="block py-2 text-gray-400 hover:text-white">Blog</a>
+    <a href="impressum.html" class="block py-2 text-gray-400 hover:text-white">Impressum</a>
+    <a href="datenschutz.html" class="block py-2 text-gray-400 hover:text-white">Datenschutz</a>
+  </div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- MOBILE TOC DRAWER (slides in from left) -->
+<!-- ============================================================ -->
+<div id="toc-drawer">
+  <div class="toc-backdrop" id="toc-backdrop"></div>
+  <div class="toc-panel">
+    <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-3">Inhaltsverzeichnis</p>
+    <a href="#hero" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">&Uuml;bersicht</a>
+    <div style="height:1px;background:#1f2937;margin:0.5rem 0;"></div>
+    <a href="#teil-1" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">1 &middot; Doppelspalt</a>
+    <a href="#teil-2" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">2 &middot; Zwei Regeln</a>
+    <a href="#teil-3" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">3 &middot; Pfadintegral</a>
+    <a href="#teil-4a" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">4a &middot; Fourier</a>
+    <a href="#teil-4b" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">4b &middot; Stehende Wellen</a>
+    <a href="#teil-4c" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">4c &middot; Drei Sprachen</a>
+    <div style="height:1px;background:#1f2937;margin:0.5rem 0;"></div>
+    <a href="#verschraenkung" class="toc-link block text-sm py-1.5 px-2 text-amber-400/70 rounded hover:text-amber-300">Bonus &middot; Verschr&auml;nkung</a>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- BLOG LAYOUT: Sidebar + Content -->
+<!-- ============================================================ -->
+<div class="blog-layout">
+
+<!-- ============================================================ -->
+<!-- SIDEBAR TOC (desktop only, sticky) -->
+<!-- ============================================================ -->
+<aside class="sidebar">
+  <p class="toc-title">Quantenphysik mit Pfeilen</p>
+  <a href="#teil-1" class="toc-link nav-link">1 &middot; Doppelspalt</a>
+  <a href="#teil-2" class="toc-link nav-link">2 &middot; Zwei Regeln</a>
+  <a href="#teil-3" class="toc-link nav-link">3 &middot; Pfadintegral</a>
+  <a href="#teil-4a" class="toc-link nav-link">4a &middot; Fourier</a>
+  <a href="#teil-4b" class="toc-link nav-link">4b &middot; Stehende Wellen</a>
+  <a href="#teil-4c" class="toc-link nav-link">4c &middot; Drei Sprachen</a>
+  <div class="toc-divider"></div>
+  <a href="#verschraenkung" class="toc-link nav-link" style="color:#fbbf24;">Bonus &middot; Verschr&auml;nkung</a>
+  <div class="toc-divider"></div>
+  <a href="#epilog" class="toc-link nav-link" style="font-style:italic;">Epilog</a>
+</aside>
+
+<!-- ============================================================ -->
+<!-- MAIN CONTENT -->
+<!-- ============================================================ -->
+<div class="blog-content">
+
+<!-- HERO -->
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; Quantenmechanik</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight">
+    Wellen, Pfeile und das Doppelspalt-Wunder
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Wie die Quantenphysik wirklich funktioniert &ndash; und warum man daf&uuml;r nicht mehr als Schulmathe braucht.
+    Eine Reise in sieben Kapiteln, mit interaktiven Visualisierungen.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>Mathias Leonhardt</span>
+    <span>&middot;</span>
+    <span>M&auml;rz 2026</span>
+    <span>&middot;</span>
+    <span>~45 Min. Lesezeit</span>
+  </div>
+</header>
+
+
+<main class="max-w-3xl px-4 sm:px-6">
+
+<!-- ============================================================ -->
+<!-- TEIL 1: Wellen, Pfeile und das Doppelspalt-Wunder -->
+<!-- ============================================================ -->
+<section id="teil-1" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 1</p>
+<h2>Wellen, Pfeile und das Doppelspalt-Wunder</h2>
+
+<h3>Ein Stein, ein Teich, ein R&auml;tsel</h3>
+
+<p>Wirf einen Stein in einen ruhigen Teich. Du wei&szlig;t, was passiert: Kreisf&ouml;rmige Wellen breiten sich aus, gleichm&auml;&szlig;ig, vorhersagbar, langweilig. Wirf jetzt zwei Steine gleichzeitig an verschiedene Stellen. Jetzt wird es interessant. Die Wellen der beiden Steine laufen aufeinander zu, und dort, wo sie sich treffen, passiert etwas Eigenartiges. An manchen Stellen wird das Wasser pl&ouml;tzlich besonders aufgew&uuml;hlt &ndash; h&ouml;her, wilder als von jedem einzelnen Stein allein. An anderen Stellen, manchmal nur wenige Zentimeter daneben, herrscht seltsame Ruhe.</p>
+
+<p>Dieses Ph&auml;nomen hat einen Namen: <strong>Interferenz</strong>. Und es ist das harmloseste, allt&auml;glichste Ding der Welt. Wo der Wellenberg der einen Welle mit dem Wellenberg der anderen zusammenf&auml;llt, addieren sich die H&ouml;hen &ndash; das Wasser schl&auml;gt besonders hoch. Wo aber ein Wellenberg auf ein Wellental trifft, heben sie sich gegenseitig auf. Plus und Minus, Null, Stille.</p>
+
+<p>So weit, so beruhigend. Jetzt lass uns denselben Effekt mit Licht beobachten. Und dann wird die Welt seltsam.</p>
+
+<figure class="illus illus-md">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Double-slit-water-waves.svg" alt="Interferenzmuster bei Wasserwellen durch zwei Quellen" loading="lazy">
+  <figcaption>Interferenz von Wasserwellen: Links zwei Punktquellen, rechts eine Welle durch einen Doppelspalt. Dort, wo sich Wellenberge treffen, verst&auml;rken sie sich &ndash; dort, wo Berg auf Tal trifft, l&ouml;schen sie sich aus. <a href="https://commons.wikimedia.org/wiki/File:Double-slit-water-waves.svg">MikeRun / Wikimedia Commons / CC BY-SA 4.0</a></figcaption>
+</figure>
+
+<h3>Thomas Young und die Wand mit zwei Schlitzen</h3>
+
+<p>Im Jahr 1801 machte der englische Arzt und Universalgelehrte Thomas Young ein Experiment, das so einfach ist, dass man es auf einem K&uuml;chentisch nachbauen k&ouml;nnte, und das gleichzeitig so tiefgr&uuml;ndig ist, dass die Physik zweihundert Jahre sp&auml;ter immer noch damit ringt.</p>
+
+<p>Die Idee: Nimm eine Lichtquelle. Stelle eine Wand davor, in die du zwei schmale, parallele Schlitze geritzt hast. Dahinter eine wei&szlig;e Fl&auml;che. Wenn Licht aus Teilchen best&uuml;nde &ndash; aus winzigen K&uuml;gelchen, die wie Gewehrkugeln geradeaus fliegen &ndash; dann w&uuml;rdest du zwei helle Streifen erwarten, direkt hinter den beiden Schlitzen.</p>
+
+<p>Aber das sieht Young nicht.</p>
+
+<p>Was er stattdessen sieht, ist ein Muster aus vielen hellen und dunklen Streifen, abwechselnd, &uuml;ber die ganze Leinwand verteilt. Hell, dunkel, hell, dunkel. <strong>Interferenz.</strong> Damit war klar: Licht ist eine Welle. Debatte beendet, Newton lag falsch, Huygens hatte recht.</p>
+
+<p>Dann kamen die Elektronen.</p>
+
+<figure class="illus illus-md">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Double_slit_diffraction.svg" alt="Schema des Doppelspalt-Experiments mit Beugung und Interferenz" loading="lazy">
+  <figcaption>Youngs Experiment: Licht (oder Teilchen) tritt durch zwei Spalte und erzeugt ein Interferenzmuster auf dem Schirm. <a href="https://commons.wikimedia.org/wiki/File:Double_slit_diffraction.svg">Bcrowell, Quibik / Wikimedia Commons / CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<h3>Das Experiment, das niemand versteht</h3>
+
+<p>Elektronen sind Teilchen. Winzige Dinger mit Masse und Ladung. Sie prallen gegen W&auml;nde, sie werden von Magneten abgelenkt, man kann sie z&auml;hlen, einzeln. Ein Elektron ist ein Elektron, nicht ein halbes, nicht ein diffuses Etwas. Wenn man einen Elektronendetektor hinter den Doppelspalt stellt, h&ouml;rt man <em>klick</em>. Ein Klick, ein Elektron. Nicht ein Rauschen, nicht ein Wischen. <em>Klick.</em></p>
+
+<p>Also: Zwei Schlitze. Elektronen einzeln abfeuern. Eins nach dem anderen. Die ersten hundert Treffer sehen zuf&auml;llig aus. Aber nach Zehntausenden von Klicks formt sich ein Bild: Streifen. Hell, dunkel, hell, dunkel. <strong>Interferenz.</strong> Genau wie bei den Wasserwellen.</p>
+
+<p>Halt. Stop.</p>
+
+<p>Die Elektronen wurden einzeln abgefeuert. Es war immer nur ein einziges unterwegs. Mit wem soll es interferiert haben? Mit sich selbst?</p>
+
+<figure class="illus" style="max-width:280px;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Double-slit_experiment_results_Tonomura_2.jpg" alt="Aufbau des Elektroneninterferenzmusters: 11, 200, 6000, 40000, 140000 Elektronen" loading="lazy">
+  <figcaption>Das ber&uuml;hmte Tonomura-Experiment: Einzelne Elektronen treffen nacheinander auf den Schirm. Nach 11 Klicks &ndash; nur Rauschen. Nach 140.000 Klicks &ndash; ein Interferenzmuster. <a href="https://commons.wikimedia.org/wiki/File:Double-slit_experiment_results_Tonomura_2.jpg">Belsazar / Wikimedia Commons / CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<p>Vielleicht geht jedes Elektron durch einen bestimmten Schlitz, und wir wissen nur nicht welchen? Gute Idee. Falsch. Denn wenn man einen Detektor an die Schlitze baut, der feststellt, <em>durch welchen</em> Schlitz das Elektron gegangen ist &ndash; dann verschwindet das Interferenzmuster. Sofort. Vollst&auml;ndig.</p>
+
+<p>Das Elektron scheint zu wissen, ob man hinschaut. An dieser Stelle steigen die meisten popul&auml;rwissenschaftlichen Darstellungen in Philosophie ein. Bewusstsein des Beobachters, kollabierende Wellenfunktionen, Katzen in Kisten. Das ist alles entweder falsch oder zumindest nicht hilfreich. Was stattdessen hilft, ist ein Pfeil.</p>
+
+<h3>Der Pfeil, der alles erkl&auml;rt</h3>
+
+<p>Vergiss f&uuml;r einen Moment alles, was du &uuml;ber Quantenmechanik geh&ouml;rt hast. Wir fangen bei Null an. Und das Einzige, was wir brauchen, ist ein kleiner Pfeil.</p>
+
+<p>Stell dir eine Uhr vor. Eine analoge, mit Zeiger. Dieser Zeiger dreht sich, gleichm&auml;&szlig;ig, im Kreis. Er hat eine bestimmte L&auml;nge und zeigt zu jedem Zeitpunkt in eine bestimmte Richtung. Das ist alles. <strong>L&auml;nge und Richtung.</strong></p>
+
+<p>In der Quantenmechanik bekommt jeder Vorgang, den ein Teilchen ausf&uuml;hren kann &ndash; &bdquo;fliege von hier nach dort&ldquo; &ndash; einen solchen Pfeil zugeordnet. Nicht eine Wahrscheinlichkeit, nicht Ja oder Nein, sondern einen Pfeil mit L&auml;nge und Richtung. Die Physiker nennen diesen Pfeil eine <span class="glossary" title="Amplitude: Ein Pfeil (komplexe Zahl) mit L&auml;nge und Richtung, der einem Quantenvorgang zugeordnet wird. L&auml;nge zum Quadrat = Wahrscheinlichkeit.">Amplitude</span>. Und es gibt genau eine Regel, um daraus eine Wahrscheinlichkeit zu machen: <strong>Nimm die L&auml;nge des Pfeils und quadriere sie.</strong> Ein Pfeil der L&auml;nge 0,3 ergibt eine Wahrscheinlichkeit von 0,09. Ein Pfeil der L&auml;nge 0,5 ergibt 0,25. So einfach ist das.</p>
+
+<p>Aber die Magie steckt nicht im Quadrieren. Die Magie steckt darin, was passiert, wenn es <em>mehrere M&ouml;glichkeiten</em> gibt.</p>
+
+<h3>Pfeile addieren &ndash; und pl&ouml;tzlich ist alles anders</h3>
+
+<p>Zur&uuml;ck zum Doppelspalt. Ein Elektron fliegt von der Quelle zum Detektor. Es gibt zwei Wege: durch den linken Schlitz oder durch den rechten. Jeder Weg hat seinen eigenen Pfeil.</p>
+
+<p>Jetzt kommt die Regel, die alles ver&auml;ndert: <strong>Wenn es mehrere M&ouml;glichkeiten gibt, die zum selben Ergebnis f&uuml;hren, dann addierst du die Pfeile.</strong> Nicht die Wahrscheinlichkeiten &ndash; die Pfeile. Lege sie hintereinander, Spitze an Ende. Der resultierende Pfeil &ndash; das ist dein Ergebnis. Dann quadrierst du seine L&auml;nge.</p>
+
+<p>Wenn die beiden Pfeile in ungef&auml;hr dieselbe Richtung zeigen: langer Gesamtpfeil, gro&szlig;e Wahrscheinlichkeit. <strong>Heller Streifen.</strong> Wenn sie in entgegengesetzte Richtungen zeigen: kurzer Gesamtpfeil, keine Wahrscheinlichkeit. <strong>Dunkler Streifen.</strong></p>
+
+<p>Das ist Interferenz. Nicht von Wellen im Raum, nicht von mysteri&ouml;sen &Uuml;berlagerungen &ndash; sondern von Pfeilen, die sich addieren.</p>
+
+<p>Und woher wei&szlig; der Pfeil, in welche Richtung er zeigen soll? Das h&auml;ngt vom Weg ab. Ein l&auml;ngerer Weg dreht den Pfeil weiter als ein k&uuml;rzerer. Genauer: Der Pfeil dreht sich proportional zur L&auml;nge des Weges. Wenn der Weg durch den linken Schlitz exakt eine <em>halbe</em> Drehung mehr ergibt als der Weg durch den rechten Schlitz, dann zeigen die beiden Pfeile in entgegengesetzte Richtungen. Ausl&ouml;schung. Dunkelheit. Wenn der Wegunterschied eine <em>ganze</em> Drehung ergibt, zeigen beide Pfeile wieder in dieselbe Richtung. Verst&auml;rkung. Helligkeit. Hell, dunkel, hell, dunkel &ndash; das Interferenzmuster f&auml;llt aus den Pfeilen heraus wie ein Abziehbild.</p>
+
+<h3>Warum Hinschauen alles zerst&ouml;rt</h3>
+
+<p>Wenn du einen Detektor aufstellst, der feststellt, durch welchen Schlitz das Elektron gegangen ist, dann gibt es keine Alternativen mehr. In jedem einzelnen Fall gibt es nur <em>einen</em> Pfeil, nicht zwei, die man addieren k&ouml;nnte.</p>
+
+<p>Kein Addieren von Pfeilen, keine Interferenz. Das Elektron &bdquo;wei&szlig;&ldquo; nicht, ob du hinschaust. Es ist keine Mystik. <strong>Es ist Buchhaltung.</strong> Wenn zwei Wege ununterscheidbar sind, addierst du die Pfeile. Wenn du sie unterscheidbar machst, gibt es nur einen Pfeil pro Durchgang. Die Addition entf&auml;llt. Die Interferenz verschwindet.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Was du jetzt in der Hand hast:</strong> Wir haben kein einziges Integral geschrieben, keine komplexen Zahlen benutzt. Wir haben nur gesagt: Jeder Weg hat einen Pfeil. Mehrere Wege zum selben Ziel? Pfeile addieren. Dann quadrieren. Und daraus ist die gesamte Interferenzphysik herausgefallen.</p>
+  <p class="text-sm text-gray-300">Diese Pfeile &ndash; diese <em>Amplituden</em> &ndash; sind der eigentliche Kern der Quantenmechanik. Nicht die Wellenfunktion (die ist nur eine bestimmte Darstellung der Pfeile). Nicht die Schr&ouml;dingergleichung (die beschreibt nur, wie sich die Pfeile mit der Zeit drehen). <strong>Die Pfeile sind das Fundament.</strong></p>
+</div>
+
+<!-- INTERACTIVE: DoubleSlitExplorer -->
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Du siehst das Doppelspalt-Experiment als interaktive Grafik. <strong>Verschiebe den gelben Punkt</strong> am Schirm, um verschiedene Detektorpositionen zu testen. <strong>Dreh an den Reglern</strong> f&uuml;r Spaltabstand und Wellenl&auml;nge. Und dann: <strong>Schalte den Detektor ein</strong> und beobachte, wie das Interferenzmuster verschwindet.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-double-slit"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Was du gerade gesehen hast:</strong> Zwei Wege, zwei Pfeile, eine Addition. Wenn die Pfeile in dieselbe Richtung zeigen (blau und lila fast parallel), verst&auml;rken sie sich &ndash; heller Streifen. Wenn sie gegeneinander zeigen, l&ouml;schen sie sich aus &ndash; dunkler Streifen. Schaltest du den Detektor ein, gibt es pro Durchgang nur noch einen Pfeil. Keine Addition, keine Interferenz.</p>
+</div>
+
+<p>Aber denk mal weiter. Was passiert, wenn man nicht zwei Schlitze in die Wand schneidet, sondern drei? Dann gibt es drei Wege, drei Pfeile. F&uuml;nf Schlitze? F&uuml;nf Pfeile. Und wenn es gar keine Wand gibt &ndash; wie viele Wege gibt es dann? Unendlich viele. Der gerade Weg. Der Weg, der einen kleinen Bogen macht. Der Weg, der erst zum Mond fliegt und zur&uuml;ckkommt. Den Spaghetti-Kn&auml;uel-Weg. Jeder dieser Wege hat einen Pfeil. Und die Quantenmechanik sagt: <strong>Addiere sie alle.</strong></p>
+
+<p>Das klingt verrückt. Das klingt, als w&auml;re es unm&ouml;glich auszurechnen. Und es klingt, als w&auml;re das Ergebnis ein heilloses Durcheinander.</p>
+
+<p>Aber das Gegenteil ist der Fall. Aus diesem scheinbaren Chaos f&auml;llt Ordnung heraus &ndash; und zwar genau die Ordnung, die wir im Alltag beobachten. Ein geworfener Ball folgt einer Parabel. Ein Planet umkreist die Sonne auf einer Ellipse. Newtons Gesetze. Die klassische Physik. Sie alle verstecken sich in der Summe &uuml;ber unendlich viele Pfeile.</p>
+
+<p>Wie das funktioniert, kl&auml;ren wir jetzt.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- TEIL 2: Zwei Regeln, die die ganze Quantenwelt erzeugen -->
+<!-- ============================================================ -->
+<section id="teil-2" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 2</p>
+<h2>Zwei Regeln, die die ganze Quantenwelt erzeugen</h2>
+
+<p>In Kapitel 1 haben wir ein Elektron durch zwei Spalte geschickt. Jeder Spalt gab dem Elektron einen Pfeil. Die zwei Pfeile wurden addiert: hintereinander legen, Gesamtpfeil messen, quadrieren &ndash; fertig war die Wahrscheinlichkeit. Daraus fiel das gesamte Interferenzmuster heraus. Am Ende stand die Frage: Wenn ein Elektron &bdquo;beide Spalte gleichzeitig nimmt&ldquo; &ndash; nimmt es vielleicht <em>alle</em> denkbaren Wege gleichzeitig?</p>
+
+<p>Die Antwort ist ja. Und der Weg dorthin f&uuml;hrt &uuml;ber zwei Regeln, die so einfach sind, dass sie auf eine Serviette passen &ndash; und so m&auml;chtig, dass die gesamte Quantenmechanik aus ihnen folgt.</p>
+
+<h3>Die Regeln</h3>
+
+<p>Richard Feynman hat die Quantenmechanik auf zwei Vorschriften reduziert. Nicht auf zwei Gleichungen &ndash; auf zwei Anweisungen, was man mit Pfeilen tun soll.</p>
+
+<p><strong>Regel 1 &ndash; Alternativen: Addiere die Pfeile.</strong><br>
+Wenn ein Teilchen auf mehreren Wegen von A nach B kommen kann, und du nicht wei&szlig;t (und prinzipiell nicht feststellen kannst), welchen Weg es genommen hat &ndash; dann bekommt jeder Weg einen Pfeil, und du legst sie hintereinander. Der Gesamtpfeil bestimmt die Wahrscheinlichkeit.</p>
+
+<p><strong>Regel 2 &ndash; Nacheinander: Multipliziere die Pfeile.</strong><br>
+Wenn ein Teilchen erst von A nach B geht und dann von B nach C, dann bekommt jeder Teilschritt einen Pfeil. Die Pfeile werden multipliziert: Die L&auml;ngen werden mal genommen, und die Winkel werden addiert.</p>
+
+<p>Das war&rsquo;s. Zwei Regeln. Kein Wenn und Aber.</p>
+
+<h3>Was &bdquo;Multiplizieren&ldquo; bedeutet</h3>
+
+<p>Multiplizieren von Pfeilen klingt abstrakt, ist aber genauso anschaulich wie das Addieren aus Kapitel 1.</p>
+
+<p><strong>Addieren</strong> hie&szlig;: Spitze an Ende legen. Der Gesamtpfeil geht vom Anfang des ersten zum Ende des letzten.</p>
+
+<p><strong>Multiplizieren</strong> hei&szlig;t: L&auml;ngen mal nehmen, Winkel zusammenz&auml;hlen. Wenn der erste Pfeil L&auml;nge 0,8 hat und um 30&deg; gedreht ist, und der zweite L&auml;nge 0,5 hat und um 45&deg; gedreht ist, dann hat das Produkt die L&auml;nge 0,4 und ist um 75&deg; gedreht.</p>
+
+<p>Warum Addition f&uuml;r Alternativen und Multiplikation f&uuml;r Hintereinander? Das folgt aus der Logik der Wahrscheinlichkeitsrechnung. In der klassischen Wahrscheinlichkeit gilt: Alternativen werden addiert, Hintereinander wird multipliziert. Die Quantenmechanik tut exakt dasselbe &ndash; nur nicht mit Wahrscheinlichkeiten, sondern mit den Pfeilen, aus denen am Ende Wahrscheinlichkeiten werden.</p>
+
+<h3>Der Doppelspalt als Spezialfall</h3>
+
+<p>Ein Elektron fliegt von der Quelle A durch eine Wand mit zwei Spalten zum Detektor C. Es gibt zwei M&ouml;glichkeiten: durch den linken Spalt (B&#x2081;) oder durch den rechten (B&#x2082;). Du wei&szlig;t nicht welchen Weg &rarr; <em>Regel 1: addiere.</em> Jeder Weg besteht aus zwei Schritten &rarr; <em>Regel 2: multipliziere.</em></p>
+
+<div class="math-display">$$\text{Pfeil}(A \to C) = \text{Pfeil}(A \to B_1) \times \text{Pfeil}(B_1 \to C) \;+\; \text{Pfeil}(A \to B_2) \times \text{Pfeil}(B_2 \to C)$$</div>
+
+<p>Genau das haben wir in Kapitel 1 gemacht &ndash; wir haben es nur nicht so genannt.</p>
+
+<h3>Von Spalten zu Wegen</h3>
+
+<figure class="illus illus-md">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Three_paths_from_A_to_B.svg" alt="Drei m&ouml;gliche Wege von Punkt A zu Punkt B" loading="lazy">
+  <figcaption>Von Spalten zu Wegen: Ein Teilchen kann auf unendlich vielen Pfaden von A nach B gelangen. Jeder Weg tr&auml;gt einen Pfeil bei. <a href="https://commons.wikimedia.org/wiki/File:Three_paths_from_A_to_B.svg">Matt McIrvin, Fallenness / Wikimedia Commons / CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<p>Was, wenn die Wand drei Spalte hat? Dann gibt es drei Alternativen. Regel 1 sagt: Addiere alle drei. Hundert Spalte? Hundert Terme in der Summe. Und wenn du die Spalte immer enger und immer zahlreicher machst? Irgendwann hast du so viele Spalte, dass die Wand praktisch nicht mehr da ist &ndash; sie besteht nur noch aus L&ouml;chern. In der Grenze: Du nimmst die Wand ganz weg. Dann gibt es an jeder Position einen &bdquo;Spalt&ldquo; &ndash; und die Summe l&auml;uft &uuml;ber alle m&ouml;glichen Zwischenpositionen.</p>
+
+<p>Jetzt schieb nicht eine, sondern <strong>zwei</strong> Zwischenw&auml;nde ein. Jeder Weg geht dann: A &rarr; irgendein Spalt B&#x2C7C; in Wand 1 &rarr; irgendein Spalt D&#x2096; in Wand 2 &rarr; C. Drei Etappen hintereinander (Regel 2: multipliziere), viele Alternativen f&uuml;r die Kombination (j,k) (Regel 1: addiere):</p>
+
+<div class="math-display">$$\text{Pfeil}(A \to C) = \sum_j \sum_k \text{Pfeil}(A \to B_j) \times \text{Pfeil}(B_j \to D_k) \times \text{Pfeil}(D_k \to C)$$</div>
+
+<p>Das sieht komplizierter aus, aber es ist nichts Neues. Dieselben zwei Regeln. Jede Kombination (j,k) ist ein kleiner Zickzack-Weg. Nur angewendet auf mehr Schritte.</p>
+
+<h3>Der <span class="glossary" title="Propagator K(B,A): Die Amplitude (der Pfeil) daf&uuml;r, dass ein Teilchen von Punkt A zu Punkt B gelangt.">Propagator</span></h3>
+
+<p>Physiker nennen den Pfeil f&uuml;r den &Uuml;bergang von A nach B den <strong>Propagator</strong>, geschrieben \(K(B,A)\). Die zentrale Gleichung f&uuml;r eine Zwischenwand lautet:</p>
+
+<div class="math-display">$$K(C,A) = \sum_{\text{alle } B} K(C,B) \cdot K(B,A)$$</div>
+
+<p>Sie sagt: Um die Amplitude von A nach C zu berechnen, nimm jeden m&ouml;glichen Zwischenpunkt B, berechne die Amplitude in zwei Schritten, multipliziere (Regel 2), und addiere &uuml;ber alle B (Regel 1).</p>
+
+<p>Was, wenn du unendlich viele Zwischenschritte einf&uuml;gst &ndash; einen f&uuml;r jeden Zeitpunkt? Dann wird jede Kombination von Zwischenpositionen zu einem <strong>Weg</strong> &ndash; einer durchgehenden Kurve von A nach C. Die Summe &uuml;ber alle Kombinationen wird zur Summe &uuml;ber alle m&ouml;glichen Wege.</p>
+
+<p>Und das Produkt der vielen kleinen Pfeile entlang eines Weges wird zu einem einzigen Pfeil f&uuml;r den gesamten Weg. Dessen Winkel h&auml;ngt von einer Zahl ab, die einen eigenen Namen hat: die <strong><span class="glossary" title="Wirkung S: Die Summe aus kinetischer minus potentieller Energie, aufaddiert &uuml;ber die gesamte Reisezeit. Bestimmt den Winkel des Pfeils.">Wirkung</span></strong>.</p>
+
+<!-- INTERACTIVE: PropagatorExplorer -->
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Die Visualisierung zeigt ein Teilchen, das von A (links) nach C (rechts) fliegt. Dazwischen stehen W&auml;nde mit Spalten. <strong>Erh&ouml;he die Anzahl der Zwischenw&auml;nde</strong> von 1 auf 5, auf 20. Beobachte, wie aus diskreten Spalten kontinuierliche Pfade werden &ndash; und wie die Pfeiladdition rechts das Ergebnis formt.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-propagator"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Was du gerade gesehen hast:</strong> Der &Uuml;bergang von &bdquo;Spalte&ldquo; zu &bdquo;Wege&ldquo; ist kein neues Prinzip. Es sind immer noch dieselben zwei Regeln &ndash; konsequent angewendet. Bei einer Wand mit zwei Spalten: zwei Terme. Bei hundert Spalten: hundert Terme. Bei zwanzig W&auml;nden sehen die Zickzack-Wege schon fast wie glatte Kurven aus.</p>
+</div>
+
+<p>Wir wissen jetzt: Die Amplitude, von A nach C zu kommen, ist die Summe &uuml;ber alle Wege. Jeder Weg tr&auml;gt einen Pfeil bei. Aber drei Fragen sind offen: Wir haben noch nicht gesagt, was die Wirkung eines Weges <em>konkret</em> ist. Wir wissen nicht, warum manche Pfeile sich verst&auml;rken und andere sich ausl&ouml;schen. Und wir wissen nicht, warum ein geworfener Ball trotz unendlich vieler m&ouml;glicher Wege immer einer Parabel folgt.</p>
+
+<p>All das kl&auml;rt sich, wenn wir die Wirkung verstehen.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- TEIL 3: Wie ein Integral aus Unendlich entsteht -->
+<!-- ============================================================ -->
+<section id="teil-3" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 3</p>
+<h2>Wie ein Integral aus Unendlich entsteht</h2>
+
+<p>In Kapitel 1 hast du gelernt: Jeder Weg bekommt einen Pfeil. Pfeile, die in dieselbe Richtung zeigen, verst&auml;rken sich. Pfeile, die gegeneinander zeigen, l&ouml;schen sich aus. In Kapitel 2 hast du entdeckt: Es gibt nur zwei Regeln (Alternativen &rarr; addiere, Nacheinander &rarr; multipliziere), und wie aus Spalten Wege werden. Am Ende stand die Erkenntnis: Die Amplitude \(K(B,A)\) ist eine Summe &uuml;ber alle m&ouml;glichen Wege.</p>
+
+<p>Aber wir haben den entscheidenden Schritt aufgeschoben: <strong>Was bestimmt den Pfeil eines Weges?</strong> Warum hat ein gerader Weg einen anderen Pfeil als ein krummer? Und warum fliegt ein Ball trotz unendlich vieler m&ouml;glicher Wege immer auf einer Parabel? Heute kl&auml;ren wir das &ndash; und dabei werden wir nebenbei herausfinden, warum Newtons Gesetze gelten.</p>
+
+<h3>Multiplikation bedeutet Winkeladdition</h3>
+
+<p>Erinnere dich an Regel 2: Wenn etwas nacheinander geschieht, multiplizierst du die Pfeile. Stell dir einen Weg vor, der in zwanzig kleine Schritte zerlegt ist. Jeder Schritt hat seinen eigenen kleinen Pfeil &ndash; mit einer kleinen Drehung. Das Produkt aller zwanzig Pfeile ist ein einziger Pfeil, dessen Winkel die Summe aller zwanzig kleinen Winkel ist:</p>
+
+<div class="math-display">$$d\varphi_1 + d\varphi_2 + d\varphi_3 + \cdots + d\varphi_N = \text{Gesamtwinkel des Weges}$$</div>
+
+<h3>Die <span class="glossary" title="Wirkung S: Das Integral aus kinetischer minus potentieller Energie &uuml;ber die Zeit. Bestimmt den Pfeilwinkel &uuml;ber S/&#x210F;.">Wirkung</span></h3>
+
+<p>Die Summe aller kleinen Winkel entlang eines Weges hei&szlig;t \(S/\hbar\) &ndash; die Wirkung \(S\) des Weges, geteilt durch die Planck-Konstante \(\hbar\). Was bestimmt den kleinen Winkel bei jedem Schritt?</p>
+
+<div class="math-display">$$d\varphi = \frac{(\text{Kinetische Energie} - \text{Potentielle Energie}) \times \text{Zeitschritt}}{\hbar}$$</div>
+
+<p>Die Gr&ouml;&szlig;e in der Klammer &ndash; kinetische Energie minus potentielle Energie &ndash; hei&szlig;t die <span class="glossary" title="Lagrange-Funktion L = T &minus; V: Kinetische Energie minus potentielle Energie. Die Wirkung ist ihr Zeitintegral.">Lagrange-Funktion</span> \(L\). Und die Wirkung \(S\) ist die Summe von \(L\) &uuml;ber alle Zeitschritte:</p>
+
+<div class="math-display">$$S = \int_0^T \bigl(\text{Kinetische Energie} - \text{Potentielle Energie}\bigr)\, dt$$</div>
+
+<p>Denk nicht an Schulmathematik. Denk an das, was es bedeutet: Du gehst den Weg von Anfang bis Ende ab, merkst dir bei jedem Schritt die Differenz &bdquo;kinetisch minus potentiell&ldquo;, und addierst alles auf. Das Ergebnis ist die Wirkung. Die Wirkung bestimmt den Winkel des Pfeils.</p>
+
+<h3>Warum \(F = ma\) einen tieferen Grund hat</h3>
+
+<p>In der Schule hast du gelernt: Kraft gleich Masse mal Beschleunigung. \(F = ma\). Newton hat das 1687 aufgeschrieben, und es funktioniert fantastisch. Aber Newton konnte nicht erkl&auml;ren, <em>warum</em> es funktioniert. Er hat nur festgestellt, dass es funktioniert.</p>
+
+<p>Die Wirkung liefert den tieferen Grund. Die Aussage &bdquo;ein Ball fliegt auf einer Parabel&ldquo; ist &auml;quivalent zur Aussage &bdquo;der Ball nimmt den Weg, bei dem die Wirkung <em>station&auml;r</em> ist&ldquo; &ndash; wo kleine Abweichungen die Wirkung kaum &auml;ndern. Das klingt nach einer mathematischen Spielerei. Aber gleich wirst du sehen, dass es exakt das ist, was die Quantenmechanik vorhersagt &ndash; als direkte Konsequenz der Pfeiladdition.</p>
+
+<h3>Die <span class="glossary" title="Stationäre Phase: Das Prinzip, dass nur Wege mit kaum variierender Wirkung (also &auml;hnlichen Pfeilwinkeln) zum Ergebnis beitragen.">station&auml;re Phase</span> &ndash; das Herzst&uuml;ck</h3>
+
+<p><strong>Wege weit weg vom klassischen Pfad:</strong> Hier &auml;ndert sich die Wirkung \(S\) schnell bei kleinen Variationen. Benachbarte Wege haben sehr verschiedene Winkel. Ihre Pfeile zeigen in alle m&ouml;glichen Richtungen. In der Summe heben sie sich auf. <em>Destruktive Interferenz.</em></p>
+
+<p><strong>Wege nahe am klassischen Pfad:</strong> Hier ist \(S\) station&auml;r &ndash; kleine Abweichungen &auml;ndern die Wirkung kaum. Benachbarte Wege haben fast den gleichen Winkel. Ihre Pfeile verst&auml;rken sich. <em>Konstruktive Interferenz.</em></p>
+
+<p>Der klassische Weg &ndash; die Parabel, die gerade Linie, was auch immer Newton vorhersagt &ndash; ist nicht deshalb besonders, weil die Natur ihn &bdquo;ausw&auml;hlt&ldquo;. Er ist besonders, weil er der einzige ist, bei dem sich die Nachbarwege nicht gegenseitig ausl&ouml;schen. <strong>Newtons \(F = ma\) ist nicht fundamental.</strong> Es ist das, was &uuml;brig bleibt, wenn sich die Pfeile der verr&uuml;ckten Wege gegenseitig zerst&ouml;rt haben.</p>
+
+<figure class="illus illus-md">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Mplwp_Euler_spiral.svg" alt="Cornu-Spirale (Euler-Spirale): Visualisierung der station&auml;ren Phase" loading="lazy">
+  <figcaption>Die Cornu-Spirale: Jeder Punkt entspricht dem Beitrag eines Weges. In der Mitte (nahe am klassischen Pfad) verlaufen die Pfeile fast parallel &ndash; sie verst&auml;rken sich. An den Enden spiralen sie sich ein und l&ouml;schen sich aus. <a href="https://commons.wikimedia.org/wiki/File:Mplwp_Euler_spiral.svg">Geek3 / Wikimedia Commons / CC BY 3.0</a></figcaption>
+</figure>
+
+<h3>Die Rolle von \(\hbar\)</h3>
+
+<p>Der Winkel eines Pfeils ist \(S/\hbar\). Je kleiner \(\hbar\), desto mehr dreht sich der Pfeil f&uuml;r eine gegebene Wirkung &ndash; und desto schneller l&ouml;schen sich Wege aus, die nicht genau auf dem klassischen Pfad liegen.</p>
+
+<p>F&uuml;r einen geworfenen Ball ist \(\hbar \approx 10^{-34}\) Joulesekunden winzig im Vergleich zur Wirkung der Flugbahn. Schon ein Weg, der nur einen Bruchteil eines Millimeters von der Parabel abweicht, l&ouml;scht sich mit seinen Nachbarn aus. Deshalb sieht der Ball aus, als folge er einem einzigen Weg.</p>
+
+<p>F&uuml;r ein Elektron ist \(\hbar\) nicht klein im Vergleich zu den relevanten Wirkungen. Viele Wege tragen bei. Deshalb zeigt das Elektron Interferenz. <strong>Der Unterschied zwischen Quanten- und klassischer Welt ist kein Prinzipienunterschied. Es ist ein Skalenunterschied.</strong></p>
+
+<!-- INTERACTIVE: ActionPhaseViz + PathIntegralExplorer -->
+<div class="try-it">
+  <p><strong>Probier es selbst &ndash; Teil A: Wirkung und Phase</strong></p>
+  <p>Die erste Visualisierung hat zwei Tabs. In <strong>Tab 1</strong> siehst du einen einzelnen Weg, zerlegt in Schritte. Verschiebe den &alpha;-Regler, um den Weg zu verbiegen, und beobachte, wie sich die Wirkung &auml;ndert. In <strong>Tab 2</strong> siehst du 121 Wege gleichzeitig: Beobachte die Cornu-Spirale rechts &ndash; in der Mitte verst&auml;rken sich die Pfeile, an den R&auml;ndern l&ouml;schen sie sich aus. <strong>Dreh am \(\hbar\)-Regler</strong>, um den &Uuml;bergang von Quantenwelt zu klassischer Welt live zu sehen.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-action-phase"></div>
+</div>
+
+<div class="try-it">
+  <p><strong>Probier es selbst &ndash; Teil B: Pfadintegral</strong></p>
+  <p>Die zweite Visualisierung zeigt die Pfade direkt. <strong>Variiere \(\hbar\):</strong> Bei gro&szlig;em \(\hbar\) (Quantenwelt) tragen viele Wege bei. Bei kleinem \(\hbar\) (Alltagswelt) &uuml;berlebt nur der klassische Pfad.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-path-integral"></div>
+</div>
+
+<h3>Warum ausgerechnet \(e^{iS/\hbar}\)? &ndash; Die Gleichung, die keine Wahl l&auml;sst</h3>
+
+<p>Bisher haben wir gesagt: Jeder Weg bekommt einen Pfeil, und der Winkel h&auml;ngt von der Wirkung ab. Aber wir haben geschummelt. Wir haben nicht erkl&auml;rt, <em>warum</em> die Beziehung zwischen Wirkung und Pfeil ausgerechnet eine Exponentialfunktion ist. Ist das ein Postulat? Ein Trick? Nein. Es ist die <strong>einzige M&ouml;glichkeit</strong>.</p>
+
+<p>Der Grund liegt in unseren beiden Regeln &ndash; und zwar in ihrem Zusammenspiel.</p>
+
+<p>Erinnere dich: Wenn ein Teilchen erst von A nach B und dann von B nach C geht, dann <strong>addieren</strong> sich die Wirkungen der beiden Teilstrecken:</p>
+
+<div class="math-display">$$S_{\text{gesamt}} = S_1 + S_2$$</div>
+
+<p>Das ist reine Physik &ndash; die Wirkung ist ein Integral &uuml;ber die Zeit, und Integrale &uuml;ber aneinandergereihte Zeitabschnitte addieren sich.</p>
+
+<p>Gleichzeitig sagt Regel 2: Die Pfeile der beiden Teilstrecken werden <strong>multipliziert</strong>:</p>
+
+<div class="math-display">$$A_{\text{gesamt}} = A_1 \cdot A_2$$</div>
+
+<p>Jetzt frag dich: Welche Funktion \(A(S)\) verwandelt eine <strong>Addition der Wirkungen</strong> in eine <strong>Multiplikation der Amplituden</strong>? Welche Funktion erf&uuml;llt:</p>
+
+<div class="math-display">$$A(S_1 + S_2) = A(S_1) \cdot A(S_2) \quad ?$$</div>
+
+<p>Das ist eine der ber&uuml;hmtesten Gleichungen der Mathematik &ndash; die <strong>Funktionalgleichung der Exponentialfunktion</strong>. Und ihre L&ouml;sung ist, unter minimalen Voraussetzungen (Stetigkeit gen&uuml;gt), eindeutig:</p>
+
+<div class="math-display">$$A(S) = e^{\alpha \, S}$$</div>
+
+<p>f&uuml;r eine Konstante \(\alpha\). Es gibt keine andere stetige Funktion, die Addition in Multiplikation verwandelt. Keine. Die Exponentialfunktion hat ein Monopol.</p>
+
+<p>Aber welcher Wert f&uuml;r \(\alpha\)? Hier kommen zwei physikalische Bedingungen ins Spiel:</p>
+
+<p><strong>Erstens:</strong> Alle Wege sollen gleichberechtigt sein &ndash; kein Weg darf von vornherein eine gr&ouml;&szlig;ere oder kleinere Amplitude haben als ein anderer. Das bedeutet: \(|A(S)| = 1\) f&uuml;r alle \(S\). Der Pfeil darf sich drehen, aber seine <strong>L&auml;nge darf sich nicht &auml;ndern</strong>. (Erst bei der Addition aller Pfeile entscheidet sich, welche Wege &bdquo;gewinnen&ldquo;.)</p>
+
+<p>Damit scheidet jedes reelle \(\alpha\) aus &ndash; denn \(e^{\alpha S}\) mit reellem \(\alpha\) w&auml;chst oder f&auml;llt exponentiell. Nur ein rein imagin&auml;res \(\alpha = i/\hbar\) h&auml;lt die L&auml;nge konstant bei 1. Denn \(|e^{i\theta}| = 1\) f&uuml;r jedes \(\theta\).</p>
+
+<p><strong>Zweitens:</strong> Die Konstante \(\hbar\) im Nenner legt die Skala fest &ndash; sie bestimmt, wie viel Wirkung n&ouml;tig ist, um den Pfeil einmal komplett im Kreis zu drehen. Sie ist keine freie Wahl der Theorie, sondern wird durch die Natur vorgegeben: \(\hbar \approx 1{,}05 \times 10^{-34}\) Joulesekunden.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Das Argument in einem Satz:</strong> Die Forderung, dass Wirkungen sich addieren, w&auml;hrend Amplituden sich multiplizieren, zusammen mit der Forderung gleicher Pfeillaenge f&uuml;r alle Wege, erzwingt \(A(S) = e^{iS/\hbar}\). Die komplexe Exponentialfunktion ist kein Postulat &ndash; sie ist die einzige Funktion, die beide Regeln gleichzeitig erf&uuml;llt.</p>
+</div>
+
+<p>Damit ist der rotierende Pfeil keine Metapher und kein Modell. Er <em>ist</em> die Mathematik &ndash; und die Mathematik hatte keine andere Wahl.</p>
+
+<h3>Die Formel</h3>
+
+<p>Jetzt k&ouml;nnen wir alles in eine einzige Zeile packen:</p>
+
+<div class="math-display">$$K(B,A) = \sum_{\text{alle Wege}} e^{\,i\,S[\text{Weg}]\,/\,\hbar}$$</div>
+
+<p>Du wei&szlig;t jetzt nicht nur, was jedes Symbol bedeutet &ndash; du wei&szlig;t auch, <em>warum</em> es so aussehen muss. Die Summe l&auml;uft &uuml;ber alle Wege (Regel 1). \(e^{iS/\hbar}\) ist ein Pfeil der L&auml;nge 1, gedreht um den Winkel \(S/\hbar\) &ndash; die einzige Funktion, die Regel 2 erf&uuml;llt, ohne Wege zu bevorzugen. Und \(S\) ist die Wirkung. Das ist <strong>Feynmans Pfadintegral</strong>. Die gesamte Quantenmechanik in einer Zeile &ndash; und jedes St&uuml;ck davon ist zwingend.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Was wir geschafft haben:</strong> In Kapitel 1 hast du Pfeile addiert. In Kapitel 2 hast du gelernt, dass es nur zwei Regeln gibt, und wie aus Spalten Wege werden. Hier hast du gesehen, wie die Wirkung entsteht und warum Newtons Gesetze eine Konsequenz der Quantenmechanik sind. Du hast gerade Physik verstanden, die Richard Feynman als Doktorand formuliert hat &ndash; und das einzige Werkzeug war ein Pfeil, der sich dreht.</p>
+</div>
+
+<p>Aber eine Frage ist offen. Wir haben das Pfadintegral &ndash; eine Summe &uuml;ber Wege. Es gibt noch zwei andere Zug&auml;nge zur Quantenmechanik, die scheinbar v&ouml;llig verschieden aussehen: Energieniveaus und Fourier-Zerlegung. Die Pointe: Alle drei sagen dasselbe &ndash; in verschiedenen Sprachen. Der Einstieg in die erste dieser Sprachen kommt aus einer unerwarteten Richtung: aus der Musik.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- TEIL 4a: Jedes Signal ist eine Summe von Schwingungen -->
+<!-- ============================================================ -->
+<section id="teil-4a" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 4a</p>
+<h2>Jedes Signal ist eine Summe von Schwingungen</h2>
+
+<h3>Ein Umweg &uuml;ber die Musik</h3>
+
+<p>Wenn du eine Gitarrensaite anschl&auml;gst, h&ouml;rst du einen Ton. Aber kein Instrument erzeugt einen &bdquo;reinen&ldquo; Ton &ndash; eine einzelne Sinuswelle. Was du h&ouml;rst, ist ein Gemisch: der Grundton plus Obert&ouml;ne, die mit doppelter, dreifacher, vierfacher Frequenz schwingen.</p>
+
+<p>Der Grundton gibt dem Ton seine H&ouml;he. Die Obert&ouml;ne geben ihm seinen Charakter: sie entscheiden, ob du eine Gitarre h&ouml;rst oder eine Fl&ouml;te, obwohl beide dasselbe C spielen. Ein Equalizer am Mischpult macht genau das sichtbar. Jeder Schieberegler steht f&uuml;r ein Frequenzband. Dreh die hohen Frequenzen runter, und der Klang wird dumpf. Dreh sie hoch, und er wird brillant. Der Equalizer zerlegt den Klang in seine Bestandteile &ndash; und erlaubt dir, sie einzeln zu regeln.</p>
+
+<div class="illus-row" style="grid-template-columns: 1fr; gap: 1rem;">
+  <figure class="illus illus-md">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Harmonic_partials_on_strings.svg" alt="Obertonserie auf einer Saite: Grundton und Harmonische" loading="lazy">
+    <figcaption>Grundton und Obert&ouml;ne einer Saite: Jeder Modus schwingt mit ganzzahligem Vielfachen der Grundfrequenz. <a href="https://commons.wikimedia.org/wiki/File:Harmonic_partials_on_strings.svg">Qef / Wikimedia Commons / Public Domain</a></figcaption>
+  </figure>
+</div>
+
+<figure class="illus illus-sm illus-float-right">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Fourier2.jpg" alt="Portrait von Joseph Fourier" loading="lazy">
+  <figcaption>Joseph Fourier (1768&ndash;1830). <a href="https://commons.wikimedia.org/wiki/File:Fourier2.jpg">Public Domain</a></figcaption>
+</figure>
+
+<p>1807 formulierte der franz&ouml;sische Mathematiker Joseph Fourier eine Erkenntnis, die weit &uuml;ber die Musik hinausreicht:</p>
+
+<p><strong>Jedes periodische Signal &ndash; egal wie komplex &ndash; l&auml;sst sich als Summe von Sinuswellen schreiben.</strong></p>
+
+<div class="clearfix"></div>
+
+<div class="math-display">$$f(t) = a_1 \sin(\omega t) + a_2 \sin(2\omega t) + a_3 \sin(3\omega t) + \cdots$$</div>
+
+<p>Die Koeffizienten \(a_1, a_2, a_3, \ldots\) sind wie die Schieberegler eines Equalizers. Sie sagen dir, wie viel von jeder Frequenz im Signal steckt. Zwei Beschreibungen derselben Sache &ndash; wie zwei Sprachen f&uuml;r denselben Gedanken.</p>
+
+<!-- INTERACTIVE: FourierExplorer -->
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Die Visualisierung ist dein Mischpult. Sieben Schieberegler, einer f&uuml;r jeden Oberton. <strong>Starte mit dem Preset &bdquo;Grundton&ldquo;</strong> &ndash; eine reine Schwingung. Dann w&auml;hle <strong>&bdquo;&asymp; Rechteck&ldquo;</strong> und beobachte, wie eine eckige Welle aus wenigen Sinuswellen entsteht. Dr&uuml;ck dann <strong>&#x25B6; Abspielen</strong> und schau nach rechts: Dort drehen sich die Pfeile. Jeder Oberton ist ein Pfeil mit eigener Geschwindigkeit. Die Summe &ndash; der gelbe Punkt &ndash; zeichnet das Signal.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-fourier"></div>
+</div>
+
+<h3>Rotierende Pfeile &ndash; schon wieder</h3>
+
+<figure class="illus illus-sm">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif" alt="Animation: Aufbau einer Rechteckwelle aus Sinuswellen mit Frequenzspektrum" loading="lazy">
+  <figcaption>Eine Rechteckwelle (rot) entsteht aus der Summe von Sinuswellen. Rechts das Frequenzspektrum &ndash; der &bdquo;Equalizer&ldquo; des Signals. <a href="https://commons.wikimedia.org/wiki/File:Fourier_series_and_transform.gif">LucasVB / Wikimedia Commons / CC0</a></figcaption>
+</figure>
+
+<p>Seit Kapitel 1 arbeiten wir mit Pfeilen, die sich drehen. Seit drei Kapiteln addieren wir sie und schauen, ob sie sich verst&auml;rken oder ausl&ouml;schen. Und jetzt tauchen sie wieder auf &ndash; mitten in der Musiktheorie. Das ist kein Zufall. <strong>Es ist dieselbe Mathematik.</strong></p>
+
+<p>Eine Sinuswelle ist n&auml;mlich nichts anderes als ein rotierender Pfeil, von der Seite betrachtet. Stell dir einen Punkt vor, der sich gleichm&auml;&szlig;ig auf einem Kreis bewegt. Schau von der Seite auf den Kreis &ndash; also projiziere den Punkt auf die vertikale Achse. Was siehst du? Der Punkt geht hoch, kommt runter, geht hoch, kommt runter. Eine Sinuswelle. L&auml;nge des Pfeils &rarr; Amplitude der Schwingung. Drehgeschwindigkeit &rarr; Frequenz. Startwinkel &rarr; Phase. Alles, was eine Sinuswelle beschreibt, steckt in einem einzigen rotierenden Pfeil.</p>
+
+<p>Und wenn ein Signal eine Summe von Sinuswellen ist, dann ist es eine Summe von rotierenden Pfeilen &ndash; Kopf an Schwanz aneinandergelegt, genau wie beim Doppelspalt in Kapitel 1. Ptolem&auml;us beschrieb im 2. Jahrhundert Planetenbahnen mit Kreisen auf Kreisen. Fourier zerlegte 1807 Signale mit derselben Mathematik. Und wir berechnen seit Kapitel 1 Quantenamplituden auf genau diese Weise. Drei Jahrtausende, drei Kontexte, eine Struktur. <strong>Fourier-Zerlegung ist Pfeiladdition, sortiert nach Drehgeschwindigkeit.</strong></p>
+
+<h3>Was das f&uuml;r die Quantenmechanik bedeutet</h3>
+
+<p>Quantensysteme haben <span class="glossary" title="Eigenfrequenzen: Die diskreten Frequenzen, bei denen ein Quantensystem 'gerne schwingt'. Jede entspricht einer bestimmten Energie.">Eigenfrequenzen</span> &ndash; diskrete Werte, die durch das System bestimmt sind. Jede Eigenfrequenz entspricht einer Energie \(E_n\):</p>
+
+<div class="math-display">$$\text{Frequenz} = \frac{E_n}{\hbar}$$</div>
+
+<p>Jeder Energiezustand verh&auml;lt sich wie ein reiner Oberton: ein Pfeil, der sich mit konstanter Geschwindigkeit \(E_n/\hbar\) dreht. In der Musik: ein reiner Ton. In der Quantenmechanik: ein <span class="glossary" title="Energieeigenzustand: Ein Quantenzustand mit fest definierter Energie, der sich zeitlich nur durch Pfeildrehung &auml;ndert.">Energieeigenzustand</span>.</p>
+
+<p>Und hier die Pointe. Erinnere dich an den Equalizer: Jeder Schieberegler war ein Oberton. Jetzt ersetze &bdquo;Oberton&ldquo; durch &bdquo;Energieniveau&ldquo;. Der Propagator \(K(B,A)\), den wir als Summe &uuml;ber Wege berechnet haben, l&auml;sst sich <em>auch</em> als Summe &uuml;ber diese Eigenzust&auml;nde schreiben:</p>
+
+<div class="math-display">$$K(B,A,t) = \sum_n \phi_n(B)\;\phi_n^*(A)\; e^{-i\,E_n\,t\,/\,\hbar}$$</div>
+
+<p>Lies das langsam. Es sieht technisch aus, aber du kennst jedes Element: Die Summe l&auml;uft &uuml;ber alle Eigenzust&auml;nde \(n\) &ndash; alle &bdquo;Obert&ouml;ne&ldquo; des Systems. Jeder Eigenzustand hat eine r&auml;umliche Form \(\phi_n\) (sein Wellenmuster &ndash; wo das Elektron &bdquo;gerne ist&ldquo;) und eine Energie \(E_n\) (die bestimmt, wie schnell sein Pfeil rotiert). Der Faktor \(e^{-iE_n t/\hbar}\) ist ein Pfeil der L&auml;nge 1, der sich mit Frequenz \(E_n/\hbar\) dreht &ndash; genau wie die Obert&ouml;ne in der Visualisierung oben.</p>
+
+<p>Dieselbe Gr&ouml;&szlig;e \(K(B,A)\) &ndash; einmal als Summe &uuml;ber Wege, einmal als Summe &uuml;ber Eigenzust&auml;nde. Zwei Beschreibungen derselben Physik. Wie der Equalizer, der dasselbe Signal zeigt, nur in einer anderen Darstellung.</p>
+
+<p>Aber eine entscheidende Frage ist offen. Die Fourier-Zerlegung zeigt uns, <em>dass</em> es Eigenfrequenzen gibt. Aber <em>woher kommen sie</em>? Was bestimmt die erlaubten Frequenzen eines Quantensystems? Warum leuchtet Wasserstoff rot und nicht blau? Warum haben Atome diskrete Energieniveaus statt eines Kontinuums? Die Antwort hat mit stehenden Wellen zu tun, mit Randbedingungen &ndash; und sie ist &uuml;berraschend einfach.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- TEIL 4b: Die T&ouml;ne, die ein Quantensystem gerne spielt -->
+<!-- ============================================================ -->
+<section id="teil-4b" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 4b</p>
+<h2>Die T&ouml;ne, die ein Quantensystem gerne spielt</h2>
+
+<h3>Die Saite, die w&auml;hlerisch ist</h3>
+
+<p>Eine Gitarrensaite ist an beiden Enden befestigt. Jede Schwingung muss an beiden Enden den Wert null haben. Stell dir vor, du versuchst, eine Welle auf die Saite zu legen, deren Wellenl&auml;nge nicht dazu passt. Du dr&uuml;ckst die Saite in ein Muster, das am linken Ende zwar null ist, aber am rechten Ende <em>nicht</em> null wird &ndash; die Welle &bdquo;endet&ldquo; irgendwo mitten in einem Berg oder Tal. Das geht nicht. Die Saite ist dort festgenagelt. Diese Welle kann auf dieser Saite nicht existieren.</p>
+
+<p>Welche Wellen passen dann? Genau diejenigen, bei denen eine <strong>ganzzahlige Anzahl von Halbwellen</strong> zwischen die Befestigungspunkte passt. Dazwischen gibt es nichts. Nicht 1,5 Halbwellen. Nicht 2,7. Nur ganze Zahlen.</p>
+
+<p>Das nennt man <strong>stehende Wellen</strong> &ndash; Wellenmuster, die nicht wandern, sondern am Ort vibrieren. Die Befestigungspunkte erzwingen die Auswahl. Diesen Auswahlmechanismus nennt man <span class="glossary" title="Randbedingung: Die Forderung, dass die Welle an bestimmten Punkten null sein muss. Verwandelt ein Kontinuum m&ouml;glicher Wellenl&auml;ngen in ein diskretes Spektrum.">Randbedingung</span>. Stell dir ein Seil vor, das du zwischen zwei T&uuml;rklinken gespannt hast. Wenn du mit der richtigen Frequenz sch&uuml;ttelst, baut sich ein stabiles Muster auf &ndash; die stehende Welle. Bei einer falschen Frequenz entstehen chaotische Reflexionen, die sich gegenseitig ausl&ouml;schen. Das System filtert selbst &ndash; nur die passenden Frequenzen &uuml;berleben.</p>
+
+<!-- INTERACTIVE: StandingWaves -->
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Der Schieberegler l&auml;sst dich \(n\) stufenlos von 0,3 bis 7,5 durchstimmen. <strong>Bei ganzzahligem \(n\)</strong> wird die Welle gr&uuml;n &ndash; sie erf&uuml;llt die Randbedingung. Bei jedem anderen Wert wird sie rot: am rechten Rand steht &bdquo;&ne; 0&ldquo;. Dr&uuml;cke <strong>&#x25B6; Schwingung</strong>, um die stehende Welle vibrieren zu sehen. Wechsle zu <strong>&#x269B; Quantenteilchen</strong> und beachte die Energieleiter rechts: Die Abst&auml;nde werden immer gr&ouml;&szlig;er.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-standing-waves"></div>
+</div>
+
+<h3>Von der Saite zum Atom</h3>
+
+<p>Louis de Broglie schlug 1924 vor: Nicht nur Licht ist eine Welle &ndash; auch Materie. Ein Teilchen mit Impuls \(p\) hat eine Wellenl&auml;nge \(\lambda = h/p\). Wenn du ein Teilchen in einen Kasten sperrst &ndash; zwischen zwei undurchdringliche W&auml;nde &ndash; dann muss seine Welle in den Kasten passen. Exakt wie die Gitarrensaite.</p>
+
+<p>Die Rechnung ist drei Zeilen lang &ndash; und das Ergebnis &uuml;berraschend elegant. Die \(n\)-te Mode hat eine Wellenl&auml;nge von \(\lambda_n = 2L/n\) (weil genau \(n\) Halbwellen hineinpassen m&uuml;ssen). Der Impuls ist also \(p_n = h/\lambda_n = nh/(2L)\). Und die kinetische Energie:</p>
+
+<div class="math-display">$$E_n = \frac{p_n^2}{2m} = \frac{n^2\, h^2}{8\,m\,L^2} = n^2 \cdot E_1$$</div>
+
+<p>Wir haben nirgends ein Postulat eingef&uuml;hrt, das sagt: &bdquo;Energie muss diskret sein.&ldquo; Wir haben nur gesagt: Das Teilchen ist eine Welle, und die Welle muss in den Kasten passen. <strong>Die Diskretheit entsteht von allein. Sie wird nicht hineingesteckt &ndash; sie kommt heraus.</strong></p>
+
+<figure class="illus illus-sm illus-float-right">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Hydrogen_energy_levels.svg" alt="Energieniveaus des Wasserstoffatoms" loading="lazy">
+  <figcaption>Die Energieleiter des Wasserstoffs. <a href="https://commons.wikimedia.org/wiki/File:Hydrogen_energy_levels.svg">Glosser.ca / CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<figure class="illus illus-md">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Hydrogen_spectrum.svg" alt="Spektralserien des Wasserstoffs (Lyman, Balmer, Paschen)" loading="lazy">
+  <figcaption>Spektrallinien des Wasserstoffs: Jede Linie entspricht einem &Uuml;bergang zwischen zwei Energieniveaus. Die rote H-alpha-Linie (656 nm) entsteht beim Sprung von \(n=3\) nach \(n=2\). <a href="https://commons.wikimedia.org/wiki/File:Hydrogen_spectrum.svg">Wikimedia Commons / CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<div class="clearfix"></div>
+
+<h3>Vom Kasten zum Wasserstoffatom</h3>
+
+<p>Der &bdquo;Teilchen im Kasten&ldquo; ist das einfachste Quantensystem. Aber das Prinzip reicht viel weiter. Ein Elektron in einem Wasserstoffatom ist nicht zwischen zwei W&auml;nden eingesperrt, sondern in der elektrischen Anziehungskraft des Protons gefangen. Das Potential hat eine andere Form &ndash; es geht wie \(-1/r\), wird also immer tiefer, je n&auml;her das Elektron dem Kern kommt. Aber die Logik ist identisch: Die Welle des Elektrons muss &bdquo;passen&ldquo;. Sie muss weit weg vom Kern auf null abfallen, statt ins Unendliche zu wachsen. Und diese Randbedingung w&auml;hlt wieder ein diskretes Spektrum aus:</p>
+
+<div class="math-display">$$E_n = -\frac{13{,}6 \;\text{eV}}{n^2}$$</div>
+
+<p>Das Minuszeichen sagt: Das Elektron ist gebunden. Der Faktor \(1/n^2\) kommt aus der Form des Coulomb-Potentials &ndash; anders als das \(n^2\) des Kastens, aber aus demselben Prinzip entstanden.</p>
+
+<p>Wenn ein Elektron von Niveau \(n = 3\) auf \(n = 2\) f&auml;llt, gibt es die Energiedifferenz als Licht ab. F&uuml;r diesen &Uuml;bergang ergibt sich rotes Licht mit einer Wellenl&auml;nge von 656 Nanometern &ndash; die ber&uuml;hmte H-alpha-Linie, die Astronomen in den Spektren ferner Galaxien sehen. F&uuml;r \(4 \to 2\) kommt t&uuml;rkises Licht heraus, f&uuml;r \(5 \to 2\) violettes. Das sind die Balmer-Linien, die Johann Balmer 1885 empirisch katalogisiert hat &ndash; drei&szlig;ig Jahre bevor irgendjemand wusste, <em>warum</em> sie existieren.</p>
+
+<p>Jetzt wei&szlig;t du warum. Das Elektron ist eine Welle. Die Welle muss in das Atom passen. Nur bestimmte Muster passen. Jedes Muster hat eine Energie. &Uuml;berg&auml;nge zwischen Mustern erzeugen Licht mit diskreten Frequenzen. <strong>Das ist das ganze Geheimnis der Spektrallinien.</strong></p>
+
+<h3>Die Nullstellen, die nicht sein d&uuml;rften</h3>
+
+<p>Bei \(n = 2\) hat die Aufenthaltswahrscheinlichkeit genau in der Mitte eine Nullstelle. Das Teilchen kann links sein oder rechts &ndash; aber es ist niemals in der Mitte. Wie kommt es dann von einer Seite auf die andere?</p>
+
+<p>Die Frage setzt voraus, dass das Teilchen ein kleiner Ball ist. Aber das tut es nicht. Es <em>ist</em> die Welle. Die ganze Welle, gleichzeitig. Erst wenn du nachmisst, findest du es an einem konkreten Ort. Zwischen den Messungen hat die Frage &bdquo;Wo ist es?&ldquo; keine scharfe Antwort.</p>
+
+<p>Und noch etwas: Das Schwingen eines Eigenzustands ist nur eine Phasendrehung &ndash; der Pfeil rotiert, aber seine L&auml;nge bleibt gleich. Und \(|\psi|^2\) h&auml;ngt nur von der L&auml;nge ab, nicht vom Winkel. Deshalb &auml;ndert sich die Wahrscheinlichkeitsverteilung eines Eigenzustands nicht mit der Zeit, obwohl die Wellenfunktion schwingt. <strong>Eigenzust&auml;nde sind station&auml;r:</strong> ihre beobachtbaren Eigenschaften &auml;ndern sich nicht.</p>
+
+<h3>Das Wort &bdquo;Quantum&ldquo;</h3>
+
+<p>Max Planck f&uuml;hrte den Begriff 1900 ein, als er entdeckte, dass Lichtenergie nur in Paketen der Gr&ouml;&szlig;e \(E = h\nu\) ausgetauscht wird. F&uuml;nfundzwanzig Jahre sp&auml;ter erkl&auml;rte die Wellenmechanik, <em>warum</em> Energie in Paketen kommt. Nicht weil die Natur es vorschreibt, sondern weil Wellen, die in begrenzten R&auml;umen leben, nur bestimmte Muster annehmen k&ouml;nnen. <strong>Eine Gitarrensaite kann nicht jede Frequenz spielen, weil sie an beiden Enden befestigt ist. Ein Atom kann nicht jede Energie haben, weil das Elektron im Potential des Kerns gefangen ist.</strong> Der Mechanismus ist derselbe.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- TEIL 4c: Drei Sprachen, eine Physik -->
+<!-- ============================================================ -->
+<section id="teil-4c" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 4c</p>
+<h2>Drei Sprachen, eine Physik</h2>
+
+<h3>Der Hauptcharakter: \(K(B, A)\)</h3>
+
+<p>Alles dreht sich um eine einzige Gr&ouml;&szlig;e: den Propagator \(K(B,A)\). Er beantwortet die fundamentalste Frage der Quantenmechanik: Wie gro&szlig; ist die Amplitude daf&uuml;r, dass ein Teilchen von Punkt A zu Punkt B gelangt? Es gibt drei v&ouml;llig verschiedene Wege, diesen Pfeil zu berechnen &ndash; und alle drei liefern exakt dasselbe Ergebnis.</p>
+
+<h3>Sprache 1: Die Summe &uuml;ber Wege</h3>
+
+<p>Feynmans Blick. Nimm jeden m&ouml;glichen Weg, berechne die Wirkung \(S\), und addiere alle Pfeile:</p>
+
+<div class="math-display">$$K(B,A) = \sum_{\text{alle Wege}} e^{\,i\,S[\text{Weg}]\,/\,\hbar}$$</div>
+
+<p>Keine Eigenzust&auml;nde, keine Energieniveaus. Nur Wege und ihre Wirkungen. Die Struktur entsteht erst beim Zusammenz&auml;hlen.</p>
+
+<h3>Sprache 2: Die Summe &uuml;ber Eigenzust&auml;nde</h3>
+
+<p>Der Blick der Wellenmechanik. Zerlege den Propagator in stabile Muster &ndash; die &bdquo;reinen T&ouml;ne&ldquo; des Systems:</p>
+
+<div class="math-display">$$K(B,A,t) = \sum_{n} \psi_n(x_B)\;\psi_n^*(x_A)\;e^{-i\,E_n\,(t_B - t_A)\,/\,\hbar}$$</div>
+
+<p>Keine Wege. Stattdessen ein Spektrum &ndash; eine Leiter von Energieniveaus. Jedes Niveau steuert einen rotierenden Pfeil bei. Das Ergebnis ist eine &Uuml;berlagerung rotierender Pfeile &ndash; exakt wie der Equalizer aus Kapitel 4a. Jeder Schieberegler steht f&uuml;r ein Energieniveau. Die Frequenzen sind die Eigenfrequenzen des Systems. Die &bdquo;Lautst&auml;rken&ldquo; werden durch die Wellenfunktionen an A und B bestimmt. Die gesamte Chemie wird in dieser Sprache am klarsten.</p>
+
+<h3>Sprache 3: Die Fourier-Zerlegung</h3>
+
+<p>Der Blick des Mathematikers. Der Propagator ist eine Funktion der Zeit. Jede Zeitfunktion l&auml;sst sich in Frequenzanteile zerlegen:</p>
+
+<div class="math-display">$$K \sim \int \tilde{K}(\omega)\;e^{-i\,\omega\,t}\;d\omega$$</div>
+
+<p>Das Frequenzspektrum hat Peaks bei den Eigenfrequenzen \(\omega_n = E_n/\hbar\). Die Fourier-Transformation <em>findet</em> die Eigenzust&auml;nde, ohne dass du sie vorher kennen musst.</p>
+
+<!-- INTERACTIVE: ThreeLanguages -->
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Die Visualisierung zeigt das Dreieck der drei Sprachen. <strong>Klicke auf jede Ecke</strong>, um ihre Perspektive zu sehen. Beobachte den Propagator in der Mitte: <strong>derselbe Pfeil, dreimal berechnet, dreimal derselbe.</strong></p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-three-languages"></div>
+</div>
+
+<h3>Das Dreieck</h3>
+
+<p>Die drei Sprachen bilden ein Dreieck. Jede Seite verbindet zwei Perspektiven:</p>
+
+<p><strong>Wege &#x2194; Eigenzust&auml;nde:</strong> Man kann die Summe &uuml;ber Wege so umgruppieren, dass sie zur Summe &uuml;ber Eigenzust&auml;nde wird. Wie ein Buch, das sowohl auf Deutsch als auch auf Franz&ouml;sisch existiert: anderer Klang, gleicher Inhalt.</p>
+
+<p><strong>Eigenzust&auml;nde &#x2194; Fourier:</strong> Die Eigenzustandszerlegung <em>ist</em> die Fourier-Zerlegung, angewandt auf das Signal &bdquo;Propagator&ldquo;. Mathematisch ist das buchst&auml;blich dasselbe.</p>
+
+<p><strong>Fourier &#x2194; Wege:</strong> Beide sind &bdquo;Summen &uuml;ber alles&ldquo; &ndash; nur das &bdquo;alles&ldquo; unterscheidet sich: Zeitpunkte vs. Frequenzen, Wege vs. Amplituden.</p>
+
+<h3>Warum drei Sprachen?</h3>
+
+<p>Jede macht etwas sichtbar, das die anderen verbergen. Die <strong>Wegsprache</strong> macht Interferenz greifbar &ndash; du siehst, warum der klassische Weg dominiert und warum Quanteneffekte bei gro&szlig;en Objekten verschwinden. Aber versuch mal, mit dem Pfadintegral die Energieniveaus von Wasserstoff auszurechnen &ndash; das ist ein Alptraum.</p>
+
+<p>Die <strong>Eigenzustandssprache</strong> macht Spektren greifbar &ndash; die Energieleiter, die erlaubten &Uuml;berg&auml;nge, die gesamte Chemie. Aber versuch mal, damit zu erkl&auml;ren, warum ein Ball eine Parabel fliegt &ndash; das ist umst&auml;ndlich.</p>
+
+<p>Die <strong>Fourier-Sprache</strong> ist die Br&uuml;cke. Sie zeigt, dass Eigenzust&auml;nde nichts anderes sind als Frequenzkomponenten eines Signals. Sie verbindet Quantenmechanik mit Signalverarbeitung, Akustik und Optik. Ihre Schw&auml;che: Sie ist abstrakt. Sie sagt &bdquo;es gibt Peaks im Spektrum&ldquo;, aber sie erz&auml;hlt keine physikalische Geschichte dar&uuml;ber, warum.</p>
+
+<p>Die St&auml;rke einer Sprache ist die Schw&auml;che der anderen. Zusammen ergeben sie ein vollst&auml;ndiges Bild. Physiker wechseln st&auml;ndig zwischen ihnen &ndash; manchmal mitten in einer Rechnung &ndash; wie ein zweisprachiger Mensch, der den Satz auf Deutsch beginnt und auf Englisch beendet, weil das treffendere Wort gerade in der anderen Sprache liegt.</p>
+
+<h3>Die &Auml;quivalenz &ndash; nicht offensichtlich, aber beweisbar</h3>
+
+<p>Dass die drei Sprachen dasselbe sagen, ist keine Metapher. Es ist ein mathematisches Theorem. Heisenberg kam 1925 &uuml;ber Matrizen, Schr&ouml;dinger 1926 &uuml;ber Wellengleichungen, Feynman 1948 &uuml;ber Pfadintegrale. Jeder dachte zun&auml;chst, er h&auml;tte etwas Neues entdeckt. Dann stellte sich heraus: Es war dreimal dasselbe. Die Natur hatte eine einzige Struktur, und drei Physiker hatten sie aus drei verschiedenen Richtungen gefunden &ndash; wie drei Tunnel, die sich im selben Raum treffen.</p>
+
+<figure class="illus">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Solvay_conference_1927.jpg" alt="Solvay-Konferenz 1927: Einstein, Bohr, Heisenberg, Schr&ouml;dinger, Dirac und andere" loading="lazy">
+  <figcaption>Solvay-Konferenz 1927: 29 Physiker, darunter Einstein, Bohr, Heisenberg, Schr&ouml;dinger, Dirac und Born &ndash; versammelt, um &uuml;ber die Bedeutung der Quantenmechanik zu streiten. Drei Formulierungen, eine Physik. <a href="https://commons.wikimedia.org/wiki/File:Solvay_conference_1927.jpg">Institut International de Physique Solvay / Public Domain</a></figcaption>
+</figure>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Was du jetzt wei&szlig;t:</strong> In Kapitel 1 hast du Pfeile addiert. In Kapitel 2 die zwei Regeln gelernt. In Kapitel 3 das Pfadintegral und die station&auml;re Phase verstanden. In 4a die Fourier-Zerlegung kennengelernt. In 4b gesehen, woher die Eigenzust&auml;nde kommen. Und jetzt wei&szlig;t du: Alle drei Perspektiven sagen dasselbe. Das ist, in groben Z&uuml;gen, der Formalismus der nicht-relativistischen Quantenmechanik. Dozenten brauchen daf&uuml;r ein Semester. Die Rechentechnik fehlt &ndash; aber die Denkweise ist da.</p>
+</div>
+
+<p>Warum hat die Quantenmechanik diese Struktur? Eine m&ouml;gliche Antwort: Weil sie <em>linear</em> ist. Die Schr&ouml;dingergleichung ist linear &ndash; wenn \(\psi_1\) und \(\psi_2\) L&ouml;sungen sind, dann ist auch \(\psi_1 + \psi_2\) eine L&ouml;sung. Linearit&auml;t ist genau die Eigenschaft, die Fourier-Zerlegungen m&ouml;glich macht. Und Linearit&auml;t ist auch die Eigenschaft, die das Superpositionsprinzip garantiert &ndash; dass Quantenzust&auml;nde &uuml;berlagert werden k&ouml;nnen. Die &Auml;quivalenz der drei Sprachen und die Superposition der Quantenmechanik sind dieselbe Tatsache, aus zwei Blickwinkeln betrachtet.</p>
+
+<p>Vielleicht die tiefste Lektion der Quantenmechanik: Nicht dass Katzen gleichzeitig lebendig und tot sind. Sondern dass <strong>die Natur reicher ist als jede einzelne Beschreibung, die wir von ihr geben k&ouml;nnen.</strong></p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- BONUS: Verschr&auml;nkung -->
+<!-- ============================================================ -->
+<section id="verschraenkung" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Bonus-Kapitel</p>
+<h2>Verschr&auml;nkung &ndash; Wenn zwei Teilchen ein Geheimnis teilen</h2>
+
+<h3>Zwei Photonen, ein Paar Pfeile</h3>
+
+<p>Ein Atom sendet zwei Photonen gleichzeitig aus &ndash; eins nach links zu Alice, eins nach rechts zu Bob. Die Natur hat diese beiden Photonen <strong>verschr&auml;nkt</strong>. Das bedeutet: Es gibt nicht einen Pfeil f&uuml;r Photon A und einen separaten Pfeil f&uuml;r Photon B. Es gibt einen <strong>gemeinsamen Satz Pfeile f&uuml;r das Paar</strong>.</p>
+
+<p>Es gibt einen Pfeil f&uuml;r &bdquo;Alice misst &uarr; UND Bob misst &rarr;&ldquo;.<br>
+Und einen Pfeil f&uuml;r &bdquo;Alice misst &rarr; UND Bob misst &uarr;&ldquo;.<br>
+Kein Pfeil zeigt auf &bdquo;beide &uarr;&ldquo; oder &bdquo;beide &rarr;&ldquo;. Deshalb: Wenn Alice &uarr; misst, muss Bob &rarr; messen.</p>
+
+<h3>&bdquo;Das ist doch trivial!&ldquo;</h3>
+
+<p>Man k&ouml;nnte denken: Die Photonen haben ihre Polarisation schon bei der Erzeugung festgelegt &ndash; wie ein Paar Handschuhe, von denen einer nach Berlin und der andere nach Tokio geschickt wird. &Ouml;ffnet man den Berliner Koffer und findet den linken Handschuh, wei&szlig; man sofort, dass in Tokio der rechte liegt. Keine Magie.</p>
+
+<p>Einstein dachte genau das. Er nannte die Quantenmechanik &bdquo;unvollst&auml;ndig&ldquo; und vermutete <span class="glossary" title="Versteckte Variablen: Die Hypothese, dass Teilchen verborgene Eigenschaften haben, die ihre Messergebnisse vorherbestimmen &ndash; wie Handschuhe in Koffern.">versteckte Variablen</span>.</p>
+
+<h3>Bells Geniestreich</h3>
+
+<p>1964 bewies John Bell mathematisch: Wenn versteckte Variablen existieren, gibt es eine <strong>Obergrenze f&uuml;r die Korrelation</strong> zwischen Alice&rsquo; und Bobs Messungen &ndash; die <span class="glossary" title="Bellsche Ungleichung: Eine mathematische Grenze f&uuml;r Korrelationen, die jede Theorie mit versteckten Variablen einhalten muss. Die Quantenmechanik verletzt diese Grenze.">Bellsche Ungleichung</span>. Und dann zeigte er: Die Quantenmechanik verletzt diese Grenze. Die Pfeile sagen st&auml;rkere Korrelationen voraus, als jede &bdquo;Handschuh-Theorie&ldquo; erkl&auml;ren kann.</p>
+
+<h3>Was das Experiment sagt</h3>
+
+<figure class="illus">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Bell_setup_EN_svg.svg" alt="Schema eines Bell-Tests: Photonenquelle, Alice und Bob mit Polarisatoren" loading="lazy">
+  <figcaption>Der Aufbau eines Bell-Tests: Eine Quelle erzeugt verschr&auml;nkte Photonenpaare. Alice und Bob messen die Polarisation unter frei w&auml;hlbaren Winkeln. <a href="https://commons.wikimedia.org/wiki/File:Bell_setup_EN_svg.svg">JozumBjada / Wikimedia Commons / CC BY-SA 4.0</a></figcaption>
+</figure>
+
+<figure class="illus illus-float-right" style="max-width:180px;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Anton_Zeilinger.jpg" alt="Anton Zeilinger, Nobelpreistr&auml;ger 2022" loading="lazy">
+  <figcaption>Anton Zeilinger &ndash; Nobelpreis 2022. <a href="https://commons.wikimedia.org/wiki/File:Anton_Zeilinger.jpg">J. Godany / CC BY 4.0</a></figcaption>
+</figure>
+
+<p>Alice und Bob stellen ihre Detektoren auf verschiedene Winkel ein. F&uuml;r jedes Photonenpaar notieren beide ihr Ergebnis: +1 oder &minus;1.</p>
+
+<p>Bei <strong>gleichen Winkeln</strong>: Perfekte Anti-Korrelation. Immer.<br>
+Bei <strong>90&deg; Unterschied</strong>: Keine Korrelation. V&ouml;llig zuf&auml;llig.<br>
+Dazwischen: Eine glatte <strong>Kosinus-Kurve</strong> &ndash; und diese Kurve liegt jenseits der Bellschen Grenze.</p>
+
+<p>2022 erhielten Alain Aspect, John Clauser und Anton Zeilinger daf&uuml;r den Nobelpreis.</p>
+
+<div class="clearfix"></div>
+
+<h3>Was Verschr&auml;nkung ist &ndash; und was nicht</h3>
+
+<p>Verschr&auml;nkung ist <strong>keine Kommunikation</strong> (Bob kann aus seinen Ergebnissen allein nichts ablesen), <strong>keine Teleportation</strong> (nichts reist schneller als Licht), und <strong>keine Mystik</strong> (sie ist Mathematik, die sich im Labor best&auml;tigt).</p>
+
+<p>Was Verschr&auml;nkung <em>ist</em>: Die Pfeile geh&ouml;ren dem Paar, nicht den einzelnen Teilchen. Die Buchhaltung der Natur kann <strong>nichtlokal</strong> sein &ndash; nicht weil Information schneller als Licht reist, sondern weil die Buchhaltung von Anfang an das ganze System umfasst.</p>
+
+<!-- INTERACTIVE: BellTestExplorer -->
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>In der Grafik kannst du Bells Experiment selbst durchf&uuml;hren. <strong>W&auml;hle Messwinkel</strong> f&uuml;r Alice und Bob. <strong>Dr&uuml;cke &bdquo;Measure&ldquo;</strong> und beobachte die Ergebnisse. <strong>Speichere Datenpunkte</strong> bei verschiedenen Winkeldifferenzen und beobachte, wie die Korrelationskurve die Bellsche Grenze durchbricht. Die Handschuhe h&auml;tten das nicht gekonnt.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-bell-test"></div>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- EPILOG -->
+<!-- ============================================================ -->
+<section id="epilog" class="pb-24">
+<div class="prose-dark">
+
+<div class="border border-gray-700/50 rounded-xl p-6 sm:p-8 bg-gradient-to-b from-gray-900/50 to-transparent">
+  <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Epilog</p>
+  <h3 class="mt-0">Was passiert, wenn du hinschaust?</h3>
+
+  <p>Bisher haben wir ein Quantensystem beschrieben, das sich ungest&ouml;rt entwickelt &ndash; ohne dass jemand hinschaut. Die Wellenfunktion schwingt, die Pfeile rotieren, die Eigenzust&auml;nde &uuml;berlagern sich. Alles ist glatt und determiniert.</p>
+
+  <p>Aber was passiert, wenn du misst? Wenn du ein Elektron, das in einer &Uuml;berlagerung von &bdquo;hier&ldquo; und &bdquo;dort&ldquo; existiert, mit einem Detektor abf&auml;ngst &ndash; und es pl&ouml;tzlich <em>hier</em> ist, nur hier, mit Sicherheit?</p>
+
+  <p>Wohin ist die &Uuml;berlagerung gegangen? War das Elektron schon vorher &bdquo;hier&ldquo;, und wir wussten es nur nicht? Oder hat die Messung die Realit&auml;t erst geschaffen? Und wenn ja &ndash; was genau z&auml;hlt als &bdquo;Messung&ldquo;?</p>
+
+  <p>Das ist das ber&uuml;hmte <strong>Messproblem</strong> &ndash; die offene Wunde der Quantenmechanik. Seit fast hundert Jahren streiten sich die kl&uuml;gsten K&ouml;pfe der Physik dar&uuml;ber, und es gibt keine Einigung.</p>
+
+  <p class="text-gray-500 mb-0"><em>Dar&uuml;ber sprechen wir &ndash; bald.</em></p>
+</div>
+
+</div>
+</section>
+
+</main>
+
+
+<!-- Footer -->
+<footer class="border-t border-gray-800/50 py-8 px-4 sm:px-6 text-xs text-gray-600">
+  <div class="max-w-3xl">
+    <p>&copy; 2026 Mathias Leonhardt</p>
+    <p class="mt-1">
+      <a href="index.html" class="hover:text-gray-400">Blog</a> &middot;
+      <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+      <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+    </p>
+  </div>
+</footer>
+
+</div><!-- /blog-content -->
+</div><!-- /blog-layout -->
+
+
+<!-- ============================================================ -->
+<!-- SCRIPTS -->
+<!-- ============================================================ -->
+
+<!-- All 8 React components -->
+<script src="components.js"></script>
+
+<!-- Page functionality: mounting, nav, progress, KaTeX -->
+<script>
+(function() {
+  'use strict';
+
+  // ----------------------------------------------------------
+  // 1. Lazy-mount React components via IntersectionObserver
+  // ----------------------------------------------------------
+  const COMPONENTS = {
+    'mount-double-slit': typeof DoubleSlitExplorer !== 'undefined' ? DoubleSlitExplorer : null,
+    'mount-bell-test': typeof BellTestExplorer !== 'undefined' ? BellTestExplorer : null,
+    'mount-path-integral': typeof PathIntegralExplorer !== 'undefined' ? PathIntegralExplorer : null,
+    'mount-propagator': typeof PropagatorExplorer !== 'undefined' ? PropagatorExplorer : null,
+    'mount-action-phase': typeof ActionPhaseViz !== 'undefined' ? ActionPhaseViz : null,
+    'mount-fourier': typeof FourierExplorer !== 'undefined' ? FourierExplorer : null,
+    'mount-standing-waves': typeof StandingWaves !== 'undefined' ? StandingWaves : null,
+    'mount-three-languages': typeof ThreeLanguages !== 'undefined' ? ThreeLanguages : null,
+  };
+
+  const mounted = new Set();
+
+  function mountComponent(id) {
+    if (mounted.has(id)) return;
+    const el = document.getElementById(id);
+    const Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted.add(id);
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Komponente konnte nicht geladen werden.</p>';
+    }
+  }
+
+  // Use IntersectionObserver for lazy mounting
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // Also mount the first component immediately (above the fold could be close)
+  mountComponent('mount-double-slit');
+
+  // ----------------------------------------------------------
+  // 2. Scroll progress bar
+  // ----------------------------------------------------------
+  const progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // ----------------------------------------------------------
+  // 3. Navigation highlighting
+  // ----------------------------------------------------------
+  const sections = document.querySelectorAll('section[id]');
+  // Select both sidebar .nav-link and toc-drawer .toc-link
+  const allTocLinks = document.querySelectorAll('.sidebar .toc-link, #toc-drawer .toc-link');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        allTocLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(s => navObserver.observe(s));
+
+  // ----------------------------------------------------------
+  // 4. Mobile menu toggle (hamburger = blog nav)
+  // ----------------------------------------------------------
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      // Close TOC if open
+      if (tocDrawer) tocDrawer.classList.remove('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 4b. TOC drawer toggle (chapter nav)
+  // ----------------------------------------------------------
+  const tocToggle = document.getElementById('toc-toggle');
+  const tocDrawer = document.getElementById('toc-drawer');
+  const tocBackdrop = document.getElementById('toc-backdrop');
+
+  if (tocToggle && tocDrawer) {
+    tocToggle.addEventListener('click', () => {
+      tocDrawer.classList.toggle('open');
+      // Close hamburger if open
+      if (mobileMenu) mobileMenu.classList.remove('open');
+    });
+    // Close on backdrop click
+    if (tocBackdrop) {
+      tocBackdrop.addEventListener('click', () => tocDrawer.classList.remove('open'));
+    }
+    // Close on link click
+    tocDrawer.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => tocDrawer.classList.remove('open'));
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 5. KaTeX auto-render
+  // ----------------------------------------------------------
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
