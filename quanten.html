@@ -5,29 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quantenphysik mit Pfeilen &ndash; Mathias Leonhardt</title>
 
-  <!-- Tailwind CSS Play CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
-        }
-      }
-    }
-  </script>
-
-  <!-- KaTeX for math rendering -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
-
-  <!-- React 18 UMD -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-  <!-- Framer Motion (for ThreeLanguages component) -->
-  <script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js"></script>
+  <!-- All resources self-hosted — no external CDN calls, fully DSGVO-compliant -->
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script src="vendor/framer-motion.min.js"></script>
   <script>var framerMotion = window.Motion || {};</script>
 
   <!-- Self-hosted Inter font (DSGVO-konform, kein Google-Server-Kontakt) -->
