@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="500px" height="265px" viewBox="-250 270 500 265" enable-background="new -250 270 500 265" xml:space="preserve">
+<rect x="-250" y="270" fill="#808080" width="500" height="230"/>
+<g>
+	<rect x="-250" y="480" width="202.5" height="20"/>
+	<rect x="-37.5" y="480" width="75" height="20"/>
+	<rect x="47.5" y="480" width="202.5" height="20"/>
+</g>
+<g fill="none" stroke-width="2.5">
+	<g>
+		<clipPath id="SVGID_2_">
+			<rect x="-250" y="270" width="500" height="210"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_2_)">
+			<circle stroke="#000000" cx="42.5" cy="480" r="10"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="20"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="30"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="40"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="50"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="60"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="70"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="80"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="90"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="100"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="110"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="120"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="130"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="140"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="150"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="160"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="170"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="180"/>
+			<circle stroke="#000000" cx="42.5" cy="480" r="190"/>
+			<circle stroke="#FFFFFF" cx="42.5" cy="480" r="200"/>
+		</g>
+		<g clip-path="url(#SVGID_2_)">
+			<circle stroke="#000000" cx="-42.5" cy="480" r="10"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="20"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="30"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="40"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="50"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="60"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="70"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="80"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="90"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="100"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="110"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="120"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="130"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="140"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="150"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="160"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="170"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="180"/>
+			<circle stroke="#000000" cx="-42.5" cy="480" r="190"/>
+			<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="200"/>
+		</g>
+	</g>
+	<circle stroke="#FFFFFF" cx="-42.5" cy="480" r="0.5"/>
+	<circle stroke="#FFFFFF" cx="42.5" cy="480" r="0.5"/>
+</g>
+<g>
+	<line fill="none" stroke="#000000" x1="42.5" y1="500" x2="42.5" y2="520"/>
+	<line fill="none" stroke="#000000" x1="-42.5" y1="500" x2="-42.5" y2="520"/>
+	<g>
+		<line fill="none" stroke="#000000" x1="-36" y1="510" x2="36" y2="510"/>
+		<path d="M38.362,508.975c-1.653-0.499-2.728-0.959-4.054-1.491v5.044c0.475-0.225,2.401-0.992,4.054-1.491
+			c1.77-0.534,3.374-0.9,4.415-1.03C41.736,509.875,40.131,509.51,38.362,508.975z"/>
+		<path d="M-38.362,511.025c1.653,0.5,2.728,0.96,4.054,1.492v-5.045c-0.475,0.226-2.401,0.993-4.054,1.492
+			c-1.77,0.534-3.374,0.9-4.415,1.03C-41.736,510.125-40.131,510.49-38.362,511.025z"/>
+	</g>
+	<g>
+		<path d="M4.881,516.282l-1.909,10.012c-0.162,0.918-0.306,1.926-0.36,2.772H1.244l0.234-1.729H1.442
+			c-0.792,1.242-1.891,1.927-3.133,1.927c-1.692,0-2.611-1.387-2.611-3.169c0-3.097,2.305-5.942,5.384-5.942
+			c0.558,0,1.17,0.126,1.548,0.307l0.774-4.178H4.881z M2.378,521.721c-0.288-0.217-0.792-0.379-1.423-0.379
+			c-2.088,0-3.709,2.233-3.709,4.556c0,1.044,0.36,2.143,1.639,2.143c1.152,0,2.539-1.314,2.917-3.277L2.378,521.721z"/>
+	</g>
+</g>
+</svg>
