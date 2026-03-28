@@ -33,11 +33,11 @@
   <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <script defer src="vendor/katex/katex.min.js"></script>
   <script defer src="vendor/katex/auto-render.min.js"></script>
-  <script defer src="vendor/react.production.min.js"></script>
-  <script defer src="vendor/react-dom.production.min.js"></script>
-  <script defer src="vendor/framer-motion.min.js"></script>
-  <script defer src="components.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script src="vendor/framer-motion.min.js"></script>
   <script>var framerMotion = window.Motion || {};</script>
+  <script defer src="components.js"></script>
 
   <!-- Self-hosted Inter font (WOFF2, DSGVO-konform) -->
   <style>
@@ -1086,21 +1086,21 @@ Dazwischen: Eine glatte <strong>Kosinus-Kurve</strong> &ndash; und diese Kurve l
 
 <!-- Page functionality: mounting, nav, progress, KaTeX -->
 <script>
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
   // ----------------------------------------------------------
   // 1. Lazy-mount React components via IntersectionObserver
   // ----------------------------------------------------------
   const COMPONENTS = {
-    'mount-double-slit': typeof DoubleSlitExplorer !== 'undefined' ? DoubleSlitExplorer : null,
-    'mount-bell-test': typeof BellTestExplorer !== 'undefined' ? BellTestExplorer : null,
-    'mount-path-integral': typeof PathIntegralExplorer !== 'undefined' ? PathIntegralExplorer : null,
-    'mount-propagator': typeof PropagatorExplorer !== 'undefined' ? PropagatorExplorer : null,
-    'mount-action-phase': typeof ActionPhaseViz !== 'undefined' ? ActionPhaseViz : null,
-    'mount-fourier': typeof FourierExplorer !== 'undefined' ? FourierExplorer : null,
-    'mount-standing-waves': typeof StandingWaves !== 'undefined' ? StandingWaves : null,
-    'mount-three-languages': typeof ThreeLanguages !== 'undefined' ? ThreeLanguages : null,
+    'mount-double-slit': window.DoubleSlitExplorer || null,
+    'mount-bell-test': window.BellTestExplorer || null,
+    'mount-path-integral': window.PathIntegralExplorer || null,
+    'mount-propagator': window.PropagatorExplorer || null,
+    'mount-action-phase': window.ActionPhaseViz || null,
+    'mount-fourier': window.FourierExplorer || null,
+    'mount-standing-waves': window.StandingWaves || null,
+    'mount-three-languages': window.ThreeLanguages || null,
   };
 
   const mounted = new Set();
@@ -1213,19 +1213,17 @@ Dazwischen: Eine glatte <strong>Kosinus-Kurve</strong> &ndash; und diese Kurve l
   // ----------------------------------------------------------
   // 5. KaTeX auto-render
   // ----------------------------------------------------------
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof renderMathInElement === 'function') {
-      renderMathInElement(document.body, {
-        delimiters: [
-          { left: '$$', right: '$$', display: true },
-          { left: '\\(', right: '\\)', display: false }
-        ],
-        throwOnError: false
-      });
-    }
-  });
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
 
-})();
+}); // end DOMContentLoaded
 </script>
 
 </body>
