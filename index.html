@@ -17,6 +17,10 @@
   <meta name="twitter:card" content="summary">
 
   <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function() { if (typeof renderMathInElement === 'function') renderMathInElement(document.body, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '\\(', right: '\\)', display: false }], throwOnError: false }); });</script>
   <style>
     @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
     @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
