@@ -521,7 +521,29 @@ Wenn ein Teilchen erst von A nach B geht und dann von B nach C, dann bekommt jed
 
 <p><strong>Multiplizieren</strong> hei&szlig;t: L&auml;ngen mal nehmen, Winkel zusammenz&auml;hlen. Wenn der erste Pfeil L&auml;nge 0,8 hat und um 30&deg; gedreht ist, und der zweite L&auml;nge 0,5 hat und um 45&deg; gedreht ist, dann hat das Produkt die L&auml;nge 0,4 und ist um 75&deg; gedreht.</p>
 
-<p>Warum Addition f&uuml;r Alternativen und Multiplikation f&uuml;r Hintereinander? Das folgt aus der Logik der Wahrscheinlichkeitsrechnung. In der klassischen Wahrscheinlichkeit gilt: Alternativen werden addiert, Hintereinander wird multipliziert. Die Quantenmechanik tut exakt dasselbe &ndash; nur nicht mit Wahrscheinlichkeiten, sondern mit den Pfeilen, aus denen am Ende Wahrscheinlichkeiten werden.</p>
+<h3>Dieselbe Buchhaltung, andere W&auml;hrung</h3>
+
+<p>Vielleicht fragst du dich: Warum Pfeile? Warum nicht einfach Wahrscheinlichkeiten, wie in der normalen Physik? Die Antwort ist der Schl&uuml;ssel zu allem, was folgt. Und am besten sieht man sie an einem konkreten Beispiel.</p>
+
+<p><strong>Der klassische Entscheidungsbaum.</strong> Stell dir vor, Elektronen w&auml;ren Gewehrkugeln. Eine Kugel fliegt auf die Wand mit zwei Spalten. Sie geht mit 50% Wahrscheinlichkeit durch den linken Spalt und mit 50% durch den rechten. Hinter jedem Spalt wird sie abgelenkt &ndash; sagen wir, mit 30% Wahrscheinlichkeit geradeaus und mit 20% leicht nach links. Wie gro&szlig; ist die Wahrscheinlichkeit, dass die Kugel an einer bestimmten Stelle auf dem Schirm ankommt?</p>
+
+<p>Nacheinander &rarr; multiplizieren: Die Wahrscheinlichkeit f&uuml;r &bdquo;linker Spalt, dann geradeaus&ldquo; ist \(0{,}5 \times 0{,}3 = 0{,}15\).<br>
+Nacheinander &rarr; multiplizieren: Die Wahrscheinlichkeit f&uuml;r &bdquo;rechter Spalt, dann geradeaus&ldquo; ist ebenfalls \(0{,}5 \times 0{,}3 = 0{,}15\).<br>
+Alternativen &rarr; addieren: Beide Wege f&uuml;hren zur selben Stelle, also \(0{,}15 + 0{,}15 = 0{,}30\).</p>
+
+<p>Soweit, so vertraut. Genau so funktioniert jeder Entscheidungsbaum, den du aus Schule oder Studium kennst. Und das Ergebnis ist vorhersagbar: <strong>Wahrscheinlichkeiten sind immer positiv.</strong> Wenn du zwei positive Zahlen addierst, wird das Ergebnis immer gr&ouml;&szlig;er. Mehr Wege bedeuten mehr Wahrscheinlichkeit. Kein Weg kann einen anderen &bdquo;ausl&ouml;schen&ldquo;. Das Muster auf dem Schirm: zwei breite Buckel, einer hinter jedem Spalt. Keine Streifen. Keine &Uuml;berraschungen.</p>
+
+<p><strong>Der Quanten-Entscheidungsbaum.</strong> Jetzt dasselbe mit Pfeilen. Exakt dieselben Regeln &ndash; multipliziere f&uuml;r Nacheinander, addiere f&uuml;r Alternativen. Aber statt der Zahl 0,5 hat jeder Spalt einen <em>Pfeil</em> der L&auml;nge 0,5, der in eine bestimmte Richtung zeigt. Und statt 0,3 hat der n&auml;chste Schritt einen Pfeil der L&auml;nge 0,3 mit einem anderen Winkel.</p>
+
+<p>Nacheinander &rarr; multiplizieren: L&auml;ngen mal nehmen, Winkel addieren. Das Ergebnis f&uuml;r den Weg &uuml;ber den linken Spalt ist ein Pfeil der L&auml;nge 0,15 &ndash; so weit identisch. Genauso f&uuml;r den rechten Spalt: auch ein Pfeil der L&auml;nge 0,15.</p>
+
+<p>Aber jetzt: Alternativen &rarr; addieren. Und hier passiert etwas, das mit Wahrscheinlichkeiten <em>unm&ouml;glich</em> ist. Die beiden Pfeile haben verschiedene Richtungen &ndash; weil die Wege durch die verschiedenen Spalte verschiedene L&auml;ngen haben und der Pfeil sich unterwegs weitergedreht hat. Wenn die beiden Pfeile in &auml;hnliche Richtungen zeigen: gro&szlig;er Gesamtpfeil. <strong>Heller Streifen.</strong> Wenn sie in entgegengesetzte Richtungen zeigen: die Pfeile heben sich auf. Gesamtpfeil fast null. <strong>Dunkler Streifen.</strong></p>
+
+<p><strong>Mehr Wege k&ouml;nnen weniger Wahrscheinlichkeit bedeuten.</strong> Das ist der Satz, der die gesamte Quantenmechanik von der gesamten klassischen Physik trennt. Und er folgt nicht aus einer neuen Regel &ndash; die Regeln sind identisch. Er folgt daraus, dass die Natur nicht mit Zahlen rechnet, sondern mit Pfeilen.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Der Unterschied in einem Satz:</strong> In der klassischen Physik rechnet man mit Wahrscheinlichkeiten (positive Zahlen, die sich nie ausl&ouml;schen). In der Quantenmechanik rechnet man mit Amplituden (Pfeile, die sich gegenseitig aufheben k&ouml;nnen). Die Buchhaltungsregeln sind dieselben. Nur die W&auml;hrung ist anders.</p>
+</div>
 
 <h3>Der Doppelspalt als Spezialfall</h3>
 
