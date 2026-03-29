@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pmmathias.github.io/blog/sitemap.xml
+Sitemap: https://ki-mathias.de/sitemap.xml
