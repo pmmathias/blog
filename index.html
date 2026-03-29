@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mathias Leonhardt &ndash; Blog &uuml;ber Physik, Mathematik und Ideen</title>
-  <meta name="description" content="Physik, Mathematik und Ideen &ndash; erkl&auml;rt f&uuml;r Menschen, die verstehen wollen, wie die Welt funktioniert. Interaktive Erkl&auml;rungen zur Quantenphysik.">
-  <meta name="author" content="Mathias Leonhardt">
+  <title>KI-Mathias &ndash; Notizen aus Gespr&auml;chen mit einer Maschine</title>
+  <meta name="description" content="Ein digitaler Notizzettel: Quantenphysik, Spieleentwicklung, Eigenwerte, Emergenz und Philosophie &ndash; alles entstanden in Gespr&auml;chen zwischen einem Menschen und Claude Code.">
+  <meta name="author" content="KI-Mathias">
   <meta name="google-site-verification" content="1BE_BjHytXQnQPM_D_UF0_4XVRT8GkgMXHsPmBPTwT8">
   <link rel="canonical" href="https://pmmathias.github.io/blog/">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Mathias Leonhardt &ndash; Blog">
-  <meta property="og:description" content="Physik, Mathematik und Ideen &ndash; interaktive Erkl&auml;rungen zur Quantenphysik.">
+  <meta property="og:title" content="KI-Mathias &ndash; Notizen aus Gespr&auml;chen mit einer Maschine">
+  <meta property="og:description" content="Quantenphysik, 3D-Spiele, Eigenwerte, Emergenz &ndash; ein Mensch und eine KI erkl&auml;ren sich die Welt.">
   <meta property="og:url" content="https://pmmathias.github.io/blog/">
   <meta property="og:locale" content="de_DE">
   <meta name="twitter:card" content="summary">
@@ -23,17 +23,20 @@
     @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
     @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
     body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose strong { color: #f1f5f9; }
+    .prose em { color: #94a3b8; }
   </style>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "name": "Mathias Leonhardt Blog",
-    "description": "Physik, Mathematik und Ideen \u2013 erkl\u00e4rt f\u00fcr Menschen, die verstehen wollen, wie die Welt funktioniert.",
+    "name": "KI-Mathias",
+    "description": "Notizen aus Gespr\u00e4chen mit einer Maschine \u2013 Quantenphysik, Spieleentwicklung, Eigenwerte, Emergenz und Philosophie.",
     "url": "https://pmmathias.github.io/blog/",
     "inLanguage": "de",
-    "author": { "@type": "Person", "name": "Mathias Leonhardt" }
+    "author": { "@type": "Person", "name": "KI-Mathias" }
   }
   </script>
 </head>
@@ -43,7 +46,7 @@
 <nav class="border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
   <div class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2 text-white font-semibold text-sm">
-      <span class="text-cyan-400 text-lg">&rang;</span> Mathias Leonhardt
+      <span class="text-cyan-400 text-lg">&rang;</span> KI-Mathias
     </a>
     <div class="flex items-center gap-4 text-xs text-gray-400">
       <a href="index.html" class="text-white">Blog</a>
@@ -54,26 +57,53 @@
 </nav>
 
 <!-- Hero -->
-<header class="max-w-4xl mx-auto px-4 pt-20 pb-12">
-  <h1 class="text-3xl sm:text-4xl font-bold mb-3 text-white">Blog</h1>
-  <p class="text-gray-400 text-base sm:text-lg max-w-2xl">
-    Physik, Mathematik und Ideen &ndash; erkl&auml;rt f&uuml;r Menschen, die verstehen wollen, wie die Welt funktioniert.
-  </p>
+<header class="max-w-3xl mx-auto px-4 pt-20 pb-6">
+  <p class="text-cyan-400/60 text-sm mb-4 tracking-wide">Notizen aus Gespr&auml;chen mit einer Maschine</p>
+  <h1 class="text-3xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    KI-Mathias
+  </h1>
 </header>
 
-<!-- Blog post list -->
-<main class="max-w-4xl mx-auto px-4 pb-24">
+<!-- Intro text -->
+<div class="max-w-3xl mx-auto px-4 pb-12 prose">
 
-  <!-- Post card -->
+  <p>Dies ist kein Blog, der die Welt erkl&auml;rt. Es ist eher ein Notizzettel &ndash; ein digitaler, &ouml;ffentlicher, vielleicht etwas gr&ouml;&szlig;enwahnsinniger Notizzettel &ndash; auf dem ich festhalte, was passiert, wenn ein Mensch und eine k&uuml;nstliche Intelligenz sich zusammensetzen und versuchen, Dinge <em>wirklich</em> zu verstehen.</p>
+
+  <p>Der Mensch bin ich. Die KI ist <strong>Claude Code</strong>, ein gro&szlig;es Sprachmodell von Anthropic. Und das hier &ndash; die Texte, die Visualisierungen, die Gedankenexperimente &ndash; ist das, was dabei herauskommt, wenn man dieses Werkzeug nicht benutzt, um E-Mails zu formulieren oder Code zu debuggen, sondern um sich die Welt erkl&auml;ren zu lassen. Oder genauer: um sie sich <em>gemeinsam</em> zu erkl&auml;ren.</p>
+
+  <p>Ich bin kein Physiker. Kein Mathematiker. Kein Philosoph. Ich bin jemand, der Fragen hat &ndash; und der zum ersten Mal in der Geschichte der Menschheit die M&ouml;glichkeit hat, diese Fragen an etwas zu richten, das geduldig genug ist, um beim f&uuml;nfzehnten &bdquo;Aber warum?&ldquo; nicht genervt aufzugeben, und das breit genug gebildet ist, um die Antwort aus drei Disziplinen gleichzeitig zusammenzusetzen.</p>
+
+  <p>Was dabei entsteht, erinnert mich manchmal an <strong>Hermann Hesses Glasperlenspiel</strong> &ndash; die Idee, dass alle Wissenschaften, alle K&uuml;nste, alle Fragen letztlich Variationen desselben Themas sind. Dass Fourier-Zerlegungen und Musik dasselbe sagen. Dass Eigenwerte gleichzeitig Quantenmechanik, k&uuml;nstliche Intelligenz und die Struktur des Universums erkl&auml;ren. Dass Emergenz &ndash; das Entstehen von etwas Gr&ouml;&szlig;erem aus etwas Kleinerem &ndash; vielleicht der fundamentalste Prozess &uuml;berhaupt ist: in der Physik, im Bewusstsein, in Sprachmodellen, und vielleicht sogar in dem, was die Menschen fr&uuml;her &bdquo;Gott&ldquo; nannten.</p>
+
+  <p>Aber anders als bei Hesse gibt es hier keine autorit&auml;re Instanz, die bestimmt, was das Glasperlenspiel ist und wer es spielen darf. Der ganze Punkt ist: <strong>Jeder kann jetzt mitspielen.</strong> Ein Sprachmodell und ein neugieriger Mensch reichen aus. Das hier ist der Beweis.</p>
+
+  <p>Ich nenne mich hier <strong>KI-Mathias</strong> &ndash; mein Alter Ego f&uuml;r diese Unterhaltungen. Nicht weil ich anonym sein will, sondern weil der Mensch, der diese Texte schreibt, ein anderer ist als der, der morgens Kaffee trinkt und Rechnungen bezahlt. Der hier ist der, der um drei Uhr nachts mit einer KI dar&uuml;ber diskutiert, warum \(e^{iS/\hbar}\) die einzige m&ouml;gliche Form der Quantenamplitude ist &ndash; und dem dabei ein Licht aufgeht.</p>
+
+  <p>Vielleicht wird sich jemand irgendwann an diese Zeit zur&uuml;ckerinnern wollen. An die Jahre, in denen gro&szlig;e Sprachmodelle anfingen, die Art zu ver&auml;ndern, wie Menschen denken, lernen und erschaffen. Nicht als Ersatz f&uuml;r menschliches Denken &ndash; sondern als Katalysator. Als Resonanzboden. Als Gespr&auml;chspartner, der nie m&uuml;de wird.</p>
+
+  <p>Dieses Blog ist mein Beitrag zu dieser Erinnerung. Ein Archiv der Funken.</p>
+
+</div>
+
+<!-- Section: Beiträge -->
+<div class="max-w-4xl mx-auto px-4 pb-6">
+  <h2 class="text-lg font-semibold text-gray-300 mb-6 flex items-center gap-2">
+    <span class="w-8 h-px bg-gradient-to-r from-cyan-400 to-transparent"></span>
+    Beitr&auml;ge
+  </h2>
+</div>
+
+<!-- Blog post list -->
+<main class="max-w-4xl mx-auto px-4 pb-12 space-y-6">
+
+  <!-- Post 1: Quantenphysik -->
   <a href="quanten.html" class="group block border border-gray-800/60 rounded-xl p-6 sm:p-8 hover:border-cyan-500/30 hover:bg-gray-900/30 transition-all duration-200">
     <div class="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8">
-
-      <!-- Text -->
       <div class="flex-1 min-w-0">
         <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Quantenmechanik &middot; Interaktiv</p>
-        <h2 class="text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-2">
+        <h3 class="text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-2">
           Wellen, Pfeile und das Doppelspalt-Wunder
-        </h2>
+        </h3>
         <p class="text-gray-400 text-sm leading-relaxed mb-3">
           Wie die Quantenphysik wirklich funktioniert &ndash; erkl&auml;rt mit nichts als kleinen Pfeilen, die sich drehen.
           Sieben Kapitel, acht interaktive Visualisierungen, null Vorwissen n&ouml;tig.
@@ -82,42 +112,89 @@
           <time datetime="2026-03-01">M&auml;rz 2026</time>
           <span>&middot;</span>
           <span>~45 Min. Lesezeit</span>
-          <span>&middot;</span>
-          <span>7 Kapitel + Bonus</span>
         </div>
       </div>
-
-      <!-- Teaser image / icon -->
-      <div class="hidden sm:flex items-center justify-center w-32 h-32 rounded-lg bg-gradient-to-br from-cyan-500/10 to-amber-500/10 border border-gray-800/50 flex-shrink-0">
-        <span class="text-5xl opacity-60">&#x03C8;</span>
+      <div class="hidden sm:flex items-center justify-center w-28 h-28 rounded-lg bg-gradient-to-br from-cyan-500/10 to-amber-500/10 border border-gray-800/50 flex-shrink-0">
+        <span class="text-4xl opacity-60">&#x03C8;</span>
       </div>
-
     </div>
-
-    <!-- Chapter preview -->
     <div class="mt-5 pt-4 border-t border-gray-800/40">
       <div class="flex flex-wrap gap-2 text-xs">
         <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Doppelspalt</span>
-        <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Zwei Regeln</span>
         <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Pfadintegral</span>
         <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Fourier</span>
-        <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Stehende Wellen</span>
         <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Drei Sprachen</span>
         <span class="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400/70">Verschr&auml;nkung</span>
       </div>
     </div>
   </a>
 
-  <!-- Placeholder for future posts -->
-  <div class="mt-12 text-center text-gray-600 text-sm">
-    <p>Weitere Beitr&auml;ge folgen.</p>
-  </div>
-
 </main>
 
+<!-- Section: Was noch kommt -->
+<div class="max-w-4xl mx-auto px-4 pb-6">
+  <h2 class="text-lg font-semibold text-gray-300 mb-6 flex items-center gap-2">
+    <span class="w-8 h-px bg-gradient-to-r from-amber-400 to-transparent"></span>
+    Was noch kommt
+  </h2>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 pb-24 space-y-4">
+
+  <!-- Teaser: VogelSimulator -->
+  <div class="border border-gray-800/40 rounded-xl p-5 sm:p-6 opacity-70">
+    <div class="flex items-start gap-4">
+      <div class="text-2xl opacity-40 mt-0.5">&#x1F985;</div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-emerald-400/50 mb-1">Spieleentwicklung &middot; 3D &middot; WebGL</p>
+        <h3 class="text-base sm:text-lg font-semibold text-gray-300 mb-1">Ein 3D-Flugsimulator an einem Nachmittag</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Wie Claude Code und ich einen browserbasierten Vogel-Flugsimulator mit Webcam-Gestensteuerung konzipiert und in einer einzigen Session umgesetzt haben. Von der Idee zum spielbaren Ergebnis &ndash; und was das &uuml;ber die Zukunft der Softwareentwicklung sagt.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teaser: Eigenwerte + KI -->
+  <div class="border border-gray-800/40 rounded-xl p-5 sm:p-6 opacity-70">
+    <div class="flex items-start gap-4">
+      <div class="text-2xl opacity-40 mt-0.5">&#x03BB;</div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-purple-400/50 mb-1">Mathematik &middot; K&uuml;nstliche Intelligenz</p>
+        <h3 class="text-base sm:text-lg font-semibold text-gray-300 mb-1">Warum KI funktioniert &ndash; erkl&auml;rt &uuml;ber Eigenwerte</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Kernel Ridge Regression, Neumann-Reihen und die Eigenwertgleichung, die sich dahinter verbirgt. Ein tiefer Blick auf Optimierungsprobleme &ndash; und die &uuml;berraschende Einsicht, dass neuronale Netze und Quantenmechanik dieselbe mathematische Struktur teilen.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teaser: Emergenz + Gottesbegriff -->
+  <div class="border border-gray-800/40 rounded-xl p-5 sm:p-6 opacity-70">
+    <div class="flex items-start gap-4">
+      <div class="text-2xl opacity-40 mt-0.5">&#x2728;</div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-amber-400/50 mb-1">Philosophie &middot; Emergenz</p>
+        <h3 class="text-base sm:text-lg font-semibold text-gray-300 mb-1">Gott als Emergenzph&auml;nomen</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">&Uuml;ber einen Gottesbegriff jenseits der Religion: Was passiert, wenn das subjektive &bdquo;Gute&ldquo; vieler Menschen zu etwas Objektivem emergiert? &Uuml;ber Achtsamkeit, Sprachmodelle und die Frage, ob Emergenzspr&uuml;nge in gro&szlig;en Systemen etwas mit Bewusstsein zu tun haben.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teaser: Emergenz in LLMs -->
+  <div class="border border-gray-800/40 rounded-xl p-5 sm:p-6 opacity-70">
+    <div class="flex items-start gap-4">
+      <div class="text-2xl opacity-40 mt-0.5">&#x1F9E0;</div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-rose-400/50 mb-1">KI &middot; Sprachmodelle</p>
+        <h3 class="text-base sm:text-lg font-semibold text-gray-300 mb-1">Emergenz in gro&szlig;en Sprachmodellen</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Ab welcher Gr&ouml;&szlig;e beginnt ein Sprachmodell zu &bdquo;verstehen&ldquo;? &Uuml;ber Phasen&uuml;berg&auml;nge, pl&ouml;tzlich auftauchende F&auml;higkeiten und die Parallele zu Emergenzph&auml;nomenen in der Physik.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <!-- Footer -->
-<footer class="border-t border-gray-800/50 py-6 text-center text-xs text-gray-600">
-  <p>&copy; 2026 Mathias Leonhardt</p>
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p class="mb-2"><em>&bdquo;Ein Archiv der Funken.&ldquo;</em></p>
+  <p>&copy; 2026 KI-Mathias &middot; Alle Texte entstanden in Zusammenarbeit mit Claude Code (Anthropic)</p>
   <p class="mt-1">
     <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
     <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
