@@ -340,7 +340,7 @@ async function trainGPU() {
   inEl.disabled=false; goBtn.disabled=false; inEl.focus();
   addMsg('I\u2019m a mini language model built on Kernel Ridge Regression \u2014 no neural network, just eigenvalues & matrix math. Trained on your GPU (' + backend + ') in ' + totalTime + 's on ' + words.length + ' tokens. Ask me about eigenvalues, kernel methods, quantum mechanics, or machine learning!', 's');
 
-  ['What is an eigenvalue?','Explain kernel ridge regression','How does PageRank work?','What is the neumann series?','Why do neural networks work?','What is regularization?','Explain the kernel trick','What is the spectral theorem?','How does attention work?'].forEach(function(ex){
+  ['What is the neumann series?','What is the spectral theorem?','Explain the kernel trick','quantum mechanics','machine learning is'].forEach(function(ex){
     var btn=document.createElement('button'); btn.textContent=ex;
     btn.onclick=function(){inEl.value=ex;handleSend();}; exEl.appendChild(btn);
   });
