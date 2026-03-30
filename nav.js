@@ -116,14 +116,26 @@
     var tocSlot = document.getElementById('nav-toc-items');
     var tocHTML = '';
     if (tocSlot) {
+      // Ensure each toc-link is displayed as block
+      var tocItems = tocSlot.querySelectorAll('a');
+      var tocLinksHTML = '';
+      tocItems.forEach(function(a) {
+        // Force block display via inline style if class alone doesn't work
+        if (!a.style.display) a.style.display = 'block';
+        tocLinksHTML += a.outerHTML;
+      });
       tocHTML =
         '<div class="p-3">' +
-          '<p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">' + (isEN ? 'This Post' : 'Diesen Beitrag') + '</p>' +
-          tocSlot.innerHTML +
+          '<p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">' + (isEN ? 'This Article' : 'Kapitel') + '</p>' +
+          tocLinksHTML +
         '</div>' +
         '<div class="h-px bg-gray-800 mx-3"></div>';
       tocSlot.remove();
     }
+
+    // Home link
+    var homeHref = isEN ? '/en/' : '/';
+    var homeLabel = isEN ? '&larr; Home' : '&larr; Startseite';
 
     navDropdown.innerHTML =
       '<div id="nav-backdrop" class="absolute inset-0 bg-black/40" style="min-height:100vh;"></div>' +
@@ -132,6 +144,10 @@
         '<div class="p-3">' +
           '<p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">' + postsLabel + '</p>' +
           postsHTML +
+        '</div>' +
+        '<div class="h-px bg-gray-800 mx-3"></div>' +
+        '<div class="p-3">' +
+          '<a href="' + homeHref + '" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">' + homeLabel + '</a>' +
         '</div>' +
         '<div class="sm:hidden">' +
           '<div class="h-px bg-gray-800 mx-3"></div>' +
