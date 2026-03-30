@@ -410,21 +410,28 @@ function handleSend() {
   var genSpan=document.createElement('span');genSpan.className='gn';
   container.appendChild(genSpan);
   var botEl=addMsg(container,'b');
-  var wi=0, hardMax=250, hitSentenceEnd=false;
+  var wi=0, absMax=300, wantStop=false;
 
   function step(){
-    // Stop condition: after minW words, stop at next sentence end (.)
-    // Hard stop at hardMax regardless
-    if (wi >= hardMax) { finish(); return; }
-    if (wi >= minW && hitSentenceEnd) { finish(); return; }
+    // Absolute safety limit
+    if (wi >= absMax) { finish(); return; }
 
     var next=predictWord(allWords,temp,topK,recent);
     allWords.push(next); recent.push(next); if(recent.length>10)recent.shift();
 
-    if (next === '.') hitSentenceEnd = true;
-
     genSpan.textContent += (wi>0?' ':'') + next;
     wi++; chatEl.scrollTop=chatEl.scrollHeight;
+
+    // After minW words, start looking for a sentence end
+    if (wi >= minW) wantStop = true;
+
+    // Stop at sentence boundary (.) when we want to stop
+    if (wantStop && next === '.') { finish(); return; }
+
+    // If we're way past minW and no period comes, force one
+    if (wi >= minW + 50 && !wantStop) { wantStop = true; }
+    if (wi >= minW + 80) { genSpan.textContent += ' .'; finish(); return; }
+
     setTimeout(step, (next==='.')?60:20);
   }
 
