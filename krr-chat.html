@@ -420,14 +420,10 @@ function handleSend() {
     if (score > bestScore) { bestScore = score; bestSent = sStart; }
   }
 
-  // Step 3: Use the last CTX words of the matched sentence as seed
-  // (so the model continues FROM that sentence)
+  // Step 3: Use the first CTX words of the matching sentence as seed
   var promptWords;
   if (bestSent >= 0 && bestScore > 0) {
-    // Find a good seed point: use words around the keyword
-    var seedEnd = Math.min(bestSent + 8, words.length - 1);
-    var seedStart = Math.max(seedEnd - CTX, 0);
-    promptWords = words.slice(seedStart, seedEnd);
+    promptWords = words.slice(bestSent, bestSent + CTX);
   } else {
     promptWords = prompt.split(/\s+/);
   }
