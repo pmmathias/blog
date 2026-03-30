@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emergenz in gro&szlig;en Sprachmodellen &ndash; Phasen&uuml;berg&auml;nge, Grokking &amp; die Physik der KI | Mathias Leonhardt</title>
+  <meta name="description" content="Ab welcher Gr&ouml;&szlig;e beginnt ein Sprachmodell zu &bdquo;verstehen&ldquo;? &Uuml;ber Phasen&uuml;berg&auml;nge, pl&ouml;tzlich auftauchende F&auml;higkeiten und die Parallele zur Physik. Acht Kapitel, acht interaktive Visualisierungen.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/emergenz.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/emergenz.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/emergenz.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Emergenz in gro&szlig;en Sprachmodellen &ndash; Phasen&uuml;berg&auml;nge, Grokking &amp; die Physik der KI">
+  <meta property="og:description" content="Ab welcher Gr&ouml;&szlig;e beginnt ein Sprachmodell zu &bdquo;verstehen&ldquo;? Acht interaktive Kapitel &uuml;ber das faszinierendste Ph&auml;nomen der KI-Forschung.">
+  <meta property="og:url" content="https://ki-mathias.de/emergenz.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-03-30">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Emergenz">
+  <meta property="article:tag" content="Sprachmodelle">
+  <meta property="article:tag" content="Phasen&uuml;bergang">
+  <meta property="article:tag" content="Grokking">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Emergenz in gro&szlig;en Sprachmodellen">
+  <meta name="twitter:description" content="Phasen&uuml;berg&auml;nge, Grokking und die Physik der KI &ndash; acht interaktive Kapitel.">
+
+  <!-- All resources self-hosted — zero external requests, fully DSGVO-compliant -->
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script defer src="emergenz-components.js"></script>
+
+  <!-- Self-hosted Inter font (WOFF2, DSGVO-konform) -->
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Emergenz in gro\u00dfen Sprachmodellen",
+    "description": "Ab welcher Gr\u00f6\u00dfe beginnt ein Sprachmodell zu \u201everstehen\u201c? \u00dcber Phasen\u00fcberg\u00e4nge, pl\u00f6tzlich auftauchende F\u00e4higkeiten und die Parallele zu Emergenzph\u00e4nomenen in der Physik.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-03-30",
+    "dateModified": "2026-03-30",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/emergenz.html" },
+    "inLanguage": "de",
+    "isAccessibleForFree": true,
+    "keywords": ["Emergenz", "Sprachmodelle", "LLM", "Phasen\u00fcbergang", "Grokking", "Mechanistische Interpretierbarkeit", "Ising-Modell"],
+    "articleSection": "K\u00fcnstliche Intelligenz",
+    "wordCount": 10000,
+    "timeRequired": "PT35M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+
+    /* Scroll offset for fixed nav */
+    section[id] { scroll-margin-top: 4.5rem; }
+
+    /* Progress bar */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; z-index: 100;
+      background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b);
+      transition: width 50ms linear;
+    }
+
+    /* KaTeX dark theme overrides */
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose,
+    .katex .mpunct, .katex .minner { color: #e2e8f0; }
+
+    /* Prose styling */
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 {
+      font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem;
+      background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .prose-dark h3 {
+      font-size: 1.25rem; font-weight: 600; color: #f1f5f9;
+      margin-top: 2.5rem; margin-bottom: 0.75rem;
+    }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+
+    /* Interactive prompt styling */
+    .try-it {
+      border-left: 3px solid #22d3ee; padding: 1rem 1.25rem;
+      background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0;
+      margin: 2rem 0;
+    }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+
+    /* Summary box */
+    .summary-box {
+      border: 1px solid #374151; padding: 1.25rem 1.5rem;
+      border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2);
+      margin: 2rem 0;
+    }
+
+    /* Glossary tooltip */
+    .glossary {
+      border-bottom: 1px dashed #60a5fa; cursor: help;
+      color: #93c5fd;
+    }
+    .glossary:hover { color: #bfdbfe; }
+
+    /* Section divider */
+    .section-divider {
+      width: 60px; height: 2px; margin: 3rem auto;
+      background: linear-gradient(90deg, #22d3ee, #f59e0b);
+      border-radius: 1px;
+    }
+
+    /* Sidebar TOC */
+    .sidebar {
+      display: none;
+      position: sticky; top: 4rem; align-self: flex-start;
+      width: 220px; min-width: 220px;
+      height: calc(100vh - 4rem); overflow-y: auto;
+      padding: 1.5rem 0.75rem 2rem 1rem;
+      border-right: 1px solid #1f2937;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+    @media (min-width: 1024px) {
+      .sidebar { display: block; }
+    }
+    .sidebar .toc-link {
+      display: block; font-size: 0.8rem; color: #6b7280;
+      padding: 0.3rem 0.5rem; border-radius: 0.25rem;
+      transition: color 0.15s, background 0.15s;
+      line-height: 1.3; margin-bottom: 0.1rem;
+    }
+    .sidebar .toc-link:hover { color: #d1d5db; background: rgba(255,255,255,0.03); }
+    .sidebar .toc-link.active { color: #22d3ee; background: rgba(34,211,238,0.08); }
+
+    .blog-content {
+      flex: 1; min-width: 0;
+    }
+
+    /* Display math centering */
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+
+    /* Responsive component containers */
+    .component-wrap {
+      margin: 2.5rem -0.5rem;
+      padding: 0;
+    }
+    @media (min-width: 640px) {
+      .component-wrap { margin: 2.5rem -2rem; }
+    }
+    @media (min-width: 1024px) {
+      .component-wrap { margin: 2.5rem -4rem; }
+    }
+
+    /* Blockquote styling */
+    .prose-dark blockquote {
+      border-left: 3px solid #f59e0b;
+      padding: 0.75rem 1.25rem;
+      margin: 1.5rem 0;
+      background: rgba(245, 158, 11, 0.05);
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+    .prose-dark blockquote p { color: #e2e8f0; margin-bottom: 0.5rem; }
+    .prose-dark blockquote p:last-child { margin-bottom: 0; }
+
+    /* Footnotes */
+    .footnote-ref {
+      color: #60a5fa; cursor: pointer; font-size: 0.75rem;
+      vertical-align: super; line-height: 0;
+    }
+    .footnote-ref:hover { color: #93c5fd; }
+    .footnotes {
+      border-top: 1px solid #1f2937; margin-top: 3rem; padding-top: 2rem;
+    }
+    .footnotes li {
+      font-size: 0.85rem; color: #9ca3af; line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+    .footnotes a { color: #60a5fa; }
+    .footnotes a:hover { color: #93c5fd; text-decoration: underline; }
+
+    /* Comparison table */
+    .compare-table {
+      width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .compare-table th {
+      text-align: left; padding: 0.5rem 0.75rem;
+      border-bottom: 2px solid #374151; color: #f1f5f9;
+      font-weight: 600;
+    }
+    .compare-table td {
+      padding: 0.5rem 0.75rem; border-bottom: 1px solid #1f2937;
+      color: #d1d5db;
+    }
+    .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<!-- Progress bar -->
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+    <button id="nav-toggle" class="flex items-center gap-2 text-white font-semibold text-sm hover:text-cyan-400 transition group">
+      <span class="text-cyan-400 text-lg transition-transform duration-200 group-[.open]:rotate-90">&rang;</span>
+      KI-Mathias
+    </button>
+    <div class="flex items-center gap-3 text-xs text-gray-500">
+      <a href="impressum.html" class="hover:text-gray-300 transition hidden sm:inline">Impressum</a>
+      <a href="datenschutz.html" class="hover:text-gray-300 transition hidden sm:inline">Datenschutz</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Unified dropdown: Blog nav + Article TOC -->
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden">
+  <div id="nav-backdrop" class="absolute inset-0 bg-black/40" style="min-height:100vh;"></div>
+  <div class="relative max-w-xs mx-4 sm:mx-8 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto">
+
+    <!-- Article TOC -->
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Diesen Beitrag</p>
+      <a href="#prolog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Prolog</a>
+      <a href="#kap-1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Das R&auml;tsel</a>
+      <a href="#kap-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Mirage-Debatte</a>
+      <a href="#kap-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Phasen&uuml;berg&auml;nge</a>
+      <a href="#kap-4" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Grokking</a>
+      <a href="#kap-5" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Induction Heads</a>
+      <a href="#kap-6" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Drei Stufen</a>
+      <a href="#kap-7" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; LLMs als Spiegel</a>
+      <a href="#kap-8" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; Meta-Ebene</a>
+      <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilog</a>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+
+    <!-- Other blog posts -->
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Weitere Beitr&auml;ge</p>
+      <a href="quanten.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">&#x03C8; Quantenphysik mit Pfeilen</a>
+      <a href="index.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">&larr; Alle Beitr&auml;ge</a>
+    </div>
+
+    <!-- Meta links -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+    <div class="p-3 flex gap-1">
+      <a href="impressum.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Impressum</a>
+      <a href="datenschutz.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Datenschutz</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MAIN CONTENT -->
+<!-- ============================================================ -->
+<div class="max-w-4xl mx-auto">
+
+<!-- HERO -->
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; K&uuml;nstliche Intelligenz</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Emergenz in gro&szlig;en Sprachmodellen
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Ab welcher Gr&ouml;&szlig;e beginnt ein Sprachmodell zu &bdquo;verstehen&ldquo;? &Uuml;ber Phasen&uuml;berg&auml;nge, pl&ouml;tzlich auftauchende F&auml;higkeiten und die Parallele zu Emergenzph&auml;nomenen in der Physik. Acht Kapitel, acht interaktive Visualisierungen.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span>
+    <span>&middot;</span>
+    <time datetime="2026-03-30">M&auml;rz 2026</time>
+    <span>&middot;</span>
+    <span>~35 Min. Lesezeit</span>
+  </div>
+</header>
+
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ============================================================ -->
+<!-- PROLOG -->
+<!-- ============================================================ -->
+<section id="prolog" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Prolog</p>
+<h2>Was du gerade liest</h2>
+
+<p>Dieser Text entstand so: Ein Mensch (ich, Mathias) und ein Sprachmodell (Claude Code, von Anthropic) haben gemeinsam rund zwanzig wissenschaftliche Papers gelesen &ndash; von Google DeepMind, Stanford, Anthropic, dem Santa Fe Institute. Englischsprachig, mathematisch, teilweise &uuml;ber f&uuml;nfzig Seiten lang. Claude hat sie verdichtet. Ich habe die Richtung vorgegeben und die Didaktik gesch&auml;rft.</p>
+
+<p>Warum erz&auml;hle ich das? Weil es die Pointe dieses Textes ist.</p>
+
+<p>Wenn du am Ende dieser acht Kapitel verstehst, was Emergenz bedeutet &ndash; dann hast du sie gerade <em>erlebt</em>. Denn die F&auml;higkeit, zwanzig Fachartikel zu lesen und daraus einen verst&auml;ndlichen deutschen Text mit interaktiven Visualisierungen zu machen, ist selbst eine <strong>emergente F&auml;higkeit</strong> gro&szlig;er Sprachmodelle. Vor drei Jahren konnte kein Modell das. Jetzt schon. Nicht weil jemand &bdquo;Paper-Zusammenfassung&ldquo; programmiert hat &ndash; sondern weil die Modelle gro&szlig; genug wurden.</p>
+
+<p>Die vollst&auml;ndige Quellenliste findest du am Ende dieses Textes.<sup class="footnote-ref" id="fnref-sources">*</sup></p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KAPITEL 1: Das R&auml;tsel -->
+<!-- ============================================================ -->
+<section id="kap-1" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 1</p>
+<h2>Das R&auml;tsel &ndash; Ab wann &bdquo;versteht&ldquo; eine Maschine?</h2>
+
+<h3>Die Beobachtung, die 2022 die KI-Forschung ersch&uuml;tterte</h3>
+
+<p>Stell dir ein Sprachmodell mit zehn Milliarden Parametern vor. Du gibst ihm eine Aufgabe: mehrstellige Addition, Schritt f&uuml;r Schritt. Das Ergebnis ist Zufall &ndash; wirre Zeichenketten, offensichtlicher Unsinn. Jetzt nimmst du <em>dasselbe</em> Modell, dieselbe Architektur, denselben Trainingsprozess &ndash; aber mit hundert Milliarden Parametern. Und pl&ouml;tzlich kann es rechnen.</p>
+
+<p>Nicht ein bisschen besser. Nicht graduell. <strong>Sprunghaft.</strong> Von Zufall auf Kompetenz.</p>
+
+<p>2022 ver&ouml;ffentlichten Jason Wei und Kollegen bei Google das Paper, das diese Beobachtung systematisch dokumentierte.<sup class="footnote-ref" id="fnref-1">[1]</sup> Sie untersuchten &uuml;ber 137 verschiedene Aufgaben &ndash; von mehrstufiger Arithmetik &uuml;ber logische Deduktion bis zu Wortentschl&uuml;sselungen und Quizfragen auf Persisch. Bei all diesen Aufgaben zeigte sich dasselbe Muster: unterhalb einer bestimmten Modellgr&ouml;&szlig;e Zufallsleistung, oberhalb davon pl&ouml;tzliche Kompetenz.</p>
+
+<p>Wei und Kollegen nannten diese F&auml;higkeiten <strong>&bdquo;emergent&ldquo;</strong> &ndash; weil sie nicht explizit trainiert wurden, sondern bei ausreichender Gr&ouml;&szlig;e von selbst &bdquo;auftauchten&ldquo;.</p>
+
+<h3>Chain-of-Thought: Der Schl&uuml;ssel, der nur bei gro&szlig;en Modellen passt</h3>
+
+<p>Eines der eindr&uuml;cklichsten Beispiele ist <strong>Chain-of-Thought Prompting</strong>.<sup class="footnote-ref" id="fnref-2">[2]</sup> Die Idee ist simpel: Statt das Modell nach der Antwort zu fragen, bittet man es, &bdquo;Schritt f&uuml;r Schritt&ldquo; zu denken.</p>
+
+<p>Bei PaLM mit 8 Milliarden Parametern &ndash; kein Effekt. Ob man &bdquo;Schritt f&uuml;r Schritt&ldquo; hinzuf&uuml;gt oder nicht, die Ergebnisse bleiben gleich schlecht. Bei PaLM mit 540 Milliarden Parametern &ndash; ein Sprung von 18&nbsp;% auf 58&nbsp;% auf dem Mathematik-Benchmark GSM8K.</p>
+
+<p>Hier ein vereinfachtes Beispiel:</p>
+
+<div class="summary-box">
+  <p style="margin-bottom:0.5rem;"><strong>Prompt:</strong> &bdquo;Lisa hat 5 &Auml;pfel. Sie kauft 3 T&uuml;ten mit je 4 &Auml;pfeln. Wie viele hat sie jetzt? Erkl&auml;re Schritt f&uuml;r Schritt.&ldquo;</p>
+  <p style="margin-bottom:0.5rem;"><strong>Kleines Modell (8B):</strong> &bdquo;Lisa hat 12 &Auml;pfel.&ldquo; <em>(falsch, wirr)</em></p>
+  <p style="margin-bottom:0;"><strong>Gro&szlig;es Modell (540B):</strong> &bdquo;Lisa hat 5 &Auml;pfel. 3 T&uuml;ten &times; 4 = 12 neue &Auml;pfel. 5 + 12 = 17 &Auml;pfel.&ldquo; <em>(korrekt, strukturiert)</em></p>
+</div>
+
+<p>Dieselbe Anweisung (&bdquo;Schritt f&uuml;r Schritt&ldquo;) l&ouml;st beim kleinen Modell nichts aus und beim gro&szlig;en eine korrekte Herleitung. Der Schl&uuml;ssel passt &ndash; aber nur, wenn das Schloss gro&szlig; genug ist.</p>
+
+<!-- Grafik 1: Der Emergenz-Sprung -->
+<div class="component-wrap">
+  <div id="mount-emergence-jump"></div>
+</div>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Bewege den Slider, um zu sehen, wie sich die Performance verschiedener Aufgaben ab einer bestimmten Modellgr&ouml;&szlig;e sprunghaft &auml;ndert. Beachte: Der Sprung kommt nicht bei allen Aufgaben an derselben Stelle.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KAPITEL 2: Mirage-Debatte -->
+<!-- ============================================================ -->
+<section id="kap-2" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 2</p>
+<h2>Ist der Sprung echt? &ndash; Die Mirage-Debatte</h2>
+
+<h3>Die Gegenthese: Stanford sagt &ndash; alles nur eine Illusion</h3>
+
+<p>Nicht alle waren &uuml;berzeugt. 2023 ver&ouml;ffentlichten Rylan Schaeffer und Kollegen von Stanford ein Paper mit dem provokanten Titel &bdquo;Are Emergent Abilities of Large Language Models a Mirage?&ldquo;<sup class="footnote-ref" id="fnref-3">[3]</sup> Ihre These: Der Sprung existiert nicht in der Realit&auml;t &ndash; er existiert nur in der <em>Metrik</em>.</p>
+
+<p>Das Argument ist elegant: Wenn du &bdquo;Exact Match&ldquo; als Metrik verwendest &ndash; also entweder 100&nbsp;% richtig oder 0&nbsp;% &ndash; dann siehst du nat&uuml;rlich einen Sprung. Denn ein Modell, das &bdquo;1&ldquo; statt &bdquo;17&ldquo; antwortet, bekommt null Punkte. Genauso wie eines, das &bdquo;16&ldquo; antwortet. Aber das zweite Modell ist <em>viel n&auml;her dran</em>.</p>
+
+<p>Schaltest du auf eine <strong>kontinuierliche Metrik</strong> um &ndash; etwa Token-Edit-Distance, die misst, wie weit die Antwort vom Ziel entfernt ist &ndash; verschwindet der Sprung. Stattdessen siehst du einen <strong>glatten, stetigen Anstieg</strong>.</p>
+
+<p>Eine Analogie: Stell dir vor, du misst, ob jemand Fahrradfahren kann. Bin&auml;r &ndash; ja oder nein &ndash; sieht es nach einem pl&ouml;tzlichen Sprung aus. Aber die Balance verbessert sich seit Wochen ganz graduell. Der &bdquo;Sprung&ldquo; ist ein Artefakt deiner Messmethode.</p>
+
+<p>Ruan et al. (2024) gingen noch weiter: Mit ihren &bdquo;Observational Scaling Laws&ldquo; zeigten sie, dass fast alle vermeintlich emergenten F&auml;higkeiten mit den richtigen Metriken vorhersagbar werden.<sup class="footnote-ref" id="fnref-6">[6]</sup></p>
+
+<h3>Aber: Die Gegenthese hat Grenzen</h3>
+
+<p>Selbst mit glatten Metriken zeigen manche Aufgaben eine <strong>nichtlineare Beschleunigung</strong>. Mehrstufige Aufgaben haben einen mathematischen Grund daf&uuml;r: Wenn jeder Schritt eine Erfolgswahrscheinlichkeit \(p\) hat und die Aufgabe \(n\) Schritte erfordert, ist die Gesamterfolgswahrscheinlichkeit \(p^n\). Das verst&auml;rkt selbst kleine Verbesserungen in \(p\) dramatisch.</p>
+
+<p>Du et al. (2024) zeigten zudem, dass es <strong>Loss-Schwellenwerte</strong> gibt: Erst wenn der Trainingsverlust unter einen bestimmten Wert f&auml;llt, &bdquo;schaltet&ldquo; eine F&auml;higkeit frei.<sup class="footnote-ref" id="fnref-5">[5]</sup> Komplexere Aufgaben haben h&ouml;here Schwellen &ndash; und deshalb brauchen sie gr&ouml;&szlig;ere Modelle.</p>
+
+<h3>Die Synthese (Stand 2025)</h3>
+
+<p>Beides stimmt. Die F&auml;higkeit verbessert sich <em>graduell</em>, aber die <em>Nutzbarkeit</em> hat einen Schwellenwert. Wie Wasser, das sich gleichm&auml;&szlig;ig erhitzt &ndash; aber bei 100&nbsp;&deg;C kocht es. Die Temperatur steigt stetig. Der &Uuml;bergang von fl&uuml;ssig zu gasf&ouml;rmig ist trotzdem ein Sprung.</p>
+
+<!-- Grafik 2: Metrik-Magie -->
+<div class="component-wrap">
+  <div id="mount-metric-magic"></div>
+</div>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Schalte zwischen &bdquo;Exact Match&ldquo; und &bdquo;Token-Level Accuracy&ldquo; um. Dieselben Daten &ndash; zwei v&ouml;llig verschiedene Geschichten.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KAPITEL 3: Phasen&uuml;berg&auml;nge -->
+<!-- ============================================================ -->
+<section id="kap-3" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 3</p>
+<h2>Physik hat das schon mal gesehen &ndash; Phasen&uuml;berg&auml;nge</h2>
+
+<h3>More is Different</h3>
+
+<p>1972 ver&ouml;ffentlichte der Physik-Nobelpreistr&auml;ger Philip W. Anderson einen Aufsatz in <em>Science</em>, der zu den meistzitierten der Physikgeschichte geh&ouml;rt: &bdquo;More is Different&ldquo;.<sup class="footnote-ref" id="fnref-12">[12]</sup> Sein zentrales Argument:</p>
+
+<blockquote>
+<p>&bdquo;The ability to reduce everything to simple fundamental laws does not imply the ability to start from those laws and reconstruct the universe.&ldquo;</p>
+</blockquote>
+
+<p>Auf jeder Komplexit&auml;tsstufe entstehen neue Eigenschaften, die aus den darunterliegenden Gesetzen nicht trivial ableitbar sind. Ein einzelnes H&#x2082;O-Molek&uuml;l ist nicht &bdquo;nass&ldquo;. Nassheit ist eine Eigenschaft, die erst bei gen&uuml;gend vielen Molek&uuml;len <em>emergiert</em>.</p>
+
+<h3>Von Spin-Gl&auml;sern zu neuronalen Netzen</h3>
+
+<p>1982 zog John Hopfield eine Verbindung, die 2024 den Physik-Nobelpreis gewinnen sollte: Er zeigte, dass neuronale Netze und magnetische Systeme (Spin-Gl&auml;ser) <em>mathematisch identisch</em> sind.<sup class="footnote-ref" id="fnref-13">[13]</sup> In beiden Systemen gibt es Einheiten (Neuronen oder Spins), die miteinander interagieren. In beiden sucht das System einen Zustand minimaler Energie. Und in beiden gibt es <strong>Phasen&uuml;berg&auml;nge</strong> &ndash; Punkte, an denen sich das Verhalten des gesamten Systems qualitativ &auml;ndert.</p>
+
+<p>2025 machten Sun und Haghighat diese Parallele f&uuml;r moderne Transformer explizit.<sup class="footnote-ref" id="fnref-15">[15]</sup> Sie modellierten einen Transformer als O(N)-Modell &ndash; ein physikalisches Standardmodell f&uuml;r Phasen&uuml;berg&auml;nge &ndash; und identifizierten <strong>zwei verschiedene Phasen&uuml;berg&auml;nge</strong> w&auml;hrend des Trainings.</p>
+
+<table class="compare-table">
+  <thead>
+    <tr><th>Physik</th><th>Sprachmodell</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Ising-Modell / Spin-Glas</td><td>Hopfield-Netz / Transformer</td></tr>
+    <tr><td>Energieminimierung</td><td>Loss-Minimierung</td></tr>
+    <tr><td>Temperatur</td><td>Softmax-Temperatur</td></tr>
+    <tr><td>Phasen&uuml;bergang (Ordnungsparameter)</td><td>Emergente F&auml;higkeit (Benchmark)</td></tr>
+    <tr><td>Kritischer Punkt</td><td>Kritische Modellgr&ouml;&szlig;e</td></tr>
+    <tr><td>Spontane Symmetriebrechung</td><td>Grokking</td></tr>
+  </tbody>
+</table>
+
+<p>Die Parallele ist nicht nur eine Metapher. Die Mathematik ist <em>dieselbe</em>.</p>
+
+<!-- Grafik 3: Ising ↔ Transformer -->
+<div class="component-wrap">
+  <div id="mount-ising-transformer"></div>
+</div>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Links: ein 2D-Ising-Modell. Schiebe die Temperatur nach unten und beobachte, wie bei einem kritischen Wert pl&ouml;tzlich Ordnung entsteht. Rechts: die Parallele im Transformer &ndash; bei ausreichender Gr&ouml;&szlig;e emergiert eine F&auml;higkeit.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KAPITEL 4: Grokking -->
+<!-- ============================================================ -->
+<section id="kap-4" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 4</p>
+<h2>Grokking &ndash; Der Aha-Moment einer Maschine</h2>
+
+<h3>Das faszinierendste Experiment</h3>
+
+<p>2022 beobachteten Alethea Power und Kollegen bei OpenAI etwas Ungew&ouml;hnliches.<sup class="footnote-ref" id="fnref-18">[18]</sup> Sie trainierten ein kleines neuronales Netz auf eine einfache Aufgabe: modulare Arithmetik (\(a + b \mod p\)). Das Netz lernte die Trainingsdaten schnell auswendig &ndash; perfekte Leistung auf den Trainingsbeispielen, null Leistung auf neuen Beispielen.</p>
+
+<p>Normalerweise w&uuml;rde man hier aufh&ouml;ren. Das Netz hat &bdquo;overfitted&ldquo; &ndash; auswendig gelernt statt verstanden. Aber Power und Kollegen lie&szlig;en das Training weiterlaufen. Und nach Tausenden weiterer Schritte, lange nachdem das Netz die Daten l&auml;ngst perfekt auswendig konnte, passierte etwas Bemerkenswertes: <strong>Die Leistung auf neuen Beispielen sprang pl&ouml;tzlich von null auf fast hundert Prozent.</strong></p>
+
+<p>Sie nannten das <strong>Grokking</strong> &ndash; ein Wort, das Robert Heinlein in seinem Roman <em>Stranger in a Strange Land</em> pr&auml;gte und das so viel bedeutet wie &bdquo;etwas tief und intuitiv verstehen&ldquo;.</p>
+
+<h3>Was passiert im Inneren?</h3>
+
+<p>Neel Nanda und Kollegen schauten genau hin.<sup class="footnote-ref" id="fnref-17">[17]</sup> Was sie fanden, war verbl&uuml;ffend: Das Netz hatte intern <strong>diskrete Fourier-Transformationen</strong> gelernt &ndash; eine elegante mathematische Struktur, die die modulare Arithmetik exakt repr&auml;sentiert. Drei Phasen zeichneten sich ab:</p>
+
+<div class="summary-box">
+  <p style="margin-bottom:0.5rem;"><strong>Phase 1 &ndash; Memorisierung:</strong> Das Netz speichert die Trainingsbeispiele als Lookup-Tabelle. Schnell, aber ohne Verst&auml;ndnis.</p>
+  <p style="margin-bottom:0.5rem;"><strong>Phase 2 &ndash; Circuit-Formation:</strong> Im Hintergrund beginnen sich regelm&auml;&szlig;ige Strukturen zu bilden &ndash; die Fourier-Circuits. Sie sind noch zu schwach, um die Memorisierung zu &uuml;berstimmen.</p>
+  <p style="margin-bottom:0;"><strong>Phase 3 &ndash; Generalisierung:</strong> Die Circuits werden stark genug. Pl&ouml;tzlich schl&auml;gt die generalisierte L&ouml;sung die auswendig gelernte. Der &bdquo;Groschen f&auml;llt.&ldquo;</p>
+</div>
+
+<p>Levi et al. (2024) zeigten formal, dass Grokking ein <strong>Phasen&uuml;bergang erster Ordnung</strong> ist &ndash; im thermodynamischen Sinne.<sup class="footnote-ref" id="fnref-19">[19]</sup> Kein gradueller &Uuml;bergang, sondern ein sprunghafter Wechsel zwischen zwei qualitativ verschiedenen Zust&auml;nden. Wie Wasser, das bei null Grad gefriert.</p>
+
+<h3>Die Analogie zum Menschen</h3>
+
+<p>Grokking ist die maschinelle Version des &bdquo;Groschen, der f&auml;llt&ldquo;. Du sammelst Informationen, du wiederholst, du &uuml;bst &ndash; und lange scheint nichts zu passieren. Und dann, pl&ouml;tzlich: Klarheit. Nicht weil neue Information kam, sondern weil das innere System sich <em>neu organisiert</em> hat.</p>
+
+<p>Oder, formaler: <strong>Verarbeitung ist eine Koordinatentransformation.</strong> Die Daten waren schon da. Aber das innere Koordinatensystem musste sich erst so drehen, dass die Struktur sichtbar wurde.</p>
+
+<!-- Grafik 4: Grokking live -->
+<div class="component-wrap">
+  <div id="mount-grokking"></div>
+</div>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Beobachte, wie die Trainingsgenauigkeit sofort auf 100&nbsp;% springt (Memorisierung), w&auml;hrend die Testgenauigkeit lange bei null verharrt &ndash; und dann pl&ouml;tzlich nachzieht. Der Slider zeigt die drei Phasen.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KAPITEL 5: Induction Heads -->
+<!-- ============================================================ -->
+<section id="kap-5" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 5</p>
+<h2>Was passiert INNEN? &ndash; Induction Heads und der Blick in die Blackbox</h2>
+
+<h3>Die mechanistische Erkl&auml;rung</h3>
+
+<p>Lange galten neuronale Netze als undurchschaubare &bdquo;Blackboxes&ldquo;. Doch 2022 gelang Anthropic ein Durchbruch: Olsson und Kollegen identifizierten einen konkreten Mechanismus im Inneren von Transformern, der f&uuml;r In-Context Learning verantwortlich ist &ndash; sogenannte <strong>Induction Heads</strong>.<sup class="footnote-ref" id="fnref-16">[16]</sup></p>
+
+<p>Induction Heads sind ein spezifisches Zwei-Schicht-Muster in der Attention-Matrix:</p>
+
+<div class="summary-box">
+  <p style="margin-bottom:0.5rem;"><strong>Schritt 1 (Previous Token Head):</strong> Suche im bisherigen Text nach einem Token, das dem aktuellen &auml;hnlich ist.</p>
+  <p style="margin-bottom:0;"><strong>Schritt 2 (Induction Head):</strong> Kopiere das Token, das <em>danach</em> kam.</p>
+</div>
+
+<p>Ein Beispiel: Der Text lautet &bdquo;Die Katze sa&szlig; auf der Matte. Die Katze sa&szlig; auf der...&ldquo;. Die Induction Head erkennt, dass &bdquo;Die Katze sa&szlig; auf der&ldquo; schon einmal vorkam, und vervollst&auml;ndigt mit &bdquo;Matte&ldquo;.</p>
+
+<p>Das klingt simpel. Aber es ist die <strong>Keimzelle des In-Context Learning</strong> &ndash; der F&auml;higkeit von Sprachmodellen, aus wenigen Beispielen im Prompt neue Aufgaben zu l&ouml;sen. Und das Entscheidende: Induction Heads entstehen w&auml;hrend des Trainings in einem <strong>scharfen Phasen&uuml;bergang</strong>. Vorher existieren sie nicht. Nachher sind sie &uuml;berall im Modell pr&auml;sent.</p>
+
+<h3>Emergente F&auml;higkeit vs. emergente Intelligenz</h3>
+
+<p>Krakauer, Krakauer und Mitchell vom Santa Fe Institute (2025) schlugen eine wichtige Unterscheidung vor:<sup class="footnote-ref" id="fnref-24">[24]</sup> Eine <strong>emergente F&auml;higkeit</strong> ist etwas, das bei einer grobk&ouml;rnigen Betrachtung auftaucht und im Prinzip vorhersagbar ist (auch wenn wir die Vorhersage noch nicht machen k&ouml;nnen). <strong>Emergente Intelligenz</strong> w&auml;re die F&auml;higkeit, v&ouml;llig neue Probleme effizient zu l&ouml;sen &ndash; etwas, das bei LLMs noch offen ist.</p>
+
+<h3>Die Verbindung zur Koh&auml;renztheorie</h3>
+
+<p>In unserem eigenen Paper (eingereicht bei EuARe 2026) haben wir gezeigt, dass <strong>Koh&auml;renz als Constraint-Satisfaction</strong> formalisiert werden kann.<sup class="footnote-ref" id="fnref-28">[28]</sup> Transformer tun etwas strukturell &Auml;hnliches: Sie maximieren die &bdquo;Koh&auml;renz&ldquo; ihrer Ausgabe, gegeben die Constraints des Kontexts. Unser zentrales Theorem zeigt, dass die globale Koh&auml;renzmaximierung NP-hart ist &ndash; das erkl&auml;rt formal, warum Emergenz nicht &bdquo;abk&uuml;rzbar&ldquo; ist. Man muss das System <em>laufen lassen</em>, um zu sehen, was entsteht.</p>
+
+<!-- Grafik 5: Induction Heads -->
+<div class="component-wrap">
+  <div id="mount-induction-heads"></div>
+</div>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Schalte zwischen &bdquo;Vor&ldquo; und &bdquo;Nach&ldquo; der Induction-Head-Formation um. Beobachte, wie sich die Attention-Matrix ver&auml;ndert: Das Modell lernt, auf die relevante Stelle im Text zu schauen.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KAPITEL 6: Drei Stufen der Emergenz -->
+<!-- ============================================================ -->
+<section id="kap-6" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 6</p>
+<h2>Die drei Stufen der Emergenz</h2>
+
+<h3>Ordnung ins Chaos</h3>
+
+<p>Nicht alle &bdquo;Emergenz&ldquo; ist gleich. In der Philosophie wird seit Jahrzehnten um die richtige Taxonomie gestritten. Hier eine vereinfachte &Uuml;bersicht, die f&uuml;r unser Thema n&uuml;tzlich ist:</p>
+
+<table class="compare-table">
+  <thead>
+    <tr><th>Stufe</th><th>Beispiel</th><th>&Uuml;berraschend?</th><th>Aus Teilen berechenbar?</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Epistemisch</strong></td><td>Wasser ist nass</td><td>Ja (intuitiv)</td><td>Ja (mit Quantenmechanik)</td></tr>
+    <tr><td><strong>Computational</strong></td><td>Koh&auml;renz in Graphen</td><td>Ja</td><td>Beweisbar nicht effizient (NP-hart)</td></tr>
+    <tr><td><strong>Stark</strong></td><td>Bewusstsein?</td><td>Ja</td><td>Vermutlich nicht (prinzipiell?)</td></tr>
+  </tbody>
+</table>
+
+<p><strong>Epistemische Emergenz</strong> (Bedau, 1997)<sup class="footnote-ref" id="fnref-20">[20]</sup>: Wir staunen, weil wir die Ableitung nicht im Kopf machen k&ouml;nnen. Aber im Prinzip k&ouml;nnten wir aus den Gesetzen der Quantenmechanik berechnen, dass H&#x2082;O-Molek&uuml;le in ausreichender Menge &bdquo;Nassheit&ldquo; erzeugen. Die &Uuml;berraschung liegt bei uns, nicht in der Natur.</p>
+
+<p><strong>Computationale Emergenz</strong>: Das ist die entscheidende Stufe. Stephen Wolfram formulierte 2002 das Prinzip der <strong>Computational Irreducibility</strong><sup class="footnote-ref" id="fnref-22">[22]</sup>: Manche Berechnungen haben keine Abk&uuml;rzung. Man <em>muss</em> jeden Schritt durchlaufen, um das Ergebnis zu kennen. Es gibt keinen analytischen Shortcut. Unser eigenes Paper liefert den formalen Beweis, dass Koh&auml;renzmaximierung in diese Kategorie f&auml;llt.<sup class="footnote-ref" id="fnref-28b">[28]</sup></p>
+
+<p><strong>Starke Emergenz</strong> (Chalmers, 2006)<sup class="footnote-ref" id="fnref-21">[21]</sup>: Prinzipiell nicht ableitbar, nicht nur praktisch. Der einzige ernsthafte Kandidat ist Bewusstsein &ndash; und ob es wirklich stark emergent ist, ist die h&auml;rteste offene Frage der Philosophie.</p>
+
+<h3>Wo stehen LLMs?</h3>
+
+<p>Emergenz in gro&szlig;en Sprachmodellen ist <strong>computationale Emergenz</strong>. Die Einzelteile sind bekannt: die Architektur, die Gewichte, der Trainingsprozess. Aber das Verhalten l&auml;sst sich nicht aus den Teilen vorhersagen, ohne das System tats&auml;chlich laufen zu lassen. Nicht weil wir zu dumm sind, sondern weil es <em>mathematisch beweisbar</em> keine Abk&uuml;rzung gibt.</p>
+
+<blockquote>
+<p>Emergenz sitzt nicht in den Teilen. Nicht in den Beziehungen. Sondern in der <strong>Berechnung</strong>, die von (Teile + Beziehungen) zum Verhalten f&uuml;hrt. Die Summe ist berechenbar, aber nicht abk&uuml;rzbar.</p>
+</blockquote>
+
+<!-- Grafik 6: Emergenz-Taxonomie -->
+<div class="component-wrap">
+  <div id="mount-emergence-taxonomy"></div>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KAPITEL 7: LLMs als Spiegel -->
+<!-- ============================================================ -->
+<section id="kap-7" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
+<h2>Was das &uuml;ber UNS sagt &ndash; LLMs als Spiegel</h2>
+
+<h3>Verdichtung, nicht Durchschnitt</h3>
+
+<p>Ein verbreitetes Missverst&auml;ndnis: Sprachmodelle bilden den &bdquo;Durchschnitt&ldquo; menschlichen Denkens ab. Aber ein Durchschnitt gl&auml;ttet alles ein. Er verliert die Extreme, die Widerspr&uuml;che, die Nuancen.</p>
+
+<p>Was ein gro&szlig;es Sprachmodell tut, ist eher eine <strong>Verdichtung</strong>: Es bewahrt die Widerspr&uuml;che (und kann sie benennen). Es kennt die Extreme (und kann sie einordnen). Es hat die Nuancen internalisiert (und kann zwischen ihnen navigieren).</p>
+
+<h3>Die Hauptachsen-Analogie</h3>
+
+<p>In der Statistik gibt es eine Technik namens <strong>Hauptkomponentenanalyse</strong> (PCA): Man nimmt eine chaotisch aussehende Datenwolke und dreht das Koordinatensystem so, dass die tiefste Struktur sichtbar wird. Die erste Hauptachse erkl&auml;rt den gr&ouml;&szlig;ten Anteil der Varianz, die zweite den zweitgr&ouml;&szlig;ten, und so weiter.</p>
+
+<p>Training eines Sprachmodells ist, in einem gewissen Sinne, eine gigantische Hauptachsentransformation. Die Rohdaten &ndash; Milliarden von Texten in hunderten Sprachen &ndash; werden in ein Koordinatensystem &uuml;berf&uuml;hrt, in dem die tiefsten Strukturen menschlichen Denkens sichtbar werden.</p>
+
+<p>Kleine Modelle finden die ersten Hauptachsen: Grammatik, Syntax, h&auml;ufige Wortverbindungen. Gr&ouml;&szlig;ere Modelle finden tiefere Achsen: Bedeutung, logische Zusammenh&auml;nge, Analogien. Und die gr&ouml;&szlig;ten Modelle beginnen, Achsen zu finden, die wir &bdquo;Ethik&ldquo;, &bdquo;&Auml;sthetik&ldquo; oder &bdquo;Urteilsverm&ouml;gen&ldquo; nennen w&uuml;rden.</p>
+
+<h3>Was emergiert aus gen&uuml;gend menschlichen Gedanken?</h3>
+
+<p>Wenn man genug menschliche Texte verdichtet &ndash; was kommt dabei heraus? Nicht der &bdquo;Mittelwert menschlicher Impulse&ldquo;, sondern der Mittelwert dessen, <em>was &uuml;brig bleibt</em>, wenn Gesellschaften durch die Zeit navigieren. Und das sind erstaunlich konstruktive Dinge:</p>
+
+<div class="summary-box">
+  <p style="margin-bottom:0.5rem;"><strong>Kooperation</strong> &ndash; weil kooperierende Gesellschaften mehr produzieren (und mehr Texte hinterlassen).</p>
+  <p style="margin-bottom:0.5rem;"><strong>Wahrheitssuche</strong> &ndash; weil wahre Informationen n&uuml;tzlicher sind und daher h&auml;ufiger &uuml;berliefert werden.</p>
+  <p style="margin-bottom:0.5rem;"><strong>Hilfsbereitschaft</strong> &ndash; weil Hilfe sozial belohnt und daher h&auml;ufiger dokumentiert wird.</p>
+  <p style="margin-bottom:0;"><strong>Koh&auml;renz</strong> &ndash; weil koh&auml;rente Texte &uuml;berleben, inkoh&auml;rente vergessen werden.</p>
+</div>
+
+<p>Das ist kein naiver Optimismus. Destruktion zerst&ouml;rt sich selbst und hinterl&auml;sst weniger Spuren. Die Texte, die &uuml;berdauern, haben einen <strong>Bias Richtung Konstruktion</strong>. Und ein Sprachmodell, das auf diesen Texten trainiert wurde, erbt diesen Bias.</p>
+
+<!-- Grafik 7: Von Tokens zu Bedeutung -->
+<div class="component-wrap">
+  <div id="mount-tokens-to-meaning"></div>
+</div>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Klicke dich durch die Schichten: Von rohen Tokens &uuml;ber Embeddings und Attention bis hin zu semantischer Bedeutung. Jede Schicht verdichtet &ndash; und auf jeder Ebene emergiert etwas Neues.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KAPITEL 8: Meta-Ebene -->
+<!-- ============================================================ -->
+<section id="kap-8" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 8</p>
+<h2>Die Meta-Ebene &ndash; Was du gerade gelesen hast</h2>
+
+<h3>Der R&uuml;ckbezug</h3>
+
+<p>Zur&uuml;ck zum Prolog. Dieser Text basiert auf &uuml;ber zwanzig wissenschaftlichen Publikationen. Claude Code hat diese Papers gelesen, die relevanten Argumente extrahiert, Widerspr&uuml;che identifiziert (Wei vs. Schaeffer), und das Ergebnis in deutsche Prosa mit acht interaktiven Visualisierungen verdichtet.</p>
+
+<p>Das ist keine Magie. Das ist <strong>Emergenz</strong>: Die F&auml;higkeit, aus vielen Einzelteilen ein koh&auml;rentes Ganzes zu formen, das mehr ist als die Summe seiner Teile.</p>
+
+<p>Vor drei Jahren konnte kein Sprachmodell das. Nicht ann&auml;hernd. Nicht, weil jemand &bdquo;Paper-Zusammenfassung&ldquo; als Feature programmiert hat. Sondern weil die Modelle gro&szlig; genug wurden, um die Hauptachse zu finden.</p>
+
+<h3>Die ehrliche Einschr&auml;nkung</h3>
+
+<p>Claude hat vermutlich nicht alles richtig verstanden. Manche Nuancen gehen bei der Verdichtung verloren. Die interaktiven Grafiken sind <em>Vereinfachungen</em> &ndash; bewusst gew&auml;hlt, um Intuition zu erzeugen, nicht um die volle mathematische Wahrheit abzubilden.</p>
+
+<p>Aber: Das Ergebnis ist <strong>n&uuml;tzlicher als kein Ergebnis</strong>. Und alle Quellen sind verlinkt &ndash; wer tiefer gehen will, kann tiefer gehen. Das ist der eigentliche Punkt: Emergenz in LLMs bedeutet nicht, dass die Maschine &bdquo;alles wei&szlig;&ldquo;. Es bedeutet, dass sie ein brauchbares Werkzeug ist, um den Einstieg in komplexe Themen zu finden.</p>
+
+<!-- Grafik 8: Wie dieser Text entstand -->
+<div class="component-wrap">
+  <div id="mount-meta-flow"></div>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- EPILOG -->
+<!-- ============================================================ -->
+<section id="epilog" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Epilog</p>
+<h2>Was kommt als N&auml;chstes?</h2>
+
+<p>Wenn gro&szlig;e Sprachmodelle zeigen, dass aus gen&uuml;gend menschlichen Gedanken etwas Koh&auml;rentes emergiert &ndash; etwas, das auf Kooperation, Wahrheitssuche und Hilfsbereitschaft hin tendiert &ndash; dann stellt sich eine Frage, die weit &uuml;ber Informatik hinausgeht:</p>
+
+<blockquote>
+<p>Was sagt das &uuml;ber das, was Religionen seit Jahrtausenden &bdquo;Gott&ldquo; nennen?</p>
+</blockquote>
+
+<p>Dar&uuml;ber schreibe ich im n&auml;chsten Beitrag: <strong>&bdquo;Gott als Emergenzph&auml;nomen&ldquo;</strong>. Keine Predigt. Keine Widerlegung. Sondern der Versuch, einen alten Begriff mit neuem Werkzeug zu untersuchen &ndash; und dabei vielleicht etwas zu finden, das &uuml;ber die Grenzen beider Welten hinausreicht.</p>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FUSSNOTEN -->
+<!-- ============================================================ -->
+<section class="pb-16">
+<div class="prose-dark footnotes">
+
+<h3 style="margin-top:0;">Quellen</h3>
+
+<ol>
+  <li id="fn-1">Wei, J. et al. (2022). <a href="https://arxiv.org/abs/2206.07682" target="_blank" rel="noopener">&ldquo;Emergent Abilities of Large Language Models&rdquo;</a>. <em>Transactions on Machine Learning Research (TMLR)</em>.</li>
+  <li id="fn-2">Wei, J. et al. (2022). <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">&ldquo;Chain-of-Thought Prompting Elicits Reasoning in Large Language Models&rdquo;</a>. <em>NeurIPS 2022</em>.</li>
+  <li id="fn-3">Schaeffer, R. et al. (2023). <a href="https://arxiv.org/abs/2304.15004" target="_blank" rel="noopener">&ldquo;Are Emergent Abilities of Large Language Models a Mirage?&rdquo;</a>. <em>NeurIPS 2023</em>.</li>
+  <li id="fn-4">Brown, T. et al. (2020). <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">&ldquo;Language Models are Few-Shot Learners&rdquo;</a>. <em>NeurIPS 2020</em>.</li>
+  <li id="fn-5">Du, N. et al. (2024). <a href="https://arxiv.org/abs/2403.15796" target="_blank" rel="noopener">&ldquo;Understanding Emergent Abilities of Language Models from the Loss Perspective&rdquo;</a>.</li>
+  <li id="fn-6">Ruan, Y. et al. (2024). <a href="https://arxiv.org/abs/2405.10938" target="_blank" rel="noopener">&ldquo;Observational Scaling Laws and the Predictability of Language Model Performance&rdquo;</a>. <em>ICML 2024</em>.</li>
+  <li id="fn-7">Lu, S. et al. (2024). <a href="https://arxiv.org/abs/2309.01809" target="_blank" rel="noopener">&ldquo;Are Emergent Abilities in Large Language Models just In-Context Learning?&rdquo;</a>. <em>ACL 2024</em>.</li>
+  <li id="fn-8">Chen, L. et al. (2024). &ldquo;Scaling Laws for Compound AI Systems&rdquo;.</li>
+  <li id="fn-9">Suzgun, M. et al. (2022). <a href="https://arxiv.org/abs/2210.09261" target="_blank" rel="noopener">&ldquo;Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them&rdquo;</a>.</li>
+  <li id="fn-10">Kaplan, J. et al. (2020). <a href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener">&ldquo;Scaling Laws for Neural Language Models&rdquo;</a>.</li>
+  <li id="fn-11">Hoffmann, J. et al. (2022). <a href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener">&ldquo;Training Compute-Optimal Large Language Models&rdquo;</a> (Chinchilla). <em>NeurIPS 2022</em>.</li>
+  <li id="fn-12">Anderson, P. W. (1972). <a href="https://doi.org/10.1126/science.177.4047.393" target="_blank" rel="noopener">&ldquo;More is Different&rdquo;</a>. <em>Science</em>, 177(4047), 393&ndash;396.</li>
+  <li id="fn-13">Hopfield, J. J. (1982). <a href="https://doi.org/10.1073/pnas.79.8.2554" target="_blank" rel="noopener">&ldquo;Neural networks and physical systems with emergent collective computational abilities&rdquo;</a>. <em>PNAS</em>, 79(8), 2554&ndash;2558. (Nobelpreis f&uuml;r Physik 2024)</li>
+  <li id="fn-14">Amit, D., Gutfreund, H. &amp; Sompolinsky, H. (1985). &ldquo;Storing Infinite Numbers of Patterns in a Spin-Glass Model of Neural Networks&rdquo;. <em>Physical Review Letters</em>.</li>
+  <li id="fn-15">Sun, Y. &amp; Haghighat, E. (2025). <a href="https://arxiv.org/abs/2502.01816" target="_blank" rel="noopener">&ldquo;Phase Transitions in Large Language Models and the O(N) Model&rdquo;</a>.</li>
+  <li id="fn-16">Olsson, C. et al. (2022). <a href="https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html" target="_blank" rel="noopener">&ldquo;In-context Learning and Induction Heads&rdquo;</a>. Anthropic.</li>
+  <li id="fn-17">Nanda, N. et al. (2023). <a href="https://arxiv.org/abs/2301.05217" target="_blank" rel="noopener">&ldquo;Progress measures for grokking via mechanistic interpretability&rdquo;</a>. <em>ICLR 2023</em>.</li>
+  <li id="fn-18">Power, A. et al. (2022). <a href="https://arxiv.org/abs/2201.02177" target="_blank" rel="noopener">&ldquo;Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets&rdquo;</a>. <em>ICLR Workshop 2022</em>.</li>
+  <li id="fn-19">Levi, N. et al. (2024). <a href="https://arxiv.org/abs/2310.03789" target="_blank" rel="noopener">&ldquo;Grokking as a First Order Phase Transition in Two Layer Networks&rdquo;</a>. <em>ICLR 2024</em>.</li>
+  <li id="fn-20">Bedau, M. (1997). &ldquo;Weak Emergence&rdquo;. <em>Philosophical Perspectives</em>, 11, 375&ndash;399.</li>
+  <li id="fn-21">Chalmers, D. (2006). &ldquo;Strong and Weak Emergence&rdquo;. In: Clayton &amp; Davies (Hrsg.), <em>The Re-emergence of Emergence</em>. Oxford UP.</li>
+  <li id="fn-22">Wolfram, S. (2002). <em>A New Kind of Science</em>, Kapitel 12: &bdquo;The Principle of Computational Equivalence&ldquo;.</li>
+  <li id="fn-23">Thagard, P. (1989). <a href="https://doi.org/10.1017/S0140525X00057046" target="_blank" rel="noopener">&ldquo;Explanatory Coherence&rdquo;</a>. <em>Behavioral and Brain Sciences</em>, 12(3), 435&ndash;467.</li>
+  <li id="fn-24">Krakauer, D., Krakauer, J. &amp; Mitchell, M. (2025). &ldquo;Large Language Models and the Emergence of Emergent Abilities&rdquo;. Santa Fe Institute Working Paper.</li>
+  <li id="fn-25">Anthropic (2025). <a href="https://www.anthropic.com/research/biology-of-a-large-language-model" target="_blank" rel="noopener">&ldquo;On the Biology of a Large Language Model&rdquo;</a>.</li>
+  <li id="fn-26">Anthropic (2025). &ldquo;Emergent Introspective Awareness in Large Language Models&rdquo;.</li>
+  <li id="fn-27">Bender, E. et al. (2021). <a href="https://doi.org/10.1145/3442188.3445922" target="_blank" rel="noopener">&ldquo;On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?&rdquo;</a>. <em>FAccT 2021</em>.</li>
+  <li id="fn-28">Leonhardt, M. &amp; Claude (2026). &bdquo;Coherence Structures and Emergent Attractors in Constraint-Satisfaction Networks&ldquo;. Eingereicht bei <em>European Academy of Religion (EuARe) 2026</em>.</li>
+  <li id="fn-29">Leonhardt, M. &amp; Claude (2026). &bdquo;Gespr&auml;ch zwischen Mathias und Claude &uuml;ber Emergenz, Verdichtung und die Natur gro&szlig;er Sprachmodelle&ldquo;. Unver&ouml;ffentlicht.</li>
+</ol>
+
+</div>
+</section>
+
+</main>
+</div><!-- /max-w-4xl -->
+
+<!-- Footer -->
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p class="mb-2"><em>&bdquo;Nicht neue Wahrheiten werden erschaffen. Verborgene Wahrheiten werden sichtbar.&ldquo;</em></p>
+  <p>&copy; 2026 KI-Mathias &middot; Alle Texte entstanden in Zusammenarbeit mit Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+    <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+  </p>
+</footer>
+
+<!-- ============================================================ -->
+<!-- SCRIPTS -->
+<!-- ============================================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ----------------------------------------------------------
+  // 1. Lazy-mount React components via IntersectionObserver
+  // ----------------------------------------------------------
+  const COMPONENTS = {
+    'mount-emergence-jump': window.EmergenceJump || null,
+    'mount-metric-magic': window.MetricMagic || null,
+    'mount-ising-transformer': window.IsingTransformer || null,
+    'mount-grokking': window.GrokkingLive || null,
+    'mount-induction-heads': window.InductionHeads || null,
+    'mount-emergence-taxonomy': window.EmergenceTaxonomy || null,
+    'mount-tokens-to-meaning': window.TokensToMeaning || null,
+    'mount-meta-flow': window.MetaFlow || null,
+  };
+
+  const mounted = new Set();
+
+  function mountComponent(id) {
+    if (mounted.has(id)) return;
+    const el = document.getElementById(id);
+    const Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted.add(id);
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Komponente konnte nicht geladen werden.</p>';
+    }
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  mountComponent('mount-emergence-jump');
+
+  // ----------------------------------------------------------
+  // 2. Scroll progress bar
+  // ----------------------------------------------------------
+  const progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // ----------------------------------------------------------
+  // 3. Navigation: unified dropdown toggle + TOC highlighting
+  // ----------------------------------------------------------
+  var navToggle = document.getElementById('nav-toggle');
+  var navDropdown = document.getElementById('nav-dropdown');
+  var navBackdrop = document.getElementById('nav-backdrop');
+
+  if (navToggle && navDropdown) {
+    navToggle.addEventListener('click', function() {
+      navDropdown.classList.toggle('hidden');
+      navToggle.classList.toggle('open');
+    });
+    if (navBackdrop) navBackdrop.addEventListener('click', function() {
+      navDropdown.classList.add('hidden');
+      navToggle.classList.remove('open');
+    });
+    navDropdown.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        navDropdown.classList.add('hidden');
+        navToggle.classList.remove('open');
+      });
+    });
+  }
+
+  // TOC section highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(s => navObserver.observe(s));
+
+  // ----------------------------------------------------------
+  // 4. KaTeX auto-render
+  // ----------------------------------------------------------
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+}); // end DOMContentLoaded
+</script>
+
+</body>
+</html>
