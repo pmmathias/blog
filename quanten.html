@@ -257,96 +257,58 @@
 <!-- Progress bar -->
 <div id="progress-bar" style="width: 0%"></div>
 
-<!-- ============================================================ -->
-<!-- TOP NAV: Blog-level navigation -->
-<!-- ============================================================ -->
-<nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-md border-b border-gray-800/50">
-  <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-
-    <!-- Blog brand -->
-    <a href="index.html" class="flex items-center gap-2 text-white font-semibold text-sm whitespace-nowrap">
-      <span class="text-cyan-400 text-lg">&rang;</span> KI-Mathias
-    </a>
-
-    <!-- Desktop blog nav -->
-    <div class="hidden sm:flex items-center gap-4 text-xs text-gray-400">
-      <a href="index.html" class="hover:text-white transition">Blog</a>
-      <a href="impressum.html" class="hover:text-white transition">Impressum</a>
-      <a href="datenschutz.html" class="hover:text-white transition">Datenschutz</a>
-    </div>
-
-    <!-- Mobile: TOC toggle + menu -->
-    <div class="flex items-center gap-1">
-      <!-- TOC toggle (shows chapter nav, hidden on desktop where sidebar is visible) -->
-      <button id="toc-toggle" class="lg:hidden p-2 text-gray-400 hover:text-white" title="Inhaltsverzeichnis">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h12M4 14h16M4 18h8"/>
-        </svg>
-      </button>
-      <!-- Hamburger (blog-level menu, mobile only) -->
-      <button id="menu-toggle" class="sm:hidden p-2 text-gray-400 hover:text-white">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile blog menu (hamburger) -->
-  <div id="mobile-menu" class="sm:hidden flex-col bg-gray-950/95 border-b border-gray-800 px-4 pb-3 text-sm">
-    <a href="index.html" class="block py-2 text-gray-400 hover:text-white">Blog</a>
-    <a href="impressum.html" class="block py-2 text-gray-400 hover:text-white">Impressum</a>
-    <a href="datenschutz.html" class="block py-2 text-gray-400 hover:text-white">Datenschutz</a>
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center">
+    <button id="nav-toggle" class="flex items-center gap-2 text-white font-semibold text-sm hover:text-cyan-400 transition group">
+      <span class="text-cyan-400 text-lg transition-transform duration-200 group-[.open]:rotate-90">&rang;</span>
+      KI-Mathias
+    </button>
   </div>
 </nav>
 
-<!-- ============================================================ -->
-<!-- MOBILE TOC DRAWER (slides in from left) -->
-<!-- ============================================================ -->
-<div id="toc-drawer">
-  <div class="toc-backdrop" id="toc-backdrop"></div>
-  <div class="toc-panel">
-    <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-3">Inhaltsverzeichnis</p>
-    <a href="#hero" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">&Uuml;bersicht</a>
-    <div style="height:1px;background:#1f2937;margin:0.5rem 0;"></div>
-    <a href="#teil-1" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">1 &middot; Doppelspalt</a>
-    <a href="#teil-2" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">2 &middot; Zwei Regeln</a>
-    <a href="#teil-3" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">3 &middot; Pfadintegral</a>
-    <a href="#teil-4a" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">4a &middot; Fourier</a>
-    <a href="#teil-4b" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">4b &middot; Stehende Wellen</a>
-    <a href="#teil-4c" class="toc-link block text-sm py-1.5 px-2 text-gray-400 rounded hover:text-white">4c &middot; Drei Sprachen</a>
-    <div style="height:1px;background:#1f2937;margin:0.5rem 0;"></div>
-    <a href="#verschraenkung" class="toc-link block text-sm py-1.5 px-2 text-amber-400/70 rounded hover:text-amber-300">Bonus &middot; Verschr&auml;nkung</a>
+<!-- Unified dropdown: Blog nav + Article TOC -->
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden">
+  <div id="nav-backdrop" class="absolute inset-0 bg-black/40" style="min-height:100vh;"></div>
+  <div class="relative max-w-xs mx-4 sm:mx-8 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto">
+
+    <!-- Article TOC -->
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Diesen Beitrag</p>
+      <a href="#teil-1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Doppelspalt</a>
+      <a href="#teil-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Zwei Regeln</a>
+      <a href="#teil-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Pfadintegral</a>
+      <a href="#teil-4a" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4a &middot; Fourier</a>
+      <a href="#teil-4b" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4b &middot; Stehende Wellen</a>
+      <a href="#teil-4c" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4c &middot; Drei Sprachen</a>
+      <a href="#verschraenkung" class="toc-link block text-sm py-1.5 px-3 text-amber-400/70 rounded-lg hover:bg-gray-800/60 transition">Bonus &middot; Verschr&auml;nkung</a>
+      <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilog</a>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+
+    <!-- Other blog posts -->
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Weitere Beitr&auml;ge</p>
+      <a href="index.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">&larr; Alle Beitr&auml;ge</a>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+
+    <!-- Meta links -->
+    <div class="p-3 flex gap-1">
+      <a href="impressum.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Impressum</a>
+      <a href="datenschutz.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Datenschutz</a>
+    </div>
   </div>
 </div>
-
-
-<!-- ============================================================ -->
-<!-- BLOG LAYOUT: Sidebar + Content -->
-<!-- ============================================================ -->
-<div class="blog-layout">
-
-<!-- ============================================================ -->
-<!-- SIDEBAR TOC (desktop only, sticky) -->
-<!-- ============================================================ -->
-<aside class="sidebar">
-  <p class="toc-title">Quantenphysik mit Pfeilen</p>
-  <a href="#teil-1" class="toc-link nav-link">1 &middot; Doppelspalt</a>
-  <a href="#teil-2" class="toc-link nav-link">2 &middot; Zwei Regeln</a>
-  <a href="#teil-3" class="toc-link nav-link">3 &middot; Pfadintegral</a>
-  <a href="#teil-4a" class="toc-link nav-link">4a &middot; Fourier</a>
-  <a href="#teil-4b" class="toc-link nav-link">4b &middot; Stehende Wellen</a>
-  <a href="#teil-4c" class="toc-link nav-link">4c &middot; Drei Sprachen</a>
-  <div class="toc-divider"></div>
-  <a href="#verschraenkung" class="toc-link nav-link" style="color:#fbbf24;">Bonus &middot; Verschr&auml;nkung</a>
-  <div class="toc-divider"></div>
-  <a href="#epilog" class="toc-link nav-link" style="font-style:italic;">Epilog</a>
-</aside>
 
 <!-- ============================================================ -->
 <!-- MAIN CONTENT -->
 <!-- ============================================================ -->
-<div class="blog-content">
+<div class="max-w-3xl mx-auto">
 
 <!-- HERO -->
 <header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
@@ -1103,8 +1065,7 @@ Dazwischen: Eine glatte <strong>Kosinus-Kurve</strong> &ndash; und diese Kurve l
   </div>
 </footer>
 
-</div><!-- /blog-content -->
-</div><!-- /blog-layout -->
+</div><!-- /max-w-3xl -->
 
 
 <!-- ============================================================ -->
@@ -1178,17 +1139,38 @@ document.addEventListener('DOMContentLoaded', function() {
   updateProgress();
 
   // ----------------------------------------------------------
-  // 3. Navigation highlighting
+  // 3. Navigation: unified dropdown toggle + TOC highlighting
   // ----------------------------------------------------------
+  var navToggle = document.getElementById('nav-toggle');
+  var navDropdown = document.getElementById('nav-dropdown');
+  var navBackdrop = document.getElementById('nav-backdrop');
+
+  if (navToggle && navDropdown) {
+    navToggle.addEventListener('click', function() {
+      navDropdown.classList.toggle('hidden');
+      navToggle.classList.toggle('open');
+    });
+    if (navBackdrop) navBackdrop.addEventListener('click', function() {
+      navDropdown.classList.add('hidden');
+      navToggle.classList.remove('open');
+    });
+    navDropdown.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        navDropdown.classList.add('hidden');
+        navToggle.classList.remove('open');
+      });
+    });
+  }
+
+  // TOC section highlighting
   const sections = document.querySelectorAll('section[id]');
-  // Select both sidebar .nav-link and toc-drawer .toc-link
-  const allTocLinks = document.querySelectorAll('.sidebar .toc-link, #toc-drawer .toc-link');
+  const tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
 
   const navObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.id;
-        allTocLinks.forEach(link => {
+        tocLinks.forEach(link => {
           link.classList.toggle('active', link.getAttribute('href') === '#' + id);
         });
       }
@@ -1196,46 +1178,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }, { rootMargin: '-20% 0px -75% 0px' });
 
   sections.forEach(s => navObserver.observe(s));
-
-  // ----------------------------------------------------------
-  // 4. Mobile menu toggle (hamburger = blog nav)
-  // ----------------------------------------------------------
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      // Close TOC if open
-      if (tocDrawer) tocDrawer.classList.remove('open');
-    });
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => mobileMenu.classList.remove('open'));
-    });
-  }
-
-  // ----------------------------------------------------------
-  // 4b. TOC drawer toggle (chapter nav)
-  // ----------------------------------------------------------
-  const tocToggle = document.getElementById('toc-toggle');
-  const tocDrawer = document.getElementById('toc-drawer');
-  const tocBackdrop = document.getElementById('toc-backdrop');
-
-  if (tocToggle && tocDrawer) {
-    tocToggle.addEventListener('click', () => {
-      tocDrawer.classList.toggle('open');
-      // Close hamburger if open
-      if (mobileMenu) mobileMenu.classList.remove('open');
-    });
-    // Close on backdrop click
-    if (tocBackdrop) {
-      tocBackdrop.addEventListener('click', () => tocDrawer.classList.remove('open'));
-    }
-    // Close on link click
-    tocDrawer.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => tocDrawer.classList.remove('open'));
-    });
-  }
 
   // ----------------------------------------------------------
   // 5. KaTeX auto-render
