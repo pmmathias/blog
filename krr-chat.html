@@ -155,7 +155,7 @@ var words = RAW.toLowerCase().split(/\s+/);
 var W2I = {}, I2W = {}, VOCAB = 0;
 for (var i = 0; i < words.length; i++) { if (W2I[words[i]] === undefined) { W2I[words[i]] = VOCAB; I2W[VOCAB] = words[i]; VOCAB++; } }
 
-var CTX = 5, HASH = 128, N_BI = 3, FEAT = CTX*HASH + N_BI*HASH, D = 1024, SIGMA = 1.5, LAM = 0.3;
+var CTX = 5, HASH = 128, N_BI = 3, FEAT = CTX*HASH + N_BI*HASH, D = 1536, SIGMA = 1.5, LAM = 0.08;
 
 function hashW(w) { var h=0; for(var i=0;i<w.length;i++) h=((h*31)+w.charCodeAt(i))|0; return((h%HASH)+HASH)%HASH; }
 function hashP(a,b) { var s=a+'|'+b; var h=0; for(var i=0;i<s.length;i++) h=((h*37)+s.charCodeAt(i))|0; return((h%HASH)+HASH)%HASH; }
