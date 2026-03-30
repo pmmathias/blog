@@ -800,11 +800,19 @@ Alternativen &rarr; addieren: Beide Wege f&uuml;hren zur selben Stelle, also \(0
 
 <h3>Die Formel</h3>
 
-<p>Jetzt k&ouml;nnen wir alles in eine einzige Zeile packen:</p>
+<p>Jetzt k&ouml;nnen wir alles in eine einzige Zeile packen. In Kapitel 2 haben wir die Amplitude als Summe &uuml;ber diskrete Spalte geschrieben &ndash; \(\sum_k\). Aber wir haben gesehen, dass die Spalte immer zahlreicher werden, die Wand verschwindet, und die Summe &uuml;ber Spalte zu einer Summe &uuml;ber <em>alle m&ouml;glichen Wege</em> wird. In der Mathematik hat dieser &Uuml;bergang von diskreter Summe zu kontinuierlicher Summe einen eigenen Namen: Er wird zum <strong>Integral</strong>. Physiker schreiben ihn so:</p>
 
-<div class="math-display">$$K(B,A) = \sum_{\text{alle Wege}} e^{\,i\,S[\text{Weg}]\,/\,\hbar}$$</div>
+<div class="math-display">$$K(B,A) = \int \mathcal{D}[x(t)]\; e^{\,i\,S[x(t)]\,/\,\hbar}$$</div>
 
-<p>Du wei&szlig;t jetzt nicht nur, was jedes Symbol bedeutet &ndash; du wei&szlig;t auch, <em>warum</em> es so aussehen muss. Die Summe l&auml;uft &uuml;ber alle Wege (Regel 1). \(e^{iS/\hbar}\) ist ein Pfeil der L&auml;nge 1, gedreht um den Winkel \(S/\hbar\) &ndash; die einzige Funktion, die Regel 2 erf&uuml;llt, ohne Wege zu bevorzugen. Und \(S\) ist die Wirkung. Das ist <strong>Feynmans Pfadintegral</strong>. Die gesamte Quantenmechanik in einer Zeile &ndash; und jedes St&uuml;ck davon ist zwingend.</p>
+<p>Das sieht einsch&uuml;chternd aus, aber du kennst jedes St&uuml;ck:</p>
+
+<p><strong>\(\int \mathcal{D}[x(t)]\)</strong> &ndash; &bdquo;summiere &uuml;ber alle Wege&ldquo;. Das \(\int\) ist das Integralzeichen (eine lang gezogene Summe), und \(\mathcal{D}[x(t)]\) sagt: jeder Weg \(x(t)\) &ndash; jede denkbare Kurve von A nach B &ndash; tr&auml;gt bei. Das ist Regel 1 aus Kapitel 2: Alternativen addieren.</p>
+
+<p><strong>\(e^{iS[x(t)]/\hbar}\)</strong> &ndash; der Pfeil f&uuml;r diesen Weg. L&auml;nge 1, gedreht um den Winkel \(S/\hbar\). Die einzige Funktion, die Regel 2 erf&uuml;llt (Nacheinander = Winkel addieren), ohne Wege zu bevorzugen (\(|e^{i\theta}| = 1\) f&uuml;r jedes \(\theta\)). Und \(S[x(t)]\) ist die Wirkung dieses spezifischen Weges &ndash; \(\int(\text{KE} - \text{PE})\,dt\), entlang des Weges integriert.</p>
+
+<p>Das ist <strong>Feynmans Pfadintegral</strong>. Die gesamte Quantenmechanik in einer Zeile &ndash; und jedes St&uuml;ck davon ist zwingend. Nicht ausgedacht, sondern erzwungen durch die zwei Regeln aus Kapitel 2 und die Funktionalgleichung aus dem letzten Abschnitt.</p>
+
+<p>Halt die Formel im Hinterkopf. In Kapitel 4 wirst du sehen, dass es zwei <em>andere</em> Formeln gibt, die v&ouml;llig anders aussehen &ndash; aber exakt dasselbe sagen. Und die strukturelle &Auml;hnlichkeit zwischen ihnen ist kein Zufall.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300"><strong>Was wir geschafft haben:</strong> In Kapitel 1 hast du Pfeile addiert. In Kapitel 2 hast du gelernt, dass es nur zwei Regeln gibt, und wie aus Spalten Wege werden. Hier hast du gesehen, wie die Wirkung entsteht und warum Newtons Gesetze eine Konsequenz der Quantenmechanik sind. Du hast gerade Physik verstanden, die Richard Feynman als Doktorand formuliert hat &ndash; und das einzige Werkzeug war ein Pfeil, der sich dreht.</p>
@@ -1013,29 +1021,45 @@ Alternativen &rarr; addieren: Beide Wege f&uuml;hren zur selben Stelle, also \(0
 
 <p>Alles dreht sich um eine einzige Gr&ouml;&szlig;e: den Propagator \(K(B,A)\). Er beantwortet die fundamentalste Frage der Quantenmechanik: Wie gro&szlig; ist die Amplitude daf&uuml;r, dass ein Teilchen von Punkt A zu Punkt B gelangt? Es gibt drei v&ouml;llig verschiedene Wege, diesen Pfeil zu berechnen &ndash; und alle drei liefern exakt dasselbe Ergebnis.</p>
 
-<h3>Sprache 1: Die Summe &uuml;ber Wege</h3>
+<h3>Sprache 1: Das Pfadintegral</h3>
 
-<p>Feynmans Blick. Nimm jeden m&ouml;glichen Weg, berechne die Wirkung \(S\), und addiere alle Pfeile:</p>
+<p>Feynmans Blick. Integriere &uuml;ber <em>alle m&ouml;glichen Wege</em> von A nach B. Jeder Weg tr&auml;gt einen Pfeil bei, dessen Winkel die Wirkung bestimmt:</p>
 
-<div class="math-display">$$K(B,A) = \sum_{\text{alle Wege}} e^{\,i\,S[\text{Weg}]\,/\,\hbar}$$</div>
+<div class="math-display">$$K(B,A) = \int \mathcal{D}[x(t)]\; e^{\,i\,S[x(t)]\,/\,\hbar}$$</div>
 
-<p>Keine Eigenzust&auml;nde, keine Energieniveaus. Nur Wege und ihre Wirkungen. Die Struktur entsteht erst beim Zusammenz&auml;hlen.</p>
+<p>Das \(\int \mathcal{D}[x(t)]\) ist das Pfadintegral &ndash; eine Summe &uuml;ber alle denkbaren Kurven \(x(t)\). Keine Eigenzust&auml;nde, keine Energieniveaus. Nur Wege und ihre Wirkungen. Die Struktur entsteht erst beim Aufsummieren.</p>
 
-<h3>Sprache 2: Die Summe &uuml;ber Eigenzust&auml;nde</h3>
+<h3>Sprache 2: Die Eigenzustandszerlegung</h3>
 
-<p>Der Blick der Wellenmechanik. Zerlege den Propagator in stabile Muster &ndash; die &bdquo;reinen T&ouml;ne&ldquo; des Systems:</p>
+<p>Der Blick der Wellenmechanik. Zerlege den Propagator in stabile Muster &ndash; die &bdquo;reinen T&ouml;ne&ldquo; des Systems. Jeder Eigenzustand \(n\) schwingt mit seiner Eigenfrequenz \(E_n/\hbar\):</p>
 
-<div class="math-display">$$K(B,A,t) = \sum_{n} \psi_n(x_B)\;\psi_n^*(x_A)\;e^{-i\,E_n\,(t_B - t_A)\,/\,\hbar}$$</div>
+<div class="math-display">$$K(B,A,t) = \sum_{n} \psi_n(x_B)\;\psi_n^*(x_A)\;e^{-i\,E_n\,t\,/\,\hbar}$$</div>
 
-<p>Keine Wege. Stattdessen ein Spektrum &ndash; eine Leiter von Energieniveaus. Jedes Niveau steuert einen rotierenden Pfeil bei. Das Ergebnis ist eine &Uuml;berlagerung rotierender Pfeile &ndash; exakt wie der Equalizer aus Kapitel 4a. Jeder Schieberegler steht f&uuml;r ein Energieniveau. Die Frequenzen sind die Eigenfrequenzen des Systems. Die &bdquo;Lautst&auml;rken&ldquo; werden durch die Wellenfunktionen an A und B bestimmt. Die gesamte Chemie wird in dieser Sprache am klarsten.</p>
+<p>Keine Wege. Stattdessen ein Spektrum &ndash; eine Leiter von Energieniveaus. Jedes Niveau steuert einen rotierenden Pfeil bei, genau wie die Obert&ouml;ne im Equalizer aus Kapitel 4a. Die gesamte Chemie wird in dieser Sprache am klarsten.</p>
 
-<h3>Sprache 3: Die Fourier-Zerlegung</h3>
+<h3>Sprache 3: Die Fourier-Transformation</h3>
 
-<p>Der Blick des Mathematikers. Der Propagator ist eine Funktion der Zeit. Jede Zeitfunktion l&auml;sst sich in Frequenzanteile zerlegen:</p>
+<p>Der Blick des Mathematikers. Der Propagator ist eine Funktion der Zeit. Jede Zeitfunktion l&auml;sst sich als Integral &uuml;ber Frequenzanteile schreiben:</p>
 
-<div class="math-display">$$K \sim \int \tilde{K}(\omega)\;e^{-i\,\omega\,t}\;d\omega$$</div>
+<div class="math-display">$$K(B,A,t) = \int_{-\infty}^{\infty} \tilde{K}(\omega)\;e^{-i\,\omega\,t}\;d\omega$$</div>
 
-<p>Das Frequenzspektrum hat Peaks bei den Eigenfrequenzen \(\omega_n = E_n/\hbar\). Die Fourier-Transformation <em>findet</em> die Eigenzust&auml;nde, ohne dass du sie vorher kennen musst.</p>
+<p>Das Frequenzspektrum \(\tilde{K}(\omega)\) hat Peaks bei den Eigenfrequenzen \(\omega_n = E_n/\hbar\). Dazwischen ist es null. Die Fourier-Transformation <em>findet</em> die Eigenzust&auml;nde, ohne dass du sie vorher kennen musst.</p>
+
+<h3>Siehst du es?</h3>
+
+<p>Schau dir die drei Formeln nochmal an. Sie sehen verschieden aus &ndash; aber sie haben <em>dieselbe Architektur</em>:</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2;">
+    <strong>Pfadintegral:</strong>&ensp; \(K = \displaystyle\int \mathcal{D}[x]\; e^{\,i\,S[x]\,/\,\hbar}\)&emsp;&mdash; integriere &uuml;ber <em>Wege</em>, gewichtet mit \(e^{i \cdot \text{Wirkung}}\)<br>
+    <strong>Eigenzust&auml;nde:</strong>&ensp; \(K = \displaystyle\sum_n c_n\; e^{-i\,E_n\,t\,/\,\hbar}\)&emsp;&mdash; summiere &uuml;ber <em>Moden</em>, gewichtet mit \(e^{i \cdot \text{Energie} \times \text{Zeit}}\)<br>
+    <strong>Fourier:</strong>&ensp; \(K = \displaystyle\int \tilde{K}(\omega)\; e^{-i\,\omega\,t}\;d\omega\)&emsp;&mdash; integriere &uuml;ber <em>Frequenzen</em>, gewichtet mit \(e^{i \cdot \text{Frequenz} \times \text{Zeit}}\)
+  </p>
+</div>
+
+<p>Drei Mal dasselbe Muster: <strong>Integriere (oder summiere) &uuml;ber alle M&ouml;glichkeiten, und gib jeder M&ouml;glichkeit einen rotierenden Pfeil \(e^{i \cdot \text{etwas}}\).</strong> Beim Pfadintegral ist das &bdquo;etwas&ldquo; die Wirkung eines Weges. Bei den Eigenzust&auml;nden ist es die Energie mal Zeit. Bei Fourier ist es die Frequenz mal Zeit. Die Struktur ist identisch. Nur die Variable, &uuml;ber die summiert wird, unterscheidet sich: Wege, Energieniveaus oder Frequenzen.</p>
+
+<p>Das ist die tiefe Erkenntnis &ndash; und sie ist kein Zufall. Sie folgt daraus, dass die Quantenmechanik <em>linear</em> ist: Jede L&ouml;sung l&auml;sst sich als &Uuml;berlagerung anderer L&ouml;sungen schreiben. Diese Eigenschaft erzwingt, dass es verschiedene &bdquo;Basen&ldquo; gibt (Wege, Eigenzust&auml;nde, Frequenzen), zwischen denen man beliebig wechseln kann &ndash; wie verschiedene Koordinatensysteme f&uuml;r denselben Raum.</p>
 
 <!-- INTERACTIVE: ThreeLanguages -->
 <div class="try-it">
