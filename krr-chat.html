@@ -155,7 +155,7 @@ var words = RAW.toLowerCase().split(/\s+/);
 var W2I = {}, I2W = {}, VOCAB = 0;
 for (var i = 0; i < words.length; i++) { if (W2I[words[i]] === undefined) { W2I[words[i]] = VOCAB; I2W[VOCAB] = words[i]; VOCAB++; } }
 
-var CTX = 5, HASH = 128, N_BI = 3, FEAT = CTX*HASH + N_BI*HASH, D = 2048, SIGMA = 1.5, LAM = 0.05;
+var CTX = 5, HASH = 128, N_BI = 3, FEAT = CTX*HASH + N_BI*HASH, D = 1024, SIGMA = 1.5, LAM = 0.3;
 
 function hashW(w) { var h=0; for(var i=0;i<w.length;i++) h=((h*31)+w.charCodeAt(i))|0; return((h%HASH)+HASH)%HASH; }
 function hashP(a,b) { var s=a+'|'+b; var h=0; for(var i=0;i<s.length;i++) h=((h*37)+s.charCodeAt(i))|0; return((h%HASH)+HASH)%HASH; }
@@ -396,23 +396,39 @@ function handleSend() {
   var keywords = queryWords.filter(function(w){ return !stopQ[w]; });
   if (keywords.length === 0) keywords = queryWords.slice(-2);
 
-  // Find best matching position in corpus: where most keywords appear nearby
-  var bestPos = -1, bestScore = -1;
-  for (var i = 0; i < words.length - CTX - 5; i++) {
-    var window = words.slice(i, i + CTX + 5).join(' ');
-    var score = 0;
-    for (var ki = 0; ki < keywords.length; ki++) {
-      if (window.indexOf(keywords[ki]) >= 0) score++;
-    }
-    if (score > bestScore) { bestScore = score; bestPos = i; }
+  // Find best matching SENTENCE START in corpus
+  // Step 1: find all sentence starts (positions after ".")
+  var sentStarts = [0];
+  for (var i = 0; i < words.length; i++) {
+    if (words[i] === '.') sentStarts.push(i + 1);
   }
 
-  // Use the corpus context at that position as the seed
+  // Step 2: score each sentence by keyword overlap
+  var bestSent = -1, bestScore = -1;
+  for (var si = 0; si < sentStarts.length - 1; si++) {
+    var sStart = sentStarts[si];
+    var sEnd = sentStarts[si + 1];
+    var sentText = words.slice(sStart, sEnd).join(' ');
+    var score = 0;
+    for (var ki = 0; ki < keywords.length; ki++) {
+      if (sentText.indexOf(keywords[ki]) >= 0) score += 2;
+      // Partial match bonus
+      for (var wi = sStart; wi < sEnd; wi++) {
+        if (words[wi].indexOf(keywords[ki]) >= 0 && words[wi] !== keywords[ki]) score++;
+      }
+    }
+    if (score > bestScore) { bestScore = score; bestSent = sStart; }
+  }
+
+  // Step 3: Use the last CTX words of the matched sentence as seed
+  // (so the model continues FROM that sentence)
   var promptWords;
-  if (bestPos >= 0 && bestScore > 0) {
-    promptWords = words.slice(bestPos, bestPos + CTX);
+  if (bestSent >= 0 && bestScore > 0) {
+    // Find a good seed point: use words around the keyword
+    var seedEnd = Math.min(bestSent + 8, words.length - 1);
+    var seedStart = Math.max(seedEnd - CTX, 0);
+    promptWords = words.slice(seedStart, seedEnd);
   } else {
-    // Fallback: use the user's words directly
     promptWords = prompt.split(/\s+/);
   }
 
@@ -420,6 +436,10 @@ function handleSend() {
   var allWords=promptWords.slice(),recent=[];
 
   var container=document.createDocumentFragment();
+  // Show the seed context so user understands what the model starts from
+  var seedSpan=document.createElement('span');seedSpan.className='sd';
+  seedSpan.textContent=promptWords.join(' ')+' ';
+  container.appendChild(seedSpan);
   var genSpan=document.createElement('span');genSpan.className='gn';
   container.appendChild(genSpan);
   var botEl=addMsg(container,'b');
