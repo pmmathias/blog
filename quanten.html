@@ -35,8 +35,7 @@
   <script defer src="vendor/katex/auto-render.min.js"></script>
   <script src="vendor/react.production.min.js"></script>
   <script src="vendor/react-dom.production.min.js"></script>
-  <script src="vendor/framer-motion.min.js"></script>
-  <script>var framerMotion = window.Motion || {};</script>
+  <!-- Framer Motion removed — ThreeLanguages replaced by static SVG -->
   <script defer src="components.js"></script>
 
   <!-- Self-hosted Inter font (WOFF2, DSGVO-konform) -->
@@ -1061,15 +1060,10 @@ Alternativen &rarr; addieren: Beide Wege f&uuml;hren zur selben Stelle, also \(0
 
 <p>Das ist die tiefe Erkenntnis &ndash; und sie ist kein Zufall. Sie folgt daraus, dass die Quantenmechanik <em>linear</em> ist: Jede L&ouml;sung l&auml;sst sich als &Uuml;berlagerung anderer L&ouml;sungen schreiben. Diese Eigenschaft erzwingt, dass es verschiedene &bdquo;Basen&ldquo; gibt (Wege, Eigenzust&auml;nde, Frequenzen), zwischen denen man beliebig wechseln kann &ndash; wie verschiedene Koordinatensysteme f&uuml;r denselben Raum.</p>
 
-<!-- INTERACTIVE: ThreeLanguages -->
-<div class="try-it">
-  <p><strong>Probier es selbst</strong></p>
-  <p>Die Visualisierung zeigt das Dreieck der drei Sprachen. <strong>Klicke auf jede Ecke</strong>, um ihre Perspektive zu sehen. Beobachte den Propagator in der Mitte: <strong>derselbe Pfeil, dreimal berechnet, dreimal derselbe.</strong></p>
-</div>
-
-<div class="component-wrap">
-  <div id="mount-three-languages"></div>
-</div>
+<figure class="illus illus-lg">
+  <img src="img/three-languages.svg" alt="Das Dreieck der drei Sprachen: Pfadintegral (oben), Eigenzust&auml;nde (links), Fourier (rechts), K(B,A) in der Mitte" loading="lazy">
+  <figcaption>Drei Formeln, eine Physik. Jede Ecke berechnet denselben Propagator \(K(B,A)\) &ndash; nur die Variable, &uuml;ber die integriert wird, unterscheidet sich: Wege, Moden oder Frequenzen.</figcaption>
+</figure>
 
 <h3>Das Dreieck</h3>
 
@@ -1299,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'mount-action-phase': window.ActionPhaseViz || null,
     'mount-fourier': window.FourierExplorer || null,
     'mount-standing-waves': window.StandingWaves || null,
-    'mount-three-languages': window.ThreeLanguages || null,
+    // ThreeLanguages replaced by static SVG diagram
   };
 
   const mounted = new Set();
