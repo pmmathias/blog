@@ -215,20 +215,55 @@ async function trainGPU() {
   setSt('Z^TZ in ' + tMat + 's (GPU). Solving ' + D + '\u00D7' + D + ' system...', 't', 60);
   await tf.nextFrame();
 
-  // === Step 4: Solve (ZTZ) W = ZTY via tf.linalg.solve — GPU! ===
+  // === Step 4: Download to CPU and solve via Gaussian elimination ===
+  // (tf.linalg.solve is not available in browser tf.js — but the solve
+  //  is only 2048×2048, fast on CPU. The GPU did the heavy lifting above.)
   var tSolve2 = performance.now();
-  var W_tf = tf.linalg.solve(ZTZ, ZTY); // D×VOCAB — GPU solve!
-  ZTZ.dispose(); ZTY.dispose();
-
-  var tSolveTime = ((performance.now() - tSolve2)/1000).toFixed(2);
-  setSt('Solved in ' + tSolveTime + 's (GPU). Downloading weights...', 't', 85);
+  setSt('Downloading matrices from GPU...', 't', 68);
   await tf.nextFrame();
 
-  // === Step 5: Download W to CPU for fast inference ===
-  var W_raw = await W_tf.data(); // Float32Array
-  W_cpu = new Float64Array(W_raw.length);
-  for (var i = 0; i < W_raw.length; i++) W_cpu[i] = W_raw[i];
-  W_tf.dispose();
+  var ZTZ_raw = await ZTZ.data();  // Float32Array D*D
+  var ZTY_raw = await ZTY.data();  // Float32Array D*VOCAB
+  ZTZ.dispose(); ZTY.dispose();
+
+  setSt('Solving ' + D + '\u00D7' + D + ' system on CPU (Gauss elimination)...', 't', 72);
+  await tf.nextFrame();
+
+  // Augmented matrix [ZTZ | ZTY] and Gaussian elimination
+  var cols = D + VOCAB;
+  var M = new Float64Array(D * cols);
+  for (var i = 0; i < D; i++) {
+    for (var j = 0; j < D; j++) M[i*cols+j] = ZTZ_raw[i*D+j];
+    for (var j = 0; j < VOCAB; j++) M[i*cols+D+j] = ZTY_raw[i*VOCAB+j];
+  }
+  ZTZ_raw = null; ZTY_raw = null;
+
+  for (var col = 0; col < D; col++) {
+    var mr=col, mv=Math.abs(M[col*cols+col]);
+    for (var r=col+1; r<D; r++) { var av=Math.abs(M[r*cols+col]); if(av>mv){mv=av;mr=r;} }
+    if (mr!==col) for(var j=col;j<cols;j++){var t=M[col*cols+j];M[col*cols+j]=M[mr*cols+j];M[mr*cols+j]=t;}
+    var piv=M[col*cols+col]; if(Math.abs(piv)<1e-14) continue;
+    for (var r=col+1; r<D; r++) {
+      var f=M[r*cols+col]/piv; if(Math.abs(f)<1e-14) continue;
+      for(var j=col;j<cols;j++) M[r*cols+j]-=f*M[col*cols+j];
+    }
+    if (col%400===0) { pb.style.width=(72+13*col/D)+'%'; }
+  }
+  // Back substitution → W_cpu (D×VOCAB)
+  W_cpu = new Float64Array(D * VOCAB);
+  for (var i=D-1; i>=0; i--) {
+    var piv=M[i*cols+i]; if(Math.abs(piv)<1e-14) continue;
+    for (var v=0; v<VOCAB; v++) {
+      var val=M[i*cols+D+v];
+      for(var j=i+1;j<D;j++) val-=M[i*cols+j]*W_cpu[j*VOCAB+v];
+      W_cpu[i*VOCAB+v]=val/piv;
+    }
+  }
+  M = null;
+
+  var tSolveTime = ((performance.now() - tSolve2)/1000).toFixed(2);
+  setSt('Solved in ' + tSolveTime + 's (CPU). Testing...', 't', 88);
+  await tf.nextFrame();
 
   // Keep omega and bias on CPU for inference
   var omega_raw = await omega_tf.data();
