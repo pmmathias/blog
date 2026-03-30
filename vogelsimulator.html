@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vogelsimulator: 3D-Flugerlebnis mit Webcam-Steuerung &mdash; an einem Nachmittag gebaut | Mathias Leonhardt</title>
+  <meta name="description" content="Wie ein Mensch und eine KI an einem Nachmittag einen browserbasierten 3D-Vogelflug-Simulator mit Webcam-Gestensteuerung gebaut haben. Three.js, MediaPipe, und viel Iteration.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/vogelsimulator.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/vogelsimulator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Ein Vogel, eine Webcam und ein Nachmittag &mdash; 3D-Flugsimulator im Browser">
+  <meta property="og:description" content="Wie ein Mensch und eine KI an einem Nachmittag einen browserbasierten 3D-Vogelflug-Simulator mit Webcam-Gestensteuerung gebaut haben.">
+  <meta property="og:url" content="https://ki-mathias.de/vogelsimulator.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-03-30">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Three.js">
+  <meta property="article:tag" content="WebGL">
+  <meta property="article:tag" content="MediaPipe">
+  <meta property="article:tag" content="Spieleentwicklung">
+  <meta property="article:tag" content="KI-Programmierung">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Ein Vogel, eine Webcam und ein Nachmittag">
+  <meta name="twitter:description" content="3D-Vogelflug-Simulator mit Webcam-Gestensteuerung &mdash; gebaut an einem Nachmittag mit KI.">
+
+  <!-- All resources self-hosted &mdash; zero external requests, fully DSGVO-compliant -->
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script defer src="components.js"></script>
+
+  <!-- Self-hosted Inter font (WOFF2, DSGVO-konform) -->
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Ein Vogel, eine Webcam und ein Nachmittag",
+    "description": "Wie ein Mensch und eine KI an einem Nachmittag einen browserbasierten 3D-Vogelflug-Simulator mit Webcam-Gestensteuerung gebaut haben. Three.js, MediaPipe, und viel Iteration.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-03-30",
+    "dateModified": "2026-03-30",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/vogelsimulator.html" },
+    "inLanguage": "de",
+    "isAccessibleForFree": true,
+    "keywords": ["Three.js", "WebGL", "MediaPipe", "Spieleentwicklung", "KI-Programmierung", "Webcam-Steuerung"],
+    "articleSection": "Spieleentwicklung",
+    "wordCount": 4500,
+    "timeRequired": "PT20M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+
+    /* Scroll offset for fixed nav */
+    section[id] { scroll-margin-top: 4.5rem; }
+
+    /* Progress bar */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; z-index: 100;
+      background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b);
+      transition: width 50ms linear;
+    }
+
+    /* KaTeX dark theme overrides */
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose,
+    .katex .mpunct, .katex .minner { color: #e2e8f0; }
+
+    /* Prose styling */
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 {
+      font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem;
+      background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .prose-dark h3 {
+      font-size: 1.25rem; font-weight: 600; color: #f1f5f9;
+      margin-top: 2.5rem; margin-bottom: 0.75rem;
+    }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+
+    /* Interactive prompt styling */
+    .try-it {
+      border-left: 3px solid #22d3ee; padding: 1rem 1.25rem;
+      background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0;
+      margin: 2rem 0;
+    }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+
+    /* Summary box */
+    .summary-box {
+      border: 1px solid #374151; padding: 1.25rem 1.5rem;
+      border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2);
+      margin: 2rem 0;
+    }
+
+    /* Glossary tooltip */
+    .glossary {
+      border-bottom: 1px dashed #60a5fa; cursor: help;
+      color: #93c5fd;
+    }
+    .glossary:hover { color: #bfdbfe; }
+
+    /* Section divider */
+    .section-divider {
+      width: 60px; height: 2px; margin: 3rem auto;
+      background: linear-gradient(90deg, #22d3ee, #f59e0b);
+      border-radius: 1px;
+    }
+
+    /* Nav active */
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+
+    /* Mobile nav */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* Illustration figures */
+    .illus {
+      margin: 2rem auto; border-radius: 0.75rem; overflow: hidden;
+      border: 1px solid #1f2937; background: #111827;
+    }
+    .illus img {
+      width: 100%; max-width: 100%; height: auto; display: block;
+      opacity: 0.92; transition: opacity 0.3s;
+      image-rendering: auto;
+    }
+    /* Never upscale beyond native resolution */
+    .illus { width: fit-content; }
+    .illus img:hover { opacity: 1; }
+    .illus figcaption {
+      padding: 0.5rem 0.75rem; font-size: 0.7rem; color: #6b7280;
+      line-height: 1.4; border-top: 1px solid #1f2937;
+    }
+    .illus figcaption a { color: #6b7280; text-decoration: underline; }
+    .illus figcaption a:hover { color: #9ca3af; }
+
+    /* Size variants */
+    .illus-sm { max-width: 260px; }
+    .illus-md { max-width: 420px; }
+    .illus-lg { max-width: 580px; }
+
+    /* Float variants for inline placement */
+    @media (min-width: 640px) {
+      .illus-float-right { float: right; margin: 0.5rem 0 1rem 1.5rem; }
+      .illus-float-left  { float: left;  margin: 0.5rem 1.5rem 1rem 0; }
+    }
+
+    /* Clear floats */
+    .clearfix::after { content: ''; display: table; clear: both; }
+
+    .illus-row {
+      display: grid; gap: 1rem; margin: 2rem 0;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .illus-row { grid-template-columns: 1fr 1fr; }
+    }
+    .illus-row .illus { margin: 0; }
+
+    /* Responsive component containers */
+    .component-wrap {
+      margin: 2.5rem -0.5rem;
+      padding: 0;
+    }
+    @media (min-width: 640px) {
+      .component-wrap { margin: 2.5rem -2rem; }
+    }
+    @media (min-width: 1024px) {
+      .component-wrap { margin: 2.5rem -4rem; }
+    }
+
+    /* Display math centering */
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+
+    /* Code block styling */
+    pre {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    code {
+      font-family: 'Menlo', 'Consolas', monospace;
+      color: #e2e8f0;
+    }
+    p code {
+      background: #1e293b;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.25rem;
+      font-size: 0.85em;
+    }
+    .code-keyword { color: #c084fc; }
+    .code-string { color: #34d399; }
+    .code-number { color: #fbbf24; }
+    .code-comment { color: #64748b; }
+
+    /* CTA button */
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #22d3ee, #3b82f6);
+      color: #fff; font-weight: 600; font-size: 1.1rem;
+      padding: 0.85rem 2rem; border-radius: 0.75rem;
+      text-decoration: none; transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(34, 211, 238, 0.25);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(34, 211, 238, 0.35);
+    }
+
+    /* Keyboard key styling */
+    kbd {
+      display: inline-block; background: #1e293b; border: 1px solid #374151;
+      border-radius: 0.25rem; padding: 0.1rem 0.45rem; font-size: 0.8em;
+      font-family: 'Menlo', 'Consolas', monospace; color: #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<!-- Progress bar -->
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+    <button id="nav-toggle" class="flex items-center gap-2 text-white font-semibold text-sm hover:text-cyan-400 transition group">
+      <span class="text-cyan-400 text-lg transition-transform duration-200 group-[.open]:rotate-90">&rang;</span>
+      KI-Mathias
+    </button>
+    <div class="flex items-center gap-3 text-xs text-gray-500">
+      <a href="impressum.html" class="hover:text-gray-300 transition hidden sm:inline">Impressum</a>
+      <a href="datenschutz.html" class="hover:text-gray-300 transition hidden sm:inline">Datenschutz</a>
+      <a href="/en/flight-simulator.html" class="hover:text-gray-300 transition">EN</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Unified dropdown: Blog nav + Article TOC -->
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden">
+  <div id="nav-backdrop" class="absolute inset-0 bg-black/40" style="min-height:100vh;"></div>
+  <div class="relative max-w-xs mx-4 sm:mx-8 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto">
+
+    <!-- Article TOC -->
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Diesen Beitrag</p>
+      <a href="#demo" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Probier es selbst</a>
+      <a href="#phase-1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Das Ger&uuml;st</a>
+      <a href="#phase-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Eine Welt aus dem Nichts</a>
+      <a href="#phase-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Der Vogel fliegt</a>
+      <a href="#phase-4" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; H&auml;nde werden Fl&uuml;gel</a>
+      <a href="#polish" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Die letzten 20%</a>
+      <a href="#meta" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Was das &uuml;ber KI sagt</a>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+
+    <!-- Other blog posts -->
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Weitere Beitr&auml;ge</p>
+      <a href="quanten.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">Quantenphysik interaktiv</a>
+      <a href="index.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">&larr; Alle Beitr&auml;ge</a>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+
+    <!-- Meta links -->
+    <div class="p-3 flex gap-1">
+      <a href="impressum.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Impressum</a>
+      <a href="datenschutz.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Datenschutz</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MAIN CONTENT -->
+<!-- ============================================================ -->
+<div class="max-w-4xl mx-auto">
+
+<!-- HERO -->
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; Spieleentwicklung</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight">
+    Ein Vogel, eine Webcam und ein Nachmittag
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Wie ein Mensch und eine KI einen browserbasierten 3D-Flugsimulator mit Gestensteuerung gebaut haben &mdash; in einer einzigen Sitzung.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span>
+    <span>&middot;</span>
+    <time datetime="2026-03-30">M&auml;rz 2026</time>
+    <span>&middot;</span>
+    <span>~20 Min. Lesezeit</span>
+  </div>
+</header>
+
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: Probier es selbst -->
+<!-- ============================================================ -->
+<section id="demo" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 1</p>
+<h2>Probier es selbst</h2>
+
+<p>Bevor wir reden &mdash; flieg erst mal.</p>
+
+<div class="try-it" style="text-align: center; padding: 2rem 1.5rem;">
+  <p style="margin-bottom: 1.25rem;">Alles l&auml;uft im Browser. Keine Installation, kein Download.</p>
+  <a href="/vogelsimulator/" class="cta-btn">Jetzt fliegen &rarr;</a>
+</div>
+
+<p><strong>Steuerung per Tastatur:</strong></p>
+<p>
+  <kbd>SPACE</kbd> Fl&uuml;gelschlag &nbsp;
+  <kbd>A</kbd>/<kbd>D</kbd> Drehen &nbsp;
+  <kbd>W</kbd> Sturzflug &nbsp;
+  <kbd>S</kbd> Steigen &nbsp;
+  <kbd>T</kbd> Webcam an/aus
+</p>
+
+<figure class="illus">
+  <img src="img/vogel-dive.png" alt="Sturzflug &uuml;ber die prozedurale Insel bei hoher Geschwindigkeit" loading="lazy">
+  <figcaption>Sturzflug &uuml;ber die Insel &mdash; bei 293 km/h.</figcaption>
+</figure>
+
+<p>Funktioniert? Gut. Dann lass mich dir erz&auml;hlen, wie dieses Ding an einem einzigen Nachmittag entstanden ist.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: Phase 1 — Das Gerüst -->
+<!-- ============================================================ -->
+<section id="phase-1" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 2</p>
+<h2>Phase 1 &mdash; Das Ger&uuml;st</h2>
+
+<h3>Eine leere Leinwand</h3>
+
+<p>Jedes Projekt beginnt mit einer leeren Leinwand. In unserem Fall: ein Terminal, <code>npm create vite@latest</code>, und die Entscheidung f&uuml;r Three.js als 3D-Engine. Kein Unity, kein Unreal &mdash; purer JavaScript-Code, der direkt im Browser l&auml;uft.</p>
+
+<p>Warum Three.js? Weil es die niedrigste Einstiegsh&uuml;rde bietet. Kein Plugin, kein App-Store, kein Download. Der Nutzer &ouml;ffnet eine URL und fliegt. Das war die Vision von Anfang an.</p>
+
+<p>Die erste Szene war simpel: eine Kamera, ein Himmel, Licht.</p>
+
+<pre><code><span class="code-keyword">const</span> scene = <span class="code-keyword">new</span> THREE.Scene();
+<span class="code-keyword">const</span> sky = <span class="code-keyword">new</span> Sky();
+sky.scale.setScalar(<span class="code-number">450000</span>);
+scene.add(sky);
+
+<span class="code-keyword">const</span> camera = <span class="code-keyword">new</span> THREE.PerspectiveCamera(<span class="code-number">60</span>, w/h, <span class="code-number">2</span>, <span class="code-number">8000</span>);
+<span class="code-keyword">const</span> renderer = <span class="code-keyword">new</span> THREE.WebGLRenderer({ antialias: <span class="code-keyword">true</span> });</code></pre>
+
+<p>In 20 Minuten stand die erste leere Szene mit blauem Himmel. Kein Terrain, keine B&auml;ume, kein Vogel. Aber ein Anfang. Und ein Anfang ist alles, was man braucht, um Momentum aufzubauen.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: Phase 2 — Eine Welt aus dem Nichts -->
+<!-- ============================================================ -->
+<section id="phase-2" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 3</p>
+<h2>Phase 2 &mdash; Eine Welt aus dem Nichts</h2>
+
+<h3>Wie baut man eine Landschaft, ohne ein einziges Polygon von Hand zu setzen?</h3>
+
+<p>Die Antwort: mit Mathe. Genauer gesagt, mit Parabeln. Stell dir einen flachen Tisch vor. Jetzt legst du unsichtbare H&uuml;gel darauf &mdash; jeder definiert durch einen Mittelpunkt, einen Radius und eine H&ouml;he. An jedem Punkt des Terrains fragst du: Wie viele dieser H&uuml;gel &uuml;berlagern sich hier? Und addierst ihre Beitr&auml;ge.</p>
+
+<pre><code><span class="code-keyword">function</span> getTerrainHeight(x, z, arcs) {
+  <span class="code-keyword">let</span> h = <span class="code-number">0</span>;
+  <span class="code-keyword">for</span> (<span class="code-keyword">const</span> arc <span class="code-keyword">of</span> arcs) {
+    <span class="code-keyword">const</span> dx = x - arc.cx, dz = z - arc.cz;
+    <span class="code-keyword">const</span> distSq = dx * dx + dz * dz;
+    <span class="code-keyword">const</span> contribution = <span class="code-number">1</span> - distSq / (arc.radius * arc.radius);
+    <span class="code-keyword">if</span> (contribution > <span class="code-number">0</span>) h += arc.height * contribution;
+  }
+  <span class="code-keyword">return</span> h;
+}</code></pre>
+
+<p>900 positive Arcs formen die H&uuml;gel. 270 negative Arcs schneiden T&auml;ler hinein. Ein radialer Falloff sorgt daf&uuml;r, dass die Insel an den R&auml;ndern sanft ins Meer abf&auml;llt. Das Ergebnis: eine nat&uuml;rlich wirkende Landschaft, die bei jedem Laden leicht anders aussieht &mdash; aber immer plausibel.</p>
+
+<figure class="illus">
+  <img src="img/vogel-terrain.png" alt="Prozedurale Insellandschaft mit H&uuml;geln, T&auml;lern und Wasser" loading="lazy">
+  <figcaption>900 Parabeln + negative Arcs + radialer Falloff = eine nat&uuml;rliche Insel.</figcaption>
+</figure>
+
+<p>Aber eine sch&ouml;ne Landschaft n&uuml;tzt nichts, wenn sie ruckelt. 900 Arcs pro Vertex durchrechnen? Bei einem 400&times;400-Grid sind das &uuml;ber 140 Millionen Operationen &mdash; pro Frame. Das geht nicht.</p>
+
+<h3>Octree und Frustum Culling</h3>
+
+<p>Die L&ouml;sung: Ein <strong>Octree</strong> unterteilt die Welt in r&auml;umliche Zellen. Statt alle 100.000 B&auml;ume und 900 Geb&auml;ude pro Frame zu rendern, fragt die Engine nur: Welche Zellen sind &uuml;berhaupt im Sichtfeld der Kamera? <strong>Frustum Culling</strong> verwirft alles au&szlig;erhalb des Sichtkegelss. Von 100.000 B&auml;umen werden typischerweise nur 3.000&ndash;5.000 tats&auml;chlich gezeichnet.</p>
+
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Zusammenfassung</p>
+  <p><strong>900 Parabeln + negative Arcs + radialer Insel-Falloff = eine nat&uuml;rliche Landschaft, ohne je einen Vertex manuell zu setzen.</strong></p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: Phase 3 — Der Vogel fliegt -->
+<!-- ============================================================ -->
+<section id="phase-3" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 4</p>
+<h2>Phase 3 &mdash; Der Vogel fliegt</h2>
+
+<h3>Eine Kamera mit H&ouml;henangst</h3>
+
+<p>Das Terrain war da. Aber ein Vogel, der nicht fliegt, ist nur eine Kamera mit H&ouml;henangst.</p>
+
+<p>Der erste Ansatz war ein simples Arcade-Modell: Dr&uuml;ck eine Taste, steig nach oben. Lass los, sink nach unten. Das funktionierte &mdash; technisch. Aber es f&uuml;hlte sich an wie ein Aufzug mit Panoramafenster. Kein Gleiten, kein Auftrieb, kein <em>Fliegen</em>.</p>
+
+<p>Also bauten wir ein aerodynamisches Modell. Die zentrale Erkenntnis: <strong>Auftrieb h&auml;ngt vom Quadrat der Geschwindigkeit ab.</strong> Das ist der dynamische Druck &mdash; dieselbe Physik, die echte V&ouml;gel und Flugzeuge in der Luft h&auml;lt.</p>
+
+<pre><code><span class="code-keyword">const</span> dynamicPressure = <span class="code-number">0.5</span> * AIR_DENSITY * speed * speed;
+<span class="code-keyword">const</span> liftMag = dynamicPressure * wingArea * CL / BIRD_MASS;
+velocity.y += baselineLift * dt;  <span class="code-comment">// Wing-Incidence-Winkel</span>
+velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;</span></code></pre>
+
+<p>Der erste Fl&uuml;gelschlag brachte&hellip; nichts. Gravity gewann. Immer. Der Vogel fiel wie ein Stein, egal wie wild man die Leertaste h&auml;mmerte.</p>
+
+<p>Das Problem: Wir hatten den <strong>Wing-Incidence-Winkel</strong> vergessen. Echte Vogelfl&uuml;gel sind nicht flach &mdash; sie haben einen eingebauten Anstellwinkel von etwa 3&deg;. Dieser Winkel erzeugt auch im Geradeausflug minimalen Auftrieb. Ohne ihn ist der Fl&uuml;gel ein Brett, und ein Brett f&auml;llt.</p>
+
+<figure class="illus">
+  <img src="img/vogel-flight.png" alt="Vogelperspektive &uuml;ber die Insellandschaft w&auml;hrend des Flugs" loading="lazy">
+  <figcaption>Gleiten &uuml;ber die Insel &mdash; erst nach sechs Iterationen f&uuml;hlte es sich nach Fliegen an.</figcaption>
+</figure>
+
+<p>Sechs Iterationen hat es gedauert. Sechs Versionen des Physik-Modells, bis das Verh&auml;ltnis von Schwerkraft, Auftrieb und Fl&uuml;gelschlag stimmte. Bis man die Leertaste dr&uuml;cken konnte und <em>sp&uuml;rte</em>, dass der Vogel steigt. Bis ein Sturzflug sich gef&auml;hrlich anf&uuml;hlte und ein Looping den Magen zusammenzog.</p>
+
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Zusammenfassung</p>
+  <p><strong>Realistische Physik &ne; spa&szlig;ige Physik. Wir brauchten 6 Iterationen, bis Flattern tats&auml;chlich H&ouml;he brachte.</strong></p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: Phase 4 — Die Hände werden zu Flügeln -->
+<!-- ============================================================ -->
+<section id="phase-4" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 5</p>
+<h2>Phase 4 &mdash; Die H&auml;nde werden zu Fl&uuml;geln</h2>
+
+<h3>Der verr&uuml;ckte Teil</h3>
+
+<p>Und dann kam der verr&uuml;ckte Teil. Die Idee: Was w&auml;re, wenn du nicht die Tastatur benutzt, sondern deine Arme? Wenn du vor der Webcam mit den Armen flatterst und der Vogel im Spiel tats&auml;chlich steigt?</p>
+
+<p>MediaPipe Pose Detection macht das m&ouml;glich. Googles ML-Modell erkennt 33 K&ouml;rperpunkte in Echtzeit &mdash; direkt im Browser, ohne Server, ohne Cloud. Schultern, Ellbogen, Handgelenke. Alles, was wir brauchen.</p>
+
+<p>Die Logik: Wir messen die H&ouml;he beider Handgelenke relativ zu den Schultern. Hohe H&auml;nde = Fl&uuml;gel oben. Niedrige H&auml;nde = Fl&uuml;gel unten. Die &Auml;nderungsrate dazwischen = Fl&uuml;gelschlag.</p>
+
+<pre><code><span class="code-keyword">const</span> delta = Math.abs(recentAvg - olderAvg);
+<span class="code-keyword">if</span> (delta > <span class="code-number">0.025</span>) {
+  flapStrength = clamp(delta * <span class="code-number">8</span>, <span class="code-number">0.5</span>, <span class="code-number">1</span>);
+}</code></pre>
+
+<p>Die Herausforderungen waren subtiler als erwartet. Das Webcam-Bild ist gespiegelt &mdash; links ist rechts. Manchmal verschwinden Landmarks, weil der Arm au&szlig;erhalb des Bildes ist. Und die Erkennungsrate schwankt mit der Beleuchtung.</p>
+
+<p>Unsere L&ouml;sung: <strong>Graceful Degradation.</strong> Wenn die H&auml;nde aus dem Bild verschwinden, gleitet der Vogel sanft weiter &mdash; statt abzust&uuml;rzen. Wenn MediaPipe keine Pose erkennt, f&auml;llt das System leise auf Tastatursteuerung zur&uuml;ck. Kein Fehler, kein Popup, kein Frust.</p>
+
+<figure class="illus">
+  <img src="img/vogel-close.png" alt="Nahaufnahme: Flug &uuml;ber B&auml;ume und Geb&auml;ude" loading="lazy">
+  <figcaption>Tiefflug durch die Siedlung &mdash; B&auml;ume und Geb&auml;ude aus der N&auml;he.</figcaption>
+</figure>
+
+<p>Das Gef&uuml;hl, wenn du zum ersten Mal die Arme hebst und der Vogel steigt &mdash; das ist der Moment, in dem das Projekt von &bdquo;technisch interessant&ldquo; zu &bdquo;das will ich Leuten zeigen&ldquo; kippt.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: Die letzten 20% -->
+<!-- ============================================================ -->
+<section id="polish" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 6</p>
+<h2>Die letzten 20%</h2>
+
+<h3>80% der Zeit</h3>
+
+<p>Die letzten 20% kosten 80% der Zeit. Das ist universell. Und bei diesem Projekt waren die letzten 20% vor allem eins: Texturen.</p>
+
+<h3>F&uuml;nf Schichten Terrain</h3>
+
+<p>Eine einfarbige Landschaft sieht aus wie Knete. Also bauten wir einen Custom Shader mit f&uuml;nf Texturschichten: Sand am Strand, Gras auf den H&uuml;geln, Erde in mittleren H&ouml;hen, Fels an den Steilh&auml;ngen, Schnee auf den Gipfeln. Jede Schicht blendet sanft in die n&auml;chste &uuml;ber.</p>
+
+<pre><code><span class="code-keyword">float</span> grassFactor = smoothstep(sandEnd, sandEnd + <span class="code-number">8.0</span>, h)
+                  * (<span class="code-number">1.0</span> - smoothstep(grassEnd - <span class="code-number">8.0</span>, grassEnd + <span class="code-number">8.0</span>, h));
+<span class="code-keyword">float</span> rockFactor = smoothstep(earthEnd, earthEnd + <span class="code-number">5.0</span>, h)
+                  * (<span class="code-number">1.0</span> - smoothstep(rockEnd - <span class="code-number">8.0</span>, rockEnd + <span class="code-number">8.0</span>, h));
+<span class="code-keyword">float</span> snowFactor = smoothstep(rockEnd - <span class="code-number">8.0</span>, rockEnd + <span class="code-number">8.0</span>, h);</code></pre>
+
+<p>Die Schnee-Textur war grau. Drei Stunden lang suchten wir den Bug in der Shader-Logik. Wir pr&uuml;ften die Blending-Faktoren, die H&ouml;henschwellen, die UV-Koordinaten. Alles sah korrekt aus. Bis wir merkten: Die Logik <em>war</em> korrekt. Die Textur war einfach nicht wei&szlig; genug. Ein 200&times;200-Pixel-JPEG mit einem Durchschnittswert von 180 statt 250. Drei Stunden Debugging f&uuml;r ein Bildbearbeitungsproblem.</p>
+
+<h3>Geb&auml;ude und Siedlungen</h3>
+
+<p>Eine Insel ohne Zivilisation wirkt leer. Also generierten wir Geb&auml;ude &mdash; f&uuml;nf Typen: Wohnh&auml;user, Scheunen, T&uuml;rme, Hotels und Hochh&auml;user. Jedes mit prozeduralen Backstein- oder Betontexturen, zuf&auml;lligen Proportionen und Farbvariationen.</p>
+
+<p>Die Platzierung nutzt Noise-Funktionen: Siedlungen entstehen in flachen Gebieten nahe der K&uuml;ste. W&auml;lder &uuml;bernehmen die H&uuml;gel und Berge. Eine zweite Noise-Ebene trennt Stadt- von Waldzonen, damit B&auml;ume nicht durch Hausd&auml;cher wachsen.</p>
+
+<div class="illus-row">
+  <figure class="illus">
+    <img src="img/vogel-schnee.png" alt="Schneebedeckte Berggipfel mit prozeduraler Textur" loading="lazy">
+    <figcaption>Schneebedeckte Gipfel &mdash; nach dem Textur-Fix endlich wei&szlig;.</figcaption>
+  </figure>
+  <figure class="illus">
+    <img src="img/vogel-berge.png" alt="Berglandschaft mit W&auml;ldern und Felsstrukturen" loading="lazy">
+    <figcaption>Fels, Erde, Wald &mdash; f&uuml;nf Texturschichten im &Uuml;bergang.</figcaption>
+  </figure>
+</div>
+
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Zusammenfassung</p>
+  <p><strong>Schneebedeckte Gipfel, 900 Geb&auml;ude, 100.000 B&auml;ume &mdash; alles prozedural generiert.</strong></p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: Was das über KI und Softwareentwicklung sagt -->
+<!-- ============================================================ -->
+<section id="meta" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
+<h2>Was das &uuml;ber KI und Softwareentwicklung sagt</h2>
+
+<h3>Mensch und Maschine</h3>
+
+<p>Lass uns ehrlich sein: Dieses Projekt h&auml;tte ohne KI Wochen gedauert. Nicht weil die Konzepte schwer sind &mdash; Three.js-Dokumentation ist hervorragend, MediaPipe hat Beispiele. Sondern weil die <em>Iteration</em> so viel schneller war.</p>
+
+<p>Die Rollenverteilung war klar:</p>
+
+<p><strong>Der Mensch</strong> lieferte Vision, &auml;sthetisches Urteil und das unersetzliche &bdquo;das f&uuml;hlt sich falsch an&ldquo;. Kein Prompt der Welt h&auml;tte die Erkenntnis automatisiert, dass der Fl&uuml;gelschlag sich &bdquo;matschig&ldquo; anf&uuml;hlt. Oder dass die B&auml;ume von oben wie gr&uuml;ne Stecken aussehen.</p>
+
+<p><strong>Die KI</strong> lieferte Architektur, Boilerplate, Debugging und eine Iterationsgeschwindigkeit, die kein einzelner Entwickler erreicht. Als der Mensch sagte &bdquo;mehr B&auml;ume&ldquo;, f&uuml;gte die KI 100.000 hinzu &mdash; mit Octree-Optimierung, LOD-System und Frustum Culling, damit die Performance nicht einbricht.</p>
+
+<p>Aber &mdash; und das ist der Punkt &mdash; die KI hat die B&auml;ume nicht von sich aus verbessert. Sie hat 100.000 identische gr&uuml;ne Kegel platziert und war zufrieden. Erst als der Mensch sagte &bdquo;die sehen aus wie Plastik&ldquo;, kamen Texturvariationen, verschiedene Baumtypen und Farbabstufungen.</p>
+
+<h3>Die Zukunft</h3>
+
+<p>In f&uuml;nf Jahren wird jeder Teenager so etwas an einem Nachmittag bauen k&ouml;nnen. Die Werkzeuge werden besser, die Modelle schlauer, die Einstiegsh&uuml;rde niedriger. Aber der entscheidende Faktor wird derselbe bleiben: <em>Jemand muss wissen, was gut aussieht, sich gut anf&uuml;hlt und Spa&szlig; macht.</em></p>
+
+<p>Der Vogel fliegt. Aber er fliegt nicht, weil die KI allein es wollte. Er fliegt, weil ein Mensch sagte: &bdquo;Das muss sich wie Fliegen anf&uuml;hlen.&ldquo; Und dann so lange iterierte, bis es das tat.</p>
+
+<div class="try-it" style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem;">
+  <p style="margin-bottom: 1.25rem;">&Uuml;berzeugt? Oder zumindest neugierig?</p>
+  <a href="/vogelsimulator/" class="cta-btn">Jetzt fliegen &rarr;</a>
+</div>
+
+</div>
+</section>
+
+</main>
+
+
+<!-- Footer -->
+<footer class="border-t border-gray-800/50 py-8 px-4 sm:px-6 text-xs text-gray-600">
+  <div class="max-w-4xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+      <!-- Navigation -->
+      <div>
+        <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Navigation</p>
+        <a href="index.html" class="block hover:text-gray-400 mb-1">Alle Beitr&auml;ge</a>
+        <a href="quanten.html" class="block hover:text-gray-400 mb-1">Quantenphysik interaktiv</a>
+        <a href="/vogelsimulator/" class="block hover:text-gray-400 mb-1">Vogelsimulator spielen</a>
+      </div>
+
+      <!-- Technik -->
+      <div>
+        <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Technik</p>
+        <p>Three.js &middot; MediaPipe &middot; Vite &middot; Playwright</p>
+        <p class="mt-1">Geschrieben von KI-Mathias. Code-Architekt: Claude Code (Anthropic).</p>
+      </div>
+
+      <!-- Impressum -->
+      <div>
+        <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Impressum</p>
+        <a href="impressum.html" class="block hover:text-gray-400 mb-1">Impressum</a>
+        <a href="datenschutz.html" class="block hover:text-gray-400 mb-1">Datenschutz</a>
+      </div>
+
+    </div>
+    <div class="mt-6 pt-4 border-t border-gray-800/30">
+      <p>&copy; 2026 KI-Mathias &middot; Entstanden in Zusammenarbeit mit Claude Code (Anthropic)</p>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /max-w-4xl -->
+
+
+<!-- ============================================================ -->
+<!-- SCRIPTS -->
+<!-- ============================================================ -->
+
+<!-- Page functionality: nav, progress, scroll spy -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // ----------------------------------------------------------
+  // 1. Scroll progress bar
+  // ----------------------------------------------------------
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // ----------------------------------------------------------
+  // 2. Navigation: unified dropdown toggle + TOC highlighting
+  // ----------------------------------------------------------
+  var navToggle = document.getElementById('nav-toggle');
+  var navDropdown = document.getElementById('nav-dropdown');
+  var navBackdrop = document.getElementById('nav-backdrop');
+
+  if (navToggle && navDropdown) {
+    navToggle.addEventListener('click', function() {
+      navDropdown.classList.toggle('hidden');
+      navToggle.classList.toggle('open');
+    });
+    if (navBackdrop) navBackdrop.addEventListener('click', function() {
+      navDropdown.classList.add('hidden');
+      navToggle.classList.remove('open');
+    });
+    navDropdown.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        navDropdown.classList.add('hidden');
+        navToggle.classList.remove('open');
+      });
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 3. TOC section highlighting (scroll spy)
+  // ----------------------------------------------------------
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+  // ----------------------------------------------------------
+  // 4. KaTeX auto-render (kept for template consistency)
+  // ----------------------------------------------------------
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+}); // end DOMContentLoaded
+</script>
+
+</body>
+</html>

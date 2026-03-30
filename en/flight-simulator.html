@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Flight Simulator: 3D Flying Experience with Webcam Controls &mdash; Built in One Afternoon | Mathias Leonhardt</title>
+  <title>Bird Simulator: 3D Flight with Webcam Controls &mdash; Built in One Afternoon | Mathias Leonhardt</title>
   <meta name="description" content="How a human and an AI built a browser-based 3D bird flight simulator with webcam gesture controls in a single afternoon. Three.js, MediaPipe, and lots of iteration.">
   <meta name="author" content="Mathias Leonhardt">
   <link rel="canonical" href="https://ki-mathias.de/en/flight-simulator.html">
-  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html">
   <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html">
   <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/vogelsimulator.html">
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="A Bird, a Webcam, and One Afternoon &mdash; 3D Flight Simulator in the Browser">
+  <meta property="og:title" content="A Bird, a Webcam and One Afternoon &mdash; 3D Flight Simulator in the Browser">
   <meta property="og:description" content="How a human and an AI built a browser-based 3D bird flight simulator with webcam gesture controls in a single afternoon.">
   <meta property="og:url" content="https://ki-mathias.de/en/flight-simulator.html">
   <meta property="og:locale" content="en_US">
@@ -28,7 +28,7 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="A Bird, a Webcam, and One Afternoon">
+  <meta name="twitter:title" content="A Bird, a Webcam and One Afternoon">
   <meta name="twitter:description" content="3D bird flight simulator with webcam gesture controls &mdash; built in one afternoon with AI.">
 
   <!-- All resources self-hosted &mdash; zero external requests, fully GDPR-compliant -->
@@ -39,7 +39,7 @@
   <script defer src="/vendor/katex/auto-render.min.js"></script>
   <script src="/vendor/react.production.min.js"></script>
   <script src="/vendor/react-dom.production.min.js"></script>
-  <script defer src="components.js"></script>
+  <script defer src="/components.js"></script>
 
   <!-- Self-hosted Inter font (WOFF2, GDPR-compliant) -->
   <style>
@@ -54,7 +54,7 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "A Bird, a Webcam, and One Afternoon",
+    "headline": "A Bird, a Webcam and One Afternoon",
     "description": "How a human and an AI built a browser-based 3D bird flight simulator with webcam gesture controls in a single afternoon. Three.js, MediaPipe, and lots of iteration.",
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
@@ -292,7 +292,7 @@
 
     <!-- Other blog posts -->
     <div class="p-3">
-      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">More Posts</p>
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Other Posts</p>
       <a href="/en/quantum.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">Interactive Quantum Physics</a>
       <a href="/en/index.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">&larr; All Posts</a>
     </div>
@@ -317,7 +317,7 @@
 <header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Game Development</p>
   <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight">
-    A Bird, a Webcam, and One Afternoon
+    A Bird, a Webcam and One Afternoon
   </h1>
   <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
     How a human and an AI built a browser-based 3D flight simulator with gesture controls &mdash; in a single session.
@@ -346,7 +346,7 @@
 <p>Before we talk &mdash; fly first.</p>
 
 <div class="try-it" style="text-align: center; padding: 2rem 1.5rem;">
-  <p style="margin-bottom: 1.25rem;">Everything runs in the browser. No installation, no download.</p>
+  <p style="margin-bottom: 1.25rem;">Everything runs in the browser. No install, no download.</p>
   <a href="/vogelsimulator/" class="cta-btn">Fly now &rarr;</a>
 </div>
 
@@ -364,7 +364,7 @@
   <figcaption>Diving over the island &mdash; at 293 km/h.</figcaption>
 </figure>
 
-<p>Working? Good. Then let me tell you how this thing came to life in a single afternoon.</p>
+<p>Did it work? Good. Then let me tell you how this thing came to life in a single afternoon.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -381,9 +381,9 @@
 
 <h3>A Blank Canvas</h3>
 
-<p>Every project starts with a blank canvas. In our case: a terminal, <code>npm create vite@latest</code>, and the decision to go with Three.js as our 3D engine. No Unity, no Unreal &mdash; pure JavaScript code that runs directly in the browser.</p>
+<p>Every project starts with a blank canvas. In our case: a terminal, <code>npm create vite@latest</code>, and the decision to go with Three.js as the 3D engine. No Unity, no Unreal &mdash; pure JavaScript code that runs directly in the browser.</p>
 
-<p>Why Three.js? Because it offers the lowest barrier to entry. No plugin, no app store, no download. The user opens a URL and flies. That was the vision from the start.</p>
+<p>Why Three.js? Because it has the lowest barrier to entry. No plugin, no app store, no download. The user opens a URL and flies. That was the vision from the start.</p>
 
 <p>The first scene was simple: a camera, a sky, light.</p>
 
@@ -395,7 +395,7 @@ scene.add(sky);
 <span class="code-keyword">const</span> camera = <span class="code-keyword">new</span> THREE.PerspectiveCamera(<span class="code-number">60</span>, w/h, <span class="code-number">2</span>, <span class="code-number">8000</span>);
 <span class="code-keyword">const</span> renderer = <span class="code-keyword">new</span> THREE.WebGLRenderer({ antialias: <span class="code-keyword">true</span> });</code></pre>
 
-<p>Within 20 minutes, the first empty scene with a blue sky was up. No terrain, no trees, no bird. But a beginning. And a beginning is all you need to build momentum.</p>
+<p>In 20 minutes, the first empty scene with a blue sky was up. No terrain, no trees, no bird. But a beginning. And a beginning is all you need to build momentum.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -412,7 +412,7 @@ scene.add(sky);
 
 <h3>How do you build a landscape without placing a single polygon by hand?</h3>
 
-<p>The answer: with math. More specifically, with parabolas. Imagine a flat table. Now place invisible hills on it &mdash; each defined by a center point, a radius, and a height. At every point on the terrain you ask: How many of these hills overlap here? And you add up their contributions.</p>
+<p>The answer: with math. More precisely, with parabolas. Imagine a flat table. Now place invisible hills on top &mdash; each defined by a center point, a radius and a height. At every point on the terrain you ask: how many of these hills overlap here? And add up their contributions.</p>
 
 <pre><code><span class="code-keyword">function</span> getTerrainHeight(x, z, arcs) {
   <span class="code-keyword">let</span> h = <span class="code-number">0</span>;
@@ -425,22 +425,22 @@ scene.add(sky);
   <span class="code-keyword">return</span> h;
 }</code></pre>
 
-<p>900 positive arcs shape the hills. 270 negative arcs carve out valleys. A radial falloff ensures the island gently slopes into the sea at its edges. The result: a natural-looking landscape that looks slightly different each time it loads &mdash; but always plausible.</p>
+<p>900 positive arcs form the hills. 270 negative arcs carve out valleys. A radial falloff ensures the island gently slopes into the sea at the edges. The result: a natural-looking landscape that looks slightly different every time you load it &mdash; but always plausible.</p>
 
 <figure class="illus">
-  <img src="/img/vogel-terrain.png" alt="Procedural island landscape with hills, valleys, and water" loading="lazy">
+  <img src="/img/vogel-terrain.png" alt="Procedural island landscape with hills, valleys and water" loading="lazy">
   <figcaption>900 parabolas + negative arcs + radial falloff = a natural island.</figcaption>
 </figure>
 
-<p>But a beautiful landscape is useless if it stutters. Computing 900 arcs per vertex? On a 400&times;400 grid, that's over 140 million operations &mdash; per frame. That won't work.</p>
+<p>But a beautiful landscape is useless if it stutters. Computing 900 arcs per vertex? With a 400&times;400 grid, that&rsquo;s over 140 million operations &mdash; per frame. That won&rsquo;t fly.</p>
 
 <h3>Octree and Frustum Culling</h3>
 
-<p>The solution: An <strong>Octree</strong> divides the world into spatial cells. Instead of rendering all 100,000 trees and 900 buildings per frame, the engine simply asks: Which cells are actually in the camera's field of view? <strong>Frustum Culling</strong> discards everything outside the viewing cone. Of 100,000 trees, typically only 3,000&ndash;5,000 are actually drawn.</p>
+<p>The solution: an <strong>Octree</strong> divides the world into spatial cells. Instead of rendering all 100,000 trees and 900 buildings every frame, the engine simply asks: which cells are actually in the camera&rsquo;s field of view? <strong>Frustum Culling</strong> discards everything outside the view cone. Out of 100,000 trees, typically only 3,000&ndash;5,000 are actually drawn.</p>
 
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
-  <p><strong>900 parabolas + negative arcs + radial island falloff = a natural landscape, without ever placing a vertex by hand.</strong></p>
+  <p><strong>900 parabolas + negative arcs + radial island falloff = a natural landscape, without ever placing a single vertex by hand.</strong></p>
 </div>
 
 </div>
@@ -458,27 +458,27 @@ scene.add(sky);
 
 <h3>A Camera with a Fear of Heights</h3>
 
-<p>The terrain was there. But a bird that doesn't fly is just a camera with a fear of heights.</p>
+<p>The terrain was there. But a bird that doesn&rsquo;t fly is just a camera with a fear of heights.</p>
 
 <p>The first approach was a simple arcade model: press a key, go up. Let go, sink down. It worked &mdash; technically. But it felt like an elevator with a panoramic window. No gliding, no lift, no <em>flying</em>.</p>
 
-<p>So we built an aerodynamic model. The key insight: <strong>Lift depends on the square of the velocity.</strong> That's dynamic pressure &mdash; the same physics that keeps real birds and airplanes in the air.</p>
+<p>So we built an aerodynamic model. The key insight: <strong>lift depends on the square of the velocity.</strong> That&rsquo;s dynamic pressure &mdash; the same physics that keeps real birds and aircraft in the air.</p>
 
 <pre><code><span class="code-keyword">const</span> dynamicPressure = <span class="code-number">0.5</span> * AIR_DENSITY * speed * speed;
 <span class="code-keyword">const</span> liftMag = dynamicPressure * wingArea * CL / BIRD_MASS;
-velocity.y += baselineLift * dt;  <span class="code-comment">// Wing-Incidence-Winkel</span>
+velocity.y += baselineLift * dt;  <span class="code-comment">// Wing incidence angle</span>
 velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;</span></code></pre>
 
-<p>The first wing flap produced&hellip; nothing. Gravity won. Every time. The bird fell like a stone, no matter how furiously you hammered the space bar.</p>
+<p>The first wing flap produced&hellip; nothing. Gravity won. Every time. The bird fell like a rock, no matter how furiously you hammered the spacebar.</p>
 
-<p>The problem: We had forgotten the <strong>wing incidence angle</strong>. Real bird wings aren't flat &mdash; they have a built-in angle of attack of about 3&deg;. This angle generates minimal lift even in level flight. Without it, the wing is a plank, and a plank falls.</p>
+<p>The problem: we had forgotten the <strong>wing incidence angle</strong>. Real bird wings aren&rsquo;t flat &mdash; they have a built-in angle of attack of about 3&deg;. This angle generates minimal lift even in level flight. Without it, the wing is a plank, and a plank falls.</p>
 
 <figure class="illus">
-  <img src="/img/vogel-flight.png" alt="Bird's eye view over the island landscape during flight" loading="lazy">
+  <img src="/img/vogel-flight.png" alt="Bird&rsquo;s-eye view over the island landscape during flight" loading="lazy">
   <figcaption>Gliding over the island &mdash; it took six iterations before it actually felt like flying.</figcaption>
 </figure>
 
-<p>It took six iterations. Six versions of the physics model until the balance of gravity, lift, and wing flaps was right. Until you could press the space bar and <em>feel</em> the bird climbing. Until a dive felt dangerous and a loop made your stomach clench.</p>
+<p>It took six iterations. Six versions of the physics model until the balance of gravity, lift and wing flapping was right. Until you could press the spacebar and <em>feel</em> the bird climbing. Until a dive felt dangerous and a loop made your stomach clench.</p>
 
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
@@ -498,29 +498,29 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 5</p>
 <h2>Phase 4 &mdash; Hands Become Wings</h2>
 
-<h3>The Crazy Part</h3>
+<h3>The Wild Part</h3>
 
-<p>And then came the crazy part. The idea: What if you didn't use the keyboard, but your arms? What if you flapped your arms in front of the webcam and the bird in the game actually climbed?</p>
+<p>And then came the wild part. The idea: what if you didn&rsquo;t use the keyboard, but your arms? What if you flapped your arms in front of the webcam and the bird in the game actually climbed?</p>
 
-<p>MediaPipe Pose Detection makes this possible. Google's ML model detects 33 body landmarks in real time &mdash; right in the browser, no server, no cloud. Shoulders, elbows, wrists. Everything we need.</p>
+<p>MediaPipe Pose Detection makes this possible. Google&rsquo;s ML model detects 33 body landmarks in real time &mdash; right in the browser, no server, no cloud. Shoulders, elbows, wrists. Everything we need.</p>
 
-<p>The logic: We measure the height of both wrists relative to the shoulders. Hands up = wings up. Hands down = wings down. The rate of change between them = wing flap.</p>
+<p>The logic: we measure the height of both wrists relative to the shoulders. High hands = wings up. Low hands = wings down. The rate of change between them = wing flap.</p>
 
 <pre><code><span class="code-keyword">const</span> delta = Math.abs(recentAvg - olderAvg);
 <span class="code-keyword">if</span> (delta > <span class="code-number">0.025</span>) {
   flapStrength = clamp(delta * <span class="code-number">8</span>, <span class="code-number">0.5</span>, <span class="code-number">1</span>);
 }</code></pre>
 
-<p>The challenges were subtler than expected. The webcam image is mirrored &mdash; left is right. Sometimes landmarks disappear because the arm is outside the frame. And detection accuracy fluctuates with lighting conditions.</p>
+<p>The challenges were subtler than expected. The webcam image is mirrored &mdash; left is right. Sometimes landmarks disappear because the arm is outside the frame. And detection accuracy fluctuates with lighting.</p>
 
-<p>Our solution: <strong>Graceful Degradation.</strong> When hands leave the frame, the bird continues gliding smoothly &mdash; instead of crashing. When MediaPipe can't detect a pose, the system quietly falls back to keyboard controls. No error, no popup, no frustration.</p>
+<p>Our solution: <strong>Graceful Degradation.</strong> When your hands leave the frame, the bird glides on gently &mdash; instead of crashing. When MediaPipe detects no pose, the system silently falls back to keyboard controls. No error, no popup, no frustration.</p>
 
 <figure class="illus">
   <img src="/img/vogel-close.png" alt="Close-up: flying over trees and buildings" loading="lazy">
   <figcaption>Low-altitude flight through the settlement &mdash; trees and buildings up close.</figcaption>
 </figure>
 
-<p>The feeling when you raise your arms for the first time and the bird climbs &mdash; that's the moment when the project tips from "technically interesting" to "I want to show this to people."</p>
+<p>The feeling when you raise your arms for the first time and the bird climbs &mdash; that&rsquo;s the moment the project tips from &ldquo;technically interesting&rdquo; to &ldquo;I want to show this to people.&rdquo;</p>
 
 </div>
 <div class="section-divider"></div>
@@ -537,11 +537,11 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 
 <h3>80% of the Time</h3>
 
-<p>The last 20% costs 80% of the time. That's universal. And in this project, the last 20% was mostly about one thing: textures.</p>
+<p>The last 20% takes 80% of the time. That&rsquo;s universal. And in this project, the last 20% was mostly about one thing: textures.</p>
 
 <h3>Five Layers of Terrain</h3>
 
-<p>A single-color landscape looks like Play-Doh. So we built a custom shader with five texture layers: sand on the beach, grass on the hills, dirt at mid-elevations, rock on the steep slopes, snow on the peaks. Each layer blends smoothly into the next.</p>
+<p>A single-color landscape looks like Play-Doh. So we built a custom shader with five texture layers: sand on the beaches, grass on the hills, earth at mid-elevation, rock on the steep slopes, snow on the peaks. Each layer blends smoothly into the next.</p>
 
 <pre><code><span class="code-keyword">float</span> grassFactor = smoothstep(sandEnd, sandEnd + <span class="code-number">8.0</span>, h)
                   * (<span class="code-number">1.0</span> - smoothstep(grassEnd - <span class="code-number">8.0</span>, grassEnd + <span class="code-number">8.0</span>, h));
@@ -549,13 +549,13 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
                   * (<span class="code-number">1.0</span> - smoothstep(rockEnd - <span class="code-number">8.0</span>, rockEnd + <span class="code-number">8.0</span>, h));
 <span class="code-keyword">float</span> snowFactor = smoothstep(rockEnd - <span class="code-number">8.0</span>, rockEnd + <span class="code-number">8.0</span>, h);</code></pre>
 
-<p>The snow texture was gray. For three hours we hunted for the bug in the shader logic. We checked the blending factors, the height thresholds, the UV coordinates. Everything looked correct. Until we realized: the logic <em>was</em> correct. The texture simply wasn't white enough. A 200&times;200 pixel JPEG with an average value of 180 instead of 250. Three hours of debugging for an image editing problem.</p>
+<p>The snow texture was gray. We spent three hours hunting the bug in the shader logic. We checked the blending factors, the height thresholds, the UV coordinates. Everything looked correct. Until we realized: the logic <em>was</em> correct. The texture just wasn&rsquo;t white enough. A 200&times;200 pixel JPEG with an average value of 180 instead of 250. Three hours of debugging for an image editing problem.</p>
 
 <h3>Buildings and Settlements</h3>
 
-<p>An island without civilization feels empty. So we generated buildings &mdash; five types: houses, barns, towers, hotels, and high-rises. Each with procedural brick or concrete textures, random proportions, and color variations.</p>
+<p>An island without civilization feels empty. So we generated buildings &mdash; five types: houses, barns, towers, hotels and high-rises. Each with procedural brick or concrete textures, random proportions and color variations.</p>
 
-<p>Placement uses noise functions: settlements emerge in flat areas near the coast. Forests take over the hills and mountains. A second noise layer separates urban zones from forest zones, so trees don't grow through rooftops.</p>
+<p>The placement uses noise functions: settlements emerge in flat areas near the coast. Forests take over the hills and mountains. A second noise layer separates urban zones from forest zones, so trees don&rsquo;t grow through rooftops.</p>
 
 <div class="illus-row">
   <figure class="illus">
@@ -564,7 +564,7 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
   </figure>
   <figure class="illus">
     <img src="/img/vogel-berge.png" alt="Mountain landscape with forests and rock structures" loading="lazy">
-    <figcaption>Rock, dirt, forest &mdash; five texture layers in transition.</figcaption>
+    <figcaption>Rock, earth, forest &mdash; five texture layers blending together.</figcaption>
   </figure>
 </div>
 
@@ -588,21 +588,21 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 
 <h3>Human and Machine</h3>
 
-<p>Let's be honest: this project would have taken weeks without AI. Not because the concepts are hard &mdash; Three.js documentation is excellent, MediaPipe has examples. But because the <em>iteration</em> was so much faster.</p>
+<p>Let&rsquo;s be honest: this project would have taken weeks without AI. Not because the concepts are hard &mdash; Three.js documentation is excellent, MediaPipe has examples. But because the <em>iteration</em> was so much faster.</p>
 
-<p>The division of roles was clear:</p>
+<p>The roles were clear:</p>
 
-<p><strong>The human</strong> provided vision, aesthetic judgment, and the irreplaceable "this feels wrong." No prompt in the world could have automated the realization that the wing flap felt "mushy." Or that the trees looked like green sticks from above.</p>
+<p><strong>The human</strong> provided vision, aesthetic judgment and the irreplaceable &ldquo;this feels wrong.&rdquo; No prompt in the world could have automated the realization that the wing flap felt &ldquo;mushy.&rdquo; Or that the trees looked like green sticks from above.</p>
 
-<p><strong>The AI</strong> provided architecture, boilerplate, debugging, and an iteration speed that no single developer can match. When the human said "more trees," the AI added 100,000 &mdash; with Octree optimization, an LOD system, and frustum culling to keep performance from tanking.</p>
+<p><strong>The AI</strong> provided architecture, boilerplate, debugging and an iteration speed no single developer can match. When the human said &ldquo;more trees,&rdquo; the AI added 100,000 &mdash; complete with octree optimization, LOD system and frustum culling so performance wouldn&rsquo;t tank.</p>
 
-<p>But &mdash; and this is the point &mdash; the AI didn't improve the trees on its own. It placed 100,000 identical green cones and was satisfied. Only when the human said "they look like plastic" did texture variations, different tree types, and color gradations appear.</p>
+<p>But &mdash; and this is the point &mdash; the AI didn&rsquo;t improve the trees on its own. It placed 100,000 identical green cones and was satisfied. Only when the human said &ldquo;those look like plastic&rdquo; did texture variations, different tree types and color gradations appear.</p>
 
 <h3>The Future</h3>
 
-<p>In five years, every teenager will be able to build something like this in an afternoon. The tools will get better, the models smarter, the barrier to entry lower. But the decisive factor will remain the same: <em>Someone has to know what looks good, feels good, and is fun.</em></p>
+<p>In five years, any teenager will be able to build something like this in an afternoon. The tools will get better, the models smarter, the barrier to entry lower. But the decisive factor will remain the same: <em>someone has to know what looks good, feels right and is fun.</em></p>
 
-<p>The bird flies. But it doesn't fly because the AI wanted it to on its own. It flies because a human said: "This has to feel like flying." And then iterated until it did.</p>
+<p>The bird flies. But it doesn&rsquo;t fly because the AI wanted it to on its own. It flies because a human said: &ldquo;This needs to feel like flying.&rdquo; And then iterated until it did.</p>
 
 <div class="try-it" style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem;">
   <p style="margin-bottom: 1.25rem;">Convinced? Or at least curious?</p>
@@ -625,7 +625,7 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
         <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Navigation</p>
         <a href="/en/index.html" class="block hover:text-gray-400 mb-1">All Posts</a>
         <a href="/en/quantum.html" class="block hover:text-gray-400 mb-1">Interactive Quantum Physics</a>
-        <a href="/vogelsimulator/" class="block hover:text-gray-400 mb-1">Play Flight Simulator</a>
+        <a href="/vogelsimulator/" class="block hover:text-gray-400 mb-1">Play Bird Simulator</a>
       </div>
 
       <!-- Tech -->
@@ -635,16 +635,16 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
         <p class="mt-1">Written by KI-Mathias. Code architect: Claude Code (Anthropic).</p>
       </div>
 
-      <!-- Imprint -->
+      <!-- Legal -->
       <div>
-        <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Imprint</p>
+        <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Legal</p>
         <a href="/en/imprint.html" class="block hover:text-gray-400 mb-1">Imprint</a>
-        <a href="/en/privacy.html" class="block hover:text-gray-400 mb-1">Privacy</a>
+        <a href="/en/privacy.html" class="block hover:text-gray-400 mb-1">Privacy Policy</a>
       </div>
 
     </div>
     <div class="mt-6 pt-4 border-t border-gray-800/30">
-      <p>&copy; 2026 KI-Mathias &middot; Created in collaboration with Claude Code (Anthropic)</p>
+      <p>&copy; 2026 KI-Mathias &middot; Built in collaboration with Claude Code (Anthropic)</p>
     </div>
   </div>
 </footer>
