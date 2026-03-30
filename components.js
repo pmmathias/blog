@@ -71,7 +71,7 @@ function dst(x1, y1, x2, y2) {
   const R = 34, sR = R * 0.47;
 
   return (
-    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-2xl mx-auto"      ,}
+    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-4xl mx-auto"      ,}
       , React.createElement('h2', { className: "text-lg sm:text-xl font-bold text-center mb-0.5 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent"          ,}, "Der Doppelspalt – Interaktiv"
 
       )
@@ -420,7 +420,7 @@ const ySc = v => pad.t + ((1 - v) / 2) * plotH;
   const last = res.length > 0 ? res[res.length - 1] : null;
 
   return (
-    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-2xl mx-auto"      ,}
+    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-4xl mx-auto"      ,}
       , React.createElement('h2', { className: "text-lg sm:text-xl font-bold text-center mb-0.5 bg-gradient-to-r from-rose-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent"          ,}, "Bell-Test – Verschränkung live"
 
       )
@@ -812,7 +812,7 @@ const TAU = Math.PI * 2;
   const hbarLabel = hbarEff > 1 ? hbarEff.toFixed(1) : hbarEff < 0.01 ? hbarEff.toExponential(1) : hbarEff.toFixed(3);
 
   return (
-    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-2xl mx-auto"      ,}
+    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-4xl mx-auto"      ,}
       , React.createElement('h2', { className: "text-lg sm:text-xl font-bold text-center mb-0.5 bg-gradient-to-r from-cyan-400 via-purple-400 to-rose-400 bg-clip-text text-transparent"          ,}, "Pfadintegral – Summe über alle Wege"
 
       )
@@ -1130,7 +1130,7 @@ const TAU = Math.PI * 2;
     : `${numScreens} Zwischenwände → Wege formen sich`;
 
   return (
-    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-2xl mx-auto"      ,}
+    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-4xl mx-auto"      ,}
       , React.createElement('h2', { className: "text-lg sm:text-xl font-bold text-center mb-0.5 bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent"          ,}, "Von Spalten zu Wegen – der Propagator"
 
       )
@@ -1498,7 +1498,7 @@ function computeAction(alpha, grav, N = 50) {
   const phHue = (p) => (((p % (2 * PI)) + 2 * PI) % (2 * PI)) / (2 * PI) * 300;
 
   return (
-    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-2xl mx-auto select-none"       ,}
+    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-4xl mx-auto select-none"       ,}
       , React.createElement('h2', { className: "text-lg sm:text-xl font-bold text-center mb-1 bg-gradient-to-r from-amber-400 via-rose-400 to-violet-400 bg-clip-text text-transparent"          ,}, "Die Wirkung S und der klassische Grenzfall"
 
       )
@@ -1988,7 +1988,7 @@ const PRESETS = [
   const probeVal = sumW(probeX);
 
   return (
-    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-2xl mx-auto select-none"       ,}
+    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-4xl mx-auto select-none"       ,}
       , React.createElement('h2', { className: "text-lg sm:text-xl font-bold text-center mb-1 bg-gradient-to-r from-rose-400 via-amber-400 to-cyan-400 bg-clip-text text-transparent"          ,}, "Fourier: Jeder Klang ist eine Summe"
 
       )
@@ -2225,7 +2225,7 @@ const PI = Math.PI;
   const rightDotY = MY - Math.sin(n * PI) * tFactor * AMP;
 
   return (
-    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-2xl mx-auto select-none"       ,}
+    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-4xl mx-auto select-none"       ,}
       , React.createElement('h2', { className: "text-lg sm:text-xl font-bold text-center mb-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent"          ,}, "Stehende Wellen: Warum nur bestimmte Töne erlaubt sind"
 
       )
@@ -2529,7 +2529,7 @@ const chapters = [
   const activeData = active !== null ? languages[active] : null;
 
   return (
-    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-2xl mx-auto select-none"       ,}
+    React.createElement('div', { className: "bg-gray-950 text-white p-3 sm:p-5 rounded-2xl max-w-4xl mx-auto select-none"       ,}
       , React.createElement('h2', { className: "text-lg sm:text-xl font-bold text-center mb-1 bg-gradient-to-r from-blue-400 via-emerald-400 to-violet-400 bg-clip-text text-transparent"          ,}, "Drei Sprachen, eine Physik"
 
       )
