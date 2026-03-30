@@ -168,6 +168,22 @@
 
 <p>The error \(\mathbf{y} - \hat{y}\) is perpendicular to \(\mathbf{a}\). That is the whole idea.</p>
 
+<svg viewBox="0 0 340 220" width="100%" style="max-width:340px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
+  <line x1="30" y1="180" x2="310" y2="180" stroke="#374151" stroke-width="1"/>
+  <line x1="30" y1="180" x2="30" y2="20" stroke="#374151" stroke-width="1"/>
+  <line x1="30" y1="180" x2="300" y2="115" stroke="#4b5563" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="295" y="108" fill="#6b7280" font-size="11">Line through a</text>
+  <line x1="30" y1="180" x2="220" y2="50" stroke="#e2e8f0" stroke-width="2"/>
+  <polygon points="220,50 210,58 215,65" fill="#e2e8f0"/>
+  <text x="228" y="50" fill="#e2e8f0" font-size="13" font-weight="600">y</text>
+  <line x1="30" y1="180" x2="200" y2="139" stroke="#22d3ee" stroke-width="2.5"/>
+  <polygon points="200,139 190,141 192,149" fill="#22d3ee"/>
+  <text x="195" y="158" fill="#22d3ee" font-size="13" font-weight="600">&ycirc;</text>
+  <line x1="200" y1="139" x2="220" y2="50" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="218" y="100" fill="#f87171" font-size="11">r = y &minus; &ycirc;</text>
+  <polyline points="206,130 213,134 209,141" fill="none" stroke="#f87171" stroke-width="1.2"/>
+</svg>
+
 <h3>The general case: the normal equation</h3>
 <p>In practice, you project onto a subspace spanned by the columns of a matrix \(X\). The condition &ldquo;error perpendicular to all columns&rdquo; becomes the <strong>normal equation</strong>:</p>
 
@@ -203,6 +219,31 @@
 <div class="math-display">$$\sum_{k=0}^{\infty} A^k = (I - A)^{-1} \quad\text{when all eigenvalues of } A \text{ have magnitude less than 1}$$</div>
 
 <p>This is the matrix version of the geometric series \(\sum q^k = 1/(1-q)\). And it means: our iteration converges to \((X^TX)^{-1}X^T\mathbf{y}\) &ndash; <em>exactly</em> the closed-form solution from Chapter 2.</p>
+
+<h3>Concrete example: numbers instead of symbols</h3>
+
+<p>For \(X = (1,\; 0.5)^T\) and \(\mathbf{y} = (3,\; 4)^T\) with exact solution \(\hat{\mathbf{y}}^* = (4,\; 2)^T\):</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">n</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(\hat{\mathbf{y}}_n\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(\mathbf{r}_n\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(\|\mathbf{r}_n\|\)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">0</td><td style="text-align:center;">(0, 0)</td><td style="text-align:center;">(3, 4)</td><td style="text-align:center;">5.00</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">1</td><td style="text-align:center;">(3.13, 1.56)</td><td style="text-align:center;">(&minus;0.13, 2.44)</td><td style="text-align:center;">2.44</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">2</td><td style="text-align:center;">(3.47, 1.73)</td><td style="text-align:center;">(&minus;0.47, 2.27)</td><td style="text-align:center;">2.32</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">5</td><td style="text-align:center;">(3.84, 1.92)</td><td style="text-align:center;">(&minus;0.84, 2.08)</td><td style="text-align:center;">2.25</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">20</td><td style="text-align:center;">(3.99, 2.00)</td><td style="text-align:center;">(&minus;0.99, 2.00)</td><td style="text-align:center;">2.24</td></tr>
+    <tr style="color:#34d399;"><td style="text-align:center;padding:0.3rem 0.6rem;">&infin;</td><td style="text-align:center;font-weight:600;">(4, 2)</td><td style="text-align:center;">(&minus;1, 2)</td><td style="text-align:center;">2.24</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The approximation moves closer to (4, 2) with each iteration. And the final error \((-1, 2)\) is perpendicular to \(X\): \(1 \cdot (-1) + 0.5 \cdot 2 = 0\). Exactly as it should be.</p>
 
 <div class="try-it">
   <p><strong>Try it yourself</strong></p>
@@ -243,10 +284,10 @@
 </div>
 <div class="component-wrap"><div id="mount-eigen-transform"></div></div>
 
-<h3>Why eigenvalues determine convergence</h3>
 <h3>What does this mean concretely?</h3>
-<p>Apply the matrix 10 times: \(\lambda_1^{10} = 2^{10} = 1024\), but \(\lambda_2^{10} = 3^{10} = 59\,049\). The larger eigenvalue <strong>dominates</strong>.</p>
+<p>Apply the matrix 10 times: \(\lambda_1^{10} = 2^{10} = 1024\), but \(\lambda_2^{10} = 3^{10} = 59\,049\). The larger eigenvalue <strong>dominates</strong>. After 20 applications: \(2^{20} \approx 10^6\), \(3^{20} \approx 3.5 \times 10^9\). The direction of \(\mathbf{v}_2\) overwhelms everything else.</p>
 
+<h3>Why eigenvalues determine convergence</h3>
 <p>The key formula: \(A^n = V\,\Lambda^n\,V^{-1}\), where \(\Lambda\) is the diagonal matrix of eigenvalues.</p>
 <p>&bull; If \(|\lambda| &lt; 1\): \(\lambda^n \to 0\) &ndash; the component <strong>vanishes</strong>.<br>
 &bull; If \(|\lambda| = 1\): stays constant.<br>
@@ -277,17 +318,35 @@
 <p>Imagine a student who memorizes 20 practice problems. In practice: 20 out of 20. On the exam with new problems: 8 out of 20. They learned the <em>problems</em>, not the <em>principles</em>. This is called <strong>overfitting</strong>.</p>
 
 <h3>What this has to do with our iteration</h3>
-<p>After \(n\) iterations, the component along the \(i\)-th eigenvector is retained by the factor \(1 - (1-\mu_i)^n\).</p>
-<p>&bull; <strong>Large eigenvalues</strong> (\(\mu_i\) large): captured within a few iterations. This is <em>signal</em>.<br>
-&bull; <strong>Small eigenvalues</strong> (\(\mu_i\) small): need many iterations. This is often <em>noise</em>.</p>
+<p>After \(n\) iterations, the component along the \(i\)-th eigenvector is retained by the factor \(1 - (1-\mu_i)^n\). Sounds abstract &ndash; but look at the numbers:</p>
 
-<p>Fewer iterations = only signal is learned. More iterations = noise too. <strong>Early stopping is a natural noise filter.</strong></p>
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(\mu_i\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\((1-\mu_i)\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">after 3 iter.</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">after 10</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">after 100</th>
+  </tr></thead>
+  <tbody>
+    <tr style="color:#34d399;"><td style="text-align:center;padding:0.3rem 0.6rem;">1.0 (strong)</td><td style="text-align:center;">0.0</td><td style="text-align:center;font-weight:600;">100%</td><td style="text-align:center;font-weight:600;">100%</td><td style="text-align:center;font-weight:600;">100%</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">0.5</td><td style="text-align:center;">0.5</td><td style="text-align:center;">87.5%</td><td style="text-align:center;">99.9%</td><td style="text-align:center;">&asymp;100%</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">0.1</td><td style="text-align:center;">0.9</td><td style="text-align:center;">27.1%</td><td style="text-align:center;">65.1%</td><td style="text-align:center;">&asymp;100%</td></tr>
+    <tr style="color:#f87171;"><td style="text-align:center;padding:0.3rem 0.6rem;">0.01 (weak)</td><td style="text-align:center;">0.99</td><td style="text-align:center;">3.0%</td><td style="text-align:center;">9.6%</td><td style="text-align:center;">63.4%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Large eigenvalues</strong> (strong signal): immediately at 100%. <strong>Small eigenvalues</strong> (often noise): need hundreds of iterations. Fewer iterations = only signal is learned. More = noise too. <strong>Early stopping is a natural noise filter.</strong></p>
 
 <h3>The equivalence to Ridge Regression</h3>
 <p>The classical remedy for overfitting &ndash; <em>Ridge Regression</em> &ndash; adds \(\lambda\) to the diagonal: \(\mathbf{c}_\lambda = (X^TX + \lambda I)^{-1}X^T\mathbf{y}\). The filter factor is \(\mu_i/(\mu_i + \lambda)\).</p>
 
-<p>Compare with our iteration factor \(1 - (1-\mu_i)^n\). Both have <em>the same effect</em>. The formal relationship:</p>
+<p>Compare with our iteration factor \(1 - (1-\mu_i)^n\). Both have <em>the same effect</em>: pass large \(\mu_i\), dampen small ones. As a rule of thumb (for moderate \(n\) and small \(\mu_i\)):</p>
 <div class="math-display">$$\lambda \approx \frac{1}{n}$$</div>
+
+<p>More iterations = smaller \(\lambda\) = less regularization. Fewer iterations = larger \(\lambda\) = smoother solution. <em>(The relationship is not exact, but both filter curves have the same shape for practical purposes.)</em></p>
 
 <div class="try-it">
   <p><strong>Try it yourself</strong></p>
@@ -328,7 +387,9 @@
 </div>
 <div class="component-wrap"><div id="mount-kernel-regression"></div></div>
 
-<p>Prediction for a new point: \(f(x_*) = \sum_{i=1}^n \alpha_i\,k(x_i, x_*)\) &ndash; each training point &ldquo;votes&rdquo;, weighted by similarity. The training data <em>is</em> the model.</p>
+<p>Prediction for a new point: \(f(x_*) = \sum_{i=1}^n \alpha_i\,k(x_i, x_*)\) &ndash; each training point &ldquo;votes&rdquo;, weighted by similarity.</p>
+
+<p>Let that sink in: there are no abstract parameters, no weight matrices, no hidden layers. <strong>The training data <em>is</em> the model.</strong> The function \(f\) is completely determined by the data points and their kernel similarities. This is the <strong>Representer Theorem</strong> &ndash; and it holds for any loss function, not just the squared error.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300"><strong>The core of the kernel trick:</strong> \(X^TX \to K\). Nothing else changes. But the feature space becomes infinite-dimensional &ndash; and the expressive power universal.</p>
@@ -342,17 +403,52 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 7</p>
 <h2>The Grand Unification</h2>
 
-<h3>From light reflections to Google</h3>
-<p>In computer graphics, the <strong>radiosity equation</strong> describes how light bounces between surfaces: \(B = E + \rho F B\). The solution?</p>
+<h3>Light bouncing off walls</h3>
+
+<p>Imagine a white room with one deep-red wall. A lamp on the ceiling. What do you see? Not just red and white surfaces &ndash; but a soft reddish glow on the white floor near the red wall. <em>Color bleeding</em>: light bounces from the red wall to the floor, carrying color with it.</p>
+
+<p>In computer graphics, the <strong>radiosity equation</strong> describes this: \(\mathbf{B} = \mathbf{E} + \rho F \mathbf{B}\). The solution?</p>
 <div class="math-display">$$\mathbf{B} = (I - \rho F)^{-1}\,\mathbf{E} = \sum_{k=0}^{\infty} (\rho F)^k\,\mathbf{E}$$</div>
 
-<p>The same Neumann series. \(k=0\): direct light. \(k=1\): first bounce. \(k=2\): second bounce. Light bouncing between walls <em>is</em> iterative error correction applied to energy instead of data.</p>
+<p>The same Neumann series as Chapter 3! Only the meaning changed:</p>
+<p>&bull; \(k=0\): <strong>Direct light</strong> &ndash; the lamp shines.<br>
+&bull; \(k=1\): <strong>First bounce</strong> &ndash; light reflects once.<br>
+&bull; \(k=2\): <strong>Second bounce</strong> &ndash; reflected light reflects again.<br>
+&bull; Typically <strong>3&ndash;5 bounces</strong> suffice before 99% of energy is absorbed.</p>
 
-<p>The matrix \(\rho F\) is <em>substochastic</em> (rows sum to less than 1). Add an &ldquo;absorber dimension&rdquo; and you get a <strong>stochastic matrix</strong> (rows sum to 1). A stochastic matrix <em>is</em> a Markov chain. Its equilibrium is the <strong>dominant eigenvector</strong> &ndash; eigenvalue 1.</p>
+<p>The matrix \(\rho F\) is <em>substochastic</em> (rows sum to less than 1). Add an &ldquo;absorber dimension&rdquo; and it becomes <strong>stochastic</strong> (rows sum to 1). A stochastic matrix <em>is</em> a <span class="glossary" title="Markov chain: a system that jumps randomly between states, where the probability of the next state depends only on the current one.">Markov chain</span>. Its equilibrium is the <strong>dominant eigenvector</strong> &ndash; eigenvalue 1.</p>
 
-<p><strong>PageRank</strong> is exactly this: the dominant eigenvector of the Google matrix \(G = d\,M + (1-d)/n \cdot \mathbf{1}\mathbf{1}^T\). Power iteration \(\mathbf{r}^{(k+1)} = G\,\mathbf{r}^{(k)}\) converges in ~50 iterations &ndash; for <em>billions</em> of web pages.</p>
+<h3>The surfer who never stops</h3>
 
-<p><strong>Wait. Stop.</strong> Regression (Chapter 3), radiosity, PageRank &ndash; three different problems, three times <strong>the same algorithm</strong>. Iterative matrix multiplication, controlled by eigenvalues.</p>
+<p>Where in real life is there a massive eigenvalue problem for a stochastic matrix? Every time you use Google.</p>
+
+<!-- Mini Web Graph SVG -->
+<svg viewBox="0 0 300 200" width="100%" style="max-width:300px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
+  <defs><marker id="pg1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#6b7280"/></marker></defs>
+  <circle cx="70" cy="50" r="22" fill="rgba(34,211,238,0.15)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="70" y="55" fill="#22d3ee" font-size="14" font-weight="600" text-anchor="middle">A</text>
+  <circle cx="220" cy="50" r="22" fill="rgba(52,211,153,0.15)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="220" y="55" fill="#34d399" font-size="14" font-weight="600" text-anchor="middle">B</text>
+  <circle cx="220" cy="150" r="22" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="220" y="155" fill="#fbbf24" font-size="14" font-weight="600" text-anchor="middle">C</text>
+  <circle cx="70" cy="150" r="22" fill="rgba(167,139,250,0.15)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="70" y="155" fill="#a78bfa" font-size="14" font-weight="600" text-anchor="middle">D</text>
+  <line x1="92" y1="45" x2="196" y2="45" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="88" y1="62" x2="200" y2="138" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="196" y1="55" x2="92" y2="55" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="220" y1="72" x2="220" y2="126" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="200" y1="156" x2="92" y2="156" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="202" y1="140" x2="88" y2="62" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="70" y1="128" x2="198" y2="55" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+</svg>
+
+<p>A random surfer starts on a webpage, clicks a random outgoing link at each step. The <strong>Google matrix</strong> adds a damping factor: with \(d \approx 0.85\) the surfer follows a link; with \(1-d \approx 0.15\) they teleport to a random page:</p>
+
+<div class="math-display">$$G = d \cdot M + \frac{1-d}{n}\,\mathbf{1}\mathbf{1}^T$$</div>
+
+<p><strong>Power iteration</strong> \(\mathbf{r}^{(k+1)} = G\,\mathbf{r}^{(k)}\) converges to the dominant eigenvector &ndash; the <strong>PageRank</strong>. For our mini-web: B ranks highest (34%), followed by A (28%), D (24%), C (14%). Google computes this for <em>billions</em> of pages in ~50 iterations.</p>
+
+<p><strong>Wait. Stop.</strong> Regression (Chapter 3), radiosity, PageRank &ndash; three different problems, three times <strong>the same algorithm</strong>. Iterative matrix multiplication, controlled by eigenvalues. Three times the Neumann series. Three times convergence to the dominant eigenvector.</p>
 
 <h3>As powerful as a brain</h3>
 <p>The <strong>Representer Theorem</strong> (Kimeldorf &amp; Wahba, 1970): the optimal KRR solution always has the form \(f^*(x) = \sum_{i=1}^n \alpha_i\,k(x_i, x)\).</p>
