@@ -155,7 +155,7 @@ var words = RAW.toLowerCase().split(/\s+/);
 var W2I = {}, I2W = {}, VOCAB = 0;
 for (var i = 0; i < words.length; i++) { if (W2I[words[i]] === undefined) { W2I[words[i]] = VOCAB; I2W[VOCAB] = words[i]; VOCAB++; } }
 
-var CTX = 5, HASH = 128, N_BI = 3, FEAT = CTX*HASH + N_BI*HASH, D = 2048, SIGMA = 1.5, LAM = 0.008;
+var CTX = 5, HASH = 128, N_BI = 3, FEAT = CTX*HASH + N_BI*HASH, D = 2048, SIGMA = 1.5, LAM = 0.05;
 
 function hashW(w) { var h=0; for(var i=0;i<w.length;i++) h=((h*31)+w.charCodeAt(i))|0; return((h%HASH)+HASH)%HASH; }
 function hashP(a,b) { var s=a+'|'+b; var h=0; for(var i=0;i<s.length;i++) h=((h*37)+s.charCodeAt(i))|0; return((h%HASH)+HASH)%HASH; }
@@ -385,21 +385,34 @@ function handleSend() {
   var userText=inEl.value.trim(); if(!userText||!W_cpu)return; inEl.value='';
   addMsg(userText,'u');
 
-  // Q&A wrapper: turn user input into a completion prompt
-  // The model is a completion model, so we steer it into answering
-  var prompt = userText.toLowerCase().replace(/[?!]+$/,'');
-  // Heuristic: if it looks like a question, prepend context
-  var promptWords;
-  if (/^(what|why|how|who|where|when|is|are|do|does|can|could|explain|tell|describe)/.test(prompt)) {
-    // "what is an eigenvalue" → "an eigenvalue is"
-    prompt = prompt.replace(/^what (is|are) (an? |the )?/i, '$2').replace(/^(why|how|explain|tell me about|describe) /i, '');
-    promptWords = prompt.split(/\s+/);
-    // Append "is" or "are" to guide completion
-    var lastW = promptWords[promptWords.length-1];
-    if (lastW !== 'is' && lastW !== 'are' && lastW !== '.') {
-      promptWords.push(lastW.endsWith('s') ? 'are' : 'is');
+  // Q&A wrapper: find the best matching context in the corpus
+  var prompt = userText.toLowerCase().replace(/[?!.,]+$/g,'').trim();
+
+  // Strategy: search the corpus for the best matching n-gram seed
+  // This gives the model context it has actually SEEN during training
+  var queryWords = prompt.split(/\s+/).filter(function(w){ return w.length > 2; });
+  // Remove question words
+  var stopQ = {what:1,why:1,how:1,does:1,do:1,is:1,are:1,can:1,could:1,explain:1,tell:1,describe:1,about:1,the:1,an:1};
+  var keywords = queryWords.filter(function(w){ return !stopQ[w]; });
+  if (keywords.length === 0) keywords = queryWords.slice(-2);
+
+  // Find best matching position in corpus: where most keywords appear nearby
+  var bestPos = -1, bestScore = -1;
+  for (var i = 0; i < words.length - CTX - 5; i++) {
+    var window = words.slice(i, i + CTX + 5).join(' ');
+    var score = 0;
+    for (var ki = 0; ki < keywords.length; ki++) {
+      if (window.indexOf(keywords[ki]) >= 0) score++;
     }
+    if (score > bestScore) { bestScore = score; bestPos = i; }
+  }
+
+  // Use the corpus context at that position as the seed
+  var promptWords;
+  if (bestPos >= 0 && bestScore > 0) {
+    promptWords = words.slice(bestPos, bestPos + CTX);
   } else {
+    // Fallback: use the user's words directly
     promptWords = prompt.split(/\s+/);
   }
 
