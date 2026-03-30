@@ -66,6 +66,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenvalues.html"/>
   </url>
   <url>
+    <loc>https://ki-mathias.de/gott.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/gott.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/god.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/god.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/gott.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/god.html"/>
+  </url>
+  <url>
     <loc>https://ki-mathias.de/impressum.html</loc>
     <lastmod>2026-03-30</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/impressum.html"/>
