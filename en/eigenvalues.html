@@ -131,17 +131,19 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
 <h2>The Glass Bead Game</h2>
 
-<p>In the <a href="/en/quantum.html#teil-4a" class="text-cyan-400 hover:text-cyan-300 underline">quantum post</a>, you saw something remarkable. The propagator &ndash; the central quantity describing how a quantum particle travels from A to B &ndash; can be written as a sum over <em>eigenstates</em>:</p>
+<p>Every time you run a Google search, a computer solves an <strong>eigenvalue problem</strong>. It computes which webpage is the most important &ndash; and the answer is an <em>eigenvector</em>.</p>
 
-<div class="math-display">$$K(B,A,t) = \sum_n \phi_n(B)\;\phi_n^*(A)\;e^{-i\,E_n\,t/\hbar}$$</div>
+<p>Every time a neural network recognizes an image or writes a text, <strong>eigenvalues</strong> control what the network learns and what it ignores.</p>
 
-<p>Each eigenstate \(\phi_n\) oscillates at its eigenfrequency \(E_n/\hbar\). The energies \(E_n\) are <strong>eigenvalues</strong> of the Hamiltonian operator. The wavefunctions \(\phi_n\) are <strong>eigenvectors</strong>. You saw them as <a href="/en/quantum.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">standing waves in a box</a> &ndash; the tones a quantum system likes to play.</p>
+<p>And in quantum mechanics? The allowed energies of an atom &ndash; the discrete spectral lines that Niels Bohr could not explain in 1913 &ndash; are also <strong>eigenvalues</strong>. Schr&ouml;dinger titled his famous 1926 paper simply: <em>&ldquo;Quantization as an Eigenvalue Problem.&rdquo;</em></p>
 
-<p>Eigenstates. Eigenvalues. You already know them. They just had a different name.</p>
+<p>Three different worlds. The same mathematics. That is no coincidence &ndash; and in this post, you will see why.</p>
 
-<p>In this post, we show: <strong>The same structure &ndash; eigenvalues, eigenvectors, spectral decomposition &ndash; drives artificial intelligence.</strong> From the simplest linear regression to Google PageRank to neural networks: everything is an eigenvalue problem.</p>
+<p>We build a <strong>chain</strong>: from the simplest linear regression through kernel methods and Google PageRank to neural networks. Each link grows from the previous one. At the end stands the insight: <strong>Artificial intelligence is an eigenvalue problem.</strong></p>
 
-<p>And one more thing: the propagator is called \(K\). The kernel in AI is also called \(K\). That is no coincidence. By the end of this post, you will see why.</p>
+<div class="summary-box">
+  <p class="text-sm text-gray-400"><em>If you have read the <a href="/en/quantum.html#teil-4a" class="text-cyan-400 hover:text-cyan-300 underline">quantum post</a>:</em> There you saw the propagator \(K(B,A,t) = \sum_n \phi_n(B)\,\phi_n^*(A)\,e^{-i E_n t/\hbar}\) &ndash; a sum over eigenstates. The energies \(E_n\) are eigenvalues. Here you will discover that the kernel in AI has <em>exactly the same structure</em>. Same letter \(K\). Same pattern. <a href="#epilog" class="text-cyan-400 hover:text-cyan-300 underline">More in the epilogue.</a></p>
+</div>
 </div>
 <div class="section-divider"></div>
 </section>
@@ -242,10 +244,19 @@
 <div class="component-wrap"><div id="mount-eigen-transform"></div></div>
 
 <h3>Why eigenvalues determine convergence</h3>
+<h3>What does this mean concretely?</h3>
+<p>Apply the matrix 10 times: \(\lambda_1^{10} = 2^{10} = 1024\), but \(\lambda_2^{10} = 3^{10} = 59\,049\). The larger eigenvalue <strong>dominates</strong>.</p>
+
 <p>The key formula: \(A^n = V\,\Lambda^n\,V^{-1}\), where \(\Lambda\) is the diagonal matrix of eigenvalues.</p>
 <p>&bull; If \(|\lambda| &lt; 1\): \(\lambda^n \to 0\) &ndash; the component <strong>vanishes</strong>.<br>
 &bull; If \(|\lambda| = 1\): stays constant.<br>
 &bull; If \(|\lambda| &gt; 1\): \(\lambda^n \to \infty\) &ndash; <strong>explosion</strong>.</p>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Slide \(|\lambda|\) and watch what happens to \(\lambda^n\). Below 1: the curve falls to zero. Above 1: it explodes.</p>
+</div>
+<div class="component-wrap"><div id="mount-convergence"></div></div>
 
 <p>Now the connection to Chapter 3: if \(\mu\) is an eigenvalue of \(X^TX\), then \((1 - \mu)\) is an eigenvalue of \((I - X^TX)\). The iteration converges when \(|1 - \mu| &lt; 1\) for all \(\mu\). The eigenvalues of \(X^TX\) determine <strong>everything</strong>.</p>
 
@@ -277,6 +288,12 @@
 
 <p>Compare with our iteration factor \(1 - (1-\mu_i)^n\). Both have <em>the same effect</em>. The formal relationship:</p>
 <div class="math-display">$$\lambda \approx \frac{1}{n}$$</div>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Slide \(n\) and observe: the iteration filter (left, cyan) and the Ridge filter (right, yellow) have <em>the same shape</em>!</p>
+</div>
+<div class="component-wrap"><div id="mount-regularization"></div></div>
 
 <p><strong>Wait. Stop.</strong> Every textbook introduces Ridge Regression as an artificial penalty term. But in reality, regularization is the most natural thing in the world: <em>stop when it is good enough.</em> The ridge parameter does not fall from the sky. It is the consequence of a simple decision: how many times do I correct my error?</p>
 
@@ -407,6 +424,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var COMPONENTS = {
     'mount-neumann-series': window.NeumannSeriesViz || null,
     'mount-eigen-transform': window.EigenTransformViz || null,
+    'mount-convergence': window.ConvergenceExplorer || null,
+    'mount-regularization': window.RegularizationCompare || null,
     'mount-kernel-regression': window.KernelRegressionViz || null,
   };
   var mounted = {};

@@ -143,17 +143,19 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 1</p>
 <h2>Das Glasperlenspiel</h2>
 
-<p>Im <a href="quanten.html#teil-4a" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> hast du etwas Bemerkenswertes gesehen. Der Propagator &ndash; die zentrale Gr&ouml;&szlig;e, die beschreibt, wie ein Quantenteilchen von A nach B gelangt &ndash; l&auml;sst sich als Summe &uuml;ber <em>Eigenzust&auml;nde</em> schreiben:</p>
+<p>Jedes Mal, wenn du eine Google-Suche startest, l&ouml;st ein Computer ein <strong>Eigenwertproblem</strong>. Er berechnet, welche Webseite die wichtigste ist &ndash; und die Antwort ist ein <em>Eigenvektor</em>.</p>
 
-<div class="math-display">$$K(B,A,t) = \sum_n \phi_n(B)\;\phi_n^*(A)\;e^{-i\,E_n\,t/\hbar}$$</div>
+<p>Jedes Mal, wenn ein neuronales Netz ein Bild erkennt oder einen Text schreibt, steuern <strong>Eigenwerte</strong>, was das Netz lernt und was es ignoriert.</p>
 
-<p>Jeder Eigenzustand \(\phi_n\) schwingt mit seiner Eigenfrequenz \(E_n/\hbar\). Die Energien \(E_n\) sind <strong>Eigenwerte</strong> des Hamilton-Operators. Die Wellenfunktionen \(\phi_n\) sind <strong>Eigenvektoren</strong>. Du hast sie in den <a href="quanten.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">stehenden Wellen im Kasten</a> gesehen &ndash; die T&ouml;ne, die ein Quantensystem gerne spielt.</p>
+<p>Und in der Quantenmechanik? Die erlaubten Energien eines Atoms &ndash; die diskreten Spektrallinien, die Niels Bohr 1913 nicht erkl&auml;ren konnte &ndash; sind ebenfalls <strong>Eigenwerte</strong>. Schr&ouml;dinger betitelte seine ber&uuml;hmte Arbeit von 1926 schlicht: <em>&bdquo;Quantisierung als Eigenwertproblem.&ldquo;</em></p>
 
-<p>Eigenzust&auml;nde. Eigenwerte. Du kennst sie bereits. Sie hie&szlig;en nur anders.</p>
+<p>Drei verschiedene Welten. Dieselbe Mathematik. Das ist kein Zufall &ndash; und in diesem Beitrag wirst du sehen, warum.</p>
 
-<p>In diesem Beitrag zeigen wir: <strong>Dieselbe Struktur &ndash; Eigenwerte, Eigenvektoren, Spektralzerlegung &ndash; treibt die k&uuml;nstliche Intelligenz an.</strong> Von der einfachsten linearen Regression &uuml;ber Google PageRank bis zu neuronalen Netzen: Alles ist ein Eigenwertproblem.</p>
+<p>Wir bauen eine <strong>Kette</strong>: Von der einfachsten linearen Regression &uuml;ber Kernel-Methoden und Google PageRank bis zu neuronalen Netzen. Jedes Glied w&auml;chst aus dem vorherigen. Am Ende steht die Einsicht: <strong>K&uuml;nstliche Intelligenz ist ein Eigenwertproblem.</strong></p>
 
-<p>Und noch etwas: Der Propagator hei&szlig;t \(K\). Der Kernel in der KI hei&szlig;t auch \(K\). Das ist kein Zufall. Am Ende dieses Beitrags wirst du sehen, warum.</p>
+<div class="summary-box">
+  <p class="text-sm text-gray-400"><em>Falls du den <a href="quanten.html#teil-4a" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> gelesen hast:</em> Dort hast du den Propagator \(K(B,A,t) = \sum_n \phi_n(B)\,\phi_n^*(A)\,e^{-i E_n t/\hbar}\) gesehen &ndash; eine Summe &uuml;ber Eigenzust&auml;nde. Die Energien \(E_n\) sind Eigenwerte. Hier wirst du entdecken, dass der Kernel in der KI <em>exakt dieselbe Struktur</em> hat. Derselbe Buchstabe \(K\). Dasselbe Muster. <a href="#epilog" class="text-cyan-400 hover:text-cyan-300 underline">Mehr dazu im Epilog.</a></p>
+</div>
 
 </div>
 <div class="section-divider"></div>
@@ -186,6 +188,27 @@
 <div class="math-display">$$\hat{y} = \frac{\langle \mathbf{a}, \mathbf{y} \rangle}{\langle \mathbf{a}, \mathbf{a} \rangle} \cdot \mathbf{a}$$</div>
 
 <p>Der Fehler \(\mathbf{y} - \hat{y}\) steht senkrecht auf \(\mathbf{a}\). Das ist die ganze Idee.</p>
+
+<svg viewBox="0 0 340 220" width="100%" style="max-width:340px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
+  <line x1="30" y1="180" x2="310" y2="180" stroke="#374151" stroke-width="1"/>
+  <line x1="30" y1="180" x2="30" y2="20" stroke="#374151" stroke-width="1"/>
+  <!-- Richtung a (Gerade) -->
+  <line x1="30" y1="180" x2="300" y2="115" stroke="#4b5563" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="295" y="108" fill="#6b7280" font-size="11">Gerade durch a</text>
+  <!-- y -->
+  <line x1="30" y1="180" x2="220" y2="50" stroke="#e2e8f0" stroke-width="2"/>
+  <polygon points="220,50 210,58 215,65" fill="#e2e8f0"/>
+  <text x="228" y="50" fill="#e2e8f0" font-size="13" font-weight="600">y</text>
+  <!-- ŷ (Projektion) -->
+  <line x1="30" y1="180" x2="200" y2="139" stroke="#22d3ee" stroke-width="2.5"/>
+  <polygon points="200,139 190,141 192,149" fill="#22d3ee"/>
+  <text x="195" y="158" fill="#22d3ee" font-size="13" font-weight="600">&ycirc;</text>
+  <!-- Residuum (senkrecht) -->
+  <line x1="200" y1="139" x2="220" y2="50" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="218" y="100" fill="#f87171" font-size="11">r = y &minus; &ycirc;</text>
+  <!-- Rechter Winkel -->
+  <polyline points="206,130 213,134 209,141" fill="none" stroke="#f87171" stroke-width="1.2"/>
+</svg>
 
 <h3>Der allgemeine Fall: Die Normalengleichung</h3>
 
@@ -236,6 +259,31 @@
 <div class="math-display">$$\sum_{k=0}^{\infty} A^k = (I - A)^{-1} \quad\text{wenn alle Eigenwerte von } A \text{ betragskleiner als 1 sind}$$</div>
 
 <p>Das ist die Matrixversion der geometrischen Reihe \(\sum q^k = 1/(1-q)\). Und sie bedeutet: Unsere Iteration konvergiert gegen \((X^TX)^{-1}X^T\mathbf{y}\) &ndash; <em>exakt</em> die geschlossene L&ouml;sung aus Kapitel 2.</p>
+
+<h3>Konkretes Beispiel: Zahlen statt Symbole</h3>
+
+<p>F&uuml;r \(X = (1,\; 0{,}5)^T\) und \(\mathbf{y} = (3,\; 4)^T\) mit exakter L&ouml;sung \(\hat{\mathbf{y}}^* = (4,\; 2)^T\):</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">n</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(\hat{\mathbf{y}}_n\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(\mathbf{r}_n\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(\|\mathbf{r}_n\|\)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">0</td><td style="text-align:center;">(0; 0)</td><td style="text-align:center;">(3; 4)</td><td style="text-align:center;">5,00</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">1</td><td style="text-align:center;">(3,13; 1,56)</td><td style="text-align:center;">(&minus;0,13; 2,44)</td><td style="text-align:center;">2,44</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">2</td><td style="text-align:center;">(3,47; 1,73)</td><td style="text-align:center;">(&minus;0,47; 2,27)</td><td style="text-align:center;">2,32</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">5</td><td style="text-align:center;">(3,84; 1,92)</td><td style="text-align:center;">(&minus;0,84; 2,08)</td><td style="text-align:center;">2,25</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">20</td><td style="text-align:center;">(3,99; 2,00)</td><td style="text-align:center;">(&minus;0,99; 2,00)</td><td style="text-align:center;">2,24</td></tr>
+    <tr style="color:#34d399;"><td style="text-align:center;padding:0.3rem 0.6rem;">&infin;</td><td style="text-align:center;font-weight:600;">(4; 2)</td><td style="text-align:center;">(&minus;1; 2)</td><td style="text-align:center;">2,24</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Beobachte: Die Approximation wandert Iteration f&uuml;r Iteration n&auml;her an (4, 2). Und der Fehler im Grenzfall &ndash; \((-1, 2)\) &ndash; steht senkrecht auf \(X\): \(1 \cdot (-1) + 0{,}5 \cdot 2 = 0\). Genau wie es sein muss.</p>
 
 <div class="try-it">
   <p><strong>Probier es selbst</strong></p>
@@ -291,6 +339,10 @@
   <div id="mount-eigen-transform"></div>
 </div>
 
+<h3>Was bedeutet das konkret?</h3>
+
+<p>Wenn du die Matrix 10 Mal hintereinander anwendest: \(\lambda_1^{10} = 2^{10} = 1024\), aber \(\lambda_2^{10} = 3^{10} = 59\,049\). Der gr&ouml;&szlig;ere Eigenwert <strong>dominiert</strong>. Nach 20 Anwendungen: \(2^{20} \approx 10^6\), \(3^{20} \approx 3{,}5 \times 10^9\). Die Richtung von \(\mathbf{v}_2\) &uuml;berlagert alles andere.</p>
+
 <h3>Warum Eigenwerte &uuml;ber Konvergenz entscheiden</h3>
 
 <p>Die Schl&uuml;sselformel: \(A^n = V\,\Lambda^n\,V^{-1}\), wobei \(\Lambda\) die Diagonalmatrix der Eigenwerte ist. Das hei&szlig;t:</p>
@@ -298,6 +350,15 @@
 <p>&bull; Wenn \(|\lambda| &lt; 1\): \(\lambda^n \to 0\) &ndash; die Komponente <strong>verschwindet</strong>.<br>
 &bull; Wenn \(|\lambda| = 1\): bleibt konstant.<br>
 &bull; Wenn \(|\lambda| &gt; 1\): \(\lambda^n \to \infty\) &ndash; <strong>Explosion</strong>.</p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Schiebe \(|\lambda|\) und beobachte, was mit \(\lambda^n\) passiert. Unter 1: die Kurve f&auml;llt gegen Null. &Uuml;ber 1: sie explodiert. Genau an der Grenze 1: nichts passiert.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-convergence"></div>
+</div>
 
 <p>Jetzt die Verbindung zu Kapitel 3: Wenn \(\mu\) ein Eigenwert von \(X^TX\) ist, dann ist \((1 - \mu)\) ein Eigenwert von \((I - X^TX)\). Die Iteration konvergiert, wenn \(|1 - \mu| &lt; 1\) f&uuml;r alle \(\mu\). Die Eigenwerte von \(X^TX\) bestimmen <strong>alles</strong> &ndash; ob die Iteration konvergiert und wie schnell.</p>
 
@@ -321,16 +382,31 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 5</p>
 <h2>Fr&uuml;h aufh&ouml;ren lohnt sich</h2>
 
-<p>Stell dir einen Sch&uuml;ler vor, der 20 &Uuml;bungsaufgaben auswendig lernt. In der &Uuml;bung: 20 von 20. In der Pr&uuml;fung mit neuen Aufgaben: 8 von 20. Er hat die <em>Aufgaben</em> gelernt, nicht die <em>Prinzipien</em>. Das nennt man <strong>Overfitting</strong>.</p>
+<p>Stell dir einen Sch&uuml;ler vor, der 20 &Uuml;bungsaufgaben auswendig lernt. Jede Zahl, jedes Komma, jede Formulierung &ndash; perfekt im Ged&auml;chtnis. In der &Uuml;bung: 20 von 20. Dann kommt die Pr&uuml;fung. Neue Aufgaben, die er noch nie gesehen hat. Ergebnis: 8 von 20. Er hat die <em>Aufgaben</em> gelernt, nicht die <em>Prinzipien</em>. Das nennt man <strong>Overfitting</strong> &ndash; &Uuml;beranpassung.</p>
 
 <h3>Was das mit unserer Iteration zu tun hat</h3>
 
-<p>Nach \(n\) Iterationen wird die Komponente entlang des \(i\)-ten Eigenvektors um den Faktor \(1 - (1-\mu_i)^n\) beibehalten. Was bedeutet das?</p>
+<p>Nach \(n\) Iterationen wird die Komponente entlang des \(i\)-ten Eigenvektors um den Faktor \(1 - (1-\mu_i)^n\) beibehalten. Klingt abstrakt &ndash; aber schau dir die Zahlen an:</p>
 
-<p>&bull; <strong>Gro&szlig;e Eigenwerte</strong> (\(\mu_i\) gro&szlig;): Nach wenigen Iterationen bei fast 100%. Das ist <em>Signal</em>.<br>
-&bull; <strong>Kleine Eigenwerte</strong> (\(\mu_i\) klein): Brauchen viele Iterationen. Das ist oft <em>Rauschen</em>.</p>
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(\mu_i\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\((1-\mu_i)\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">nach 3 Iter.</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">nach 10</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">nach 100</th>
+  </tr></thead>
+  <tbody>
+    <tr style="color:#34d399;"><td style="text-align:center;padding:0.3rem 0.6rem;">1,0 (stark)</td><td style="text-align:center;">0,0</td><td style="text-align:center;font-weight:600;">100%</td><td style="text-align:center;font-weight:600;">100%</td><td style="text-align:center;font-weight:600;">100%</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">0,5</td><td style="text-align:center;">0,5</td><td style="text-align:center;">87,5%</td><td style="text-align:center;">99,9%</td><td style="text-align:center;">&asymp;100%</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">0,1</td><td style="text-align:center;">0,9</td><td style="text-align:center;">27,1%</td><td style="text-align:center;">65,1%</td><td style="text-align:center;">&asymp;100%</td></tr>
+    <tr style="color:#f87171;"><td style="text-align:center;padding:0.3rem 0.6rem;">0,01 (schwach)</td><td style="text-align:center;">0,99</td><td style="text-align:center;">3,0%</td><td style="text-align:center;">9,6%</td><td style="text-align:center;">63,4%</td></tr>
+  </tbody>
+</table>
+</div>
 
-<p>Wenige Iterationen = nur das Signal wird gelernt. Viele Iterationen = auch das Rauschen. <strong>Fr&uuml;hes Aufh&ouml;ren ist ein nat&uuml;rlicher Rauschfilter.</strong></p>
+<p><strong>Gro&szlig;e Eigenwerte</strong> (starkes Signal): Sofort bei 100%. <strong>Kleine Eigenwerte</strong> (oft Rauschen): Brauchen Hunderte von Iterationen. Wenige Iterationen = nur das Signal wird gelernt. Viele = auch das Rauschen. <strong>Fr&uuml;hes Aufh&ouml;ren ist ein nat&uuml;rlicher Rauschfilter.</strong></p>
 
 <h3>Die &Auml;quivalenz zu Ridge Regression</h3>
 
@@ -341,6 +417,15 @@
 <div class="math-display">$$\lambda \approx \frac{1}{n}$$</div>
 
 <p>Mehr Iterationen = kleineres \(\lambda\) = weniger Regularisierung. Weniger Iterationen = gr&ouml;&szlig;eres \(\lambda\) = glattere L&ouml;sung.</p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Schiebe \(n\) und beobachte: Die Filterkurve der Iteration (links, cyan) und die von Ridge Regression (rechts, gelb) haben <em>dieselbe Form</em>. Frühes Aufhören und Ridge Regression tun dasselbe!</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-regularization"></div>
+</div>
 
 <p><strong>Halt. Stop.</strong> In jedem Lehrbuch wird Ridge Regression als k&uuml;nstlicher Strafterm eingef&uuml;hrt: &bdquo;Wir bestrafen gro&szlig;e Koeffizienten.&ldquo; Aber in Wirklichkeit ist Regularisierung die nat&uuml;rlichste Sache der Welt: <em>H&ouml;r auf, wenn es gut genug ist.</em> Der Ridge-Parameter f&auml;llt nicht vom Himmel. Er ist die Konsequenz einer einfachen Entscheidung: Wie oft korrigiere ich meinen Fehler?</p>
 
@@ -411,19 +496,57 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
 <h2>Die gro&szlig;e Vereinigung</h2>
 
-<h3>Von Lichtreflexionen zu Google</h3>
+<h3>Licht, das von W&auml;nden springt</h3>
 
-<p>In der Computergrafik beschreibt die <strong>Radiosity-Gleichung</strong>, wie Licht zwischen Fl&auml;chen springt: \(B = E + \rho F B\), wobei \(E\) das Eigenleuchten, \(\rho\) die Reflektivit&auml;t und \(F\) die Formfaktormatrix ist. Die L&ouml;sung?</p>
+<p>Stell dir einen wei&szlig;en Raum vor mit einer tiefroten Wand. Eine Lampe an der Decke. Was siehst du? Nicht nur rote und wei&szlig;e Fl&auml;chen &ndash; sondern einen sanften r&ouml;tlichen Schimmer auf dem wei&szlig;en Boden neben der roten Wand. <em>Color Bleeding</em>: Licht springt von der roten Wand zum Boden und tr&auml;gt Farbe mit.</p>
+
+<p>In der Computergrafik beschreibt die <strong>Radiosity-Gleichung</strong>, wie Licht zwischen Fl&auml;chen springt: \(\mathbf{B} = \mathbf{E} + \rho F \mathbf{B}\). Hier ist \(\mathbf{E}\) das Eigenleuchten (Lampen), \(\rho\) die Reflektivit&auml;t (wie viel Licht jede Fl&auml;che zur&uuml;ckwirft) und \(F\) die Formfaktormatrix (wer &bdquo;sieht&ldquo; wen). Die L&ouml;sung?</p>
 
 <div class="math-display">$$\mathbf{B} = (I - \rho F)^{-1}\,\mathbf{E} = \sum_{k=0}^{\infty} (\rho F)^k\,\mathbf{E}$$</div>
 
-<p>Dieselbe Neumann-Reihe. \(k=0\): direktes Licht. \(k=1\): erster Bounce. \(k=2\): zweiter Bounce. Jeder Term = eine weitere Lichtreflexion. Licht, das zwischen W&auml;nden springt, <em>ist</em> iterative Fehlerkorrektur, angewendet auf Energie statt auf Daten.</p>
+<p>Dieselbe Neumann-Reihe wie in Kapitel 3! Nur die Bedeutung hat sich ge&auml;ndert:</p>
 
-<p>Jetzt der Trick: Die Matrix \(\rho F\) ist <em>substochastisch</em> &ndash; Zeilen summieren sich zu weniger als 1 (weil Energie absorbiert wird). F&uuml;ge eine zus&auml;tzliche &bdquo;Absorber-Dimension&ldquo; hinzu, die die fehlende Energie auff&auml;ngt und an die Emitter zur&uuml;ckverteilt. Resultat: eine <strong>stochastische Matrix</strong> (alle Zeilen = 1). Derselbe Trick wie homogene Koordinaten in der 3D-Grafik: Eine Dimension mehr, und eine unvollst&auml;ndige Struktur wird vollst&auml;ndig.</p>
+<p>&bull; \(k=0\): <strong>Direktes Licht</strong> &ndash; die Lampe strahlt.<br>
+&bull; \(k=1\): <strong>Erster Bounce</strong> &ndash; Licht reflektiert einmal von einer Wand.<br>
+&bull; \(k=2\): <strong>Zweiter Bounce</strong> &ndash; das reflektierte Licht reflektiert nochmal.<br>
+&bull; Typischerweise gen&uuml;gen <strong>3&ndash;5 Bounces</strong>, bevor 99% der Energie absorbiert ist.</p>
 
-<p>Eine stochastische Matrix <em>ist</em> eine Markov-Kette. Deren Gleichgewicht ist der <strong>dominante Eigenvektor</strong> &ndash; der Eigenvektor zum Eigenwert 1.</p>
+<p>Licht, das zwischen W&auml;nden springt, <em>ist</em> iterative Fehlerkorrektur &ndash; angewendet auf Energie statt auf Daten.</p>
 
-<p>Wo im echten Leben gibt es ein riesiges Eigenwertproblem f&uuml;r eine stochastische Matrix? Jedes Mal, wenn du Google benutzt. <strong>PageRank</strong> ist der dominante Eigenvektor der Google-Matrix \(G = d\,M + (1-d)/n \cdot \mathbf{1}\mathbf{1}^T\). Der Random Surfer klickt Links (\(d \approx 0{,}85\)) oder teleportiert zuf&auml;llig (\(1-d\)). Die Power Iteration \(\mathbf{r}^{(k+1)} = G\,\mathbf{r}^{(k)}\) konvergiert in ~50 Iterationen &ndash; f&uuml;r <em>Milliarden</em> Webseiten.</p>
+<p>Die Matrix \(\rho F\) ist <em>substochastisch</em> (Zeilen summieren sich zu weniger als 1, weil Energie absorbiert wird). F&uuml;ge eine zus&auml;tzliche &bdquo;Absorber-Dimension&ldquo; hinzu &ndash; und die Matrix wird <strong>stochastisch</strong> (alle Zeilen = 1). Eine stochastische Matrix <em>ist</em> eine <span class="glossary" title="Markov-Kette: Ein System, das zuf&auml;llig zwischen Zust&auml;nden springt, wobei die Wahrscheinlichkeit des n&auml;chsten Zustands nur vom aktuellen abh&auml;ngt.">Markov-Kette</span>. Deren Gleichgewicht ist der <strong>dominante Eigenvektor</strong> &ndash; der Eigenvektor zum Eigenwert 1.</p>
+
+<h3>Der Surfer, der nie aufh&ouml;rt</h3>
+
+<p>Wo im echten Leben gibt es ein riesiges Eigenwertproblem f&uuml;r eine stochastische Matrix? Jedes Mal, wenn du Google benutzt.</p>
+
+<p>Stell dir einen zuf&auml;lligen Surfer vor, der auf einer Webseite startet und bei jedem Schritt zuf&auml;llig auf einen der ausgehenden Links klickt. Die <strong>&Uuml;bergangsmatrix</strong> \(M\) beschreibt diesen Random Walk. Beispiel mit 4 Seiten:</p>
+
+<!-- Mini Web Graph SVG -->
+<svg viewBox="0 0 300 200" width="100%" style="max-width:300px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
+  <defs><marker id="pg1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#6b7280"/></marker></defs>
+  <circle cx="70" cy="50" r="22" fill="rgba(34,211,238,0.15)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="70" y="55" fill="#22d3ee" font-size="14" font-weight="600" text-anchor="middle">A</text>
+  <circle cx="220" cy="50" r="22" fill="rgba(52,211,153,0.15)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="220" y="55" fill="#34d399" font-size="14" font-weight="600" text-anchor="middle">B</text>
+  <circle cx="220" cy="150" r="22" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="220" y="155" fill="#fbbf24" font-size="14" font-weight="600" text-anchor="middle">C</text>
+  <circle cx="70" cy="150" r="22" fill="rgba(167,139,250,0.15)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="70" y="155" fill="#a78bfa" font-size="14" font-weight="600" text-anchor="middle">D</text>
+  <!-- Edges -->
+  <line x1="92" y1="45" x2="196" y2="45" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="88" y1="62" x2="200" y2="138" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="196" y1="55" x2="92" y2="55" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="220" y1="72" x2="220" y2="126" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="200" y1="156" x2="92" y2="156" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="202" y1="140" x2="88" y2="62" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+  <line x1="70" y1="128" x2="198" y2="55" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
+</svg>
+
+<p>A hat 2 Links (&rarr; B, &rarr; D), also gibt A je \(1/2\) seiner &bdquo;Stimme&ldquo; an B und D. Die <strong>Google-Matrix</strong> erg&auml;nzt einen D&auml;mpfungsfaktor: mit \(d \approx 0{,}85\) folgt der Surfer einem Link; mit \(1-d \approx 0{,}15\) teleportiert er zu einer zuf&auml;lligen Seite:</p>
+
+<div class="math-display">$$G = d \cdot M + \frac{1-d}{n}\,\mathbf{1}\mathbf{1}^T$$</div>
+
+<p>Die <strong>Power Iteration</strong> \(\mathbf{r}^{(k+1)} = G\,\mathbf{r}^{(k)}\) konvergiert zum dominanten Eigenvektor &ndash; dem <strong>PageRank</strong>. F&uuml;r unser Mini-Web: B hat den h&ouml;chsten Rang (34%), gefolgt von A (28%), D (24%), C (14%). Google berechnet das f&uuml;r <em>Milliarden</em> Webseiten in ~50 Iterationen.</p>
 
 <p><strong>Halt. Stop.</strong> Regression (Kapitel 3), Radiosity, PageRank &ndash; drei verschiedene Probleme, dreimal <strong>derselbe Algorithmus</strong>. Iterative Matrixmultiplikation, gesteuert durch Eigenwerte. Dreimal Neumann-Reihe. Dreimal Konvergenz zum dominanten Eigenvektor.</p>
 
@@ -510,6 +633,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var COMPONENTS = {
     'mount-neumann-series': window.NeumannSeriesViz || null,
     'mount-eigen-transform': window.EigenTransformViz || null,
+    'mount-convergence': window.ConvergenceExplorer || null,
+    'mount-regularization': window.RegularizationCompare || null,
     'mount-kernel-regression': window.KernelRegressionViz || null,
   };
 

@@ -544,3 +544,194 @@ var _eigenSolve = (function() {
 
   window.KernelRegressionViz = KernelRegressionViz;
 })();
+
+
+// === 4. ConvergenceExplorer ===
+// Shows λ^n for adjustable |λ| — why eigenvalue magnitude determines convergence.
+(function() {
+  var h = React.createElement;
+
+  function ConvergenceExplorer() {
+    var _l = React.useState(0.7), lam = _l[0], setLam = _l[1];
+    var _a = React.useState(false), anim = _a[0], setAnim = _a[1];
+    var _n = React.useState(0), step = _n[0], setStep = _n[1];
+    var timerRef = React.useRef(null);
+
+    var MAX_N = 20;
+    var W = 420, H = 220, PL = 45, PR = 15, PT = 15, PB = 30;
+    var pW = W - PL - PR, pH = H - PT - PB;
+
+    // Compute λ^n values
+    var vals = React.useMemo(function() {
+      var v = [];
+      for (var i = 0; i <= MAX_N; i++) v.push(Math.pow(lam, i));
+      return v;
+    }, [lam]);
+
+    React.useEffect(function() {
+      if (anim && step < MAX_N) {
+        timerRef.current = setTimeout(function() { setStep(function(s) { return s + 1; }); }, 300);
+      }
+      if (step >= MAX_N) setAnim(false);
+      return function() { if (timerRef.current) clearTimeout(timerRef.current); };
+    }, [anim, step]);
+
+    // Determine y-axis range
+    var yMax = lam > 1 ? Math.max(Math.pow(lam, step), 2) : 1.2;
+    var yMin = -0.1;
+
+    function toX(n) { return PL + (n / MAX_N) * pW; }
+    function toY(v) { return PT + ((yMax - v) / (yMax - yMin)) * pH; }
+
+    // Color based on convergence
+    var curveColor = lam < 0.99 ? '#34d399' : (lam > 1.01 ? '#f87171' : '#fbbf24');
+    var label = lam < 0.99 ? 'Konvergenz' : (lam > 1.01 ? 'Explosion!' : 'Grenzfall');
+
+    // Points up to current step
+    var points = [];
+    for (var i = 0; i <= step; i++) {
+      var val = Math.min(vals[i], yMax * 1.5);
+      points.push(h('circle', { cx: toX(i), cy: toY(val), r: 3.5, fill: curveColor, key: 'p' + i }));
+    }
+
+    // Line through points
+    var linePts = [];
+    for (var i = 0; i <= step; i++) {
+      linePts.push(toX(i) + ',' + toY(Math.min(vals[i], yMax * 1.5)));
+    }
+
+    // Grid
+    var gridEls = [];
+    for (var n = 0; n <= MAX_N; n += 5) {
+      gridEls.push(h('line', { x1: toX(n), y1: PT, x2: toX(n), y2: H - PB, stroke: '#1f2937', strokeWidth: 0.5, key: 'gn' + n }));
+      gridEls.push(h('text', { x: toX(n), y: H - PB + 14, fill: '#4b5563', fontSize: 9, textAnchor: 'middle', key: 'gnl' + n }, n));
+    }
+
+    var svgEl = h('svg', { viewBox: '0 0 ' + W + ' ' + H, width: '100%' }, [
+      // Axes
+      h('line', { x1: PL, y1: H - PB, x2: W - PR, y2: H - PB, stroke: '#4b5563', strokeWidth: 1, key: 'xa' }),
+      h('line', { x1: PL, y1: PT, x2: PL, y2: H - PB, stroke: '#4b5563', strokeWidth: 1, key: 'ya' }),
+      h('text', { x: W / 2, y: H - 4, fill: '#6b7280', fontSize: 10, textAnchor: 'middle', key: 'xlab' }, 'n (Iterationen)'),
+      h('text', { x: 8, y: PT + pH / 2, fill: '#6b7280', fontSize: 10, textAnchor: 'middle', transform: 'rotate(-90,8,' + (PT + pH / 2) + ')', key: 'ylab' }, '\u03BB\u207F'),
+      // 1-line
+      h('line', { x1: PL, y1: toY(1), x2: W - PR, y2: toY(1), stroke: '#fbbf24', strokeWidth: 0.5, strokeDasharray: '4,4', key: 'one' }),
+      h('text', { x: PL - 4, y: toY(1) + 3, fill: '#fbbf24', fontSize: 9, textAnchor: 'end', key: 'onel' }, '1'),
+      // Zero line
+      h('line', { x1: PL, y1: toY(0), x2: W - PR, y2: toY(0), stroke: '#374151', strokeWidth: 0.5, key: 'zero' }),
+    ].concat(gridEls, [
+      linePts.length > 1 ? h('polyline', { points: linePts.join(' '), fill: 'none', stroke: curveColor, strokeWidth: 1.5, key: 'line' }) : null,
+    ], points, [
+      // Status label
+      h('text', { x: W - PR - 5, y: PT + 15, fill: curveColor, fontSize: 12, fontWeight: 600, textAnchor: 'end', key: 'status' }, label),
+    ]));
+
+    var controls = h('div', { className: 'flex flex-wrap items-center gap-3 mt-2', key: 'ctrl' }, [
+      h('label', { className: 'text-xs text-gray-500', key: 'll' }, '|\u03BB|'),
+      h('input', { type: 'range', min: 0.1, max: 1.5, step: 0.01, value: lam,
+        onChange: function(e) { setLam(parseFloat(e.target.value)); setStep(0); setAnim(false); },
+        className: 'flex-1 accent-cyan-500', key: 'lr' }),
+      h('span', { className: 'text-xs font-mono w-20 text-right', style: { color: curveColor }, key: 'lv' }, '|\u03BB| = ' + lam.toFixed(2)),
+      h('button', {
+        className: 'px-3 py-1.5 text-xs rounded-lg border transition cursor-pointer ' +
+          (anim ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400' : 'border-gray-700 hover:border-cyan-500/50 text-gray-300'),
+        onClick: function() { if (step >= MAX_N) setStep(0); setAnim(!anim); }, key: 'play'
+      }, anim ? '\u23F8 Pause' : '\u25B6 Start'),
+      h('button', {
+        className: 'px-3 py-1.5 text-xs rounded-lg border border-gray-700 hover:border-cyan-500/50 text-gray-300 transition cursor-pointer',
+        onClick: function() { setStep(0); setAnim(false); }, key: 'reset'
+      }, '\u21BA Reset'),
+    ]);
+
+    return h('div', { className: 'bg-gray-950 text-white p-3 sm:p-4 rounded-2xl max-w-xl mx-auto border border-gray-800/50' }, [
+      svgEl, controls
+    ]);
+  }
+
+  window.ConvergenceExplorer = ConvergenceExplorer;
+})();
+
+
+// === 5. RegularizationCompare ===
+// Side-by-side: iteration filter 1-(1-μ)^n vs Ridge filter μ/(μ+λ).
+(function() {
+  var h = React.createElement;
+
+  function RegularizationCompare() {
+    var _n = React.useState(5), nIter = _n[0], setNIter = _n[1];
+
+    var W = 240, H = 180, PL = 35, PR = 10, PT = 15, PB = 28;
+    var pW = W - PL - PR, pH = H - PT - PB;
+    var muMax = 1.2;
+
+    function toX(mu) { return PL + (mu / muMax) * pW; }
+    function toY(v) { return PT + (1 - v) * pH; }
+
+    // Derived λ
+    var lambda = 1 / nIter;
+
+    // Iteration filter: 1 - (1-μ)^n
+    function iterFilter(mu) { return 1 - Math.pow(Math.max(0, 1 - mu), nIter); }
+    // Ridge filter: μ / (μ + λ)
+    function ridgeFilter(mu) { return mu / (mu + lambda); }
+
+    function makePath(fn) {
+      var pts = [];
+      for (var i = 0; i <= 60; i++) {
+        var mu = (muMax * i) / 60;
+        var v = Math.max(0, Math.min(1, fn(mu)));
+        pts.push((i === 0 ? 'M' : 'L') + toX(mu).toFixed(1) + ',' + toY(v).toFixed(1));
+      }
+      return pts.join(' ');
+    }
+
+    var iterPath = makePath(iterFilter);
+    var ridgePath = makePath(ridgeFilter);
+
+    function makePanel(title, path, color, isRight) {
+      var gridEls = [];
+      for (var g = 0; g <= 1; g += 0.5) {
+        gridEls.push(h('line', { x1: PL, y1: toY(g), x2: W - PR, y2: toY(g), stroke: '#1f2937', strokeWidth: 0.5, key: 'g' + g }));
+      }
+      return h('div', { key: title }, [
+        h('p', { className: 'text-xs text-center mb-1', style: { color: color }, key: 't' }, title),
+        h('svg', { viewBox: '0 0 ' + W + ' ' + H, width: '100%', className: 'max-w-[240px]', key: 's' }, [
+          h('line', { x1: PL, y1: H - PB, x2: W - PR, y2: H - PB, stroke: '#4b5563', strokeWidth: 1, key: 'xa' }),
+          h('line', { x1: PL, y1: PT, x2: PL, y2: H - PB, stroke: '#4b5563', strokeWidth: 1, key: 'ya' }),
+          h('text', { x: (PL + W - PR) / 2, y: H - 5, fill: '#6b7280', fontSize: 9, textAnchor: 'middle', key: 'xl' }, '\u03BC (Eigenwert)'),
+          h('text', { x: PL - 4, y: toY(1) + 3, fill: '#6b7280', fontSize: 8, textAnchor: 'end', key: 'yl1' }, '1'),
+          h('text', { x: PL - 4, y: toY(0) + 3, fill: '#6b7280', fontSize: 8, textAnchor: 'end', key: 'yl0' }, '0'),
+          // 100% line
+          h('line', { x1: PL, y1: toY(1), x2: W - PR, y2: toY(1), stroke: '#374151', strokeWidth: 0.5, strokeDasharray: '3,3', key: 'max' }),
+        ].concat(gridEls, [
+          h('path', { d: path, fill: 'none', stroke: color, strokeWidth: 2.5, key: 'curve' }),
+        ]))
+      ]);
+    }
+
+    var leftPanel = makePanel('Iteration: 1\u2009\u2212\u2009(1\u2212\u03BC)\u207F', iterPath, '#22d3ee');
+    var rightPanel = makePanel('Ridge: \u03BC/(\u03BC+\u03BB)', ridgePath, '#f59e0b');
+
+    var controls = h('div', { className: 'flex items-center gap-3 mt-2', key: 'ctrl' }, [
+      h('label', { className: 'text-xs text-gray-500', key: 'nl' }, 'n'),
+      h('input', { type: 'range', min: 1, max: 50, step: 1, value: nIter,
+        onChange: function(e) { setNIter(parseInt(e.target.value)); },
+        className: 'flex-1 accent-cyan-500', key: 'nr' }),
+      h('span', { className: 'text-xs text-cyan-400 font-mono w-40 text-right', key: 'nv' },
+        'n = ' + nIter + '  \u2192  \u03BB \u2248 ' + lambda.toFixed(3)),
+    ]);
+
+    return h('div', { className: 'bg-gray-950 text-white p-3 sm:p-4 rounded-2xl max-w-2xl mx-auto border border-gray-800/50' }, [
+      h('div', { className: 'flex flex-col sm:flex-row gap-2 items-center justify-center', key: 'panels' }, [
+        leftPanel,
+        h('span', { className: 'text-2xl text-emerald-400 font-bold hidden sm:block', key: 'eq' }, '\u2248'),
+        rightPanel
+      ]),
+      controls,
+      h('p', { className: 'text-xs text-gray-500 text-center mt-2', key: 'hint' },
+        'Beide Kurven haben dieselbe Form \u2014 fr\u00fches Aufh\u00f6ren und Ridge Regression tun dasselbe!'
+      )
+    ]);
+  }
+
+  window.RegularizationCompare = RegularizationCompare;
+})();
