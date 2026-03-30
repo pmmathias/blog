@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantum Physics Simply Explained &ndash; Double Slit, Path Integral &amp; Entanglement | Mathias Leonhardt</title>
+  <meta name="description" content="How quantum physics really works &ndash; explained with little arrows that spin. Seven chapters, eight interactive visualizations, zero prior knowledge required.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/en/quantum.html">
+
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/quanten.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/quanten.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Waves, Arrows and the Double-Slit Wonder &ndash; Interactive Quantum Physics">
+  <meta property="og:description" content="How quantum physics really works &ndash; explained with little arrows. Seven interactive chapters.">
+  <meta property="og:url" content="https://ki-mathias.de/en/quantum.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-03-01">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Quantum Mechanics">
+  <meta property="article:tag" content="Double-Slit Experiment">
+  <meta property="article:tag" content="Path Integral">
+  <meta property="article:tag" content="Entanglement">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Waves, Arrows and the Double-Slit Wonder">
+  <meta name="twitter:description" content="Quantum physics explained interactively &ndash; seven chapters with visualizations.">
+
+  <!-- All resources self-hosted &mdash; zero external requests, fully GDPR-compliant -->
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+  <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/auto-render.min.js"></script>
+  <script src="/vendor/react.production.min.js"></script>
+  <script src="/vendor/react-dom.production.min.js"></script>
+  <!-- Framer Motion removed — ThreeLanguages replaced by static SVG -->
+  <script defer src="/components.js"></script>
+
+  <!-- Self-hosted Inter font (WOFF2, GDPR-compliant) -->
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-500.woff2) format('woff2'), url(/fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Waves, Arrows and the Double-Slit Wonder",
+    "description": "How quantum physics really works \u2013 explained with little arrows that spin. Seven chapters, eight interactive visualizations.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-03-01",
+    "dateModified": "2026-03-28",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/quantum.html" },
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "keywords": ["Quantum Mechanics", "Double-Slit Experiment", "Path Integral", "Quantum Physics", "Entanglement", "Fourier Analysis"],
+    "articleSection": "Quantum Mechanics",
+    "wordCount": 12000,
+    "timeRequired": "PT45M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+
+    /* Scroll offset for fixed nav */
+    section[id] { scroll-margin-top: 4.5rem; }
+
+    /* Progress bar */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; z-index: 100;
+      background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b);
+      transition: width 50ms linear;
+    }
+
+    /* KaTeX dark theme overrides */
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose,
+    .katex .mpunct, .katex .minner { color: #e2e8f0; }
+
+    /* Prose styling */
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 {
+      font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem;
+      background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .prose-dark h3 {
+      font-size: 1.25rem; font-weight: 600; color: #f1f5f9;
+      margin-top: 2.5rem; margin-bottom: 0.75rem;
+    }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+
+    /* Interactive prompt styling */
+    .try-it {
+      border-left: 3px solid #22d3ee; padding: 1rem 1.25rem;
+      background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0;
+      margin: 2rem 0;
+    }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+
+    /* Summary box */
+    .summary-box {
+      border: 1px solid #374151; padding: 1.25rem 1.5rem;
+      border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2);
+      margin: 2rem 0;
+    }
+
+    /* Glossary tooltip */
+    .glossary {
+      border-bottom: 1px dashed #60a5fa; cursor: help;
+      color: #93c5fd;
+    }
+    .glossary:hover { color: #bfdbfe; }
+
+    /* Section divider */
+    .section-divider {
+      width: 60px; height: 2px; margin: 3rem auto;
+      background: linear-gradient(90deg, #22d3ee, #f59e0b);
+      border-radius: 1px;
+    }
+
+    /* Nav active */
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+
+    /* Mobile nav */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* Blog layout: sidebar + content */
+    .blog-layout {
+      display: flex; max-width: 80rem; margin: 0 auto;
+    }
+
+    /* Sidebar TOC */
+    .sidebar {
+      display: none; /* hidden on mobile */
+      position: sticky; top: 4rem; align-self: flex-start;
+      width: 220px; min-width: 220px;
+      height: calc(100vh - 4rem); overflow-y: auto;
+      padding: 1.5rem 0.75rem 2rem 1rem;
+      border-right: 1px solid #1f2937;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+    @media (min-width: 1024px) {
+      .sidebar { display: block; }
+    }
+    .sidebar .toc-title {
+      font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: #6b7280; margin-bottom: 0.75rem; font-weight: 600;
+    }
+    .sidebar .toc-link {
+      display: block; font-size: 0.8rem; color: #6b7280;
+      padding: 0.3rem 0.5rem; border-radius: 0.25rem;
+      transition: color 0.15s, background 0.15s;
+      line-height: 1.3; margin-bottom: 0.1rem;
+    }
+    .sidebar .toc-link:hover { color: #d1d5db; background: rgba(255,255,255,0.03); }
+    .sidebar .toc-link.active { color: #22d3ee; background: rgba(34,211,238,0.08); }
+    .sidebar .toc-divider {
+      height: 1px; background: #1f2937; margin: 0.75rem 0.5rem;
+    }
+
+    /* Content area fills remaining space */
+    .blog-content {
+      flex: 1; min-width: 0; /* allow shrink */
+    }
+
+    /* Mobile TOC drawer */
+    #toc-drawer {
+      display: none; position: fixed; top: 3.5rem; left: 0; right: 0; bottom: 0; z-index: 45;
+    }
+    #toc-drawer.open { display: flex; }
+    #toc-drawer .toc-backdrop {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+    }
+    #toc-drawer .toc-panel {
+      position: relative; width: 280px; max-width: 80vw;
+      background: #0a0a14; border-right: 1px solid #1f2937;
+      padding: 1rem; overflow-y: auto;
+    }
+
+    /* Display math centering */
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+
+    /* Responsive component containers */
+    .component-wrap {
+      margin: 2.5rem -0.5rem;
+      padding: 0;
+    }
+    @media (min-width: 640px) {
+      .component-wrap { margin: 2.5rem -1rem; }
+    }
+
+    /* Illustration figures */
+    .illus {
+      margin: 2rem auto; border-radius: 0.75rem; overflow: hidden;
+      border: 1px solid #1f2937; background: #111827;
+    }
+    .illus img {
+      width: 100%; max-width: 100%; height: auto; display: block;
+      opacity: 0.92; transition: opacity 0.3s;
+      image-rendering: auto;
+    }
+    /* Never upscale beyond native resolution */
+    .illus { width: fit-content; }
+    .illus img:hover { opacity: 1; }
+    .illus figcaption {
+      padding: 0.5rem 0.75rem; font-size: 0.7rem; color: #6b7280;
+      line-height: 1.4; border-top: 1px solid #1f2937;
+    }
+    .illus figcaption a { color: #6b7280; text-decoration: underline; }
+    .illus figcaption a:hover { color: #9ca3af; }
+
+    /* Size variants */
+    .illus-sm { max-width: 260px; }
+    .illus-md { max-width: 420px; }
+    .illus-lg { max-width: 580px; }
+    /* full width is the default (no class needed) */
+
+    /* Float variants for inline placement */
+    @media (min-width: 640px) {
+      .illus-float-right { float: right; margin: 0.5rem 0 1rem 1.5rem; }
+      .illus-float-left  { float: left;  margin: 0.5rem 1.5rem 1rem 0; }
+    }
+
+    /* Clear floats */
+    .clearfix::after { content: ''; display: table; clear: both; }
+
+    .illus-row {
+      display: grid; gap: 1rem; margin: 2rem 0;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .illus-row { grid-template-columns: 1fr 1fr; }
+    }
+    .illus-row .illus { margin: 0; }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<!-- Progress bar -->
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center">
+    <button id="nav-toggle" class="flex items-center gap-2 text-white font-semibold text-sm hover:text-cyan-400 transition group">
+      <span class="text-cyan-400 text-lg transition-transform duration-200 group-[.open]:rotate-90">&rang;</span>
+      KI-Mathias
+    </button>
+  </div>
+</nav>
+
+<!-- Unified dropdown: Blog nav + Article TOC -->
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden">
+  <div id="nav-backdrop" class="absolute inset-0 bg-black/40" style="min-height:100vh;"></div>
+  <div class="relative max-w-xs mx-4 sm:mx-8 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto">
+
+    <!-- Article TOC -->
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">This Article</p>
+      <a href="#teil-1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Double Slit</a>
+      <a href="#teil-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Two Rules</a>
+      <a href="#teil-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Path Integral</a>
+      <a href="#teil-4a" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4a &middot; Fourier</a>
+      <a href="#teil-4b" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4b &middot; Standing Waves</a>
+      <a href="#teil-4c" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4c &middot; Three Languages</a>
+      <a href="#verschraenkung" class="toc-link block text-sm py-1.5 px-3 text-amber-400/70 rounded-lg hover:bg-gray-800/60 transition">Bonus &middot; Entanglement</a>
+      <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilogue</a>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+
+    <!-- Other blog posts -->
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">More Posts</p>
+      <a href="/en/index.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">&larr; All Posts</a>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+
+    <!-- Meta links -->
+    <div class="p-3 flex gap-1">
+      <a href="/en/imprint.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Imprint</a>
+      <a href="/en/privacy.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Privacy</a>
+    </div>
+
+    <!-- Language switcher -->
+    <div class="h-px bg-gray-800 mx-3"></div>
+    <div class="p-3">
+      <a href="/quanten.html" class="block text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">&#x1F1E9;&#x1F1EA; Deutsch</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MAIN CONTENT -->
+<!-- ============================================================ -->
+<div class="max-w-3xl mx-auto">
+
+<!-- HERO -->
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Quantum Mechanics</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight">
+    Waves, Arrows and the Double-Slit Wonder
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    How quantum physics really works &ndash; and why you need nothing more than high-school math to understand it.
+    A journey in seven chapters, with interactive visualizations.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span>
+    <span>&middot;</span>
+    <time datetime="2026-03-01">March 2026</time>
+    <span>&middot;</span>
+    <span>~45 min read</span>
+  </div>
+</header>
+
+
+<main class="max-w-3xl px-4 sm:px-6">
+
+<!-- ============================================================ -->
+<!-- CHAPTER 1: Waves, Arrows and the Double-Slit Wonder -->
+<!-- ============================================================ -->
+<section id="teil-1" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
+<h2>Waves, Arrows and the Double-Slit Wonder</h2>
+
+<h3>A Stone, a Pond, a Puzzle</h3>
+
+<p>Throw a stone into a still pond. You know what happens: circular waves spread out, smooth, predictable, boring. Now throw two stones at the same time into different spots. Now it gets interesting. The waves from the two stones travel toward each other, and where they meet, something peculiar happens. In some places the water gets especially agitated &ndash; higher, wilder than from either stone alone. In other places, sometimes just a few centimeters away, there is a strange calm.</p>
+
+<p>This phenomenon has a name: <strong>interference</strong>. And it is the most harmless, everyday thing in the world. Where the crest of one wave meets the crest of another, the heights add up &ndash; the water surges especially high. But where a crest meets a trough, they cancel each other out. Plus and minus, zero, silence.</p>
+
+<p>So far, so reassuring. Now let us observe the same effect with light. And then the world gets strange.</p>
+
+<figure class="illus illus-md">
+  <img src="/img/water-waves.svg" alt="Interference pattern from two water wave sources" loading="lazy">
+  <figcaption>Interference of water waves: On the left, two point sources; on the right, a wave through a double slit. Where crests meet crests, they reinforce each other &ndash; where crest meets trough, they cancel out. <a href="https://commons.wikimedia.org/wiki/File:Double-slit-water-waves.svg">MikeRun</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></figcaption>
+</figure>
+
+<h3>Thomas Young and the Wall with Two Slits</h3>
+
+<p>In 1801, the English physician and polymath Thomas Young performed an experiment that is simple enough to recreate on a kitchen table, yet so profound that physics is still grappling with it two hundred years later.</p>
+
+<p>The idea: take a light source. Place a wall in front of it with two narrow, parallel slits cut into it. Behind it, a white screen. If light were made of particles &ndash; tiny pellets flying in straight lines like bullets &ndash; you would expect two bright strips, directly behind the two slits.</p>
+
+<p>But that is not what Young sees. And in <em>two</em> different ways.</p>
+
+<p>First, the light fans out behind each slit. It doesn't fly straight through like a bullet through a hole &ndash; it <em>spreads out</em> in all directions, as if each slit were itself a new, tiny light source. This fanning out is called <strong>diffraction</strong>.</p>
+
+<!-- ASIDE: Single-slit diffraction -->
+<div class="border border-gray-700/40 rounded-xl p-5 sm:p-6 my-6 bg-gray-900/20">
+  <p class="text-xs uppercase tracking-widest text-amber-400/50 mb-3">Aside &middot; Why a single slit is enough</p>
+
+  <p>In the ideal thought experiment, slits are infinitely narrow &ndash; mathematical points. In reality, every slit has a finite width. And that width has consequences.</p>
+
+  <p>Think of the slit not as a single point but as a row of points, tightly packed side by side. Each of these points within the slit opening acts like its own tiny light source, radiating in all directions. All these tiny sources overlap &ndash; and because they sit at slightly different positions within the slit, their contributions travel slightly different path lengths before reaching the screen.</p>
+
+  <p>Straight ahead, directly behind the slit, all contributions arrive almost simultaneously &ndash; they reinforce each other. But at an angle, the paths from different points within the slit have different lengths. Some contributions cancel out, others reinforce. The result: even a <em>single</em> slit produces a pattern &ndash; a broad bright strip in the center and weaker strips on either side. And &ndash; counterintuitively &ndash; the <em>narrower</em> the slit, the <em>wider</em> the light fans out.</p>
+
+  <div class="illus-row" style="margin: 1.5rem 0;">
+    <figure class="illus">
+      <img src="/img/single-slit.jpg" alt="Diffraction pattern of a single slit at 580 nm: broad central maximum, weaker side fringes" loading="lazy">
+      <figcaption>A single slit, no second one in sight &ndash; and yet a pattern with bright and dark fringes. That is diffraction. <a href="https://commons.wikimedia.org/wiki/File:Single-slit-diffraction-pattern-580nm.jpg">MikeRun</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></figcaption>
+    </figure>
+    <figure class="illus">
+      <img src="/img/airy-disk.jpg" alt="Airy disk: diffraction pattern of a circular aperture with central disk and concentric rings" loading="lazy">
+      <figcaption>The Airy disk: shine laser light through a tiny circular aperture and this characteristic disk with rings appears. Every telescope, every microscope, every pupil produces such patterns. <a href="https://commons.wikimedia.org/wiki/File:Airy_disk_created_by_laser_beam_through_pinhole.jpg">Anaqreon</a> / Wikimedia Commons / CC0</figcaption>
+    </figure>
+  </div>
+
+  <p>What you see here is not a double-slit effect. It is a <em>single</em>-slit effect &ndash; or, for the circular aperture, a single-<em>hole</em> effect. Interference does not need a second slit. It only needs an opening that is not infinitely narrow &ndash; and the fact that contributions from different points within that opening can overlap.</p>
+
+  <p class="text-gray-500 text-sm mb-0"><em>Later, when we learn Feynman's arrow method, it will become clear: this single-slit pattern is nothing but adding arrows &ndash; over all paths through the opening. The physics behind diffraction and interference is one and the same.</em></p>
+</div>
+
+<p>But the crucial thing about the double slit only arrives with the <em>second</em> slit. Because now there are two such fanning-out light sources, close together. And where their contributions overlap, something happens that diffraction alone cannot explain: in some places they reinforce each other, in others they cancel out. The result is a pattern of many bright and dark fringes, alternating, spread across the entire screen. Bright, dark, bright, dark. <strong>Interference.</strong></p>
+
+<p>Diffraction and interference &ndash; Richard Feynman later said that nobody ever managed to define the difference between the two satisfactorily. Fundamentally it is the same phenomenon: contributions from different directions overlap and either reinforce or cancel. With one slit we call it diffraction, with two we call it interference. The physics behind it is identical &ndash; and later, when we learn Feynman's arrow method, we will see that both are nothing but <em>adding arrows</em>.</p>
+
+<p>For Young, at any rate, the case was clear: light is a wave. Debate over, Newton was wrong, Huygens was right.</p>
+
+<p>Then came the electrons.</p>
+
+<figure class="illus illus-md">
+  <img src="/img/double-slit.svg" alt="Diagram of the double-slit experiment showing diffraction and interference" loading="lazy">
+  <figcaption>Young's experiment: light (or particles) passes through two slits and creates an interference pattern on the screen. <a href="https://commons.wikimedia.org/wiki/File:Double_slit_diffraction.svg">Bcrowell, Quibik</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<h3>The Experiment Nobody Understands</h3>
+
+<p>Electrons are particles. Tiny things with mass and charge. They bounce off walls, they get deflected by magnets, you can count them, one by one. An electron is an electron, not half of one, not some diffuse something. If you place an electron detector behind the double slit, you hear <em>click</em>. One click, one electron. Not a hiss, not a swoosh. <em>Click.</em></p>
+
+<p>So: two slits. Fire electrons one at a time. One after another. The first hundred hits look random. But after tens of thousands of clicks, a picture forms: fringes. Bright, dark, bright, dark. <strong>Interference.</strong> Just like the water waves.</p>
+
+<p>Stop. Wait.</p>
+
+<p>The electrons were fired one at a time. There was only ever a single one in flight. What could it have interfered with? With itself?</p>
+
+<figure class="illus" style="max-width:280px;">
+  <img src="/img/tonomura.jpg" alt="Build-up of electron interference pattern: 11, 200, 6000, 40000, 140000 electrons" loading="lazy">
+  <figcaption>The famous Tonomura experiment: individual electrons hit the screen one after another. After 11 clicks &ndash; just noise. After 140,000 clicks &ndash; an interference pattern. <a href="https://commons.wikimedia.org/wiki/File:Double-slit_experiment_results_Tonomura_2.jpg">Belsazar</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<p>Maybe each electron goes through one particular slit, and we just don't know which? Good idea. Wrong. Because when you install a detector at the slits that determines <em>which</em> slit the electron went through &ndash; the interference pattern vanishes. Instantly. Completely.</p>
+
+<p>The electron seems to know whether you are watching. At this point most popular-science accounts veer into philosophy. Consciousness of the observer, collapsing wave functions, cats in boxes. All of that is either wrong or at least unhelpful. What actually helps is an arrow.</p>
+
+<h3>The Arrow That Explains Everything</h3>
+
+<p>Forget for a moment everything you have ever heard about quantum mechanics. We start from scratch. And the only thing we need is a little arrow.</p>
+
+<p>Imagine a clock. An analog one, with a hand. This hand rotates, steadily, in a circle. It has a certain length and points in a certain direction at every moment. That is all. <strong>Length and direction.</strong></p>
+
+<p>In quantum mechanics, every process a particle can carry out &ndash; "fly from here to there" &ndash; gets assigned such an arrow. Not a probability, not yes or no, but an arrow with length and direction. Physicists call this arrow an <span class="glossary" title="Amplitude: An arrow (complex number) with length and direction, assigned to a quantum process. Length squared = probability.">amplitude</span>. And there is exactly one rule to turn it into a probability: <strong>take the length of the arrow and square it.</strong> An arrow of length 0.3 gives a probability of 0.09. An arrow of length 0.5 gives 0.25. That simple.</p>
+
+<p>But the magic is not in the squaring. The magic is in what happens when there are <em>multiple possibilities</em>.</p>
+
+<h3>Adding Arrows &ndash; and Suddenly Everything Changes</h3>
+
+<p>Back to the double slit. An electron flies from the source to the detector. There are two paths: through the left slit or through the right. Each path has its own arrow.</p>
+
+<p>Now comes the rule that changes everything: <strong>when there are multiple possibilities leading to the same outcome, you add the arrows.</strong> Not the probabilities &ndash; the arrows. Lay them tip to tail. The resulting arrow &ndash; that is your answer. Then you square its length.</p>
+
+<p>When the two arrows point in roughly the same direction: long resultant arrow, high probability. <strong>Bright fringe.</strong> When they point in opposite directions: short resultant arrow, no probability. <strong>Dark fringe.</strong></p>
+
+<p>That is interference. Not of waves in space, not of mysterious superpositions &ndash; but of arrows that add up.</p>
+
+<p>And how does the arrow know which direction to point? That depends on the path. A longer path rotates the arrow further than a shorter one. More precisely: the arrow rotates in proportion to the path length. If the path through the left slit yields exactly one <em>half</em> rotation more than the path through the right slit, then the two arrows point in opposite directions. Cancellation. Darkness. If the path difference yields one <em>full</em> rotation, both arrows point the same way again. Reinforcement. Brightness. Bright, dark, bright, dark &ndash; the interference pattern falls out of the arrows like a transfer decal.</p>
+
+<h3>Why Looking Destroys Everything</h3>
+
+<p>When you set up a detector that determines which slit the electron went through, there are no longer any alternatives. In each individual case there is only <em>one</em> arrow, not two that could be added.</p>
+
+<p>No adding of arrows, no interference. The electron does not "know" whether you are watching. It is not mysticism. <strong>It is bookkeeping.</strong> When two paths are indistinguishable, you add the arrows. When you make them distinguishable, there is only one arrow per trial. The addition drops out. The interference disappears.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>What you now have in hand:</strong> We have not written a single integral, not used any complex numbers. All we said was: every path has an arrow. Multiple paths to the same destination? Add the arrows. Then square. And from that, the entire physics of interference fell out.</p>
+  <p class="text-sm text-gray-300">These arrows &ndash; these <em>amplitudes</em> &ndash; are the real core of quantum mechanics. Not the wave function (that is just a particular representation of the arrows). Not the Schr&ouml;dinger equation (that just describes how the arrows rotate over time). <strong>The arrows are the foundation.</strong></p>
+</div>
+
+<!-- INTERACTIVE: DoubleSlitExplorer -->
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>You see the double-slit experiment as an interactive visualization. <strong>Drag the yellow dot</strong> on the screen to test different detector positions. <strong>Turn the sliders</strong> for slit separation and wavelength. And then: <strong>switch on the detector</strong> and watch the interference pattern disappear.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-double-slit"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>What you just saw:</strong> Two paths, two arrows, one addition. When the arrows point in the same direction (blue and purple nearly parallel), they reinforce each other &ndash; bright fringe. When they oppose each other, they cancel out &ndash; dark fringe. Switch on the detector, and there is only one arrow per trial. No addition, no interference.</p>
+</div>
+
+<p>But think further. What happens if you cut not two slits into the wall but three? Then there are three paths, three arrows. Five slits? Five arrows. And if there is no wall at all &ndash; how many paths are there? Infinitely many. The straight path. The path that takes a little detour. The path that first flies to the moon and comes back. The spaghetti-tangle path. Each of these paths has an arrow. And quantum mechanics says: <strong>add them all.</strong></p>
+
+<p>That sounds insane. It sounds impossible to calculate. And it sounds like the result would be utter chaos.</p>
+
+<p>But the opposite is the case. Out of this apparent chaos, order emerges &ndash; and precisely the order we observe in everyday life. A thrown ball follows a parabola. A planet orbits the sun on an ellipse. Newton's laws. Classical physics. They are all hiding inside the sum over infinitely many arrows.</p>
+
+<p>How that works is what we will figure out now.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- CHAPTER 2: Two Rules That Generate the Entire Quantum World -->
+<!-- ============================================================ -->
+<section id="teil-2" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 2</p>
+<h2>Two Rules That Generate the Entire Quantum World</h2>
+
+<p>In Chapter 1 we sent an electron through two slits. Each slit gave the electron an arrow. The two arrows were added: lay them tip to tail, measure the resultant, square &ndash; done, there was the probability. From that, the entire interference pattern fell out. At the end stood the question: if an electron "takes both slits at once" &ndash; does it perhaps take <em>all</em> conceivable paths at once?</p>
+
+<p>The answer is yes. And the road there leads through two rules that are simple enough to fit on a napkin &ndash; and powerful enough that all of quantum mechanics follows from them.</p>
+
+<h3>The Rules</h3>
+
+<p>Richard Feynman reduced quantum mechanics to two instructions. Not two equations &ndash; two instructions for what to do with arrows.</p>
+
+<p><strong>Rule 1 &ndash; Alternatives: Add the arrows.</strong><br>
+If a particle can get from A to B by multiple paths, and you don't know (and in principle cannot determine) which path it took &ndash; then every path gets an arrow, and you lay them tip to tail. The resultant arrow determines the probability.</p>
+
+<p><strong>Rule 2 &ndash; In sequence: Multiply the arrows.</strong><br>
+If a particle first goes from A to B and then from B to C, then each leg gets an arrow. The arrows are multiplied: the lengths are multiplied, and the angles are added.</p>
+
+<p>That's it. Two rules. No ifs, no buts.</p>
+
+<h3>What "Multiplying" Means</h3>
+
+<p>Multiplying arrows sounds abstract, but it is just as intuitive as the adding from Chapter 1.</p>
+
+<p><strong>Adding</strong> meant: lay them tip to tail. The resultant arrow goes from the start of the first to the end of the last.</p>
+
+<p><strong>Multiplying</strong> means: multiply the lengths, add the angles. If the first arrow has length 0.8 and is rotated by 30&deg;, and the second has length 0.5 and is rotated by 45&deg;, then the product has length 0.4 and is rotated by 75&deg;.</p>
+
+<h3>Same Bookkeeping, Different Currency</h3>
+
+<p>You might be wondering: why arrows? Why not simply probabilities, as in ordinary physics? The answer is the key to everything that follows. And the best way to see it is through a concrete example.</p>
+
+<p><strong>The classical decision tree.</strong> Imagine electrons were bullets. A bullet flies at the wall with two slits. It goes through the left slit with 50% probability and through the right with 50%. Behind each slit it gets deflected &ndash; say, with 30% probability straight ahead and 20% slightly to the left. What is the probability of the bullet arriving at a particular spot on the screen?</p>
+
+<p>In sequence &rarr; multiply: the probability for "left slit, then straight ahead" is \(0{,}5 \times 0{,}3 = 0{,}15\).<br>
+In sequence &rarr; multiply: the probability for "right slit, then straight ahead" is also \(0{,}5 \times 0{,}3 = 0{,}15\).<br>
+Alternatives &rarr; add: both paths lead to the same spot, so \(0{,}15 + 0{,}15 = 0{,}30\).</p>
+
+<p>So far, so familiar. This is exactly how every decision tree you know from school or university works. And the result is predictable: <strong>probabilities are always positive.</strong> When you add two positive numbers, the result always gets bigger. More paths mean more probability. No path can "cancel" another. The pattern on the screen: two broad humps, one behind each slit. No fringes. No surprises.</p>
+
+<p><strong>The quantum decision tree.</strong> Now the same thing with arrows. Exactly the same rules &ndash; multiply for in-sequence, add for alternatives. But instead of the number 0.5, each slit has an <em>arrow</em> of length 0.5 pointing in a particular direction. And instead of 0.3, the next step has an arrow of length 0.3 with a different angle.</p>
+
+<p>In sequence &rarr; multiply: multiply the lengths, add the angles. The result for the path through the left slit is an arrow of length 0.15 &ndash; so far identical. Likewise for the right slit: also an arrow of length 0.15.</p>
+
+<p>But now: alternatives &rarr; add. And here something happens that is <em>impossible</em> with probabilities. The two arrows have different directions &ndash; because the paths through the different slits have different lengths and the arrow has rotated further along the way. When the two arrows point in similar directions: large resultant arrow. <strong>Bright fringe.</strong> When they point in opposite directions: the arrows cancel. Resultant arrow nearly zero. <strong>Dark fringe.</strong></p>
+
+<p><strong>More paths can mean less probability.</strong> That is the sentence that separates all of quantum mechanics from all of classical physics. And it follows not from a new rule &ndash; the rules are identical. It follows from the fact that nature does not compute with numbers but with arrows.</p>
+
+<figure class="illus">
+  <img src="/img/decision-tree.svg" alt="Decision tree comparison: Classical (probabilities, smooth distribution) vs. Quantum mechanics (arrows, interference pattern)" loading="lazy">
+  <figcaption>The same decision tree, the same rules. Left: probabilities always add up &ndash; no fringes. Right: arrows can cancel &ndash; interference.</figcaption>
+</figure>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>The difference in one sentence:</strong> In classical physics you compute with probabilities (positive numbers that never cancel). In quantum mechanics you compute with amplitudes (arrows that can cancel each other). The bookkeeping rules are the same. Only the currency is different.</p>
+</div>
+
+<h3>The Double Slit as a Special Case</h3>
+
+<p>An electron flies from source A through a wall with two slits to detector C. There are two possibilities: through the left slit (B&#x2081;) or through the right (B&#x2082;). You don't know which path &rarr; <em>Rule 1: add.</em> Each path consists of two steps &rarr; <em>Rule 2: multiply.</em></p>
+
+<div class="math-display">$$\text{Arrow}(A \to C) = \text{Arrow}(A \to B_1) \times \text{Arrow}(B_1 \to C) \;+\; \text{Arrow}(A \to B_2) \times \text{Arrow}(B_2 \to C)$$</div>
+
+<p>This is exactly what we did in Chapter 1 &ndash; we just didn't call it that.</p>
+
+<h3>From Slits to Paths</h3>
+
+<figure class="illus illus-md">
+  <img src="/img/three-paths.svg" alt="Three possible paths from point A to point B" loading="lazy">
+  <figcaption>From slits to paths: a particle can travel from A to B along infinitely many routes. Each path contributes an arrow. <a href="https://commons.wikimedia.org/wiki/File:Three_paths_from_A_to_B.svg">Matt McIrvin, Fallenness</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<p>What if the wall has three slits? Then there are three alternatives. Rule 1 says: add all three. A hundred slits? A hundred terms in the sum. And if you make the slits ever narrower and ever more numerous? Eventually you have so many slits that the wall practically isn't there anymore &ndash; it is nothing but holes. In the limit: you remove the wall entirely. Then every position is a "slit" &ndash; and the sum runs over all possible intermediate positions.</p>
+
+<p>Now insert not one but <strong>two</strong> intermediate walls. Each path then goes: A &rarr; some slit B&#x2C7C; in wall 1 &rarr; some slit D&#x2096; in wall 2 &rarr; C. Three legs in sequence (Rule 2: multiply), many alternatives for the combination (j,k) (Rule 1: add):</p>
+
+<div class="math-display">$$\text{Arrow}(A \to C) = \sum_j \sum_k \text{Arrow}(A \to B_j) \times \text{Arrow}(B_j \to D_k) \times \text{Arrow}(D_k \to C)$$</div>
+
+<p>This looks more complicated, but it is nothing new. The same two rules. Each combination (j,k) is a little zigzag path. Just applied to more steps.</p>
+
+<h3>The <span class="glossary" title="Propagator K(B,A): The amplitude (the arrow) for a particle to get from point A to point B.">Propagator</span></h3>
+
+<p>Physicists call the arrow for the transition from A to B the <strong>propagator</strong>, written \(K(B,A)\). The central equation for one intermediate wall reads:</p>
+
+<div class="math-display">$$K(C,A) = \sum_{\text{all } B} K(C,B) \cdot K(B,A)$$</div>
+
+<p>It says: to compute the amplitude from A to C, take every possible intermediate point B, compute the amplitude in two steps, multiply (Rule 2), and add over all B (Rule 1).</p>
+
+<p>What if you insert infinitely many intermediate steps &ndash; one for every instant in time? Then every combination of intermediate positions becomes a <strong>path</strong> &ndash; a continuous curve from A to C. The sum over all combinations becomes the sum over all possible paths.</p>
+
+<p>And the product of the many small arrows along a path becomes a single arrow for the entire path. Its angle depends on a number that has its own name: the <strong><span class="glossary" title="Action S: The sum of kinetic minus potential energy, accumulated over the entire travel time. Determines the angle of the arrow.">action</span></strong>.</p>
+
+<!-- INTERACTIVE: PropagatorExplorer -->
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>The visualization shows a particle traveling from A (left) to C (right). In between stand walls with slits. <strong>Increase the number of intermediate walls</strong> from 1 to 5 to 20. Watch how discrete slits become continuous paths &ndash; and how the arrow addition on the right shapes the result.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-propagator"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>What you just saw:</strong> The transition from "slits" to "paths" is not a new principle. It is still the same two rules &ndash; applied consistently. With a wall with two slits: two terms. With a hundred slits: a hundred terms. With twenty walls, the zigzag paths already look almost like smooth curves.</p>
+</div>
+
+<p>We now know: the amplitude for getting from A to C is the sum over all paths. Each path contributes an arrow. But three questions remain open: we have not yet said what the action of a path <em>concretely</em> is. We do not know why some arrows reinforce and others cancel. And we do not know why a thrown ball always follows a parabola despite infinitely many possible paths.</p>
+
+<p>All of that clears up once we understand the action.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- CHAPTER 3: How an Integral Emerges from Infinity -->
+<!-- ============================================================ -->
+<section id="teil-3" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 3</p>
+<h2>How an Integral Emerges from Infinity</h2>
+
+<p>In Chapter 1 you learned: every path gets an arrow. Arrows pointing in the same direction reinforce each other. Arrows pointing against each other cancel out. In Chapter 2 you discovered: there are only two rules (alternatives &rarr; add, in sequence &rarr; multiply), and how slits become paths. At the end stood the insight: the amplitude \(K(B,A)\) is a sum over all possible paths.</p>
+
+<p>But we put off the decisive step: <strong>what determines the arrow of a path?</strong> Why does a straight path have a different arrow than a curved one? And why does a ball always fly in a parabola despite infinitely many possible paths? Today we will settle this &ndash; and along the way we will incidentally discover why Newton's laws hold.</p>
+
+<h3>Multiplication Means Angle Addition</h3>
+
+<p>Remember Rule 2: when things happen in sequence, you multiply the arrows. Imagine a path broken into twenty small steps. Each step has its own small arrow &ndash; with a small rotation. The product of all twenty arrows is a single arrow whose angle is the sum of all twenty small angles:</p>
+
+<div class="math-display">$$d\varphi_1 + d\varphi_2 + d\varphi_3 + \cdots + d\varphi_N = \text{total angle of the path}$$</div>
+
+<h3>The <span class="glossary" title="Action S: The integral of kinetic minus potential energy over time. Determines the arrow angle via S/&#x210F;.">Action</span></h3>
+
+<p>The sum of all small angles along a path is called \(S/\hbar\) &ndash; the action \(S\) of the path, divided by the Planck constant \(\hbar\). What determines the small angle at each step?</p>
+
+<div class="math-display">$$d\varphi = \frac{(\text{Kinetic Energy} - \text{Potential Energy}) \times \text{time step}}{\hbar}$$</div>
+
+<p>The quantity in the parentheses &ndash; kinetic energy minus potential energy &ndash; is called the <span class="glossary" title="Lagrangian L = T &minus; V: Kinetic energy minus potential energy. The action is its time integral.">Lagrangian</span> \(L\). And the action \(S\) is the sum of \(L\) over all time steps:</p>
+
+<div class="math-display">$$S = \int_0^T \bigl(\text{Kinetic Energy} - \text{Potential Energy}\bigr)\, dt$$</div>
+
+<p>Don't think of textbook math. Think of what it means: you walk the path from start to finish, at each step noting the difference "kinetic minus potential," and add it all up. The result is the action. The action determines the angle of the arrow.</p>
+
+<h3>Why Minus and Not Plus?</h3>
+
+<p>Wait. Kinetic energy <em>minus</em> potential energy? Not plus? This is not an arbitrary convention. It is the heart of the whole thing.</p>
+
+<p>Consider what would happen if we used plus. \(\text{KE} + \text{PE}\) is the total energy &ndash; and total energy is conserved. For a ball flying from A to B, the total energy is the same on <em>every</em> path (same initial speed, same final position, same travel time). The integral of \((\text{KE} + \text{PE})\) over time simply gives \(E \times T\) &ndash; a constant. The same number for the straight path as for the crazy path. A quantity that is the same on every path cannot explain why nature prefers a particular path.</p>
+
+<p>The <em>difference</em> \(\text{KE} - \text{PE}\) is different. It varies from path to path, even though their sum stays constant. Imagine a ball you throw straight up. At the start it is fast (lots of KE, little PE) &ndash; \(L\) is positive. At the highest point it is still (zero KE, lots of PE) &ndash; \(L\) is strongly negative. On the way back down, \(L\) becomes positive again. The action \(S = \int L\,dt\) captures this entire <em>rhythm</em>: when the ball is fast and when it is high. A different path &ndash; say, the ball hovers longer at the top &ndash; would have a different rhythm and a different action. The classical path (the parabola) is the one where the action is stationary.</p>
+
+<p>Feynman would say: the question "Why minus?" is ultimately answered by quantum mechanics itself. The action is the number whose arrow &ndash; \(e^{iS/\hbar}\) &ndash; when summed over all paths, yields the correct physics. The fact that it contains \(\text{KE} - \text{PE}\) rather than any other combination is the only choice that works. The minus is no coincidence. It is the reason why the arrow addition describes the world.</p>
+
+<h3>Why \(F = ma\) Has a Deeper Reason</h3>
+
+<p>In school you learned: force equals mass times acceleration. \(F = ma\). Newton wrote that down in 1687, and it works fantastically. But Newton could not explain <em>why</em> it works. He simply established that it does.</p>
+
+<p>The action provides the deeper reason. The statement "a ball flies in a parabola" is equivalent to the statement "the ball takes the path where the action is <em>stationary</em>" &ndash; where small deviations barely change the action. That sounds like a mathematical curiosity. But in a moment you will see that it is exactly what quantum mechanics predicts &ndash; as a direct consequence of arrow addition.</p>
+
+<h3>The <span class="glossary" title="Stationary phase: The principle that only paths whose action barely varies (i.e. whose arrows point in similar directions) contribute to the result.">Stationary Phase</span> &ndash; the Heart of the Matter</h3>
+
+<p><strong>Paths far from the classical trajectory:</strong> here the action \(S\) changes rapidly with small variations. Neighboring paths have very different angles. Their arrows point in all sorts of directions. In the sum, they cancel out. <em>Destructive interference.</em></p>
+
+<p><strong>Paths near the classical trajectory:</strong> here \(S\) is stationary &ndash; small deviations barely change the action. Neighboring paths have nearly the same angle. Their arrows reinforce each other. <em>Constructive interference.</em></p>
+
+<p>The classical path &ndash; the parabola, the straight line, whatever Newton predicts &ndash; is not special because nature "selects" it. It is special because it is the only one where neighboring paths do not cancel each other out. <strong>Newton's \(F = ma\) is not fundamental.</strong> It is what remains after the arrows of the crazy paths have destroyed each other.</p>
+
+<figure class="illus illus-md">
+  <img src="/img/cornu-spiral.svg" alt="Cornu spiral (Euler spiral): visualization of stationary phase" loading="lazy">
+  <figcaption>The Cornu spiral: each point corresponds to the contribution of one path. In the middle (near the classical trajectory) the arrows run nearly parallel &ndash; they reinforce each other. At the ends they spiral inward and cancel out. <a href="https://commons.wikimedia.org/wiki/File:Mplwp_Euler_spiral.svg">Geek3</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></figcaption>
+</figure>
+
+<h3>The Role of \(\hbar\)</h3>
+
+<p>The angle of an arrow is \(S/\hbar\). The smaller \(\hbar\), the more the arrow rotates for a given action &ndash; and the faster paths cancel that are not exactly on the classical trajectory.</p>
+
+<p>For a thrown ball, \(\hbar \approx 10^{-34}\) joule-seconds is tiny compared to the action of the flight path. Even a path that deviates by a mere fraction of a millimeter from the parabola cancels with its neighbors. That is why the ball looks as though it follows a single path.</p>
+
+<p>For an electron, \(\hbar\) is not small compared to the relevant actions. Many paths contribute. That is why the electron shows interference. <strong>The difference between the quantum world and the classical world is not a difference in principle. It is a difference in scale.</strong></p>
+
+<h3>The Numbers That Explain Everything</h3>
+
+<p>This sounds abstract. Let us make it concrete.</p>
+
+<p><strong>A tennis ball</strong> (57 grams, 20 m/s, 1 second of flight time). The action for the straight path is \(S = \tfrac{1}{2}mv^2 t = 11{,}4\) joule-seconds. Divided by \(\hbar\): the arrow rotates during the flight <strong>\(1{,}7 \times 10^{34}\) times</strong> around the circle. Seventeen billion billion billion billion full turns.</p>
+
+<p>What happens if the ball deviates by just one <em>millionth</em> of a millimeter from the straight path? The action changes so much that the arrow makes <strong>\(1{,}7 \times 10^{20}\) extra turns</strong> &ndash; a hundred billion billion additional rotations. The arrow of this neighboring path points in a completely different direction from the classical path's arrow. Cancellation. The "quantum corridor" &ndash; the region in which the arrows still point in similar directions &ndash; is <strong>0.03 femtometers</strong> wide. That is one thirtieth of a proton radius. The tennis ball "feels" only the classical path.</p>
+
+<p><strong>An electron in the double slit</strong> (50 electron volts, slit separation 100 nanometers). The action is \(S \approx 1{,}9 \times 10^{-24}\) joule-seconds &ndash; the arrow makes "only" <strong>\(2{,}9 \times 10^{9}\) turns</strong>. Still billions, but \(10^{25}\) times fewer than for the tennis ball. And the quantum corridor? <strong>3.7 micrometers</strong> wide &ndash; forty times wider than the slit separation. The electron's path can comfortably "explore" both slits. That is why it interferes.</p>
+
+<p>At the first bright spot on the screen, the paths through the two slits differ by exactly <strong>one full arrow rotation</strong> (\(2\pi\)) &ndash; the arrows point in the same direction, reinforcement. At the first dark spot: exactly <strong>half a rotation</strong> (\(\pi\)) difference &ndash; the arrows point in opposite directions, cancellation.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>The metaphor:</strong> \(\hbar\) is the "grain size" of the action. For the tennis ball, the action consists of \(10^{34}\) grains &ndash; the quantum graininess is completely invisible, like individual atoms in a steel beam. For the electron, there are \(10^{9}\) grains &ndash; the path can wobble micrometers wide before the graininess shows. That wobble is enough to go through both slits.</p>
+</div>
+
+<!-- INTERACTIVE: ActionPhaseViz + PathIntegralExplorer -->
+<div class="try-it">
+  <p><strong>Try it yourself &ndash; Part A: Action and Phase</strong></p>
+  <p>The first visualization has two tabs. In <strong>Tab 1</strong> you see a single path, broken into steps. Move the &alpha; slider to bend the path and watch how the action changes. In <strong>Tab 2</strong> you see 121 paths simultaneously: observe the Cornu spiral on the right &ndash; in the middle the arrows reinforce, at the edges they cancel out. <strong>Turn the \(\hbar\) slider</strong> to see the transition from quantum world to classical world live.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-action-phase"></div>
+</div>
+
+<div class="try-it">
+  <p><strong>Try it yourself &ndash; Part B: Path Integral</strong></p>
+  <p>The second visualization shows the paths directly. <strong>Vary \(\hbar\):</strong> at large \(\hbar\) (quantum world) many paths contribute. At small \(\hbar\) (everyday world) only the classical path survives.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-path-integral"></div>
+</div>
+
+<h3>What \(e^{i\theta}\) Means &ndash; the Language of Arrows</h3>
+
+<p>Before we go further, we need to talk about notation. For two chapters we have been drawing arrows. Physicists don't draw arrows &ndash; they write \(e^{i\theta}\). And this is not a new concept. It is the mathematical notation for exactly what you already know.</p>
+
+<p>\(e^{i\theta}\) means: <strong>an arrow of length 1, rotated by the angle \(\theta\).</strong> Nothing more, nothing less. The letter \(e\) is Euler's number (2.718...), the \(i\) is the imaginary unit ("a quarter turn"), and \(\theta\) is the angle in radians. Together they give a point on the unit circle.</p>
+
+<p>Here are the key special cases:</p>
+
+<div style="overflow-x:auto; margin: 1.5rem 0;">
+<table style="width:100%; border-collapse:collapse; font-size:0.9rem; color:#d1d5db;">
+  <tr style="border-bottom:1px solid #374151;">
+    <th style="padding:0.5rem; text-align:left; color:#f1f5f9;">Angle \(\theta\)</th>
+    <th style="padding:0.5rem; text-align:left; color:#f1f5f9;">\(e^{i\theta}\)</th>
+    <th style="padding:0.5rem; text-align:left; color:#f1f5f9;">Arrow</th>
+  </tr>
+  <tr style="border-bottom:1px solid #1f2937;">
+    <td style="padding:0.5rem;">\(0\)</td>
+    <td style="padding:0.5rem;">\(1\)</td>
+    <td style="padding:0.5rem;">&rarr; points right. No rotation.</td>
+  </tr>
+  <tr style="border-bottom:1px solid #1f2937;">
+    <td style="padding:0.5rem;">\(\pi/2\)</td>
+    <td style="padding:0.5rem;">\(i\)</td>
+    <td style="padding:0.5rem;">&uarr; points up. Quarter turn.</td>
+  </tr>
+  <tr style="border-bottom:1px solid #1f2937;">
+    <td style="padding:0.5rem;">\(\pi\)</td>
+    <td style="padding:0.5rem;">\(-1\)</td>
+    <td style="padding:0.5rem;">&larr; points left. <strong>Half turn.</strong> This is Euler's famous identity: \(e^{i\pi} = -1\).</td>
+  </tr>
+  <tr>
+    <td style="padding:0.5rem;">\(2\pi\)</td>
+    <td style="padding:0.5rem;">\(1\)</td>
+    <td style="padding:0.5rem;">&rarr; full turn, back to the start.</td>
+  </tr>
+</table>
+</div>
+
+<p>Look at the third row carefully. \(e^{i\pi} = -1\) means: <strong>a minus sign IS a 180&deg; rotation.</strong> When two arrows point in opposite directions, their sum is zero &ndash; they literally amount to plus and minus, and that is cancellation. The destructive interference we saw at the double slit in Chapter 1 is contained in this single equation.</p>
+
+<p>And the best part: the multiplication rule we have been using since Chapter 2 ("angles add up") is trivial in exponential notation:</p>
+
+<div class="math-display">$$e^{i\alpha} \cdot e^{i\beta} = e^{i(\alpha + \beta)}$$</div>
+
+<p>Multiplying arrows = adding angles. What we stated as a rule for two chapters is a single line of algebra in the notation.</p>
+
+<div class="border border-gray-700/40 rounded-xl p-4 my-4 bg-gray-900/20">
+  <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">For the curious</p>
+  <p class="text-sm text-gray-400 mb-0"><em>Why does the exponential function describe a circle?</em> Consider \(z(\theta) = e^{i\theta}\). Its derivative is \(i \cdot e^{i\theta} = i \cdot z\). "Times \(i\)" rotates an arrow by 90&deg;. So the velocity is always perpendicular to the position &ndash; and that is the definition of circular motion. Starting point \(z(0) = 1\) (right), velocity points up, and the point travels on the unit circle.</p>
+</div>
+
+<p>From now on we can use \(e^{i\theta}\) and "arrow with angle \(\theta\)" interchangeably. They are the same thing &ndash; just written more concisely.</p>
+
+<h3>Why Exactly \(e^{iS/\hbar}\)? &ndash; The Equation That Leaves No Choice</h3>
+
+<p>Now that we know what \(e^{i\theta}\) means, we can ask the decisive question: why is the arrow for a path precisely \(e^{iS/\hbar}\) &ndash; an arrow with angle "action divided by \(\hbar\)"? Is this a postulate? A trick? No. It is the <strong>only possibility</strong>.</p>
+
+<p>The reason lies in our two rules &ndash; specifically in how they interact.</p>
+
+<p>Remember: when a particle first goes from A to B and then from B to C, the actions of the two legs <strong>add</strong>:</p>
+
+<div class="math-display">$$S_{\text{total}} = S_1 + S_2$$</div>
+
+<p>That is pure physics &ndash; the action is an integral over time, and integrals over concatenated time intervals add.</p>
+
+<p>At the same time, Rule 2 says: the arrows of the two legs are <strong>multiplied</strong>:</p>
+
+<div class="math-display">$$A_{\text{total}} = A_1 \cdot A_2$$</div>
+
+<p>Now ask yourself: what function \(A(S)\) turns an <strong>addition of actions</strong> into a <strong>multiplication of amplitudes</strong>? What function satisfies:</p>
+
+<div class="math-display">$$A(S_1 + S_2) = A(S_1) \cdot A(S_2) \quad ?$$</div>
+
+<p>This is one of the most famous equations in mathematics &ndash; the <strong>functional equation of the exponential function</strong>. And its solution is, under minimal assumptions (continuity suffices), unique:</p>
+
+<div class="math-display">$$A(S) = e^{\alpha \, S}$$</div>
+
+<p>for a constant \(\alpha\). There is no other continuous function that turns addition into multiplication. None. The exponential function has a monopoly.</p>
+
+<p>But what value for \(\alpha\)? Here two physical conditions come into play:</p>
+
+<p><strong>First:</strong> all paths should be on equal footing &ndash; no path should inherently have a larger or smaller amplitude than any other. This means: \(|A(S)| = 1\) for all \(S\). The arrow may rotate, but its <strong>length must not change</strong>. (Only when all arrows are added does it emerge which paths "win.")</p>
+
+<p>That rules out every real \(\alpha\) &ndash; because \(e^{\alpha S}\) with real \(\alpha\) grows or decays exponentially. Only a purely imaginary \(\alpha = i/\hbar\) keeps the length constant at 1. Because \(|e^{i\theta}| = 1\) for every \(\theta\).</p>
+
+<p><strong>Second:</strong> the constant \(\hbar\) in the denominator sets the scale &ndash; it determines how much action is needed to rotate the arrow once fully around the circle. It is not a free choice of the theory but is given by nature: \(\hbar \approx 1{,}05 \times 10^{-34}\) joule-seconds.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>The argument in one sentence:</strong> The requirement that actions add while amplitudes multiply, together with the requirement of equal arrow length for all paths, forces \(A(S) = e^{iS/\hbar}\). The complex exponential function is not a postulate &ndash; it is the only function that satisfies both rules simultaneously.</p>
+</div>
+
+<p>With that, the rotating arrow is neither a metaphor nor a model. It <em>is</em> the mathematics &ndash; and the mathematics had no other choice.</p>
+
+<h3>The Formula</h3>
+
+<p>Now we can pack everything into a single line. In Chapter 2 we wrote the amplitude as a sum over discrete slits &ndash; \(\sum_k\). But we saw that the slits become ever more numerous, the wall vanishes, and the sum over slits becomes a sum over <em>all possible paths</em>. In mathematics, this transition from discrete sum to continuous sum has its own name: it becomes an <strong>integral</strong>. Physicists write it like this:</p>
+
+<div class="math-display">$$K(B,A) = \int \mathcal{D}[x(t)]\; e^{\,i\,S[x(t)]\,/\,\hbar}$$</div>
+
+<p>It looks intimidating, but you know every piece:</p>
+
+<p><strong>\(\int \mathcal{D}[x(t)]\)</strong> &ndash; "sum over all paths." The \(\int\) is the integral sign (an elongated sum), and \(\mathcal{D}[x(t)]\) says: every path \(x(t)\) &ndash; every conceivable curve from A to B &ndash; contributes. This is Rule 1 from Chapter 2: add alternatives.</p>
+
+<p><strong>\(e^{iS[x(t)]/\hbar}\)</strong> &ndash; the arrow for this path. Length 1, rotated by the angle \(S/\hbar\). The only function that satisfies Rule 2 (in sequence = add angles) without favoring any path (\(|e^{i\theta}| = 1\) for every \(\theta\)). And \(S[x(t)]\) is the action of this specific path &ndash; \(\int(\text{KE} - \text{PE})\,dt\), integrated along the path.</p>
+
+<p>That is <strong>Feynman's path integral</strong>. All of quantum mechanics in one line &ndash; and every piece of it is forced. Not invented, but forced by the two rules from Chapter 2 and the functional equation from the last section.</p>
+
+<p>Keep the formula in the back of your mind. In Chapter 4 you will see that there are two <em>other</em> formulas that look completely different &ndash; but say exactly the same thing. And the structural similarity between them is no coincidence.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>What we have accomplished:</strong> In Chapter 1 you added arrows. In Chapter 2 you learned that there are only two rules, and how slits become paths. Here you saw how the action arises and why Newton's laws are a consequence of quantum mechanics. You have just understood physics that Richard Feynman formulated as a doctoral student &ndash; and the only tool was an arrow that spins.</p>
+</div>
+
+<p>But one question remains open. We have the path integral &ndash; a sum over paths. There are two other approaches to quantum mechanics that look seemingly completely different: energy levels and Fourier decomposition. The punchline: all three say the same thing &ndash; in different languages. The entry into the first of these languages comes from an unexpected direction: from music.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- CHAPTER 4a: Every Signal Is a Sum of Oscillations -->
+<!-- ============================================================ -->
+<section id="teil-4a" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4a</p>
+<h2>Every Signal Is a Sum of Oscillations</h2>
+
+<h3>A Detour Through Music</h3>
+
+<p>When you pluck a guitar string, you hear a note. But no instrument produces a "pure" note &ndash; a single sine wave. What you hear is a mixture: the fundamental plus overtones that vibrate at double, triple, quadruple the frequency.</p>
+
+<p>The fundamental gives the note its pitch. The overtones give it its character: they determine whether you hear a guitar or a flute, even though both are playing the same C. An equalizer on a mixing console makes exactly this visible. Each slider represents a frequency band. Turn down the high frequencies and the sound becomes muffled. Turn them up and it becomes brilliant. The equalizer decomposes the sound into its components &ndash; and lets you adjust each one individually.</p>
+
+<div class="illus-row" style="grid-template-columns: 1fr; gap: 1rem;">
+  <figure class="illus illus-md">
+    <img src="/img/harmonics.svg" alt="Overtone series on a string: fundamental and harmonics" loading="lazy">
+    <figcaption>Fundamental and overtones of a string: each mode vibrates at an integer multiple of the fundamental frequency. <a href="https://commons.wikimedia.org/wiki/File:Harmonic_partials_on_strings.svg">Qef / Wikimedia Commons / Public Domain</a></figcaption>
+  </figure>
+</div>
+
+<figure class="illus illus-sm illus-float-right">
+  <img src="/img/fourier-portrait.jpg" alt="Portrait of Joseph Fourier" loading="lazy">
+  <figcaption>Joseph Fourier (1768&ndash;1830). <a href="https://commons.wikimedia.org/wiki/File:Fourier2.jpg">Public Domain</a></figcaption>
+</figure>
+
+<p>In 1807, the French mathematician Joseph Fourier formulated an insight that reaches far beyond music:</p>
+
+<p><strong>Every periodic signal &ndash; no matter how complex &ndash; can be written as a sum of sine waves.</strong></p>
+
+<div class="clearfix"></div>
+
+<div class="math-display">$$f(t) = a_1 \sin(\omega t) + a_2 \sin(2\omega t) + a_3 \sin(3\omega t) + \cdots$$</div>
+
+<p>The coefficients \(a_1, a_2, a_3, \ldots\) are like the sliders of an equalizer. They tell you how much of each frequency is contained in the signal. Two descriptions of the same thing &ndash; like two languages for the same thought.</p>
+
+<!-- INTERACTIVE: FourierExplorer -->
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>The visualization is your mixing console. Seven sliders, one for each overtone. <strong>Start with the preset "Fundamental"</strong> &ndash; a pure oscillation. Then choose <strong>"&asymp; Square"</strong> and watch how a rectangular wave emerges from just a few sine waves. Then press <strong>&#x25B6; Play</strong> and look to the right: there the arrows are spinning. Each overtone is an arrow with its own speed. The sum &ndash; the yellow dot &ndash; traces the signal.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-fourier"></div>
+</div>
+
+<h3>Spinning Arrows &ndash; Again</h3>
+
+<figure class="illus illus-sm">
+  <img src="/img/fourier-anim.gif" alt="Animation: building a square wave from sine waves with frequency spectrum" loading="lazy">
+  <figcaption>A square wave (red) emerges from the sum of sine waves. On the right, the frequency spectrum &ndash; the "equalizer" of the signal. <a href="https://commons.wikimedia.org/wiki/File:Fourier_series_and_transform.gif">LucasVB / Wikimedia Commons / CC0</a></figcaption>
+</figure>
+
+<p>Since Chapter 1 we have been working with arrows that spin. For three chapters we have added them and watched whether they reinforce or cancel. And now they appear again &ndash; right in the middle of music theory. That is no coincidence. <strong>It is the same mathematics.</strong></p>
+
+<p>A sine wave is nothing other than a spinning arrow viewed from the side. Imagine a point moving steadily around a circle. Look at the circle from the side &ndash; that is, project the point onto the vertical axis. What do you see? The point goes up, comes down, goes up, comes down. A sine wave. Length of the arrow &rarr; amplitude of the oscillation. Rotation speed &rarr; frequency. Starting angle &rarr; phase. Everything that describes a sine wave is contained in a single spinning arrow.</p>
+
+<p>And if a signal is a sum of sine waves, then it is a sum of spinning arrows &ndash; laid tip to tail, exactly as at the double slit in Chapter 1. Ptolemy described planetary orbits in the 2nd century with circles upon circles. Fourier decomposed signals in 1807 with the same mathematics. And since Chapter 1 we have been computing quantum amplitudes in exactly this way. Three millennia, three contexts, one structure. <strong>Fourier decomposition is arrow addition, sorted by rotation speed.</strong></p>
+
+<h3>What This Means for Quantum Mechanics</h3>
+
+<p>Quantum systems have <span class="glossary" title="Eigenfrequencies: The discrete frequencies at which a quantum system 'likes to vibrate.' Each corresponds to a particular energy.">eigenfrequencies</span> &ndash; discrete values determined by the system. Each eigenfrequency corresponds to a particular energy \(E_n\). And the connection between the two is strikingly direct.</p>
+
+<p>Remember Chapter 3: the action \(S\) determines the arrow angle via \(S/\hbar\). An <span class="glossary" title="Energy eigenstate: A quantum state with a well-defined energy that changes over time only through arrow rotation.">eigenstate</span> has a fixed energy \(E_n\) &ndash; its spatial shape does not change; the only thing that happens is that the arrow rotates. What angle does it accumulate in time \(T\)? The action is simply \(S = E_n \cdot T\), so the angle is \(E_n \cdot T / \hbar\). The rotation speed &ndash; the angle per unit time &ndash; is therefore:</p>
+
+<div class="math-display">$$\omega_n = \frac{E_n}{\hbar}$$</div>
+
+<p>That is the eigenfrequency. Not a new postulate &ndash; it follows directly from "action determines the arrow angle," applied to a state with fixed energy. Each energy state behaves like a pure overtone: an arrow spinning at constant speed. In music: a pure tone. In quantum mechanics: an eigenstate.</p>
+
+<p>How fast do these arrows spin? For an electron in a 1-nanometer box: the slowest arrow (\(n = 1\), energy 0.38 eV) completes about one rotation every 11 femtoseconds. The third fastest (\(n = 3\), energy 3.39 eV) manages nearly one full rotation per femtosecond &ndash; <em>nine times</em> faster, because the energies grow like \(n^2\). A femtosecond is a millionth of a billionth of a second. In this world the arrows spin unimaginably fast.</p>
+
+<h3>From Signal to Propagator</h3>
+
+<p>Now comes the transfer &ndash; and it is strikingly direct. Three steps:</p>
+
+<p><strong>Step 1:</strong> The propagator \(K(B,A,t)\) is a function of time. If we hold the start and end points fixed and vary only the time, <em>the propagator is a signal</em> &ndash; just as the sound of a guitar is a signal.</p>
+
+<p><strong>Step 2:</strong> Fourier says: every signal can be decomposed into pure frequencies. So the propagator, too, can be decomposed into pure frequencies.</p>
+
+<p><strong>Step 3:</strong> The allowed pure frequencies of a quantum system are exactly the eigenfrequencies \(\omega_n = E_n/\hbar\) &ndash; because frequencies that do not correspond to an eigenstate cancel out (like wavelengths that do not fit on a guitar string, as we will see in Chapter 4b). What remains are the eigenstates.</p>
+
+<p>Remember the equalizer: each slider was an overtone. Now replace "overtone" with "energy level." The "volume" of each overtone &ndash; how loudly it resonates in the signal &ndash; depends on how strongly the eigenstate "lives" at the start and end points. This leads to the formula:</p>
+
+<div class="math-display">$$K(B,A,t) = \sum_n \phi_n(B)\;\phi_n^*(A)\; e^{-i\,E_n\,t\,/\,\hbar}$$</div>
+
+<p>Read that slowly. Every symbol has a meaning you already know:</p>
+
+<p><strong>\(\sum_n\)</strong> &ndash; sum over all eigenstates (all "overtones" of the system).</p>
+
+<p><strong>\(\phi_n(B)\)</strong> &ndash; the spatial shape of the \(n\)-th eigenstate, evaluated at the destination \(B\). Think of the guitar string: \(\phi_1\) is one big arc, \(\phi_2\) has two arcs with a node in the middle, \(\phi_3\) has three arcs. Where \(\phi_n(B)\) is large, the eigenstate "lives" strongly at point \(B\). Where \(\phi_n(B)\) is zero, \(B\) is a node &ndash; the eigenstate contributes nothing there.</p>
+
+<p><strong>\(\phi_n^*(A)\)</strong> &ndash; the same shape, evaluated at the starting point \(A\), but with a mirrored arrow (the asterisk). The mirroring appears because the particle <em>departs</em> from \(A\) &ndash; and "departing" is the counterpart of "arriving." The counterpart of an arrow is its mirror image across the horizontal axis.</p>
+
+<p><strong>\(e^{-iE_n t/\hbar}\)</strong> &ndash; an arrow of length 1 that rotates at frequency \(E_n/\hbar\). Just like the overtones in the Fourier visualization above. The minus sign in the exponent determines the rotation direction &ndash; a convention that ensures the arrows rotate clockwise, as in Feynman's stopwatch picture.</p>
+
+<p>The same quantity \(K(B,A)\) &ndash; once as a sum over paths (Chapter 3), once as a sum over eigenstates (here). Two descriptions of the same physics. Like the equalizer showing the same signal, just in a different representation.</p>
+
+<p>But one crucial question remains open. The Fourier decomposition shows us <em>that</em> there are eigenfrequencies. But <em>where do they come from</em>? What determines the allowed frequencies of a quantum system? Why does hydrogen glow red and not blue? Why do atoms have discrete energy levels instead of a continuum? The answer has to do with standing waves, with boundary conditions &ndash; and it is surprisingly simple.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- CHAPTER 4b: The Notes a Quantum System Likes to Play -->
+<!-- ============================================================ -->
+<section id="teil-4b" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4b</p>
+<h2>The Notes a Quantum System Likes to Play</h2>
+
+<h3>The Picky String</h3>
+
+<p>A guitar string is fixed at both ends. Every vibration must equal zero at both ends. Imagine trying to place a wave on the string whose wavelength does not fit. You push the string into a pattern that is zero at the left end but <em>not</em> zero at the right end &ndash; the wave "ends" somewhere in the middle of a peak or trough. That won't work. The string is pinned there. This wave cannot exist on this string.</p>
+
+<p>Which waves do fit, then? Precisely those where an <strong>integer number of half-wavelengths</strong> fits between the fixed points. Nothing in between. Not 1.5 half-wavelengths. Not 2.7. Only whole numbers.</p>
+
+<p>These are called <strong>standing waves</strong> &ndash; wave patterns that do not travel but vibrate in place. The fixed points force the selection. This selection mechanism is called a <span class="glossary" title="Boundary condition: The requirement that the wave must be zero at certain points. Turns a continuum of possible wavelengths into a discrete spectrum.">boundary condition</span>. Imagine a rope stretched between two door handles. If you shake at the right frequency, a stable pattern builds up &ndash; the standing wave. At the wrong frequency, chaotic reflections arise that cancel each other. The system filters itself &ndash; only the matching frequencies survive.</p>
+
+<!-- INTERACTIVE: StandingWaves -->
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>The slider lets you sweep \(n\) continuously from 0.3 to 7.5. <strong>At integer \(n\)</strong> the wave turns green &ndash; it satisfies the boundary condition. At every other value it turns red: at the right edge it reads "&ne; 0." Press <strong>&#x25B6; Vibration</strong> to watch the standing wave oscillate. Switch to <strong>&#x269B; Quantum particle</strong> and note the energy ladder on the right: the spacings keep growing.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-standing-waves"></div>
+</div>
+
+<h3>From the String to the Atom</h3>
+
+<p>Louis de Broglie proposed in 1924: not only light is a wave &ndash; so is matter. A particle with momentum \(p\) has a wavelength \(\lambda = h/p\). If you trap a particle in a box &ndash; between two impenetrable walls &ndash; its wave must fit inside the box. Exactly like the guitar string.</p>
+
+<p>The calculation is three lines long &ndash; and the result is surprisingly elegant. The \(n\)-th mode has wavelength \(\lambda_n = 2L/n\) (because exactly \(n\) half-wavelengths must fit inside). The momentum is therefore \(p_n = h/\lambda_n = nh/(2L)\). And the kinetic energy:</p>
+
+<div class="math-display">$$E_n = \frac{p_n^2}{2m} = \frac{n^2\, h^2}{8\,m\,L^2} = n^2 \cdot E_1$$</div>
+
+<p>We have not introduced any postulate saying "energy must be discrete." All we said was: the particle is a wave, and the wave must fit inside the box. <strong>Discreteness arises on its own. It is not put in &ndash; it comes out.</strong></p>
+
+<figure class="illus illus-sm illus-float-right">
+  <img src="/img/hydrogen-levels.svg" alt="Energy levels of the hydrogen atom" loading="lazy">
+  <figcaption>The energy ladder of hydrogen. <a href="https://commons.wikimedia.org/wiki/File:Hydrogen_energy_levels.svg">Glosser.ca</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<figure class="illus illus-md">
+  <img src="/img/hydrogen-spectrum.svg" alt="Spectral series of hydrogen (Lyman, Balmer, Paschen)" loading="lazy">
+  <figcaption>Spectral lines of hydrogen: each line corresponds to a transition between two energy levels. The red H-alpha line (656 nm) arises from the jump from \(n=3\) to \(n=2\). <a href="https://commons.wikimedia.org/wiki/File:Hydrogen_spectrum.svg">OrangeDog</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
+</figure>
+
+<div class="clearfix"></div>
+
+<h3>From the Box to the Hydrogen Atom</h3>
+
+<p>The "particle in a box" is the simplest quantum system. But the principle reaches much further. An electron in a hydrogen atom is not trapped between two walls but caught in the electric attraction of the proton. The potential has a different shape &ndash; it goes as \(-1/r\), getting ever deeper the closer the electron comes to the nucleus. But the logic is identical: the electron's wave must "fit." It must fall to zero far from the nucleus rather than grow to infinity. And this boundary condition again selects a discrete spectrum:</p>
+
+<div class="math-display">$$E_n = -\frac{13{,}6 \;\text{eV}}{n^2}$$</div>
+
+<p>The minus sign says: the electron is bound. The factor \(1/n^2\) comes from the shape of the Coulomb potential &ndash; different from the \(n^2\) of the box, but arising from the same principle.</p>
+
+<p>When an electron falls from level \(n = 3\) to \(n = 2\), it releases the energy difference as light. For this transition, the result is red light with a wavelength of 656 nanometers &ndash; the famous H-alpha line that astronomers see in the spectra of distant galaxies. For \(4 \to 2\) you get turquoise light, for \(5 \to 2\) violet. These are the Balmer lines, which Johann Balmer catalogued empirically in 1885 &ndash; thirty years before anyone knew <em>why</em> they exist.</p>
+
+<p>Now you know why. The electron is a wave. The wave must fit inside the atom. Only certain patterns fit. Each pattern has an energy. Transitions between patterns produce light at discrete frequencies. <strong>That is the entire secret of spectral lines.</strong></p>
+
+<h3>The Zeros That Shouldn't Be</h3>
+
+<p>For \(n = 2\), the probability density has a node right in the middle. The particle can be on the left or on the right &ndash; but it is never in the middle. How does it get from one side to the other?</p>
+
+<p>The question assumes the particle is a little ball. But it isn't. It <em>is</em> the wave. The whole wave, simultaneously. Only when you measure do you find it at a specific location. Between measurements, the question "Where is it?" has no sharp answer.</p>
+
+<p>And one more thing: the oscillation of an eigenstate is merely a phase rotation &ndash; the arrow spins, but its length stays the same. And \(|\psi|^2\) depends only on the length, not the angle. That is why the probability distribution of an eigenstate does not change over time, even though the wave function oscillates. <strong>Eigenstates are stationary:</strong> their observable properties do not change.</p>
+
+<h3>The Word "Quantum"</h3>
+
+<p>Max Planck introduced the term in 1900 when he discovered that light energy is exchanged only in packets of size \(E = h\nu\). Twenty-five years later, wave mechanics explained <em>why</em> energy comes in packets. Not because nature mandates it, but because waves living in bounded spaces can only take on certain patterns. <strong>A guitar string cannot play just any frequency because it is fixed at both ends. An atom cannot have just any energy because the electron is trapped in the potential of the nucleus.</strong> The mechanism is the same.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- CHAPTER 4c: Three Languages, One Physics -->
+<!-- ============================================================ -->
+<section id="teil-4c" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4c</p>
+<h2>Three Languages, One Physics</h2>
+
+<h3>The Main Character: \(K(B, A)\)</h3>
+
+<p>Everything revolves around a single quantity: the propagator \(K(B,A)\). It answers the most fundamental question of quantum mechanics: how large is the amplitude for a particle to get from point A to point B? There are three entirely different ways to compute this arrow &ndash; and all three yield exactly the same result.</p>
+
+<h3>Language 1: The Path Integral</h3>
+
+<p>Feynman's perspective. Integrate over <em>all possible paths</em> from A to B. Each path contributes an arrow whose angle is determined by the action:</p>
+
+<div class="math-display">$$K(B,A) = \int \mathcal{D}[x(t)]\; e^{\,i\,S[x(t)]\,/\,\hbar}$$</div>
+
+<p>The \(\int \mathcal{D}[x(t)]\) is the path integral &ndash; a sum over all conceivable curves \(x(t)\). No eigenstates, no energy levels. Just paths and their actions. Structure emerges only in the summation.</p>
+
+<h3>Language 2: The Eigenstate Decomposition</h3>
+
+<p>The perspective of wave mechanics. Decompose the propagator into stable patterns &ndash; the "pure tones" of the system. Each eigenstate \(n\) oscillates at its eigenfrequency \(E_n/\hbar\):</p>
+
+<div class="math-display">$$K(B,A,t) = \sum_{n} \psi_n(x_B)\;\psi_n^*(x_A)\;e^{-i\,E_n\,t\,/\,\hbar}$$</div>
+
+<p>No paths. Instead, a spectrum &ndash; a ladder of energy levels. Each level contributes a spinning arrow, just like the overtones in the equalizer from Chapter 4a. All of chemistry becomes clearest in this language.</p>
+
+<h3>Language 3: The Fourier Transform</h3>
+
+<p>The mathematician's perspective. The propagator is a function of time. Every time-dependent function can be written as an integral over frequency components:</p>
+
+<div class="math-display">$$K(B,A,t) = \int_{-\infty}^{\infty} \tilde{K}(\omega)\;e^{-i\,\omega\,t}\;d\omega$$</div>
+
+<p>The frequency spectrum \(\tilde{K}(\omega)\) has peaks at the eigenfrequencies \(\omega_n = E_n/\hbar\). In between, it is zero. The Fourier transform <em>finds</em> the eigenstates without you having to know them beforehand.</p>
+
+<h3>Do You See It?</h3>
+
+<p>Look at the three formulas again. They look different &ndash; but they share <em>the same architecture</em>:</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2;">
+    <strong>Path integral:</strong>&ensp; \(K = \displaystyle\int \mathcal{D}[x]\; e^{\,i\,S[x]\,/\,\hbar}\)&emsp;&mdash; integrate over <em>paths</em>, weighted by \(e^{i \cdot \text{action}}\)<br>
+    <strong>Eigenstates:</strong>&ensp; \(K = \displaystyle\sum_n c_n\; e^{-i\,E_n\,t\,/\,\hbar}\)&emsp;&mdash; sum over <em>modes</em>, weighted by \(e^{i \cdot \text{energy} \times \text{time}}\)<br>
+    <strong>Fourier:</strong>&ensp; \(K = \displaystyle\int \tilde{K}(\omega)\; e^{-i\,\omega\,t}\;d\omega\)&emsp;&mdash; integrate over <em>frequencies</em>, weighted by \(e^{i \cdot \text{frequency} \times \text{time}}\)
+  </p>
+</div>
+
+<p>Three times the same pattern: <strong>integrate (or sum) over all possibilities, and give each possibility a spinning arrow \(e^{i \cdot \text{something}}\).</strong> In the path integral, that "something" is the action of a path. For the eigenstates, it is energy times time. For Fourier, it is frequency times time. The structure is identical. Only the variable being summed over differs: paths, energy levels, or frequencies.</p>
+
+<p>This is the deep insight &ndash; and it is no coincidence. It follows from the fact that quantum mechanics is <em>linear</em>: every solution can be written as a superposition of other solutions. This property forces the existence of different "bases" (paths, eigenstates, frequencies) between which you can freely switch &ndash; like different coordinate systems for the same space.</p>
+
+<figure class="illus illus-lg">
+  <img src="/img/three-languages.svg" alt="The triangle of three languages: Path integral (top), Eigenstates (left), Fourier (right), K(B,A) in the middle" loading="lazy">
+  <figcaption>Three formulas, one physics. Each corner computes the same propagator \(K(B,A)\) &ndash; only the variable being integrated over differs: paths, modes, or frequencies.</figcaption>
+</figure>
+
+<h3>The Triangle</h3>
+
+<p>The three languages form a triangle. Each side connects two perspectives:</p>
+
+<p><strong>Paths &#x2194; Eigenstates:</strong> you can regroup the sum over paths so that it becomes the sum over eigenstates. Like a book that exists in both English and French: different sound, same content.</p>
+
+<p><strong>Eigenstates &#x2194; Fourier:</strong> the eigenstate decomposition <em>is</em> the Fourier decomposition applied to the signal "propagator." Mathematically it is literally the same thing.</p>
+
+<p><strong>Fourier &#x2194; Paths:</strong> both are "sums over everything" &ndash; only the "everything" differs: time points vs. frequencies, paths vs. amplitudes.</p>
+
+<h3>Why Three Languages?</h3>
+
+<p>Each makes something visible that the others hide. The <strong>path language</strong> makes interference tangible &ndash; you see why the classical path dominates and why quantum effects vanish for large objects. But try using the path integral to compute the energy levels of hydrogen &ndash; it's a nightmare.</p>
+
+<p>The <strong>eigenstate language</strong> makes spectra tangible &ndash; the energy ladder, the allowed transitions, all of chemistry. But try using it to explain why a ball flies in a parabola &ndash; it's cumbersome.</p>
+
+<p>The <strong>Fourier language</strong> is the bridge. It shows that eigenstates are nothing but frequency components of a signal. It connects quantum mechanics with signal processing, acoustics, and optics. Its weakness: it is abstract. It says "there are peaks in the spectrum," but it tells no physical story about why.</p>
+
+<p>The strength of one language is the weakness of another. Together they form a complete picture. Physicists switch between them constantly &ndash; sometimes in the middle of a calculation &ndash; like a bilingual person who starts a sentence in English and finishes it in French because the better word happens to be in the other language.</p>
+
+<h3>The Equivalence &ndash; Not Obvious, but Provable</h3>
+
+<p>That the three languages say the same thing is not a metaphor. It is a mathematical theorem. Heisenberg arrived in 1925 via matrices, Schr&ouml;dinger in 1926 via wave equations, Feynman in 1948 via path integrals. Each initially thought he had discovered something new. Then it turned out: it was the same thing three times over. Nature had a single structure, and three physicists had found it from three different directions &ndash; like three tunnels that meet in the same chamber.</p>
+
+<figure class="illus">
+  <img src="/img/solvay-1927.jpg" alt="Solvay Conference 1927: Einstein, Bohr, Heisenberg, Schr&ouml;dinger, Dirac, and others" loading="lazy">
+  <figcaption>Solvay Conference 1927: 29 physicists, including Einstein, Bohr, Heisenberg, Schr&ouml;dinger, Dirac, and Born &ndash; gathered to argue about the meaning of quantum mechanics. Three formulations, one physics. <a href="https://commons.wikimedia.org/wiki/File:Solvay_conference_1927.jpg">Institut International de Physique Solvay / Public Domain</a></figcaption>
+</figure>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>What you now know:</strong> In Chapter 1 you added arrows. In Chapter 2 you learned the two rules. In Chapter 3 you understood the path integral and stationary phase. In 4a you met the Fourier decomposition. In 4b you saw where eigenstates come from. And now you know: all three perspectives say the same thing. That is, in broad strokes, the formalism of non-relativistic quantum mechanics. Professors need a semester for this. The calculation technique is missing &ndash; but the way of thinking is there.</p>
+</div>
+
+<p>Why does quantum mechanics have this structure? One possible answer: because it is <em>linear</em>. The Schr&ouml;dinger equation is linear &ndash; if \(\psi_1\) and \(\psi_2\) are solutions, then so is \(\psi_1 + \psi_2\). Linearity is precisely the property that makes Fourier decompositions possible. And linearity is also the property that guarantees the superposition principle &ndash; that quantum states can be superposed. The equivalence of the three languages and the superposition of quantum mechanics are the same fact, viewed from two angles.</p>
+
+<p>Perhaps the deepest lesson of quantum mechanics: not that cats are simultaneously alive and dead. But that <strong>nature is richer than any single description we can give of it.</strong></p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- BONUS: Entanglement -->
+<!-- ============================================================ -->
+<section id="verschraenkung" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Bonus Chapter</p>
+<h2>Entanglement &ndash; When Two Particles Share a Secret</h2>
+
+<h3>Two Photons, One Pair of Arrows</h3>
+
+<p>An atom emits two photons simultaneously &ndash; one to the left toward Alice, one to the right toward Bob. Nature has <strong>entangled</strong> these two photons. That means: there is not one arrow for photon A and a separate arrow for photon B. There is a <strong>joint set of arrows for the pair</strong>.</p>
+
+<p>There is an arrow for "Alice measures &uarr; AND Bob measures &rarr;."<br>
+And an arrow for "Alice measures &rarr; AND Bob measures &uarr;."<br>
+No arrow points to "both &uarr;" or "both &rarr;." Therefore: if Alice measures &uarr;, Bob must measure &rarr;.</p>
+
+<h3>"That's Trivial!"</h3>
+
+<p>You might think: the photons fixed their polarization at the moment of creation &ndash; like a pair of gloves, one sent to Berlin and the other to Tokyo. Open the Berlin suitcase and find the left glove, and you instantly know the right one is in Tokyo. No magic.</p>
+
+<p>Einstein thought exactly that. He called quantum mechanics "incomplete" and suspected <span class="glossary" title="Hidden variables: The hypothesis that particles carry hidden properties that predetermine their measurement outcomes &ndash; like gloves in suitcases.">hidden variables</span>.</p>
+
+<h3>Bell's Stroke of Genius</h3>
+
+<p>In 1964, the Northern Irish physicist John Bell had an idea that changed everything. He asked: if the photons really did have their properties in advance &ndash; like the gloves &ndash; what <em>maximum</em> correlation could you expect between Alice's and Bob's measurements?</p>
+
+<h3>The Limit of the Gloves &ndash; with Numbers</h3>
+
+<p>Bell proposed the following experiment. Alice randomly chooses one of two measurement directions for each photon: \(a_1 = 0°\) or \(a_2 = 45°\). Bob likewise: \(b_1 = 22{,}5°\) or \(b_2 = 67{,}5°\). Each measurement yields +1 or &minus;1. After thousands of runs they compute the <em>correlation</em> \(E(a, b)\) &ndash; how often they agree minus how often they disagree &ndash; for each of the four angle combinations.</p>
+
+<p>Now the decisive quantity. Define:</p>
+
+<div class="math-display">$$S = E(a_1, b_1) - E(a_1, b_2) + E(a_2, b_1) + E(a_2, b_2)$$</div>
+
+<p><strong>If hidden variables exist</strong> &ndash; if every photon has fixed its answers for all possible angles at birth &ndash; then you can show in three lines that \(|S| \leq 2\). The proof: each individual photon pair carries predetermined outcomes \(A_1, A_2, B_1, B_2 = \pm 1\). Substitute: \(S_{\text{single}} = A_1(B_1 - B_2) + A_2(B_1 + B_2)\). Since \(B_1\) and \(B_2\) are each \(\pm 1\), either \(B_1 - B_2 = 0\) or \(B_1 + B_2 = 0\) &ndash; one of the two terms always vanishes. So \(|S_{\text{single}}| = 2\). Averaged over many pairs: <strong>\(|S| \leq 2\)</strong>.</p>
+
+<p>This is the <span class="glossary" title="CHSH inequality: An experimentally testable version of Bell's inequality. Hidden variables allow at most S = 2. Quantum mechanics predicts S = 2&radic;2 &asymp; 2.83.">CHSH inequality</span> &ndash; the experimentally testable version of Bell's limit. No matter how cleverly the "gloves" are programmed: <strong>\(S\) can never exceed 2.</strong></p>
+
+<h3>What Quantum Mechanics Predicts</h3>
+
+<p>The arrow rules say: at an angle difference \(\theta\) between Alice and Bob, the outcomes agree with probability \(\cos^2(\theta)\). The correlation is \(E(a, b) = \cos(2(a - b))\). Plugging in Bell's optimal angles:</p>
+
+<div style="overflow-x:auto; margin: 1.5rem 0;">
+<table style="width:100%; border-collapse:collapse; font-size:0.9rem; color:#d1d5db;">
+  <tr style="border-bottom:1px solid #374151;">
+    <th style="padding:0.5rem; text-align:left; color:#f1f5f9;">Pair</th>
+    <th style="padding:0.5rem; text-align:left; color:#f1f5f9;">Angle difference</th>
+    <th style="padding:0.5rem; text-align:left; color:#f1f5f9;">Correlation</th>
+  </tr>
+  <tr style="border-bottom:1px solid #1f2937;">
+    <td style="padding:0.5rem;">\(E(0°,\; 22{,}5°)\)</td>
+    <td style="padding:0.5rem;">22.5°</td>
+    <td style="padding:0.5rem;"><strong>+0.707</strong></td>
+  </tr>
+  <tr style="border-bottom:1px solid #1f2937;">
+    <td style="padding:0.5rem;">\(E(0°,\; 67{,}5°)\)</td>
+    <td style="padding:0.5rem;">67.5°</td>
+    <td style="padding:0.5rem;"><strong>&minus;0.707</strong></td>
+  </tr>
+  <tr style="border-bottom:1px solid #1f2937;">
+    <td style="padding:0.5rem;">\(E(45°,\; 22{,}5°)\)</td>
+    <td style="padding:0.5rem;">22.5°</td>
+    <td style="padding:0.5rem;"><strong>+0.707</strong></td>
+  </tr>
+  <tr>
+    <td style="padding:0.5rem;">\(E(45°,\; 67{,}5°)\)</td>
+    <td style="padding:0.5rem;">22.5°</td>
+    <td style="padding:0.5rem;"><strong>+0.707</strong></td>
+  </tr>
+</table>
+</div>
+
+<p>The trick: three of the four pairs have 22.5° difference (strong correlation: +0.707). The fourth has 67.5° (anti-correlation: &minus;0.707). But the minus sign in the \(S\) formula flips this anti-correlation. All four terms add up:</p>
+
+<div class="math-display">$$S = 0{,}707 - (-0{,}707) + 0{,}707 + 0{,}707 = \frac{4}{\sqrt{2}} = 2\sqrt{2} \approx 2{,}83$$</div>
+
+<p><strong>2.83 &gt; 2.</strong></p>
+
+<p>Stop. Wait. This is the moment. The gloves allow at most 2. Quantum mechanics says 2.83. This is not a small difference, not a rounding error, not a matter of interpretation. It is a mathematical theorem: <strong>no theory with predetermined properties can reach \(S = 2{,}83\).</strong> Nature does it anyway.</p>
+
+<h3>What the Experiment Says</h3>
+
+<figure class="illus">
+  <img src="/img/bell-setup.svg" alt="Diagram of a Bell test: photon source, Alice and Bob with polarizers" loading="lazy">
+  <figcaption>The setup of a Bell test: a source produces entangled photon pairs. Alice and Bob measure the polarization at freely chosen angles. <a href="https://commons.wikimedia.org/wiki/File:Bell_setup_EN_svg.svg">JozumBjada</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></figcaption>
+</figure>
+
+<figure class="illus illus-float-right" style="max-width:180px;">
+  <img src="/img/zeilinger.jpg" alt="Anton Zeilinger, Nobel laureate 2022" loading="lazy">
+  <figcaption>Anton Zeilinger &ndash; Nobel Prize 2022. <a href="https://commons.wikimedia.org/wiki/File:Anton_Zeilinger.jpg">Jacqueline Godany</a> / <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></figcaption>
+</figure>
+
+<p>Alice and Bob set their detectors to different angles. For each photon pair, both record their result: +1 or &minus;1.</p>
+
+<p>At <strong>equal angles</strong>: perfect anti-correlation. Always.<br>
+At <strong>90&deg; difference</strong>: no correlation. Completely random.<br>
+In between: a smooth <strong>cosine curve</strong> &ndash; and this curve lies beyond Bell's limit.</p>
+
+<p>And the experiments? Aspect (1982): \(S = 2{,}70\). Weihs and Zeilinger (1998): \(S = 2{,}73\). Hensen in Delft (2015, the first loophole-free test): \(S = 2{,}42\). All above 2. All consistent with \(2\sqrt{2}\). In 2022, Alain Aspect, John Clauser, and Anton Zeilinger received the Nobel Prize for this work.</p>
+
+<div class="clearfix"></div>
+
+<h3>What Entanglement Is &ndash; and What It Isn't</h3>
+
+<p>Entanglement is <strong>not communication</strong> (Bob cannot read anything from his results alone), <strong>not teleportation</strong> (nothing travels faster than light), and <strong>not mysticism</strong> (it is mathematics, confirmed in the lab).</p>
+
+<p>What entanglement <em>is</em>: the arrows belong to the pair, not to the individual particles. Nature's bookkeeping can be <strong>nonlocal</strong> &ndash; not because information travels faster than light, but because the bookkeeping encompassed the whole system from the start.</p>
+
+<!-- INTERACTIVE: BellTestExplorer -->
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>In the visualization you can run Bell's experiment yourself. <strong>Choose measurement angles</strong> for Alice and Bob. <strong>Press "Measure"</strong> and observe the results. <strong>Save data points</strong> at various angle differences and watch the correlation curve break through Bell's limit. The gloves could not have done that.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-bell-test"></div>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- EPILOGUE -->
+<!-- ============================================================ -->
+<section id="epilog" class="pb-24">
+<div class="prose-dark">
+
+<div class="border border-gray-700/50 rounded-xl p-6 sm:p-8 bg-gradient-to-b from-gray-900/50 to-transparent">
+  <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Epilogue</p>
+  <h3 class="mt-0">What Happens When You Look?</h3>
+
+  <p>So far we have described a quantum system evolving undisturbed &ndash; with nobody looking. The wave function oscillates, the arrows spin, the eigenstates superpose. Everything is smooth and deterministic.</p>
+
+  <p>But what happens when you measure? When you catch an electron that exists in a superposition of "here" and "there" with a detector &ndash; and suddenly it is <em>here</em>, only here, with certainty?</p>
+
+  <p>Where did the superposition go? Was the electron already "here" before, and we just didn't know? Or did the measurement create reality? And if so &ndash; what exactly counts as a "measurement"?</p>
+
+  <p>That is the famous <strong>measurement problem</strong> &ndash; the open wound of quantum mechanics. For nearly a hundred years the sharpest minds in physics have been arguing about it, and there is no consensus.</p>
+
+  <p class="text-gray-500 mb-0"><em>We will talk about that &ndash; soon.</em></p>
+</div>
+
+</div>
+</section>
+
+</main>
+
+
+<!-- Footer -->
+<footer class="border-t border-gray-800/50 py-8 px-4 sm:px-6 text-xs text-gray-600">
+  <div class="max-w-3xl">
+    <p>&copy; 2026 KI-Mathias &middot; Created in collaboration with Claude Code (Anthropic)</p>
+    <p class="mt-1">
+      <a href="/en/index.html" class="hover:text-gray-400">Blog</a> &middot;
+      <a href="/en/imprint.html" class="hover:text-gray-400">Imprint</a> &middot;
+      <a href="/en/privacy.html" class="hover:text-gray-400">Privacy</a>
+    </p>
+  </div>
+</footer>
+
+</div><!-- /max-w-3xl -->
+
+
+<!-- ============================================================ -->
+<!-- SCRIPTS -->
+<!-- ============================================================ -->
+
+<!-- Page functionality: mounting, nav, progress, KaTeX -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // ----------------------------------------------------------
+  // 1. Lazy-mount React components via IntersectionObserver
+  // ----------------------------------------------------------
+  const COMPONENTS = {
+    'mount-double-slit': window.DoubleSlitExplorer || null,
+    'mount-bell-test': window.BellTestExplorer || null,
+    'mount-path-integral': window.PathIntegralExplorer || null,
+    'mount-propagator': window.PropagatorExplorer || null,
+    'mount-action-phase': window.ActionPhaseViz || null,
+    'mount-fourier': window.FourierExplorer || null,
+    'mount-standing-waves': window.StandingWaves || null,
+    // ThreeLanguages replaced by static SVG diagram
+  };
+
+  const mounted = new Set();
+
+  function mountComponent(id) {
+    if (mounted.has(id)) return;
+    const el = document.getElementById(id);
+    const Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted.add(id);
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Component could not be loaded.</p>';
+    }
+  }
+
+  // Use IntersectionObserver for lazy mounting
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // Also mount the first component immediately (above the fold could be close)
+  mountComponent('mount-double-slit');
+
+  // ----------------------------------------------------------
+  // 2. Scroll progress bar
+  // ----------------------------------------------------------
+  const progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // ----------------------------------------------------------
+  // 3. Navigation: unified dropdown toggle + TOC highlighting
+  // ----------------------------------------------------------
+  var navToggle = document.getElementById('nav-toggle');
+  var navDropdown = document.getElementById('nav-dropdown');
+  var navBackdrop = document.getElementById('nav-backdrop');
+
+  if (navToggle && navDropdown) {
+    navToggle.addEventListener('click', function() {
+      navDropdown.classList.toggle('hidden');
+      navToggle.classList.toggle('open');
+    });
+    if (navBackdrop) navBackdrop.addEventListener('click', function() {
+      navDropdown.classList.add('hidden');
+      navToggle.classList.remove('open');
+    });
+    navDropdown.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        navDropdown.classList.add('hidden');
+        navToggle.classList.remove('open');
+      });
+    });
+  }
+
+  // TOC section highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(s => navObserver.observe(s));
+
+  // ----------------------------------------------------------
+  // 5. KaTeX auto-render
+  // ----------------------------------------------------------
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+}); // end DOMContentLoaded
+</script>
+
+</body>
+</html>

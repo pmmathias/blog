@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KI-Mathias &ndash; Notes from Conversations with a Machine</title>
+  <meta name="description" content="A digital notebook: quantum physics, game development, eigenvalues, emergence and philosophy &ndash; all born from conversations between a human and Claude Code.">
+  <meta name="author" content="KI-Mathias">
+  <link rel="canonical" href="https://ki-mathias.de/en/">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KI-Mathias &ndash; Notes from Conversations with a Machine">
+  <meta property="og:description" content="Quantum physics, 3D games, eigenvalues, emergence &ndash; a human and an AI explain the world to each other.">
+  <meta property="og:url" content="https://ki-mathias.de/en/">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/auto-render.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function() { if (typeof renderMathInElement === 'function') renderMathInElement(document.body, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '\\(', right: '\\)', display: false }], throwOnError: false }); });</script>
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-500.woff2) format('woff2'), url(/fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose strong { color: #f1f5f9; }
+    .prose em { color: #94a3b8; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "KI-Mathias",
+    "description": "Notes from conversations with a machine \u2013 quantum physics, game development, eigenvalues, emergence and philosophy.",
+    "url": "https://ki-mathias.de/en/",
+    "inLanguage": "en",
+    "author": { "@type": "Person", "name": "KI-Mathias" }
+  }
+  </script>
+</head>
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center">
+    <button id="nav-toggle" class="flex items-center gap-2 text-white font-semibold text-sm hover:text-cyan-400 transition group">
+      <span class="text-cyan-400 text-lg transition-transform duration-200 group-[.open]:rotate-90">&rang;</span>
+      KI-Mathias
+    </button>
+  </div>
+</nav>
+
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden">
+  <div id="nav-backdrop" class="absolute inset-0 bg-black/40" style="min-height:100vh;"></div>
+  <div class="relative max-w-xs mx-4 sm:mx-8 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden">
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Posts</p>
+      <a href="/en/quantum.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800/60 transition group">
+        <span class="text-xl opacity-50 group-hover:opacity-80">&#x03C8;</span>
+        <div>
+          <div class="text-sm text-gray-200 font-medium">Quantum Physics with Arrows</div>
+          <div class="text-xs text-gray-500">Double slit &middot; Path integral &middot; Entanglement</div>
+        </div>
+      </a>
+    </div>
+    <div class="h-px bg-gray-800 mx-3"></div>
+    <div class="p-3 flex gap-1">
+      <a href="/en/index.html" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Blog</a>
+      <a href="/en/imprint.html" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Imprint</a>
+      <a href="/en/privacy.html" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Privacy</a>
+    </div>
+    <div class="h-px bg-gray-800 mx-3"></div>
+    <div class="p-3">
+      <a href="/" class="block text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">&#x1F1E9;&#x1F1EA; Deutsch</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var toggle = document.getElementById('nav-toggle');
+  var dropdown = document.getElementById('nav-dropdown');
+  var backdrop = document.getElementById('nav-backdrop');
+  if (!toggle || !dropdown) return;
+  toggle.addEventListener('click', function() { dropdown.classList.toggle('hidden'); toggle.classList.toggle('open'); });
+  if (backdrop) backdrop.addEventListener('click', function() { dropdown.classList.add('hidden'); toggle.classList.remove('open'); });
+  dropdown.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { dropdown.classList.add('hidden'); toggle.classList.remove('open'); }); });
+})();
+</script>
+
+<!-- Hero -->
+<header class="max-w-3xl mx-auto px-4 pt-24 pb-6">
+  <p class="text-cyan-400/60 text-sm mb-4 tracking-wide">Notes from Conversations with a Machine</p>
+  <h1 class="text-3xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    KI-Mathias
+  </h1>
+</header>
+
+<!-- Intro text -->
+<div class="max-w-3xl mx-auto px-4 pb-12 prose">
+
+  <p>This is not a blog that explains the world. It is more like a notebook &ndash; a digital, public, incomplete notebook &ndash; where I record what happens when a human and an artificial intelligence sit down together and try to <em>truly</em> understand things.</p>
+
+  <p>The human is me. The AI is <strong>Claude Code</strong>, a large language model by Anthropic. And this &ndash; the texts, the visualizations, the thought experiments &ndash; is what emerges when you use this tool not to draft emails or debug code, but to have the world explained to you. Or more precisely: to explain it to each other, <em>together</em>.</p>
+
+  <p>I am not a physicist. Not a mathematician. Not a philosopher. I am someone who has questions &ndash; and who, for the first time in human history, has the opportunity to direct those questions at something patient enough not to give up after the fifteenth &ldquo;But why?&rdquo;, and broadly educated enough to assemble the answer from three disciplines at once.</p>
+
+  <p>What emerges sometimes reminds me of <strong>Hermann Hesse&rsquo;s Glass Bead Game</strong> &ndash; the idea that all sciences, all arts, all questions are ultimately variations of the same theme. That Fourier decompositions and music say the same thing. That eigenvalues simultaneously explain quantum mechanics, artificial intelligence, and the structure of the universe. That emergence &ndash; the arising of something greater from something smaller &ndash; may be the most fundamental process of all: in physics, in consciousness, in language models, and perhaps even in what people once called &ldquo;God.&rdquo;</p>
+
+  <p>But unlike Hesse, there is no authoritarian institution here that decides what the Glass Bead Game is and who gets to play. The whole point is: <strong>Everyone can play now.</strong> A language model and a curious human are enough. This is the proof.</p>
+
+  <p>I call myself <strong>KI-Mathias</strong> here &ndash; my alter ego for these conversations. Not because I want to be anonymous, but because the person who writes these texts is different from the one who drinks coffee in the morning and pays bills. This one is the person who, at three in the morning, argues with an AI about why \(e^{iS/\hbar}\) is the only possible form of the quantum amplitude &ndash; and has a lightbulb moment.</p>
+
+  <p>Perhaps someone will want to remember this time one day. The years when large language models began to change the way people think, learn, and create. Not as a replacement for human thought &ndash; but as a catalyst. A sounding board. A conversation partner that never gets tired.</p>
+
+  <p>This blog is my contribution to that memory. An archive of sparks.</p>
+
+</div>
+
+<!-- Section: Posts -->
+<div class="max-w-4xl mx-auto px-4 pb-6">
+  <h2 class="text-lg font-semibold text-gray-300 mb-6 flex items-center gap-2">
+    <span class="w-8 h-px bg-gradient-to-r from-cyan-400 to-transparent"></span>
+    Posts
+  </h2>
+</div>
+
+<!-- Blog post list -->
+<main class="max-w-4xl mx-auto px-4 pb-12 space-y-6">
+
+  <a href="/en/quantum.html" class="group block border border-gray-800/60 rounded-xl p-6 sm:p-8 hover:border-cyan-500/30 hover:bg-gray-900/30 transition-all duration-200">
+    <div class="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8">
+      <div class="flex-1 min-w-0">
+        <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Quantum Mechanics &middot; Interactive</p>
+        <h3 class="text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-2">
+          Waves, Arrows, and the Double-Slit Wonder
+        </h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-3">
+          How quantum physics really works &ndash; explained with nothing but little arrows that rotate.
+          Seven chapters, seven interactive visualizations, zero prerequisites.
+        </p>
+        <div class="flex items-center gap-3 text-xs text-gray-500">
+          <time datetime="2026-03-01">March 2026</time>
+          <span>&middot;</span>
+          <span>~45 min read</span>
+        </div>
+      </div>
+      <div class="hidden sm:flex items-center justify-center w-28 h-28 rounded-lg bg-gradient-to-br from-cyan-500/10 to-amber-500/10 border border-gray-800/50 flex-shrink-0">
+        <span class="text-4xl opacity-60">&#x03C8;</span>
+      </div>
+    </div>
+    <div class="mt-5 pt-4 border-t border-gray-800/40">
+      <div class="flex flex-wrap gap-2 text-xs">
+        <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Double Slit</span>
+        <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Path Integral</span>
+        <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Fourier</span>
+        <span class="px-2.5 py-1 rounded-full bg-gray-800/50 text-gray-400">Three Languages</span>
+        <span class="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400/70">Entanglement</span>
+      </div>
+    </div>
+  </a>
+
+</main>
+
+<!-- Section: Coming Soon -->
+<div class="max-w-4xl mx-auto px-4 pb-6">
+  <h2 class="text-lg font-semibold text-gray-300 mb-6 flex items-center gap-2">
+    <span class="w-8 h-px bg-gradient-to-r from-amber-400 to-transparent"></span>
+    Coming Soon
+  </h2>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 pb-24 space-y-4">
+
+  <div class="border border-gray-800/40 rounded-xl p-5 sm:p-6 opacity-70">
+    <div class="flex items-start gap-4">
+      <div class="text-2xl opacity-40 mt-0.5">&#x1F985;</div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-emerald-400/50 mb-1">Game Development &middot; 3D &middot; WebGL</p>
+        <h3 class="text-base sm:text-lg font-semibold text-gray-300 mb-1">A 3D Flight Simulator in One Afternoon</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">How Claude Code and I designed and built a browser-based bird flight simulator with webcam gesture control in a single session. From idea to playable result &ndash; and what it says about the future of software development.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="border border-gray-800/40 rounded-xl p-5 sm:p-6 opacity-70">
+    <div class="flex items-start gap-4">
+      <div class="text-2xl opacity-40 mt-0.5">&#x03BB;</div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-purple-400/50 mb-1">Mathematics &middot; Artificial Intelligence</p>
+        <h3 class="text-base sm:text-lg font-semibold text-gray-300 mb-1">Why AI Works &ndash; Explained Through Eigenvalues</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Kernel ridge regression, Neumann series, and the eigenvalue equation hiding behind it all. A deep dive into optimization &ndash; and the surprising insight that neural networks and quantum mechanics share the same mathematical structure.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="border border-gray-800/40 rounded-xl p-5 sm:p-6 opacity-70">
+    <div class="flex items-start gap-4">
+      <div class="text-2xl opacity-40 mt-0.5">&#x2728;</div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-amber-400/50 mb-1">Philosophy &middot; Emergence</p>
+        <h3 class="text-base sm:text-lg font-semibold text-gray-300 mb-1">God as an Emergent Phenomenon</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">A concept of God beyond religion: What happens when the subjective &ldquo;good&rdquo; of many people emerges into something objective? On mindfulness, language models, and whether phase transitions in large systems have anything to do with consciousness.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="border border-gray-800/40 rounded-xl p-5 sm:p-6 opacity-70">
+    <div class="flex items-start gap-4">
+      <div class="text-2xl opacity-40 mt-0.5">&#x1F9E0;</div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-rose-400/50 mb-1">AI &middot; Language Models</p>
+        <h3 class="text-base sm:text-lg font-semibold text-gray-300 mb-1">Emergence in Large Language Models</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">At what size does a language model begin to &ldquo;understand&rdquo;? On phase transitions, suddenly appearing capabilities, and the parallel to emergence phenomena in physics.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p class="mb-2"><em>&ldquo;An archive of sparks.&rdquo;</em></p>
+  <p>&copy; 2026 KI-Mathias &middot; All texts created in collaboration with Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="/en/imprint.html" class="hover:text-gray-400">Imprint</a> &middot;
+    <a href="/en/privacy.html" class="hover:text-gray-400">Privacy</a>
+  </p>
+</footer>
+
+</body>
+</html>

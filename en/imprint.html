@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Imprint &ndash; KI-Mathias</title>
+  <link rel="canonical" href="https://ki-mathias.de/en/imprint.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/impressum.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/imprint.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/impressum.html">
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose p { margin-bottom: 1rem; line-height: 1.7; color: #d1d5db; }
+    .prose h1 { font-size: 1.5rem; font-weight: 700; color: #f1f5f9; margin-bottom: 1.5rem; }
+    .prose h2 { font-size: 1.1rem; font-weight: 600; color: #f1f5f9; margin-top: 2rem; margin-bottom: 0.5rem; }
+    .prose strong { color: #f1f5f9; }
+    .prose a { color: #60a5fa; }
+    .prose a:hover { color: #93c5fd; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center">
+    <button id="nav-toggle" class="flex items-center gap-2 text-white font-semibold text-sm hover:text-cyan-400 transition group">
+      <span class="text-cyan-400 text-lg transition-transform duration-200 group-[.open]:rotate-90">&rang;</span> KI-Mathias
+    </button>
+  </div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden">
+  <div id="nav-backdrop" class="absolute inset-0 bg-black/40" style="min-height:100vh;"></div>
+  <div class="relative max-w-xs mx-4 sm:mx-8 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden">
+    <div class="p-3">
+      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Posts</p>
+      <a href="/en/quantum.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800/60 transition group">
+        <span class="text-xl opacity-50">&#x03C8;</span>
+        <div><div class="text-sm text-gray-200 font-medium">Quantum Physics with Arrows</div></div>
+      </a>
+    </div>
+    <div class="h-px bg-gray-800 mx-3"></div>
+    <div class="p-3 flex gap-1">
+      <a href="/en/index.html" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Blog</a>
+      <a href="/en/imprint.html" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Imprint</a>
+      <a href="/en/privacy.html" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Privacy</a>
+    </div>
+    <div class="h-px bg-gray-800 mx-3"></div>
+    <div class="p-3"><a href="/impressum.html" class="block text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">&#x1F1E9;&#x1F1EA; Deutsch</a></div>
+  </div>
+</div>
+<script>
+(function() {
+  var t = document.getElementById('nav-toggle'), d = document.getElementById('nav-dropdown'), b = document.getElementById('nav-backdrop');
+  if (!t||!d) return;
+  t.addEventListener('click', function() { d.classList.toggle('hidden'); t.classList.toggle('open'); });
+  if (b) b.addEventListener('click', function() { d.classList.add('hidden'); t.classList.remove('open'); });
+  d.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { d.classList.add('hidden'); t.classList.remove('open'); }); });
+})();
+</script>
+
+<main class="max-w-3xl mx-auto px-4 pt-24 pb-16 prose">
+
+<h1>Imprint</h1>
+
+<p><strong>Information pursuant to &sect; 5 DDG (German Digital Services Act)</strong></p>
+
+<p>Mathias Leonhardt<br>
+Gudrunstra&szlig;e 106F<br>
+22559 Hamburg, Germany</p>
+
+<h2>Contact</h2>
+<p>Email: mathias-leonhardt@gmx.de<br>
+Phone: +49 151 57420276</p>
+
+<h2>Responsible for content</h2>
+<p>pursuant to &sect; 18 para. 2 MStV (German Interstate Media Treaty):<br>
+Mathias Leonhardt (address as above)</p>
+
+<h2>Note on AI usage</h2>
+<p>Texts on this blog are partly written with the assistance of artificial intelligence (Claude, Anthropic). All content is editorially reviewed, revised, and takes responsibility by the author.</p>
+
+</main>
+
+<footer class="border-t border-gray-800/50 py-6 text-center text-xs text-gray-600">
+  <p>&copy; 2026 KI-Mathias</p>
+  <p class="mt-1">
+    <a href="/en/imprint.html" class="hover:text-gray-400">Imprint</a> &middot;
+    <a href="/en/privacy.html" class="hover:text-gray-400">Privacy</a>
+  </p>
+</footer>
+
+</body>
+</html>
