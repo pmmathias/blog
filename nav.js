@@ -173,4 +173,16 @@
       });
     });
   }
+
+  // ============================================================
+  // GoatCounter analytics (privacy-friendly, no cookies)
+  // Script served locally, only the ping goes to goatcounter.com
+  // ============================================================
+  if (!window.goatcounter) {
+    var gc = document.createElement('script');
+    gc.async = true;
+    gc.src = '/js/count.js';
+    gc.setAttribute('data-goatcounter', 'https://kimathias.goatcounter.com/count');
+    document.body.appendChild(gc);
+  }
 })();
