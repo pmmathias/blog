@@ -26,6 +26,34 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum.html"/>
   </url>
   <url>
+    <loc>https://ki-mathias.de/vogelsimulator.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/flight-simulator.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/vogelsimulator/</loc>
+    <lastmod>2026-03-30</lastmod>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/emergenz.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/emergenz.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/emergence.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/emergence.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/emergenz.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/emergence.html"/>
+  </url>
+  <url>
     <loc>https://ki-mathias.de/impressum.html</loc>
     <lastmod>2026-03-30</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/impressum.html"/>
