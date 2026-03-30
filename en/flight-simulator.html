@@ -255,59 +255,23 @@
 <!-- Progress bar -->
 <div id="progress-bar" style="width: 0%"></div>
 
-<!-- Navigation -->
-<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
-  <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-    <button id="nav-toggle" class="flex items-center gap-2 text-white font-semibold text-sm hover:text-cyan-400 transition group">
-      <span class="text-cyan-400 text-lg transition-transform duration-200 group-[.open]:rotate-90">&rang;</span>
-      KI-Mathias
-    </button>
-    <div class="flex items-center gap-3 text-xs text-gray-500">
-      <a href="/en/imprint.html" class="hover:text-gray-300 transition hidden sm:inline">Imprint</a>
-      <a href="/en/privacy.html" class="hover:text-gray-300 transition hidden sm:inline">Privacy</a>
-      <a href="/vogelsimulator.html" class="hover:text-gray-300 transition">DE</a>
-    </div>
-  </div>
-</nav>
-
-<!-- Unified dropdown: Blog nav + Article TOC -->
-<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden">
-  <div id="nav-backdrop" class="absolute inset-0 bg-black/40" style="min-height:100vh;"></div>
-  <div class="relative max-w-xs mx-4 sm:mx-8 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto">
-
-    <!-- Article TOC -->
-    <div class="p-3">
-      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">This Post</p>
-      <a href="#demo" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Try It Yourself</a>
-      <a href="#phase-1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; The Scaffold</a>
-      <a href="#phase-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; A World from Nothing</a>
-      <a href="#phase-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; The Bird Takes Flight</a>
-      <a href="#phase-4" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Hands Become Wings</a>
-      <a href="#polish" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; The Last 20%</a>
-      <a href="#meta" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; What This Says About AI</a>
-    </div>
-
-    <!-- Divider -->
-    <div class="h-px bg-gray-800 mx-3"></div>
-
-    <!-- Other blog posts -->
-    <div class="p-3">
-      <p class="text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Other Posts</p>
-      <a href="/en/quantum.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">Interactive Quantum Physics</a>
-      <a href="/en/emergence.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">&#x1F9E0; Emergence in Language Models</a>
-      <a href="/en/index.html" class="block text-sm py-1.5 px-3 text-gray-400 rounded-lg hover:bg-gray-800/60 hover:text-white transition">&larr; All Posts</a>
-    </div>
-
-    <!-- Divider -->
-    <div class="h-px bg-gray-800 mx-3"></div>
-
-    <!-- Meta links -->
-    <div class="p-3 flex gap-1">
-      <a href="/en/imprint.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Imprint</a>
-      <a href="/en/privacy.html" class="flex-1 text-center text-xs text-gray-500 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">Privacy</a>
-    </div>
-  </div>
+<!-- TOC items for nav.js -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#demo" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Try It Yourself</a>
+  <a href="#phase-1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; The Scaffold</a>
+  <a href="#phase-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; A World from Nothing</a>
+  <a href="#phase-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; The Bird Takes Flight</a>
+  <a href="#phase-4" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Hands Become Wings</a>
+  <a href="#polish" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; The Last 20%</a>
+  <a href="#meta" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; What This Says About AI</a>
 </div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+<script src="/nav.js"></script>
 
 <!-- ============================================================ -->
 <!-- MAIN CONTENT -->
@@ -361,7 +325,7 @@
 </p>
 
 <figure class="illus">
-  <img src="/img/vogel-dive.png" alt="Diving over the procedural island at high speed" loading="lazy">
+  <img src="/img/vogel-dive.jpg" alt="Diving over the procedural island at high speed" loading="lazy">
   <figcaption>Diving over the island &mdash; at 293 km/h.</figcaption>
 </figure>
 
@@ -429,7 +393,7 @@ scene.add(sky);
 <p>900 positive arcs form the hills. 270 negative arcs carve out valleys. A radial falloff ensures the island gently slopes into the sea at the edges. The result: a natural-looking landscape that looks slightly different every time you load it &mdash; but always plausible.</p>
 
 <figure class="illus">
-  <img src="/img/vogel-terrain.png" alt="Procedural island landscape with hills, valleys and water" loading="lazy">
+  <img src="/img/vogel-terrain.jpg" alt="Procedural island landscape with hills, valleys and water" loading="lazy">
   <figcaption>900 parabolas + negative arcs + radial falloff = a natural island.</figcaption>
 </figure>
 
@@ -475,7 +439,7 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 <p>The problem: we had forgotten the <strong>wing incidence angle</strong>. Real bird wings aren&rsquo;t flat &mdash; they have a built-in angle of attack of about 3&deg;. This angle generates minimal lift even in level flight. Without it, the wing is a plank, and a plank falls.</p>
 
 <figure class="illus">
-  <img src="/img/vogel-flight.png" alt="Bird&rsquo;s-eye view over the island landscape during flight" loading="lazy">
+  <img src="/img/vogel-landscape.jpg" alt="Bird&rsquo;s-eye view over the island landscape during flight" loading="lazy">
   <figcaption>Gliding over the island &mdash; it took six iterations before it actually felt like flying.</figcaption>
 </figure>
 
@@ -517,7 +481,7 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 <p>Our solution: <strong>Graceful Degradation.</strong> When your hands leave the frame, the bird glides on gently &mdash; instead of crashing. When MediaPipe detects no pose, the system silently falls back to keyboard controls. No error, no popup, no frustration.</p>
 
 <figure class="illus">
-  <img src="/img/vogel-close.png" alt="Close-up: flying over trees and buildings" loading="lazy">
+  <img src="/img/vogel-coast.jpg" alt="Close-up: flying over trees and buildings" loading="lazy">
   <figcaption>Low-altitude flight through the settlement &mdash; trees and buildings up close.</figcaption>
 </figure>
 
@@ -560,11 +524,11 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 
 <div class="illus-row">
   <figure class="illus">
-    <img src="/img/vogel-schnee.png" alt="Snow-covered mountain peaks with procedural texture" loading="lazy">
+    <img src="/img/vogel-schnee.jpg" alt="Snow-covered mountain peaks with procedural texture" loading="lazy">
     <figcaption>Snow-covered peaks &mdash; finally white after the texture fix.</figcaption>
   </figure>
   <figure class="illus">
-    <img src="/img/vogel-berge.png" alt="Mountain landscape with forests and rock structures" loading="lazy">
+    <img src="/img/vogel-textures.jpg" alt="Mountain landscape with forests and rock structures" loading="lazy">
     <figcaption>Rock, earth, forest &mdash; five texture layers blending together.</figcaption>
   </figure>
 </div>

@@ -24,11 +24,6 @@
       en: { title: 'Quantum Physics with Arrows', subtitle: 'Double slit \u00B7 Path integral \u00B7 Entanglement', href: '/en/quantum.html' }
     },
     {
-      icon: '\uD83E\uDDE0',  // 🧠
-      de: { title: 'Emergenz in Sprachmodellen', subtitle: 'Phasen\u00FCberg\u00E4nge \u00B7 Grokking \u00B7 Ising', href: '/emergenz.html' },
-      en: { title: 'Emergence in Language Models', subtitle: 'Phase transitions \u00B7 Grokking \u00B7 Ising', href: '/en/emergence.html' }
-    },
-    {
       icon: '\uD83E\uDD85',  // 🦅
       de: { title: 'Vogelsimulator', subtitle: '3D \u00B7 Webcam \u00B7 Gestensteuerung', href: '/vogelsimulator.html' },
       en: { title: 'Bird Simulator', subtitle: '3D \u00B7 Webcam \u00B7 Gesture Control', href: '/en/flight-simulator.html' }
@@ -37,6 +32,11 @@
       icon: '\u03BB',  // λ
       de: { title: 'Eigenwerte & KI', subtitle: 'Kernel \u00B7 PageRank \u00B7 Neumann-Reihe', href: '/eigenwerte.html' },
       en: { title: 'Eigenvalues & AI', subtitle: 'Kernels \u00B7 PageRank \u00B7 Neumann Series', href: '/en/eigenvalues.html' }
+    },
+    {
+      icon: '\uD83E\uDDE0',  // 🧠
+      de: { title: 'Emergenz in Sprachmodellen', subtitle: 'Phasen\u00FCberg\u00E4nge \u00B7 Grokking \u00B7 Ising', href: '/emergenz.html' },
+      en: { title: 'Emergence in Language Models', subtitle: 'Phase transitions \u00B7 Grokking \u00B7 Ising', href: '/en/emergence.html' }
     },
     {
       icon: '\u2728',  // ✨
