@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eigenwerte &amp; KI &ndash; Warum k&uuml;nstliche Intelligenz ein Eigenwertproblem ist | Mathias Leonhardt</title>
+  <meta name="description" content="Von der einfachsten Regression bis zum m&auml;chtigsten neuronalen Netz &ndash; eine einzige mathematische Kette, erkl&auml;rt &uuml;ber Eigenwerte. Interaktive Visualisierungen, echte Herleitungen, null Vorwissen n&ouml;tig.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/eigenwerte.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/eigenwerte.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenvalues.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/eigenwerte.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Eigenwerte &amp; KI &ndash; Warum k&uuml;nstliche Intelligenz ein Eigenwertproblem ist">
+  <meta property="og:description" content="Von Regression &uuml;ber Kernel-Methoden bis PageRank &ndash; eine Kette, die alles verbindet. Interaktiv erkl&auml;rt.">
+  <meta property="og:url" content="https://ki-mathias.de/eigenwerte.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-03-30">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Eigenwerte">
+  <meta property="article:tag" content="K&uuml;nstliche Intelligenz">
+  <meta property="article:tag" content="Kernel Ridge Regression">
+  <meta property="article:tag" content="PageRank">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Eigenwerte &amp; KI &ndash; Warum KI ein Eigenwertproblem ist">
+  <meta name="twitter:description" content="Eine mathematische Kette von Regression bis neuronale Netze &ndash; interaktiv erkl&auml;rt.">
+
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script defer src="eigenwerte-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Eigenwerte & KI \u2013 Warum k\u00fcnstliche Intelligenz ein Eigenwertproblem ist",
+    "description": "Von der einfachsten Regression bis zum m\u00e4chtigsten neuronalen Netz \u2013 eine einzige mathematische Kette, erkl\u00e4rt \u00fcber Eigenwerte.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-03-30",
+    "dateModified": "2026-03-30",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/eigenwerte.html" },
+    "inLanguage": "de",
+    "isAccessibleForFree": true,
+    "keywords": ["Eigenwerte", "K\u00fcnstliche Intelligenz", "Kernel Ridge Regression", "PageRank", "Neumann-Reihe", "Spektralzerlegung"],
+    "articleSection": "Mathematik",
+    "wordCount": 15000,
+    "timeRequired": "PT50M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<!-- Hidden TOC slot — nav.js picks this up and injects it into the dropdown -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#glasperlenspiel" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Glasperlenspiel</a>
+  <a href="#projektion" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Projektion</a>
+  <a href="#iteration" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Iteration</a>
+  <a href="#eigenwerte" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Eigenwerte</a>
+  <a href="#regularisierung" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Regularisierung</a>
+  <a href="#kernel-trick" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Kernel-Trick</a>
+  <a href="#vereinigung" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Vereinigung</a>
+  <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilog</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; Mathematik &middot; KI</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Eigenwerte &amp; KI
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Warum k&uuml;nstliche Intelligenz ein Eigenwertproblem ist &ndash; und was das mit Quantenmechanik zu tun hat. Eine mathematische Kette in sieben Kapiteln, mit interaktiven Visualisierungen.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-03-30">M&auml;rz 2026</time><span>&middot;</span>
+    <span>~50 Min. Lesezeit</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ================================================================ -->
+<!-- 1. DAS GLASPERLENSPIEL -->
+<!-- ================================================================ -->
+<section id="glasperlenspiel" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 1</p>
+<h2>Das Glasperlenspiel</h2>
+
+<p>Im <a href="quanten.html#teil-4a" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> hast du etwas Bemerkenswertes gesehen. Der Propagator &ndash; die zentrale Gr&ouml;&szlig;e, die beschreibt, wie ein Quantenteilchen von A nach B gelangt &ndash; l&auml;sst sich als Summe &uuml;ber <em>Eigenzust&auml;nde</em> schreiben:</p>
+
+<div class="math-display">$$K(B,A,t) = \sum_n \phi_n(B)\;\phi_n^*(A)\;e^{-i\,E_n\,t/\hbar}$$</div>
+
+<p>Jeder Eigenzustand \(\phi_n\) schwingt mit seiner Eigenfrequenz \(E_n/\hbar\). Die Energien \(E_n\) sind <strong>Eigenwerte</strong> des Hamilton-Operators. Die Wellenfunktionen \(\phi_n\) sind <strong>Eigenvektoren</strong>. Du hast sie in den <a href="quanten.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">stehenden Wellen im Kasten</a> gesehen &ndash; die T&ouml;ne, die ein Quantensystem gerne spielt.</p>
+
+<p>Eigenzust&auml;nde. Eigenwerte. Du kennst sie bereits. Sie hie&szlig;en nur anders.</p>
+
+<p>In diesem Beitrag zeigen wir: <strong>Dieselbe Struktur &ndash; Eigenwerte, Eigenvektoren, Spektralzerlegung &ndash; treibt die k&uuml;nstliche Intelligenz an.</strong> Von der einfachsten linearen Regression &uuml;ber Google PageRank bis zu neuronalen Netzen: Alles ist ein Eigenwertproblem.</p>
+
+<p>Und noch etwas: Der Propagator hei&szlig;t \(K\). Der Kernel in der KI hei&szlig;t auch \(K\). Das ist kein Zufall. Am Ende dieses Beitrags wirst du sehen, warum.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 2. DER K&Uuml;RZESTE WEG -->
+<!-- ================================================================ -->
+<section id="projektion" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 2</p>
+<h2>Der k&uuml;rzeste Weg</h2>
+
+<h3>Ein Schatten auf dem Boden</h3>
+
+<p>Stell dir vor, du stehst in der Mittagssonne. Dein Schatten f&auml;llt senkrecht auf den Boden &ndash; ein flaches Abbild deiner dreidimensionalen Gestalt. Das ist eine <strong>Projektion</strong>: die bestm&ouml;gliche Darstellung von dir in einer niedrigeren Dimension.</p>
+
+<p>Was hei&szlig;t &bdquo;bestm&ouml;glich&ldquo;? Der k&uuml;rzeste Abstand von einem Punkt zu einer Fl&auml;che ist immer <strong>senkrecht</strong>. Das ist die Grundlage von allem, was in diesem Beitrag folgt.</p>
+
+<h3>Das Skalarprodukt: Zwei Vektoren, eine Zahl</h3>
+
+<p>Um &bdquo;senkrecht&ldquo; mathematisch auszudr&uuml;cken, brauchen wir das <span class="glossary" title="Skalarprodukt: Multipliziere Vektoren komponentenweise und addiere. Ergebnis = 0 bedeutet senkrecht.">Skalarprodukt</span>: \(\langle \mathbf{a}, \mathbf{b} \rangle = a_1 b_1 + a_2 b_2 + \ldots + a_n b_n\). Zwei Vektoren stehen senkrecht aufeinander, wenn ihr Skalarprodukt <strong>null</strong> ist. Ist es positiv, zeigen sie in &auml;hnliche Richtungen. Negativ = entgegengesetzt.</p>
+
+<h3>Projektion auf eine Gerade</h3>
+
+<p>Gegeben: ein Vektor \(\mathbf{y}\) und eine Richtung \(\mathbf{a}\). Der Punkt auf der Geraden durch \(\mathbf{a}\), der \(\mathbf{y}\) am n&auml;chsten liegt, ist:</p>
+
+<div class="math-display">$$\hat{y} = \frac{\langle \mathbf{a}, \mathbf{y} \rangle}{\langle \mathbf{a}, \mathbf{a} \rangle} \cdot \mathbf{a}$$</div>
+
+<p>Der Fehler \(\mathbf{y} - \hat{y}\) steht senkrecht auf \(\mathbf{a}\). Das ist die ganze Idee.</p>
+
+<h3>Der allgemeine Fall: Die Normalengleichung</h3>
+
+<p>In der Praxis projiziert man nicht auf eine Gerade, sondern auf einen Unterraum, aufgespannt durch die Spalten einer Matrix \(X\). Die Bedingung &bdquo;Fehler steht senkrecht auf allen Spalten&ldquo; wird zur <strong>Normalengleichung</strong>:</p>
+
+<div class="math-display">$$X^T X\,\mathbf{c} = X^T\mathbf{y} \quad\Longrightarrow\quad \mathbf{c} = (X^TX)^{-1}\,X^T\mathbf{y}$$</div>
+
+<p>Konkretes Beispiel: \(X = (1,\; 0{,}5)^T\), \(\mathbf{y} = (3,\; 4)^T\). Dann \(X^TX = 1{,}25\), \(X^T\mathbf{y} = 5\), also \(c = 4\). Die Projektion ist \(\hat{\mathbf{y}} = (4,\; 2)^T\). Der Fehler \((-1,\; 2)^T\) steht senkrecht auf \(X\): \(1 \cdot (-1) + 0{,}5 \cdot 2 = 0\). &#x2713;</p>
+
+<p>Sch&ouml;ne Formel. Aber in der Mitte steht \((X^TX)^{-1}\) &ndash; eine <strong>Matrixinversion</strong>. Die kostet \(O(n^3)\) Rechenoperationen, ist numerisch instabil, und &ndash; wie wir gleich sehen werden &ndash; <em>unn&ouml;tig</em>.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 3. GEDULD STATT GENIALIT&Auml;T -->
+<!-- ================================================================ -->
+<section id="iteration" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 3</p>
+<h2>Geduld statt Genialit&auml;t</h2>
+
+<p>Was w&auml;re, wenn wir die Inverse nie berechnen m&uuml;ssten? Wenn es einen Weg g&auml;be, der nichts weiter tut, als immer wieder den eigenen Fehler zu korrigieren?</p>
+
+<h3>Projiziere. Fehler. Wiederhole.</h3>
+
+<p><strong>Schritt 1:</strong> Berechne eine grobe erste Approximation: \(\hat{\mathbf{y}}_1 = X \cdot X^T \mathbf{y}\).</p>
+
+<p><strong>Schritt 2:</strong> Berechne den Fehler (das <em>Residuum</em>): \(\mathbf{r}_1 = \mathbf{y} - \hat{\mathbf{y}}_1\).</p>
+
+<p><strong>Schritt 3:</strong> Projiziere den Fehler selbst und addiere ihn: \(\hat{\mathbf{y}}_2 = \hat{\mathbf{y}}_1 + X \cdot X^T \mathbf{r}_1\).</p>
+
+<p>Und weiter. Und weiter. Jede Iteration bringt uns n&auml;her an die exakte L&ouml;sung.</p>
+
+<h3>Das Muster in den Residuen</h3>
+
+<p>Nach \(n\) Schritten hat das Residuum die Form:</p>
+
+<div class="math-display">$$\mathbf{r}_n = (I - X \cdot X^T)^n \cdot \mathbf{y}$$</div>
+
+<p>Wenn die Matrix \((I - XX^T)\) &bdquo;schrumpft&ldquo; &ndash; alle ihre Eigenwerte betragskleiner als 1 sind &ndash; dann konvergiert \(\mathbf{r}_n \to \mathbf{0}\). Der Fehler verschwindet.</p>
+
+<p>Die mathematische Struktur hinter dieser Konvergenz hei&szlig;t <strong>Neumann-Reihe</strong>:</p>
+
+<div class="math-display">$$\sum_{k=0}^{\infty} A^k = (I - A)^{-1} \quad\text{wenn alle Eigenwerte von } A \text{ betragskleiner als 1 sind}$$</div>
+
+<p>Das ist die Matrixversion der geometrischen Reihe \(\sum q^k = 1/(1-q)\). Und sie bedeutet: Unsere Iteration konvergiert gegen \((X^TX)^{-1}X^T\mathbf{y}\) &ndash; <em>exakt</em> die geschlossene L&ouml;sung aus Kapitel 2.</p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Klicke &bdquo;N&auml;chster Schritt&ldquo; und beobachte, wie die blaue Approximation sich der gr&uuml;nen exakten L&ouml;sung n&auml;hert. Der rote Pfeil (Residuum) wird bei jedem Schritt k&uuml;rzer.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-neumann-series"></div>
+</div>
+
+<p><strong>Halt. Stop.</strong> Lies den letzten Satz nochmal. Die Iteration konvergiert nicht zu irgendeiner N&auml;herung. Sie konvergiert zur <strong>exakten</strong> L&ouml;sung &ndash; derselben, die man durch Matrixinversion bekommt. Ohne je eine Matrix zu invertieren. Nur durch geduldiges Korrigieren des eigenen Fehlers.</p>
+
+<h3>Der elegante Beweis</h3>
+
+<p>Im Gleichgewicht &auml;ndert sich die L&ouml;sung nicht mehr: \(\hat{\mathbf{y}}' = X^T\mathbf{x} + (I - X^TX)\,\hat{\mathbf{y}}'\). Umstellen: \(\hat{\mathbf{y}}' - (I - X^TX)\,\hat{\mathbf{y}}' = X^T\mathbf{x}\), also \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{x}\), also \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{x}\). Die Normalengleichung. Q.E.D.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Was du jetzt in der Hand hast:</strong> Iteration ersetzt Inversion. Geduld ersetzt Genialit&auml;t. Aber eine Frage bleibt: <em>Warum</em> konvergiert das? Was bestimmt die Geschwindigkeit?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 4. WAS MATRIZEN WIRKLICH TUN -->
+<!-- ================================================================ -->
+<section id="eigenwerte" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 4</p>
+<h2>Was Matrizen wirklich tun</h2>
+
+<p>Eine Matrix ist eine Maschine: Vektor rein, Vektor raus. Die meisten Vektoren werden dabei sowohl gestreckt als auch gedreht. Aber es gibt Spezialisten &ndash; Vektoren, deren <strong>Richtung sich nicht &auml;ndert</strong>:</p>
+
+<div class="math-display">$$A\mathbf{v} = \lambda\,\mathbf{v}$$</div>
+
+<p>So ein \(\mathbf{v}\) hei&szlig;t <strong>Eigenvektor</strong>, das \(\lambda\) sein <strong>Eigenwert</strong>. Die Matrix tut nichts weiter, als den Eigenvektor mit \(\lambda\) zu skalieren &ndash; kein Drehen, kein Kippen.</p>
+
+<h3>Ein Beispiel von Hand</h3>
+
+<p>Nehmen wir \(A = \bigl(\begin{smallmatrix} 2 &amp; 1 \\ 0 &amp; 3 \end{smallmatrix}\bigr)\). Das charakteristische Polynom: \(\det(A - \lambda I) = (2-\lambda)(3-\lambda) = 0\). Eigenwerte: \(\lambda_1 = 2\), \(\lambda_2 = 3\).</p>
+
+<p>Eigenvektoren: F&uuml;r \(\lambda_1 = 2\) l&ouml;se \((A-2I)\mathbf{v} = 0\): \(\mathbf{v}_1 = (1, 0)^T\). F&uuml;r \(\lambda_2 = 3\): \(\mathbf{v}_2 = (1, 1)^T\). Probe: \(A \cdot (1,1)^T = (3,3)^T = 3 \cdot (1,1)^T\). &#x2713;</p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Ziehe den wei&szlig;en Vektor. Wenn er in Richtung eines Eigenvektors zeigt, &auml;ndert \(A\mathbf{v}\) nur die L&auml;nge &ndash; nicht die Richtung. W&auml;hle verschiedene Matrizen, um Streckung, Scherung und Drehung zu vergleichen.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-eigen-transform"></div>
+</div>
+
+<h3>Warum Eigenwerte &uuml;ber Konvergenz entscheiden</h3>
+
+<p>Die Schl&uuml;sselformel: \(A^n = V\,\Lambda^n\,V^{-1}\), wobei \(\Lambda\) die Diagonalmatrix der Eigenwerte ist. Das hei&szlig;t:</p>
+
+<p>&bull; Wenn \(|\lambda| &lt; 1\): \(\lambda^n \to 0\) &ndash; die Komponente <strong>verschwindet</strong>.<br>
+&bull; Wenn \(|\lambda| = 1\): bleibt konstant.<br>
+&bull; Wenn \(|\lambda| &gt; 1\): \(\lambda^n \to \infty\) &ndash; <strong>Explosion</strong>.</p>
+
+<p>Jetzt die Verbindung zu Kapitel 3: Wenn \(\mu\) ein Eigenwert von \(X^TX\) ist, dann ist \((1 - \mu)\) ein Eigenwert von \((I - X^TX)\). Die Iteration konvergiert, wenn \(|1 - \mu| &lt; 1\) f&uuml;r alle \(\mu\). Die Eigenwerte von \(X^TX\) bestimmen <strong>alles</strong> &ndash; ob die Iteration konvergiert und wie schnell.</p>
+
+<p>Symmetrische Matrizen (und \(X^TX\) ist immer symmetrisch) haben nur reelle Eigenwerte und orthogonale Eigenvektoren. Gro&szlig;e Eigenwerte = Richtungen mit viel Variation (Signal). Kleine = wenig Variation (Rauschen).</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Die DNA einer Matrix</strong> sind ihre Eigenwerte. Sie sagen dir, ob ein iterativer Prozess konvergiert, wie schnell, und wohin. Und sie trennen Signal von Rauschen &ndash; was direkt zum n&auml;chsten Kapitel f&uuml;hrt.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 5. FR&Uuml;H AUFH&Ouml;REN LOHNT SICH -->
+<!-- ================================================================ -->
+<section id="regularisierung" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 5</p>
+<h2>Fr&uuml;h aufh&ouml;ren lohnt sich</h2>
+
+<p>Stell dir einen Sch&uuml;ler vor, der 20 &Uuml;bungsaufgaben auswendig lernt. In der &Uuml;bung: 20 von 20. In der Pr&uuml;fung mit neuen Aufgaben: 8 von 20. Er hat die <em>Aufgaben</em> gelernt, nicht die <em>Prinzipien</em>. Das nennt man <strong>Overfitting</strong>.</p>
+
+<h3>Was das mit unserer Iteration zu tun hat</h3>
+
+<p>Nach \(n\) Iterationen wird die Komponente entlang des \(i\)-ten Eigenvektors um den Faktor \(1 - (1-\mu_i)^n\) beibehalten. Was bedeutet das?</p>
+
+<p>&bull; <strong>Gro&szlig;e Eigenwerte</strong> (\(\mu_i\) gro&szlig;): Nach wenigen Iterationen bei fast 100%. Das ist <em>Signal</em>.<br>
+&bull; <strong>Kleine Eigenwerte</strong> (\(\mu_i\) klein): Brauchen viele Iterationen. Das ist oft <em>Rauschen</em>.</p>
+
+<p>Wenige Iterationen = nur das Signal wird gelernt. Viele Iterationen = auch das Rauschen. <strong>Fr&uuml;hes Aufh&ouml;ren ist ein nat&uuml;rlicher Rauschfilter.</strong></p>
+
+<h3>Die &Auml;quivalenz zu Ridge Regression</h3>
+
+<p>Die klassische L&ouml;sung gegen Overfitting &ndash; <em>Ridge Regression</em> &ndash; addiert \(\lambda\) zur Diagonale: \(\mathbf{c}_\lambda = (X^TX + \lambda I)^{-1}X^T\mathbf{y}\). Der Filterfaktor ist \(\mu_i/(\mu_i + \lambda)\).</p>
+
+<p>Vergleiche mit unserem Iterationsfaktor \(1 - (1-\mu_i)^n\). Beide haben <em>dieselbe Wirkung</em>: gro&szlig;e \(\mu_i\) durchlassen, kleine d&auml;mpfen. Die formale Beziehung:</p>
+
+<div class="math-display">$$\lambda \approx \frac{1}{n}$$</div>
+
+<p>Mehr Iterationen = kleineres \(\lambda\) = weniger Regularisierung. Weniger Iterationen = gr&ouml;&szlig;eres \(\lambda\) = glattere L&ouml;sung.</p>
+
+<p><strong>Halt. Stop.</strong> In jedem Lehrbuch wird Ridge Regression als k&uuml;nstlicher Strafterm eingef&uuml;hrt: &bdquo;Wir bestrafen gro&szlig;e Koeffizienten.&ldquo; Aber in Wirklichkeit ist Regularisierung die nat&uuml;rlichste Sache der Welt: <em>H&ouml;r auf, wenn es gut genug ist.</em> Der Ridge-Parameter f&auml;llt nicht vom Himmel. Er ist die Konsequenz einer einfachen Entscheidung: Wie oft korrigiere ich meinen Fehler?</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Die Formel:</strong> \(\lambda \approx 1/n\). Fr&uuml;hes Aufh&ouml;ren = Ridge Regression. Beide trennen Signal von Rauschen, gesteuert durch die Eigenwerte von \(X^TX\).</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 6. DER KERNEL-TRICK -->
+<!-- ================================================================ -->
+<section id="kernel-trick" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 6</p>
+<h2>Der Kernel-Trick</h2>
+
+<p>Bisher war alles linear: Geraden, Ebenen, Polynome. Aber die Welt ist nicht linear. Daten folgen Parabeln, Sinuskurven, chaotischen Mustern. Brauchen wir eine neue Theorie?</p>
+
+<p>Nein. Wir brauchen einen neuen <strong>Blick auf die Daten</strong>.</p>
+
+<h3>Features erweitern</h3>
+
+<p>Wenn Daten nicht linear in \(x\) sind, mach sie linear in \((1, x, x^2)\). Erweitere die Designmatrix durch eine <span class="glossary" title="Feature-Abbildung: Transformation der Eingabedaten in einen h&ouml;herdimensionalen Raum, in dem das Problem linear wird.">Feature-Abbildung</span> \(\phi(x)\). Im neuen Raum ist das Problem linear &ndash; unsere gesamte Maschinerie funktioniert wieder.</p>
+
+<h3>Die entscheidende Beobachtung</h3>
+
+<p>In der Iteration taucht &uuml;berall \(X^TX\) auf &ndash; die Matrix der <strong>paarweisen Skalarprodukte</strong>. Eintrag \((i,j)\) ist \(\langle \phi(x_i), \phi(x_j) \rangle\). Wir brauchen die Features \(\phi(x_i)\) nie einzeln. Nur ihre Skalarprodukte.</p>
+
+<p>Eine <strong>Kernel-Funktion</strong> \(k(x_i, x_j) = \langle \phi(x_i), \phi(x_j) \rangle\) berechnet dieses Skalarprodukt <em>direkt</em>, ohne den Umweg &uuml;ber die Features. Konkretes Beispiel: \((1 + xz)^2 = 1 + 2xz + x^2z^2\). Das ist das Skalarprodukt der Features \(\phi = (1, \sqrt{2}\,x, x^2)\) &ndash; eine einzige Multiplikation statt drei.</p>
+
+<p>Der <strong>Gau&szlig;-Kernel</strong> \(k(x,z) = \exp(-\|x-z\|^2/(2\sigma^2))\) hat einen <em>unendlich-dimensionalen</em> Feature-Raum. Aber die Kernel-Matrix \(K\) bleibt endlich: \(n \times n\) f&uuml;r \(n\) Datenpunkte.</p>
+
+<h3>Der &Uuml;bergang: Nichts &auml;ndert sich</h3>
+
+<p>Ersetze \(X^TX\) durch \(K\). Die Iteration wird: \(\hat{\mathbf{y}}_{n+1} = \hat{\mathbf{y}}_n + K(\mathbf{y} - \hat{\mathbf{y}}_n)\). Residuen: \(\mathbf{r}_n = (I - K)^n \mathbf{y}\). Konvergenz: bestimmt durch Eigenwerte von \(K\). Regularisierung: \(\lambda \approx 1/n\). <strong>Derselbe Algorithmus. Andere Sprache. Unendliche Ausdruckskraft.</strong></p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Bewege die Regler f&uuml;r \(\lambda\) (Regularisierung) und \(\sigma\) (Kernel-Breite). Bei kleinem \(\lambda\) passt sich die Kurve eng an die Daten an. Bei gro&szlig;em \(\lambda\) wird sie zu glatt. Finde den Sweet Spot.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-kernel-regression"></div>
+</div>
+
+<p>Die Vorhersage f&uuml;r einen neuen Punkt \(x_*\) ist \(f(x_*) = \sum_{i=1}^n \alpha_i\,k(x_i, x_*)\) &ndash; jeder Trainingspunkt &bdquo;stimmt ab&ldquo;, gewichtet nach seiner &Auml;hnlichkeit zum neuen Punkt. Die Trainingsdaten <em>sind</em> das Modell.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Der Kern des Kernel-Tricks:</strong> \(X^TX \to K\). Sonst &auml;ndert sich nichts. Aber der Feature-Raum wird unendlich-dimensional &ndash; und die Ausdruckskraft universell.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 7. DIE GROSSE VEREINIGUNG -->
+<!-- ================================================================ -->
+<section id="vereinigung" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
+<h2>Die gro&szlig;e Vereinigung</h2>
+
+<h3>Von Lichtreflexionen zu Google</h3>
+
+<p>In der Computergrafik beschreibt die <strong>Radiosity-Gleichung</strong>, wie Licht zwischen Fl&auml;chen springt: \(B = E + \rho F B\), wobei \(E\) das Eigenleuchten, \(\rho\) die Reflektivit&auml;t und \(F\) die Formfaktormatrix ist. Die L&ouml;sung?</p>
+
+<div class="math-display">$$\mathbf{B} = (I - \rho F)^{-1}\,\mathbf{E} = \sum_{k=0}^{\infty} (\rho F)^k\,\mathbf{E}$$</div>
+
+<p>Dieselbe Neumann-Reihe. \(k=0\): direktes Licht. \(k=1\): erster Bounce. \(k=2\): zweiter Bounce. Jeder Term = eine weitere Lichtreflexion. Licht, das zwischen W&auml;nden springt, <em>ist</em> iterative Fehlerkorrektur, angewendet auf Energie statt auf Daten.</p>
+
+<p>Jetzt der Trick: Die Matrix \(\rho F\) ist <em>substochastisch</em> &ndash; Zeilen summieren sich zu weniger als 1 (weil Energie absorbiert wird). F&uuml;ge eine zus&auml;tzliche &bdquo;Absorber-Dimension&ldquo; hinzu, die die fehlende Energie auff&auml;ngt und an die Emitter zur&uuml;ckverteilt. Resultat: eine <strong>stochastische Matrix</strong> (alle Zeilen = 1). Derselbe Trick wie homogene Koordinaten in der 3D-Grafik: Eine Dimension mehr, und eine unvollst&auml;ndige Struktur wird vollst&auml;ndig.</p>
+
+<p>Eine stochastische Matrix <em>ist</em> eine Markov-Kette. Deren Gleichgewicht ist der <strong>dominante Eigenvektor</strong> &ndash; der Eigenvektor zum Eigenwert 1.</p>
+
+<p>Wo im echten Leben gibt es ein riesiges Eigenwertproblem f&uuml;r eine stochastische Matrix? Jedes Mal, wenn du Google benutzt. <strong>PageRank</strong> ist der dominante Eigenvektor der Google-Matrix \(G = d\,M + (1-d)/n \cdot \mathbf{1}\mathbf{1}^T\). Der Random Surfer klickt Links (\(d \approx 0{,}85\)) oder teleportiert zuf&auml;llig (\(1-d\)). Die Power Iteration \(\mathbf{r}^{(k+1)} = G\,\mathbf{r}^{(k)}\) konvergiert in ~50 Iterationen &ndash; f&uuml;r <em>Milliarden</em> Webseiten.</p>
+
+<p><strong>Halt. Stop.</strong> Regression (Kapitel 3), Radiosity, PageRank &ndash; drei verschiedene Probleme, dreimal <strong>derselbe Algorithmus</strong>. Iterative Matrixmultiplikation, gesteuert durch Eigenwerte. Dreimal Neumann-Reihe. Dreimal Konvergenz zum dominanten Eigenvektor.</p>
+
+<h3>So m&auml;chtig wie ein Gehirn</h3>
+
+<p>Jetzt die letzte Verbindung. Wie m&auml;chtig ist Kernel Ridge Regression wirklich?</p>
+
+<p>Das <strong>Representer Theorem</strong> (Kimeldorf &amp; Wahba, 1970) sagt: Die optimale KRR-L&ouml;sung hat immer die Form \(f^*(x) = \sum_{i=1}^n \alpha_i\,k(x_i, x)\). Endlich viele Koeffizienten, egal wie hochdimensional der Kernel-Raum ist.</p>
+
+<p>Das <strong>Universal Approximation Theorem</strong> (Cybenko, 1989) sagt: Ein neuronales Netz mit einer versteckten Schicht kann jede stetige Funktion beliebig genau approximieren.</p>
+
+<p>Und der Gau&szlig;-Kernel ist <strong>universell</strong> (Micchelli et al., 2006): KRR mit Gau&szlig;-Kernel kann ebenfalls jede stetige Funktion beliebig genau approximieren.</p>
+
+<p>Beide Funktionenklassen &ndash; neuronale Netze und KRR &ndash; sind <strong>dicht in \(C(K)\)</strong>. Sie sind gleich m&auml;chtig. Und der <strong>Neural Tangent Kernel</strong> (Jacot et al., 2018) zeigt: Im Grenzfall unendlicher Breite <em>wird</em> ein neuronales Netz zu KRR. Die Verbindung ist nicht metaphorisch &ndash; sie ist ein Theorem.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2.2;">
+    <strong>Regression:</strong>&ensp; \(\hat{\mathbf{y}} = (X^TX + \lambda I)^{-1}X^T\mathbf{y}\) &mdash; Eigenwerte steuern die Konvergenz<br>
+    <strong>Radiosity:</strong>&ensp; \(\mathbf{B} = (I - \rho F)^{-1}\mathbf{E}\) &mdash; Eigenwerte steuern die Lichtverteilung<br>
+    <strong>PageRank:</strong>&ensp; \(\mathbf{r} = \text{dom. Eigenvektor von } G\) &mdash; Eigenwert 1 bestimmt die Rangfolge<br>
+    <strong>KRR &equiv; NN:</strong>&ensp; beide dicht in \(C(K)\) &mdash; Eigenwerte des NTK steuern das Lernen
+  </p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 8. EPILOG: K = K -->
+<!-- ================================================================ -->
+<section id="epilog" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Epilog</p>
+<h2>K = K: Das Glasperlenspiel</h2>
+
+<p>Am Anfang dieses Beitrags stand eine Formel aus der Quantenmechanik. Am Ende steht eine Formel aus dem maschinellen Lernen. Stell sie nebeneinander:</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2.5;">
+    <strong>Propagator (Quantenmechanik):</strong><br>
+    \(\displaystyle K(B,A,t) = \sum_n \psi_n(B)\;\psi_n^*(A)\;e^{-i\,E_n\,t/\hbar}\)<br><br>
+    <strong>Kernel (Machine Learning &ndash; Mercer-Zerlegung):</strong><br>
+    \(\displaystyle K(x,x') = \sum_n \lambda_n\;\phi_n(x)\;\phi_n(x')\)
+  </p>
+</div>
+
+<p>Derselbe Buchstabe \(K\). Dasselbe Muster: Eine Summe &uuml;ber Eigenfunktionen, gewichtet durch Eigenwerte. Der Propagator beschreibt, wie ein Quantenteilchen von A nach B reist. Der Kernel beschreibt, wie &auml;hnlich zwei Datenpunkte sind. Verschiedene B&uuml;hnen, <strong>dieselbe Mathematik</strong>.</p>
+
+<p>Im <a href="quanten.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> hast du gesehen, wie stehende Wellen zu diskreten Energieniveaus f&uuml;hren &ndash; die T&ouml;ne, die ein Quantensystem gerne spielt. Hier hast du gesehen, wie die Eigenwerte einer Kernel-Matrix bestimmen, was ein Algorithmus lernt und was er ignoriert. Dasselbe Prinzip. Andere B&uuml;hne.</p>
+
+<p>Erwin Schr&ouml;dinger betitelte seine Arbeit von 1926: <em>&bdquo;Quantisierung als Eigenwertproblem.&ldquo;</em></p>
+
+<p>Vielleicht sollten wir erg&auml;nzen: <em>Intelligenz als Eigenwertproblem.</em></p>
+
+<p>Die Natur ist reicher als jede einzelne Beschreibung. Aber manchmal teilen verschiedene Beschreibungen denselben mathematischen Kern. Eigenwerte sind dieser Kern.</p>
+
+</div>
+</section>
+
+
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 px-4 sm:px-6 text-xs text-gray-600">
+  <div class="max-w-4xl">
+    <p>&copy; 2026 KI-Mathias &middot; Entstanden in Zusammenarbeit mit Claude Code (Anthropic)</p>
+    <p class="mt-1">
+      <a href="index.html" class="hover:text-gray-400">Blog</a> &middot;
+      <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+      <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+    </p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // 1. Lazy-mount React components
+  var COMPONENTS = {
+    'mount-neumann-series': window.NeumannSeriesViz || null,
+    'mount-eigen-transform': window.EigenTransformViz || null,
+    'mount-kernel-regression': window.KernelRegressionViz || null,
+  };
+
+  var mounted = {};
+
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Komponente konnte nicht geladen werden.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // 2. Scroll progress bar
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // 3. TOC highlighting (nav toggle handled by nav.js)
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          else link.classList.remove('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+  // 4. KaTeX auto-render
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+});
+</script>
+
+</body>
+</html>
