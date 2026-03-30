@@ -197,7 +197,7 @@
 <p>After \(n\) steps, the residual has the form:</p>
 <div class="math-display">$$\mathbf{r}_n = (I - X \cdot X^T)^n \cdot \mathbf{y}$$</div>
 
-<p>If the matrix \((I - XX^T)\) &ldquo;shrinks&rdquo; &ndash; all its eigenvalues have magnitude less than 1 &ndash; then \(\mathbf{r}_n \to \mathbf{0}\). The error vanishes.</p>
+<p>If the matrix \((I - XX^T)\) &ldquo;shrinks&rdquo; &ndash; all its eigenvalues have magnitude less than 1 &ndash; then \(\mathbf{r}_n \to \mathbf{0}\). The error vanishes. <em>(This assumes the data is suitably scaled. In practice, one introduces a learning rate \(\eta\) to ensure this &ndash; we keep it simple here.)</em></p>
 
 <p>The mathematical structure behind this convergence is the <strong>Neumann series</strong>:</p>
 <div class="math-display">$$\sum_{k=0}^{\infty} A^k = (I - A)^{-1} \quad\text{when all eigenvalues of } A \text{ have magnitude less than 1}$$</div>
@@ -213,7 +213,7 @@
 <p><strong>Wait. Stop.</strong> Read that last sentence again. The iteration does not converge to some approximation. It converges to the <strong>exact</strong> solution &ndash; the same one you get from matrix inversion. Without ever inverting a matrix. Just by patiently correcting your own error.</p>
 
 <h3>The elegant proof</h3>
-<p>At equilibrium, the solution no longer changes: \(\hat{\mathbf{y}}' = X^T\mathbf{x} + (I - X^TX)\,\hat{\mathbf{y}}'\). Rearranging: \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{x}\), hence \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{x}\). The normal equation. Q.E.D.</p>
+<p>At equilibrium, the solution no longer changes: \(\hat{\mathbf{y}}' = X^T\mathbf{y} + (I - X^TX)\,\hat{\mathbf{y}}'\). Rearranging: \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), hence \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{y}\). The normal equation. Q.E.D.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300"><strong>What you now hold:</strong> Iteration replaces inversion. Patience replaces genius. But a question remains: <em>why</em> does it converge? What determines the speed?</p>
@@ -361,7 +361,9 @@
 
 <p>The Gaussian kernel is <strong>universal</strong> (Micchelli et al., 2006): KRR with Gaussian kernel can also approximate any continuous function.</p>
 
-<p>Both function classes are <strong>dense in \(C(K)\)</strong>. They are equally powerful. And the <strong>Neural Tangent Kernel</strong> (Jacot et al., 2018) shows: in the limit of infinite width, a neural network literally <em>becomes</em> KRR.</p>
+<p>Both function classes are <strong>dense in \(C(K)\)</strong>. They are equally powerful. And the <strong>Neural Tangent Kernel</strong> (Jacot et al., 2018) shows: in the idealized limit of infinite width and suitable initialization, a neural network literally <em>becomes</em> KRR. The connection is not a metaphor &ndash; it is a theorem (albeit a limiting-case theorem).</p>
+
+<p>Of course, modern AI &ndash; Transformers, attention, stochastic gradient descent in non-convex landscapes &ndash; is <em>more</em> than an eigenvalue problem. But the eigenvalue structure is the mathematical core running through every layer. It does not explain everything &ndash; but it explains <em>why the foundation holds</em>.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2.2;">
@@ -387,11 +389,11 @@
     <strong>Propagator (Quantum Mechanics):</strong><br>
     \(\displaystyle K(B,A,t) = \sum_n \psi_n(B)\;\psi_n^*(A)\;e^{-i\,E_n\,t/\hbar}\)<br><br>
     <strong>Kernel (Machine Learning &ndash; Mercer decomposition):</strong><br>
-    \(\displaystyle K(x,x') = \sum_n \lambda_n\;\phi_n(x)\;\phi_n(x')\)
+    \(\displaystyle K(x,x') = \sum_n \lambda_n\;\psi_n(x)\;\psi_n(x')\)
   </p>
 </div>
 
-<p>Same letter \(K\). Same pattern: a sum over eigenfunctions, weighted by eigenvalues. The propagator describes how a quantum particle travels from A to B. The kernel describes how similar two data points are. Different stages, <strong>same mathematics</strong>.</p>
+<p>Same letter \(K\). Same pattern: a sum over eigenfunctions \(\psi_n\), weighted by eigenvalues. The propagator describes how a quantum particle travels from A to B. The kernel describes how similar two data points are. Different stages, <strong>same mathematics</strong>. <em>(The \(\psi_n\) here are the Mercer eigenfunctions of the kernel &ndash; related to, but distinct from, the feature map \(\phi\) in Chapter 6.)</em></p>
 
 <p>In the <a href="/en/quantum.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">quantum post</a>, you saw how standing waves lead to discrete energy levels &ndash; the tones a quantum system likes to play. Here you saw how the eigenvalues of a kernel matrix determine what an algorithm learns and what it ignores. Same principle. Different stage.</p>
 

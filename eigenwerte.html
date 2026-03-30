@@ -252,7 +252,7 @@
 
 <div class="math-display">$$\mathbf{r}_n = (I - X \cdot X^T)^n \cdot \mathbf{y}$$</div>
 
-<p>Wenn die Matrix \((I - XX^T)\) &bdquo;schrumpft&ldquo; &ndash; alle ihre Eigenwerte betragskleiner als 1 sind &ndash; dann konvergiert \(\mathbf{r}_n \to \mathbf{0}\). Der Fehler verschwindet.</p>
+<p>Wenn die Matrix \((I - XX^T)\) &bdquo;schrumpft&ldquo; &ndash; alle ihre Eigenwerte betragskleiner als 1 sind &ndash; dann konvergiert \(\mathbf{r}_n \to \mathbf{0}\). Der Fehler verschwindet. <em>(Das setzt voraus, dass die Daten passend skaliert sind. In der Praxis f&uuml;gt man eine Lernrate \(\eta\) ein, die genau das sicherstellt &ndash; wir halten es hier einfach.)</em></p>
 
 <p>Die mathematische Struktur hinter dieser Konvergenz hei&szlig;t <strong>Neumann-Reihe</strong>:</p>
 
@@ -298,7 +298,7 @@
 
 <h3>Der elegante Beweis</h3>
 
-<p>Im Gleichgewicht &auml;ndert sich die L&ouml;sung nicht mehr: \(\hat{\mathbf{y}}' = X^T\mathbf{x} + (I - X^TX)\,\hat{\mathbf{y}}'\). Umstellen: \(\hat{\mathbf{y}}' - (I - X^TX)\,\hat{\mathbf{y}}' = X^T\mathbf{x}\), also \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{x}\), also \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{x}\). Die Normalengleichung. Q.E.D.</p>
+<p>Im Gleichgewicht &auml;ndert sich die L&ouml;sung nicht mehr: \(\hat{\mathbf{y}}' = X^T\mathbf{y} + (I - X^TX)\,\hat{\mathbf{y}}'\). Umstellen: \(\hat{\mathbf{y}}' - (I - X^TX)\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), also \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), also \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{y}\). Die Normalengleichung. Q.E.D.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300"><strong>Was du jetzt in der Hand hast:</strong> Iteration ersetzt Inversion. Geduld ersetzt Genialit&auml;t. Aber eine Frage bleibt: <em>Warum</em> konvergiert das? Was bestimmt die Geschwindigkeit?</p>
@@ -412,11 +412,11 @@
 
 <p>Die klassische L&ouml;sung gegen Overfitting &ndash; <em>Ridge Regression</em> &ndash; addiert \(\lambda\) zur Diagonale: \(\mathbf{c}_\lambda = (X^TX + \lambda I)^{-1}X^T\mathbf{y}\). Der Filterfaktor ist \(\mu_i/(\mu_i + \lambda)\).</p>
 
-<p>Vergleiche mit unserem Iterationsfaktor \(1 - (1-\mu_i)^n\). Beide haben <em>dieselbe Wirkung</em>: gro&szlig;e \(\mu_i\) durchlassen, kleine d&auml;mpfen. Die formale Beziehung:</p>
+<p>Vergleiche mit unserem Iterationsfaktor \(1 - (1-\mu_i)^n\). Beide haben <em>dieselbe Wirkung</em>: gro&szlig;e \(\mu_i\) durchlassen, kleine d&auml;mpfen. Als Faustregel (f&uuml;r moderate \(n\) und kleine \(\mu_i\)):</p>
 
 <div class="math-display">$$\lambda \approx \frac{1}{n}$$</div>
 
-<p>Mehr Iterationen = kleineres \(\lambda\) = weniger Regularisierung. Weniger Iterationen = gr&ouml;&szlig;eres \(\lambda\) = glattere L&ouml;sung.</p>
+<p>Mehr Iterationen = kleineres \(\lambda\) = weniger Regularisierung. Weniger Iterationen = gr&ouml;&szlig;eres \(\lambda\) = glattere L&ouml;sung. <em>(Die Beziehung ist nicht exakt, aber die Filterkurven beider Verfahren haben f&uuml;r praktische Zwecke dieselbe Form.)</em></p>
 
 <div class="try-it">
   <p><strong>Probier es selbst</strong></p>
@@ -476,7 +476,9 @@
   <div id="mount-kernel-regression"></div>
 </div>
 
-<p>Die Vorhersage f&uuml;r einen neuen Punkt \(x_*\) ist \(f(x_*) = \sum_{i=1}^n \alpha_i\,k(x_i, x_*)\) &ndash; jeder Trainingspunkt &bdquo;stimmt ab&ldquo;, gewichtet nach seiner &Auml;hnlichkeit zum neuen Punkt. Die Trainingsdaten <em>sind</em> das Modell.</p>
+<p>Die Vorhersage f&uuml;r einen neuen Punkt \(x_*\) ist \(f(x_*) = \sum_{i=1}^n \alpha_i\,k(x_i, x_*)\) &ndash; jeder Trainingspunkt &bdquo;stimmt ab&ldquo;, gewichtet nach seiner &Auml;hnlichkeit zum neuen Punkt.</p>
+
+<p>Halt dir das vor Augen: Es gibt keine abstrakten Parameter, keine Gewichtsmatrizen, keine versteckten Schichten. <strong>Die Trainingsdaten <em>sind</em> das Modell.</strong> Die Funktion \(f\) ist vollst&auml;ndig durch die Datenpunkte und ihre Kernel-&Auml;hnlichkeiten bestimmt. Das ist das <strong>Representer Theorem</strong> &ndash; und es gilt f&uuml;r jede Verlustfunktion, nicht nur f&uuml;r die quadratische.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300"><strong>Der Kern des Kernel-Tricks:</strong> \(X^TX \to K\). Sonst &auml;ndert sich nichts. Aber der Feature-Raum wird unendlich-dimensional &ndash; und die Ausdruckskraft universell.</p>
@@ -560,7 +562,9 @@
 
 <p>Und der Gau&szlig;-Kernel ist <strong>universell</strong> (Micchelli et al., 2006): KRR mit Gau&szlig;-Kernel kann ebenfalls jede stetige Funktion beliebig genau approximieren.</p>
 
-<p>Beide Funktionenklassen &ndash; neuronale Netze und KRR &ndash; sind <strong>dicht in \(C(K)\)</strong>. Sie sind gleich m&auml;chtig. Und der <strong>Neural Tangent Kernel</strong> (Jacot et al., 2018) zeigt: Im Grenzfall unendlicher Breite <em>wird</em> ein neuronales Netz zu KRR. Die Verbindung ist nicht metaphorisch &ndash; sie ist ein Theorem.</p>
+<p>Beide Funktionenklassen &ndash; neuronale Netze und KRR &ndash; sind <strong>dicht in \(C(K)\)</strong>. Sie sind gleich m&auml;chtig. Und der <strong>Neural Tangent Kernel</strong> (Jacot et al., 2018) zeigt: Im idealisierten Grenzfall unendlicher Breite und geeigneter Initialisierung <em>wird</em> ein neuronales Netz zu KRR. Die Verbindung ist nicht metaphorisch &ndash; sie ist ein Theorem (wenn auch ein Grenzfall-Theorem).</p>
+
+<p>Nat&uuml;rlich ist moderne KI &ndash; Transformer, Attention, stochastisches Gradientenverfahren in nicht-konvexen Landschaften &ndash; <em>mehr</em> als ein Eigenwertproblem. Aber die Eigenwertstruktur ist der mathematische Kern, der sich durch alle Schichten zieht. Sie erkl&auml;rt nicht alles &ndash; aber sie erkl&auml;rt, <em>warum</em> das Fundament h&auml;lt.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2.2;">
@@ -592,11 +596,11 @@
     <strong>Propagator (Quantenmechanik):</strong><br>
     \(\displaystyle K(B,A,t) = \sum_n \psi_n(B)\;\psi_n^*(A)\;e^{-i\,E_n\,t/\hbar}\)<br><br>
     <strong>Kernel (Machine Learning &ndash; Mercer-Zerlegung):</strong><br>
-    \(\displaystyle K(x,x') = \sum_n \lambda_n\;\phi_n(x)\;\phi_n(x')\)
+    \(\displaystyle K(x,x') = \sum_n \lambda_n\;\psi_n(x)\;\psi_n(x')\)
   </p>
 </div>
 
-<p>Derselbe Buchstabe \(K\). Dasselbe Muster: Eine Summe &uuml;ber Eigenfunktionen, gewichtet durch Eigenwerte. Der Propagator beschreibt, wie ein Quantenteilchen von A nach B reist. Der Kernel beschreibt, wie &auml;hnlich zwei Datenpunkte sind. Verschiedene B&uuml;hnen, <strong>dieselbe Mathematik</strong>.</p>
+<p>Derselbe Buchstabe \(K\). Dasselbe Muster: Eine Summe &uuml;ber Eigenfunktionen \(\psi_n\), gewichtet durch Eigenwerte. Der Propagator beschreibt, wie ein Quantenteilchen von A nach B reist. Der Kernel beschreibt, wie &auml;hnlich zwei Datenpunkte sind. Verschiedene B&uuml;hnen, <strong>dieselbe Mathematik</strong>. <em>(Die \(\psi_n\) sind hier die Mercer-Eigenfunktionen des Kernels &ndash; verwandt mit, aber verschieden von der Feature-Abbildung \(\phi\) aus Kapitel 6.)</em></p>
 
 <p>Im <a href="quanten.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> hast du gesehen, wie stehende Wellen zu diskreten Energieniveaus f&uuml;hren &ndash; die T&ouml;ne, die ein Quantensystem gerne spielt. Hier hast du gesehen, wie die Eigenwerte einer Kernel-Matrix bestimmen, was ein Algorithmus lernt und was er ignoriert. Dasselbe Prinzip. Andere B&uuml;hne.</p>
 
