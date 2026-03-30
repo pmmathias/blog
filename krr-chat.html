@@ -49,13 +49,13 @@
 <div id="chat" class="chat"></div>
 <div class="ex" id="examples"></div>
 <div class="ct">
-  <label>Temp <input type="range" id="tmp" min="0.05" max="0.8" step="0.05" value="0.15"><span class="v" id="tv">0.15</span></label>
-  <label>Top-K <input type="range" id="topk" min="1" max="20" step="1" value="6"><span class="v" id="kv">6</span></label>
-  <label>Words <input type="range" id="mw" min="5" max="60" step="1" value="25"><span class="v" id="wv">25</span></label>
+  <label>Temp <input type="range" id="tmp" min="0" max="0.8" step="0.05" value="0"><span class="v" id="tv">0.00</span></label>
+  <label>Top-K <input type="range" id="topk" min="1" max="20" step="1" value="1"><span class="v" id="kv">1</span></label>
+  <label>Min words <input type="range" id="mw" min="10" max="250" step="5" value="40"><span class="v" id="wv">40</span></label>
   <label style="margin-left:auto;color:#334155" id="nfo"></label>
 </div>
 <div class="ip">
-  <input type="text" id="in" placeholder="Type words... (e.g. 'the eigenvalue', 'kernel ridge regression')" disabled>
+  <input type="text" id="in" placeholder="Ask something... (e.g. 'What is an eigenvalue?', 'Explain kernel ridge regression')" disabled>
   <button id="go" disabled>&#x27A4;</button>
 </div>
 
@@ -111,7 +111,45 @@ var RAW =
 "this is why direct matrix inversion is numerically unstable . the iterative approach avoids this problem because it never computes the inverse directly . it only multiplies and adds . "+
 "eigenvalues appear everywhere in science and engineering . in structural analysis they determine the natural frequencies of a bridge or building . in population dynamics they determine growth rates . "+
 "in control theory eigenvalues determine whether a system is stable or unstable . in quantum chemistry they determine molecular orbitals and bonding energies . "+
-"the beauty of eigenvalue theory is its universality . the same mathematical framework applies to vibrating strings quantum particles web pages neural networks and everything in between .";
+"the beauty of eigenvalue theory is its universality . the same mathematical framework applies to vibrating strings quantum particles web pages neural networks and everything in between . "+
+// === ADDITIONAL TRAINING DATA ===
+"the projection of a vector onto a subspace is the closest point in that subspace . the error between the original vector and its projection is perpendicular to the subspace . this is the fundamental idea behind least squares regression . "+
+"the normal equation states that the best fit coefficients satisfy the equation x transpose x times c equals x transpose y . the solution is c equals the inverse of x transpose x times x transpose y . "+
+"matrix inversion is expensive . it costs order n cubed operations and is numerically unstable for ill conditioned matrices . the iterative approach replaces inversion with repeated error correction . "+
+"the dot product of two vectors measures their similarity . if the dot product is zero the vectors are perpendicular . if it is positive they point in similar directions . if negative they point in opposite directions . "+
+"a kernel function computes the similarity between two data points without explicitly mapping them to a high dimensional feature space . this is known as the kernel trick . "+
+"support vector machines use kernel functions for classification . they find the hyperplane that maximizes the margin between classes . the support vectors are the data points closest to the decision boundary . "+
+"gaussian processes are the probabilistic version of kernel ridge regression . they provide not only predictions but also uncertainty estimates . the covariance function is the kernel . "+
+"the bias variance tradeoff is central to machine learning . a simple model has high bias but low variance . a complex model has low bias but high variance . the optimal model balances both . "+
+"cross validation is a technique for estimating the generalization performance of a model . the data is split into training and validation sets . the model is trained on the training set and evaluated on the validation set . "+
+"gradient descent is the most common optimization algorithm in machine learning . it updates the parameters in the direction of the negative gradient of the loss function . the learning rate controls the step size . "+
+"stochastic gradient descent processes the data in small batches rather than the entire dataset at once . this makes it much faster for large datasets . the noise from random sampling can actually help escape local minima . "+
+"backpropagation is the algorithm used to compute gradients in neural networks . it applies the chain rule of calculus layer by layer from the output back to the input . this is why it is called backpropagation . "+
+"convolutional neural networks are specialized for image processing . they use convolutional filters that slide across the input and detect local patterns like edges and textures . deeper layers detect more abstract features . "+
+"recurrent neural networks process sequential data like text and time series . they maintain a hidden state that is updated at each time step . long short term memory networks solve the vanishing gradient problem . "+
+"the transformer architecture replaced recurrent networks for most natural language processing tasks . it uses self attention to process all tokens in parallel rather than sequentially . this enables much faster training . "+
+"large language models like gpt are transformers trained on massive amounts of text data . they learn to predict the next word given the previous context . the emergent abilities of large language models surprised the research community . "+
+"the loss function measures how wrong the model predictions are . for regression the most common loss is the mean squared error . for classification it is the cross entropy loss . "+
+"batch normalization stabilizes the training of deep neural networks by normalizing the activations within each layer . this allows higher learning rates and faster convergence . "+
+"dropout is a regularization technique that randomly sets some neurons to zero during training . this prevents the network from relying too heavily on any single neuron and improves generalization . "+
+"transfer learning uses a model trained on one task as a starting point for another task . this is especially useful when the target task has limited training data . fine tuning adjusts the pretrained weights for the new task . "+
+"the curse of dimensionality describes the problems that arise when working with high dimensional data . distances become less meaningful and data becomes sparse . kernel methods and dimensionality reduction help address this . "+
+"an orthogonal matrix preserves lengths and angles . its transpose equals its inverse . the eigenvectors of a symmetric matrix form an orthogonal basis . this is why principal component analysis works so well . "+
+"the singular value decomposition factorizes any matrix into three components . it generalizes the eigenvalue decomposition to non square matrices . the singular values are the square roots of the eigenvalues of the matrix times its transpose . "+
+"the rank of a matrix is the number of linearly independent rows or columns . it equals the number of nonzero singular values . a low rank matrix can be efficiently approximated by keeping only the largest singular values . "+
+"dimensionality reduction techniques like principal component analysis and autoencoders compress high dimensional data into a lower dimensional representation . the key idea is to preserve the most important structure while discarding noise . "+
+"the information bottleneck theory suggests that deep neural networks learn by compressing the input into a compact representation that retains only the information relevant to the output . this is related to regularization and eigenvalue filtering . "+
+"ensemble methods combine multiple models to achieve better performance than any single model . random forests average many decision trees . boosting trains models sequentially with each model correcting the errors of the previous one . "+
+"the no free lunch theorem states that no single algorithm is best for all problems . the choice of algorithm depends on the structure of the data and the nature of the task . "+
+"the manifold hypothesis states that high dimensional data often lies on or near a low dimensional manifold . this is why dimensionality reduction works and why neural networks can learn meaningful representations . "+
+"bayesian methods treat model parameters as random variables and compute posterior distributions given the data . this provides a principled framework for uncertainty quantification and model selection . "+
+"the kernel matrix is always positive semidefinite . this means all its eigenvalues are nonnegative . this is guaranteed by mercer theorem which characterizes valid kernel functions . "+
+"the spectral gap of a stochastic matrix is the difference between its largest eigenvalue and its second largest eigenvalue . a large spectral gap means the markov chain mixes quickly and the power iteration converges fast . "+
+"eigenvalue perturbation theory studies how eigenvalues change when a matrix is slightly modified . the davis kahan theorem bounds the rotation of eigenvectors under perturbation . this is important for the stability of algorithms . "+
+"numerical linear algebra is the study of algorithms for matrix computations . the most important operations are matrix multiplication solving linear systems and computing eigenvalues . modern implementations use highly optimized libraries . "+
+"the fast fourier transform computes the discrete fourier transform in order n log n operations instead of n squared . this made spectral analysis practical for large datasets and revolutionized signal processing . "+
+"quantum computing uses quantum mechanical phenomena to perform computation . quantum bits or qubits can exist in a superposition of states . quantum algorithms like shor algorithm exploit eigenvalue structure for factoring large numbers .";
+
 
 var words = RAW.toLowerCase().split(/\s+/);
 var W2I = {}, I2W = {}, VOCAB = 0;
@@ -300,9 +338,9 @@ async function trainGPU() {
   setSt('Ready \u2014 ' + words.length + ' tokens, ' + VOCAB + ' words, D=' + D + ' | GPU training: ' + totalTime + 's | top-1=' + acc1 + '% top-3=' + acc3 + '%', 'r');
   nfoEl.innerHTML = 'vocab='+VOCAB+' · top-1='+acc1+'% · top-3='+acc3+'% · <span class="timer">GPU '+totalTime+'s</span>';
   inEl.disabled=false; goBtn.disabled=false; inEl.focus();
-  addMsg('Word-level KRR language model. Trained on your GPU (' + backend + ') in ' + totalTime + 's. ' + words.length + ' tokens, ' + VOCAB + ' unique words, D=' + D + '. No neural network \u2014 just eigenvalues & matrix math.', 's');
+  addMsg('I\u2019m a mini language model built on Kernel Ridge Regression \u2014 no neural network, just eigenvalues & matrix math. Trained on your GPU (' + backend + ') in ' + totalTime + 's on ' + words.length + ' tokens. Ask me about eigenvalues, kernel methods, quantum mechanics, or machine learning!', 's');
 
-  ['the eigenvalue','kernel ridge regression','in quantum mechanics','the neumann series','google pagerank is','neural networks with','attention mechanisms in','machine learning is','the spectral theorem'].forEach(function(ex){
+  ['What is an eigenvalue?','Explain kernel ridge regression','How does PageRank work?','What is the neumann series?','Why do neural networks work?','What is regularization?','Explain the kernel trick','What is the spectral theorem?','How does attention work?'].forEach(function(ex){
     var btn=document.createElement('button'); btn.textContent=ex;
     btn.onclick=function(){inEl.value=ex;handleSend();}; exEl.appendChild(btn);
   });
@@ -344,21 +382,58 @@ function predictWord(contextWords,temperature,topK,recentWords) {
 
 // === CHAT ===
 function handleSend() {
-  var text=inEl.value.trim().toLowerCase(); if(!text||!W_cpu)return; inEl.value='';
-  addMsg(text,'u');
-  var temp=parseFloat(tmpSl.value),topK=parseInt(topkSl.value),maxW=parseInt(mwSl.value);
-  var allWords=text.split(/\s+/),recent=[];
-  var container=document.createDocumentFragment();
-  var seedSpan=document.createElement('span');seedSpan.className='sd';seedSpan.textContent=text+' ';container.appendChild(seedSpan);
-  var genSpan=document.createElement('span');genSpan.className='gn';container.appendChild(genSpan);
-  var botEl=addMsg(container,'b');
-  var wi=0;
-  function step(){
-    if(wi>=maxW){var badge=document.createElement('span');badge.className='bd';badge.textContent='KRR\u00B7D='+D+'\u00B7top-'+topK+'\u00B7T='+temp.toFixed(2);botEl.appendChild(badge);return;}
-    var next=predictWord(allWords,temp,topK,recent);allWords.push(next);recent.push(next);if(recent.length>8)recent.shift();
-    genSpan.textContent+=(wi>0?' ':'')+next;wi++;chatEl.scrollTop=chatEl.scrollHeight;
-    setTimeout(step,(next==='.'||next===',')?80:25);
+  var userText=inEl.value.trim(); if(!userText||!W_cpu)return; inEl.value='';
+  addMsg(userText,'u');
+
+  // Q&A wrapper: turn user input into a completion prompt
+  // The model is a completion model, so we steer it into answering
+  var prompt = userText.toLowerCase().replace(/[?!]+$/,'');
+  // Heuristic: if it looks like a question, prepend context
+  var promptWords;
+  if (/^(what|why|how|who|where|when|is|are|do|does|can|could|explain|tell|describe)/.test(prompt)) {
+    // "what is an eigenvalue" → "an eigenvalue is"
+    prompt = prompt.replace(/^what (is|are) (an? |the )?/i, '$2').replace(/^(why|how|explain|tell me about|describe) /i, '');
+    promptWords = prompt.split(/\s+/);
+    // Append "is" or "are" to guide completion
+    var lastW = promptWords[promptWords.length-1];
+    if (lastW !== 'is' && lastW !== 'are' && lastW !== '.') {
+      promptWords.push(lastW.endsWith('s') ? 'are' : 'is');
+    }
+  } else {
+    promptWords = prompt.split(/\s+/);
   }
+
+  var temp=parseFloat(tmpSl.value),topK=parseInt(topkSl.value),minW=parseInt(mwSl.value);
+  var allWords=promptWords.slice(),recent=[];
+
+  var container=document.createDocumentFragment();
+  var genSpan=document.createElement('span');genSpan.className='gn';
+  container.appendChild(genSpan);
+  var botEl=addMsg(container,'b');
+  var wi=0, hardMax=250, hitSentenceEnd=false;
+
+  function step(){
+    // Stop condition: after minW words, stop at next sentence end (.)
+    // Hard stop at hardMax regardless
+    if (wi >= hardMax) { finish(); return; }
+    if (wi >= minW && hitSentenceEnd) { finish(); return; }
+
+    var next=predictWord(allWords,temp,topK,recent);
+    allWords.push(next); recent.push(next); if(recent.length>10)recent.shift();
+
+    if (next === '.') hitSentenceEnd = true;
+
+    genSpan.textContent += (wi>0?' ':'') + next;
+    wi++; chatEl.scrollTop=chatEl.scrollHeight;
+    setTimeout(step, (next==='.')?60:20);
+  }
+
+  function finish() {
+    var badge=document.createElement('span');badge.className='bd';
+    badge.textContent='KRR\u00B7'+wi+' words\u00B7D='+D;
+    botEl.appendChild(badge);
+  }
+
   setTimeout(step,100);
 }
 goBtn.onclick=handleSend; inEl.onkeydown=function(e){if(e.key==='Enter')handleSend();};
