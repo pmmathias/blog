@@ -120,8 +120,9 @@
       var tocItems = tocSlot.querySelectorAll('a');
       var tocLinksHTML = '';
       tocItems.forEach(function(a) {
-        // Force block display via inline style if class alone doesn't work
-        if (!a.style.display) a.style.display = 'block';
+        // Ensure proper styling for each TOC link
+        a.style.display = 'block';
+        a.className = 'toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition';
         tocLinksHTML += a.outerHTML;
       });
       tocHTML =
