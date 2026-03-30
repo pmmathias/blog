@@ -340,6 +340,36 @@
 
 <p>Did it work? Good. Then let me tell you how this thing came to life in a single afternoon.</p>
 
+<h3>How We Worked</h3>
+
+<p>Before we talk about code, a word about the process &ndash; because it&rsquo;s at least as interesting as the result.</p>
+
+<p>I was the <strong>Product Owner</strong>. The vision, the decisions, the &ldquo;this feels wrong, do it differently&rdquo; &ndash; that was me. Claude Code was everything else: <strong>project manager, developer, and tester</strong> rolled into one. And yes, I mean that literally.</p>
+
+<p>Claude set up a <strong>ticket system in Markdown</strong> at the start &ndash; 40 tickets across 5 phases, each with priority, dependencies, and acceptance criteria. Tickets moved through folders: <code>backlog/</code> &rarr; <code>in-progress/</code> &rarr; <code>done/</code>. No Jira, no Trello &ndash; just files in a Git repository.</p>
+
+<p>A typical ticket looked like this:</p>
+
+<pre style="background:#111827; border:1px solid #1f2937; border-radius:0.5rem; padding:1rem; overflow-x:auto; font-size:0.8rem; color:#d1d5db; margin:1.5rem 0;"><code># T018: Octree construction
+<strong style="color:#f59e0b;">Priority:</strong> P0 | <strong style="color:#f59e0b;">Phase:</strong> 2 | <strong style="color:#f59e0b;">Size:</strong> L
+<strong style="color:#f59e0b;">Depends on:</strong> T011
+
+## Acceptance Criteria
+- [ ] Octree builds from chunk AABBs
+- [ ] Correct recursive subdivision
+- [ ] Unit test with known geometry</code></pre>
+
+<p>40 tickets. All completed. From &ldquo;set up project&rdquo; (T001) to &ldquo;smooth webcam calibration&rdquo; (T040). Claude wrote them, implemented them, and tested them with <strong>Playwright</strong> automated tests. I said what I wanted. He delivered.</p>
+
+<div class="summary-box" style="text-align:center;">
+  <p class="text-sm text-gray-300">The entire ticket system is publicly available:</p>
+  <p class="text-sm" style="margin-bottom:0;">
+    <a href="https://github.com/pmmathias/VogelSimulator/tree/main/tickets" style="color:#22d3ee; text-decoration:underline;">github.com/pmmathias/VogelSimulator/tree/main/tickets</a>
+  </p>
+</div>
+
+<p>What does this mean for the future of software development? More on that at the end. First: what&rsquo;s inside those 40 tickets?</p>
+
 </div>
 <div class="section-divider"></div>
 </section>

@@ -340,6 +340,36 @@
 
 <p>Funktioniert? Gut. Dann lass mich dir erz&auml;hlen, wie dieses Ding an einem einzigen Nachmittag entstanden ist.</p>
 
+<h3>Wie wir gearbeitet haben</h3>
+
+<p>Bevor es um Code geht, ein Wort &uuml;ber den Prozess &ndash; denn der ist mindestens so interessant wie das Ergebnis.</p>
+
+<p>Ich war der <strong>Product Owner</strong>. Die Vision, die Entscheidungen, das &bdquo;das f&uuml;hlt sich falsch an, mach es anders&ldquo; &ndash; das kam von mir. Claude Code war alles andere: <strong>Projektmanager, Entwickler und Tester</strong> in einer Person. Und ja, ich meine das w&ouml;rtlich.</p>
+
+<p>Claude hat zu Beginn ein <strong>Ticket-System in Markdown</strong> aufgesetzt &ndash; 40 Tickets, aufgeteilt in 5 Phasen, jedes mit Priorit&auml;t, Abh&auml;ngigkeiten und Acceptance Criteria. Die Tickets wanderten durch Ordner: <code>backlog/</code> &rarr; <code>in-progress/</code> &rarr; <code>done/</code>. Kein Jira, kein Trello &ndash; nur Dateien in einem Git-Repository.</p>
+
+<p>Ein typisches Ticket sah so aus:</p>
+
+<pre style="background:#111827; border:1px solid #1f2937; border-radius:0.5rem; padding:1rem; overflow-x:auto; font-size:0.8rem; color:#d1d5db; margin:1.5rem 0;"><code># T018: Octree construction
+<strong style="color:#f59e0b;">Priority:</strong> P0 | <strong style="color:#f59e0b;">Phase:</strong> 2 | <strong style="color:#f59e0b;">Size:</strong> L
+<strong style="color:#f59e0b;">Depends on:</strong> T011
+
+## Acceptance Criteria
+- [ ] Octree builds from chunk AABBs
+- [ ] Correct recursive subdivision
+- [ ] Unit test with known geometry</code></pre>
+
+<p>40 Tickets. Alle abgearbeitet. Von &bdquo;Projekt aufsetzen&ldquo; (T001) bis &bdquo;Webcam-Kalibrierung gl&auml;tten&ldquo; (T040). Claude hat sie geschrieben, implementiert und mit <strong>Playwright</strong> automatisiert getestet. Ich habe gesagt, was ich will. Er hat geliefert.</p>
+
+<div class="summary-box" style="text-align:center;">
+  <p class="text-sm text-gray-300">Das gesamte Ticket-System ist &ouml;ffentlich einsehbar:</p>
+  <p class="text-sm" style="margin-bottom:0;">
+    <a href="https://github.com/pmmathias/VogelSimulator/tree/main/tickets" style="color:#22d3ee; text-decoration:underline;">github.com/pmmathias/VogelSimulator/tree/main/tickets</a>
+  </p>
+</div>
+
+<p>Was bedeutet das f&uuml;r die Art, wie Software in Zukunft entsteht? Dazu mehr am Ende. Jetzt erst mal: Was steckt in diesen 40 Tickets drin?</p>
+
 </div>
 <div class="section-divider"></div>
 </section>
