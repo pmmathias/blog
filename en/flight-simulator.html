@@ -639,32 +639,10 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
-  // ----------------------------------------------------------
-  // 2. Navigation: unified dropdown toggle + TOC highlighting
-  // ----------------------------------------------------------
-  var navToggle = document.getElementById('nav-toggle');
-  var navDropdown = document.getElementById('nav-dropdown');
-  var navBackdrop = document.getElementById('nav-backdrop');
-
-  if (navToggle && navDropdown) {
-    navToggle.addEventListener('click', function() {
-      navDropdown.classList.toggle('hidden');
-      navToggle.classList.toggle('open');
-    });
-    if (navBackdrop) navBackdrop.addEventListener('click', function() {
-      navDropdown.classList.add('hidden');
-      navToggle.classList.remove('open');
-    });
-    navDropdown.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', function() {
-        navDropdown.classList.add('hidden');
-        navToggle.classList.remove('open');
-      });
-    });
-  }
+  // Navigation toggle handled by nav.js
 
   // ----------------------------------------------------------
-  // 3. TOC section highlighting (scroll spy)
+  // 2. TOC section highlighting (scroll spy)
   // ----------------------------------------------------------
   var sections = document.querySelectorAll('section[id]');
   var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
