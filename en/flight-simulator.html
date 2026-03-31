@@ -621,6 +621,26 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 </div>
 </section>
 
+
+<section class="pb-16">
+<div class="prose-dark">
+<h2 style="font-size:1.25rem;">Frequently Asked Questions</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Can you really build a game with AI in one afternoon?</h3>
+<p>Yes – but with caveats. Claude Code wrote all the code, managed 40 tickets, and ran automated tests. The human was the Product Owner: vision, decisions, quality control. One afternoon is enough for an impressive prototype, not for a AAA game.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is frustum culling?</h3>
+<p>Frustum culling is an optimization technique in 3D graphics. The camera sees only a cone-shaped slice of the world (the frustum). Everything outside does not need to be rendered. An octree helps quickly decide which objects are visible.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">How does the webcam control work with MediaPipe?</h3>
+<p>MediaPipe detects 33 body landmarks in real-time via the webcam. Arm positions are converted to angles: raising and lowering creates wing flaps, lateral tilting controls direction, leaning forward triggers a dive.</p>
+
+</div>
+</section>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can you really build a game with AI in one afternoon?", "acceptedAnswer": {"@type": "Answer", "text": "Yes – but with caveats. Claude Code wrote all the code, managed 40 tickets, and ran automated tests. The human was the Product Owner: vision, decisions, quality control. One afternoon is enough for an impressive prototype, not for a AAA game."}}, {"@type": "Question", "name": "What is frustum culling?", "acceptedAnswer": {"@type": "Answer", "text": "Frustum culling is an optimization technique in 3D graphics. The camera sees only a cone-shaped slice of the world (the frustum). Everything outside does not need to be rendered. An octree helps quickly decide which objects are visible."}}, {"@type": "Question", "name": "How does the webcam control work with MediaPipe?", "acceptedAnswer": {"@type": "Answer", "text": "MediaPipe detects 33 body landmarks in real-time via the webcam. Arm positions are converted to angles: raising and lowering creates wing flaps, lateral tilting controls direction, leaning forward triggers a dive."}}]}
+</script>
 </main>
 
 
