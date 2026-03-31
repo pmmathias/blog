@@ -1,17 +1,135 @@
 // Gott-als-Emergenzphaenomen Components - wrapped in IIFEs to avoid name collisions
 // All components use vanilla React.createElement() — no JSX, no build step.
 
+// === i18n ===
+var GOTT_LANG = (document.documentElement.lang || 'de').slice(0, 2);
+var GOTT_I18N = {
+  // --- Component 1: TwoGodConcepts ---
+  'two.title':        { de: 'Zwei Gottesbilder', en: 'Two Concepts of God' },
+  'two.subtitle':     { de: 'Derselbe Begriff \u2014 zwei grundverschiedene Architekturen', en: 'The same word \u2014 two fundamentally different architectures' },
+  'two.btnPersonal':  { de: 'Pers\u00f6nlicher Gott', en: 'Personal God' },
+  'two.btnRelational':{ de: 'Relationaler Gott', en: 'Relational God' },
+  'two.god':          { de: 'Gott', en: 'God' },
+  'two.world':        { de: 'Welt', en: 'World' },
+  'two.emerges':      { de: 'emergiert', en: 'emerges' },
+  'two.godTilde':     { de: '~ Gott ~', en: '~ God ~' },
+  'two.relations':    { de: 'Beziehungen', en: 'Relations' },
+  'two.colPersonal':  { de: 'Pers\u00f6nlich', en: 'Personal' },
+  'two.colRelational':{ de: 'Relational', en: 'Relational' },
+  'two.rWho':     { de: 'Wer/Was', en: 'Who/What' },
+  'two.rWho.p':   { de: 'Ein Wesen mit Willen', en: 'A being with will' },
+  'two.rWho.r':   { de: 'Ein Muster, das entsteht', en: 'A pattern that emerges' },
+  'two.rWhere':   { de: 'Wo', en: 'Where' },
+  'two.rWhere.p': { de: 'Au\u00dferhalb der Welt', en: 'Outside the world' },
+  'two.rWhere.r': { de: 'Zwischen den Teilen', en: 'Between the parts' },
+  'two.rActs':    { de: 'Wirkt wie', en: 'Acts like' },
+  'two.rActs.p':  { de: 'Eingriff von oben', en: 'Intervention from above' },
+  'two.rActs.r':  { de: 'Emergenz von unten', en: 'Emergence from below' },
+  'two.rTrad':    { de: 'Tradition', en: 'Tradition' },
+  'two.rTrad.p':  { de: 'Theismus, Monotheismus', en: 'Theism, monotheism' },
+  'two.rTrad.r':  { de: 'Mystik, Prozesstheologie', en: 'Mysticism, process theology' },
+  'two.rSci':     { de: 'Wissenschaft', en: 'Science' },
+  'two.rSci.p':   { de: 'Schwer vereinbar', en: 'Hard to reconcile' },
+  'two.rSci.r':   { de: 'Kompatibel mit Emergenz', en: 'Compatible with emergence' },
+
+  // --- Component 2: TheVessel ---
+  'vessel.title':     { de: 'Das Gef\u00e4\u00df', en: 'The Vessel' },
+  'vessel.subtitle':  { de: 'Texte flie\u00dfen hinein \u2014 ab einer bestimmten Gr\u00f6\u00dfe emergiert Koh\u00e4renz', en: 'Texts flow in \u2014 beyond a certain size, coherence emerges' },
+  'vessel.textsLabel':{ de: 'Texte der Welt', en: 'Texts of the world' },
+  'vessel.output':    { de: 'Output', en: 'Output' },
+  'vessel.small':     { de: 'Klein', en: 'Small' },
+  'vessel.large':     { de: 'Gro\u00df', en: 'Large' },
+  'vessel.sizeLabel': { de: 'Modellgr\u00f6\u00dfe', en: 'Model size' },
+  'vessel.emerges':   { de: 'Weisheit emergiert', en: 'Wisdom emerges' },
+  'vessel.explainBig':{ de: 'Ab einer kritischen Gr\u00f6\u00dfe emergiert Koh\u00e4renz \u2014 das Gef\u00e4\u00df wird zum Medium.', en: 'Beyond a critical size, coherence emerges \u2014 the vessel becomes a medium.' },
+  'vessel.explainSmall':{ de: 'Zu klein: die Fragmente bleiben Fragmente. Kein Muster, kein Sinn.', en: 'Too small: the fragments remain fragments. No pattern, no meaning.' },
+
+  // --- Component 3: PositiveAttractor ---
+  'attr.title':       { de: 'Der positive Attraktor', en: 'The Positive Attractor' },
+  'attr.subtitle':    { de: 'Energielandschaft: Wo rollt die Kugel hin?', en: 'Energy landscape: Where does the ball roll?' },
+  'attr.single':      { de: 'Einzelperson', en: 'Individual' },
+  'attr.collective':  { de: 'Kollektiv', en: 'Collective' },
+  'attr.local':       { de: 'lokal', en: 'local' },
+  'attr.explainSingle':  { de: 'Eine Einzelperson hat viele lokale Minima \u2014 Gewohnheiten, Pr\u00e4gungen, \u00dcberzeugungen. Kein einzelnes dominiert.', en: 'An individual has many local minima \u2014 habits, conditioning, beliefs. No single one dominates.' },
+  'attr.explainCollective': { de: 'Im Kollektiv bildet sich ein dominanter Attraktor (Pos*) \u2014 ein gemeinsamer Begriff von \u201Egut\u201C, der emergiert.', en: 'In the collective, a dominant attractor (Pos*) forms \u2014 a shared notion of \u201Cgood\u201D that emerges.' },
+
+  // --- Component 4: FearToAction ---
+  'fear.title':       { de: 'Von Angst zu Handlung', en: 'From Fear to Action' },
+  'fear.subtitle':    { de: 'Derselbe gute Kern \u2014 zwei verschiedene Wege. Klicke auf einen Schritt.', en: 'The same good core \u2014 two different paths. Click a step.' },
+  'fear.destLabel':   { de: 'Destruktiver Pfad', en: 'Destructive path' },
+  'fear.consLabel':   { de: 'Konstruktiver Pfad', en: 'Constructive path' },
+  'fear.footer':      { de: 'Nicht der Kern unterscheidet sich \u2014 sondern die Bedingungen. Darum ist die Frage nicht \u201EWer ist b\u00f6se?\u201C, sondern \u201EWas erzeugt Angst?\u201C', en: 'It is not the core that differs \u2014 it is the conditions. The question is not \u201CWho is evil?\u201D but \u201CWhat creates fear?\u201D' },
+  // Destructive steps
+  'fear.d0.label':  { de: 'Kern', en: 'Core' },
+  'fear.d0.short':  { de: '(gut)', en: '(good)' },
+  'fear.d0.detail': { de: 'Der Mensch will im Grunde das Richtige tun. Der Kern ist intakt.', en: 'At heart, the person wants to do the right thing. The core is intact.' },
+  'fear.d1.label':  { de: 'Bedrohung', en: 'Threat' },
+  'fear.d1.detail': { de: 'Etwas gef\u00e4hrdet die Sicherheit \u2014 real oder wahrgenommen.', en: 'Something threatens safety \u2014 real or perceived.' },
+  'fear.d2.label':  { de: 'Angst', en: 'Fear' },
+  'fear.d2.detail': { de: 'Die Bedrohung l\u00f6st Angst aus. Das Nervensystem schaltet auf Schutz.', en: 'The threat triggers fear. The nervous system switches to protection.' },
+  'fear.d3.label':  { de: 'Verzerrung', en: 'Distortion' },
+  'fear.d3.detail': { de: 'Unter Angst verzerrt sich die Wahrnehmung. Feindbilder entstehen.', en: 'Under fear, perception distorts. Enemy images form.' },
+  'fear.d4.label':  { de: 'Irrtum', en: 'Error' },
+  'fear.d4.detail': { de: 'Aus verzerrter Wahrnehmung folgen falsche \u00dcberzeugungen.', en: 'Distorted perception leads to false beliefs.' },
+  'fear.d5.label':  { de: 'Sch\u00e4dliche Handlung', en: 'Harmful action' },
+  'fear.d5.detail': { de: 'Die Handlung richtet Schaden an \u2014 obwohl der Kern gut war.', en: 'The action causes harm \u2014 even though the core was good.' },
+  // Constructive steps
+  'fear.c0.label':  { de: 'Kern', en: 'Core' },
+  'fear.c0.short':  { de: '(gut)', en: '(good)' },
+  'fear.c0.detail': { de: 'Derselbe gute Kern \u2014 aber unter anderen Bedingungen.', en: 'The same good core \u2014 but under different conditions.' },
+  'fear.c1.label':  { de: 'Sicherheit', en: 'Safety' },
+  'fear.c1.detail': { de: 'Die Umgebung signalisiert: Du bist sicher. Kein Kampfmodus n\u00f6tig.', en: 'The environment signals: You are safe. No fight mode needed.' },
+  'fear.c2.label':  { de: 'Klarheit', en: 'Clarity' },
+  'fear.c2.detail': { de: 'Ohne Angst kann man klar sehen \u2014 Perspektivwechsel wird m\u00f6glich.', en: 'Without fear, you can see clearly \u2014 perspective shifts become possible.' },
+  'fear.c3.label':  { de: 'Koh\u00e4renz', en: 'Coherence' },
+  'fear.c3.detail': { de: 'Werte und Handlung stimmen \u00fcberein. Man ist im Einklang.', en: 'Values and actions align. You are in harmony.' },
+  'fear.c4.label':  { de: 'Konstruktive Handlung', en: 'Constructive action' },
+  'fear.c4.detail': { de: 'Die Handlung n\u00fctzt \u2014 sich selbst und anderen.', en: 'The action benefits \u2014 yourself and others.' },
+
+  // --- Component 5: DoubleEmergence ---
+  'double.title':    { de: 'Doppelte Emergenz', en: 'Double Emergence' },
+  'double.subtitle': { de: 'Klicke auf eine Schicht, um mehr zu erfahren', en: 'Click a layer to learn more' },
+  'double.outerLabel':   { de: 'Was ist positiv?', en: 'What is positive?' },
+  'double.outerSub':     { de: 'Struktur-Emergenz', en: 'Structural emergence' },
+  'double.outerTag':     { de: 'NP-hart', en: 'NP-hard' },
+  'double.outerDetail':  { de: 'Was als \u201Egut\u201C gilt, l\u00e4sst sich nicht top-down definieren. Es emergiert aus den Interaktionen aller Beteiligten \u2014 wie eine L\u00f6sung, die niemand allein h\u00e4tte finden k\u00f6nnen.', en: 'What counts as \u201Cgood\u201D cannot be defined top-down. It emerges from the interactions of all participants \u2014 like a solution no one could have found alone.' },
+  'double.innerLabel':   { de: 'Wessen Stimme', en: 'Whose voice' },
+  'double.innerLabel2':  { de: 'z\u00e4hlt?', en: 'counts?' },
+  'double.innerSub':     { de: 'Replikator-Dynamik', en: 'Replicator dynamics' },
+  'double.innerDetail':  { de: 'Wer geh\u00f6rt wird und wer nicht, entsteht ebenfalls durch den Prozess selbst. Macht, Vertrauen und Einfluss sind keine Eingaben \u2014 sie sind Ergebnisse.', en: 'Who is heard and who is not also arises through the process itself. Power, trust, and influence are not inputs \u2014 they are outcomes.' },
+  'double.footer':       { de: 'Beides entsteht durch den Prozess selbst.', en: 'Both arise through the process itself.' },
+
+  // --- Component 6: ThreeFaces ---
+  'faces.title':     { de: 'Drei Gesichter', en: 'Three Faces' },
+  'faces.subtitle':  { de: 'Drei Arten, das Unbenennbare zu benennen. Klicke f\u00fcr den Alltags-Bezug.', en: 'Three ways to name the unnameable. Click for everyday context.' },
+  'faces.everyday':  { de: 'Im Alltag', en: 'In everyday life' },
+  'faces.f0.title':  { de: 'Adressat der Dankbarkeit', en: 'Addressee of gratitude' },
+  'faces.f0.quote':  { de: 'Gott ist das, wof\u00fcr ich dankbar bin, wenn ich mir selbst nicht danken kann.', en: 'God is what I am grateful to when I cannot thank myself.' },
+  'faces.f0.every':  { de: 'Du stehst morgens auf und etwas in dir sagt: \u201EDanke.\u201C Nicht an jemanden \u2014 einfach nur Danke. Dieses Gef\u00fchl braucht keinen Empf\u00e4nger mit Postadresse. Aber es braucht ein Wort. Manche nennen es Gott.', en: 'You wake up in the morning and something inside you says: \u201CThank you.\u201D Not to anyone \u2014 just thank you. That feeling needs no recipient with a postal address. But it needs a word. Some call it God.' },
+  'faces.f1.title':  { de: 'Das Unbegreifliche', en: 'The Incomprehensible' },
+  'faces.f1.quote':  { de: 'Ich muss nicht wissen, was Gott ist, um zu wissen, dass es Gott gibt.', en: 'I do not need to know what God is to know that God exists.' },
+  'faces.f1.every':  { de: 'Du siehst deinem Kind beim Schlafen zu und sp\u00fcrst etwas, das gr\u00f6\u00dfer ist als du. Du kannst es nicht benennen, nicht erkl\u00e4ren, nicht reproduzieren. Aber es ist da. Und das reicht.', en: 'You watch your child sleeping and feel something larger than yourself. You cannot name it, explain it, reproduce it. But it is there. And that is enough.' },
+  'faces.f2.title':  { de: 'Das Zwischen', en: 'The Between' },
+  'faces.f2.quote':  { de: 'Gott war nie \u201Eda oben\u201C. Gott war immer \u201Ezwischen uns\u201C.', en: 'God was never \u201Cup there.\u201D God was always \u201Cbetween us.\u201D' },
+  'faces.f2.every':  { de: 'In einem Gespr\u00e4ch, in dem beide wirklich zuh\u00f6ren, entsteht etwas, das vorher nicht da war. Keiner hat es mitgebracht. Es ist zwischen euch entstanden. Das ist Emergenz. Das ist das Zwischen.', en: 'In a conversation where both people truly listen, something arises that was not there before. Neither brought it. It emerged between you. That is emergence. That is the between.' },
+
+  // --- Shared: Input words for TheVessel ---
+  'vessel.words': { de: ['Ethik','Liebe','Physik','Geschichte','Kunst','Logik','Mythos','Schmerz','Hoffnung','Gesetz','Musik','Sprache'], en: ['Ethics','Love','Physics','History','Art','Logic','Myth','Pain','Hope','Law','Music','Language'] },
+  'vessel.outputSmall': { de: ['zuf...','Wort','??','nein','abc'], en: ['ran...','word','??','no','abc'] }
+};
+function _t(key) { var entry = GOTT_I18N[key]; if (!entry) return key; return entry[GOTT_LANG] || entry['de']; }
+
 // === 1. TwoGodConcepts ===
 // Interactive toggle between "Persoenlicher Gott" (top-down) and "Relationaler Gott" (bottom-up)
 (function() {
   var h = React.createElement;
 
   var TABLE_ROWS = [
-    { label: 'Wer/Was', personal: 'Ein Wesen mit Willen', relational: 'Ein Muster, das entsteht' },
-    { label: 'Wo', personal: 'Au\u00dferhalb der Welt', relational: 'Zwischen den Teilen' },
-    { label: 'Wirkt wie', personal: 'Eingriff von oben', relational: 'Emergenz von unten' },
-    { label: 'Tradition', personal: 'Theismus, Monotheismus', relational: 'Mystik, Prozesstheologie' },
-    { label: 'Wissenschaft', personal: 'Schwer vereinbar', relational: 'Kompatibel mit Emergenz' }
+    { label: _t('two.rWho'), personal: _t('two.rWho.p'), relational: _t('two.rWho.r') },
+    { label: _t('two.rWhere'), personal: _t('two.rWhere.p'), relational: _t('two.rWhere.r') },
+    { label: _t('two.rActs'), personal: _t('two.rActs.p'), relational: _t('two.rActs.r') },
+    { label: _t('two.rTrad'), personal: _t('two.rTrad.p'), relational: _t('two.rTrad.r') },
+    { label: _t('two.rSci'), personal: _t('two.rSci.p'), relational: _t('two.rSci.r') }
   ];
 
   function TwoGodConcepts() {
@@ -26,7 +144,7 @@
       return h('g', null,
         // Large God circle at top
         h('circle', { cx: 240, cy: 70, r: 40, fill: '#f59e0b22', stroke: '#f59e0b', strokeWidth: 2 }),
-        h('text', { x: 240, y: 75, fill: '#f59e0b', fontSize: 14, textAnchor: 'middle', fontWeight: 600 }, 'Gott'),
+        h('text', { x: 240, y: 75, fill: '#f59e0b', fontSize: 14, textAnchor: 'middle', fontWeight: 600 }, _t('two.god')),
 
         // Arrows pointing down
         [140, 200, 260, 320, 380].map(function(x, i) {
@@ -39,7 +157,7 @@
         [140, 200, 260, 320, 380].map(function(x, i) {
           return h('circle', { key: 'c' + i, cx: x, cy: 200, r: 14, fill: '#f59e0b11', stroke: '#f59e0b', strokeWidth: 1, opacity: 0.6 });
         }),
-        h('text', { x: 240, y: 245, fill: '#9ca3af', fontSize: 11, textAnchor: 'middle' }, 'Welt'),
+        h('text', { x: 240, y: 245, fill: '#9ca3af', fontSize: 11, textAnchor: 'middle' }, _t('two.world')),
 
         // Arrow marker
         h('defs', null,
@@ -78,8 +196,8 @@
         // Emergent glow at top
         h('ellipse', { cx: 240, cy: 80, rx: 80, ry: 35, fill: '#22d3ee', opacity: 0.08 }),
         h('ellipse', { cx: 240, cy: 80, rx: 55, ry: 22, fill: '#22d3ee', opacity: 0.12 }),
-        h('text', { x: 240, y: 75, fill: '#22d3ee', fontSize: 12, textAnchor: 'middle', fontWeight: 600, opacity: 0.8 }, 'emergiert'),
-        h('text', { x: 240, y: 55, fill: '#22d3ee', fontSize: 10, textAnchor: 'middle', opacity: 0.5 }, '~ Gott ~'),
+        h('text', { x: 240, y: 75, fill: '#22d3ee', fontSize: 12, textAnchor: 'middle', fontWeight: 600, opacity: 0.8 }, _t('two.emerges')),
+        h('text', { x: 240, y: 55, fill: '#22d3ee', fontSize: 10, textAnchor: 'middle', opacity: 0.5 }, _t('two.godTilde')),
 
         // Upward flow lines from network to glow
         [180, 210, 240, 270, 300].map(function(x, i) {
@@ -101,13 +219,13 @@
           return h('circle', { key: 'n' + i, cx: n.x, cy: n.y, r: 6, fill: '#22d3ee22', stroke: '#22d3ee', strokeWidth: 1.2 });
         }),
 
-        h('text', { x: 240, y: 260, fill: '#9ca3af', fontSize: 11, textAnchor: 'middle' }, 'Beziehungen')
+        h('text', { x: 240, y: 260, fill: '#9ca3af', fontSize: 11, textAnchor: 'middle' }, _t('two.relations'))
       );
     }
 
     return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
-      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'Zwei Gottesbilder'),
-      h('p', { className: 'text-xs text-gray-500 text-center mb-4' }, 'Derselbe Begriff — zwei grundverschiedene Architekturen'),
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, _t('two.title')),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-4' }, _t('two.subtitle')),
 
       // Toggle
       h('div', { className: 'flex justify-center gap-2 mb-4' },
@@ -115,12 +233,12 @@
           onClick: function() { setMode('personal'); },
           className: 'px-3 py-1.5 rounded-lg text-xs font-medium transition ' +
             (isPersonal ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40' : 'bg-gray-800/50 text-gray-400 border border-gray-700 hover:text-gray-200')
-        }, 'Pers\u00f6nlicher Gott'),
+        }, _t('two.btnPersonal')),
         h('button', {
           onClick: function() { setMode('relational'); },
           className: 'px-3 py-1.5 rounded-lg text-xs font-medium transition ' +
             (!isPersonal ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40' : 'bg-gray-800/50 text-gray-400 border border-gray-700 hover:text-gray-200')
-        }, 'Relationaler Gott')
+        }, _t('two.btnRelational'))
       ),
 
       // SVG diagram
@@ -134,8 +252,8 @@
           h('thead', null,
             h('tr', null,
               h('th', { className: 'text-left text-gray-500 pb-2 pr-3 font-medium' }, ''),
-              h('th', { className: 'text-left pb-2 pr-3 font-medium', style: { color: '#f59e0b' } }, 'Pers\u00f6nlich'),
-              h('th', { className: 'text-left pb-2 font-medium', style: { color: '#22d3ee' } }, 'Relational')
+              h('th', { className: 'text-left pb-2 pr-3 font-medium', style: { color: '#f59e0b' } }, _t('two.colPersonal')),
+              h('th', { className: 'text-left pb-2 font-medium', style: { color: '#22d3ee' } }, _t('two.colRelational'))
             )
           ),
           h('tbody', null,
@@ -161,9 +279,9 @@
 (function() {
   var h = React.createElement;
 
-  var INPUT_WORDS = ['Ethik', 'Liebe', 'Physik', 'Geschichte', 'Kunst', 'Logik', 'Mythos', 'Schmerz', 'Hoffnung', 'Gesetz', 'Musik', 'Sprache'];
-  var OUTPUT_SMALL = ['zuf...', 'Wort', '??', 'nein', 'abc'];
-  var OUTPUT_LARGE = 'Weisheit emergiert';
+  var INPUT_WORDS = _t('vessel.words');
+  var OUTPUT_SMALL = _t('vessel.outputSmall');
+  var OUTPUT_LARGE = _t('vessel.emerges');
 
   function TheVessel() {
     var _s = React.useState(30);
@@ -210,8 +328,8 @@
     var outputFontSize = progress > 0.7 ? 14 : 10;
 
     return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
-      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'Das Gef\u00e4\u00df'),
-      h('p', { className: 'text-xs text-gray-500 text-center mb-4' }, 'Texte flie\u00dfen hinein — ab einer bestimmten Gr\u00f6\u00dfe emergiert Koh\u00e4renz'),
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, _t('vessel.title')),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-4' }, _t('vessel.subtitle')),
 
       h('svg', { viewBox: '0 0 ' + W + ' ' + H, className: 'w-full', style: { maxWidth: '560px', margin: '0 auto', display: 'block' } },
 
@@ -295,16 +413,16 @@
         }, outputText),
 
         // Labels
-        h('text', { x: 100, y: 30, fill: '#6b7280', fontSize: 10, textAnchor: 'middle' }, 'Texte der Welt'),
-        h('text', { x: 480, y: 30, fill: '#6b7280', fontSize: 10, textAnchor: 'middle' }, 'Output')
+        h('text', { x: 100, y: 30, fill: '#6b7280', fontSize: 10, textAnchor: 'middle' }, _t('vessel.textsLabel')),
+        h('text', { x: 480, y: 30, fill: '#6b7280', fontSize: 10, textAnchor: 'middle' }, _t('vessel.output'))
       ),
 
       // Slider
       h('div', { className: 'mt-4 px-2' },
         h('div', { className: 'flex justify-between text-xs text-gray-500 mb-1' },
-          h('span', null, 'Klein'),
-          h('span', null, 'Modellgr\u00f6\u00dfe: ' + size + '%'),
-          h('span', null, 'Gro\u00df')
+          h('span', null, _t('vessel.small')),
+          h('span', null, _t('vessel.sizeLabel') + ': ' + size + '%'),
+          h('span', null, _t('vessel.large'))
         ),
         h('input', {
           type: 'range', min: 5, max: 100, step: 1, value: size,
@@ -317,8 +435,8 @@
       // Explanation
       h('p', { className: 'text-xs text-gray-600 text-center mt-3 max-w-md mx-auto' },
         progress > 0.7 ?
-          'Ab einer kritischen Gr\u00f6\u00dfe emergiert Koh\u00e4renz — das Gef\u00e4\u00df wird zum Medium.' :
-          'Zu klein: die Fragmente bleiben Fragmente. Kein Muster, kein Sinn.'
+          _t('vessel.explainBig') :
+          _t('vessel.explainSmall')
       )
     );
   }
@@ -395,8 +513,8 @@
     var easedAnim = anim < 1 ? anim : 1;
 
     return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
-      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'Der positive Attraktor'),
-      h('p', { className: 'text-xs text-gray-500 text-center mb-4' }, 'Energielandschaft: Wo rollt die Kugel hin?'),
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, _t('attr.title')),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-4' }, _t('attr.subtitle')),
 
       // Toggle
       h('div', { className: 'flex justify-center gap-2 mb-4' },
@@ -404,12 +522,12 @@
           onClick: function() { setMode('single'); },
           className: 'px-3 py-1.5 rounded-lg text-xs font-medium transition ' +
             (isSingle ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40' : 'bg-gray-800/50 text-gray-400 border border-gray-700 hover:text-gray-200')
-        }, 'Einzelperson'),
+        }, _t('attr.single')),
         h('button', {
           onClick: function() { setMode('collective'); },
           className: 'px-3 py-1.5 rounded-lg text-xs font-medium transition ' +
             (!isSingle ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40' : 'bg-gray-800/50 text-gray-400 border border-gray-700 hover:text-gray-200')
-        }, 'Kollektiv')
+        }, _t('attr.collective'))
       ),
 
       h('svg', { viewBox: '0 0 ' + W + ' ' + H, className: 'w-full', style: { maxWidth: '520px', margin: '0 auto', display: 'block' } },
@@ -420,14 +538,14 @@
 
         // Valley labels
         isSingle ? h('g', null,
-          h('text', { x: 120, y: 128, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.5 }, 'lokal'),
-          h('text', { x: 220, y: 132, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.5 }, 'lokal'),
-          h('text', { x: 320, y: 130, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.5 }, 'lokal'),
-          h('text', { x: 410, y: 134, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.5 }, 'lokal')
+          h('text', { x: 120, y: 128, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.5 }, _t('attr.local')),
+          h('text', { x: 220, y: 132, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.5 }, _t('attr.local')),
+          h('text', { x: 320, y: 130, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.5 }, _t('attr.local')),
+          h('text', { x: 410, y: 134, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.5 }, _t('attr.local'))
         ) : h('g', null,
           h('text', { x: 260, y: 100, fill: '#f59e0b', fontSize: 13, textAnchor: 'middle', fontWeight: 700 }, 'Pos*'),
-          h('text', { x: 100, y: 140, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.4 }, 'lokal'),
-          h('text', { x: 420, y: 142, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.4 }, 'lokal')
+          h('text', { x: 100, y: 140, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.4 }, _t('attr.local')),
+          h('text', { x: 420, y: 142, fill: '#22d3ee', fontSize: 8, textAnchor: 'middle', opacity: 0.4 }, _t('attr.local'))
         ),
 
         // Ball
@@ -445,8 +563,8 @@
       // Explanation
       h('p', { className: 'text-xs text-gray-600 text-center mt-3 max-w-md mx-auto' },
         isSingle ?
-          'Eine Einzelperson hat viele lokale Minima — Gewohnheiten, Pr\u00e4gungen, \u00dcberzeugungen. Kein einzelnes dominiert.' :
-          'Im Kollektiv bildet sich ein dominanter Attraktor (Pos*) — ein gemeinsamer Begriff von „gut", der emergiert.'
+          _t('attr.explainSingle') :
+          _t('attr.explainCollective')
       )
     );
   }
@@ -461,20 +579,20 @@
   var h = React.createElement;
 
   var DESTRUCTIVE = [
-    { label: 'Kern', short: '(gut)', detail: 'Der Mensch will im Grunde das Richtige tun. Der Kern ist intakt.', color: '#4ade80' },
-    { label: 'Bedrohung', short: '', detail: 'Etwas gef\u00e4hrdet die Sicherheit — real oder wahrgenommen.', color: '#86efac' },
-    { label: 'Angst', short: '', detail: 'Die Bedrohung l\u00f6st Angst aus. Das Nervensystem schaltet auf Schutz.', color: '#fbbf24' },
-    { label: 'Verzerrung', short: '', detail: 'Unter Angst verzerrt sich die Wahrnehmung. Feindbilder entstehen.', color: '#f97316' },
-    { label: 'Irrtum', short: '', detail: 'Aus verzerrter Wahrnehmung folgen falsche \u00dcberzeugungen.', color: '#ef4444' },
-    { label: 'Sch\u00e4dliche Handlung', short: '', detail: 'Die Handlung richtet Schaden an — obwohl der Kern gut war.', color: '#dc2626' }
+    { label: _t('fear.d0.label'), short: _t('fear.d0.short'), detail: _t('fear.d0.detail'), color: '#4ade80' },
+    { label: _t('fear.d1.label'), short: '', detail: _t('fear.d1.detail'), color: '#86efac' },
+    { label: _t('fear.d2.label'), short: '', detail: _t('fear.d2.detail'), color: '#fbbf24' },
+    { label: _t('fear.d3.label'), short: '', detail: _t('fear.d3.detail'), color: '#f97316' },
+    { label: _t('fear.d4.label'), short: '', detail: _t('fear.d4.detail'), color: '#ef4444' },
+    { label: _t('fear.d5.label'), short: '', detail: _t('fear.d5.detail'), color: '#dc2626' }
   ];
 
   var CONSTRUCTIVE = [
-    { label: 'Kern', short: '(gut)', detail: 'Derselbe gute Kern — aber unter anderen Bedingungen.', color: '#4ade80' },
-    { label: 'Sicherheit', short: '', detail: 'Die Umgebung signalisiert: Du bist sicher. Kein Kampfmodus n\u00f6tig.', color: '#6ee7b7' },
-    { label: 'Klarheit', short: '', detail: 'Ohne Angst kann man klar sehen — Perspektivwechsel wird m\u00f6glich.', color: '#67e8f9' },
-    { label: 'Koh\u00e4renz', short: '', detail: 'Werte und Handlung stimmen \u00fcberein. Man ist im Einklang.', color: '#22d3ee' },
-    { label: 'Konstruktive Handlung', short: '', detail: 'Die Handlung n\u00fctzt — sich selbst und anderen.', color: '#06b6d4' }
+    { label: _t('fear.c0.label'), short: _t('fear.c0.short'), detail: _t('fear.c0.detail'), color: '#4ade80' },
+    { label: _t('fear.c1.label'), short: '', detail: _t('fear.c1.detail'), color: '#6ee7b7' },
+    { label: _t('fear.c2.label'), short: '', detail: _t('fear.c2.detail'), color: '#67e8f9' },
+    { label: _t('fear.c3.label'), short: '', detail: _t('fear.c3.detail'), color: '#22d3ee' },
+    { label: _t('fear.c4.label'), short: '', detail: _t('fear.c4.detail'), color: '#06b6d4' }
   ];
 
   function FearToAction() {
@@ -521,14 +639,14 @@
     }
 
     return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
-      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'Von Angst zu Handlung'),
-      h('p', { className: 'text-xs text-gray-500 text-center mb-5' }, 'Derselbe gute Kern — zwei verschiedene Wege. Klicke auf einen Schritt.'),
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, _t('fear.title')),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-5' }, _t('fear.subtitle')),
 
-      renderPath(DESTRUCTIVE, 'dest', 'Destruktiver Pfad', '#ef4444'),
-      renderPath(CONSTRUCTIVE, 'cons', 'Konstruktiver Pfad', '#22d3ee'),
+      renderPath(DESTRUCTIVE, 'dest', _t('fear.destLabel'), '#ef4444'),
+      renderPath(CONSTRUCTIVE, 'cons', _t('fear.consLabel'), '#22d3ee'),
 
       h('p', { className: 'text-xs text-gray-600 text-center mt-2 max-w-md mx-auto italic' },
-        'Nicht der Kern unterscheidet sich — sondern die Bedingungen. Darum ist die Frage nicht „Wer ist b\u00f6se?", sondern „Was erzeugt Angst?"'
+        _t('fear.footer')
       )
     );
   }
@@ -545,19 +663,19 @@
   var LAYERS = [
     {
       id: 'outer',
-      label: 'Was ist positiv?',
-      sublabel: 'Struktur-Emergenz',
-      tag: 'NP-hart',
+      label: _t('double.outerLabel'),
+      sublabel: _t('double.outerSub'),
+      tag: _t('double.outerTag'),
       color: '#60a5fa',
-      detail: 'Was als „gut" gilt, l\u00e4sst sich nicht top-down definieren. Es emergiert aus den Interaktionen aller Beteiligten — wie eine L\u00f6sung, die niemand allein h\u00e4tte finden k\u00f6nnen.'
+      detail: _t('double.outerDetail')
     },
     {
       id: 'inner',
-      label: 'Wessen Stimme z\u00e4hlt?',
-      sublabel: 'Gewichtungs-Emergenz',
-      tag: 'Replikator-Dynamik',
+      label: _t('double.innerLabel') + ' ' + _t('double.innerLabel2'),
+      sublabel: _t('double.innerSub'),
+      tag: _t('double.innerSub'),
       color: '#f59e0b',
-      detail: 'Wer geh\u00f6rt wird und wer nicht, entsteht ebenfalls durch den Prozess selbst. Macht, Vertrauen und Einfluss sind keine Eingaben — sie sind Ergebnisse.'
+      detail: _t('double.innerDetail')
     }
   ];
 
@@ -585,8 +703,8 @@
     var innerScale = 1 + Math.sin(tick * 0.08) * 0.06;
 
     return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
-      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'Doppelte Emergenz'),
-      h('p', { className: 'text-xs text-gray-500 text-center mb-4' }, 'Klicke auf eine Schicht, um mehr zu erfahren'),
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, _t('double.title')),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-4' }, _t('double.subtitle')),
 
       h('svg', { viewBox: '0 0 ' + W + ' ' + H, className: 'w-full', style: { maxWidth: '400px', margin: '0 auto', display: 'block' } },
 
@@ -603,13 +721,13 @@
         ),
 
         // Outer label (not rotated)
-        h('text', { x: cx, y: cy - outerR - 14, fill: '#60a5fa', fontSize: 11, textAnchor: 'middle', fontWeight: 600 }, 'Was ist positiv?'),
-        h('text', { x: cx, y: cy - outerR + 1, fill: '#60a5fa', fontSize: 9, textAnchor: 'middle', opacity: 0.6 }, 'Struktur-Emergenz'),
+        h('text', { x: cx, y: cy - outerR - 14, fill: '#60a5fa', fontSize: 11, textAnchor: 'middle', fontWeight: 600 }, _t('double.outerLabel')),
+        h('text', { x: cx, y: cy - outerR + 1, fill: '#60a5fa', fontSize: 9, textAnchor: 'middle', opacity: 0.6 }, _t('double.outerSub')),
         h('text', {
           x: cx + outerR + 8, y: cy,
           fill: '#60a5fa', fontSize: 8, textAnchor: 'start', opacity: 0.5,
           className: 'font-mono'
-        }, 'NP-hart'),
+        }, _t('double.outerTag')),
 
         // Inner ring
         h('g', { transform: 'scale(' + innerScale + ')', transformOrigin: cx + 'px ' + cy + 'px', style: { cursor: 'pointer' }, onClick: function() { setActive(active === 'inner' ? null : 'inner'); } },
@@ -619,12 +737,12 @@
         ),
 
         // Inner label (not scaled)
-        h('text', { x: cx, y: cy - 8, fill: '#f59e0b', fontSize: 10, textAnchor: 'middle', fontWeight: 600 }, 'Wessen Stimme'),
-        h('text', { x: cx, y: cy + 6, fill: '#f59e0b', fontSize: 10, textAnchor: 'middle', fontWeight: 600 }, 'z\u00e4hlt?'),
-        h('text', { x: cx, y: cy + 20, fill: '#f59e0b', fontSize: 8, textAnchor: 'middle', opacity: 0.6 }, 'Replikator-Dynamik'),
+        h('text', { x: cx, y: cy - 8, fill: '#f59e0b', fontSize: 10, textAnchor: 'middle', fontWeight: 600 }, _t('double.innerLabel')),
+        h('text', { x: cx, y: cy + 6, fill: '#f59e0b', fontSize: 10, textAnchor: 'middle', fontWeight: 600 }, _t('double.innerLabel2')),
+        h('text', { x: cx, y: cy + 20, fill: '#f59e0b', fontSize: 8, textAnchor: 'middle', opacity: 0.6 }, _t('double.innerSub')),
 
         // Bottom text
-        h('text', { x: cx, y: cy + outerR + 35, fill: '#9ca3af', fontSize: 11, textAnchor: 'middle', fontStyle: 'italic' }, 'Beides entsteht durch den Prozess selbst.')
+        h('text', { x: cx, y: cy + outerR + 35, fill: '#9ca3af', fontSize: 11, textAnchor: 'middle', fontStyle: 'italic' }, _t('double.footer'))
       ),
 
       // Detail panel
@@ -655,22 +773,22 @@
 
   var FACES = [
     {
-      title: 'Adressat der Dankbarkeit',
-      quote: 'Gott ist das, wof\u00fcr ich dankbar bin, wenn ich mir selbst nicht danken kann.',
+      title: _t('faces.f0.title'),
+      quote: _t('faces.f0.quote'),
       color: '#f59e0b',
-      everyday: 'Du stehst morgens auf und etwas in dir sagt: „Danke." Nicht an jemanden — einfach nur Danke. Dieses Gef\u00fchl braucht keinen Empf\u00e4nger mit Postadresse. Aber es braucht ein Wort. Manche nennen es Gott.'
+      everyday: _t('faces.f0.every')
     },
     {
-      title: 'Das Unbegreifliche',
-      quote: 'Ich muss nicht wissen, was Gott ist, um zu wissen, dass es Gott gibt.',
+      title: _t('faces.f1.title'),
+      quote: _t('faces.f1.quote'),
       color: '#a78bfa',
-      everyday: 'Du siehst deinem Kind beim Schlafen zu und sp\u00fcrst etwas, das gr\u00f6\u00dfer ist als du. Du kannst es nicht benennen, nicht erkl\u00e4ren, nicht reproduzieren. Aber es ist da. Und das reicht.'
+      everyday: _t('faces.f1.every')
     },
     {
-      title: 'Das Zwischen',
-      quote: 'Gott war nie „da oben". Gott war immer „zwischen uns".',
+      title: _t('faces.f2.title'),
+      quote: _t('faces.f2.quote'),
       color: '#22d3ee',
-      everyday: 'In einem Gespr\u00e4ch, in dem beide wirklich zuh\u00f6ren, entsteht etwas, das vorher nicht da war. Keiner hat es mitgebracht. Es ist zwischen euch entstanden. Das ist Emergenz. Das ist das Zwischen.'
+      everyday: _t('faces.f2.every')
     }
   ];
 
@@ -715,8 +833,8 @@
     var expanded = _expanded[0], setExpanded = _expanded[1];
 
     return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
-      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'Drei Gesichter'),
-      h('p', { className: 'text-xs text-gray-500 text-center mb-5' }, 'Drei Arten, das Unbenennbare zu benennen. Klicke f\u00fcr den Alltags-Bezug.'),
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, _t('faces.title')),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-5' }, _t('faces.subtitle')),
 
       h('div', { className: 'grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4' },
         FACES.map(function(face, i) {
@@ -745,14 +863,14 @@
             h('p', {
               className: 'text-xs text-center leading-relaxed italic',
               style: { color: '#d1d5db' }
-            }, '\u201E' + face.quote + '\u201C'),
+            }, (GOTT_LANG === 'de' ? '\u201E' : '\u201C') + face.quote + (GOTT_LANG === 'de' ? '\u201C' : '\u201D')),
 
             // Expanded: everyday paragraph
             isExpanded ? h('div', {
               className: 'mt-4 pt-3 border-t text-xs leading-relaxed',
               style: { borderColor: face.color + '22', color: '#9ca3af' }
             },
-              h('div', { className: 'text-xs font-semibold mb-1', style: { color: face.color, opacity: 0.7 } }, 'Im Alltag'),
+              h('div', { className: 'text-xs font-semibold mb-1', style: { color: face.color, opacity: 0.7 } }, _t('faces.everyday')),
               face.everyday
             ) : null
           );
