@@ -27,7 +27,11 @@
   <meta property="article:tag" content="AI Programming">
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://ki-mathias.de/img/og/vogelsimulator-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/vogelsimulator-en.png">
   <meta name="twitter:title" content="A Bird, a Webcam and One Afternoon">
   <meta name="twitter:description" content="3D bird flight simulator with webcam gesture controls &mdash; built in one afternoon with AI.">
 
@@ -620,37 +624,13 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 
 
 <!-- Footer -->
-<footer class="border-t border-gray-800/50 py-8 px-4 sm:px-6 text-xs text-gray-600">
-  <div class="max-w-4xl mx-auto">
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-
-      <!-- Navigation -->
-      <div>
-        <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Navigation</p>
-        <a href="/en/index.html" class="block hover:text-gray-400 mb-1">All Posts</a>
-        <a href="/en/quantum.html" class="block hover:text-gray-400 mb-1">Interactive Quantum Physics</a>
-        <a href="/vogelsimulator/" class="block hover:text-gray-400 mb-1">Play Bird Simulator</a>
-      </div>
-
-      <!-- Tech -->
-      <div>
-        <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Tech</p>
-        <p>Three.js &middot; MediaPipe &middot; Vite &middot; Playwright</p>
-        <p class="mt-1">Written by KI-Mathias. Code architect: Claude Code (Anthropic).</p>
-      </div>
-
-      <!-- Legal -->
-      <div>
-        <p class="text-gray-500 font-semibold uppercase tracking-widest mb-2" style="font-size: 0.65rem;">Legal</p>
-        <a href="/en/imprint.html" class="block hover:text-gray-400 mb-1">Imprint</a>
-        <a href="/en/privacy.html" class="block hover:text-gray-400 mb-1">Privacy Policy</a>
-      </div>
-
-    </div>
-    <div class="mt-6 pt-4 border-t border-gray-800/30">
-      <p>&copy; 2026 KI-Mathias &middot; Built in collaboration with Claude Code (Anthropic)</p>
-    </div>
-  </div>
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Created with Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="/en/about.html" class="hover:text-gray-400">About</a> &middot;
+    <a href="/en/imprint.html" class="hover:text-gray-400">Imprint</a> &middot;
+    <a href="/en/privacy.html" class="hover:text-gray-400">Privacy</a>
+  </p>
 </footer>
 
 </div><!-- /max-w-4xl -->

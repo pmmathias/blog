@@ -49,8 +49,8 @@
   // META LINKS
   // ============================================================
   var META = isEN
-    ? { imprint: '/en/imprint.html', privacy: '/en/privacy.html', imprintLabel: 'Imprint', privacyLabel: 'Privacy' }
-    : { imprint: '/impressum.html', privacy: '/datenschutz.html', imprintLabel: 'Impressum', privacyLabel: 'Datenschutz' };
+    ? { about: '/en/about.html', imprint: '/en/imprint.html', privacy: '/en/privacy.html', aboutLabel: 'About', imprintLabel: 'Imprint', privacyLabel: 'Privacy' }
+    : { about: '/ueber-mich.html', imprint: '/impressum.html', privacy: '/datenschutz.html', aboutLabel: '\u00DCber mich', imprintLabel: 'Impressum', privacyLabel: 'Datenschutz' };
 
   // ============================================================
   // Detect which page we're on (for language toggle + TOC)
@@ -68,6 +68,7 @@
     }
   });
   // Special cases for meta pages
+  if (path.match(/ueber-mich|about/)) langToggleHref = isEN ? '/ueber-mich.html' : '/en/about.html';
   if (path.match(/impressum|imprint/)) langToggleHref = isEN ? '/impressum.html' : '/en/imprint.html';
   if (path.match(/datenschutz|privacy/)) langToggleHref = isEN ? '/datenschutz.html' : '/en/privacy.html';
   if (path === '/' || path === '/index.html' || path === '/en/' || path === '/en/index.html') {
@@ -89,6 +90,7 @@
           ' KI-Mathias' +
         '</button>' +
         '<div class="flex items-center gap-3 text-xs text-gray-500">' +
+          '<a href="' + META.about + '" class="hover:text-gray-300 transition hidden sm:inline">' + META.aboutLabel + '</a>' +
           '<a href="' + META.imprint + '" class="hover:text-gray-300 transition hidden sm:inline">' + META.imprintLabel + '</a>' +
           '<a href="' + META.privacy + '" class="hover:text-gray-300 transition hidden sm:inline">' + META.privacyLabel + '</a>' +
           '<a href="' + langToggleHref + '" class="hover:text-gray-300 transition">' + langToggleLabel + '</a>' +
@@ -153,6 +155,7 @@
         '<div class="sm:hidden">' +
           '<div class="h-px bg-gray-800 mx-3"></div>' +
           '<div class="p-3 flex gap-1">' +
+            '<a href="' + META.about + '" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">' + META.aboutLabel + '</a>' +
             '<a href="' + META.imprint + '" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">' + META.imprintLabel + '</a>' +
             '<a href="' + META.privacy + '" class="flex-1 text-center text-xs text-gray-400 hover:text-white py-2 rounded-lg hover:bg-gray-800/40 transition">' + META.privacyLabel + '</a>' +
           '</div>' +
