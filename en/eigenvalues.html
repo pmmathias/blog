@@ -489,9 +489,87 @@
 
 <div class="try-it">
   <p><strong>Try it yourself: KRR Chat</strong></p>
-  <p>We built a <a href="/krr-chat.html" class="text-cyan-400 hover:text-cyan-300 underline" style="color:#22d3ee;">mini language model</a> that works on <em>exactly</em> this principle &ndash; Kernel Ridge Regression with Random Fourier Features, trained on your GPU in the browser. No neural network. Just eigenvalues and matrix multiplication.</p>
+  <p>We built a <a href="/krr-chat.html" class="text-cyan-400 hover:text-cyan-300 underline" style="color:#22d3ee;">mini language model</a> that works on <em>exactly</em> this principle &ndash; Kernel Ridge Regression with Random Fourier Features. No neural network. Just eigenvalues and matrix multiplication.</p>
   <p><a href="/krr-chat.html" style="display:inline-block;margin-top:0.5rem;padding:0.4rem 1rem;background:#22d3ee15;border:1px solid #22d3ee30;border-radius:0.5rem;color:#22d3ee;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x03BB; Try KRR Chat &rarr;</a> &ensp; <a href="https://github.com/pmmathias/krr-chat" style="color:#64748b;font-size:0.75rem;text-decoration:underline;">Source on GitHub</a></p>
 </div>
+
+<!-- ================================================================ -->
+<!-- 7b. HOW THE KRR CHATBOT WORKS -->
+<!-- ================================================================ -->
+
+<h3 style="margin-top:2.5rem;">Under the Hood: How the KRR Chatbot Works</h3>
+
+<p>The KRR Chat is not a toy &ndash; it is a complete language model that unifies the entire chain of this post in a single application. Let&rsquo;s look at what happens when you ask a question.</p>
+
+<h4>The Dual Model: Retrieval + Generation</h4>
+
+<p>The chat consists of <strong>two independent systems</strong> working together:</p>
+
+<div class="summary-box">
+  <p><strong>System 1 &ndash; Retrieval</strong> (keyword search):<br>
+  A corpus of 805 sentences about eigenvalues, kernel methods, quantum mechanics, and machine learning. For each question, the chat extracts keywords (e.g. &ldquo;eigenvalues&rdquo; from &ldquo;What are eigenvalues?&rdquo;) and finds the sentences with the most hits. <strong>This is search, not learning.</strong></p>
+  <p><strong>System 2 &ndash; Generation</strong> (KRR language model):<br>
+  A Kernel Ridge Regression model trained on 104 curated sentences (505-word vocabulary, 1427 tokens total). It learns: <em>given the last 5 words, which word comes next?</em> This is genuine prediction &ndash; the same task that GPT-4 solves, just with a kernel instead of a neural network.</p>
+</div>
+
+<h4>The Pipeline: From Question to Answer</h4>
+
+<p>When you ask &ldquo;What are eigenvalues?&rdquo;, here is what happens:</p>
+
+<ol style="line-height:2.2;">
+  <li><strong>Keyword extraction:</strong> Stop words (what, are, the, is, &hellip;) are removed. What remains: <code>[&quot;eigenvalues&quot;]</code></li>
+  <li><strong>Retrieval:</strong> All 805 sentences are searched for this keyword. Exact match = 5 points, partial match (e.g. &ldquo;eigenvalue&rdquo; in &ldquo;eigenvalues&rdquo;) = 2 points. Duplicates are removed. The top 2 sentences are shown in <span style="color:#22d3ee;font-weight:600;">cyan</span>.</li>
+  <li><strong>KRR generation:</strong> The last 5 words of the final retrieved sentence become the context. From this, the model computes:
+    <ul style="margin-top:0.3rem;">
+      <li>Feature vector \(\mathbf{x}\) via word hashing (128 buckets &times; 5 positions + 3 bigram hashes = 1024 dimensions)</li>
+      <li>Random Fourier Features: \(\mathbf{z} = \sqrt{2/D}\,\cos(\mathbf{x}\boldsymbol{\omega} + \mathbf{b})\) with \(D = 1536\)</li>
+      <li>Next word: \(\hat{y} = \arg\max_w\, \mathbf{z}^\top \mathbf{W}_{:,w}\)</li>
+    </ul>
+    This word is appended, and the process repeats &ndash; word by word.
+  </li>
+</ol>
+
+<h4>The Three Colors: Memorization vs. Generalization</h4>
+
+<p>Every word in the response is color-coded &ndash; and this is where it gets interesting:</p>
+
+<div style="display:flex;flex-direction:column;gap:0.6rem;margin:1rem 0;padding:1rem;background:#1e293b;border-radius:0.5rem;">
+  <p style="margin:0;"><span style="color:#22d3ee;font-weight:600;">&#x25CF; Cyan</span> &ndash; <strong>Retrieved.</strong> This sentence was found via keyword search in the corpus. No KRR computation involved &ndash; pure text search.</p>
+  <p style="margin:0;"><span style="color:#34d399;font-weight:600;">&#x25CF; Green</span> &ndash; <strong>Generated &amp; Verbatim.</strong> The KRR model predicted this word, and the word sequence appears exactly (as a 3- or 4-gram) in the training data. The model is <em>reproducing</em> learned knowledge.</p>
+  <p style="margin:0;"><span style="color:#f59e0b;font-weight:600;">&#x25CF; Orange</span> &ndash; <strong>Generated &amp; Novel.</strong> The KRR model predicted this word, but this word sequence does <em>not</em> exist in the training data. This is genuine <strong>generalization</strong> &ndash; the model is combining learned patterns in new ways.</p>
+</div>
+
+<p>Typically 70&ndash;80% of generated words are green (verbatim) and 20&ndash;30% are orange (generalized). This honestly shows: a KRR model with a 505-word vocabulary <strong>primarily memorizes</strong> &ndash; but it generalizes at the seams between learned sentences.</p>
+
+<h4>Why Two Models? The Float64 Lesson</h4>
+
+<p>A natural approach would be: train a single KRR model on the entire 805-sentence corpus. We tried this &ndash; and it fails instructively:</p>
+
+<ul>
+  <li><strong>Vocabulary 1820, hash buckets 256:</strong> On average, 7 different words collide per bucket. The model cannot distinguish &ldquo;eigenvalue&rdquo; from &ldquo;convergence&rdquo; when both hash to the same bin.</li>
+  <li><strong>Float32 precision in the browser:</strong> The Gaussian elimination for the linear system \((\mathbf{Z}^\top\mathbf{Z} + \lambda\mathbf{I})\mathbf{W} = \mathbf{Z}^\top\mathbf{Y}\) requires about 15 significant decimal digits at \(D = 2048\). WebGL delivers only 7 (Float32). The result: &ldquo;learning learning learning learning&rdquo; &ndash; a single word dominates every context.</li>
+  <li><strong>The solution:</strong> Train offline with Float64 (NumPy), load weights as compressed Float16 in the browser. Full-precision training, reduced-precision inference &ndash; exactly like large language models (quantization).</li>
+</ul>
+
+<p>The small curated model (505 words, HASH=128, D=1536) works even live in the browser &ndash; because only ~4 collisions per bucket occur and Float32 precision suffices for the smaller system.</p>
+
+<h4>The Connection: From Chatbot Back to Theory</h4>
+
+<p>Every component of the KRR Chat maps to a concept from this post:</p>
+
+<div class="summary-box">
+  <p style="font-family:monospace;font-size:0.85rem;line-height:2.2;">
+    <strong>Word hashing</strong> \(\rightarrow\) Feature map \(\phi(x)\) (Chapter 6)<br>
+    <strong>Random Fourier Features</strong> \(\rightarrow\) Kernel approximation \(k(x,x') \approx \mathbf{z}(x)^\top\mathbf{z}(x')\) (Chapter 6)<br>
+    <strong>Gaussian elimination</strong> \(\rightarrow\) Solving linear systems \((\mathbf{Z}^\top\mathbf{Z} + \lambda\mathbf{I})^{-1}\) (Chapter 3)<br>
+    <strong>Ridge parameter \(\lambda\)</strong> \(\rightarrow\) Regularization = early stopping (Chapter 5)<br>
+    <strong>Hash collisions</strong> \(\rightarrow\) Condition number of the matrix (Chapter 3)<br>
+    <strong>Float64 vs. Float32</strong> \(\rightarrow\) Numerical stability (Chapter 5)<br>
+    <strong>Word-by-word prediction</strong> \(\rightarrow\) Eigenvalues control learning speed (Chapter 4)
+  </p>
+</div>
+
+<p>The KRR Chat is therefore not just a demo &ndash; it is a <strong>living textbook</strong> where every line of code corresponds to a mathematical concept derived in this post.</p>
 
 </div>
 <div class="section-divider"></div>
