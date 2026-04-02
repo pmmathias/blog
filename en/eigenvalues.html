@@ -499,144 +499,17 @@
 
 <h3 style="margin-top:2.5rem;">Under the Hood: How the KRR Chatbot Works</h3>
 
-<p>The KRR Chat is not a toy &ndash; it is a complete language model that unifies the entire chain of this post in a single application. Let&rsquo;s look at what happens when you ask a question.</p>
+<p>The KRR Chat is not a toy &ndash; it is a complete language model that unifies the entire chain of this post in a single application: word hashing (\(\phi(x)\)), Random Fourier Features (kernel approximation), ridge regression (regularization) &ndash; all in <strong>three JavaScript functions</strong>.</p>
 
-<h4>The Dual Model: Retrieval + Generation</h4>
+<p>The model&rsquo;s output is color-coded: <span style="color:#34d399;font-weight:600;">green</span> for words that appear exactly in the training data (memorization), <span style="color:#f59e0b;font-weight:600;">orange</span> for words the model combines in new ways (generalization). Typically 60&ndash;80% are green &ndash; honestly showing: a KRR model with 505 words primarily memorizes, but generalizes at the seams between learned sentences.</p>
 
-<p>The chat consists of <strong>two independent systems</strong> working together:</p>
-
-<div class="summary-box">
-  <p><strong>System 1 &ndash; Retrieval</strong> (keyword search):<br>
-  A corpus of 805 sentences about eigenvalues, kernel methods, quantum mechanics, and machine learning. For each question, the chat extracts keywords (e.g. &ldquo;eigenvalues&rdquo; from &ldquo;What are eigenvalues?&rdquo;) and finds the sentences with the most hits. <strong>This is search, not learning.</strong></p>
-  <p><strong>System 2 &ndash; Generation</strong> (KRR language model):<br>
-  A Kernel Ridge Regression model trained on 104 curated sentences (505-word vocabulary, 1427 tokens total). It learns: <em>given the last 5 words, which word comes next?</em> This is genuine prediction &ndash; the same task that GPT-4 solves, just with a kernel instead of a neural network.</p>
+<div class="try-it">
+  <p><strong>Deep dive: The complete source code, the Float64 lesson, and what the model can (and cannot) do</strong></p>
+  <p><a href="/en/krr-chat-explained.html" style="display:inline-block;margin-top:0.3rem;padding:0.4rem 1rem;background:#22d3ee15;border:1px solid #22d3ee30;border-radius:0.5rem;color:#22d3ee;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x1F4AC; KRR Chat: Under the Hood &rarr;</a></p>
 </div>
 
-<h4>The Pipeline: From Question to Answer</h4>
+<!-- old deep-dive content moved to /en/krr-chat-explained.html -->
 
-<p>When you ask &ldquo;What are eigenvalues?&rdquo;, here is what happens:</p>
-
-<ol style="line-height:2.2;">
-  <li><strong>Keyword extraction:</strong> Stop words (what, are, the, is, &hellip;) are removed. What remains: <code>[&quot;eigenvalues&quot;]</code></li>
-  <li><strong>Retrieval:</strong> All 805 sentences are searched for this keyword. Exact match = 5 points, partial match (e.g. &ldquo;eigenvalue&rdquo; in &ldquo;eigenvalues&rdquo;) = 2 points. Duplicates are removed. The top 2 sentences are shown in <span style="color:#22d3ee;font-weight:600;">cyan</span>.</li>
-  <li><strong>KRR generation:</strong> The last 5 words of the final retrieved sentence become the context. From this, the model computes:
-    <ul style="margin-top:0.3rem;">
-      <li>Feature vector \(\mathbf{x}\) via word hashing (128 buckets &times; 5 positions + 3 bigram hashes = 1024 dimensions)</li>
-      <li>Random Fourier Features: \(\mathbf{z} = \sqrt{2/D}\,\cos(\mathbf{x}\boldsymbol{\omega} + \mathbf{b})\) with \(D = 1536\)</li>
-      <li>Next word: \(\hat{y} = \arg\max_w\, \mathbf{z}^\top \mathbf{W}_{:,w}\)</li>
-    </ul>
-    This word is appended, and the process repeats &ndash; word by word.
-  </li>
-</ol>
-
-<h4>The Three Colors: Memorization vs. Generalization</h4>
-
-<p>Every word in the response is color-coded &ndash; and this is where it gets interesting:</p>
-
-<div style="display:flex;flex-direction:column;gap:0.6rem;margin:1rem 0;padding:1rem;background:#1e293b;border-radius:0.5rem;">
-  <p style="margin:0;"><span style="color:#22d3ee;font-weight:600;">&#x25CF; Cyan</span> &ndash; <strong>Retrieved.</strong> This sentence was found via keyword search in the corpus. No KRR computation involved &ndash; pure text search.</p>
-  <p style="margin:0;"><span style="color:#34d399;font-weight:600;">&#x25CF; Green</span> &ndash; <strong>Generated &amp; Verbatim.</strong> The KRR model predicted this word, and the word sequence appears exactly (as a 3- or 4-gram) in the training data. The model is <em>reproducing</em> learned knowledge.</p>
-  <p style="margin:0;"><span style="color:#f59e0b;font-weight:600;">&#x25CF; Orange</span> &ndash; <strong>Generated &amp; Novel.</strong> The KRR model predicted this word, but this word sequence does <em>not</em> exist in the training data. This is genuine <strong>generalization</strong> &ndash; the model is combining learned patterns in new ways.</p>
-</div>
-
-<p>Typically 70&ndash;80% of generated words are green (verbatim) and 20&ndash;30% are orange (generalized). This honestly shows: a KRR model with a 505-word vocabulary <strong>primarily memorizes</strong> &ndash; but it generalizes at the seams between learned sentences.</p>
-
-<h4>Why Two Models? The Float64 Lesson</h4>
-
-<p>A natural approach would be: train a single KRR model on the entire 805-sentence corpus. We tried this &ndash; and it fails instructively:</p>
-
-<ul>
-  <li><strong>Vocabulary 1820, hash buckets 256:</strong> On average, 7 different words collide per bucket. The model cannot distinguish &ldquo;eigenvalue&rdquo; from &ldquo;convergence&rdquo; when both hash to the same bin.</li>
-  <li><strong>Float32 precision in the browser:</strong> The Gaussian elimination for the linear system \((\mathbf{Z}^\top\mathbf{Z} + \lambda\mathbf{I})\mathbf{W} = \mathbf{Z}^\top\mathbf{Y}\) requires about 15 significant decimal digits at \(D = 2048\). WebGL delivers only 7 (Float32). The result: &ldquo;learning learning learning learning&rdquo; &ndash; a single word dominates every context.</li>
-  <li><strong>The solution:</strong> Train offline with Float64 (NumPy), load weights as compressed Float16 in the browser. Full-precision training, reduced-precision inference &ndash; exactly like large language models (quantization).</li>
-</ul>
-
-<p>The small curated model (505 words, HASH=128, D=1536) works even live in the browser &ndash; because only ~4 collisions per bucket occur and Float32 precision suffices for the smaller system.</p>
-
-<h4>The Connection: From Chatbot Back to Theory</h4>
-
-<p>Every component of the KRR Chat maps to a concept from this post:</p>
-
-<div class="summary-box">
-  <p style="font-family:monospace;font-size:0.85rem;line-height:2.2;">
-    <strong>Word hashing</strong> \(\rightarrow\) Feature map \(\phi(x)\) (Chapter 6)<br>
-    <strong>Random Fourier Features</strong> \(\rightarrow\) Kernel approximation \(k(x,x') \approx \mathbf{z}(x)^\top\mathbf{z}(x')\) (Chapter 6)<br>
-    <strong>Gaussian elimination</strong> \(\rightarrow\) Solving linear systems \((\mathbf{Z}^\top\mathbf{Z} + \lambda\mathbf{I})^{-1}\) (Chapter 3)<br>
-    <strong>Ridge parameter \(\lambda\)</strong> \(\rightarrow\) Regularization = early stopping (Chapter 5)<br>
-    <strong>Hash collisions</strong> \(\rightarrow\) Condition number of the matrix (Chapter 3)<br>
-    <strong>Float64 vs. Float32</strong> \(\rightarrow\) Numerical stability (Chapter 5)<br>
-    <strong>Word-by-word prediction</strong> \(\rightarrow\) Eigenvalues control learning speed (Chapter 4)
-  </p>
-</div>
-
-<p>The KRR Chat is therefore not just a demo &ndash; it is a <strong>living textbook</strong> where every line of code corresponds to a mathematical concept derived in this post.</p>
-
-<h4>The Source Code: From Math to Algorithm</h4>
-
-<p>The entire KRR Chat consists of <strong>three functions</strong>. Here is the complete inference code &ndash; readable, commented, no tricks:</p>
-
-<p><strong>Step 1: Feature map</strong> \(\phi(x)\) &ndash; turning words into numbers</p>
-
-<pre style="background:#0f172a;border:1px solid #334155;border-radius:0.5rem;padding:1rem;overflow-x:auto;font-size:0.78rem;line-height:1.6;color:#e2e8f0;"><code><span style="color:#64748b;">// Word → hash index (0..127). Each word gets a "fingerprint".</span>
-<span style="color:#c084fc;">function</span> <span style="color:#22d3ee;">hash</span>(word) {
-  <span style="color:#c084fc;">var</span> h = <span style="color:#f59e0b;">0</span>;
-  <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> i = <span style="color:#f59e0b;">0</span>; i &lt; word.length; i++)
-    h = (h * <span style="color:#f59e0b;">31</span> + word.charCodeAt(i)) &gt;&gt;&gt; <span style="color:#f59e0b;">0</span>;
-  <span style="color:#c084fc;">return</span> h % <span style="color:#f59e0b;">128</span>;  <span style="color:#64748b;">// 128 buckets</span>
-}
-
-<span style="color:#64748b;">// Context (5 words) → feature vector (1024 dimensions)</span>
-<span style="color:#64748b;">// Each word occupies a position × hash-bucket slot.</span>
-<span style="color:#64748b;">// Positional weighting: later words count more.</span>
-<span style="color:#c084fc;">function</span> <span style="color:#22d3ee;">encode</span>(context) {
-  <span style="color:#c084fc;">var</span> features = <span style="color:#c084fc;">new</span> Float32Array(<span style="color:#f59e0b;">1024</span>);  <span style="color:#64748b;">// 5×128 + 3×128</span>
-  <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> pos = <span style="color:#f59e0b;">0</span>; pos &lt; <span style="color:#f59e0b;">5</span>; pos++) {
-    <span style="color:#c084fc;">var</span> weight = <span style="color:#f59e0b;">0.4</span> + <span style="color:#f59e0b;">0.6</span> * (pos / <span style="color:#f59e0b;">4</span>);  <span style="color:#64748b;">// 0.4 → 1.0</span>
-    features[pos * <span style="color:#f59e0b;">128</span> + hash(context[pos])] += weight;
-  }
-  <span style="color:#c084fc;">return</span> features;
-}</code></pre>
-
-<p style="font-size:0.8rem;color:#94a3b8;margin-top:0.5rem;">This is the \(\phi(x)\) from Chapter 6 &ndash; a feature map that embeds words into a high-dimensional space. Hash collisions are inevitable (505 words into 128 buckets), but the model still learns &ndash; as long as the collision rate is low enough.</p>
-
-<p><strong>Step 2: Random Fourier Features</strong> &ndash; approximating the kernel</p>
-
-<pre style="background:#0f172a;border:1px solid #334155;border-radius:0.5rem;padding:1rem;overflow-x:auto;font-size:0.78rem;line-height:1.6;color:#e2e8f0;"><code><span style="color:#64748b;">// φ(x) → z(x) via Random Fourier Features</span>
-<span style="color:#64748b;">// z(x) = √(2/D) · cos(x·ω + b)</span>
-<span style="color:#64748b;">// Then: z(x)ᵀz(x') ≈ k(x,x') = exp(-‖x-x'‖²/2σ²)</span>
-<span style="color:#c084fc;">function</span> <span style="color:#22d3ee;">rff</span>(features) {
-  <span style="color:#c084fc;">var</span> z = <span style="color:#c084fc;">new</span> Float32Array(<span style="color:#f59e0b;">1536</span>);   <span style="color:#64748b;">// D = 1536</span>
-  <span style="color:#c084fc;">var</span> scale = Math.sqrt(<span style="color:#f59e0b;">2.0</span> / <span style="color:#f59e0b;">1536</span>);
-  <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> j = <span style="color:#f59e0b;">0</span>; j &lt; <span style="color:#f59e0b;">1536</span>; j++) {
-    <span style="color:#c084fc;">var</span> dot = <span style="color:#f59e0b;">0</span>;
-    <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> k = <span style="color:#f59e0b;">0</span>; k &lt; <span style="color:#f59e0b;">1024</span>; k++)
-      dot += features[k] * omega[k * <span style="color:#f59e0b;">1536</span> + j]; <span style="color:#64748b;">// ω: random, fixed</span>
-    z[j] = Math.cos(dot + bias[j]) * scale;
-  }
-  <span style="color:#c084fc;">return</span> z;  <span style="color:#64748b;">// kernel-space vector</span>
-}</code></pre>
-
-<p style="font-size:0.8rem;color:#94a3b8;margin-top:0.5rem;">This is the kernel trick from Chapter 6, implemented via Rahimi &amp; Recht&rsquo;s Random Fourier Features (2007). The matrix \(\boldsymbol{\omega}\) is drawn randomly once and never changed &ndash; it is <em>not</em> a learned parameter. The cosine ensures that the dot product \(\mathbf{z}(x)^\top\mathbf{z}(x')\) approximates the Gaussian kernel.</p>
-
-<p><strong>Step 3: Prediction</strong> &ndash; choosing the next word</p>
-
-<pre style="background:#0f172a;border:1px solid #334155;border-radius:0.5rem;padding:1rem;overflow-x:auto;font-size:0.78rem;line-height:1.6;color:#e2e8f0;"><code><span style="color:#64748b;">// Context → next word</span>
-<span style="color:#64748b;">// scores = z(x)ᵀ · W   (W was learned offline via KRR)</span>
-<span style="color:#c084fc;">function</span> <span style="color:#22d3ee;">predict</span>(contextWords) {
-  <span style="color:#c084fc;">var</span> z = rff(encode(contextWords));
-  <span style="color:#c084fc;">var</span> scores = <span style="color:#c084fc;">new</span> Float32Array(<span style="color:#f59e0b;">505</span>);  <span style="color:#64748b;">// one score per word</span>
-
-  <span style="color:#64748b;">// Matrix-vector multiplication: scores = zᵀW</span>
-  <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> j = <span style="color:#f59e0b;">0</span>; j &lt; <span style="color:#f59e0b;">1536</span>; j++)
-    <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> v = <span style="color:#f59e0b;">0</span>; v &lt; <span style="color:#f59e0b;">505</span>; v++)
-      scores[v] += z[j] * W[j * <span style="color:#f59e0b;">505</span> + v];
-
-  <span style="color:#c084fc;">return</span> argmax(scores);  <span style="color:#64748b;">// word with highest score</span>
-}</code></pre>
-
-<p style="font-size:0.8rem;color:#94a3b8;margin-top:0.5rem;">This is the entire inference. No softmax, no attention, no feedforward layers. Just a <strong>single matrix-vector multiplication</strong> \(\mathbf{z}^\top\mathbf{W}\), where \(\mathbf{W}\) was computed offline via \((\mathbf{Z}^\top\mathbf{Z} + \lambda\mathbf{I})^{-1}\mathbf{Z}^\top\mathbf{Y}\) &ndash; the ridge regression system from Chapter 5.</p>
-
-<p><strong>The pipeline:</strong> The three functions form a chain: <code>words &rarr; encode() &rarr; rff() &rarr; predict() &rarr; next word</code>. The entire chatbot is this pipeline in a loop &ndash; plus a keyword search that determines the starting point. The complete <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;">source code</a> is ~120 lines of JavaScript.</p>
 
 </div>
 <div class="section-divider"></div>

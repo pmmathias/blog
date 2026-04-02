@@ -604,144 +604,18 @@
 
 <h3 style="margin-top:2.5rem;">Unter der Haube: Wie der KRR-Chatbot funktioniert</h3>
 
-<p>Der KRR-Chat ist kein Spielzeug &ndash; er ist ein vollst&auml;ndiges Sprachmodell, das die gesamte Kette dieses Beitrags in einer einzigen Anwendung vereint. Schauen wir uns an, was genau passiert, wenn du eine Frage stellst.</p>
+<p>Der KRR-Chat ist kein Spielzeug &ndash; er ist ein vollst&auml;ndiges Sprachmodell, das die gesamte Kette dieses Beitrags in einer einzigen Anwendung vereint: Wort-Hashing (\(\phi(x)\)), Random Fourier Features (Kernel-Approximation), Ridge Regression (Regularisierung) &ndash; alles in <strong>drei JavaScript-Funktionen</strong>.</p>
 
-<h4>Das Dual-Modell: Retrieval + Generation</h4>
+<p>Die Antwort des Modells wird farblich markiert: <span style="color:#34d399;font-weight:600;">Gr&uuml;n</span> f&uuml;r W&ouml;rter die exakt so in den Trainingsdaten vorkommen (Memorisierung), <span style="color:#f59e0b;font-weight:600;">Orange</span> f&uuml;r W&ouml;rter die das Modell neu kombiniert (Generalisierung). Typischerweise sind 60&ndash;80% gr&uuml;n &ndash; das zeigt ehrlich: ein KRR-Modell mit 505 W&ouml;rtern memoriert haupts&auml;chlich, generalisiert aber an den Nahtstellen zwischen gelernten S&auml;tzen.</p>
 
-<p>Der Chat besteht aus <strong>zwei unabh&auml;ngigen Systemen</strong>, die zusammenarbeiten:</p>
-
-<div class="summary-box">
-  <p><strong>System 1 &ndash; Retrieval</strong> (Keyword-Suche):<br>
-  Ein Corpus von 805 S&auml;tzen &uuml;ber Eigenwerte, Kernel-Methoden, Quantenmechanik und maschinelles Lernen. Bei jeder Frage extrahiert der Chat die Schl&uuml;sselw&ouml;rter (z.B. &bdquo;eigenvalues&ldquo; aus &bdquo;What are eigenvalues?&ldquo;) und findet die S&auml;tze mit den meisten Treffern. <strong>Das ist Suche, nicht Lernen.</strong></p>
-  <p><strong>System 2 &ndash; Generation</strong> (KRR-Sprachmodell):<br>
-  Ein Kernel-Ridge-Regression-Modell, trainiert auf 104 kuratierten S&auml;tzen (505 W&ouml;rter Vokabular). Es lernt: <em>Gegeben die letzten 5 W&ouml;rter, welches Wort kommt als n&auml;chstes?</em> Das ist echte Pr&auml;diktion &ndash; die gleiche Aufgabe, die auch GPT-4 l&ouml;st, nur mit einem Kernel statt einem neuronalen Netz.</p>
+<div class="try-it">
+  <p><strong>Deep Dive: Der vollst&auml;ndige Quellcode, die Float64-Lektion und was das Modell kann (und was nicht)</strong></p>
+  <p><a href="krr-chat-erklaert.html" style="display:inline-block;margin-top:0.3rem;padding:0.4rem 1rem;background:#22d3ee15;border:1px solid #22d3ee30;border-radius:0.5rem;color:#22d3ee;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x1F4AC; KRR Chat: Unter der Haube &rarr;</a></p>
 </div>
 
-<h4>Die Pipeline: Von der Frage zur Antwort</h4>
 
-<p>Wenn du &bdquo;What are eigenvalues?&ldquo; fragst, passiert Folgendes:</p>
 
-<ol style="line-height:2.2;">
-  <li><strong>Keyword-Extraktion:</strong> Stoppw&ouml;rter (what, are, the, is, ...) werden entfernt. &Uuml;brig bleibt: <code>[&quot;eigenvalues&quot;]</code></li>
-  <li><strong>Retrieval:</strong> Alle 805 S&auml;tze werden nach diesem Keyword durchsucht. Exakter Match = 5 Punkte, Teilmatch (z.B. &bdquo;eigenvalue&ldquo; in &bdquo;eigenvalues&ldquo;) = 2 Punkte. Duplikate werden entfernt. Die besten 2 S&auml;tze werden <span style="color:#22d3ee;font-weight:600;">cyan</span> angezeigt.</li>
-  <li><strong>KRR-Generation:</strong> Die letzten 5 W&ouml;rter des letzten Retrieval-Satzes werden als Kontext genommen. Daraus berechnet das Modell:
-    <ul style="margin-top:0.3rem;">
-      <li>Feature-Vektor \(\mathbf{x}\) durch Wort-Hashing (128 Buckets &times; 5 Positionen + 3 Bigram-Hashes = 1024 Dimensionen)</li>
-      <li>Random Fourier Features: \(\mathbf{z} = \sqrt{2/D}\,\cos(\mathbf{x}\boldsymbol{\omega} + \mathbf{b})\) mit \(D = 1536\)</li>
-      <li>N&auml;chstes Wort: \(\hat{y} = \arg\max_w\, \mathbf{z}^\top \mathbf{W}_{:,w}\)</li>
-    </ul>
-    Dieses Wort wird angeh&auml;ngt, und der Prozess wiederholt sich &ndash; Wort f&uuml;r Wort.
-  </li>
-</ol>
 
-<h4>Die drei Farben: Memorieren vs. Generalisieren</h4>
-
-<p>Jedes Wort in der Antwort wird farblich markiert &ndash; und genau hier wird es spannend:</p>
-
-<div style="display:flex;flex-direction:column;gap:0.6rem;margin:1rem 0;padding:1rem;background:#1e293b;border-radius:0.5rem;">
-  <p style="margin:0;"><span style="color:#22d3ee;font-weight:600;">&#x25CF; Cyan</span> &ndash; <strong>Retrieved.</strong> Dieser Satz wurde per Keyword-Suche im Corpus gefunden. Keine KRR-Berechnung n&ouml;tig &ndash; reine Textsuche.</p>
-  <p style="margin:0;"><span style="color:#34d399;font-weight:600;">&#x25CF; Gr&uuml;n</span> &ndash; <strong>Generiert &amp; Verbatim.</strong> Das KRR-Modell hat dieses Wort vorhergesagt, und die Wortfolge kommt exakt so (als 3- oder 4-gram) in den Trainingsdaten vor. Das Modell <em>reproduziert</em> gelerntes Wissen.</p>
-  <p style="margin:0;"><span style="color:#f59e0b;font-weight:600;">&#x25CF; Orange</span> &ndash; <strong>Generiert &amp; Neu.</strong> Das KRR-Modell hat dieses Wort vorhergesagt, aber diese Wortfolge existiert <em>nicht</em> in den Trainingsdaten. Das ist echte <strong>Generalisierung</strong> &ndash; das Modell kombiniert gelernte Muster auf neue Weise.</p>
-</div>
-
-<p>Typischerweise sind 70&ndash;80% der generierten W&ouml;rter gr&uuml;n (verbatim) und 20&ndash;30% orange (generalisiert). Das zeigt ehrlich: Ein KRR-Modell mit 505 W&ouml;rtern Vokabular <strong>memoriert</strong> haupts&auml;chlich &ndash; aber es generalisiert an den Nahtstellen zwischen gelernten S&auml;tzen.</p>
-
-<h4>Warum zwei Modelle? Die Float64-Lektion</h4>
-
-<p>Ein natürlicher Ansatz w&auml;re: ein einziges KRR-Modell auf dem gesamten 805-Satz-Corpus trainieren. Das haben wir versucht &ndash; und es scheitert lehrreich:</p>
-
-<ul>
-  <li><strong>Vokabular 1820, Hash-Buckets 256:</strong> Im Schnitt kollidieren 7 verschiedene W&ouml;rter pro Bucket. Das Modell kann &bdquo;eigenvalue&ldquo; nicht von &bdquo;convergence&ldquo; unterscheiden, wenn beide auf denselben Hash fallen.</li>
-  <li><strong>Float32-Pr&auml;zision im Browser:</strong> Die Gauß-Elimination f&uuml;r das lineare System \((\mathbf{Z}^\top\mathbf{Z} + \lambda\mathbf{I})\mathbf{W} = \mathbf{Z}^\top\mathbf{Y}\) braucht bei \(D = 2048\) etwa 15 signifikante Dezimalstellen. WebGL liefert nur 7 (Float32). Das Ergebnis: &bdquo;learning learning learning learning&ldquo; &ndash; ein einziges Wort dominiert alle Kontexte.</li>
-  <li><strong>Die L&ouml;sung:</strong> Offline mit Float64 (NumPy) trainieren, Gewichte als Float16 komprimiert im Browser laden. Training in voller Pr&auml;zision, Inferenz in reduzierter &ndash; genau wie bei gro&szlig;en Sprachmodellen (Quantisierung).</li>
-</ul>
-
-<p>Das kleine kuratierte Modell (505 W&ouml;rter, HASH=128, D=1536) funktioniert dagegen auch live im Browser &ndash; weil nur 4 Kollisionen pro Bucket auftreten und die Float32-Pr&auml;zision f&uuml;r das kleinere System ausreicht.</p>
-
-<h4>Die Verbindung: Vom Chatbot zur&uuml;ck zur Theorie</h4>
-
-<p>Jede Komponente des KRR-Chats entspricht einem Konzept aus diesem Beitrag:</p>
-
-<div class="summary-box">
-  <p style="font-family:monospace;font-size:0.85rem;line-height:2.2;">
-    <strong>Wort-Hashing</strong> \(\rightarrow\) Feature-Abbildung \(\phi(x)\) (Kapitel 6)<br>
-    <strong>Random Fourier Features</strong> \(\rightarrow\) Kernel-Approximation \(k(x,x') \approx \mathbf{z}(x)^\top\mathbf{z}(x')\) (Kapitel 6)<br>
-    <strong>Gauß-Elimination</strong> \(\rightarrow\) Lineares System l&ouml;sen \((\mathbf{Z}^\top\mathbf{Z} + \lambda\mathbf{I})^{-1}\) (Kapitel 3)<br>
-    <strong>Ridge-Parameter \(\lambda\)</strong> \(\rightarrow\) Regularisierung = Fr&uuml;h aufh&ouml;ren (Kapitel 5)<br>
-    <strong>Hash-Kollisionen</strong> \(\rightarrow\) Konditionszahl der Matrix (Kapitel 3)<br>
-    <strong>Float64 vs. Float32</strong> \(\rightarrow\) Numerische Stabilit&auml;t (Kapitel 5)<br>
-    <strong>Wort-f&uuml;r-Wort-Vorhersage</strong> \(\rightarrow\) Eigenwerte bestimmen Lerngeschwindigkeit (Kapitel 4)
-  </p>
-</div>
-
-<p>Der KRR-Chat ist damit nicht nur eine Demo &ndash; er ist ein <strong>lebendes Lehrbuch</strong>, in dem jede Zeile Code einem mathematischen Konzept entspricht, das wir in diesem Beitrag hergeleitet haben.</p>
-
-<h4>Der Quellcode: Von der Mathematik zum Algorithmus</h4>
-
-<p>Der gesamte KRR-Chat besteht aus <strong>drei Funktionen</strong>. Hier ist der vollst&auml;ndige Inferenz-Code &ndash; lesbar, kommentiert, ohne Tricks:</p>
-
-<p><strong>Schritt 1: Feature-Abbildung</strong> \(\phi(x)\) &ndash; W&ouml;rter in Zahlen verwandeln</p>
-
-<pre style="background:#0f172a;border:1px solid #334155;border-radius:0.5rem;padding:1rem;overflow-x:auto;font-size:0.78rem;line-height:1.6;color:#e2e8f0;"><code><span style="color:#64748b;">// Wort → Hash-Index (0..127). Jedes Wort bekommt einen "Fingerabdruck".</span>
-<span style="color:#c084fc;">function</span> <span style="color:#22d3ee;">hash</span>(word) {
-  <span style="color:#c084fc;">var</span> h = <span style="color:#f59e0b;">0</span>;
-  <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> i = <span style="color:#f59e0b;">0</span>; i &lt; word.length; i++)
-    h = (h * <span style="color:#f59e0b;">31</span> + word.charCodeAt(i)) &gt;&gt;&gt; <span style="color:#f59e0b;">0</span>;
-  <span style="color:#c084fc;">return</span> h % <span style="color:#f59e0b;">128</span>;  <span style="color:#64748b;">// 128 Buckets</span>
-}
-
-<span style="color:#64748b;">// Kontext (5 Wörter) → Feature-Vektor (1024 Dimensionen)</span>
-<span style="color:#64748b;">// Jedes Wort belegt eine Position × Hash-Bucket.</span>
-<span style="color:#64748b;">// Positionsgewichtung: spätere Wörter zählen stärker.</span>
-<span style="color:#c084fc;">function</span> <span style="color:#22d3ee;">encode</span>(context) {
-  <span style="color:#c084fc;">var</span> features = <span style="color:#c084fc;">new</span> Float32Array(<span style="color:#f59e0b;">1024</span>);  <span style="color:#64748b;">// 5×128 + 3×128</span>
-  <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> pos = <span style="color:#f59e0b;">0</span>; pos &lt; <span style="color:#f59e0b;">5</span>; pos++) {
-    <span style="color:#c084fc;">var</span> weight = <span style="color:#f59e0b;">0.4</span> + <span style="color:#f59e0b;">0.6</span> * (pos / <span style="color:#f59e0b;">4</span>);  <span style="color:#64748b;">// 0.4 → 1.0</span>
-    features[pos * <span style="color:#f59e0b;">128</span> + hash(context[pos])] += weight;
-  }
-  <span style="color:#c084fc;">return</span> features;
-}</code></pre>
-
-<p style="font-size:0.8rem;color:#94a3b8;margin-top:0.5rem;">Das ist \(\phi(x)\) aus Kapitel 6 &ndash; eine Feature-Abbildung, die W&ouml;rter in einen hochdimensionalen Raum einbettet. Hash-Kollisionen sind unvermeidlich (505 W&ouml;rter auf 128 Buckets), aber das Modell lernt trotzdem &ndash; solange die Kollisionsrate niedrig genug ist.</p>
-
-<p><strong>Schritt 2: Random Fourier Features</strong> &ndash; den Kernel approximieren</p>
-
-<pre style="background:#0f172a;border:1px solid #334155;border-radius:0.5rem;padding:1rem;overflow-x:auto;font-size:0.78rem;line-height:1.6;color:#e2e8f0;"><code><span style="color:#64748b;">// φ(x) → z(x) mittels Random Fourier Features</span>
-<span style="color:#64748b;">// z(x) = √(2/D) · cos(x·ω + b)</span>
-<span style="color:#64748b;">// Danach gilt: z(x)ᵀz(x') ≈ k(x,x') = exp(-‖x-x'‖²/2σ²)</span>
-<span style="color:#c084fc;">function</span> <span style="color:#22d3ee;">rff</span>(features) {
-  <span style="color:#c084fc;">var</span> z = <span style="color:#c084fc;">new</span> Float32Array(<span style="color:#f59e0b;">1536</span>);   <span style="color:#64748b;">// D = 1536</span>
-  <span style="color:#c084fc;">var</span> scale = Math.sqrt(<span style="color:#f59e0b;">2.0</span> / <span style="color:#f59e0b;">1536</span>);
-  <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> j = <span style="color:#f59e0b;">0</span>; j &lt; <span style="color:#f59e0b;">1536</span>; j++) {
-    <span style="color:#c084fc;">var</span> dot = <span style="color:#f59e0b;">0</span>;
-    <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> k = <span style="color:#f59e0b;">0</span>; k &lt; <span style="color:#f59e0b;">1024</span>; k++)
-      dot += features[k] * omega[k * <span style="color:#f59e0b;">1536</span> + j]; <span style="color:#64748b;">// ω: zufällig, fixiert</span>
-    z[j] = Math.cos(dot + bias[j]) * scale;
-  }
-  <span style="color:#c084fc;">return</span> z;  <span style="color:#64748b;">// Kernel-Raum-Vektor</span>
-}</code></pre>
-
-<p style="font-size:0.8rem;color:#94a3b8;margin-top:0.5rem;">Das ist der Kernel-Trick aus Kapitel 6, umgesetzt mit Rahimi &amp; Rechts Random Fourier Features (2007). Die Matrix \(\boldsymbol{\omega}\) wird einmal zuf&auml;llig gezogen und nie ver&auml;ndert &ndash; sie ist <em>kein</em> gelernter Parameter. Das Cosinus sorgt daf&uuml;r, dass das Skalarprodukt \(\mathbf{z}(x)^\top\mathbf{z}(x')\) den Gau&szlig;-Kernel approximiert.</p>
-
-<p><strong>Schritt 3: Vorhersage</strong> &ndash; das n&auml;chste Wort bestimmen</p>
-
-<pre style="background:#0f172a;border:1px solid #334155;border-radius:0.5rem;padding:1rem;overflow-x:auto;font-size:0.78rem;line-height:1.6;color:#e2e8f0;"><code><span style="color:#64748b;">// Kontext → nächstes Wort</span>
-<span style="color:#64748b;">// scores = z(x)ᵀ · W   (W wurde offline per KRR gelernt)</span>
-<span style="color:#c084fc;">function</span> <span style="color:#22d3ee;">predict</span>(contextWords) {
-  <span style="color:#c084fc;">var</span> z = rff(encode(contextWords));
-  <span style="color:#c084fc;">var</span> scores = <span style="color:#c084fc;">new</span> Float32Array(<span style="color:#f59e0b;">505</span>);  <span style="color:#64748b;">// ein Score pro Wort</span>
-
-  <span style="color:#64748b;">// Matrix-Vektor-Multiplikation: scores = zᵀW</span>
-  <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> j = <span style="color:#f59e0b;">0</span>; j &lt; <span style="color:#f59e0b;">1536</span>; j++)
-    <span style="color:#c084fc;">for</span> (<span style="color:#c084fc;">var</span> v = <span style="color:#f59e0b;">0</span>; v &lt; <span style="color:#f59e0b;">505</span>; v++)
-      scores[v] += z[j] * W[j * <span style="color:#f59e0b;">505</span> + v];
-
-  <span style="color:#c084fc;">return</span> argmax(scores);  <span style="color:#64748b;">// Wort mit höchstem Score</span>
-}</code></pre>
-
-<p style="font-size:0.8rem;color:#94a3b8;margin-top:0.5rem;">Das ist die gesamte Inferenz. Kein Softmax, kein Attention, kein Feedforward-Netz. Nur eine <strong>einzige Matrix-Vektor-Multiplikation</strong> \(\mathbf{z}^\top\mathbf{W}\), wobei \(\mathbf{W}\) offline durch \((\mathbf{Z}^\top\mathbf{Z} + \lambda\mathbf{I})^{-1}\mathbf{Z}^\top\mathbf{Y}\) berechnet wurde &ndash; das Ridge-Regression-System aus Kapitel 5.</p>
-
-<p><strong>Das Zusammenspiel:</strong> Die drei Funktionen bilden eine Pipeline: <code>Wörter → encode() → rff() → predict() → nächstes Wort</code>. Der gesamte Chatbot ist diese Pipeline in einer Schleife &ndash; plus eine Keyword-Suche, die den Startpunkt bestimmt. Der vollst&auml;ndige <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;">Quellcode</a> umfasst ~120 Zeilen JavaScript.</p>
 
 </div>
 <div class="section-divider"></div>

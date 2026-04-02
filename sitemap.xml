@@ -66,6 +66,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenvalues.html"/>
   </url>
   <url>
+    <loc>https://ki-mathias.de/krr-chat-erklaert.html</loc>
+    <lastmod>2026-04-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/krr-chat-erklaert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/krr-chat-explained.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/krr-chat-explained.html</loc>
+    <lastmod>2026-04-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/krr-chat-erklaert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/krr-chat-explained.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/krr-chat.html</loc>
+    <lastmod>2026-04-02</lastmod>
+  </url>
+  <url>
     <loc>https://ki-mathias.de/gott.html</loc>
     <lastmod>2026-03-30</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/gott.html"/>

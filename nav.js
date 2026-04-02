@@ -34,6 +34,11 @@
       en: { title: 'Eigenvalues & AI', subtitle: 'Kernels \u00B7 PageRank \u00B7 Neumann Series', href: '/en/eigenvalues.html' }
     },
     {
+      icon: '\uD83D\uDCAC',  // 💬
+      de: { title: 'KRR Chat: Unter der Haube', subtitle: 'RAG \u00B7 Float64 \u00B7 Drei-Farben-Code', href: '/krr-chat-erklaert.html' },
+      en: { title: 'KRR Chat: Under the Hood', subtitle: 'RAG \u00B7 Float64 \u00B7 Three-Color Code', href: '/en/krr-chat-explained.html' }
+    },
+    {
       icon: '\uD83E\uDDE0',  // 🧠
       de: { title: 'Emergenz in Sprachmodellen', subtitle: 'Phasen\u00FCberg\u00E4nge \u00B7 Grokking \u00B7 Ising', href: '/emergenz.html' },
       en: { title: 'Emergence in Language Models', subtitle: 'Phase transitions \u00B7 Grokking \u00B7 Ising', href: '/en/emergence.html' }
