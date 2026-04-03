@@ -1471,6 +1471,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // ----------------------------------------------------------
+  // 4. Re-scroll to hash after KaTeX/components changed page height
+  // ----------------------------------------------------------
+  if (window.location.hash) {
+    requestAnimationFrame(function() {
+      var target = document.querySelector(window.location.hash);
+      if (target) target.scrollIntoView();
+    });
+  }
+
 }); // end DOMContentLoaded
 </script>
 
