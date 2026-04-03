@@ -475,9 +475,75 @@
 
 <p>And that is the real punchline: whether a model has a 505-word vocabulary or 50,000 &ndash; the mathematical structure is the same. Eigenvalues, kernels, regularization. The chain holds.</p>
 
+<h4>Two Chatbots, One Principle</h4>
+
+<p>We implemented the KRR principle in two different chatbots &ndash; and the differences reveal <strong>which parameters actually matter for language models</strong>:</p>
+
+<div style="overflow-x:auto;margin:1rem 0;">
+<table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+<thead>
+<tr style="border-bottom:2px solid #334155;">
+<th style="text-align:left;padding:.5rem;color:#94a3b8;"></th>
+<th style="text-align:center;padding:.5rem;color:#22d3ee;">&#x03BB; KRR Chat (EN)</th>
+<th style="text-align:center;padding:.5rem;color:#34d399;">&#x1F44B; Kalle (DE)</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Language</td>
+<td style="text-align:center;padding:.4rem;">English (technical)</td>
+<td style="text-align:center;padding:.4rem;">German (conversational)</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Corpus</td>
+<td style="text-align:center;padding:.4rem;">104 sentences on eigenvalues, kernels, PageRank</td>
+<td style="text-align:center;padding:.4rem;">57 dialogues on daily life, feelings, hobbies</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Vocabulary</td>
+<td style="text-align:center;padding:.4rem;">505 words</td>
+<td style="text-align:center;padding:.4rem;">397 words</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Context (CTX)</td>
+<td style="text-align:center;padding:.4rem;">5 words</td>
+<td style="text-align:center;padding:.4rem;color:#34d399;font-weight:600;">8 words</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">RFF dimension (D)</td>
+<td style="text-align:center;padding:.4rem;">1536</td>
+<td style="text-align:center;padding:.4rem;">2048</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Format</td>
+<td style="text-align:center;padding:.4rem;">Prose (retrieval + generation)</td>
+<td style="text-align:center;padding:.4rem;">Dialog (turn markers: <code>du:</code> / <code>bot:</code>)</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Repetition penalty</td>
+<td style="text-align:center;padding:.4rem;">0.15 (reduces loops)</td>
+<td style="text-align:center;padding:.4rem;color:#f59e0b;">None (German needs word repetition)</td>
+</tr>
+<tr>
+<td style="padding:.4rem;color:#94a3b8;">Top-1 accuracy</td>
+<td style="text-align:center;padding:.4rem;">99.8%</td>
+<td style="text-align:center;padding:.4rem;">99.8%</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>Key insight:</strong> The biggest quality jump for Kalle came <em>not</em> from fewer hash collisions or one-hot encoding &ndash; but from <strong>CTX=8 instead of CTX=5</strong>. Three extra words of context make the difference between 12 and 33 correct words for short inputs like &ldquo;ja&rdquo;.</p>
+
+<p>Second insight: <strong>No repetition penalty for German.</strong> English works with fewer function-word repetitions. German needs &ldquo;ich bin&rdquo;, &ldquo;das ist&rdquo;, &ldquo;du bist&rdquo; in every sentence. A penalty that suppresses these words destroys German sentence structure.</p>
+
 <div class="try-it">
-  <p><strong>Try it yourself</strong></p>
-  <p>Open the <a href="/krr-chat.html" style="color:#22d3ee;text-decoration:underline;">KRR Chat</a> and ask your questions. Look at the colors. Read the <a href="/en/eigenvalues.html" style="color:#22d3ee;text-decoration:underline;">main post</a> alongside. And if you want to read the code: <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;text-decoration:underline;">GitHub</a>.</p>
+  <p><strong>Try both</strong></p>
+  <p style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;">
+    <a href="/krr-chat.html" style="display:inline-block;padding:0.4rem 1rem;background:#22d3ee15;border:1px solid #22d3ee30;border-radius:0.5rem;color:#22d3ee;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x03BB; KRR Chat (Eigenvalues, EN) &rarr;</a>
+    <a href="/kalle-chat.html" style="display:inline-block;padding:0.4rem 1rem;background:#34d39915;border:1px solid #34d39930;border-radius:0.5rem;color:#34d399;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x1F44B; Kalle (Buddy Chat, DE) &rarr;</a>
+  </p>
+  <p style="margin-top:.5rem;font-size:.8rem;color:#64748b;">Source: <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;text-decoration:underline;">GitHub</a> &middot; Main post: <a href="/en/eigenvalues.html" style="color:#22d3ee;text-decoration:underline;">Eigenvalues &amp; AI</a></p>
 </div>
 
 </div>

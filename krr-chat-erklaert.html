@@ -475,9 +475,75 @@
 
 <p>Und das ist die eigentliche Pointe: Ob ein Modell 505 W&ouml;rter Vokabular hat oder 50.000 &ndash; die mathematische Struktur ist dieselbe. Eigenwerte, Kernels, Regularisierung. Die Kette h&auml;lt.</p>
 
+<h4>Zwei Chatbots, ein Prinzip</h4>
+
+<p>Wir haben das KRR-Prinzip in zwei verschiedenen Chatbots umgesetzt &ndash; und die Unterschiede zeigen, <strong>welche Parameter bei Sprachmodellen wirklich z&auml;hlen</strong>:</p>
+
+<div style="overflow-x:auto;margin:1rem 0;">
+<table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+<thead>
+<tr style="border-bottom:2px solid #334155;">
+<th style="text-align:left;padding:.5rem;color:#94a3b8;"></th>
+<th style="text-align:center;padding:.5rem;color:#22d3ee;">&#x03BB; KRR Chat (EN)</th>
+<th style="text-align:center;padding:.5rem;color:#34d399;">&#x1F44B; Kalle (DE)</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Sprache</td>
+<td style="text-align:center;padding:.4rem;">Englisch (Fachsprache)</td>
+<td style="text-align:center;padding:.4rem;">Deutsch (Umgangssprache)</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Corpus</td>
+<td style="text-align:center;padding:.4rem;">104 S&auml;tze &uuml;ber Eigenwerte, Kernel, PageRank</td>
+<td style="text-align:center;padding:.4rem;">57 Dialoge &uuml;ber Alltag, Gef&uuml;hle, Hobbys</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Vokabular</td>
+<td style="text-align:center;padding:.4rem;">505 W&ouml;rter</td>
+<td style="text-align:center;padding:.4rem;">397 W&ouml;rter</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Kontext (CTX)</td>
+<td style="text-align:center;padding:.4rem;">5 W&ouml;rter</td>
+<td style="text-align:center;padding:.4rem;color:#34d399;font-weight:600;">8 W&ouml;rter</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">RFF-Dimension (D)</td>
+<td style="text-align:center;padding:.4rem;">1536</td>
+<td style="text-align:center;padding:.4rem;">2048</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Format</td>
+<td style="text-align:center;padding:.4rem;">Flie&szlig;text (Retrieval + Generation)</td>
+<td style="text-align:center;padding:.4rem;">Dialog (Turn-Marker: <code>du:</code> / <code>bot:</code>)</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#94a3b8;">Repetition Penalty</td>
+<td style="text-align:center;padding:.4rem;">0.15 (reduziert Wiederholungen)</td>
+<td style="text-align:center;padding:.4rem;color:#f59e0b;">Keine (Deutsch braucht Wortwiederholungen)</td>
+</tr>
+<tr>
+<td style="padding:.4rem;color:#94a3b8;">Top-1 Accuracy</td>
+<td style="text-align:center;padding:.4rem;">99.8%</td>
+<td style="text-align:center;padding:.4rem;">99.8%</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>Die Schl&uuml;ssel-Erkenntnis:</strong> Der gr&ouml;&szlig;te Qualit&auml;tssprung bei Kalle kam <em>nicht</em> von weniger Hash-Kollisionen oder One-Hot-Encoding &ndash; sondern von <strong>CTX=8 statt CTX=5</strong>. Drei Worte mehr Kontext machen den Unterschied zwischen 12 und 33 korrekten W&ouml;rtern f&uuml;r kurze Eingaben wie &bdquo;ja&ldquo;.</p>
+
+<p>Die zweite Erkenntnis: <strong>Keine Repetition Penalty f&uuml;r Deutsch.</strong> Englisch kommt mit weniger Funktionswort-Wiederholungen aus. Deutsch braucht &bdquo;ich bin&ldquo;, &bdquo;das ist&ldquo;, &bdquo;du bist&ldquo; in jedem Satz. Eine Penalty die diese W&ouml;rter bestraft zerst&ouml;rt die deutsche Satzstruktur.</p>
+
 <div class="try-it">
-  <p><strong>Probier es selbst</strong></p>
-  <p>&Ouml;ffne den <a href="krr-chat.html" style="color:#22d3ee;text-decoration:underline;">KRR Chat</a> und stelle deine Fragen. Schau dir die Farben an. Lies den <a href="eigenwerte.html" style="color:#22d3ee;text-decoration:underline;">Hauptbeitrag</a> parallel. Und wenn du den Code lesen willst: <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;text-decoration:underline;">GitHub</a>.</p>
+  <p><strong>Probier beide aus</strong></p>
+  <p style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;">
+    <a href="krr-chat.html" style="display:inline-block;padding:0.4rem 1rem;background:#22d3ee15;border:1px solid #22d3ee30;border-radius:0.5rem;color:#22d3ee;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x03BB; KRR Chat (Eigenvalues, EN) &rarr;</a>
+    <a href="kalle-chat.html" style="display:inline-block;padding:0.4rem 1rem;background:#34d39915;border:1px solid #34d39930;border-radius:0.5rem;color:#34d399;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x1F44B; Kalle (Buddy-Chat, DE) &rarr;</a>
+  </p>
+  <p style="margin-top:.5rem;font-size:.8rem;color:#64748b;">Quellcode: <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;text-decoration:underline;">GitHub</a> &middot; Hauptbeitrag: <a href="eigenwerte.html" style="color:#22d3ee;text-decoration:underline;">Eigenwerte &amp; KI</a></p>
 </div>
 
 </div>
