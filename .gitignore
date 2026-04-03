@@ -1,0 +1,42 @@
+# Python / Manim
+.venv/
+__pycache__/
+*.pyc
+media/videos/
+media/audio/
+media/voiceovers/
+media/texts/
+media/Tex/
+media/thumbnails/
+media/screenshots/
+
+# Environment & secrets
+.env
+*.env
+
+# Internal docs (not for public repo)
+CLAUDE.md
+VIDEO-PRODUCTION.md
+YOUTUBE-CHANNEL-SETUP.md
+social-posts.md
+reddit-comments.md
+quora-answers.md
+fh-wedel-backlink.md
+prompt-*.md
+demo-conversation.md
+
+# Drafts & temp files
+poe-preview*.html
+Wellen, Zeiger und das Doppelspalt-Wunder.txt
+
+# Scripts (build tools, not served)
+scripts/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
