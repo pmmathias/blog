@@ -2804,3 +2804,188 @@ const chapters = [
 window.ThreeLanguages = ThreeLanguages;
 })();
 
+// ── WavePacketBuilder ──────────────────────────────────────────────
+(function() {
+  var CYAN = '#22d3ee';
+  var AMBER = '#f59e0b';
+  var DK = 0.3;
+  var X_MIN = -20, X_MAX = 20, X_SAMPLES = 500;
+  var SVG_W = 600, SVG_H = 160, PAD = 40;
+
+  function computeData(N) {
+    var ks = [];
+    for (var j = 0; j < N; j++) ks.push((j - (N - 1) / 2) * DK);
+
+    var dx = (X_MAX - X_MIN) / (X_SAMPLES - 1);
+    var xs = [], psi2 = [];
+    for (var i = 0; i < X_SAMPLES; i++) {
+      var x = X_MIN + i * dx;
+      xs.push(x);
+      var arg = DK * x / 2;
+      var sinSmall = Math.sin(arg);
+      var val;
+      if (Math.abs(sinSmall) < 1e-12) {
+        val = 1.0;
+      } else {
+        var sinBig = Math.sin(N * arg);
+        val = (sinBig * sinBig) / (N * sinSmall * sinSmall) / N;
+      }
+      psi2.push(val * N);
+    }
+
+    var sum = 0;
+    for (var i = 0; i < X_SAMPLES; i++) sum += psi2[i];
+    var meanX = 0;
+    for (var i = 0; i < X_SAMPLES; i++) meanX += xs[i] * psi2[i] / sum;
+    var varX = 0;
+    for (var i = 0; i < X_SAMPLES; i++) varX += (xs[i] - meanX) * (xs[i] - meanX) * psi2[i] / sum;
+    var deltaX = Math.sqrt(varX);
+
+    var peak = 0;
+    for (var i = 0; i < X_SAMPLES; i++) if (psi2[i] > peak) peak = psi2[i];
+    var half = peak / 2;
+    var fwhmL = 0, fwhmR = 0;
+    for (var i = 0; i < X_SAMPLES; i++) { if (psi2[i] >= half) { fwhmL = xs[i]; break; } }
+    for (var i = X_SAMPLES - 1; i >= 0; i--) { if (psi2[i] >= half) { fwhmR = xs[i]; break; } }
+
+    var deltaP = N > 1 ? (N - 1) * DK / Math.sqrt(12) : 0;
+
+    return { xs: xs, psi2: psi2, ks: ks, peak: peak, deltaX: deltaX, deltaP: deltaP,
+             fwhmL: fwhmL, fwhmR: fwhmR, kMin: ks[0], kMax: ks[ks.length - 1] };
+  }
+
+  var LANG = (typeof document !== 'undefined' && document.documentElement.lang === 'en') ? 'en' : 'de';
+  var L = {
+    title:    LANG === 'en' ? 'Wave Packet Builder'                         : 'Wellenpaket-Baukasten',
+    desc:     LANG === 'en' ? 'Superimpose N Fourier modes and watch how position and momentum uncertainty behave.'
+                            : 'Superponiere N Fourier-Moden und beobachte, wie sich Orts- und Impulsunsch\u00E4rfe verhalten.',
+    modes:    LANG === 'en' ? 'Modes N = '    : 'Moden N = ',
+    posLabel: LANG === 'en' ? 'Position space |\u03C8(x)|\u00B2' : 'Ortsraum |\u03C8(x)|\u00B2',
+    momLabel: LANG === 'en' ? 'Momentum space \u2013 mode distribution' : 'Impulsraum \u2013 Modenverteilung',
+    deloc:    LANG === 'en' ? 'At N=1: wave completely delocalized' : 'Bei N=1: Welle komplett delokalisiert',
+    edge:     LANG === 'en' ? '< \u0127/2 (edge effect of finite sampling)' : '< \u0127/2 (Randeffekt endlicher Abtastung)',
+    undef:    LANG === 'en' ? '\u0394x\u00B7\u0394p \u2192 undefined' : '\u0394x\u00B7\u0394p \u2192 nicht definiert'
+  };
+
+  function WavePacketBuilder() {
+    var ref = React.useState(5);
+    var N = ref[0], setN = ref[1];
+
+    var data = React.useMemo(function() { return computeData(N); }, [N]);
+
+    var plotW = SVG_W - 2 * PAD, plotH = SVG_H - 2 * PAD;
+
+    var xScale = function(x) { return PAD + (x - X_MIN) / (X_MAX - X_MIN) * plotW; };
+    var yScalePos = function(v) { return PAD + plotH - (v / (data.peak || 1)) * plotH; };
+
+    var pathD = 'M';
+    for (var i = 0; i < data.xs.length; i++) {
+      pathD += (i > 0 ? 'L' : '') + xScale(data.xs[i]).toFixed(1) + ',' + yScalePos(data.psi2[i]).toFixed(1);
+    }
+    var fillD = pathD + 'L' + xScale(X_MAX).toFixed(1) + ',' + (PAD + plotH) +
+                'L' + xScale(X_MIN).toFixed(1) + ',' + (PAD + plotH) + 'Z';
+
+    var kRange = Math.max(8, (data.kMax - data.kMin) * 1.5 || 8);
+    var kScaleX = function(k) { return PAD + (k + kRange / 2) / kRange * plotW; };
+    var barW = Math.max(2, plotW / (kRange / DK) * 0.6);
+    var barH = plotH * 0.8;
+
+    var bracketY = PAD + plotH + 12;
+    var bxL = xScale(data.fwhmL), bxR = xScale(data.fwhmR);
+    var showXBracket = N > 1 && (data.fwhmR - data.fwhmL) < 38;
+
+    var kbL = kScaleX(data.kMin), kbR = kScaleX(data.kMax);
+    var showKBracket = N > 1;
+
+    var product = data.deltaX * data.deltaP;
+    var dxText = N === 1 ? '\u0394x \u2192 \u221E' : '\u0394x = ' + data.deltaX.toFixed(2);
+    var dpText = N === 1 ? '\u0394p = 0' : '\u0394p = ' + data.deltaP.toFixed(2) + ' \u0127';
+    var prodText = N === 1 ? L.undef
+                           : '\u0394x\u00B7\u0394p = ' + product.toFixed(2) + ' \u0127';
+    var satisfied = N > 1 && product >= 0.5;
+
+    var ce = React.createElement;
+
+    return ce('div', { className: 'w-full bg-gray-900 rounded-xl border border-gray-800 p-4 sm:p-6 space-y-4' },
+      ce('h3', { className: 'text-lg font-bold text-cyan-400' }, L.title),
+      ce('p', { className: 'text-sm text-gray-400' }, L.desc),
+
+      ce('div', { className: 'flex items-center gap-4' },
+        ce('label', { className: 'text-sm text-gray-300 whitespace-nowrap' }, L.modes + N),
+        ce('input', {
+          type: 'range', min: 1, max: 50, value: N,
+          onChange: function(e) { setN(parseInt(e.target.value)); },
+          className: 'flex-1 accent-cyan-400 h-2'
+        })
+      ),
+
+      ce('div', null,
+        ce('div', { className: 'text-xs text-gray-500 mb-1' }, L.posLabel),
+        ce('svg', { viewBox: '0 0 ' + SVG_W + ' ' + (SVG_H + 20), className: 'w-full',
+                    preserveAspectRatio: 'xMidYMid meet' },
+          ce('line', { x1: PAD, y1: PAD + plotH, x2: PAD + plotW, y2: PAD + plotH,
+                       stroke: '#374151', strokeWidth: 1 }),
+          ce('path', { d: fillD, fill: CYAN, fillOpacity: 0.15 }),
+          ce('path', { d: pathD, fill: 'none', stroke: CYAN, strokeWidth: 2 }),
+          showXBracket ? ce('g', null,
+            ce('line', { x1: bxL, y1: bracketY, x2: bxR, y2: bracketY,
+                         stroke: CYAN, strokeWidth: 1.5 }),
+            ce('line', { x1: bxL, y1: bracketY - 4, x2: bxL, y2: bracketY + 4,
+                         stroke: CYAN, strokeWidth: 1.5 }),
+            ce('line', { x1: bxR, y1: bracketY - 4, x2: bxR, y2: bracketY + 4,
+                         stroke: CYAN, strokeWidth: 1.5 }),
+            ce('text', { x: (bxL + bxR) / 2, y: bracketY + 14, textAnchor: 'middle',
+                         fill: CYAN, fontSize: 11 }, '\u0394x')
+          ) : null,
+          ce('text', { x: PAD, y: PAD + plotH + 14, textAnchor: 'middle',
+                       fill: '#6b7280', fontSize: 10 }, X_MIN),
+          ce('text', { x: PAD + plotW, y: PAD + plotH + 14, textAnchor: 'middle',
+                       fill: '#6b7280', fontSize: 10 }, X_MAX),
+          ce('text', { x: PAD + plotW / 2, y: PAD + plotH + 14, textAnchor: 'middle',
+                       fill: '#6b7280', fontSize: 10 }, '0')
+        )
+      ),
+
+      ce('div', null,
+        ce('div', { className: 'text-xs text-gray-500 mb-1' }, L.momLabel),
+        ce('svg', { viewBox: '0 0 ' + SVG_W + ' ' + (SVG_H + 20), className: 'w-full',
+                    preserveAspectRatio: 'xMidYMid meet' },
+          ce('line', { x1: PAD, y1: PAD + plotH, x2: PAD + plotW, y2: PAD + plotH,
+                       stroke: '#374151', strokeWidth: 1 }),
+          data.ks.map(function(k, i) {
+            var cx = kScaleX(k);
+            return ce('rect', { key: i, x: cx - barW / 2, y: PAD + plotH - barH,
+                                width: barW, height: barH,
+                                fill: AMBER, fillOpacity: 0.7, rx: 1 });
+          }),
+          showKBracket ? ce('g', null,
+            ce('line', { x1: kbL, y1: bracketY, x2: kbR, y2: bracketY,
+                         stroke: AMBER, strokeWidth: 1.5 }),
+            ce('line', { x1: kbL, y1: bracketY - 4, x2: kbL, y2: bracketY + 4,
+                         stroke: AMBER, strokeWidth: 1.5 }),
+            ce('line', { x1: kbR, y1: bracketY - 4, x2: kbR, y2: bracketY + 4,
+                         stroke: AMBER, strokeWidth: 1.5 }),
+            ce('text', { x: (kbL + kbR) / 2, y: bracketY + 14, textAnchor: 'middle',
+                         fill: AMBER, fontSize: 11 }, '\u0394p')
+          ) : null,
+          ce('text', { x: PAD + plotW / 2, y: PAD + plotH + 14, textAnchor: 'middle',
+                       fill: '#6b7280', fontSize: 10 }, 'k = 0')
+        )
+      ),
+
+      ce('div', { className: 'bg-gray-800 rounded-lg p-3 flex flex-wrap gap-x-6 gap-y-1 text-sm' },
+        ce('span', { className: 'text-cyan-400 font-mono' }, dxText),
+        ce('span', { className: 'text-amber-400 font-mono' }, dpText),
+        ce('span', { className: 'font-mono ' + (satisfied ? 'text-emerald-400' : 'text-gray-400') },
+          prodText),
+        N > 1
+          ? ce('span', { className: 'text-gray-500 text-xs self-center' },
+              satisfied ? '\u2265 \u0127/2 \u2714' : L.edge)
+          : ce('span', { className: 'text-gray-500 text-xs self-center' }, L.deloc)
+      )
+    );
+  }
+
+  window.WavePacketBuilder = WavePacketBuilder;
+})();
+

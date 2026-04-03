@@ -66,14 +66,14 @@
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-03-01",
-    "dateModified": "2026-03-28",
+    "dateModified": "2026-04-03",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/quantum.html" },
     "inLanguage": "en",
     "isAccessibleForFree": true,
-    "keywords": ["Quantum Mechanics", "Double-Slit Experiment", "Path Integral", "Quantum Physics", "Entanglement", "Fourier Analysis"],
+    "keywords": ["Quantum Mechanics", "Double-Slit Experiment", "Path Integral", "Quantum Physics", "Entanglement", "Fourier Analysis", "Quantum Field Theory", "Uncertainty Principle", "Wave Packet"],
     "articleSection": "Quantum Mechanics",
-    "wordCount": 12000,
-    "timeRequired": "PT45M"
+    "wordCount": 14000,
+    "timeRequired": "PT55M"
   }
   </script>
 
@@ -277,6 +277,7 @@
   <a href="#teil-4a" class="toc-link">4a &middot; Fourier</a>
   <a href="#teil-4b" class="toc-link">4b &middot; Standing Waves</a>
   <a href="#teil-4c" class="toc-link">4c &middot; Three Languages</a>
+  <a href="#teil-4d" class="toc-link">4d &middot; Fields &amp; Uncertainty</a>
   <a href="#verschraenkung" class="toc-link">Bonus &middot; Entanglement</a>
   <a href="#epilog" class="toc-link">Epilogue</a>
 </div>
@@ -943,6 +944,8 @@ Alternatives &rarr; add: both paths lead to the same spot, so \(0{,}15 + 0{,}15 
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4b</p>
 <h2>The Notes a Quantum System Likes to Play</h2>
 
+<p>At the end of Chapter 4a, a question remained: where do the eigenfrequencies come from &ndash; the preferred vibrations of a system? Here is the answer.</p>
+
 <h3>The Picky String</h3>
 
 <p>A guitar string is fixed at both ends. Every vibration must equal zero at both ends. Imagine trying to place a wave on the string whose wavelength does not fit. You push the string into a pattern that is zero at the left end but <em>not</em> zero at the right end &ndash; the wave "ends" somewhere in the middle of a peak or trough. That won't work. The string is pinned there. This wave cannot exist on this string.</p>
@@ -1056,7 +1059,7 @@ Alternatives &rarr; add: both paths lead to the same spot, so \(0{,}15 + 0{,}15 
 <div class="summary-box">
   <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2;">
     <strong>Path integral:</strong>&ensp; \(K = \displaystyle\int \mathcal{D}[x]\; e^{\,i\,S[x]\,/\,\hbar}\)&emsp;&mdash; integrate over <em>paths</em>, weighted by \(e^{i \cdot \text{action}}\)<br>
-    <strong>Eigenstates:</strong>&ensp; \(K = \displaystyle\sum_n c_n\; e^{-i\,E_n\,t\,/\,\hbar}\)&emsp;&mdash; sum over <em>modes</em>, weighted by \(e^{i \cdot \text{energy} \times \text{time}}\)<br>
+    <strong>Eigenstates:</strong>&ensp; \(K = \displaystyle\sum_n \underbrace{\psi_n(B)\,\psi_n^*(A)}_{\text{Fourier coeff.}}\; e^{-i\,E_n\,t\,/\,\hbar}\)&emsp;&mdash; sum over <em>modes</em>, weighted by \(e^{i \cdot \text{energy} \times \text{time}}\)<br>
     <strong>Fourier:</strong>&ensp; \(K = \displaystyle\int \tilde{K}(\omega)\; e^{-i\,\omega\,t}\;d\omega\)&emsp;&mdash; integrate over <em>frequencies</em>, weighted by \(e^{i \cdot \text{frequency} \times \text{time}}\)
   </p>
 </div>
@@ -1106,6 +1109,85 @@ Alternatives &rarr; add: both paths lead to the same spot, so \(0{,}15 + 0{,}15 
 <p>Why does quantum mechanics have this structure? One possible answer: because it is <em>linear</em>. The Schr&ouml;dinger equation is linear &ndash; if \(\psi_1\) and \(\psi_2\) are solutions, then so is \(\psi_1 + \psi_2\). Linearity is precisely the property that makes Fourier decompositions possible. And linearity is also the property that guarantees the superposition principle &ndash; that quantum states can be superposed. The equivalence of the three languages and the superposition of quantum mechanics are the same fact, viewed from two angles.</p>
 
 <p>Perhaps the deepest lesson of quantum mechanics: not that cats are simultaneously alive and dead. But that <strong>nature is richer than any single description we can give of it.</strong></p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- CHAPTER 4d: From Particles to Fields -->
+<!-- ============================================================ -->
+<section id="teil-4d" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4d</p>
+<h2>From Particles to Fields &ndash; and Why You Can Never Quite Pin Down a Particle</h2>
+
+<h3>The Universe&rsquo;s Equalizer</h3>
+
+<p>In Chapter 4a you decomposed a signal in <em>time</em> into frequencies &ndash; like an equalizer that splits a song into bass, mids, and treble. Now we do the same thing, but with a <strong>field in space</strong>.</p>
+
+<p>Imagine a field that fills all of space &ndash; like a temperature distribution, except instead of temperature it carries a physical quantity at every point. The Fourier decomposition breaks this field into <strong>modes</strong>: sine waves of various wavelengths. The same trick as the equalizer &ndash; only instead of a slider per <em>frequency</em>, now a slider per <em>wavelength</em>.</p>
+
+<p>Mathematically it looks almost identical to 4a:</p>
+
+<div class="math-display">$$\phi(x) = \sum_k a_k \cdot e^{ikx}$$</div>
+
+<p>The same \(e^{i \cdot \text{something}}\) as everywhere in this blog. Only now \(x\) is a position rather than a time, and \(k\) is a <span class="glossary" title="Wavenumber: Determines the spatial frequency of a wave. Large k = short wavelength, small k = long wavelength.">wavenumber</span> rather than a frequency.</p>
+
+<h3>Every Slider Is a Swing</h3>
+
+<p>Here comes the conceptual leap. Each individual Fourier mode of this field &ndash; each sine wave with a particular wavelength &ndash; behaves mathematically like a <strong>harmonic oscillator</strong>. A child on a swing. It has an amplitude and a frequency.</p>
+
+<p>In Chapter 4b you saw: a particle in a box has discrete energy levels. The harmonic oscillator has discrete levels too, but they are evenly spaced:</p>
+
+<div class="math-display">$$E_n = \left(n + \tfrac{1}{2}\right)\hbar\omega$$</div>
+
+<p>The \(n\) counts excitation levels: \(n = 0\) (ground state), \(n = 1\) (first excitation), \(n = 2\) (second), and so on. Now the punchline:</p>
+
+<p><strong>&ldquo;Quantizing a field&rdquo; means: giving each Fourier mode discrete energy levels.</strong> And the excitation number \(n\) of a mode means: <strong>&ldquo;There are \(n\) particles with this wavelength.&rdquo;</strong></p>
+
+<p>The analogy: imagine an organ with infinitely many pipes, one per wavelength. Each pipe can be silent (\(n = 0\), vacuum), hum softly (\(n = 1\), one particle), louder (\(n = 2\), two particles). &ldquo;Creating a particle&rdquo; means turning a pipe up by one notch.</p>
+
+<h3>Why Particles Can Be Created and Destroyed</h3>
+
+<p>In Chapters 1 through 4c, the world was like this: there is a particle, and it has a wave function. The particle was <em>given</em> &ndash; you could ask where it is or how fast it moves, but not whether it exists.</p>
+
+<p>In quantum field theory (QFT), things are different. Here the field is fundamental, not the particle. A &ldquo;particle&rdquo; is not an independent entity &ndash; it is an <strong>excitation of a mode</strong>. That is why particles can be created and destroyed: you are not conjuring matter from nothing, you are turning a slider up or down.</p>
+
+<p><em>(The full story involves special relativity, but it does not change the Fourier structure &ndash; it adds an elegant frame around it.)</em></p>
+
+<h3>Why You Can Never Pin Down a Particle</h3>
+
+<p>Now we reach the heart of the matter &ndash; and here the circle back to Chapter 4a closes.</p>
+
+<p>A single Fourier mode \(e^{ikx}\) is a sine wave stretching across <strong>all of space</strong>. It has a perfectly defined momentum (via de Broglie: \(p = \hbar k\)). But where is the particle? Nowhere and everywhere &ndash; the wave has no preferred position.</p>
+
+<p>Remember the equalizer from 4a? <strong>A pure tone has no beginning and no end.</strong> A sharp &ldquo;click&rdquo; needs all frequencies. The exact same thing holds in space: a pure momentum wave has no location. A localized particle needs all wavelengths.</p>
+
+<p>To build a &ldquo;particle-like&rdquo; thing &ndash; something that is roughly <em>here</em> and not <em>there</em> &ndash; you must superimpose many Fourier modes. The result is a <strong>wave packet</strong>: a localized bump in space.</p>
+
+<p>But the more modes you superimpose, the wider the momentum distribution becomes. And conversely: the fewer modes, the sharper the momentum &ndash; but the more smeared out the particle is in space. There is no escape.</p>
+
+<p class="text-cyan-400/80" style="font-style:italic;">Try it yourself &ndash; drag the slider and watch position and momentum fight each other:</p>
+
+<!-- INTERACTIVE: WavePacketBuilder -->
+<div class="component-wrap">
+  <div id="mount-wave-packet"></div>
+</div>
+
+<p>This is the famous <strong>Heisenberg uncertainty relation</strong>:</p>
+
+<div class="math-display">$$\Delta x \cdot \Delta p \;\geq\; \frac{\hbar}{2}$$</div>
+
+<p>And here is the crucial point: this is <strong>not a separate postulate</strong>. It is not a law of nature that someone discovered. It is a <strong>mathematical theorem about Fourier transforms</strong>. It holds equally in signal processing, in acoustics, in radio engineering. In communications engineering it is called the <em>bandwidth theorem</em>: sending a sharp pulse requires a wide bandwidth. Heisenberg is the same mathematics, applied to matter waves.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Summary:</strong> The Fourier modes from 4a, the discrete levels from 4b, the three languages from 4c all lead to one conclusion: particles are not points. They are excitations of modes. And modes cannot be simultaneously perfectly localized and perfectly monochromatic. That <em>is</em> the uncertainty relation.</p>
+</div>
+
+<p>In the bonus chapter we see another consequence: what happens when two particles share a set of arrows &ndash; <a href="#verschraenkung">entanglement</a>.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -1277,11 +1359,17 @@ In between: a smooth <strong>cosine curve</strong> &ndash; and this curve lies b
 <h3 style="font-size:1rem; margin-top:1.5rem;">Why is the exponential function the only possible quantum amplitude?</h3>
 <p>The quantum rules require: actions add for sequential path segments, amplitudes multiply. The only continuous function that turns addition into multiplication is the exponential function. Combined with the requirement of equal arrow length (|A|=1), only e^{iS/ħ} remains.</p>
 
+<h3 style="font-size:1rem; margin-top:1.5rem;">Why are Fourier modes used in quantum field theory?</h3>
+<p>In QFT, a field in space is decomposed into Fourier modes &ndash; sine waves of various wavelengths. Each mode behaves like a harmonic oscillator with discrete energy levels. The excitation number of a mode corresponds to the number of particles with that wavelength. Fourier modes are therefore not a mathematical convenience but the fundamental objects of the theory.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Is the uncertainty principle a physical law?</h3>
+<p>No &ndash; it is a mathematical theorem about Fourier transforms. If a function is narrow in position space (localized), its Fourier transform must be wide (many wavelengths), and vice versa. In physics this translates to: position and momentum cannot both be arbitrarily sharp at the same time. The same principle holds in signal processing as the bandwidth theorem.</p>
+
 </div>
 </section>
 
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the path integral?", "acceptedAnswer": {"@type": "Answer", "text": "The path integral is a formulation of quantum mechanics developed by Richard Feynman in 1948. Instead of solving a wave equation, you sum over all possible paths a particle can take from A to B. Each path gets an 'arrow' (a complex amplitude), and the sum of all arrows gives the total probability."}}, {"@type": "Question", "name": "Why does the interference pattern disappear when you measure?", "acceptedAnswer": {"@type": "Answer", "text": "When you measure which slit the particle goes through, the two paths become distinguishable. You only add arrows when paths are indistinguishable. Make them distinguishable, and there is only one arrow per run – no addition, no interference. It is not mysticism, it is bookkeeping."}}, {"@type": "Question", "name": "What is the difference between diffraction and interference?", "acceptedAnswer": {"@type": "Answer", "text": "Physically, there is no sharp difference – Feynman himself said nobody has ever satisfactorily defined the distinction. Diffraction is the spreading behind a single slit, interference is the superposition from two or more slits. Both are the same principle: adding arrows."}}, {"@type": "Question", "name": "Why is the exponential function the only possible quantum amplitude?", "acceptedAnswer": {"@type": "Answer", "text": "The quantum rules require: actions add for sequential path segments, amplitudes multiply. The only continuous function that turns addition into multiplication is the exponential function. Combined with the requirement of equal arrow length (|A|=1), only e^{iS/ħ} remains."}}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the path integral?", "acceptedAnswer": {"@type": "Answer", "text": "The path integral is a formulation of quantum mechanics developed by Richard Feynman in 1948. Instead of solving a wave equation, you sum over all possible paths a particle can take from A to B. Each path gets an 'arrow' (a complex amplitude), and the sum of all arrows gives the total probability."}}, {"@type": "Question", "name": "Why does the interference pattern disappear when you measure?", "acceptedAnswer": {"@type": "Answer", "text": "When you measure which slit the particle goes through, the two paths become distinguishable. You only add arrows when paths are indistinguishable. Make them distinguishable, and there is only one arrow per run – no addition, no interference. It is not mysticism, it is bookkeeping."}}, {"@type": "Question", "name": "What is the difference between diffraction and interference?", "acceptedAnswer": {"@type": "Answer", "text": "Physically, there is no sharp difference – Feynman himself said nobody has ever satisfactorily defined the distinction. Diffraction is the spreading behind a single slit, interference is the superposition from two or more slits. Both are the same principle: adding arrows."}}, {"@type": "Question", "name": "Why is the exponential function the only possible quantum amplitude?", "acceptedAnswer": {"@type": "Answer", "text": "The quantum rules require: actions add for sequential path segments, amplitudes multiply. The only continuous function that turns addition into multiplication is the exponential function. Combined with the requirement of equal arrow length (|A|=1), only e^{iS/ħ} remains."}}, {"@type": "Question", "name": "Why are Fourier modes used in quantum field theory?", "acceptedAnswer": {"@type": "Answer", "text": "In QFT, a field in space is decomposed into Fourier modes – sine waves of various wavelengths. Each mode behaves like a harmonic oscillator with discrete energy levels. The excitation number of a mode corresponds to the number of particles with that wavelength. Fourier modes are not a mathematical convenience but the fundamental objects of the theory."}}, {"@type": "Question", "name": "Is the uncertainty principle a physical law?", "acceptedAnswer": {"@type": "Answer", "text": "No – it is a mathematical theorem about Fourier transforms. If a function is narrow in position space (localized), its Fourier transform must be wide (many wavelengths), and vice versa. In physics this translates to: position and momentum cannot both be arbitrarily sharp at the same time."}}]}
 </script>
 </main>
 
@@ -1319,6 +1407,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'mount-action-phase': window.ActionPhaseViz || null,
     'mount-fourier': window.FourierExplorer || null,
     'mount-standing-waves': window.StandingWaves || null,
+    'mount-wave-packet': window.WavePacketBuilder || null,
     // ThreeLanguages replaced by static SVG diagram
   };
 
