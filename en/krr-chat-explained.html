@@ -179,7 +179,7 @@
   <p><strong>System 1 &ndash; Retrieval</strong> (keyword search):<br>
   A corpus of <strong>805 sentences</strong> about eigenvalues, kernel methods, quantum mechanics, and machine learning. For each question, the chat extracts keywords and finds the sentences with the most hits. <strong>This is search, not learning.</strong></p>
   <p><strong>System 2 &ndash; Generation</strong> (KRR language model):<br>
-  A Kernel Ridge Regression model trained on <strong>104 curated sentences</strong> (505-word vocabulary). It learns: <em>Given the last 5 words, which word comes next?</em> This is genuine prediction &ndash; the same task that GPT-4 solves, just with a kernel instead of a neural network.</p>
+  A Kernel Ridge Regression model trained on <strong>104 curated sentences</strong> (505-word vocabulary). It learns: <em>Given the last 5 words, which word comes next?</em> This is genuine prediction &ndash; the same core task that GPT-4 solves &ndash; but at a deliberately minimal scale: 505 words instead of billions of parameters. The small scale makes the mathematics visible.</p>
 </div>
 
 <h3>Why two systems?</h3>
@@ -259,6 +259,10 @@
 
 <div class="summary-box">
   <p><strong>Didactic point:</strong> The color coding is an <em>X-ray</em> of the model. With GPT-4, you only see the output. With KRR Chat, you additionally see whether the model is remembering or generalizing &ndash; a transparency that would otherwise require elaborate interpretability methods.</p>
+</div>
+
+<div class="summary-box" style="background:#f59e0b10;border:1px solid #f59e0b30;">
+  <p><strong>Important:</strong> KRR Chat is not a competitor to ChatGPT or other large language models. It is a <strong>didactic proof-of-concept</strong> of deliberately minimal size (505 words, 104 sentences) that shows the mathematical principles behind large language models &ndash; at a scale where you can still understand them.</p>
 </div>
 
 </div>
@@ -558,6 +562,11 @@
 <div class="prose-dark">
 
 <h2>Frequently Asked Questions</h2>
+
+<div class="faq-item" style="margin-bottom:1.5rem;">
+<h3 style="font-size:1rem;color:#e2e8f0;margin-bottom:.5rem;">Is KRR Chat meant to replace ChatGPT?</h3>
+<p>No. KRR Chat is a didactic proof-of-concept. It shows how the mathematical foundation of language models works &ndash; kernel functions, eigenvalues, regularization &ndash; at a scale that remains comprehensible: 505 words, 104 sentences, three JavaScript functions. ChatGPT uses similar mathematical principles but scales to billions of parameters. The value of KRR Chat lies in its <strong>transparency</strong>: you can see what the model memorizes and what it generalizes. With ChatGPT, you only see the output.</p>
+</div>
 
 <h3 style="font-size:1rem; margin-top:1.5rem;">What is the difference between KRR Chat and ChatGPT?</h3>
 <p>ChatGPT uses a neural network with billions of parameters and attention mechanisms. KRR Chat uses Kernel Ridge Regression with a single weight matrix (1536 &times; 505 = ~780,000 parameters). Both solve the same task &ndash; &ldquo;given context, predict the next word&rdquo; &ndash; but with entirely different mathematical tools. KRR Chat makes visible through color coding what the model memorizes and what it generalizes.</p>

@@ -179,7 +179,7 @@
   <p><strong>System 1 &ndash; Retrieval</strong> (Keyword-Suche):<br>
   Ein Corpus von <strong>805 S&auml;tzen</strong> &uuml;ber Eigenwerte, Kernel-Methoden, Quantenmechanik und maschinelles Lernen. Bei jeder Frage extrahiert der Chat die Schl&uuml;sselw&ouml;rter und findet die S&auml;tze mit den meisten Treffern. <strong>Das ist Suche, nicht Lernen.</strong></p>
   <p><strong>System 2 &ndash; Generation</strong> (KRR-Sprachmodell):<br>
-  Ein Kernel-Ridge-Regression-Modell, trainiert auf <strong>104 kuratierten S&auml;tzen</strong> (505 W&ouml;rter Vokabular). Es lernt: <em>Gegeben die letzten 5 W&ouml;rter, welches Wort kommt als n&auml;chstes?</em> Das ist echte Pr&auml;diktion &ndash; die gleiche Aufgabe, die auch GPT-4 l&ouml;st, nur mit einem Kernel statt einem neuronalen Netz.</p>
+  Ein Kernel-Ridge-Regression-Modell, trainiert auf <strong>104 kuratierten S&auml;tzen</strong> (505 W&ouml;rter Vokabular). Es lernt: <em>Gegeben die letzten 5 W&ouml;rter, welches Wort kommt als n&auml;chstes?</em> Das ist echte Pr&auml;diktion &ndash; dieselbe Grundaufgabe, die auch GPT-4 l&ouml;st &mdash; allerdings auf einem bewusst minimalen Ma&szlig;stab: 505 W&ouml;rter statt Milliarden von Parametern. Der kleine Ma&szlig;stab macht die Mathematik sichtbar.</p>
 </div>
 
 <h3>Warum zwei Systeme?</h3>
@@ -259,6 +259,10 @@
 
 <div class="summary-box">
   <p><strong>Didaktischer Punkt:</strong> Die Farbcodierung ist eine <em>R&ouml;ntgenaufnahme</em> des Modells. Bei GPT-4 sieht man nur die Ausgabe. Beim KRR Chat sieht man zus&auml;tzlich, ob das Modell erinnert oder generalisiert &ndash; eine Transparenz, die sonst nur durch aufwendige Interpretability-Methoden m&ouml;glich w&auml;re.</p>
+</div>
+
+<div class="summary-box" style="background:#f59e0b10;border:1px solid #f59e0b30;">
+  <p><strong>Wichtig:</strong> Der KRR Chat ist kein Konkurrent zu ChatGPT oder anderen gro&szlig;en Sprachmodellen. Er ist ein <strong>didaktisches Proof-of-Concept</strong> mit bewusst minimaler Gr&ouml;&szlig;e (505 W&ouml;rter, 104 S&auml;tze), das die mathematischen Prinzipien zeigt, die auch hinter gro&szlig;en Sprachmodellen stecken &ndash; nur in einer Gr&ouml;&szlig;e, in der man sie noch verstehen kann.</p>
 </div>
 
 </div>
@@ -558,6 +562,11 @@
 <div class="prose-dark">
 
 <h2>H&auml;ufige Fragen</h2>
+
+<div class="faq-item" style="margin-bottom:1.5rem;">
+<h3 style="font-size:1rem;color:#e2e8f0;margin-bottom:.5rem;">Ist der KRR Chat ein Ersatz f&uuml;r ChatGPT?</h3>
+<p>Nein. Der KRR Chat ist ein didaktisches Proof-of-Concept. Er zeigt, wie die mathematische Grundlage von Sprachmodellen funktioniert &ndash; Kernel-Funktionen, Eigenwerte, Regularisierung &ndash; auf einem Ma&szlig;stab, der nachvollziehbar bleibt: 505 W&ouml;rter, 104 S&auml;tze, drei JavaScript-Funktionen. ChatGPT nutzt &auml;hnliche mathematische Prinzipien, aber skaliert auf Milliarden von Parametern. Der Wert des KRR Chats liegt in der <strong>Transparenz</strong>: Man sieht, was das Modell memoriert und was es generalisiert. Bei ChatGPT sieht man nur die Ausgabe.</p>
+</div>
 
 <h3 style="font-size:1rem; margin-top:1.5rem;">Was ist der Unterschied zwischen dem KRR Chat und ChatGPT?</h3>
 <p>ChatGPT nutzt ein neuronales Netz mit Milliarden von Parametern und Attention-Mechanismen. Der KRR Chat nutzt Kernel Ridge Regression mit einer einzigen Gewichtsmatrix (1536 &times; 505 = ~780.000 Parameter). Beide l&ouml;sen dieselbe Aufgabe &ndash; &bdquo;gegeben Kontext, sage das n&auml;chste Wort vorher&ldquo; &ndash; aber mit v&ouml;llig unterschiedlichen mathematischen Werkzeugen. Der KRR Chat macht durch die Farbcodierung sichtbar, was das Modell memoriert und was es generalisiert.</p>
