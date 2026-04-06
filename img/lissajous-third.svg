@@ -16,7 +16,7 @@
 <g id="half">
   <path id="curve"
      fill="none"
-     stroke="red"
+     stroke="#22d3ee"
      stroke-width="0.01"
      transform="translate(300,300) scale(280,-280)"
      stroke-linejoin="round"

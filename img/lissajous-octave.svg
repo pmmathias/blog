@@ -15,7 +15,7 @@
 
   <path id="curve"
      fill="none"
-     stroke="red"
+     stroke="#22d3ee"
      stroke-width="0.01"
      transform="translate(300,300) scale(280,-280) rotate(90)"
      stroke-linejoin="round"
