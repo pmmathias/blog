@@ -1,4 +1,4 @@
-import{requestFullscreenLandscape as i}from"./MobileInput-D2mEYDCM.js";import"./index-BwpIOm5-.js";class r{constructor(e){this._mobileInput=e,this._onStart=null,this._createStartScreen(),this._createFullscreenGuide(),this._createControlsOverlay(),this._createOrientationWarning()}_createStartScreen(){this._startScreen=document.createElement("div"),this._startScreen.id="mobile-start",this._startScreen.style.cssText=`
+import{requestFullscreenLandscape as i}from"./MobileInput-Cl1VOj2o.js";import"./index-BAFA6nlB.js";class r{constructor(e){this._mobileInput=e,this._onStart=null,this._createStartScreen(),this._createFullscreenGuide(),this._createControlsOverlay(),this._createOrientationWarning()}_createStartScreen(){this._startScreen=document.createElement("div"),this._startScreen.id="mobile-start",this._startScreen.style.cssText=`
       position:fixed; inset:0; z-index:500;
       background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0a1628 100%);
       display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -36,7 +36,7 @@ import{requestFullscreenLandscape as i}from"./MobileInput-D2mEYDCM.js";import"./
       <p style="color:#445566; margin-top:16px; font-size:10px;">
         Drehe dein Gerät ins Querformat
       </p>
-    `,document.body.appendChild(this._startScreen),document.getElementById("mobile-start-btn").addEventListener("click",async()=>{i(),await this._mobileInput.requestPermission(),this._mobileInput.active=!0,this._startScreen.style.display="none",this._controlsOverlay.style.display="block",this._onStart&&this._onStart()}),document.getElementById("mobile-fs-guide-btn").addEventListener("click",()=>{this._fsGuide.style.display="flex"})}_createFullscreenGuide(){this._fsGuide=document.createElement("div"),this._fsGuide.style.cssText=`
+    `,document.body.appendChild(this._startScreen),document.getElementById("mobile-start-btn").addEventListener("click",async()=>{i(),await this._mobileInput.requestPermission(),this._mobileInput.active=!0,this._mobileInput.calibrate(),this._startScreen.style.display="none",this._controlsOverlay.style.display="block",this._onStart&&this._onStart()}),document.getElementById("mobile-fs-guide-btn").addEventListener("click",()=>{this._fsGuide.style.display="flex"})}_createFullscreenGuide(){this._fsGuide=document.createElement("div"),this._fsGuide.style.cssText=`
       position:fixed; inset:0; z-index:550;
       background:rgba(8,16,32,0.97);
       display:none; flex-direction:column; align-items:center; justify-content:center;
