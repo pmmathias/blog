@@ -1,4 +1,4 @@
-import{requestFullscreenLandscape as i}from"./MobileInput-rwOYsoj2.js";import"./index-CcA3RNHp.js";class r{constructor(e){this._mobileInput=e,this._onStart=null,this._createStartScreen(),this._createFullscreenGuide(),this._createControlsOverlay(),this._createOrientationWarning()}_createStartScreen(){this._startScreen=document.createElement("div"),this._startScreen.id="mobile-start",this._startScreen.style.cssText=`
+import{requestFullscreenLandscape as i}from"./MobileInput-CunADYJj.js";import"./index-cmaFaS1I.js";class r{constructor(e){this._mobileInput=e,this._onStart=null,this._createStartScreen(),this._createFullscreenGuide(),this._createControlsOverlay(),this._createOrientationWarning()}_createStartScreen(){this._startScreen=document.createElement("div"),this._startScreen.id="mobile-start",this._startScreen.style.cssText=`
       position:fixed; inset:0; z-index:500;
       background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0a1628 100%);
       display:flex; flex-direction:column; align-items:center; justify-content:center;
