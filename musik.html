@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Warum Dur fr&ouml;hlich klingt &ndash; Musik, Mathematik &amp; Wahrnehmung</title>
+  <meta name="description" content="Warum klingt Dur fr&ouml;hlich und Moll traurig? Von Frequenzverh&auml;ltnissen &uuml;ber Pythagoras bis zur Cochlea &ndash; die Mathematik der Musik, interaktiv erkl&auml;rt. Keine Vorkenntnisse n&ouml;tig.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/musik.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/musik.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/music.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/musik.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Warum Dur fr&ouml;hlich klingt &ndash; Musik, Mathematik &amp; Wahrnehmung">
+  <meta property="og:description" content="Von Frequenzverh&auml;ltnissen &uuml;ber Pythagoras bis zur Cochlea &ndash; die Mathematik der Musik, interaktiv erkl&auml;rt.">
+  <meta property="og:url" content="https://ki-mathias.de/musik.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-04-06">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Musik">
+  <meta property="article:tag" content="Mathematik">
+  <meta property="article:tag" content="Akustik">
+  <meta property="article:tag" content="Wahrnehmung">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/musik-de.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/musik-de.png">
+  <meta name="twitter:title" content="Warum Dur fr&ouml;hlich klingt &ndash; Musik, Mathematik &amp; Wahrnehmung">
+  <meta name="twitter:description" content="Von Frequenzverh&auml;ltnissen &uuml;ber Pythagoras bis zur Cochlea &ndash; die Mathematik der Musik, interaktiv erkl&auml;rt.">
+
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script defer src="musik-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Warum Dur fr\u00f6hlich klingt \u2013 Musik, Mathematik & Wahrnehmung",
+    "description": "Warum klingt Dur fr\u00f6hlich und Moll traurig? Von Frequenzverh\u00e4ltnissen \u00fcber Pythagoras bis zur Cochlea \u2013 die Mathematik der Musik, interaktiv erkl\u00e4rt.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-04-06",
+    "dateModified": "2026-04-06",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/musik.html" },
+    "inLanguage": "de",
+    "isAccessibleForFree": true,
+    "keywords": ["Musik", "Mathematik", "Akustik", "Konsonanz", "Obertonreihe", "Stimmung", "Pythagoras", "Fourier", "Cochlea"],
+    "articleSection": "Musik & Mathematik",
+    "wordCount": 14000,
+    "timeRequired": "PT40M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<!-- Hidden TOC slot — nav.js picks this up and injects it into the dropdown -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#konsonanz" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Ein Ton, zwei T&ouml;ne, ein R&auml;tsel</a>
+  <a href="#obertonreihe" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Die Obertonreihe</a>
+  <a href="#dur-moll" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Dur, Moll und das Gef&uuml;hl</a>
+  <a href="#pythagoras-komma" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Das Komma des Pythagoras</a>
+  <a href="#wohltemperiert" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Das wohltemperierte Klavier</a>
+  <a href="#gehoer" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Das wohltemperierte Geh&ouml;r</a>
+  <a href="#schwingung" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Alles ist Schwingung</a>
+  <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilog</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; Musik &middot; Mathematik &middot; Wahrnehmung</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-amber-400 to-purple-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Warum Dur fr&ouml;hlich klingt
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Musik, Mathematik &amp; Wahrnehmung &ndash; von Frequenzverh&auml;ltnissen &uuml;ber das Komma des Pythagoras bis zur Cochlea. Eine Reise in sieben Kapiteln, mit interaktiven Visualisierungen.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-04-06">April 2026</time><span>&middot;</span>
+    <span>~40 Min. Lesezeit</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+
+<!-- ================================================================ -->
+<!-- 1. EIN TON, ZWEI T&Ouml;NE, EIN R&Auml;TSEL -->
+<!-- ================================================================ -->
+<section id="konsonanz" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 1</p>
+<h2>Ein Ton, zwei T&ouml;ne, ein R&auml;tsel</h2>
+
+<p>Schlag zwei T&ouml;ne gleichzeitig an. Manchmal klingt es sch&ouml;n &ndash; weich, rund, verschmelzend. Manchmal klingt es rau, schwebend, unangenehm. Diesen Unterschied h&ouml;rt jeder Mensch, egal ob musikalisch ausgebildet oder nicht. Aber <strong>warum?</strong></p>
+
+<p>Die Antwort beginnt mit einer Beobachtung, die zweieinhalb Jahrtausende alt ist. Der Legende nach ging Pythagoras an einer Schmiede vorbei und h&ouml;rte, dass manche Hammerpaare harmonisch klangen und andere nicht. Er untersuchte die Gewichte der H&auml;mmer und fand ganzzahlige Verh&auml;ltnisse. Die Geschichte ist wahrscheinlich erfunden &ndash; Hammergewichte bestimmen nicht direkt die Tonh&ouml;he &ndash; aber die Einsicht dahinter ist real: <strong>Konsonanz hat etwas mit einfachen Zahlverh&auml;ltnissen zu tun.</strong></p>
+
+<h3>Frequenz: Was ein Ton wirklich ist</h3>
+
+<p>Ein Ton ist eine periodische Druckschwankung der Luft. Die Anzahl der Schwingungen pro Sekunde nennen wir <span class="glossary" title="Frequenz: Anzahl der Schwingungen pro Sekunde, gemessen in Hertz (Hz). Der Kammerton A4 hat 440 Hz.">Frequenz</span>, gemessen in Hertz (Hz). Der Kammerton A4 schwingt 440 Mal pro Sekunde: \(f = 440 \,\text{Hz}\). Ein tieferes A3 schwingt genau halb so schnell: \(f = 220 \,\text{Hz}\). Das Verh&auml;ltnis ist \(2{:}1\) &ndash; eine <strong>Oktave</strong>.</p>
+
+<p>Die fundamentale Frage der Musiktheorie l&auml;sst sich so formulieren: <em>Welche Frequenzverh&auml;ltnisse klingen &bdquo;gut&ldquo;, und warum?</em></p>
+
+<h3>Die einfachsten Verh&auml;ltnisse</h3>
+
+<p>Pythagoras und seine Sch&uuml;ler identifizierten die konsonantesten Intervalle anhand einfacher Bruchzahlen:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Intervall</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Verh&auml;ltnis</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Beispiel (Hz)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Empfindung</th>
+  </tr></thead>
+  <tbody>
+    <tr style="color:#34d399;"><td style="padding:0.3rem 0.6rem;">Oktave</td><td style="text-align:center;">2:1</td><td style="text-align:center;">440 &amp; 880</td><td style="text-align:center;">Verschmelzend</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Quinte</td><td style="text-align:center;">3:2</td><td style="text-align:center;">440 &amp; 660</td><td style="text-align:center;">Offen, kr&auml;ftig</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Quarte</td><td style="text-align:center;">4:3</td><td style="text-align:center;">440 &amp; 587</td><td style="text-align:center;">Stabil, ruhig</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Gro&szlig;e Terz</td><td style="text-align:center;">5:4</td><td style="text-align:center;">440 &amp; 550</td><td style="text-align:center;">Warm, heiter</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Kleine Terz</td><td style="text-align:center;">6:5</td><td style="text-align:center;">440 &amp; 528</td><td style="text-align:center;">Weich, melancholisch</td></tr>
+    <tr style="color:#f87171;"><td style="padding:0.3rem 0.6rem;">Tritonus</td><td style="text-align:center;">45:32</td><td style="text-align:center;">440 &amp; 618</td><td style="text-align:center;">Gespannt, dissonant</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Je <em>einfacher</em> das Verh&auml;ltnis, desto <em>konsonanter</em> der Klang. Diese Faustregel funktioniert erstaunlich gut &ndash; aber <em>warum</em> sie funktioniert, konnten erst Helmholtz und sp&auml;ter Plomp &amp; Levelt erkl&auml;ren.</p>
+
+<h3>Lissajous-Figuren: Konsonanz sichtbar machen</h3>
+
+<p>Wenn man zwei Sinusschwingungen gegeneinander auftr&auml;gt &ndash; eine auf der x-Achse, die andere auf der y-Achse &ndash; entstehen <span class="glossary" title="Lissajous-Figur: Parametrische Kurve, die entsteht, wenn zwei Sinusschwingungen auf die x- und y-Achse gelegt werden. Bei rationalen Frequenzverh&auml;ltnissen schlie&szlig;t sich die Kurve.">Lissajous-Figuren</span>. Bei einfachen Frequenzverh&auml;ltnissen sind die Muster geschlossen und einfach. Bei komplizierten Verh&auml;ltnissen werden sie chaotisch.</p>
+
+<figure class="my-6">
+  <div class="grid grid-cols-3 gap-4">
+    <div class="text-center">
+      <img src="img/lissajous-octave.svg" alt="Lissajous-Figur der Oktave (2:1) &ndash; eine geschlossene Acht" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+      <p class="text-xs text-gray-500 mt-2">Oktave (2:1)</p>
+    </div>
+    <div class="text-center">
+      <img src="img/lissajous-fifth.svg" alt="Lissajous-Figur der Quinte (3:2) &ndash; ein geschlossenes Muster mit drei Schleifen" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+      <p class="text-xs text-gray-500 mt-2">Quinte (3:2)</p>
+    </div>
+    <div class="text-center">
+      <img src="img/lissajous-third.svg" alt="Lissajous-Figur der gro&szlig;en Terz (5:4) &ndash; ein komplexeres aber geschlossenes Muster" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+      <p class="text-xs text-gray-500 mt-2">Gro&szlig;e Terz (5:4)</p>
+    </div>
+  </div>
+  <figcaption class="text-xs text-gray-600 mt-3 text-center">Lissajous-Figuren f&uuml;r drei konsonante Intervalle. Je einfacher das Verh&auml;ltnis, desto einfacher das Muster.</figcaption>
+</figure>
+
+<p>Die Oktave (2:1) erzeugt eine einfache Acht. Die Quinte (3:2) ein etwas komplexeres, aber klar geschlossenes Muster. Die gro&szlig;e Terz (5:4) wird schon verschlungener &ndash; aber bleibt geschlossen. Ein Tritonus (45:32) w&uuml;rde beinahe die gesamte Fl&auml;che f&uuml;llen, bevor sich die Kurve schlie&szlig;t.</p>
+
+<h3>Helmholtz: Schwebungen und Rauigkeit</h3>
+
+<p>Hermann von Helmholtz lieferte 1863 in seiner <em>&bdquo;Lehre von den Tonempfindungen&ldquo;</em> die erste physikalische Erkl&auml;rung. Wenn zwei T&ouml;ne nah beieinander liegen, h&ouml;rt man <strong>Schwebungen</strong> &ndash; periodische Lautst&auml;rkeschwankungen mit der Frequenz \(|f_1 - f_2|\).</p>
+
+<div class="math-display">$$y(t) = \sin(2\pi f_1 t) + \sin(2\pi f_2 t) = 2\cos\!\bigl(\pi(f_1 - f_2)t\bigr)\sin\!\bigl(\pi(f_1 + f_2)t\bigr)$$</div>
+
+<p>Das ist die Produktformel f&uuml;r die Addition zweier Sinusfunktionen. Der Cosinus-Term moduliert die Amplitude mit der <strong>Schwebungsfrequenz</strong> \(|f_1 - f_2|\). Langsame Schwebungen (2&ndash;6 Hz) nehmen wir als angenehmes &bdquo;Vibrato&ldquo; wahr. Aber im Bereich von <strong>20&ndash;50 Hz</strong> wird die Empfindung unangenehm: ein raues, kratzendes Gef&uuml;hl, das Helmholtz als <strong>Rauigkeit</strong> (<em>roughness</em>) bezeichnete.</p>
+
+<p>Helmholtz' These: <strong>Dissonanz ist Rauigkeit.</strong> Zwei T&ouml;ne klingen dissonant, wenn ihre Frequenzen (oder die ihrer Oberton-Paare) so dicht beieinander liegen, dass die Schwebungen im rauen Bereich landen.</p>
+
+<h3>Plomp &amp; Levelt: Die Dissonanzkurve</h3>
+
+<p>1965 pr&auml;zisierten Reinier Plomp und Willem Levelt die Idee mit einem ber&uuml;hmten Experiment. Sie spielten Versuchspersonen Paare reiner Sinust&ouml;ne vor und lie&szlig;en die empfundene Rauigkeit bewerten. Das Ergebnis: eine universelle <strong>Dissonanzkurve</strong>.</p>
+
+<p>Die Rauigkeit ist maximal, wenn der Frequenzabstand etwa <strong>25% der kritischen Bandbreite</strong> betr&auml;gt &ndash; ein Konzept aus der Psychoakustik, auf das wir in Kapitel 6 zur&uuml;ckkommen. Bei gr&ouml;&szlig;erem Abstand nimmt die Rauigkeit ab und erreicht bei einfachen Verh&auml;ltnissen lokale Minima.</p>
+
+<p>Die Plomp-Levelt-Kurve f&uuml;r zwei reine T&ouml;ne hat ein einfaches Muster: ein Maximum bei etwa einem Viertelton, dann monotoner Abfall. Aber f&uuml;r <em>komplexe</em> T&ouml;ne mit Oberton-Reihen (also alle echten Instrumente) summiert sich die Rauigkeit &uuml;ber alle Oberton-Paare &ndash; und dann tauchen die pythagor&auml;ischen Verh&auml;ltnisse als scharfe <strong>Minima</strong> auf. Die einfachen Br&uuml;che sind nicht arbitr&auml;r: Sie sind die Punkte, an denen die Oberton-Reihen beider T&ouml;ne <strong>maximal &uuml;berlappen</strong> statt gegeneinander zu schlagen.</p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Bewege den Frequenzregler und h&ouml;re, wie die Konsonanz sich ver&auml;ndert. Die Dissonanzkurve zeigt in Echtzeit, wo die rauen Stellen liegen. Wechsle zwischen Sinuston und Klangfarbe mit Oberton-Reihe &ndash; und beobachte, wie die Minima bei den pythagor&auml;ischen Verh&auml;ltnissen auftauchen.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-harmonic-explorer"></div>
+</div>
+
+<h3>Euler und die Gradus-Funktion</h3>
+
+<p>Leonhard Euler schlug 1739 ein einfaches Ma&szlig; f&uuml;r die &bdquo;Einfachheit&ldquo; eines Frequenzverh&auml;ltnisses vor: den <em>Gradus suavitatis</em> (Grad der Lieblichkeit). F&uuml;r ein Verh&auml;ltnis \(p{:}q\) (gek&uuml;rzt, also \(\gcd(p,q) = 1\)) berechnet man:</p>
+
+<div class="math-display">$$\Gamma(p{:}q) = 1 + \sum_{i} (p_i - 1)$$</div>
+
+<p>wobei \(p_i\) die Primfaktoren von \(p \cdot q\) sind (mit Vielfachheit). Je kleiner \(\Gamma\), desto konsonanter. Die Oktave (2:1) hat \(\Gamma = 2\), die Quinte (3:2) hat \(\Gamma = 4\), der Tritonus (45:32) hat \(\Gamma = 14\). Eulers Formel war seiner Zeit voraus &ndash; sie quantifiziert dieselbe Intuition, die Plomp und Levelt zwei Jahrhunderte sp&auml;ter experimentell best&auml;tigten.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Konsonanz ist nicht willk&uuml;rlich. Einfache Frequenzverh&auml;ltnisse klingen gut, weil sie minimale Rauigkeit erzeugen &ndash; das ist experimentell belegt (Plomp &amp; Levelt 1965) und theoretisch verstanden (Helmholtz 1863). Aber das Bild ist noch nicht vollst&auml;ndig: Rauigkeit erkl&auml;rt nicht, warum Dur fr&ouml;hlich und Moll traurig klingt. Daf&uuml;r brauchen wir zun&auml;chst die Oberton-Reihe.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 2. DIE OBERTONREIHE -->
+<!-- ================================================================ -->
+<section id="obertonreihe" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 2</p>
+<h2>Die Obertonreihe</h2>
+
+<p>Wenn du eine Gitarrensaite anschl&auml;gst, h&ouml;rst du nicht <em>einen</em> Ton. Du h&ouml;rst Dutzende &ndash; gleichzeitig. Was du als &bdquo;einen Ton&ldquo; wahrnimmst, ist in Wirklichkeit ein <strong>Akkord aus Oberton-Frequenzen</strong>, die dein Gehirn zu einer einzigen Klangfarbe verschmilzt.</p>
+
+<h3>Stehende Wellen auf einer Saite</h3>
+
+<p>Eine Saite der L&auml;nge \(L\), an beiden Enden eingespannt, kann nur auf bestimmte Weisen schwingen. Die <strong>Randbedingungen</strong> erzwingen, dass die Auslenkung an beiden Enden null ist. Die einzigen Funktionen, die das erf&uuml;llen, sind Sinuswellen, deren halbe Wellenl&auml;nge ganzzahlig in \(L\) passt:</p>
+
+<div class="math-display">$$y_n(x, t) = A_n \sin\!\Bigl(\frac{n\pi x}{L}\Bigr)\cos(2\pi f_n t), \quad f_n = n \cdot f_1, \quad n = 1, 2, 3, \ldots$$</div>
+
+<p>Der <span class="glossary" title="Grundton (Fundamentalfrequenz): Der tiefste Teilton einer schwingenden Saite, n=1. Bestimmt die wahrgenommene Tonh&ouml;he.">Grundton</span> \(f_1\) hat \(n=1\): eine einzelne halbe Sinuswelle. Der zweite Teilton \(f_2 = 2f_1\) hat zwei Halbwellen, schwingt also eine Oktave h&ouml;her. Der dritte \(f_3 = 3f_1\) eine Quinte dar&uuml;ber. Und so weiter.</p>
+
+<figure class="my-6">
+  <img src="img/harmonic-partials.svg" alt="Die ersten sechs Teilt&ouml;ne einer schwingenden Saite als stehende Wellen, mit 1, 2, 3, 4, 5 und 6 Schwingungsb&auml;uchen" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Die ersten sechs Harmonischen einer Saite. Jede Schwingungsmode hat genau \(n\) Schwingungsb&auml;uche.</figcaption>
+</figure>
+
+<p>Diese diskreten Frequenzen \(f_n = n \cdot f_1\) bilden die <strong>Obertonreihe</strong> (<em>harmonic series</em>). Sie ist keine menschliche Erfindung &ndash; sie folgt direkt aus der Physik schwingender Saiten. Und sie enth&auml;lt, ganz von selbst, die Intervalle der Musik:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Teilton</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Verh&auml;ltnis zu \(f_1\)</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Intervall</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Beispiel (C = 131 Hz)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">1</td><td style="text-align:center;">1</td><td>Grundton</td><td style="text-align:center;">C (131 Hz)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">2</td><td style="text-align:center;">2</td><td>Oktave</td><td style="text-align:center;">C (262 Hz)</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">3</td><td style="text-align:center;">3</td><td>Oktave + Quinte</td><td style="text-align:center;">G (393 Hz)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">4</td><td style="text-align:center;">4</td><td>Zwei Oktaven</td><td style="text-align:center;">C (524 Hz)</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">5</td><td style="text-align:center;">5</td><td>Zwei Okt. + gro&szlig;e Terz</td><td style="text-align:center;">E (655 Hz)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">6</td><td style="text-align:center;">6</td><td>Zwei Okt. + Quinte</td><td style="text-align:center;">G (786 Hz)</td></tr>
+    <tr style="color:#f59e0b;"><td style="text-align:center;padding:0.3rem 0.6rem;">7</td><td style="text-align:center;">7</td><td>Naturseptime (kein Klavier-Ton!)</td><td style="text-align:center;">B&#x266D; (917 Hz)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Beachte: Die Teilt&ouml;ne 4, 5, 6 bilden das Verh&auml;ltnis \(4{:}5{:}6\). Das ist ein <strong>Dur-Dreiklang</strong>. Die Natur &bdquo;spielt&ldquo; Dur ganz von allein. Moll muss man suchen.</p>
+
+<h3>Warum jedes Instrument anders klingt</h3>
+
+<p>Die Obertonreihe ist f&uuml;r jedes Instrument gleich &ndash; die <em>Frequenzen</em> sind immer \(f, 2f, 3f, \ldots\). Was sich unterscheidet, sind die <strong>relativen Lautst&auml;rken</strong> der Teilt&ouml;ne: die Amplituden \(A_1, A_2, A_3, \ldots\). Genau das macht die <span class="glossary" title="Klangfarbe (Timbre): Der Charakter eines Tons, der ihn von anderen T&ouml;nen gleicher Tonh&ouml;he und Lautst&auml;rke unterscheidet. Bestimmt durch das Oberton-Spektrum.">Klangfarbe</span> (<em>Timbre</em>) aus.</p>
+
+<p>Eine Fl&ouml;te hat fast nur den Grundton &ndash; beinahe ein reiner Sinus. Eine Oboe hat starke ungerade Oberton-Anteile &ndash; daher ihr nasaler Klang. Eine Trompete hat viele starke Oberton-Paare &ndash; daher ihr brillanter Klang. Ein Klavier hat am Anfang extrem viele Oberton-Anteile (der Hammeranschlag), die dann unterschiedlich schnell verklingen.</p>
+
+<figure class="my-6">
+  <img src="img/spectrogram-violin.jpg" alt="Spektrogramm einer Violine, das die Grundfrequenz und ihre Oberton-Reihe als horizontale Linien zeigt" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Spektrogramm einer Violine. Die horizontalen Linien sind die Teilt&ouml;ne: Grundfrequenz ganz unten, Oberton-Reihe dar&uuml;ber. Die Helligkeiten zeigen die relativen Amplituden.</figcaption>
+</figure>
+
+<h3>Die Fourier-Zerlegung: Jeder Klang ist eine Summe</h3>
+
+<p>Die mathematische Formulierung ist elegant. Jede periodische Funktion l&auml;sst sich als Summe von Sinus- und Cosinusfunktionen darstellen &ndash; die <strong>Fourier-Reihe</strong>:</p>
+
+<div class="math-display">$$f(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \bigl[a_n \cos(2\pi n f_1 t) + b_n \sin(2\pi n f_1 t)\bigr]$$</div>
+
+<p>Die Koeffizienten \(a_n, b_n\) (oder &auml;quivalent die Amplituden \(A_n\) und Phasen \(\phi_n\)) sind der <strong>Fingerabdruck</strong> des Klangs. Das Spektrum <em>ist</em> die Klangfarbe.</p>
+
+<figure class="my-6">
+  <img src="img/waveforms.svg" alt="Drei Wellenformen nebeneinander: Sinus (gl&auml;tt), S&auml;gezahn (alle Oberton-Anteile) und Rechteck (nur ungerade Oberton-Anteile)" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Drei klassische Wellenformen. Sinus: nur Grundton. S&auml;gezahn: alle Oberton-Anteile mit \(A_n = 1/n\). Rechteck: nur ungerade Oberton-Anteile.</figcaption>
+</figure>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Mische die Amplituden der ersten acht Oberton-Anteile und h&ouml;re, wie sich die Klangfarbe ver&auml;ndert. Starte mit einem reinen Sinus (nur \(A_1\)), dann f&uuml;ge nacheinander Oberton-Anteile hinzu. Kannst du eine Fl&ouml;te, eine Klarinette oder ein Cembalo nachbauen?</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-overtone-viz"></div>
+</div>
+
+<h3>Warum Oberton-Reihen Konsonanz erkl&auml;ren</h3>
+
+<p>Jetzt schlie&szlig;t sich der Kreis zu Kapitel 1. Wenn zwei T&ouml;ne im Verh&auml;ltnis \(3{:}2\) (Quinte) stehen, dann ist der 3. Teilton des unteren Tons <strong>identisch</strong> mit dem 2. Teilton des oberen Tons. Die Oberton-Reihen &uuml;berlappen &ndash; sie verschmelzen. Bei einem Frequenzverh&auml;ltnis von \(45{:}32\) (Tritonus) &uuml;berlappen die Oberton-Reihen erst bei sehr hohen Teilt&ouml;nen &ndash; und in der Zwischenzeit erzeugen eng benachbarte Oberton-Paare <strong>Rauigkeit</strong>.</p>
+
+<p>Die Plomp-Levelt-Dissonanzkurve f&uuml;r komplexe T&ouml;ne ist nichts anderes als die <strong>Summe der Rauigkeiten aller Oberton-Paare</strong>. Die Konsonanz eines Intervalls ist keine metaphysische Eigenschaft &ndash; sie ist eine berechenbare Gr&ouml;&szlig;e, die aus der Physik stehender Wellen folgt.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Jeder Klang ist eine Summe harmonischer Teilt&ouml;ne (\(f, 2f, 3f, \ldots\)). Die relativen Amplituden bestimmen die Klangfarbe. Konsonanz entsteht, wenn sich Oberton-Reihen &uuml;berlappen. Und die Oberton-Reihe enth&auml;lt bereits den Dur-Dreiklang: die Teilt&ouml;ne 4, 5, 6. Was aber ist mit Moll?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 3. DUR, MOLL UND DIE FRAGE NACH DEM GEF&Uuml;HL -->
+<!-- ================================================================ -->
+<section id="dur-moll" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Kapitel 3</p>
+<h2>Dur, Moll und die Frage nach dem Gef&uuml;hl</h2>
+
+<p>Dur klingt fr&ouml;hlich, Moll klingt traurig &ndash; das ist eines der hartn&auml;ckigsten Klischees der Musiktheorie. Und wie alle guten Klischees enth&auml;lt es einen wahren Kern, aber auch eine &Uuml;bervereinfachung.</p>
+
+<h3>Der Dur-Dreiklang: 4:5:6</h3>
+
+<p>Ein Dur-Dreiklang besteht aus Grundton, gro&szlig;er Terz und Quinte. In reiner Stimmung lauten die Frequenzverh&auml;ltnisse:</p>
+
+<div class="math-display">$$\text{Dur:} \quad 4 : 5 : 6$$</div>
+
+<p>Das bedeutet: Wenn der Grundton bei 400 Hz liegt, liegt die Terz bei 500 Hz und die Quinte bei 600 Hz. Drei aufeinanderfolgende ganzzahlige Vielfache. Bemerkenswert einfach.</p>
+
+<p>Mehr noch: Die Frequenzen 400, 500 und 600 Hz sind alle Vielfache von <strong>100 Hz</strong> (dem 4., 5. und 6. Teilton). Der Dur-Dreiklang klingt, als w&auml;re er ein <em>Fragment einer einzigen Oberton-Reihe</em> &ndash; weil er es ist. Das erkl&auml;rt die empfundene Verschmelzung: Das Gehirn interpretiert die drei T&ouml;ne als Teile <strong>eines einzigen Klangs</strong> mit der (virtuellen) Grundfrequenz 100 Hz.</p>
+
+<h3>Der Moll-Dreiklang: 10:12:15</h3>
+
+<p>Ein Moll-Dreiklang besteht aus Grundton, kleiner Terz und Quinte. Die Frequenzverh&auml;ltnisse:</p>
+
+<div class="math-display">$$\text{Moll:} \quad 10 : 12 : 15$$</div>
+
+<p>Statt \(4{:}5{:}6\) haben wir \(10{:}12{:}15\) &ndash; die Zahlen sind deutlich gr&ouml;&szlig;er. Der kleinste gemeinsame Grundton (das kgV) w&auml;re 1, aber die Frequenzen 10, 12 und 15 sind <em>nicht</em> aufeinanderfolgende Vielfache einer einzigen Frequenz. Die virtuelle Grundfrequenz ist ambig: Ist es der 10. Teilton von etwas? Der 12.? Die Verschmelzung ist <strong>unvollst&auml;ndig</strong>.</p>
+
+<p>Norman Cook formulierte es 2007 so: Dur suggeriert <strong>einen Sprecher</strong> (eine koh&auml;rente Oberton-Quelle), Moll suggeriert <strong>mehrere Sprecher</strong> (eine ambige Quellenzuordnung). Die Traurigkeit von Moll w&auml;re demnach keine direkte Emotion, sondern eine <em>kognitive Unsicherheit</em>: das Gehirn kann die T&ouml;ne nicht so sauber zu einer einzigen Quelle zusammenf&uuml;gen.</p>
+
+<h3>Was sagt die Psychologie?</h3>
+
+<p>Die empirische Forschung best&auml;tigt den Dur-fr&ouml;hlich/Moll-traurig-Effekt f&uuml;r westliche H&ouml;rer mit enormer Konsistenz. In Studien mit Tausenden von Teilnehmern ordnen &uuml;ber 90% der westlich sozialisierten Erwachsenen Dur als &bdquo;happy&ldquo; und Moll als &bdquo;sad&ldquo; ein (Kastner &amp; Crowder, 1990; Dalla Bella et al., 2001).</p>
+
+<p>Aber ist das Biologie oder Kultur?</p>
+
+<h3>Die Tsimane-Studie: Ein Experiment im Regenwald</h3>
+
+<p>2016 ver&ouml;ffentlichten Josh McDermott und Kollegen eine bemerkenswerte Studie im Fachjournal <em>Nature</em>. Sie reisten zu den <strong>Tsimane</strong>, einer indigenen Bev&ouml;lkerungsgruppe im bolivianischen Amazonasgebiet, die kaum Kontakt mit westlicher Musik hatte.</p>
+
+<p>Das Ergebnis war &uuml;berraschend: Die Tsimane bewerteten konsonante und dissonante Intervalle als <strong>gleich angenehm</strong>. Sie hatten keine Pr&auml;ferenz f&uuml;r Oktaven, Quinten oder Dur-Dreikl&auml;nge gegen&uuml;ber dissonanten Kombinationen. F&uuml;r westliche H&ouml;rer ist diese Pr&auml;ferenz so selbstverst&auml;ndlich, dass sie nat&uuml;rlich erscheint &ndash; aber die Tsimane-Daten zeigen: <strong>Die Pr&auml;ferenz f&uuml;r Konsonanz ist (zumindest teilweise) gelernt.</strong></p>
+
+<p>Allerdings: Die Tsimane konnten Rauigkeit durchaus wahrnehmen &ndash; sie fanden raue Kl&auml;nge unangenehm. Was sie nicht hatten, war die <em>&auml;sthetische Pr&auml;ferenz</em> f&uuml;r einfache Frequenzverh&auml;ltnisse. Die sensorische Grundlage (Rauigkeitserkennung) scheint universell zu sein; die emotionale Bewertung (Dur = fr&ouml;hlich) ist kulturell gepr&auml;gt.</p>
+
+<h3>Natur oder Kultur? Beides.</h3>
+
+<p>Die aktuelle wissenschaftliche Sicht l&auml;sst sich so zusammenfassen:</p>
+
+<p><strong>Universell (Natur):</strong></p>
+<p>&bull; Rauigkeitserkennung ist angeboren (schon S&auml;uglinge reagieren auf Dissonanz).<br>
+&bull; Die Oberton-Reihe ist eine physikalische Tatsache, keine kulturelle Konvention.<br>
+&bull; Die F&auml;higkeit zur Tonh&ouml;henunterscheidung ist angeboren.</p>
+
+<p><strong>Kulturell gepr&auml;gt (Nurture):</strong></p>
+<p>&bull; Die <em>Pr&auml;ferenz</em> f&uuml;r Konsonanz vs. Dissonanz.<br>
+&bull; Die emotionale Zuordnung Dur/fr&ouml;hlich, Moll/traurig.<br>
+&bull; Welche Skalen und Stimmungen als &bdquo;richtig&ldquo; empfunden werden.<br>
+&bull; Welche Akkordfolgen &bdquo;Spannung&ldquo; und &bdquo;Aufl&ouml;sung&ldquo; erzeugen.</p>
+
+<p>Die Biologie liefert das <strong>Rohmaterial</strong> (Oberton-Reihe, Rauigkeitserkennung, Frequenzanalyse im Innenohr). Die Kultur formt daraus <strong>musikalische Grammatiken</strong>. Dur klingt fr&ouml;hlich &ndash; f&uuml;r uns. Aber nicht f&uuml;r alle Menschen auf der Welt.</p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Spiele einen Dur-Dreiklang und einen Moll-Dreiklang. Sieh die Frequenzverh&auml;ltnisse, h&ouml;re den Klang, beobachte die &Uuml;berlappung der Oberton-Reihen. Verschiebe den Grundton &ndash; das Muster bleibt gleich, die Empfindung auch.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-triad-explorer"></div>
+</div>
+
+<h3>Jenseits von Dur und Moll</h3>
+
+<p>Westliche Musik beschr&auml;nkt sich auf 12 T&ouml;ne pro Oktave. Aber andere Kulturen nutzen v&ouml;llig andere Systeme:</p>
+
+<p>&bull; <strong>Arabische Maqam-Musik</strong> verwendet Viertelton-Schritte &ndash; 24 T&ouml;ne pro Oktave, mit Intervallen, die im westlichen System nicht existieren.<br>
+&bull; <strong>Javanische Gamelan-Musik</strong> verwendet Slendro (5 T&ouml;ne) und Pelog (7 T&ouml;ne) &ndash; Skalen, die absichtlich &bdquo;verstimmt&ldquo; klingen, um Schwebungen zu erzeugen, die als sch&ouml;n empfunden werden.<br>
+&bull; <strong>Indische Raga-Musik</strong> definiert nicht nur Skalen, sondern auch <em>aufsteigende und absteigende Regeln</em>, emotionale Zuordnungen zu Tageszeiten und Jahreszeiten.<br>
+&bull; <strong>Balinesische Gamelan-Musik</strong> stimmt sogar absichtlich Instrumenten-Paare gegeneinander <em>leicht verstimmt</em>, um ein schwebendes &bdquo;Ombak&ldquo; (Welle) zu erzeugen.</p>
+
+<p>Was all diese Systeme teilen: Sie nutzen die <strong>Oberton-Reihe als Rohmaterial</strong>, aber formen daraus ganz verschiedene &auml;sthetische Landschaften. Die Physik der Schwingungen ist universell; die Musik ist es nicht.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Dur (4:5:6) suggeriert eine koh&auml;rente Oberton-Quelle &ndash; daher die empfundene &bdquo;Klarheit&ldquo;. Moll (10:12:15) ist ambiger. Aber die emotionale Bewertung ist kulturell gepr&auml;gt: Die Tsimane haben keine Konsonanz-Pr&auml;ferenz. Die Biologie liefert das Rohmaterial (Oberton-Reihe, Rauigkeitserkennung), die Kultur formt die Musik. Und jetzt stehen wir vor einem praktischen Problem: Wie stimmen wir ein Instrument?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 4. DAS KOMMA DES PYTHAGORAS -->
+<!-- ================================================================ -->
+<section id="pythagoras-komma" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 4</p>
+<h2>Das Komma des Pythagoras</h2>
+
+<p>Stell dir vor, du stimmst ein Klavier. Du beginnst mit einem C und stimmst von dort aus in reinen Quinten aufw&auml;rts: C &rarr; G &rarr; D &rarr; A &rarr; E &rarr; B &rarr; F&#x266F; &rarr; C&#x266F; &rarr; G&#x266F; &rarr; D&#x266F; &rarr; A&#x266F; &rarr; E&#x266F; &rarr; B&#x266F;. Nach <strong>12 Quinten</strong> bist du theoretisch wieder beim Ausgangs-C angekommen &ndash; sieben Oktaven h&ouml;her.</p>
+
+<p>Theoretisch. In der Praxis passiert etwas Unbequemes.</p>
+
+<h3>Die Rechnung</h3>
+
+<p>Zw&ouml;lf reine Quinten aufw&auml;rts bedeuten: Multipliziere die Frequenz 12 Mal mit \(3/2\).</p>
+
+<div class="math-display">$$\Bigl(\frac{3}{2}\Bigr)^{12} = \frac{3^{12}}{2^{12}} = \frac{531\,441}{4\,096} \approx 129{,}746$$</div>
+
+<p>Sieben Oktaven aufw&auml;rts bedeuten: Multipliziere mit \(2^7 = 128\).</p>
+
+<div class="math-display">$$2^7 = 128$$</div>
+
+<p>Das Verh&auml;ltnis der beiden:</p>
+
+<div class="math-display">$$\frac{(3/2)^{12}}{2^7} = \frac{3^{12}}{2^{19}} = \frac{531\,441}{524\,288} \approx 1{,}01364$$</div>
+
+<p>Das ist <strong>nicht 1</strong>. Es fehlen \(1{,}36\%\) &ndash; umgerechnet <strong>23,46 Cent</strong>. (Ein <span class="glossary" title="Cent: Logarithmisches Ma&szlig; f&uuml;r Intervallgr&ouml;&szlig;e. 100 Cent = 1 Halbton in gleichstufiger Stimmung. 1 Cent = kaum h&ouml;rbar, 5-10 Cent = sp&uuml;rbar.">Cent</span> ist ein Hundertstel eines gleichstufigen Halbtons. Die meisten Menschen h&ouml;ren Unterschiede ab etwa 5&ndash;10 Cent.) Der Unterschied von 23,46 Cent ist <strong>eindeutig h&ouml;rbar</strong>.</p>
+
+<p>Dieses winzige, aber hartn&auml;ckige Verh&auml;ltnis \(3^{12}/2^{19}\) hei&szlig;t das <strong>pythagor&auml;ische Komma</strong>. Es ist der mathematische Beweis, dass der Quintenzirkel sich <strong>nicht exakt schlie&szlig;t</strong>.</p>
+
+<figure class="my-6">
+  <img src="img/circle-of-fifths.svg" alt="Der Quintenzirkel als Kreis mit 12 Stationen, wobei die letzte Station (B-sharp) nicht exakt auf die erste (C) trifft &ndash; Darstellung der L&uuml;cke des pythagor&auml;ischen Kommas" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:420px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Der Quintenzirkel: 12 reine Quinten schlie&szlig;en sich nicht ganz. Die L&uuml;cke ist das pythagor&auml;ische Komma (23,46 Cent).</figcaption>
+</figure>
+
+<h3>Warum das ein fundamentales Problem ist</h3>
+
+<p>Der Grund liegt in der Zahlentheorie. Reine Quinten sind Potenzen von 3 (genauer: \(3^n / 2^m\)), und Oktaven sind Potenzen von 2. Eine reine Quinte w&uuml;rde exakt in Oktaven aufgehen, wenn es ganze Zahlen \(n, m\) g&auml;be mit \((3/2)^n = 2^m\), also \(3^n = 2^{n+m}\). Aber die Gleichung</p>
+
+<div class="math-display">$$3^n = 2^k$$</div>
+
+<p>hat f&uuml;r positive ganze Zahlen \(n, k\) <strong>keine L&ouml;sung</strong>. (Beweis: Links ist die Zahl ungerade, rechts gerade. Widerspruch.) Das pythagor&auml;ische Komma ist keine Ungenauigkeit &ndash; es ist ein <strong>Theorem</strong>. Quinten und Oktaven sind <em>inkommensurabel</em>, wie die Diagonale eines Quadrats zu seiner Seitenlänge.</p>
+
+<figure class="my-6">
+  <img src="img/pythagorean-comma.svg" alt="Visualisierung des pythagor&auml;ischen Kommas: Quintenspirale vs. Oktavenleiter, die sich nie exakt treffen" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:500px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">12 reine Quinten (Spirale) vs. 7 Oktaven (gerade Linie). Sie treffen sich fast &ndash; aber nie exakt.</figcaption>
+</figure>
+
+<h3>Die Wolfsquinte</h3>
+
+<p>In der Praxis bedeutet das pythagor&auml;ische Komma: Wenn man 11 von 12 Quinten rein stimmt, muss die <strong>letzte Quinte</strong> das gesamte Komma schlucken &ndash; sie wird um 23,46 Cent zu eng. Diese verst&uuml;mmelte Quinte klingt so schlecht, dass man ihr den Namen <strong>Wolfsquinte</strong> gab &ndash; sie &bdquo;heult wie ein Wolf&ldquo;.</p>
+
+<p>In der pythagor&auml;ischen Stimmung lag die Wolfsquinte &uuml;blicherweise zwischen G&#x266F; und E&#x266D;. Das bedeutete: Tonarten mit vielen Kreuz- oder Be-Vorzeichen waren <strong>unbenutzbar</strong>. Ein Komponist konnte in C-Dur wunderbar schreiben, aber F&#x266F;-Dur klang grauenhaft. Das schr&auml;nkte die Musik jahrhundertelang ein.</p>
+
+<h3>Andere Kommata: Das syntonische Komma</h3>
+
+<p>Das pythagor&auml;ische Komma ist nicht das einzige Problem. Es gibt auch das <strong>syntonische Komma</strong> (81:80, ca. 21,5 Cent): der Unterschied zwischen einer pythagor&auml;ischen gro&szlig;en Terz (\(81/64\), vier Quinten aufw&auml;rts) und einer reinen gro&szlig;en Terz (\(5/4 = 80/64\)).</p>
+
+<div class="math-display">$$\frac{81/64}{5/4} = \frac{81}{80} \approx 1{,}0125 \approx 21{,}5 \,\text{Cent}$$</div>
+
+<p>Das pythagor&auml;ische System kennt nur die Primzahlen 2 und 3. Sobald man die Primzahl 5 hinzunimmt (f&uuml;r reine Terzen), entsteht ein neues Komma. Man kann reine Quinten <em>oder</em> reine Terzen haben &ndash; aber <strong>nicht beides gleichzeitig</strong>. Das ist die grundlegende Spannung der Stimmungstheorie.</p>
+
+<h3>Die historischen Stimmungssysteme im Vergleich</h3>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Stimmung</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Quinten</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Terzen</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Alle Tonarten?</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Epoche</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Pythagor&auml;isch</td><td style="text-align:center;color:#34d399;">11 rein, 1 Wolf</td><td style="text-align:center;color:#f87171;">Alle zu gro&szlig;</td><td style="text-align:center;color:#f87171;">Nein</td><td>Antike &ndash; 1400</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Mitteltönig (1/4)</td><td style="text-align:center;color:#f59e0b;">8 eng, 1 Wolf</td><td style="text-align:center;color:#34d399;">8 rein</td><td style="text-align:center;color:#f87171;">Nein</td><td>1500 &ndash; 1700</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Werckmeister III</td><td style="text-align:center;color:#f59e0b;">Unregelm&auml;&szlig;ig</td><td style="text-align:center;color:#f59e0b;">Unregelm&auml;&szlig;ig</td><td style="text-align:center;color:#34d399;">Ja (Charakter)</td><td>1691</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Gleichstufig (12-TET)</td><td style="text-align:center;color:#f59e0b;">Alle ~2 Cent eng</td><td style="text-align:center;color:#f59e0b;">Alle ~14 Cent zu gro&szlig;</td><td style="text-align:center;color:#34d399;">Ja (identisch)</td><td>ab ~1800</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>W&auml;hle eine Stimmung und h&ouml;re, wie derselbe Akkord in verschiedenen Tonarten klingt. In pythagor&auml;ischer Stimmung klingt C-Dur perfekt, aber F&#x266F;-Dur grauenhaft. In gleichstufiger Stimmung klingt alles gleich &ndash; aber nichts ist perfekt rein.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-tuning-compare"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Das pythagor&auml;ische Komma (\(3^{12}/2^{19} \approx 1{,}0136\)) ist ein zahlentheoretisches Theorem: Quinten und Oktaven sind inkommensurabel. Kein Stimmungssystem kann gleichzeitig reine Quinten, reine Terzen und Transponierbarkeit bieten. Jede Stimmung ist ein <strong>Kompromiss</strong>. Der radikalste Kompromiss &ndash; die gleichstufige Stimmung &ndash; brauchte Jahrhunderte, um sich durchzusetzen.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 5. DAS WOHLTEMPERIERTE KLAVIER -->
+<!-- ================================================================ -->
+<section id="wohltemperiert" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 5</p>
+<h2>Das wohltemperierte Klavier</h2>
+
+<p>1722 schrieb Johann Sebastian Bach eine Sammlung von 24 Pr&auml;ludien und Fugen &ndash; je eines in jeder Dur- und Moll-Tonart. Er nannte sie <em>&bdquo;Das Wohltemperierte Clavier&ldquo;</em>. Der Titel war ein Statement: <strong>Alle Tonarten sind spielbar.</strong></p>
+
+<figure class="my-6">
+  <img src="img/bach-wtc-title.jpg" alt="Titelblatt von Johann Sebastian Bachs &bdquo;Das Wohltemperierte Clavier&ldquo;, 1722, mit der handschriftlichen Widmung" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:480px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Titelblatt des Wohltemperierten Klaviers (1722). Bach demonstrierte, dass ein einziges Stimmungssystem alle 24 Tonarten erm&ouml;glicht. <span class="text-gray-700">Public Domain.</span></figcaption>
+</figure>
+
+<p>Welche Stimmung Bach genau verwendete, ist bis heute umstritten. Es war <em>nicht</em> die gleichstufige Stimmung &ndash; die kam erst sp&auml;ter. Wahrscheinlich war es eine <strong>wohltemperierte Stimmung</strong> (wie Werckmeister III oder eine &auml;hnliche), bei der die Quinten unregelm&auml;&szlig;ig verengt werden, sodass es keine Wolfsquinte gibt, aber jede Tonart einen eigenen Charakter beh&auml;lt.</p>
+
+<h3>Der Weg zur Gleichstufigkeit</h3>
+
+<p>Die Idee, alle 12 Halbt&ouml;ne exakt gleich gro&szlig; zu machen, ist &auml;lter, als man denkt. Der chinesische Gelehrte <strong>Zhu Zaiyu</strong> berechnete sie bereits 1584. In Europa publizierte <strong>Simon Stevin</strong> um 1585 dieselbe Idee. Aber die Umsetzung dauerte Jahrhunderte &ndash; Musiker lehnten die gleichstufige Stimmung ab, weil die Terzen zu unrein klangen.</p>
+
+<p>Die mathematische Formulierung ist elegant. Wir suchen 12 gleiche Schritte, die zusammen eine Oktave (Faktor 2) ergeben. Jeder Schritt muss also den Faktor</p>
+
+<div class="math-display">$$s = \sqrt[12]{2} = 2^{1/12} \approx 1{,}05946$$</div>
+
+<p>haben. Die Frequenz des \(n\)-ten Halbtons &uuml;ber einem Grundton \(f_0\) ist:</p>
+
+<div class="math-display">$$f_n = f_0 \cdot 2^{n/12}$$</div>
+
+<p>Ausgehend von A4 = 440 Hz ergibt das zum Beispiel:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Ton</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Halbt&ouml;ne &uuml;ber A</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Gleichstufig (Hz)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Rein (Hz)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Differenz (Cent)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">A</td><td style="text-align:center;">0</td><td style="text-align:center;">440,00</td><td style="text-align:center;">440,00</td><td style="text-align:center;">0,0</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">C&#x266F;</td><td style="text-align:center;">4</td><td style="text-align:center;">554,37</td><td style="text-align:center;">550,00</td><td style="text-align:center;">+13,7</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">D</td><td style="text-align:center;">5</td><td style="text-align:center;">587,33</td><td style="text-align:center;">586,67</td><td style="text-align:center;">+1,9</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">E</td><td style="text-align:center;">7</td><td style="text-align:center;">659,26</td><td style="text-align:center;">660,00</td><td style="text-align:center;">&minus;1,9</td></tr>
+    <tr style="color:#f59e0b;"><td style="padding:0.3rem 0.6rem;">E (Quinte)</td><td style="text-align:center;">7</td><td style="text-align:center;">659,26</td><td style="text-align:center;">660,00</td><td style="text-align:center;">&minus;1,9</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Die gleichstufige Quinte ist nur 1,9 Cent zu eng &ndash; kaum h&ouml;rbar. Aber die gleichstufige gro&szlig;e Terz ist <strong>13,7 Cent zu gro&szlig;</strong> &ndash; das h&ouml;ren trainierte Ohren deutlich. Das ist der Preis der Gleichstufigkeit: perfekte Transponierbarkeit gegen leicht unreine Terzen.</p>
+
+<h3>Die Logarithmus-Idee</h3>
+
+<p>Warum 12? Warum nicht 19 oder 31 oder 53 T&ouml;ne pro Oktave? Die Antwort liegt in der Approximationstheorie. Die Quinte hat das Frequenzverh&auml;ltnis \(3/2\). In der gleichstufigen Stimmung mit \(N\) T&ouml;nen pro Oktave wird sie durch \(2^{k/N}\) approximiert, wobei \(k\) die Anzahl der Halbt&ouml;ne ist. Wir suchen:</p>
+
+<div class="math-display">$$2^{k/N} \approx \frac{3}{2} \quad\Longleftrightarrow\quad \frac{k}{N} \approx \log_2\!\Bigl(\frac{3}{2}\Bigr) \approx 0{,}58496$$</div>
+
+<p>Die besten <span class="glossary" title="Kettenbr&uuml;che: Methode zur systematischen Approximation irrationaler Zahlen durch Br&uuml;che. Liefert die besten Approximationen f&uuml;r gegebene Nennergr&ouml;&szlig;e.">Kettenbr&uuml;che</span>-Approximationen von \(0{,}58496\ldots\) sind: \(1/2\), \(3/5\), \(7/12\), \(24/41\), \(31/53\), \(\ldots\) Die Nenner geben die Anzahl der T&ouml;ne pro Oktave: 2, 5, <strong>12</strong>, 41, <strong>53</strong>. Zw&ouml;lf ist der erste Nenner, der eine hervorragende Approximation der Quinte liefert (\(7/12 = 0{,}58333\ldots\), Fehler nur 1,9 Cent). F&uuml;r <em>noch</em> reinere Quinten und Terzen w&auml;ren 53 T&ouml;ne pro Oktave ideal &ndash; aber 53 Tasten pro Oktave sind f&uuml;r menschliche H&auml;nde nicht praktikabel.</p>
+
+<h3>Die Ironie der Gleichstufigkeit</h3>
+
+<p>Die gleichstufige Stimmung ist mathematisch gesehen ein <strong>Verzicht auf jede reine Harmonie</strong> zugunsten einer einzigen Eigenschaft: Translationsinvarianz. Jeder Halbtonschritt ist gleich gro&szlig;, also klingt jede Tonart gleich. Modulation wird frei. Transposition wird trivial.</p>
+
+<p>In der Sprache der Mathematik: Die gleichstufige Stimmung ersetzt die <strong>multiplikative Gruppe</strong> der rationalen Frequenzverh&auml;ltnisse durch die <strong>zyklische Gruppe</strong> \(\mathbb{Z}_{12}\). Ganzzahlige Verh&auml;ltnisse werden durch irrationale Zahlen ersetzt &ndash; \(\sqrt[12]{2}\) ist irrational, wie Pythagoras' Diagonale. Der Preis: Kein einziges Intervall au&szlig;er der Oktave ist rein. Der Gewinn: Jedes Intervall ist &uuml;berall gleich.</p>
+
+<p>Historisch war das ein radikaler Kompromiss. Barocke Musiker lehnten ihn ab, weil sie den Charakter der einzelnen Tonarten sch&auml;tzten &ndash; D-Dur klang in Werckmeister-Stimmung anders als B-Dur, und das war gew&uuml;nscht. Erst das 19. Jahrhundert mit seinem wachsenden Bed&uuml;rfnis nach Modulation und Chromatik machte die Gleichstufigkeit zur Standardstimmung. Heute ist sie so dominant, dass die meisten Menschen sie f&uuml;r &bdquo;nat&uuml;rlich&ldquo; halten &ndash; was sie definitiv nicht ist.</p>
+
+<h3>Microtonale Renaissance</h3>
+
+<p>Im 20. und 21. Jahrhundert gibt es eine Gegenbewegung. Komponisten wie Harry Partch (43 T&ouml;ne pro Oktave), Ben Johnston (reine Stimmung) und Sevish (elektronische Microtonalmusik) erforschen Stimmungssysteme jenseits der 12-TET. Software-Synthesizer erm&ouml;glichen beliebige Stimmungen ohne physische Einschr&auml;nkungen. Die Frage &bdquo;Wie viele T&ouml;ne braucht eine Oktave?&ldquo; ist wieder offen.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Die gleichstufige Stimmung mit \(f_n = f_0 \cdot 2^{n/12}\) opfert Reinheit f&uuml;r Transponierbarkeit. Zw&ouml;lf T&ouml;ne sind kein Naturgesetz, sondern die beste Kettenbr&uuml;che-Approximation, die noch auf eine Tastatur passt. Bachs Wohltemperiertes Klavier feierte den Sieg &uuml;ber die Wolfsquinte. Aber &ndash; <em>warum</em> akzeptiert unser Geh&ouml;r diese Kompromisse? Wie verarbeitet das Ohr Frequenzen &uuml;berhaupt?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 6. DAS WOHLTEMPERIERTE GEH&Ouml;R -->
+<!-- ================================================================ -->
+<section id="gehoer" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Kapitel 6</p>
+<h2>Das wohltemperierte Geh&ouml;r</h2>
+
+<p>Bisher haben wir Musik als physikalisches Ph&auml;nomen betrachtet &ndash; Frequenzen, Verh&auml;ltnisse, stehende Wellen. Aber Musik existiert nicht in der Luft. Sie existiert im <strong>Gehirn</strong>. Und zwischen Schallwelle und Bewusstsein liegt ein &uuml;berraschend komplexes Organ: das <strong>Innenohr</strong>.</p>
+
+<h3>Die Cochlea: Eine biologische Fourier-Analyse</h3>
+
+<p>Tief im Innenohr liegt die <span class="glossary" title="Cochlea (Schnecke): Spiralf&ouml;rmiges Organ im Innenohr, das Schallwellen in Nervensignale umwandelt. F&uuml;hrt eine mechanische Frequenzanalyse durch.">Cochlea</span> (H&ouml;rschnecke) &ndash; ein spiralf&ouml;rmiger, mit Fl&uuml;ssigkeit gef&uuml;llter Kanal, etwa so gro&szlig; wie eine Erbse. Entrollt misst sie ungef&auml;hr 3,5 Zentimeter. Auf ihrer gesamten L&auml;nge liegt die <strong>Basilarmembran</strong> &ndash; und diese Membran ist der Schl&uuml;ssel zu allem.</p>
+
+<p>Die Basilarmembran ist am Eingang (nahe dem ovalen Fenster) <strong>schmal und steif</strong>, und am Ende (Apex) <strong>breit und weich</strong>. Hohe Frequenzen bringen den steifen Anfang zum Schwingen, tiefe Frequenzen den weichen Teil am Ende. Jede Stelle der Membran reagiert am st&auml;rksten auf eine bestimmte Frequenz &ndash; die <span class="glossary" title="Tonotopie: Die r&auml;umliche Zuordnung von Frequenzen zu Orten auf der Basilarmembran. Hohe Frequenzen am Eingang, tiefe am Ende.">tonotopische Abbildung</span>.</p>
+
+<figure class="my-6">
+  <img src="img/cochlea-frequency.svg" alt="Schema der entrollten Cochlea mit Frequenzzuordnung: 20.000 Hz am Eingang, 20 Hz am Apex, logarithmische Verteilung" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:500px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Die entrollte Cochlea: Jeder Ort auf der Basilarmembran ist auf eine bestimmte Frequenz &bdquo;gestimmt&ldquo;. Die Zuordnung ist ann&auml;hernd logarithmisch.</figcaption>
+</figure>
+
+<p>Das ist bemerkenswert: Die Cochlea f&uuml;hrt im Wesentlichen eine <strong>Fourier-Analyse in Hardware</strong> durch. Sie zerlegt den eingehenden Schall in seine Frequenzkomponenten &ndash; nicht durch Mathematik, sondern durch <strong>Mechanik</strong>. Georg von B&eacute;k&eacute;sy erhielt 1961 den Nobelpreis f&uuml;r die experimentelle Best&auml;tigung dieser Theorie.</p>
+
+<h3>Kritische B&auml;nder: Die Aufl&ouml;sung des Ohrs</h3>
+
+<p>Die Basilarmembran hat eine begrenzte <strong>Frequenzaufl&ouml;sung</strong>. Jeder Punkt reagiert nicht nur auf eine einzige Frequenz, sondern auf einen <strong>Frequenzbereich</strong> &ndash; das sogenannte <span class="glossary" title="Kritische Bandbreite: Der Frequenzbereich, in dem das Ohr zwei T&ouml;ne nicht mehr einzeln aufl&ouml;sen kann. Ungef&auml;hr 1/3 der Mittenfrequenz, mindestens aber ~100 Hz.">kritische Band</span> (<em>critical band</em>).</p>
+
+<p>Die Breite eines kritischen Bands ist frequenzabh&auml;ngig. Die N&auml;herungsformel nach Barkhausen/Zwicker:</p>
+
+<div class="math-display">$$\text{CB}(f) \approx 25 + 75 \cdot \bigl[1 + 1{,}4 \cdot (f/1000)^2\bigr]^{0{,}69} \quad\text{Hz}$$</div>
+
+<p>Bei tiefen Frequenzen (unter 500 Hz) ist das kritische Band etwa <strong>100 Hz breit</strong>. Bei hohen Frequenzen w&auml;chst es auf mehrere Hundert Hertz an. Das erkl&auml;rt, warum tiefe Akkorde schnell &bdquo;matschen&ldquo;: Bei 100 Hz ist das kritische Band fast so breit wie ein ganzer Ton, und die Oberton-Paare landen im rauen Bereich.</p>
+
+<p>Jetzt verbindet sich alles: Die <strong>Plomp-Levelt-Dissonanz</strong> aus Kapitel 1 ist genau die Rauigkeit, die entsteht, wenn zwei Frequenzen <em>innerhalb desselben kritischen Bands</em> liegen. Die Dissonanzkurve ist eine direkte Konsequenz der <strong>physikalischen Aufl&ouml;sung der Cochlea</strong>.</p>
+
+<h3>Kombinationst&ouml;ne: Wenn das Ohr erfindet</h3>
+
+<p>Das Ohr ist kein passiver Empf&auml;nger &ndash; es ist ein <strong>aktiver Signalverarbeiter</strong>. Wenn zwei laute T&ouml;ne mit Frequenzen \(f_1\) und \(f_2\) gleichzeitig erklingen, erzeugt das Innenohr zus&auml;tzliche T&ouml;ne, die physikalisch nicht vorhanden sind: <strong>Kombinationst&ouml;ne</strong> (<em>combination tones</em>).</p>
+
+<p>Der prominenteste ist der <strong>Differenzton</strong>: \(f_d = f_2 - f_1\). Bei einer reinen Quinte (660 Hz und 440 Hz) ist der Differenzton \(660 - 440 = 220\) Hz &ndash; genau eine Oktave unter dem tieferen Ton. Der Differenzton <strong>verst&auml;rkt den Grundton</strong>. Bei einer Sekunde (440 Hz und 495 Hz) ist der Differenzton 55 Hz &ndash; ein tiefer Brummton, der weder zum einen noch zum anderen Ton passt. Dissonanz.</p>
+
+<p>Es gibt auch kubische Differenzt&ouml;ne (\(2f_1 - f_2\)) und h&ouml;here Ordnungen. Diese Kombinationst&ouml;ne entstehen durch die <strong>Nichtlinearit&auml;t</strong> des Innenohrs &ndash; die &auml;u&szlig;eren Haarzellen verst&auml;rken den Schall aktiv und f&uuml;hren dabei leichte Verzerrungen ein. Was wie ein Defekt klingt, ist in Wirklichkeit ein Feature: Kombinationst&ouml;ne helfen dem Gehirn bei der <strong>Grundtonerkennung</strong>.</p>
+
+<h3>Die fehlende Grundfrequenz</h3>
+
+<p>Eines der faszinierendsten Ph&auml;nomene der Psychoakustik: Wenn du die Frequenzen 400, 500, 600, 700 Hz h&ouml;rst, nimmst du den Ton <strong>200 Hz</strong> wahr &ndash; obwohl 200 Hz physikalisch <em>gar nicht vorhanden</em> ist. Das Gehirn <em>berechnet</em> die <span class="glossary" title="Virtuelle Tonh&ouml;he / Missing Fundamental: Das Gehirn nimmt einen Grundton wahr, der physikalisch nicht vorhanden ist, wenn die h&ouml;heren Harmonischen vorhanden sind.">fehlende Grundfrequenz</span> (<em>missing fundamental</em>) aus den Abst&auml;nden der Oberton-Reihe.</p>
+
+<p>Deshalb h&ouml;rst du den Bass in kleinen Laptop-Lautsprechern, obwohl diese physikalisch keine Frequenzen unter 150 Hz wiedergeben k&ouml;nnen. Dein Gehirn rekonstruiert den Grundton aus den vorhandenen Oberton-Anteilen. Das funktioniert, weil die Oberton-Reihe ein <strong>eindeutiges Muster</strong> hat: gleichm&auml;&szlig;ig verteilte Frequenzen mit dem Abstand \(f_1\).</p>
+
+<p>Das ist auch der Grund, warum der Dur-Dreiklang (4:5:6) so klar klingt: Das Gehirn erkennt sofort die fehlende Grundfrequenz (1) und ordnet die drei T&ouml;ne einer einzigen virtuellen Quelle zu. Beim Moll-Dreiklang (10:12:15) ist die fehlende Grundfrequenz ambiger &ndash; daher die empfundene Komplexit&auml;t.</p>
+
+<h3>Oktav&auml;quivalenz: Warum C immer C ist</h3>
+
+<p>Eines der universellsten Ph&auml;nomene der Musik: T&ouml;ne, die eine Oktave auseinander liegen, werden als &bdquo;gleich&ldquo; empfunden. Das tiefe C und das hohe C sind verschiedene T&ouml;ne, aber sie tragen denselben <strong>Namen</strong>, die gleiche <strong>Funktion</strong>. Diese <em>Oktav&auml;quivalenz</em> (<em>octave equivalence</em>) findet sich in <strong>jeder bekannten Musikkultur</strong>.</p>
+
+<p>Die physikalische Erkl&auml;rung: Wenn \(f\) und \(2f\) gleichzeitig erklingen, ist jeder Oberton von \(2f\) auch ein Oberton von \(f\). Die Oberton-Reihe von \(2f\) ist eine <strong>echte Teilmenge</strong> der Oberton-Reihe von \(f\). F&uuml;r die Cochlea &uuml;berlappen die beiden Erregungsmuster perfekt &ndash; \(2f\) f&uuml;gt nichts Neues hinzu, es verst&auml;rkt nur.</p>
+
+<p>In mathematischer Sprache: Die Tonh&ouml;henwahrnehmung ist <strong>zyklisch modulo Oktave</strong>. Wenn wir den Frequenzraum logarithmisch darstellen (\(\text{Tonh&ouml;he} = \log_2(f/f_0)\)), wird die Oktave zum Intervall \([0, 1)\), und die &bdquo;Chroma&ldquo; (Tonnamen C, D, E, ...) liegen auf dem Einheitskreis \(\mathbb{R}/\mathbb{Z}\). Musiker sprechen vom <strong>Tonkreis</strong>, Mathematiker von einer <strong>Quotientengruppe</strong>. Dieselbe Struktur.</p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>Gib eine Frequenz ein und sieh, welcher Ort auf der Basilarmembran maximal angeregt wird. Beobachte, wie das kritische Band bei tiefen Frequenzen breiter ist als bei hohen. Spiele zwei T&ouml;ne gleichzeitig und sieh die &Uuml;berlappung der Erregungsmuster &ndash; je gr&ouml;&szlig;er die &Uuml;berlappung, desto rauer der Klang.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-cochlea-mapper"></div>
+</div>
+
+<h3>Das Ohr als nichtlinearer Signalverarbeiter</h3>
+
+<p>Fassen wir zusammen, was das Geh&ouml;r leistet:</p>
+
+<p>&bull; <strong>Frequenzanalyse</strong> (Cochlea = mechanische Fourier-Transformation)<br>
+&bull; <strong>Dynamikkompression</strong> (&auml;u&szlig;ere Haarzellen verst&auml;rken leise T&ouml;ne, d&auml;mpfen laute &ndash; ein Dynamikbereich von 120 dB wird auf 40 dB komprimiert)<br>
+&bull; <strong>Kombinationstonerz eugung</strong> (nichtlineare Verzerrung als Feature, nicht als Bug)<br>
+&bull; <strong>Grundtonrekonstruktion</strong> (Missing Fundamental aus Oberton-Muster)<br>
+&bull; <strong>Zeitliche Analyse</strong> (Phase-Locking bis ca. 5 kHz &ndash; das Gehirn nutzt auch die <em>Zeitstruktur</em>, nicht nur die Frequenz)</p>
+
+<p>Kein technischer Audioanalysator erreicht die Leistung der menschlichen Cochlea. Sie hat eine Frequenzaufl&ouml;sung von etwa <strong>3.500 Kan&auml;len</strong> (innere Haarzellen), einen Dynamikbereich von <strong>120 dB</strong> (Faktor 1.000.000 in der Amplitude), und sie verarbeitet alles in <strong>Echtzeit</strong> mit einem Energieverbrauch von Mikrowatt.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Die Cochlea ist ein mechanischer Fourier-Analysator. Kritische B&auml;nder erkl&auml;ren Rauigkeit. Kombinationst&ouml;ne und die fehlende Grundfrequenz zeigen, dass das Ohr ein aktiver Signalverarbeiter ist. Oktav&auml;quivalenz folgt aus der Teilmengenbeziehung der Oberton-Reihen. Und jetzt die letzte Verbindung: Was hat das alles mit Physik, Fourier und Eigenwerten zu tun?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 7. ALLES IST SCHWINGUNG -->
+<!-- ================================================================ -->
+<section id="schwingung" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
+<h2>Alles ist Schwingung</h2>
+
+<p>In Kapitel 2 haben wir die Oberton-Reihe als physikalische Tatsache hingenommen: Eine Saite schwingt mit Frequenzen \(f, 2f, 3f, \ldots\). Aber <em>warum</em> genau diese Frequenzen? Die Antwort liegt in einer der tiefsten Ideen der Mathematik &ndash; und sie verbindet die Musiktheorie mit der Quantenmechanik, der Bildkompression und der K&uuml;nstlichen Intelligenz.</p>
+
+<h3>Die Wellengleichung und ihre Eigenwerte</h3>
+
+<p>Die Schwingung einer Saite wird durch die <strong>Wellengleichung</strong> beschrieben:</p>
+
+<div class="math-display">$$\frac{\partial^2 y}{\partial t^2} = c^2 \frac{\partial^2 y}{\partial x^2}$$</div>
+
+<p>wobei \(c = \sqrt{T/\mu}\) die Wellengeschwindigkeit ist (\(T\) = Saitenspannung, \(\mu\) = Masse pro L&auml;nge). Die Randbedingungen \(y(0,t) = y(L,t) = 0\) (Saite an beiden Enden eingespannt) schr&auml;nken die L&ouml;sungen ein.</p>
+
+<p>Wir suchen L&ouml;sungen der Form \(y(x,t) = X(x) \cdot T(t)\) (Separation der Variablen). Einsetzen liefert:</p>
+
+<div class="math-display">$$\frac{T''(t)}{c^2 T(t)} = \frac{X''(x)}{X(x)} = -\lambda$$</div>
+
+<p>Die linke Seite h&auml;ngt nur von \(t\) ab, die rechte nur von \(x\). Damit beide gleich sind, m&uuml;ssen beide <strong>konstant</strong> sein. Diese Konstante hei&szlig;t \(-\lambda\). F&uuml;r den r&auml;umlichen Teil ergibt sich ein <strong>Eigenwertproblem</strong>:</p>
+
+<div class="math-display">$$X''(x) = -\lambda\, X(x), \quad X(0) = X(L) = 0$$</div>
+
+<p>Die L&ouml;sungen sind:</p>
+
+<div class="math-display">$$X_n(x) = \sin\!\Bigl(\frac{n\pi x}{L}\Bigr), \quad \lambda_n = \Bigl(\frac{n\pi}{L}\Bigr)^2, \quad n = 1, 2, 3, \ldots$$</div>
+
+<p>Die <strong>Eigenfunktionen</strong> sind Sinuswellen. Die <strong>Eigenwerte</strong> \(\lambda_n\) bestimmen die erlaubten Frequenzen: \(f_n = \frac{c}{2L}\,n\). Die Oberton-Reihe ist nichts anderes als das <strong>Spektrum eines Eigenwertproblems</strong>.</p>
+
+<p><strong>Halt. Stop.</strong> Lies den letzten Satz nochmal. Die Musiktheorie &ndash; Konsonanz, Oberton-Reihe, Klangfarbe, alles &ndash; folgt aus einem <em>Eigenwertproblem</em>. Demselben mathematischen Konzept, das in der <a href="eigenwerte.html" class="text-cyan-400 hover:text-cyan-300 underline">K&uuml;nstlichen Intelligenz</a> und in der <a href="quanten.html" class="text-cyan-400 hover:text-cyan-300 underline">Quantenmechanik</a> die zentrale Rolle spielt.</p>
+
+<h3>Schr&ouml;dinger und die Saite</h3>
+
+<p>Die station&auml;re Schr&ouml;dinger-Gleichung f&uuml;r ein Teilchen im Kasten der L&auml;nge \(L\):</p>
+
+<div class="math-display">$$-\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} = E\,\psi(x), \quad \psi(0) = \psi(L) = 0$$</div>
+
+<p>Dieselbe Gleichung. Dieselben Randbedingungen. Dieselben L&ouml;sungen: \(\psi_n(x) = \sin(n\pi x/L)\) mit Energien \(E_n = \frac{\hbar^2 \pi^2}{2mL^2}\,n^2\). Die erlaubten Energieniveaus eines Quantenteilchens im Kasten sind die <strong>Eigenwerte desselben Problems</strong>, das auch die Oberton-Reihe einer Saite bestimmt. Die Saite und das Quantenteilchen sind <strong>mathematische Geschwister</strong>.</p>
+
+<p>Erwin Schr&ouml;dinger betitelte seine epochemachende Arbeit von 1926: <em>&bdquo;Quantisierung als Eigenwertproblem.&ldquo;</em> Die diskreten Energieniveaus des Wasserstoffatoms folgen aus demselben Prinzip wie die diskreten Oberton-Frequenzen einer Gitarrensaite: Randbedingungen erzwingen <strong>Quantisierung</strong>.</p>
+
+<h3>Chladni-Figuren: Eigenwerte sichtbar machen</h3>
+
+<p>Ernst Florens Friedrich Chladni zeigte 1787, dass man die Schwingungsmoden einer Platte <em>sichtbar</em> machen kann. Er streute feinen Sand auf eine Metallplatte und strich mit einem Geigenbogen &uuml;ber den Rand. Der Sand sammelte sich auf den <strong>Knotenlinien</strong> &ndash; den Stellen, an denen die Platte nicht schwingt. Die Muster, die entstehen, hei&szlig;en <strong>Chladni-Figuren</strong>.</p>
+
+<figure class="my-6">
+  <img src="img/chladni-figures.svg" alt="Vier Chladni-Figuren auf quadratischen Platten mit zunehmend komplexen Knotenlinien-Mustern" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:500px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Chladni-Figuren: Schwingungsmoden einer Platte, sichtbar gemacht durch Sand auf den Knotenlinien. Jedes Muster entspricht einem Eigenwert der zweidimensionalen Wellengleichung.</figcaption>
+</figure>
+
+<p>Mathematisch sind Chladni-Figuren die <strong>Eigenfunktionen der zweidimensionalen Wellengleichung</strong>. Auf einer rechteckigen Platte der Gr&ouml;&szlig;e \(a \times b\):</p>
+
+<div class="math-display">$$\nabla^2 u = -\lambda\, u \quad\Longrightarrow\quad u_{mn}(x,y) = \sin\!\Bigl(\frac{m\pi x}{a}\Bigr)\sin\!\Bigl(\frac{n\pi y}{b}\Bigr)$$</div>
+
+<p>mit Eigenwerten \(\lambda_{mn} = \pi^2\bigl(\frac{m^2}{a^2} + \frac{n^2}{b^2}\bigr)\). Die Knotenlinien sind die Nullstellen von \(u_{mn}\). Je h&ouml;her der Eigenwert, desto feiner das Muster &ndash; genau wie h&ouml;here Oberton-Frequenzen feinere stehende Wellen erzeugen.</p>
+
+<p>Chladni f&uuml;hrte seine Experimente Napoleon Bonaparte vor, der davon so beeindruckt war, dass er einen Preis f&uuml;r die mathematische Erkl&auml;rung auslobte. Sophie Germain gewann ihn 1816 &ndash; eine der ersten anerkannten wissenschaftlichen Leistungen einer Frau in der Neuzeit.</p>
+
+<div class="try-it">
+  <p><strong>Probier es selbst</strong></p>
+  <p>W&auml;hle die Schwingungsmode (\(m, n\)) und beobachte die Chladni-Figur: das Muster der Knotenlinien auf einer schwingenden Platte. H&ouml;here Moden = komplexere Muster = h&ouml;here Eigenwerte = h&ouml;here Frequenzen.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-chladni-sim"></div>
+</div>
+
+<h3>Fourier &uuml;berall: Von der Saite zum JPEG</h3>
+
+<p>Die Fourier-Zerlegung &ndash; jede Funktion als Summe von Sinuswellen &ndash; ist die <strong>Spektralzerlegung eines Operators</strong>. Die Sinus- und Cosinusfunktionen sind die <em>Eigenfunktionen</em> des Ableitungsoperators \(d^2/dx^2\). Wenn wir einen Klang in Oberton-Anteile zerlegen, f&uuml;hren wir eine <strong>Eigenwertzerlegung</strong> durch.</p>
+
+<p>Dieselbe Mathematik steckt in Technologien, die du t&auml;glich benutzt:</p>
+
+<p><strong>MP3-Kompression:</strong> Musik wird in kurze Bl&ouml;cke unterteilt. Jeder Block wird per <em>modifizierter diskreter Cosinustransformation</em> (MDCT) in Frequenzkomponenten zerlegt. Unhörbare Komponenten werden entfernt &ndash; gesteuert durch ein <strong>psychoakustisches Modell</strong>, das die kritischen B&auml;nder der Cochlea ber&uuml;cksichtigt. Die MDCT ist eine diskrete Version der Fourier-Zerlegung &ndash; eine Eigenwertzerlegung auf einem endlichen Gitter.</p>
+
+<p><strong>JPEG-Bildkompression:</strong> Das Bild wird in 8&times;8-Pixel-Bl&ouml;cke unterteilt. Jeder Block wird per <em>diskreter Cosinustransformation</em> (DCT) in Frequenzkomponenten zerlegt. Hochfrequente Komponenten (feine Details) werden st&auml;rker komprimiert als niederfrequente (grobe Formen). Die DCT-Basisfunktionen &ndash; das sind die <strong>diskreten Eigenfunktionen</strong> auf einem endlichen Gitter &ndash; sind die zweidimensionalen Analoga der Chladni-Figuren.</p>
+
+<p><strong>Spracherkennung:</strong> Audio wird in kurze Fenster unterteilt. Per Fast Fourier Transform (FFT) wird jedes Fenster in sein Spektrum zerlegt. Dann werden Mel-Frequenz-Cepstral-Koeffizienten (MFCCs) berechnet &ndash; eine Darstellung, die der logarithmischen Frequenzaufl&ouml;sung der Cochlea nachempfunden ist. Auch hier: Eigenwertzerlegung, inspiriert von der Biologie des Ohrs.</p>
+
+<h3>Die gro&szlig;e Verbindung</h3>
+
+<p>Lass uns die Verbindungen explizit machen:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Gebiet</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Operator</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Eigenfunktionen</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Eigenwerte</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;color:#22d3ee;">Saite</td><td>\(-d^2/dx^2\)</td><td>\(\sin(n\pi x/L)\)</td><td>\((n\pi/L)^2 \to f_n\)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;color:#a855f7;">Quantenmechanik</td><td>\(-\frac{\hbar^2}{2m}\nabla^2 + V\)</td><td>\(\psi_n(x)\)</td><td>\(E_n\) (Energieniveaus)</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;color:#f59e0b;">Chladni-Platte</td><td>\(-\nabla^2\)</td><td>\(\sin(m\pi x/a)\sin(n\pi y/b)\)</td><td>\(\lambda_{mn}\) (Frequenzen)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;color:#22d3ee;">MP3/JPEG</td><td>DCT-Matrix</td><td>Cosinus-Basisfunktionen</td><td>Frequenz-Koeffizienten</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;color:#a855f7;">KI (Kernel)</td><td>Kernel-Matrix \(K\)</td><td>Mercer-Eigenfunktionen</td><td>\(\lambda_n\) (Spektrum)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>F&uuml;nf verschiedene Gebiete, ein Muster: Ein Operator mit Randbedingungen erzeugt ein diskretes Spektrum von Eigenwerten und Eigenfunktionen. Das Spektrum bestimmt alles &ndash; welche T&ouml;ne m&ouml;glich sind, welche Energien erlaubt sind, welche Muster auf einer Platte entstehen, welche Information bei der Kompression erhalten bleibt, was ein Algorithmus lernt.</p>
+
+<h3>Fourier und der Klang der Mathematik</h3>
+
+<p>Jean-Baptiste Joseph Fourier ver&ouml;ffentlichte 1822 seine <em>Th&eacute;orie analytique de la chaleur</em> &ndash; eine Abhandlung &uuml;ber W&auml;rmeleitung. Seine zentrale Behauptung: Jede (hinreichend gutartige) Funktion l&auml;sst sich als Summe von Sinus- und Cosinusfunktionen darstellen. Die mathematische Welt war skeptisch. Lagrange wandte ein, dass das nicht f&uuml;r unstetige Funktionen gelten k&ouml;nne.</p>
+
+<p>Fourier hatte teilweise Recht und teilweise Unrecht &ndash; die genauen Konvergenzbedingungen brauchten noch ein Jahrhundert, um gekl&auml;rt zu werden (Dirichlet, Carleson). Aber die Grundidee erwies sich als eine der fruchtbarsten der gesamten Mathematik. Die Fourier-Analyse durchdringt heute die Physik, die Ingenieurwissenschaften, die Signalverarbeitung, die Bildgebung, die Kryptographie und &ndash; wie wir gesehen haben &ndash; die Musik.</p>
+
+<p>Es ist kein Zufall, dass die Eigenfunktionen der Wellengleichung Sinuswellen sind. Es ist eine <strong>Konsequenz der Symmetrie</strong>: Der Ableitungsoperator ist translationsinvariant, und Sinuswellen sind die einzigen beschr&auml;nkten Funktionen, die unter Translation nur um einen Faktor skaliert werden. In der Sprache der Gruppentheorie: Sinuswellen sind die <strong>irreduziblen Darstellungen der Translationsgruppe</strong>. Die Oberton-Reihe folgt aus der Symmetrie des Raums selbst.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Die Oberton-Reihe folgt aus einem Eigenwertproblem: \(X'' = -\lambda X\) mit Randbedingungen. Dieselbe Mathematik beschreibt Quantenmechanik, Chladni-Figuren, JPEG-Kompression und KI. Fourier-Analyse ist Eigenwertzerlegung. Alles ist Schwingung &ndash; und jede Schwingung hat ein Spektrum.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- EPILOG -->
+<!-- ================================================================ -->
+<section id="epilog" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Epilog</p>
+<h2>Pythagoras hatte recht &ndash; und unrecht</h2>
+
+<p>Pythagoras glaubte, das Universum sei aus Zahlenverh&auml;ltnissen gebaut. Die Musik der Sph&auml;ren &ndash; die Vorstellung, dass die Planeten auf ihren Bahnen T&ouml;ne erzeugen, die harmonischen Verh&auml;ltnissen gehorchen &ndash; war f&uuml;r ihn nicht Metapher, sondern w&ouml;rtliche Wahrheit.</p>
+
+<p>Er hatte <strong>unrecht</strong> in den Details: Planeten erzeugen keine h&ouml;rbaren T&ouml;ne. Die pythagor&auml;ische Stimmung scheitert am eigenen Komma. Und die emotionale Wirkung von Musik ist kulturell gepr&auml;gt, nicht mathematisch determiniert.</p>
+
+<p>Aber er hatte <strong>recht</strong> in der Grundidee: Es gibt eine tiefe Verbindung zwischen Mathematik und Wahrnehmung. Die Oberton-Reihe ist keine Erfindung der Musiktheorie, sondern ein <strong>Eigenwertspektrum</strong>. Die Konsonanz ist keine &auml;sthetische Laune, sondern eine Konsequenz der <strong>physikalischen Aufl&ouml;sung der Cochlea</strong>. Und die Fourier-Zerlegung &ndash; Pythagoras' Traum, alles in ganzzahlige Verh&auml;ltnisse zu zerlegen, ins Unendliche extrapoliert &ndash; ist das mathematische Werkzeug, das Quantenmechanik, Signalverarbeitung und K&uuml;nstliche Intelligenz verbindet.</p>
+
+<p>In diesem Blog haben wir jetzt drei Facetten desselben Glasperlenspiel-Musters gesehen:</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2.2;">
+    <strong style="color:#22d3ee;">Quantenmechanik:</strong>&ensp; \(\hat{H}\psi = E\psi\) &mdash; Eigenwerte bestimmen die erlaubten Energien<br>
+    <strong style="color:#f59e0b;">Musik:</strong>&ensp; \(X'' = -\lambda X\) &mdash; Eigenwerte bestimmen die Oberton-Frequenzen<br>
+    <strong style="color:#a855f7;">KI:</strong>&ensp; \(K\boldsymbol{\alpha} = \lambda\boldsymbol{\alpha}\) &mdash; Eigenwerte bestimmen, was gelernt wird
+  </p>
+</div>
+
+<p>Drei verschiedene B&uuml;hnen, dasselbe Prinzip: <strong>Ein Operator mit Randbedingungen erzeugt ein diskretes Spektrum.</strong> Die Physik zwingt die Natur in diskrete Moden &ndash; ob das Schwingungsmoden einer Saite sind, Energieniveaus eines Atoms oder Eigenvektoren einer Kernel-Matrix.</p>
+
+<p>Pythagoras h&ouml;rte Zahlen in der Musik. Schr&ouml;dinger fand dieselben Zahlen im Atom. Und heute finden wir sie in den Algorithmen, die unsere Sprache modellieren.</p>
+
+<p>Die Musik der Sph&auml;ren existiert vielleicht nicht im Weltraum. Aber sie existiert in der Mathematik &ndash; und jedes Mal, wenn du eine Saite anschl&auml;gst, ein JPEG &ouml;ffnest oder eine KI befragst, h&ouml;rst du ein Echo davon.</p>
+
+<p>Vielleicht hatte Hermann Hesse recht, als er im <em>Glasperlenspiel</em> schrieb: <em>&bdquo;Musik und Mathematik &hellip; haben beinahe die gleiche Haltung dem Geist gegen&uuml;ber, beinahe den gleichen Grad von Strenge und Genauigkeit im Ergebnis.&ldquo;</em></p>
+
+</div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- FAQ -->
+<!-- ================================================================ -->
+<section class="pb-16">
+<div class="prose-dark">
+<h2 style="font-size:1.25rem;">H&auml;ufige Fragen</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Warum klingt Dur fr&ouml;hlich und Moll traurig?</h3>
+<p>Dur (4:5:6) enth&auml;lt aufeinanderfolgende Teilt&ouml;ne einer einzigen Oberton-Reihe &ndash; das Gehirn interpretiert es als koh&auml;rente Quelle. Moll (10:12:15) ist ambiger. Die emotionale Bewertung ist aber auch kulturell gepr&auml;gt: Die Tsimane im bolivianischen Regenwald empfinden keine Pr&auml;ferenz f&uuml;r Dur gegen&uuml;ber Moll.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was ist das pythagor&auml;ische Komma?</h3>
+<p>Das pythagor&auml;ische Komma ist das Verh&auml;ltnis \(3^{12}/2^{19} \approx 1{,}0136\) (23,46 Cent). Es zeigt, dass 12 reine Quinten nicht exakt 7 Oktaven ergeben. Das ist ein mathematisches Theorem: \(3^n \neq 2^k\) f&uuml;r positive ganze Zahlen. Es zwingt jedes Stimmungssystem zu Kompromissen.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was hat Musik mit Eigenwerten zu tun?</h3>
+<p>Die Oberton-Reihe einer Saite folgt aus einem Eigenwertproblem: \(X'' = -\lambda X\) mit Randbedingungen. Dieselbe Mathematik beschreibt Quantenmechanik (Schr&ouml;dinger-Gleichung), Bildkompression (DCT) und maschinelles Lernen (Kernel-Eigenwerte). Eigenwerte sind das gemeinsame Muster.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Warum hat ein Klavier genau 12 T&ouml;ne pro Oktave?</h3>
+<p>Zw&ouml;lf ist die beste Kettenbr&uuml;che-Approximation, die sowohl eine gute Quinte (\(7/12\), nur 1,9 Cent Abweichung) als auch eine brauchbare Terz bietet und gleichzeitig auf einer Tastatur praktikabel ist. Bessere Approximationen (z.B. 53 T&ouml;ne) w&auml;ren mathematisch &uuml;berlegen, aber f&uuml;r menschliche H&auml;nde nicht handhabbar.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was ist die fehlende Grundfrequenz?</h3>
+<p>Wenn nur die Oberton-Frequenzen 400, 500, 600 Hz vorhanden sind, nimmt das Gehirn den Ton 200 Hz wahr &ndash; obwohl er physikalisch fehlt. Die Cochlea erkennt das Muster der gleichm&auml;&szlig;ig verteilten Oberton-Abst&auml;nde und rekonstruiert daraus den Grundton. Deshalb h&ouml;rt man Bass auch auf kleinen Lautsprechern.</p>
+
+</div>
+</section>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Warum klingt Dur fr\u00f6hlich und Moll traurig?", "acceptedAnswer": {"@type": "Answer", "text": "Dur (4:5:6) enth\u00e4lt aufeinanderfolgende Teilt\u00f6ne einer einzigen Obertonreihe \u2013 das Gehirn interpretiert es als koh\u00e4rente Quelle. Moll (10:12:15) ist ambiger. Die emotionale Bewertung ist aber auch kulturell gepr\u00e4gt: Die Tsimane im bolivianischen Regenwald empfinden keine Pr\u00e4ferenz f\u00fcr Dur gegen\u00fcber Moll."}}, {"@type": "Question", "name": "Was ist das pythagor\u00e4ische Komma?", "acceptedAnswer": {"@type": "Answer", "text": "Das pythagor\u00e4ische Komma ist das Verh\u00e4ltnis 3^12/2^19 \u2248 1,0136 (23,46 Cent). Es zeigt, dass 12 reine Quinten nicht exakt 7 Oktaven ergeben. Das ist ein mathematisches Theorem: 3^n \u2260 2^k f\u00fcr positive ganze Zahlen."}}, {"@type": "Question", "name": "Was hat Musik mit Eigenwerten zu tun?", "acceptedAnswer": {"@type": "Answer", "text": "Die Obertonreihe einer Saite folgt aus einem Eigenwertproblem: X'' = -\u03bbX mit Randbedingungen. Dieselbe Mathematik beschreibt Quantenmechanik, Bildkompression (DCT) und maschinelles Lernen (Kernel-Eigenwerte)."}}, {"@type": "Question", "name": "Warum hat ein Klavier genau 12 T\u00f6ne pro Oktave?", "acceptedAnswer": {"@type": "Answer", "text": "Zw\u00f6lf ist die beste Kettenbr\u00fcche-Approximation, die sowohl eine gute Quinte (7/12, nur 1,9 Cent Abweichung) als auch eine brauchbare Terz bietet und gleichzeitig auf einer Tastatur praktikabel ist."}}, {"@type": "Question", "name": "Was ist die fehlende Grundfrequenz?", "acceptedAnswer": {"@type": "Answer", "text": "Wenn nur Oberton-Frequenzen vorhanden sind (z.B. 400, 500, 600 Hz), nimmt das Gehirn den Grundton 200 Hz wahr, obwohl er physikalisch fehlt. Die Cochlea erkennt das Muster der gleichm\u00e4\u00dfig verteilten Oberton-Abst\u00e4nde und rekonstruiert den Grundton."}}]}
+</script>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Erstellt mit Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="ueber-mich.html" class="hover:text-gray-400">&Uuml;ber mich</a> &middot;
+    <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+    <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+  </p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // 1. Lazy-mount React components
+  var COMPONENTS = {
+    'mount-harmonic-explorer': window.HarmonicExplorer || null,
+    'mount-overtone-viz': window.OvertoneViz || null,
+    'mount-triad-explorer': window.TriadExplorer || null,
+    'mount-tuning-compare': window.TuningCompare || null,
+    'mount-cochlea-mapper': window.CochleaMapper || null,
+    'mount-chladni-sim': window.ChladniSim || null,
+  };
+
+  var mounted = {};
+
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Komponente konnte nicht geladen werden.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // 2. Scroll progress bar
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // 3. TOC highlighting (nav toggle handled by nav.js)
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          else link.classList.remove('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+  // 4. KaTeX auto-render
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+});
+</script>
+
+</body>
+</html>

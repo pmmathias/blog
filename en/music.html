@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Why Major Sounds Happy &ndash; Music, Mathematics &amp; Perception</title>
+  <meta name="description" content="Why does a major chord sound happy and a minor chord sad? From frequency ratios through Pythagoras to the cochlea &ndash; the mathematics of music, explained interactively. No prerequisites required.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/en/music.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/musik.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/music.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/musik.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Why Major Sounds Happy &ndash; Music, Mathematics &amp; Perception">
+  <meta property="og:description" content="From frequency ratios through Pythagoras to the cochlea &ndash; the mathematics of music, explained interactively.">
+  <meta property="og:url" content="https://ki-mathias.de/en/music.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-04-06">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Music">
+  <meta property="article:tag" content="Mathematics">
+  <meta property="article:tag" content="Acoustics">
+  <meta property="article:tag" content="Perception">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/musik-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/musik-en.png">
+  <meta name="twitter:title" content="Why Major Sounds Happy &ndash; Music, Mathematics &amp; Perception">
+  <meta name="twitter:description" content="From frequency ratios through Pythagoras to the cochlea &ndash; the mathematics of music, explained interactively.">
+
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+  <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/auto-render.min.js"></script>
+  <script src="/vendor/react.production.min.js"></script>
+  <script src="/vendor/react-dom.production.min.js"></script>
+  <script defer src="/musik-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-500.woff2) format('woff2'), url(/fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Why Major Sounds Happy \u2013 Music, Mathematics & Perception",
+    "description": "Why does a major chord sound happy and a minor chord sad? From frequency ratios through Pythagoras to the cochlea \u2013 the mathematics of music, explained interactively.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-04-06",
+    "dateModified": "2026-04-06",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/music.html" },
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "keywords": ["Music", "Mathematics", "Acoustics", "Consonance", "Harmonic Series", "Tuning", "Pythagoras", "Fourier", "Cochlea"],
+    "articleSection": "Music & Mathematics",
+    "wordCount": 14000,
+    "timeRequired": "PT40M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<!-- Hidden TOC slot — nav.js picks this up and injects it into the dropdown -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#consonance" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; One Tone, Two Tones, a Puzzle</a>
+  <a href="#harmonic-series" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; The Harmonic Series</a>
+  <a href="#major-minor" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Major, Minor, and Emotion</a>
+  <a href="#pythagorean-comma" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; The Comma of Pythagoras</a>
+  <a href="#well-tempered" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; The Well-Tempered Clavier</a>
+  <a href="#hearing" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; The Well-Tempered Ear</a>
+  <a href="#vibration" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Everything Is Vibration</a>
+  <a href="#epilogue" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilogue</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Music &middot; Mathematics &middot; Perception</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-amber-400 to-purple-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Why Major Sounds Happy
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Music, Mathematics &amp; Perception &ndash; from frequency ratios through the comma of Pythagoras to the cochlea. A journey in seven chapters, with interactive visualizations.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-04-06">April 6, 2026</time><span>&middot;</span>
+    <span>~40 min read</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+
+<!-- ================================================================ -->
+<!-- 1. ONE TONE, TWO TONES, A PUZZLE -->
+<!-- ================================================================ -->
+<section id="consonance" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
+<h2>One Tone, Two Tones, a Puzzle</h2>
+
+<p>Strike two notes at the same time. Sometimes it sounds beautiful &ndash; smooth, round, blending together. Sometimes it sounds rough, wavering, unpleasant. Every human being hears this difference, whether musically trained or not. But <strong>why?</strong></p>
+
+<p>The answer begins with an observation two and a half millennia old. Legend has it that Pythagoras walked past a blacksmith&rsquo;s forge and noticed that certain pairs of hammers sounded harmonious while others did not. He investigated the weights of the hammers and found integer ratios. The story is probably fiction &ndash; hammer weights don&rsquo;t directly determine pitch &ndash; but the insight behind it is real: <strong>consonance has something to do with simple number ratios.</strong></p>
+
+<h3>Frequency: What a Tone Really Is</h3>
+
+<p>A tone is a periodic fluctuation in air pressure. The number of oscillations per second is called <span class="glossary" title="Frequency: The number of oscillations per second, measured in Hertz (Hz). Concert pitch A4 is 440 Hz.">frequency</span>, measured in Hertz (Hz). Concert pitch A4 oscillates 440 times per second: \(f = 440 \,\text{Hz}\). A lower A3 oscillates exactly half as fast: \(f = 220 \,\text{Hz}\). The ratio is \(2{:}1\) &ndash; an <strong>octave</strong>.</p>
+
+<p>The fundamental question of music theory can be stated this way: <em>Which frequency ratios sound &ldquo;good,&rdquo; and why?</em></p>
+
+<h3>The Simplest Ratios</h3>
+
+<p>Pythagoras and his students identified the most consonant intervals using simple fractions:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Interval</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Ratio</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Example (Hz)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Perception</th>
+  </tr></thead>
+  <tbody>
+    <tr style="color:#34d399;"><td style="padding:0.3rem 0.6rem;">Octave</td><td style="text-align:center;">2:1</td><td style="text-align:center;">440 &amp; 880</td><td style="text-align:center;">Fused, identical</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Fifth</td><td style="text-align:center;">3:2</td><td style="text-align:center;">440 &amp; 660</td><td style="text-align:center;">Open, powerful</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Fourth</td><td style="text-align:center;">4:3</td><td style="text-align:center;">440 &amp; 587</td><td style="text-align:center;">Stable, calm</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Major third</td><td style="text-align:center;">5:4</td><td style="text-align:center;">440 &amp; 550</td><td style="text-align:center;">Warm, bright</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Minor third</td><td style="text-align:center;">6:5</td><td style="text-align:center;">440 &amp; 528</td><td style="text-align:center;">Soft, melancholic</td></tr>
+    <tr style="color:#f87171;"><td style="padding:0.3rem 0.6rem;">Tritone</td><td style="text-align:center;">45:32</td><td style="text-align:center;">440 &amp; 618</td><td style="text-align:center;">Tense, dissonant</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The <em>simpler</em> the ratio, the more <em>consonant</em> the sound. This rule of thumb works remarkably well &ndash; but <em>why</em> it works could only be explained by Helmholtz and later by Plomp &amp; Levelt.</p>
+
+<h3>Lissajous Figures: Making Consonance Visible</h3>
+
+<p>When you plot two sinusoidal oscillations against each other &ndash; one on the x-axis, the other on the y-axis &ndash; you get <span class="glossary" title="Lissajous figure: A parametric curve that emerges when two sinusoidal oscillations are mapped to the x and y axes. For rational frequency ratios, the curve closes.">Lissajous figures</span>. For simple frequency ratios, the patterns are closed and simple. For complicated ratios, they become chaotic.</p>
+
+<figure class="my-6">
+  <div class="grid grid-cols-3 gap-4">
+    <div class="text-center">
+      <img src="/img/lissajous-octave.svg" alt="Lissajous figure for the octave (2:1) &ndash; a closed figure-eight" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+      <p class="text-xs text-gray-500 mt-2">Octave (2:1)</p>
+    </div>
+    <div class="text-center">
+      <img src="/img/lissajous-fifth.svg" alt="Lissajous figure for the fifth (3:2) &ndash; a closed pattern with three loops" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+      <p class="text-xs text-gray-500 mt-2">Fifth (3:2)</p>
+    </div>
+    <div class="text-center">
+      <img src="/img/lissajous-third.svg" alt="Lissajous figure for the major third (5:4) &ndash; a more complex but still closed pattern" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+      <p class="text-xs text-gray-500 mt-2">Major third (5:4)</p>
+    </div>
+  </div>
+  <figcaption class="text-xs text-gray-600 mt-3 text-center">Lissajous figures for three consonant intervals. The simpler the ratio, the simpler the pattern.</figcaption>
+</figure>
+
+<p>The octave (2:1) produces a simple figure eight. The fifth (3:2) yields a somewhat more complex but clearly closed pattern. The major third (5:4) becomes more intricate &ndash; but remains closed. A tritone (45:32) would fill nearly the entire surface before the curve closes.</p>
+
+<h3>Helmholtz: Beating and Roughness</h3>
+
+<p>Hermann von Helmholtz provided the first physical explanation in 1863, in his <em>&ldquo;On the Sensations of Tone.&rdquo;</em> When two tones lie close together in frequency, you hear <strong>beating</strong> &ndash; periodic volume fluctuations at the frequency \(|f_1 - f_2|\).</p>
+
+<div class="math-display">$$y(t) = \sin(2\pi f_1 t) + \sin(2\pi f_2 t) = 2\cos\!\bigl(\pi(f_1 - f_2)t\bigr)\sin\!\bigl(\pi(f_1 + f_2)t\bigr)$$</div>
+
+<p>This is the product formula for the sum of two sine functions. The cosine term modulates the amplitude at the <strong>beat frequency</strong> \(|f_1 - f_2|\). Slow beating (2&ndash;6 Hz) is perceived as a pleasant &ldquo;vibrato.&rdquo; But in the range of <strong>20&ndash;50 Hz</strong>, the sensation becomes unpleasant: a rough, grating feeling that Helmholtz called <strong>roughness</strong>.</p>
+
+<p>Helmholtz&rsquo;s thesis: <strong>Dissonance is roughness.</strong> Two tones sound dissonant when their frequencies (or those of their overtone pairs) lie so close together that the beating falls in the rough range.</p>
+
+<h3>Plomp &amp; Levelt: The Dissonance Curve</h3>
+
+<p>In 1965, Reinier Plomp and Willem Levelt refined this idea with a landmark experiment. They played pairs of pure sine tones to listeners and asked them to rate the perceived roughness. The result: a universal <strong>dissonance curve</strong>.</p>
+
+<p>Roughness is greatest when the frequency separation is about <strong>25% of the critical bandwidth</strong> &ndash; a concept from psychoacoustics that we&rsquo;ll return to in Chapter 6. At larger separations, roughness decreases and reaches local minima at simple ratios.</p>
+
+<p>The Plomp-Levelt curve for two pure tones has a simple shape: a maximum at about a quarter tone, then a monotonic decline. But for <em>complex</em> tones with overtone series (i.e., every real instrument), the roughness is summed over all overtone pairs &ndash; and then the Pythagorean ratios appear as sharp <strong>minima</strong>. The simple fractions aren&rsquo;t arbitrary: they are the points where the overtone series of both tones <strong>overlap maximally</strong> instead of beating against each other.</p>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Move the frequency slider and hear how consonance changes. The dissonance curve shows in real time where the rough spots are. Toggle between a pure sine tone and a timbre with overtone series &ndash; and watch the minima appear at the Pythagorean ratios.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-harmonic-explorer"></div>
+</div>
+
+<h3>Euler and the Gradus Function</h3>
+
+<p>In 1739, Leonhard Euler proposed a simple measure for the &ldquo;simplicity&rdquo; of a frequency ratio: the <em>Gradus suavitatis</em> (degree of sweetness). For a ratio \(p{:}q\) (in lowest terms, so \(\gcd(p,q) = 1\)):</p>
+
+<div class="math-display">$$\Gamma(p{:}q) = 1 + \sum_{i} (p_i - 1)$$</div>
+
+<p>where \(p_i\) are the prime factors of \(p \cdot q\) (with multiplicity). The smaller \(\Gamma\), the more consonant. The octave (2:1) has \(\Gamma = 2\), the fifth (3:2) has \(\Gamma = 4\), the tritone (45:32) has \(\Gamma = 14\). Euler&rsquo;s formula was ahead of its time &ndash; it quantifies the same intuition that Plomp and Levelt confirmed experimentally two centuries later.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> Consonance is not arbitrary. Simple frequency ratios sound good because they produce minimal roughness &ndash; this is experimentally confirmed (Plomp &amp; Levelt 1965) and theoretically understood (Helmholtz 1863). But the picture is not yet complete: roughness does not explain why major sounds happy and minor sounds sad. For that, we first need the harmonic series.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 2. THE HARMONIC SERIES -->
+<!-- ================================================================ -->
+<section id="harmonic-series" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 2</p>
+<h2>The Harmonic Series</h2>
+
+<p>When you pluck a guitar string, you don&rsquo;t hear <em>one</em> tone. You hear dozens &ndash; simultaneously. What you perceive as &ldquo;a single tone&rdquo; is actually a <strong>chord of overtone frequencies</strong> that your brain fuses into a single timbre.</p>
+
+<h3>Standing Waves on a String</h3>
+
+<p>A string of length \(L\), fixed at both ends, can only vibrate in certain ways. The <strong>boundary conditions</strong> require the displacement to be zero at both ends. The only functions that satisfy this are sine waves whose half-wavelength fits an integer number of times into \(L\):</p>
+
+<div class="math-display">$$y_n(x, t) = A_n \sin\!\Bigl(\frac{n\pi x}{L}\Bigr)\cos(2\pi f_n t), \quad f_n = n \cdot f_1, \quad n = 1, 2, 3, \ldots$$</div>
+
+<p>The <span class="glossary" title="Fundamental (fundamental frequency): The lowest partial of a vibrating string, n=1. Determines the perceived pitch.">fundamental</span> \(f_1\) has \(n=1\): a single half sine wave. The second partial \(f_2 = 2f_1\) has two half-waves, vibrating an octave higher. The third \(f_3 = 3f_1\) a fifth above that. And so on.</p>
+
+<figure class="my-6">
+  <img src="/img/harmonic-partials.svg" alt="The first six partials of a vibrating string as standing waves, with 1, 2, 3, 4, 5, and 6 antinodes" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The first six harmonics of a string. Each vibration mode has exactly \(n\) antinodes.</figcaption>
+</figure>
+
+<p>These discrete frequencies \(f_n = n \cdot f_1\) form the <strong>harmonic series</strong>. It is not a human invention &ndash; it follows directly from the physics of vibrating strings. And it contains, all by itself, the intervals of music:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Partial</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Ratio to \(f_1\)</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Interval</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Example (C = 131 Hz)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">1</td><td style="text-align:center;">1</td><td>Fundamental</td><td style="text-align:center;">C (131 Hz)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">2</td><td style="text-align:center;">2</td><td>Octave</td><td style="text-align:center;">C (262 Hz)</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">3</td><td style="text-align:center;">3</td><td>Octave + fifth</td><td style="text-align:center;">G (393 Hz)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">4</td><td style="text-align:center;">4</td><td>Two octaves</td><td style="text-align:center;">C (524 Hz)</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">5</td><td style="text-align:center;">5</td><td>Two oct. + major third</td><td style="text-align:center;">E (655 Hz)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;">6</td><td style="text-align:center;">6</td><td>Two oct. + fifth</td><td style="text-align:center;">G (786 Hz)</td></tr>
+    <tr style="color:#f59e0b;"><td style="text-align:center;padding:0.3rem 0.6rem;">7</td><td style="text-align:center;">7</td><td>Natural seventh (not a piano note!)</td><td style="text-align:center;">B&#x266D; (917 Hz)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Notice: partials 4, 5, 6 form the ratio \(4{:}5{:}6\). That is a <strong>major triad</strong>. Nature &ldquo;plays&rdquo; major all by itself. Minor has to be sought out.</p>
+
+<h3>Why Every Instrument Sounds Different</h3>
+
+<p>The harmonic series is the same for every instrument &ndash; the <em>frequencies</em> are always \(f, 2f, 3f, \ldots\). What differs are the <strong>relative loudnesses</strong> of the partials: the amplitudes \(A_1, A_2, A_3, \ldots\). This is precisely what makes up <span class="glossary" title="Timbre: The character of a tone that distinguishes it from other tones of the same pitch and loudness. Determined by the overtone spectrum.">timbre</span>.</p>
+
+<p>A flute has almost nothing but the fundamental &ndash; nearly a pure sine wave. An oboe has strong odd-numbered overtones &ndash; hence its nasal quality. A trumpet has many strong overtone pairs &ndash; hence its brilliant sound. A piano starts with an enormous number of overtone partials (from the hammer strike), which then decay at different rates.</p>
+
+<figure class="my-6">
+  <img src="/img/spectrogram-violin.jpg" alt="Spectrogram of a violin showing the fundamental frequency and its harmonic series as horizontal lines" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Spectrogram of a violin. The horizontal lines are the partials: fundamental at the bottom, harmonic series above. Brightness indicates relative amplitude.</figcaption>
+</figure>
+
+<h3>The Fourier Decomposition: Every Sound Is a Sum</h3>
+
+<p>The mathematical formulation is elegant. Any periodic function can be represented as a sum of sines and cosines &ndash; the <strong>Fourier series</strong>:</p>
+
+<div class="math-display">$$f(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \bigl[a_n \cos(2\pi n f_1 t) + b_n \sin(2\pi n f_1 t)\bigr]$$</div>
+
+<p>The coefficients \(a_n, b_n\) (or equivalently the amplitudes \(A_n\) and phases \(\phi_n\)) are the <strong>fingerprint</strong> of the sound. The spectrum <em>is</em> the timbre.</p>
+
+<figure class="my-6">
+  <img src="/img/waveforms.svg" alt="Three waveforms side by side: sine (smooth), sawtooth (all overtones), and square (only odd overtones)" class="w-full rounded-lg border border-gray-800/50" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Three classic waveforms. Sine: fundamental only. Sawtooth: all overtones with \(A_n = 1/n\). Square: only odd overtones.</figcaption>
+</figure>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Mix the amplitudes of the first eight overtone partials and hear how the timbre changes. Start with a pure sine (only \(A_1\)), then add overtone partials one by one. Can you recreate a flute, a clarinet, or a harpsichord?</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-overtone-viz"></div>
+</div>
+
+<h3>Why Overtone Series Explain Consonance</h3>
+
+<p>Now the circle closes back to Chapter 1. When two tones stand in the ratio \(3{:}2\) (a fifth), the 3rd partial of the lower tone is <strong>identical</strong> to the 2nd partial of the upper tone. The overtone series overlap &ndash; they fuse. For a frequency ratio of \(45{:}32\) (a tritone), the overtone series only overlap at very high partials &ndash; and in the meantime, closely spaced overtone pairs create <strong>roughness</strong>.</p>
+
+<p>The Plomp-Levelt dissonance curve for complex tones is nothing other than the <strong>sum of roughness across all overtone pairs</strong>. The consonance of an interval is not a metaphysical property &ndash; it is a calculable quantity that follows from the physics of standing waves.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> Every sound is a sum of harmonic partials (\(f, 2f, 3f, \ldots\)). The relative amplitudes determine the timbre. Consonance arises when overtone series overlap. And the harmonic series already contains the major triad: partials 4, 5, 6. But what about minor?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 3. MAJOR, MINOR, AND THE QUESTION OF EMOTION -->
+<!-- ================================================================ -->
+<section id="major-minor" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Chapter 3</p>
+<h2>Major, Minor, and the Question of Emotion</h2>
+
+<p>Major sounds happy, minor sounds sad &ndash; it&rsquo;s one of the most persistent clich&eacute;s in music theory. And like all good clich&eacute;s, it contains a kernel of truth, but also an oversimplification.</p>
+
+<h3>The Major Triad: 4:5:6</h3>
+
+<p>A major triad consists of the root, major third, and fifth. In just intonation, the frequency ratios are:</p>
+
+<div class="math-display">$$\text{Major:} \quad 4 : 5 : 6$$</div>
+
+<p>This means: if the root is at 400 Hz, the third is at 500 Hz and the fifth at 600 Hz. Three consecutive integer multiples. Remarkably simple.</p>
+
+<p>What&rsquo;s more: the frequencies 400, 500, and 600 Hz are all multiples of <strong>100 Hz</strong> (the 4th, 5th, and 6th partials). A major triad sounds as if it were a <em>fragment of a single overtone series</em> &ndash; because it is. This explains the perceived fusion: the brain interprets the three tones as parts of <strong>a single sound</strong> with the (virtual) fundamental frequency of 100 Hz.</p>
+
+<h3>The Minor Triad: 10:12:15</h3>
+
+<p>A minor triad consists of the root, minor third, and fifth. The frequency ratios:</p>
+
+<div class="math-display">$$\text{Minor:} \quad 10 : 12 : 15$$</div>
+
+<p>Instead of \(4{:}5{:}6\), we have \(10{:}12{:}15\) &ndash; the numbers are significantly larger. The frequencies 10, 12, and 15 are <em>not</em> consecutive multiples of a single frequency. The virtual fundamental is ambiguous: is it the 10th partial of something? The 12th? The fusion is <strong>incomplete</strong>.</p>
+
+<p>Norman Cook put it this way in 2007: major suggests <strong>one speaker</strong> (a coherent overtone source), minor suggests <strong>multiple speakers</strong> (an ambiguous source attribution). The sadness of minor would then be not a direct emotion, but a <em>cognitive uncertainty</em>: the brain cannot neatly assign the tones to a single source.</p>
+
+<h3>What Does Psychology Say?</h3>
+
+<p>Empirical research confirms the major-happy/minor-sad effect for Western listeners with enormous consistency. In studies with thousands of participants, over 90% of Western-socialized adults classify major as &ldquo;happy&rdquo; and minor as &ldquo;sad&rdquo; (Kastner &amp; Crowder, 1990; Dalla Bella et al., 2001).</p>
+
+<p>But is it biology or culture?</p>
+
+<h3>The Tsimane Study: An Experiment in the Rainforest</h3>
+
+<p>In 2016, Josh McDermott and colleagues published a remarkable study in the journal <em>Nature</em>. They traveled to the <strong>Tsimane</strong>, an indigenous group in the Bolivian Amazon who had little exposure to Western music.</p>
+
+<p>The result was surprising: the Tsimane rated consonant and dissonant intervals as <strong>equally pleasant</strong>. They had no preference for octaves, fifths, or major triads over dissonant combinations. For Western listeners, this preference feels so natural that it seems innate &ndash; but the Tsimane data show: <strong>the preference for consonance is (at least partly) learned.</strong></p>
+
+<p>However: the Tsimane could perceive roughness perfectly well &ndash; they found rough sounds unpleasant. What they lacked was the <em>aesthetic preference</em> for simple frequency ratios. The sensory foundation (roughness detection) seems universal; the emotional valuation (major = happy) is culturally shaped.</p>
+
+<h3>Nature or Nurture? Both.</h3>
+
+<p>The current scientific consensus can be summarized as follows:</p>
+
+<p><strong>Universal (Nature):</strong></p>
+<p>&bull; Roughness detection is innate (even infants react to dissonance).<br>
+&bull; The harmonic series is a physical fact, not a cultural convention.<br>
+&bull; The ability to distinguish pitch is innate.</p>
+
+<p><strong>Culturally shaped (Nurture):</strong></p>
+<p>&bull; The <em>preference</em> for consonance vs. dissonance.<br>
+&bull; The emotional association major/happy, minor/sad.<br>
+&bull; Which scales and tunings feel &ldquo;right.&rdquo;<br>
+&bull; Which chord progressions create &ldquo;tension&rdquo; and &ldquo;resolution.&rdquo;</p>
+
+<p>Biology provides the <strong>raw material</strong> (harmonic series, roughness detection, frequency analysis in the inner ear). Culture shapes it into <strong>musical grammars</strong>. Major sounds happy &ndash; to us. But not to every human being on the planet.</p>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Play a major triad and a minor triad. See the frequency ratios, hear the sound, observe how the overtone series overlap. Shift the root note &ndash; the pattern stays the same, and so does the perception.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-triad-explorer"></div>
+</div>
+
+<h3>Beyond Major and Minor</h3>
+
+<p>Western music limits itself to 12 tones per octave. But other cultures use entirely different systems:</p>
+
+<p>&bull; <strong>Arabic maqam music</strong> uses quarter-tone steps &ndash; 24 tones per octave, with intervals that don&rsquo;t exist in the Western system.<br>
+&bull; <strong>Javanese gamelan music</strong> uses slendro (5 tones) and pelog (7 tones) &ndash; scales that deliberately sound &ldquo;out of tune&rdquo; to produce beating that is considered beautiful.<br>
+&bull; <strong>Indian raga music</strong> defines not just scales but also <em>ascending and descending rules</em>, emotional associations with times of day and seasons of the year.<br>
+&bull; <strong>Balinese gamelan music</strong> even deliberately tunes instrument pairs slightly <em>out of tune</em> with each other, to create a shimmering &ldquo;ombak&rdquo; (wave) effect.</p>
+
+<p>What all these systems share: they use the <strong>harmonic series as raw material</strong>, but shape it into entirely different aesthetic landscapes. The physics of vibration is universal; the music is not.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> Major (4:5:6) suggests a coherent overtone source &ndash; hence the perceived &ldquo;clarity.&rdquo; Minor (10:12:15) is more ambiguous. But the emotional valuation is culturally shaped: the Tsimane show no consonance preference. Biology provides the raw material (harmonic series, roughness detection), culture shapes the music. And now we face a practical problem: how do we tune an instrument?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 4. THE COMMA OF PYTHAGORAS -->
+<!-- ================================================================ -->
+<section id="pythagorean-comma" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 4</p>
+<h2>The Comma of Pythagoras</h2>
+
+<p>Imagine you&rsquo;re tuning a piano. You start from a C and tune upward in pure fifths: C &rarr; G &rarr; D &rarr; A &rarr; E &rarr; B &rarr; F&#x266F; &rarr; C&#x266F; &rarr; G&#x266F; &rarr; D&#x266F; &rarr; A&#x266F; &rarr; E&#x266F; &rarr; B&#x266F;. After <strong>12 fifths</strong>, you should theoretically arrive back at the starting C &ndash; seven octaves higher.</p>
+
+<p>Theoretically. In practice, something inconvenient happens.</p>
+
+<h3>The Calculation</h3>
+
+<p>Twelve pure fifths upward means: multiply the frequency 12 times by \(3/2\).</p>
+
+<div class="math-display">$$\Bigl(\frac{3}{2}\Bigr)^{12} = \frac{3^{12}}{2^{12}} = \frac{531\,441}{4\,096} \approx 129.746$$</div>
+
+<p>Seven octaves upward means: multiply by \(2^7 = 128\).</p>
+
+<div class="math-display">$$2^7 = 128$$</div>
+
+<p>The ratio of the two:</p>
+
+<div class="math-display">$$\frac{(3/2)^{12}}{2^7} = \frac{3^{12}}{2^{19}} = \frac{531\,441}{524\,288} \approx 1.01364$$</div>
+
+<p>That is <strong>not 1</strong>. It&rsquo;s off by \(1.36\%\) &ndash; equivalent to <strong>23.46 cents</strong>. (A <span class="glossary" title="Cent: A logarithmic measure of interval size. 100 cents = 1 semitone in equal temperament. 1 cent = barely audible, 5&ndash;10 cents = noticeable.">cent</span> is one hundredth of an equal-tempered semitone. Most people can hear differences from about 5&ndash;10 cents.) The difference of 23.46 cents is <strong>clearly audible</strong>.</p>
+
+<p>This tiny but persistent ratio \(3^{12}/2^{19}\) is called the <strong>Pythagorean comma</strong>. It is the mathematical proof that the circle of fifths <strong>does not close exactly</strong>.</p>
+
+<figure class="my-6">
+  <img src="/img/circle-of-fifths.svg" alt="The circle of fifths as a circle with 12 stops, where the last stop (B-sharp) does not exactly meet the first (C) &ndash; showing the gap of the Pythagorean comma" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:420px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The circle of fifths: 12 pure fifths don&rsquo;t quite close. The gap is the Pythagorean comma (23.46 cents).</figcaption>
+</figure>
+
+<h3>Why This Is a Fundamental Problem</h3>
+
+<p>The reason lies in number theory. Pure fifths are powers of 3 (more precisely: \(3^n / 2^m\)), and octaves are powers of 2. A pure fifth would fit exactly into octaves if there existed integers \(n, m\) with \((3/2)^n = 2^m\), i.e., \(3^n = 2^{n+m}\). But the equation</p>
+
+<div class="math-display">$$3^n = 2^k$$</div>
+
+<p>has <strong>no solution</strong> for positive integers \(n, k\). (Proof: the left side is odd, the right side is even. Contradiction.) The Pythagorean comma is not an inaccuracy &ndash; it is a <strong>theorem</strong>. Fifths and octaves are <em>incommensurable</em>, like the diagonal of a square and its side.</p>
+
+<figure class="my-6">
+  <img src="/img/pythagorean-comma.svg" alt="Visualization of the Pythagorean comma: spiral of fifths vs. ladder of octaves, never meeting exactly" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:500px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">12 pure fifths (spiral) vs. 7 octaves (straight line). They almost meet &ndash; but never exactly.</figcaption>
+</figure>
+
+<h3>The Wolf Fifth</h3>
+
+<p>In practice, the Pythagorean comma means: if you tune 11 out of 12 fifths pure, the <strong>last fifth</strong> must absorb the entire comma &ndash; it becomes 23.46 cents too narrow. This mutilated fifth sounds so bad that it earned the name <strong>wolf fifth</strong> &ndash; it &ldquo;howls like a wolf.&rdquo;</p>
+
+<p>In Pythagorean tuning, the wolf fifth typically fell between G&#x266F; and E&#x266D;. This meant: keys with many sharps or flats were <strong>unusable</strong>. A composer could write beautifully in C major, but F&#x266F; major sounded ghastly. This constrained music for centuries.</p>
+
+<h3>Other Commas: The Syntonic Comma</h3>
+
+<p>The Pythagorean comma is not the only problem. There is also the <strong>syntonic comma</strong> (81:80, roughly 21.5 cents): the difference between a Pythagorean major third (\(81/64\), four fifths up) and a pure major third (\(5/4 = 80/64\)).</p>
+
+<div class="math-display">$$\frac{81/64}{5/4} = \frac{81}{80} \approx 1.0125 \approx 21.5 \,\text{cents}$$</div>
+
+<p>The Pythagorean system uses only the primes 2 and 3. As soon as you add the prime 5 (for pure thirds), a new comma appears. You can have pure fifths <em>or</em> pure thirds &ndash; but <strong>not both at once</strong>. This is the fundamental tension of tuning theory.</p>
+
+<h3>Historical Tuning Systems Compared</h3>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Tuning</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Fifths</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Thirds</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">All keys?</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Era</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Pythagorean</td><td style="text-align:center;color:#34d399;">11 pure, 1 wolf</td><td style="text-align:center;color:#f87171;">All too wide</td><td style="text-align:center;color:#f87171;">No</td><td>Antiquity &ndash; 1400</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Quarter-comma meantone</td><td style="text-align:center;color:#f59e0b;">8 narrow, 1 wolf</td><td style="text-align:center;color:#34d399;">8 pure</td><td style="text-align:center;color:#f87171;">No</td><td>1500 &ndash; 1700</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Werckmeister III</td><td style="text-align:center;color:#f59e0b;">Irregular</td><td style="text-align:center;color:#f59e0b;">Irregular</td><td style="text-align:center;color:#34d399;">Yes (with character)</td><td>1691</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Equal temperament (12-TET)</td><td style="text-align:center;color:#f59e0b;">All ~2 cents narrow</td><td style="text-align:center;color:#f59e0b;">All ~14 cents wide</td><td style="text-align:center;color:#34d399;">Yes (identical)</td><td>from ~1800</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Choose a tuning system and hear how the same chord sounds in different keys. In Pythagorean tuning, C major sounds perfect, but F&#x266F; major sounds ghastly. In equal temperament, everything sounds the same &ndash; but nothing is perfectly pure.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-tuning-compare"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> The Pythagorean comma (\(3^{12}/2^{19} \approx 1.0136\)) is a number-theoretic theorem: fifths and octaves are incommensurable. No tuning system can simultaneously offer pure fifths, pure thirds, and transposability. Every tuning is a <strong>compromise</strong>. The most radical compromise &ndash; equal temperament &ndash; took centuries to prevail.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 5. THE WELL-TEMPERED CLAVIER -->
+<!-- ================================================================ -->
+<section id="well-tempered" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 5</p>
+<h2>The Well-Tempered Clavier</h2>
+
+<p>In 1722, Johann Sebastian Bach wrote a collection of 24 preludes and fugues &ndash; one in each major and minor key. He called it <em>&ldquo;The Well-Tempered Clavier.&rdquo;</em> The title was a statement: <strong>all keys are playable.</strong></p>
+
+<figure class="my-6">
+  <img src="/img/bach-wtc-title.jpg" alt="Title page of Johann Sebastian Bach&rsquo;s &ldquo;The Well-Tempered Clavier,&rdquo; 1722, with handwritten dedication" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:480px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Title page of The Well-Tempered Clavier (1722). Bach demonstrated that a single tuning system could accommodate all 24 keys. <span class="text-gray-700">Public Domain.</span></figcaption>
+</figure>
+
+<p>Exactly which tuning Bach used remains debated to this day. It was <em>not</em> equal temperament &ndash; that came later. It was most likely a <strong>well temperament</strong> (such as Werckmeister III or similar), in which the fifths are irregularly narrowed so that no wolf fifth exists, but each key retains its own character.</p>
+
+<h3>The Road to Equal Temperament</h3>
+
+<p>The idea of making all 12 semitones exactly equal in size is older than you might think. The Chinese scholar <strong>Zhu Zaiyu</strong> calculated it as early as 1584. In Europe, <strong>Simon Stevin</strong> published the same idea around 1585. But implementation took centuries &ndash; musicians rejected equal temperament because the thirds sounded too impure.</p>
+
+<p>The mathematical formulation is elegant. We seek 12 equal steps that together make one octave (factor 2). Each step must therefore have the factor</p>
+
+<div class="math-display">$$s = \sqrt[12]{2} = 2^{1/12} \approx 1.05946$$</div>
+
+<p>The frequency of the \(n\)-th semitone above a fundamental \(f_0\) is:</p>
+
+<div class="math-display">$$f_n = f_0 \cdot 2^{n/12}$$</div>
+
+<p>Starting from A4 = 440 Hz, this gives for example:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Note</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Semitones above A</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Equal temp. (Hz)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Just (Hz)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Difference (cents)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">A</td><td style="text-align:center;">0</td><td style="text-align:center;">440.00</td><td style="text-align:center;">440.00</td><td style="text-align:center;">0.0</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">C&#x266F;</td><td style="text-align:center;">4</td><td style="text-align:center;">554.37</td><td style="text-align:center;">550.00</td><td style="text-align:center;">+13.7</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">D</td><td style="text-align:center;">5</td><td style="text-align:center;">587.33</td><td style="text-align:center;">586.67</td><td style="text-align:center;">+1.9</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">E</td><td style="text-align:center;">7</td><td style="text-align:center;">659.26</td><td style="text-align:center;">660.00</td><td style="text-align:center;">&minus;1.9</td></tr>
+    <tr style="color:#f59e0b;"><td style="padding:0.3rem 0.6rem;">E (fifth)</td><td style="text-align:center;">7</td><td style="text-align:center;">659.26</td><td style="text-align:center;">660.00</td><td style="text-align:center;">&minus;1.9</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The equal-tempered fifth is only 1.9 cents too narrow &ndash; barely audible. But the equal-tempered major third is <strong>13.7 cents too wide</strong> &ndash; trained ears can clearly hear that. This is the price of equal temperament: perfect transposability in exchange for slightly impure thirds.</p>
+
+<h3>The Logarithm Idea</h3>
+
+<p>Why 12? Why not 19 or 31 or 53 tones per octave? The answer lies in approximation theory. The fifth has the frequency ratio \(3/2\). In equal temperament with \(N\) tones per octave, it is approximated by \(2^{k/N}\), where \(k\) is the number of semitones. We seek:</p>
+
+<div class="math-display">$$2^{k/N} \approx \frac{3}{2} \quad\Longleftrightarrow\quad \frac{k}{N} \approx \log_2\!\Bigl(\frac{3}{2}\Bigr) \approx 0.58496$$</div>
+
+<p>The best <span class="glossary" title="Continued fractions: A method for systematically approximating irrational numbers with fractions. Yields the best approximations for a given denominator size.">continued-fraction</span> approximations of \(0.58496\ldots\) are: \(1/2\), \(3/5\), \(7/12\), \(24/41\), \(31/53\), \(\ldots\) The denominators give the number of tones per octave: 2, 5, <strong>12</strong>, 41, <strong>53</strong>. Twelve is the first denominator that delivers an excellent approximation of the fifth (\(7/12 = 0.58333\ldots\), error only 1.9 cents). For <em>even</em> purer fifths and thirds, 53 tones per octave would be ideal &ndash; but 53 keys per octave are not practical for human hands.</p>
+
+<h3>The Irony of Equal Temperament</h3>
+
+<p>Mathematically speaking, equal temperament is a <strong>sacrifice of all pure harmony</strong> in favor of a single property: translational invariance. Every semitone step is the same size, so every key sounds the same. Modulation becomes free. Transposition becomes trivial.</p>
+
+<p>In the language of mathematics: equal temperament replaces the <strong>multiplicative group</strong> of rational frequency ratios with the <strong>cyclic group</strong> \(\mathbb{Z}_{12}\). Integer ratios are replaced by irrational numbers &ndash; \(\sqrt[12]{2}\) is irrational, like Pythagoras&rsquo; diagonal. The cost: no interval except the octave is pure. The gain: every interval is the same everywhere.</p>
+
+<p>Historically, this was a radical compromise. Baroque musicians rejected it because they valued the character of individual keys &ndash; D major sounded different from B-flat major in Werckmeister tuning, and that was desired. Only the 19th century, with its growing need for modulation and chromaticism, made equal temperament the standard tuning. Today it is so dominant that most people consider it &ldquo;natural&rdquo; &ndash; which it decidedly is not.</p>
+
+<h3>Microtonal Renaissance</h3>
+
+<p>In the 20th and 21st centuries, there has been a counter-movement. Composers like Harry Partch (43 tones per octave), Ben Johnston (just intonation), and Sevish (electronic microtonal music) are exploring tuning systems beyond 12-TET. Software synthesizers allow arbitrary tunings without physical constraints. The question &ldquo;How many tones does an octave need?&rdquo; is open once again.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> Equal temperament with \(f_n = f_0 \cdot 2^{n/12}\) sacrifices purity for transposability. Twelve tones are not a law of nature, but the best continued-fraction approximation that still fits on a keyboard. Bach&rsquo;s Well-Tempered Clavier celebrated the victory over the wolf fifth. But &ndash; <em>why</em> does our brain accept these compromises? How does the ear process frequencies at all?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 6. THE WELL-TEMPERED EAR -->
+<!-- ================================================================ -->
+<section id="hearing" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Chapter 6</p>
+<h2>The Well-Tempered Ear</h2>
+
+<p>So far, we have treated music as a physical phenomenon &ndash; frequencies, ratios, standing waves. But music does not exist in the air. It exists in the <strong>brain</strong>. And between sound wave and consciousness lies a surprisingly complex organ: the <strong>inner ear</strong>.</p>
+
+<h3>The Cochlea: A Biological Fourier Analysis</h3>
+
+<p>Deep within the inner ear lies the <span class="glossary" title="Cochlea: A spiral-shaped organ in the inner ear that converts sound waves into nerve signals. Performs a mechanical frequency analysis.">cochlea</span> &ndash; a spiral-shaped, fluid-filled canal roughly the size of a pea. Uncoiled, it measures about 3.5 centimeters. Running along its entire length is the <strong>basilar membrane</strong> &ndash; and this membrane is the key to everything.</p>
+
+<p>The basilar membrane is <strong>narrow and stiff</strong> at the entrance (near the oval window) and <strong>wide and flexible</strong> at the end (apex). High frequencies cause the stiff beginning to vibrate; low frequencies excite the flexible end. Each location on the membrane responds most strongly to a specific frequency &ndash; the <span class="glossary" title="Tonotopy: The spatial mapping of frequencies to locations on the basilar membrane. High frequencies at the entrance, low frequencies at the end.">tonotopic map</span>.</p>
+
+<figure class="my-6">
+  <img src="/img/cochlea-frequency.svg" alt="Diagram of the uncoiled cochlea with frequency mapping: 20,000 Hz at the entrance, 20 Hz at the apex, logarithmic distribution" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:500px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The uncoiled cochlea: each location on the basilar membrane is &ldquo;tuned&rdquo; to a specific frequency. The mapping is approximately logarithmic.</figcaption>
+</figure>
+
+<p>This is remarkable: the cochlea essentially performs a <strong>Fourier analysis in hardware</strong>. It decomposes incoming sound into its frequency components &ndash; not through mathematics, but through <strong>mechanics</strong>. Georg von B&eacute;k&eacute;sy received the Nobel Prize in 1961 for experimentally confirming this theory.</p>
+
+<h3>Critical Bands: The Resolution of the Ear</h3>
+
+<p>The basilar membrane has a limited <strong>frequency resolution</strong>. Each point responds not to a single frequency alone, but to a <strong>frequency range</strong> &ndash; the so-called <span class="glossary" title="Critical bandwidth: The frequency range within which the ear cannot resolve two tones separately. Approximately 1/3 of the center frequency, but at least ~100 Hz.">critical band</span>.</p>
+
+<p>The width of a critical band depends on frequency. The approximation formula after Barkhausen/Zwicker:</p>
+
+<div class="math-display">$$\text{CB}(f) \approx 25 + 75 \cdot \bigl[1 + 1.4 \cdot (f/1000)^2\bigr]^{0.69} \quad\text{Hz}$$</div>
+
+<p>At low frequencies (below 500 Hz), the critical band is about <strong>100 Hz wide</strong>. At high frequencies, it grows to several hundred Hertz. This explains why low chords quickly &ldquo;muddy up&rdquo;: at 100 Hz, the critical band is nearly as wide as a whole tone, and the overtone pairs land in the rough zone.</p>
+
+<p>Now everything connects: the <strong>Plomp-Levelt dissonance</strong> from Chapter 1 is precisely the roughness that arises when two frequencies fall <em>within the same critical band</em>. The dissonance curve is a direct consequence of the <strong>physical resolution of the cochlea</strong>.</p>
+
+<h3>Combination Tones: When the Ear Invents</h3>
+
+<p>The ear is not a passive receiver &ndash; it is an <strong>active signal processor</strong>. When two loud tones with frequencies \(f_1\) and \(f_2\) sound simultaneously, the inner ear produces additional tones that are not physically present: <strong>combination tones</strong>.</p>
+
+<p>The most prominent is the <strong>difference tone</strong>: \(f_d = f_2 - f_1\). For a pure fifth (660 Hz and 440 Hz), the difference tone is \(660 - 440 = 220\) Hz &ndash; exactly one octave below the lower tone. The difference tone <strong>reinforces the fundamental</strong>. For a second (440 Hz and 495 Hz), the difference tone is 55 Hz &ndash; a low hum that matches neither tone. Dissonance.</p>
+
+<p>There are also cubic difference tones (\(2f_1 - f_2\)) and higher orders. These combination tones arise from the <strong>nonlinearity</strong> of the inner ear &ndash; the outer hair cells actively amplify sound and introduce slight distortions in the process. What sounds like a defect is actually a feature: combination tones help the brain with <strong>fundamental pitch recognition</strong>.</p>
+
+<h3>The Missing Fundamental</h3>
+
+<p>One of the most fascinating phenomena in psychoacoustics: when you hear the frequencies 400, 500, 600, 700 Hz, you perceive the pitch <strong>200 Hz</strong> &ndash; even though 200 Hz is <em>physically absent</em>. The brain <em>computes</em> the <span class="glossary" title="Virtual pitch / missing fundamental: The brain perceives a fundamental tone that is physically absent, when the higher harmonics are present.">missing fundamental</span> from the spacing of the harmonic series.</p>
+
+<p>This is why you hear bass on small laptop speakers, even though they physically cannot reproduce frequencies below 150 Hz. Your brain reconstructs the fundamental from the overtone partials that are present. This works because the harmonic series has a <strong>unique pattern</strong>: evenly spaced frequencies with a spacing of \(f_1\).</p>
+
+<p>This is also why the major triad (4:5:6) sounds so clear: the brain immediately recognizes the missing fundamental (1) and assigns the three tones to a single virtual source. With the minor triad (10:12:15), the missing fundamental is more ambiguous &ndash; hence the perceived complexity.</p>
+
+<h3>Octave Equivalence: Why C Is Always C</h3>
+
+<p>One of the most universal phenomena in music: tones an octave apart are perceived as &ldquo;the same.&rdquo; The low C and the high C are different tones, but they carry the same <strong>name</strong>, the same <strong>function</strong>. This <em>octave equivalence</em> is found in <strong>every known musical culture</strong>.</p>
+
+<p>The physical explanation: when \(f\) and \(2f\) sound together, every overtone of \(2f\) is also an overtone of \(f\). The harmonic series of \(2f\) is a <strong>proper subset</strong> of the harmonic series of \(f\). For the cochlea, the two excitation patterns overlap perfectly &ndash; \(2f\) adds nothing new, it only reinforces.</p>
+
+<p>In mathematical terms: pitch perception is <strong>cyclic modulo the octave</strong>. If we represent the frequency space logarithmically (\(\text{pitch} = \log_2(f/f_0)\)), the octave becomes the interval \([0, 1)\), and the &ldquo;chroma&rdquo; (pitch classes C, D, E, ...) lie on the unit circle \(\mathbb{R}/\mathbb{Z}\). Musicians call it the <strong>pitch circle</strong>, mathematicians a <strong>quotient group</strong>. Same structure.</p>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Enter a frequency and see which location on the basilar membrane is maximally excited. Observe how the critical band is wider at low frequencies than at high ones. Play two tones simultaneously and see the overlap of excitation patterns &ndash; the greater the overlap, the rougher the sound.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-cochlea-mapper"></div>
+</div>
+
+<h3>The Ear as a Nonlinear Signal Processor</h3>
+
+<p>Let us summarize what the auditory system accomplishes:</p>
+
+<p>&bull; <strong>Frequency analysis</strong> (cochlea = mechanical Fourier transform)<br>
+&bull; <strong>Dynamic compression</strong> (outer hair cells amplify quiet sounds, dampen loud ones &ndash; a dynamic range of 120 dB is compressed to 40 dB)<br>
+&bull; <strong>Combination tone generation</strong> (nonlinear distortion as a feature, not a bug)<br>
+&bull; <strong>Fundamental reconstruction</strong> (missing fundamental from the overtone pattern)<br>
+&bull; <strong>Temporal analysis</strong> (phase locking up to ~5 kHz &ndash; the brain also uses <em>timing</em>, not just frequency)</p>
+
+<p>No technical audio analyzer matches the performance of the human cochlea. It has a frequency resolution of about <strong>3,500 channels</strong> (inner hair cells), a dynamic range of <strong>120 dB</strong> (a factor of 1,000,000 in amplitude), and it processes everything in <strong>real time</strong> at a power consumption of microwatts.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> The cochlea is a mechanical Fourier analyzer. Critical bands explain roughness. Combination tones and the missing fundamental show that the ear is an active signal processor. Octave equivalence follows from the subset relationship of harmonic series. And now the final connection: what does all of this have to do with physics, Fourier, and eigenvalues?</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 7. EVERYTHING IS VIBRATION -->
+<!-- ================================================================ -->
+<section id="vibration" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 7</p>
+<h2>Everything Is Vibration</h2>
+
+<p>In Chapter 2, we accepted the harmonic series as a physical fact: a string vibrates at frequencies \(f, 2f, 3f, \ldots\). But <em>why</em> exactly these frequencies? The answer lies in one of the deepest ideas in mathematics &ndash; and it connects music theory with quantum mechanics, image compression, and artificial intelligence.</p>
+
+<h3>The Wave Equation and Its Eigenvalues</h3>
+
+<p>The vibration of a string is described by the <strong>wave equation</strong>:</p>
+
+<div class="math-display">$$\frac{\partial^2 y}{\partial t^2} = c^2 \frac{\partial^2 y}{\partial x^2}$$</div>
+
+<p>where \(c = \sqrt{T/\mu}\) is the wave speed (\(T\) = string tension, \(\mu\) = mass per length). The boundary conditions \(y(0,t) = y(L,t) = 0\) (string fixed at both ends) constrain the solutions.</p>
+
+<p>We seek solutions of the form \(y(x,t) = X(x) \cdot T(t)\) (separation of variables). Substituting yields:</p>
+
+<div class="math-display">$$\frac{T''(t)}{c^2 T(t)} = \frac{X''(x)}{X(x)} = -\lambda$$</div>
+
+<p>The left side depends only on \(t\), the right side only on \(x\). For both to be equal, they must both be <strong>constant</strong>. This constant is called \(-\lambda\). For the spatial part, we get an <strong>eigenvalue problem</strong>:</p>
+
+<div class="math-display">$$X''(x) = -\lambda\, X(x), \quad X(0) = X(L) = 0$$</div>
+
+<p>The solutions are:</p>
+
+<div class="math-display">$$X_n(x) = \sin\!\Bigl(\frac{n\pi x}{L}\Bigr), \quad \lambda_n = \Bigl(\frac{n\pi}{L}\Bigr)^2, \quad n = 1, 2, 3, \ldots$$</div>
+
+<p>The <strong>eigenfunctions</strong> are sine waves. The <strong>eigenvalues</strong> \(\lambda_n\) determine the allowed frequencies: \(f_n = \frac{c}{2L}\,n\). The harmonic series is nothing other than the <strong>spectrum of an eigenvalue problem</strong>.</p>
+
+<p><strong>Stop. Read that last sentence again.</strong> Music theory &ndash; consonance, harmonic series, timbre, all of it &ndash; follows from an <em>eigenvalue problem</em>. The very same mathematical concept that plays the central role in <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300 underline">artificial intelligence</a> and in <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300 underline">quantum mechanics</a>.</p>
+
+<h3>Schr&ouml;dinger and the String</h3>
+
+<p>The time-independent Schr&ouml;dinger equation for a particle in a box of length \(L\):</p>
+
+<div class="math-display">$$-\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} = E\,\psi(x), \quad \psi(0) = \psi(L) = 0$$</div>
+
+<p>The same equation. The same boundary conditions. The same solutions: \(\psi_n(x) = \sin(n\pi x/L)\) with energies \(E_n = \frac{\hbar^2 \pi^2}{2mL^2}\,n^2\). The allowed energy levels of a quantum particle in a box are the <strong>eigenvalues of the same problem</strong> that also determines the harmonic series of a string. The string and the quantum particle are <strong>mathematical siblings</strong>.</p>
+
+<p>Erwin Schr&ouml;dinger titled his epoch-making 1926 paper: <em>&ldquo;Quantization as an Eigenvalue Problem.&rdquo;</em> The discrete energy levels of the hydrogen atom follow from the same principle as the discrete overtone frequencies of a guitar string: boundary conditions enforce <strong>quantization</strong>.</p>
+
+<h3>Chladni Figures: Making Eigenvalues Visible</h3>
+
+<p>In 1787, Ernst Florens Friedrich Chladni showed that the vibration modes of a plate can be made <em>visible</em>. He sprinkled fine sand on a metal plate and drew a violin bow across the edge. The sand collected on the <strong>nodal lines</strong> &ndash; the places where the plate does not vibrate. The patterns that emerge are called <strong>Chladni figures</strong>.</p>
+
+<figure class="my-6">
+  <img src="/img/chladni-figures.svg" alt="Four Chladni figures on square plates with increasingly complex nodal line patterns" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:500px;display:block;margin:0 auto;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Chladni figures: vibration modes of a plate, made visible by sand on the nodal lines. Each pattern corresponds to an eigenvalue of the two-dimensional wave equation.</figcaption>
+</figure>
+
+<p>Mathematically, Chladni figures are the <strong>eigenfunctions of the two-dimensional wave equation</strong>. On a rectangular plate of size \(a \times b\):</p>
+
+<div class="math-display">$$\nabla^2 u = -\lambda\, u \quad\Longrightarrow\quad u_{mn}(x,y) = \sin\!\Bigl(\frac{m\pi x}{a}\Bigr)\sin\!\Bigl(\frac{n\pi y}{b}\Bigr)$$</div>
+
+<p>with eigenvalues \(\lambda_{mn} = \pi^2\bigl(\frac{m^2}{a^2} + \frac{n^2}{b^2}\bigr)\). The nodal lines are the zeros of \(u_{mn}\). The higher the eigenvalue, the finer the pattern &ndash; just as higher overtone frequencies produce finer standing waves.</p>
+
+<p>Chladni demonstrated his experiments to Napoleon Bonaparte, who was so impressed that he offered a prize for their mathematical explanation. Sophie Germain won it in 1816 &ndash; one of the earliest recognized scientific achievements by a woman in the modern era.</p>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Choose the vibration mode (\(m, n\)) and observe the Chladni figure: the pattern of nodal lines on a vibrating plate. Higher modes = more complex patterns = higher eigenvalues = higher frequencies.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-chladni-sim"></div>
+</div>
+
+<h3>Fourier Everywhere: From the String to JPEG</h3>
+
+<p>The Fourier decomposition &ndash; any function as a sum of sine waves &ndash; is the <strong>spectral decomposition of an operator</strong>. The sine and cosine functions are the <em>eigenfunctions</em> of the derivative operator \(d^2/dx^2\). When we decompose a sound into its overtone components, we are performing an <strong>eigenvalue decomposition</strong>.</p>
+
+<p>The same mathematics underlies technologies you use every day:</p>
+
+<p><strong>MP3 compression:</strong> Music is divided into short blocks. Each block is decomposed into frequency components via the <em>modified discrete cosine transform</em> (MDCT). Inaudible components are discarded &ndash; guided by a <strong>psychoacoustic model</strong> that accounts for the critical bands of the cochlea. The MDCT is a discrete version of the Fourier decomposition &ndash; an eigenvalue decomposition on a finite grid.</p>
+
+<p><strong>JPEG image compression:</strong> The image is divided into 8&times;8-pixel blocks. Each block is decomposed into frequency components via the <em>discrete cosine transform</em> (DCT). High-frequency components (fine detail) are compressed more heavily than low-frequency components (coarse shapes). The DCT basis functions &ndash; these are the <strong>discrete eigenfunctions</strong> on a finite grid &ndash; are the two-dimensional analogues of Chladni figures.</p>
+
+<p><strong>Speech recognition:</strong> Audio is divided into short windows. Each window is transformed to its spectrum via the Fast Fourier Transform (FFT). Then Mel-frequency cepstral coefficients (MFCCs) are computed &ndash; a representation modeled on the logarithmic frequency resolution of the cochlea. Here too: eigenvalue decomposition, inspired by the biology of the ear.</p>
+
+<h3>The Grand Connection</h3>
+
+<p>Let us make the connections explicit:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Domain</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Operator</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Eigenfunctions</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Eigenvalues</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;color:#22d3ee;">String</td><td>\(-d^2/dx^2\)</td><td>\(\sin(n\pi x/L)\)</td><td>\((n\pi/L)^2 \to f_n\)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;color:#a855f7;">Quantum mechanics</td><td>\(-\frac{\hbar^2}{2m}\nabla^2 + V\)</td><td>\(\psi_n(x)\)</td><td>\(E_n\) (energy levels)</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;color:#f59e0b;">Chladni plate</td><td>\(-\nabla^2\)</td><td>\(\sin(m\pi x/a)\sin(n\pi y/b)\)</td><td>\(\lambda_{mn}\) (frequencies)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;color:#22d3ee;">MP3/JPEG</td><td>DCT matrix</td><td>Cosine basis functions</td><td>Frequency coefficients</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;color:#a855f7;">AI (kernel)</td><td>Kernel matrix \(K\)</td><td>Mercer eigenfunctions</td><td>\(\lambda_n\) (spectrum)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Five different domains, one pattern: an operator with boundary conditions produces a discrete spectrum of eigenvalues and eigenfunctions. The spectrum determines everything &ndash; which tones are possible, which energies are allowed, which patterns form on a plate, which information is preserved during compression, what an algorithm learns.</p>
+
+<h3>Fourier and the Sound of Mathematics</h3>
+
+<p>In 1822, Jean-Baptiste Joseph Fourier published his <em>Th&eacute;orie analytique de la chaleur</em> &ndash; a treatise on heat conduction. His central claim: any (sufficiently well-behaved) function can be represented as a sum of sines and cosines. The mathematical world was skeptical. Lagrange objected that this couldn&rsquo;t hold for discontinuous functions.</p>
+
+<p>Fourier was partly right and partly wrong &ndash; the precise convergence conditions took another century to resolve (Dirichlet, Carleson). But the core idea proved to be one of the most fruitful in all of mathematics. Fourier analysis permeates physics, engineering, signal processing, medical imaging, cryptography, and &ndash; as we have seen &ndash; music.</p>
+
+<p>It is no coincidence that the eigenfunctions of the wave equation are sine waves. It is a <strong>consequence of symmetry</strong>: the derivative operator is translation-invariant, and sine waves are the only bounded functions that merely scale by a factor under translation. In the language of group theory: sine waves are the <strong>irreducible representations of the translation group</strong>. The harmonic series follows from the symmetry of space itself.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> The harmonic series follows from an eigenvalue problem: \(X'' = -\lambda X\) with boundary conditions. The same mathematics describes quantum mechanics, Chladni figures, JPEG compression, and AI. Fourier analysis is eigenvalue decomposition. Everything is vibration &ndash; and every vibration has a spectrum.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- EPILOGUE -->
+<!-- ================================================================ -->
+<section id="epilogue" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Epilogue</p>
+<h2>Pythagoras Was Right &ndash; and Wrong</h2>
+
+<p>Pythagoras believed the universe was built from number ratios. The music of the spheres &ndash; the notion that the planets in their orbits produce tones obeying harmonic ratios &ndash; was for him not metaphor but literal truth.</p>
+
+<p>He was <strong>wrong</strong> in the details: planets do not produce audible tones. Pythagorean tuning fails at its own comma. And the emotional impact of music is culturally shaped, not mathematically determined.</p>
+
+<p>But he was <strong>right</strong> about the core idea: there is a deep connection between mathematics and perception. The harmonic series is not an invention of music theory, but an <strong>eigenvalue spectrum</strong>. Consonance is not an aesthetic whim, but a consequence of the <strong>physical resolution of the cochlea</strong>. And the Fourier decomposition &ndash; Pythagoras&rsquo; dream of reducing everything to integer ratios, extrapolated to infinity &ndash; is the mathematical tool that connects quantum mechanics, signal processing, and artificial intelligence.</p>
+
+<p>In this blog, we have now seen three facets of the same Glass Bead Game pattern:</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2.2;">
+    <strong style="color:#22d3ee;">Quantum mechanics:</strong>&ensp; \(\hat{H}\psi = E\psi\) &mdash; eigenvalues determine the allowed energies<br>
+    <strong style="color:#f59e0b;">Music:</strong>&ensp; \(X'' = -\lambda X\) &mdash; eigenvalues determine the overtone frequencies<br>
+    <strong style="color:#a855f7;">AI:</strong>&ensp; \(K\boldsymbol{\alpha} = \lambda\boldsymbol{\alpha}\) &mdash; eigenvalues determine what is learned
+  </p>
+</div>
+
+<p>Three different stages, the same principle: <strong>an operator with boundary conditions produces a discrete spectrum.</strong> Physics forces nature into discrete modes &ndash; whether those are vibration modes of a string, energy levels of an atom, or eigenvectors of a kernel matrix.</p>
+
+<p>Pythagoras heard numbers in music. Schr&ouml;dinger found the same numbers in the atom. And today we find them in the algorithms that model our language.</p>
+
+<p>The music of the spheres may not exist in outer space. But it exists in mathematics &ndash; and every time you pluck a string, open a JPEG, or query an AI, you hear an echo of it.</p>
+
+<p>Perhaps Hermann Hesse was right when he wrote in <em>The Glass Bead Game</em>: <em>&ldquo;Music and mathematics &hellip; share almost the same attitude toward the mind, almost the same degree of rigor and precision in their results.&rdquo;</em></p>
+
+</div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- FAQ -->
+<!-- ================================================================ -->
+<section class="pb-16">
+<div class="prose-dark">
+<h2 style="font-size:1.25rem;">Frequently Asked Questions</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Why does major sound happy and minor sound sad?</h3>
+<p>Major (4:5:6) contains consecutive partials of a single harmonic series &ndash; the brain interprets it as a coherent source. Minor (10:12:15) is more ambiguous. The emotional valuation is also culturally shaped, however: the Tsimane in the Bolivian rainforest show no preference for major over minor.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is the Pythagorean comma?</h3>
+<p>The Pythagorean comma is the ratio \(3^{12}/2^{19} \approx 1.0136\) (23.46 cents). It shows that 12 pure fifths do not exactly equal 7 octaves. This is a mathematical theorem: \(3^n \neq 2^k\) for positive integers. It forces every tuning system into compromises.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What does music have to do with eigenvalues?</h3>
+<p>The harmonic series of a string follows from an eigenvalue problem: \(X'' = -\lambda X\) with boundary conditions. The same mathematics describes quantum mechanics (Schr&ouml;dinger equation), image compression (DCT), and machine learning (kernel eigenvalues). Eigenvalues are the common thread.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Why does a piano have exactly 12 tones per octave?</h3>
+<p>Twelve is the best continued-fraction approximation that provides both a good fifth (\(7/12\), only 1.9 cents off) and a usable third while remaining practical for a keyboard. Better approximations (e.g., 53 tones) would be mathematically superior but unmanageable for human hands.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is the missing fundamental?</h3>
+<p>When only overtone frequencies are present (e.g., 400, 500, 600 Hz), the brain perceives the pitch 200 Hz &ndash; even though it is physically absent. The cochlea recognizes the pattern of evenly spaced overtone intervals and reconstructs the fundamental from them. This is why you can hear bass even on small speakers.</p>
+
+</div>
+</section>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does major sound happy and minor sound sad?", "acceptedAnswer": {"@type": "Answer", "text": "Major (4:5:6) contains consecutive partials of a single harmonic series \u2013 the brain interprets it as a coherent source. Minor (10:12:15) is more ambiguous. The emotional valuation is also culturally shaped: the Tsimane in the Bolivian rainforest show no preference for major over minor."}}, {"@type": "Question", "name": "What is the Pythagorean comma?", "acceptedAnswer": {"@type": "Answer", "text": "The Pythagorean comma is the ratio 3^12/2^19 \u2248 1.0136 (23.46 cents). It shows that 12 pure fifths do not exactly equal 7 octaves. This is a mathematical theorem: 3^n \u2260 2^k for positive integers."}}, {"@type": "Question", "name": "What does music have to do with eigenvalues?", "acceptedAnswer": {"@type": "Answer", "text": "The harmonic series of a string follows from an eigenvalue problem: X'' = -\u03bbX with boundary conditions. The same mathematics describes quantum mechanics, image compression (DCT), and machine learning (kernel eigenvalues)."}}, {"@type": "Question", "name": "Why does a piano have exactly 12 tones per octave?", "acceptedAnswer": {"@type": "Answer", "text": "Twelve is the best continued-fraction approximation that provides both a good fifth (7/12, only 1.9 cents off) and a usable third while remaining practical for a keyboard."}}, {"@type": "Question", "name": "What is the missing fundamental?", "acceptedAnswer": {"@type": "Answer", "text": "When only overtone frequencies are present (e.g., 400, 500, 600 Hz), the brain perceives the pitch 200 Hz even though it is physically absent. The cochlea recognizes the pattern of evenly spaced overtone intervals and reconstructs the fundamental."}}]}
+</script>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Built with Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="/en/about.html" class="hover:text-gray-400">About</a> &middot;
+    <a href="/impressum.html" class="hover:text-gray-400">Legal Notice</a> &middot;
+    <a href="/datenschutz.html" class="hover:text-gray-400">Privacy Policy</a>
+  </p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // 1. Lazy-mount React components
+  var COMPONENTS = {
+    'mount-harmonic-explorer': window.HarmonicExplorer || null,
+    'mount-overtone-viz': window.OvertoneViz || null,
+    'mount-triad-explorer': window.TriadExplorer || null,
+    'mount-tuning-compare': window.TuningCompare || null,
+    'mount-cochlea-mapper': window.CochleaMapper || null,
+    'mount-chladni-sim': window.ChladniSim || null,
+  };
+
+  var mounted = {};
+
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Component could not be loaded.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // 2. Scroll progress bar
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // 3. TOC highlighting (nav toggle handled by nav.js)
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          else link.classList.remove('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+  // 4. KaTeX auto-render
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+});
+</script>
+
+</body>
+</html>
