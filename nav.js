@@ -57,6 +57,11 @@
       icon: '\uD83E\uDDE9',  // 🧩
       de: { title: 'Die Grenzen des Beweisbaren', subtitle: 'G\u00F6del \u00B7 Turing \u00B7 Selbstreferenz', href: '/logik.html' },
       en: { title: 'The Limits of Provability', subtitle: 'G\u00F6del \u00B7 Turing \u00B7 Self-Reference', href: '/en/logic.html' }
+    },
+    {
+      icon: '\uD83C\uDFB2',  // 🎲
+      de: { title: 'Das Glasperlenspiel', subtitle: 'Meta-Reise \u00B7 Achtsamkeit \u00B7 Hesse', href: '/glasperlenspiel.html' },
+      en: { title: 'The Glass Bead Game', subtitle: 'Meta-Journey \u00B7 Mindfulness \u00B7 Hesse', href: '/en/glass-bead-game.html' }
     }
   ];
 
