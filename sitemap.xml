@@ -133,4 +133,16 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/musik.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/music.html"/>
   </url>
+  <url>
+    <loc>https://ki-mathias.de/logik.html</loc>
+    <lastmod>2026-04-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/logik.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/logic.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/logic.html</loc>
+    <lastmod>2026-04-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/logik.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/logic.html"/>
+  </url>
 </urlset>

@@ -52,6 +52,11 @@
       icon: '\uD83C\uDFB5',  // 🎵
       de: { title: 'Warum Dur fr\u00F6hlich klingt', subtitle: 'Harmonik \u00B7 Stimmung \u00B7 Psychoakustik', href: '/musik.html' },
       en: { title: 'Why Major Sounds Happy', subtitle: 'Harmony \u00B7 Tuning \u00B7 Psychoacoustics', href: '/en/music.html' }
+    },
+    {
+      icon: '\uD83E\uDDE9',  // 🧩
+      de: { title: 'Die Grenzen des Beweisbaren', subtitle: 'G\u00F6del \u00B7 Turing \u00B7 Selbstreferenz', href: '/logik.html' },
+      en: { title: 'The Limits of Provability', subtitle: 'G\u00F6del \u00B7 Turing \u00B7 Self-Reference', href: '/en/logic.html' }
     }
   ];
 

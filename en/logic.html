@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>The Limits of Provability &ndash; Self-Reference, G&ouml;del &amp; Turing</title>
+  <meta name="description" content="From Russell's paradox through Gödel's incompleteness theorems to Turing's halting problem — why mathematics cannot prove everything, explained interactively. No prerequisites required.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/en/logic.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/logik.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/logic.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/logik.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Limits of Provability &ndash; Self-Reference, G&ouml;del &amp; Turing">
+  <meta property="og:description" content="From Russell's paradox through Gödel's incompleteness theorems to Turing's halting problem — why mathematics cannot prove everything.">
+  <meta property="og:url" content="https://ki-mathias.de/en/logic.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-04-07">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Logic">
+  <meta property="article:tag" content="Mathematics">
+  <meta property="article:tag" content="Gödel">
+  <meta property="article:tag" content="Turing">
+  <meta property="article:tag" content="Computability">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/logik-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/logik-en.png">
+  <meta name="twitter:title" content="The Limits of Provability &ndash; Self-Reference, G&ouml;del &amp; Turing">
+  <meta name="twitter:description" content="From Russell's paradox through Gödel's incompleteness theorems to Turing's halting problem — why mathematics cannot prove everything.">
+
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+  <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/auto-render.min.js"></script>
+  <script src="/vendor/react.production.min.js"></script>
+  <script src="/vendor/react-dom.production.min.js"></script>
+  <script defer src="/logik-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-500.woff2) format('woff2'), url(/fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Limits of Provability \u2013 Self-Reference, G\u00f6del & Turing",
+    "description": "From Russell's paradox through G\u00f6del's incompleteness theorems to Turing's halting problem \u2013 why mathematics cannot prove everything, explained interactively.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-04-07",
+    "dateModified": "2026-04-07",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/logic.html" },
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "keywords": ["Logic", "Mathematics", "G\u00f6del", "Turing", "Incompleteness", "Halting Problem", "Computability", "Self-Reference", "Russell", "Cantor"],
+    "articleSection": "Logic & Computability",
+    "wordCount": 18000,
+    "timeRequired": "PT45M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<!-- Hidden TOC slot — nav.js picks this up and injects it into the dropdown -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#barber" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; The Barber Who Cannot Shave Himself</a>
+  <a href="#cantor" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Cantor&rsquo;s Diagonal Argument</a>
+  <a href="#goedel1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; G&ouml;del&rsquo;s Masterstroke</a>
+  <a href="#goedel2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; The Second Blow</a>
+  <a href="#halting" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Turing&rsquo;s Halting Problem</a>
+  <a href="#hierarchy" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; The Hierarchy of Computability</a>
+  <a href="#self-reference" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Self-Reference Everywhere</a>
+  <a href="#epilogue" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilogue</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Logic &middot; Mathematics &middot; Computability</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-amber-400 to-purple-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    The Limits of Provability
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Self-Reference, G&ouml;del &amp; Turing &ndash; why mathematics cannot prove everything, computers cannot compute everything, and the deepest truths are the ones that talk about themselves. A journey in seven chapters, with interactive visualizations.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-04-07">April 7, 2026</time><span>&middot;</span>
+    <span>~45 min read</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+
+<!-- ================================================================ -->
+<!-- 1. THE BARBER WHO CANNOT SHAVE HIMSELF -->
+<!-- ================================================================ -->
+<section id="barber" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
+<h2>The Barber Who Cannot Shave Himself</h2>
+
+<p>Imagine a small town with exactly one barber. The barber shaves all those &ndash; and only those &ndash; who do not shave themselves. Simple enough rule. Now the question: <strong>who shaves the barber?</strong></p>
+
+<p>If he shaves himself, then he belongs to the group of people who shave themselves &ndash; and therefore should <em>not</em> be shaved by the barber. But he <em>is</em> the barber. If he does not shave himself, then he belongs to the group of people who do not shave themselves &ndash; and therefore <em>must</em> be shaved by the barber. But again, he <em>is</em> the barber. Either way, contradiction.</p>
+
+<p>This is not a logic puzzle with a clever trick answer. There is no resolution. The barber <strong>cannot exist</strong> under these rules. And this seemingly innocent little story shook the foundations of mathematics in the early twentieth century.</p>
+
+<h3>The Liar Who Tells the Truth About Lying</h3>
+
+<p>The barber paradox is a modern retelling of a far older puzzle. Around 600 BCE, the Cretan philosopher Epimenides reportedly declared: <em>&ldquo;All Cretans are liars.&rdquo;</em> If Epimenides is telling the truth, then as a Cretan he is a liar &ndash; so the statement must be false. If it is false, then not all Cretans are liars &ndash; which is consistent but uninformative. The strict version sharpens the paradox to a single sentence:</p>
+
+<div class="summary-box" style="text-align:center;">
+  <p class="text-lg text-gray-200" style="margin:0;"><em>&ldquo;This sentence is false.&rdquo;</em></p>
+</div>
+
+<p>If the sentence is true, then what it says holds &ndash; it is false. If it is false, then what it says does not hold &ndash; so it is true. The sentence oscillates between true and false without ever settling. It is <strong>self-referential</strong>: it talks about itself. And that self-reference is the source of the paradox.</p>
+
+<p>For millennia, philosophers treated the Liar as a curiosity &ndash; an amusing puzzle for dinner parties, not a serious problem. That changed in 1901.</p>
+
+<h3>Frege&rsquo;s Life&rsquo;s Work in Ruins</h3>
+
+<p>Gottlob Frege had spent decades building the <em>Grundgesetze der Arithmetik</em> &ndash; an ambitious attempt to derive all of arithmetic from pure logic. Two volumes, hundreds of pages of meticulous formal deductions. In 1902, just as the second volume was going to press, Frege received a letter from a young British logician named Bertrand Russell.</p>
+
+<p>Russell had found a contradiction at the heart of Frege&rsquo;s system. Consider the set of all sets that do not contain themselves:</p>
+
+<div class="math-display">$$R = \{x \mid x \notin x\}$$</div>
+
+<p>Does \(R\) contain itself? If \(R \in R\), then by definition \(R \notin R\). If \(R \notin R\), then by definition \(R \in R\). Contradiction. This is <span class="glossary" title="Russell's Paradox: The set of all sets that do not contain themselves leads to a contradiction. Discovered by Bertrand Russell in 1901.">Russell&rsquo;s paradox</span> &ndash; the barber story in set-theoretic clothing.</p>
+
+<p>Frege&rsquo;s system allowed unrestricted set formation: for any property \(P(x)\), the set \(\{x \mid P(x)\}\) was assumed to exist. Russell&rsquo;s paradox showed that this principle &ndash; called <strong>na&iuml;ve comprehension</strong> &ndash; is inconsistent. Not all properties define sets.</p>
+
+<p>Frege responded with devastating honesty. He added an appendix to the second volume: <em>&ldquo;Hardly anything more unfortunate can befall a scientific writer than to have one of the foundations of his edifice shaken after the work is finished. This was the position I was placed in by a letter of Mr. Bertrand Russell.&rdquo;</em></p>
+
+<h3>The Escape Routes</h3>
+
+<p>Mathematics needed repair. Several proposals emerged:</p>
+
+<p><strong>Russell&rsquo;s type theory (1908):</strong> Sets are arranged in a hierarchy of &ldquo;types.&rdquo; A set of type \(n\) can only contain elements of type \(n-1\). The set of all sets that don&rsquo;t contain themselves is simply ill-formed &ndash; you cannot ask whether a set contains itself, because a set and its elements belong to different types. Effective but cumbersome.</p>
+
+<p><strong>Zermelo&ndash;Fraenkel set theory (ZF, 1908&ndash;1922):</strong> Instead of na&iuml;ve comprehension, a carefully chosen list of axioms controls which sets can be formed. The axiom of <em>separation</em> allows only subsets of existing sets, preventing the formation of \(R\). This became the standard foundation, usually augmented with the <span class="glossary" title="Axiom of Choice: For any collection of non-empty sets, there exists a function that selects one element from each set. Equivalent to Zorn's Lemma and the Well-Ordering Theorem.">axiom of choice</span> (ZFC).</p>
+
+<p><strong>Hilbert&rsquo;s program (1920s):</strong> David Hilbert proposed a more ambitious solution. Don&rsquo;t just patch the foundations &ndash; <em>prove</em> that mathematics is consistent. Find a <span class="glossary" title="Formal system: A set of axioms and inference rules that mechanically determine which statements are provable. Examples: Peano arithmetic, ZFC set theory.">formal system</span> powerful enough to express all of mathematics, and then demonstrate, using only the simplest and most reliable methods, that no contradiction can ever arise within it.</p>
+
+<p>Hilbert&rsquo;s vision was grand: <strong>completeness</strong> (every true statement is provable), <strong>consistency</strong> (no contradictions), and <strong>decidability</strong> (an algorithm that determines the truth of any statement). He genuinely believed this was achievable. In 1930, he declared at a conference in K&ouml;nigsberg: <em>&ldquo;Wir m&uuml;ssen wissen. Wir werden wissen.&rdquo;</em> &ndash; <em>&ldquo;We must know. We will know.&rdquo;</em></p>
+
+<p>The day before that speech, in the same city, a quiet 24-year-old Austrian mathematician named Kurt G&ouml;del had presented a result that destroyed the program entirely.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> Self-reference creates paradoxes. Russell&rsquo;s paradox shattered na&iuml;ve set theory. Hilbert proposed to rescue mathematics by proving its own consistency. G&ouml;del was about to show that this is impossible &ndash; but first, we need a tool from Georg Cantor.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 2. CANTOR'S DIAGONAL ARGUMENT -->
+<!-- ================================================================ -->
+<section id="cantor" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 2</p>
+<h2>Cantor&rsquo;s Diagonal Argument</h2>
+
+<p>In the 1870s, Georg Cantor asked a question that seemed almost absurd: are there different <strong>sizes of infinity?</strong> Common sense says no &ndash; infinity is infinity. Cantor proved that common sense is wrong.</p>
+
+<h3>Countable Infinity</h3>
+
+<p>A set is <span class="glossary" title="Countably infinite: A set is countably infinite if its elements can be listed in a sequence indexed by natural numbers 1, 2, 3, ... — even if that list is infinitely long.">countably infinite</span> if its elements can be listed in a sequence &ndash; first element, second element, third element, and so on, eventually reaching every element. The natural numbers \(\mathbb{N} = \{0, 1, 2, 3, \ldots\}\) are the prototype.</p>
+
+<p>Surprising fact: the <strong>integers</strong> \(\mathbb{Z}\) are also countable, even though they extend in both directions. Just interleave positives and negatives: \(0, 1, -1, 2, -2, 3, -3, \ldots\). Every integer appears exactly once.</p>
+
+<p>Even more surprising: the <strong>rational numbers</strong> \(\mathbb{Q}\) are countable. Cantor showed this with a beautiful zigzag argument over a two-dimensional grid of fractions. Despite being <em>dense</em> &ndash; between any two rationals there are infinitely many others &ndash; they can still be listed.</p>
+
+<h3>The Diagonal Proof</h3>
+
+<p>Now Cantor asked: are the <strong>real numbers</strong> also countable? His proof that they are not is one of the most elegant arguments in all of mathematics.</p>
+
+<p>Suppose, for contradiction, that we <em>could</em> list all real numbers between 0 and 1. Write them out in decimal:</p>
+
+<div style="overflow-x:auto;">
+<table style="border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem auto;font-family:monospace;">
+  <tbody>
+    <tr><td style="padding:0.2rem 0.6rem;color:#6b7280;">\(r_1\) =</td><td style="padding:0.2rem 0;">0.</td><td style="padding:0.2rem 0.15rem;color:#22d3ee;background:rgba(34,211,238,0.15);border-radius:4px;"><strong>5</strong></td><td style="padding:0.2rem 0.15rem;">1</td><td style="padding:0.2rem 0.15rem;">0</td><td style="padding:0.2rem 0.15rem;">3</td><td style="padding:0.2rem 0.15rem;">7</td><td style="padding:0.2rem 0.15rem;">&hellip;</td></tr>
+    <tr><td style="padding:0.2rem 0.6rem;color:#6b7280;">\(r_2\) =</td><td style="padding:0.2rem 0;">0.</td><td style="padding:0.2rem 0.15rem;">4</td><td style="padding:0.2rem 0.15rem;color:#f59e0b;background:rgba(245,158,11,0.15);border-radius:4px;"><strong>1</strong></td><td style="padding:0.2rem 0.15rem;">3</td><td style="padding:0.2rem 0.15rem;">9</td><td style="padding:0.2rem 0.15rem;">2</td><td style="padding:0.2rem 0.15rem;">&hellip;</td></tr>
+    <tr><td style="padding:0.2rem 0.6rem;color:#6b7280;">\(r_3\) =</td><td style="padding:0.2rem 0;">0.</td><td style="padding:0.2rem 0.15rem;">8</td><td style="padding:0.2rem 0.15rem;">2</td><td style="padding:0.2rem 0.15rem;color:#a855f7;background:rgba(168,85,247,0.15);border-radius:4px;"><strong>7</strong></td><td style="padding:0.2rem 0.15rem;">1</td><td style="padding:0.2rem 0.15rem;">8</td><td style="padding:0.2rem 0.15rem;">&hellip;</td></tr>
+    <tr><td style="padding:0.2rem 0.6rem;color:#6b7280;">\(r_4\) =</td><td style="padding:0.2rem 0;">0.</td><td style="padding:0.2rem 0.15rem;">3</td><td style="padding:0.2rem 0.15rem;">5</td><td style="padding:0.2rem 0.15rem;">0</td><td style="padding:0.2rem 0.15rem;color:#22d3ee;background:rgba(34,211,238,0.15);border-radius:4px;"><strong>6</strong></td><td style="padding:0.2rem 0.15rem;">4</td><td style="padding:0.2rem 0.15rem;">&hellip;</td></tr>
+    <tr><td style="padding:0.2rem 0.6rem;color:#6b7280;">\(r_5\) =</td><td style="padding:0.2rem 0;">0.</td><td style="padding:0.2rem 0.15rem;">9</td><td style="padding:0.2rem 0.15rem;">7</td><td style="padding:0.2rem 0.15rem;">3</td><td style="padding:0.2rem 0.15rem;">8</td><td style="padding:0.2rem 0.15rem;color:#f59e0b;background:rgba(245,158,11,0.15);border-radius:4px;"><strong>5</strong></td><td style="padding:0.2rem 0.15rem;">&hellip;</td></tr>
+    <tr><td style="padding:0.2rem 0.6rem;color:#6b7280;" colspan="8">&vellip;</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Now construct a new number \(d\) by reading down the <strong>diagonal</strong> &ndash; the first digit of \(r_1\), the second digit of \(r_2\), the third digit of \(r_3\), and so on &ndash; and then <em>changing every digit</em>. For example, replace each digit \(a\) with \(a + 1 \pmod{9}\) (wrapping 9 to 0):</p>
+
+<div class="math-display">$$d = 0.\underbrace{6}_{5+1}\underbrace{2}_{1+1}\underbrace{8}_{7+1}\underbrace{7}_{6+1}\underbrace{6}_{5+1}\ldots$$</div>
+
+<p>The number \(d\) <strong>differs from every number on the list</strong>. It differs from \(r_1\) in the first decimal place. From \(r_2\) in the second. From \(r_n\) in the \(n\)-th. So \(d\) is not on the list &ndash; contradicting our assumption that the list contained <em>all</em> real numbers.</p>
+
+<p>Therefore the real numbers are <strong>uncountable</strong>. There are strictly more real numbers than natural numbers. Infinity comes in sizes, and the infinity of the reals is larger than the infinity of the naturals.</p>
+
+<figure class="my-6">
+  <img src="/img/cantor-diagonal.svg" alt="Visualization of Cantor's diagonal argument: a table of real numbers with the diagonal highlighted and a new number constructed by modifying each diagonal digit" class="w-full rounded-lg border border-gray-800/50" loading="lazy" style="max-width:500px;margin:0 auto;display:block;">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Cantor&rsquo;s diagonal: a new real number is constructed that differs from every listed number in at least one decimal place.</figcaption>
+</figure>
+
+<h3>The Power of Diagonalization</h3>
+
+<p>Cantor published his diagonal argument in 1891. It looks like a curiosity about set theory, but the <strong>method</strong> turned out to be one of the most powerful proof techniques in all of mathematics and computer science. The pattern is always the same:</p>
+
+<p><strong>1.</strong> Assume a complete listing of some collection.<br>
+<strong>2.</strong> Use the listing itself to construct an object that cannot be on the list.<br>
+<strong>3.</strong> Contradiction.</p>
+
+<p>We will see this same pattern in G&ouml;del&rsquo;s proof (Chapter 3) and Turing&rsquo;s proof (Chapter 5). The diagonal argument is the common ancestor of the deepest impossibility results in logic and computation.</p>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Enter any five real numbers (as decimals). The visualization builds the diagonal in real time and shows you the constructed number that escapes the list.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-cantor-diagonal"></div>
+</div>
+
+<h3>Cantor&rsquo;s Legacy</h3>
+
+<p>Cantor&rsquo;s work was fiercely resisted. Leopold Kronecker called him a &ldquo;corrupter of youth.&rdquo; Henri Poincar&eacute; called set theory a &ldquo;disease.&rdquo; Cantor suffered from recurring bouts of depression and spent his final years in a sanatorium. He died in 1918 without seeing his ideas accepted by the mainstream.</p>
+
+<p>Today, his diagonal argument is taught in every first-year logic course, and his set theory is the foundation on which virtually all of modern mathematics is built. The irony is deep: the man who was attacked for his ideas about infinity produced a proof technique so powerful that it exposed the limits of mathematics itself.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> Cantor showed that the real numbers are uncountable using a <strong>diagonal argument</strong>: assume a complete list, use the list to construct something that cannot be on the list, reach a contradiction. This technique &ndash; diagonalization &ndash; is the engine behind the deepest impossibility results of the twentieth century. G&ouml;del will use it next.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 3. GÖDEL'S MASTERSTROKE -->
+<!-- ================================================================ -->
+<section id="goedel1" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 3</p>
+<h2>G&ouml;del&rsquo;s Masterstroke</h2>
+
+<p>It is 1930. David Hilbert, the most influential mathematician alive, is confident that the foundations crisis is nearly resolved. His program calls for a formal system that captures all of mathematics and a <em>finitary</em> proof that the system is consistent. Several of his colleagues are working on the details.</p>
+
+<p>Kurt G&ouml;del, twenty-four years old, has just completed his doctorate in Vienna. His thesis proved that first-order logic is <strong>complete</strong> &ndash; every logical truth has a proof. A triumph for Hilbert&rsquo;s program. But then G&ouml;del turned to a deeper question: is <em>arithmetic</em> also complete? Can every true statement about natural numbers be proved?</p>
+
+<figure class="my-6 flex flex-col items-center">
+  <img src="/img/goedel-portrait.png" alt="Portrait of Kurt Gödel" class="rounded-lg border border-gray-800/50" style="max-width:260px;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Kurt G&ouml;del (1906&ndash;1978). His incompleteness theorems are among the most profound results in the history of mathematics.</figcaption>
+</figure>
+
+<h3>Hilbert&rsquo;s Three Demands</h3>
+
+<p>Hilbert wanted a formal system \(F\) satisfying three properties:</p>
+
+<p><strong>Consistency:</strong> \(F\) never proves both \(\varphi\) and \(\neg\varphi\). No contradictions.</p>
+
+<p><strong>Completeness:</strong> For every statement \(\varphi\) in the language of \(F\), either \(\varphi\) or \(\neg\varphi\) is provable. No undecidable questions.</p>
+
+<p><strong>Decidability:</strong> There exists a mechanical procedure (what we would now call an <em>algorithm</em>) that, given any statement \(\varphi\), determines whether \(\varphi\) is provable in \(F\).</p>
+
+<p>G&ouml;del shattered the first two demands. Turing would later shatter the third.</p>
+
+<h3>Making Arithmetic Talk About Itself</h3>
+
+<p>G&ouml;del&rsquo;s key insight was breathtaking in its audacity: he made arithmetic <strong>talk about itself</strong>. The Liar paradox says &ldquo;this sentence is false.&rdquo; G&ouml;del constructed an arithmetic statement that says &ldquo;this statement is not provable.&rdquo;</p>
+
+<p>But how can a statement about numbers refer to itself? Numbers don&rsquo;t know about proofs. G&ouml;del&rsquo;s trick: assign a unique natural number to every symbol, every formula, and every proof in the formal system. This encoding is called <span class="glossary" title="Gödel numbering: A systematic assignment of natural numbers to the symbols, formulas, and proofs of a formal system. Allows metamathematical statements to be expressed as arithmetic statements.">G&ouml;del numbering</span>.</p>
+
+<p>The details are intricate but the idea is simple. Every symbol gets a number:</p>
+
+<div style="overflow-x:auto;">
+<table style="border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem auto;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">Symbol</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">0</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">S</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">+</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">&times;</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">=</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">(</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">)</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">&not;</th>
+    <th style="text-align:center;padding:0.4rem 0.8rem;color:#6b7280;">&forall;</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="text-align:center;padding:0.3rem 0.8rem;color:#6b7280;">Code</td>
+    <td style="text-align:center;color:#22d3ee;">1</td>
+    <td style="text-align:center;color:#22d3ee;">2</td>
+    <td style="text-align:center;color:#22d3ee;">3</td>
+    <td style="text-align:center;color:#22d3ee;">4</td>
+    <td style="text-align:center;color:#22d3ee;">5</td>
+    <td style="text-align:center;color:#22d3ee;">6</td>
+    <td style="text-align:center;color:#22d3ee;">7</td>
+    <td style="text-align:center;color:#22d3ee;">8</td>
+    <td style="text-align:center;color:#22d3ee;">9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>A formula like \(0 = 0\) becomes the sequence \(\langle 1, 5, 1 \rangle\), which gets encoded as a single number via prime factorization: \(2^1 \cdot 3^5 \cdot 5^1 = 2 \cdot 243 \cdot 5 = 2430\). A proof is a sequence of formulas, which becomes a sequence of G&ouml;del numbers, which becomes a single (very large) number.</p>
+
+<p>The crucial observation: the property &ldquo;\(n\) is the G&ouml;del number of a provable formula&rdquo; is an <strong>arithmetic property</strong> &ndash; it can be expressed using only the basic operations of addition, multiplication, and quantifiers over natural numbers. Proofs about proofs become statements about numbers.</p>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Type a simple formula and watch it get encoded into a G&ouml;del number step by step. Then see how the number encodes back into the original formula.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-goedel-calc"></div>
+</div>
+
+<h3>The G&ouml;del Sentence</h3>
+
+<p>Using his numbering, G&ouml;del constructed a formula \(G\) with the following property:</p>
+
+<div class="summary-box" style="text-align:center;">
+  <p class="text-lg text-gray-200" style="margin:0;">\(G\) says: &ldquo;The formula with G&ouml;del number \(\ulcorner G \urcorner\) is not provable in \(F\).&rdquo;</p>
+</div>
+
+<p>In other words, \(G\) says <strong>&ldquo;I am not provable.&rdquo;</strong></p>
+
+<p>Now the diagonal argument bites. Is \(G\) true or false?</p>
+
+<p><strong>Case 1:</strong> Suppose \(G\) is provable. Then \(F\) proves \(G\). But \(G\) says &ldquo;I am not provable.&rdquo; So if \(G\) is provable, it is also false. A consistent system does not prove false statements. So if \(F\) is consistent, \(G\) cannot be provable.</p>
+
+<p><strong>Case 2:</strong> So \(G\) is not provable. But that is precisely what \(G\) asserts! So \(G\) is <strong>true but unprovable</strong>.</p>
+
+<p>This is the <strong>First Incompleteness Theorem</strong> (1931):</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>G&ouml;del&rsquo;s First Incompleteness Theorem:</strong> Any consistent formal system \(F\) that is powerful enough to express basic arithmetic contains statements that are true but not provable in \(F\). In other words, \(F\) is <strong>incomplete</strong>.</p>
+</div>
+
+<p>Note the careful conditions: the system must be <em>consistent</em> (no contradictions) and <em>sufficiently powerful</em> (able to express arithmetic &ndash; roughly, Peano arithmetic or anything stronger). Trivial systems or very weak logics can escape, but any system capable of doing real mathematics cannot.</p>
+
+<h3>Can&rsquo;t We Just Add \(G\) as an Axiom?</h3>
+
+<p>A natural reaction: if \(G\) is true but unprovable, just add \(G\) as a new axiom! Call the extended system \(F'\). Problem solved?</p>
+
+<p>No. G&ouml;del&rsquo;s construction works for <em>any</em> sufficiently powerful consistent system. So \(F'\) has its own G&ouml;del sentence \(G'\), which is true but unprovable in \(F'\). Add \(G'\), get \(F''\), which has \(G''\), and so on. The incompleteness is <strong>inescapable</strong>. You can never patch it away.</p>
+
+<p>This is not a bug in arithmetic. It is a structural feature of any formal system that can talk about itself.</p>
+
+<h3>The Connection to the Liar</h3>
+
+<p>G&ouml;del himself acknowledged the parallel. The Liar sentence says &ldquo;I am false.&rdquo; G&ouml;del&rsquo;s sentence says &ldquo;I am not provable.&rdquo; The Liar leads to a paradox because truth and falsehood are exhaustive &ndash; a sentence must be one or the other. G&ouml;del&rsquo;s sentence avoids paradox because provability and truth are <strong>not the same thing</strong>. A sentence can be true without being provable. G&ouml;del showed that such sentences <em>must</em> exist.</p>
+
+<p>The Liar paradox is a bug. The G&ouml;del sentence is a <strong>theorem</strong>.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> G&ouml;del used a diagonal argument to construct a sentence that says &ldquo;I am not provable.&rdquo; If the system is consistent, this sentence is true but unprovable. Arithmetic &ndash; and any system powerful enough to express it &ndash; is necessarily incomplete. But there is worse news.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 4. THE SECOND BLOW -->
+<!-- ================================================================ -->
+<section id="goedel2" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 4</p>
+<h2>The Second Blow</h2>
+
+<p>The first incompleteness theorem says that arithmetic is incomplete &ndash; there are truths it cannot prove. Painful, but perhaps tolerable. After all, Hilbert&rsquo;s primary concern was <em>consistency</em>. Even if some exotic statements slip through, surely we can at least prove that the system doesn&rsquo;t contradict itself?</p>
+
+<p>G&ouml;del&rsquo;s second theorem closes this escape route.</p>
+
+<h3>The Second Incompleteness Theorem</h3>
+
+<p>The statement &ldquo;\(F\) is consistent&rdquo; can itself be expressed as an arithmetic sentence. Consistency means: there is no number \(n\) that encodes a proof of \(0 = 1\) (or any other contradiction). In G&ouml;del&rsquo;s encoding, this becomes:</p>
+
+<div class="math-display">$$\text{Con}(F) \;:\; \neg\,\exists\, n\;\text{Proof}_F(n, \ulcorner 0 = 1 \urcorner)$$</div>
+
+<p>G&ouml;del proved that if \(F\) is consistent, then \(F\) cannot prove \(\text{Con}(F)\).</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>G&ouml;del&rsquo;s Second Incompleteness Theorem:</strong> No consistent formal system \(F\) that is powerful enough to express basic arithmetic can prove its own consistency.</p>
+</div>
+
+<p>The intuition is elegant: the first theorem showed that \(G\) (&ldquo;I am not provable&rdquo;) is true if and only if \(F\) is consistent. So proving consistency is at least as hard as proving \(G\). But \(G\) is unprovable. Therefore consistency is also unprovable.</p>
+
+<h3>Hilbert&rsquo;s Program: Dead on Arrival</h3>
+
+<p>Recall Hilbert&rsquo;s three demands:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Demand</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Status</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Killed by</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Completeness</td><td style="text-align:center;color:#f87171;">Impossible</td><td style="padding:0.3rem 0.6rem;">G&ouml;del&rsquo;s 1st theorem (1931)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;">Provable consistency</td><td style="text-align:center;color:#f87171;">Impossible</td><td style="padding:0.3rem 0.6rem;">G&ouml;del&rsquo;s 2nd theorem (1931)</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Decidability</td><td style="text-align:center;color:#f87171;">Impossible</td><td style="padding:0.3rem 0.6rem;">Church &amp; Turing (1936)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Hilbert&rsquo;s program was not merely difficult &ndash; it was <strong>mathematically impossible</strong>. Not because mathematicians weren&rsquo;t clever enough, but because the goals themselves were contradictory for any sufficiently powerful system.</p>
+
+<h3>A Subtle but Important Point</h3>
+
+<p>G&ouml;del&rsquo;s second theorem says that \(F\) cannot prove <em>its own</em> consistency. It does <strong>not</strong> say that consistency cannot be proved at all. Gerhard Gentzen proved the consistency of Peano arithmetic in 1936 &ndash; but he had to use <em>transfinite induction</em> up to the ordinal \(\varepsilon_0\), which goes beyond what Peano arithmetic itself can justify. You can always prove consistency from <em>outside</em>, using a stronger system &ndash; but that merely shifts the problem. Who proves the consistency of the stronger system?</p>
+
+<p>It is turtles all the way down.</p>
+
+<h3>What Does It Mean?</h3>
+
+<p>G&ouml;del&rsquo;s theorems do <strong>not</strong> say that mathematics is unreliable, that truth doesn&rsquo;t exist, or that &ldquo;anything goes.&rdquo; They say something far more precise and far more interesting:</p>
+
+<p><strong>Truth exceeds provability.</strong> In any formal system rich enough to do arithmetic, there are truths that the system recognizes as meaningful but cannot derive from its axioms. Mathematics is too vast to be captured by any single set of rules.</p>
+
+<p>Some have drawn philosophical conclusions from this &ndash; that human mathematical intuition must transcend mechanical computation (the &ldquo;Lucas&ndash;Penrose argument&rdquo;). Others reject this interpretation. The debate continues. What is beyond debate is the mathematical result itself: completeness and self-proved consistency are unattainable.</p>
+
+<div class="component-wrap">
+  <div id="mount-goedel-calc-2"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> G&ouml;del&rsquo;s second theorem killed Hilbert&rsquo;s dream. No sufficiently powerful system can prove its own consistency. The third leg of Hilbert&rsquo;s program &ndash; decidability &ndash; would fall five years later, by a completely different route: computation.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 5. TURING'S HALTING PROBLEM -->
+<!-- ================================================================ -->
+<section id="halting" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 5</p>
+<h2>Turing&rsquo;s Halting Problem</h2>
+
+<p>In 1928, Hilbert posed the <span class="glossary" title="Entscheidungsproblem (Decision Problem): Is there an algorithm that takes any mathematical statement as input and determines whether it is true or false? Shown to be unsolvable by Church and Turing in 1936.">Entscheidungsproblem</span> &ndash; the &ldquo;decision problem&rdquo;: is there a general algorithm that can determine the truth or falsehood of any mathematical statement?</p>
+
+<p>To answer this, you first need a precise definition of &ldquo;algorithm.&rdquo; In 1936, Alan Turing provided one.</p>
+
+<figure class="my-6 flex flex-col items-center">
+  <img src="/img/turing-portrait.jpg" alt="Portrait of Alan Turing" class="rounded-lg border border-gray-800/50" style="max-width:260px;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Alan Turing (1912&ndash;1954). His 1936 paper defined computation and proved that some problems are forever beyond its reach.</figcaption>
+</figure>
+
+<h3>The Turing Machine</h3>
+
+<p>A <span class="glossary" title="Turing machine: An abstract mathematical model of computation consisting of an infinite tape, a read/write head, and a finite set of rules. Anything that is computable at all can be computed by a Turing machine.">Turing machine</span> is the simplest possible model of a computer. It consists of:</p>
+
+<p><strong>1.</strong> An infinite tape divided into cells, each containing a symbol.<br>
+<strong>2.</strong> A read/write head that moves one cell at a time, left or right.<br>
+<strong>3.</strong> A finite set of states and a transition table: given the current state and the symbol under the head, the machine writes a new symbol, moves the head, and transitions to a new state.<br>
+<strong>4.</strong> A special <em>halt</em> state: when the machine enters it, computation stops.</p>
+
+<figure class="my-6">
+  <img src="/img/turing-machine.svg" alt="Schematic of a Turing machine: an infinite tape with symbols, a read/write head, and a state indicator" class="w-full rounded-lg border border-gray-800/50" style="max-width:500px;margin:0 auto;display:block;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">A Turing machine: infinite tape, finite rules. Despite its simplicity, it can compute anything that any computer can compute.</figcaption>
+</figure>
+
+<p>The <strong>Church&ndash;Turing thesis</strong> (not a theorem, but a widely accepted claim) says: anything that is &ldquo;effectively computable&rdquo; can be computed by a Turing machine. Every programming language, every supercomputer, every quantum computer &ndash; they are all equivalent to a Turing machine in terms of what they can compute. They may differ in <em>speed</em>, but not in <em>capability</em>.</p>
+
+<h3>The Universal Turing Machine</h3>
+
+<p>A crucial insight: a Turing machine&rsquo;s transition table can itself be encoded as a string of symbols on a tape. So there exists a <strong>universal</strong> Turing machine \(U\) that takes as input the description of any other Turing machine \(M\) and an input \(x\), and simulates what \(M\) would do on \(x\).</p>
+
+<div class="math-display">$$U(\langle M \rangle, x) = M(x)$$</div>
+
+<p>This is the theoretical foundation of the stored-program computer. The machine and its instructions are both just data. John von Neumann would later build exactly this architecture in hardware.</p>
+
+<h3>The Halting Problem</h3>
+
+<p>Now Turing asked the question that would kill the Entscheidungsproblem. Consider the following problem:</p>
+
+<div class="summary-box" style="text-align:center;">
+  <p class="text-gray-200" style="margin:0;"><strong>Halting Problem:</strong> Given a Turing machine \(M\) and an input \(x\), does \(M\) eventually halt on \(x\), or does it run forever?</p>
+</div>
+
+<p>Turing proved that <strong>no algorithm can solve this problem in general</strong>. The proof is a diagonal argument &ndash; the same technique Cantor used, now applied to computation.</p>
+
+<h3>The Proof</h3>
+
+<p>Suppose, for contradiction, that there exists a Turing machine \(H\) that solves the halting problem. That is, for any machine \(M\) and input \(x\):</p>
+
+<div class="math-display">$$H(\langle M \rangle, x) = \begin{cases} 1 & \text{if } M(x) \text{ halts} \\ 0 & \text{if } M(x) \text{ runs forever} \end{cases}$$</div>
+
+<p>Now construct a new machine \(D\) (for &ldquo;diagonal&rdquo;) that takes a machine description \(\langle M \rangle\) as input and does the following:</p>
+
+<p><strong>1.</strong> Run \(H(\langle M \rangle, \langle M \rangle)\) &ndash; ask whether \(M\) halts when given its own description as input.<br>
+<strong>2.</strong> If \(H\) says &ldquo;halts,&rdquo; then \(D\) loops forever.<br>
+<strong>3.</strong> If \(H\) says &ldquo;loops forever,&rdquo; then \(D\) halts.</p>
+
+<p>In other words, \(D\) does the <strong>opposite</strong> of what \(H\) predicts.</p>
+
+<p>Now ask: what happens when we run \(D\) on its own description, \(D(\langle D \rangle)\)?</p>
+
+<p><strong>Case 1:</strong> Suppose \(D(\langle D \rangle)\) halts. Then \(H(\langle D \rangle, \langle D \rangle) = 1\). But then, by construction, \(D\) loops forever. Contradiction.</p>
+
+<p><strong>Case 2:</strong> Suppose \(D(\langle D \rangle)\) loops forever. Then \(H(\langle D \rangle, \langle D \rangle) = 0\). But then, by construction, \(D\) halts. Contradiction.</p>
+
+<p>Both cases lead to contradiction. Therefore \(H\) cannot exist. The halting problem is <strong>undecidable</strong>.</p>
+
+<div class="try-it">
+  <p><strong>Try it yourself</strong></p>
+  <p>Step through the halting-problem proof interactively. See how the diagonal machine D is constructed and why feeding it its own description leads to a contradiction.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-turing-sim"></div>
+</div>
+
+<h3>The Connection to Cantor</h3>
+
+<p>The structure is identical to Cantor&rsquo;s diagonal argument:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Step</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Cantor</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Turing</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;color:#22d3ee;">Assume</td><td style="padding:0.3rem 0.6rem;">All reals can be listed</td><td style="padding:0.3rem 0.6rem;">A halting oracle \(H\) exists</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;color:#f59e0b;">Construct</td><td style="padding:0.3rem 0.6rem;">New real via diagonal + flip</td><td style="padding:0.3rem 0.6rem;">Machine \(D\) via \(H\) + opposite</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;color:#a855f7;">Self-apply</td><td style="padding:0.3rem 0.6rem;">Check if \(d\) is on the list</td><td style="padding:0.3rem 0.6rem;">Run \(D(\langle D \rangle)\)</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;color:#f87171;">Contradiction</td><td style="padding:0.3rem 0.6rem;">\(d\) differs from every entry</td><td style="padding:0.3rem 0.6rem;">\(D\) halts iff it doesn&rsquo;t</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The diagonal argument is the secret weapon. Cantor uses it against set theory. G&ouml;del uses it (via self-reference) against formal provability. Turing uses it against computation. Three different domains, one technique, one conclusion: <strong>some things are beyond reach</strong>.</p>
+
+<h3>The Death of the Entscheidungsproblem</h3>
+
+<p>Turing and Alonzo Church (using his lambda calculus) independently proved in 1936 that the Entscheidungsproblem has no solution. There is no general algorithm that decides all mathematical statements. The last pillar of Hilbert&rsquo;s program had fallen.</p>
+
+<p>But Turing&rsquo;s paper, &ldquo;On Computable Numbers, with an Application to the Entscheidungsproblem,&rdquo; achieved something far beyond answering Hilbert&rsquo;s question. By defining computation precisely, Turing laid the intellectual foundation for the <strong>digital computer</strong>. The impossibility result was a byproduct of creating the most important concept in twentieth-century technology.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> The halting problem is undecidable: no algorithm can determine whether an arbitrary program terminates. The proof uses the same diagonal technique as Cantor. Combined with G&ouml;del&rsquo;s theorems, it buries Hilbert&rsquo;s program completely: mathematics is incomplete, its consistency unprovable from within, and there is no algorithm that settles all questions. But these impossibilities <em>organize</em> themselves into a beautiful hierarchy.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 6. THE HIERARCHY OF COMPUTABILITY -->
+<!-- ================================================================ -->
+<section id="hierarchy" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 6</p>
+<h2>The Hierarchy of Computability</h2>
+
+<p>Not all problems are created equal. Some are solvable. Some are solvable but take an obscenely long time. Some are outright unsolvable. The twentieth century produced a remarkably detailed map of these distinctions.</p>
+
+<h3>The Chomsky Hierarchy</h3>
+
+<p>In the 1950s, Noam Chomsky &ndash; working on the structure of natural language &ndash; classified formal grammars into a hierarchy of increasing power. Each level corresponds to a class of automata:</p>
+
+<figure class="my-6">
+  <img src="/img/chomsky-hierarchy.svg" alt="The Chomsky hierarchy as nested sets: regular languages inside context-free inside context-sensitive inside recursively enumerable" class="w-full rounded-lg border border-gray-800/50" style="max-width:500px;margin:0 auto;display:block;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The Chomsky hierarchy: four levels of formal languages, each strictly more powerful than the last.</figcaption>
+</figure>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Type</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Grammar</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Automaton</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Example</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;color:#22d3ee;">3</td><td style="padding:0.3rem 0.6rem;">Regular</td><td style="padding:0.3rem 0.6rem;">Finite automaton</td><td style="padding:0.3rem 0.6rem;">Email validation, regex</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;color:#f59e0b;">2</td><td style="padding:0.3rem 0.6rem;">Context-free</td><td style="padding:0.3rem 0.6rem;">Pushdown automaton</td><td style="padding:0.3rem 0.6rem;">HTML parsing, balanced brackets</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;color:#a855f7;">1</td><td style="padding:0.3rem 0.6rem;">Context-sensitive</td><td style="padding:0.3rem 0.6rem;">Linear bounded automaton</td><td style="padding:0.3rem 0.6rem;">Natural language syntax</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="text-align:center;padding:0.3rem 0.6rem;color:#f87171;">0</td><td style="padding:0.3rem 0.6rem;">Recursively enumerable</td><td style="padding:0.3rem 0.6rem;">Turing machine</td><td style="padding:0.3rem 0.6rem;">Any computable function</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Each level is <strong>strictly</strong> more powerful than the one below. A finite automaton cannot check whether parentheses are balanced. A pushdown automaton cannot do arbitrary computation. Only a Turing machine (or equivalent) reaches the full power of computation &ndash; and even that power has limits, as we saw with the halting problem.</p>
+
+<h3>P vs NP: The Millennium Problem</h3>
+
+<p>Even among problems that <em>are</em> solvable, there is a dramatic hierarchy of difficulty. The most famous open question in computer science divides solvable problems into two classes:</p>
+
+<p><strong>P</strong> (Polynomial time): Problems where a solution can be <em>found</em> in polynomial time. Sorting a list. Finding the shortest path in a graph. Multiplying two numbers. These are &ldquo;efficiently solvable.&rdquo;</p>
+
+<p><strong>NP</strong> (Nondeterministic Polynomial time): Problems where a solution can be <em>verified</em> in polynomial time, even if finding it might take much longer. Given a proposed coloring of a map with four colors, it&rsquo;s easy to check. But finding such a coloring might require exploring exponentially many possibilities.</p>
+
+<figure class="my-6">
+  <img src="/img/p-np-diagram.svg" alt="Venn diagram showing P inside NP, with NP-complete at the boundary, and undecidable problems outside" class="w-full rounded-lg border border-gray-800/50" style="max-width:400px;margin:0 auto;display:block;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The landscape of computational complexity. Whether P = NP is one of the seven Millennium Prize Problems.</figcaption>
+</figure>
+
+<p>The question <strong>P = NP?</strong> asks: is every problem whose solution can be efficiently <em>verified</em> also one whose solution can be efficiently <em>found</em>? Most computer scientists believe the answer is no, but after more than fifty years, no one has been able to prove it. The Clay Mathematics Institute offers one million dollars for a proof either way.</p>
+
+<p>If P = NP, then every cryptographic system we rely on could be broken. Every optimization problem in logistics, biology, and engineering would become tractable. It would be the most consequential mathematical result in history.</p>
+
+<p>If P &ne; NP (as most believe), then there are problems that are easy to check but inherently hard to solve. Creativity &ndash; finding a solution &ndash; is genuinely harder than verification &ndash; checking one. This resonates far beyond mathematics.</p>
+
+<h3>Beyond the Computable: The Arithmetical Hierarchy</h3>
+
+<p>Above the boundary of computability, there is further structure. The <span class="glossary" title="Arithmetical hierarchy: A classification of sets of natural numbers by the complexity of the quantifier prefixes needed to define them. Computable sets are at the bottom (Δ₁⁰), the halting problem is Σ₁⁰, and higher levels require more alternations of quantifiers.">arithmetical hierarchy</span> classifies undecidable problems by their degree of unsolvability:</p>
+
+<p><strong>\(\Sigma_1^0\)</strong> &ndash; the halting problem lives here. Problems of the form &ldquo;there exists an \(n\) such that &hellip;&rdquo;</p>
+
+<p><strong>\(\Pi_1^0\)</strong> &ndash; the complement of the halting problem. &ldquo;For all \(n\), &hellip;&rdquo;</p>
+
+<p><strong>\(\Sigma_2^0\)</strong> &ndash; &ldquo;there exists an \(n\) such that for all \(m\), &hellip;&rdquo;</p>
+
+<p>And so on, with ever more alternations of quantifiers. Each level is strictly harder than the one below. The hierarchy continues through the hyperarithmetical sets, the analytical hierarchy, and beyond &ndash; into a vast landscape of undecidability that dwarfs the computable world.</p>
+
+<div class="component-wrap">
+  <div id="mount-automata"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> Computability and complexity form a layered hierarchy. The Chomsky hierarchy classifies languages by the power of the automata needed to recognize them. P vs NP stratifies <em>solvable</em> problems by difficulty. The arithmetical hierarchy stratifies <em>unsolvable</em> problems. At every level, there are problems that cannot be reduced to a lower level. The limits are structural, not accidental.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 7. SELF-REFERENCE EVERYWHERE -->
+<!-- ================================================================ -->
+<section id="self-reference" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 7</p>
+<h2>Self-Reference Everywhere</h2>
+
+<p>We have now seen the same pattern &ndash; <strong>self-reference leading to impossibility or paradox</strong> &ndash; in four different domains. Let us make the connections explicit.</p>
+
+<h3>The Connection Table</h3>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Domain</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Self-referential object</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Result</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Year</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;color:#22d3ee;">Set theory</td><td style="padding:0.3rem 0.6rem;">Set of all non-self-containing sets</td><td style="padding:0.3rem 0.6rem;">Russell&rsquo;s paradox</td><td style="text-align:center;">1901</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;color:#f59e0b;">Set theory</td><td style="padding:0.3rem 0.6rem;">Diagonal of a supposed listing</td><td style="padding:0.3rem 0.6rem;">Uncountability of \(\mathbb{R}\)</td><td style="text-align:center;">1891</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;color:#a855f7;">Arithmetic</td><td style="padding:0.3rem 0.6rem;">&ldquo;I am not provable&rdquo;</td><td style="padding:0.3rem 0.6rem;">Incompleteness</td><td style="text-align:center;">1931</td></tr>
+    <tr style="background:rgba(34,211,238,0.05);"><td style="padding:0.3rem 0.6rem;color:#22d3ee;">Computation</td><td style="padding:0.3rem 0.6rem;">Program that analyzes itself</td><td style="padding:0.3rem 0.6rem;">Undecidability of halting</td><td style="text-align:center;">1936</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;color:#f59e0b;">Semantics</td><td style="padding:0.3rem 0.6rem;">&ldquo;This sentence is false&rdquo;</td><td style="padding:0.3rem 0.6rem;">Liar paradox</td><td style="text-align:center;">~600 BCE</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The common thread: a system becomes powerful enough to <strong>describe itself</strong>, and in that moment of self-reflection, it encounters a boundary it cannot cross.</p>
+
+<h3>Quines: Programs That Print Themselves</h3>
+
+<p>Self-reference is not always destructive. A <span class="glossary" title="Quine: A program that takes no input and produces its own source code as output. Named after the philosopher Willard Van Orman Quine. Possible in any sufficiently powerful programming language (by Kleene's recursion theorem).">quine</span> is a program that outputs its own source code. No input, no file reading &ndash; the program generates itself from scratch.</p>
+
+<p>Here is a quine in Python:</p>
+
+<div style="background:#1e293b;border:1px solid #374151;border-radius:0.75rem;padding:1rem;margin:1rem 0;overflow-x:auto;">
+<pre style="margin:0;color:#d1d5db;font-size:0.85rem;"><code>s = 's = %r\nprint(s %% s)'
+print(s % s)</code></pre>
+</div>
+
+<p>The string <code>s</code> contains a template of the entire program, with <code>%r</code> as a placeholder for itself. The <code>print</code> statement fills the placeholder with <code>s</code>, producing the exact source code. Self-reference without paradox &ndash; the program does not ask whether it halts or whether it is true; it simply <em>reproduces</em>.</p>
+
+<p>Quines exist in every Turing-complete language. This is guaranteed by Kleene&rsquo;s <strong>recursion theorem</strong> (also called the fixed-point theorem): for any computable transformation \(f\), there exists a program \(e\) such that running \(e\) produces the same result as running \(f\) on \(e\)&rsquo;s own description. Self-reference is not a bug &ndash; it is a theorem.</p>
+
+<h3>DNA: The Original Quine</h3>
+
+<p>The parallel to biology is irresistible. A cell&rsquo;s DNA encodes the instructions for building the molecular machinery (ribosomes, polymerases) that reads and copies the DNA. The DNA is both the <strong>program</strong> and the <strong>data</strong> that the program operates on.</p>
+
+<p>John von Neumann recognized this structure in the 1940s &ndash; before the discovery of DNA&rsquo;s double helix. He proved mathematically that a self-reproducing automaton must contain a <strong>universal constructor</strong> (the ribosome) and a <strong>description of itself</strong> (the genome). The description must be used in two different ways: once as instructions to be <em>executed</em>, once as data to be <em>copied</em>. This is exactly what DNA does. The theory predicted the biology.</p>
+
+<h3>G&ouml;del, Escher, Bach</h3>
+
+<p>Douglas Hofstadter&rsquo;s <em>G&ouml;del, Escher, Bach: An Eternal Golden Braid</em> (1979) is the definitive exploration of self-reference across domains. Hofstadter traces the pattern through:</p>
+
+<p><strong>G&ouml;del:</strong> Arithmetic talks about itself via G&ouml;del numbering. Incompleteness follows.</p>
+
+<p><strong>Escher:</strong> Hands drawing hands. A gallery that contains a painting of the gallery. Visual self-reference that loops back on itself, creating impossible structures.</p>
+
+<figure class="my-6 flex flex-col items-center">
+  <img src="/img/penrose-triangle.svg" alt="The Penrose triangle — an impossible object that visually loops back on itself" class="rounded-lg border border-gray-800/50" style="max-width:200px;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The Penrose triangle: a visual paradox of self-reference. Each edge is locally consistent; the whole is impossible.</figcaption>
+</figure>
+
+<figure class="my-6 flex flex-col items-center">
+  <img src="/img/droste-effect.jpg" alt="The Droste effect — a recursive image containing itself" class="rounded-lg border border-gray-800/50" style="max-width:300px;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The Droste effect: an image that contains a smaller version of itself, recurring infinitely.</figcaption>
+</figure>
+
+<p><strong>Bach:</strong> Musical canons and fugues where themes are inverted, reversed, and layered over themselves. The <em>Art of the Fugue</em> ends with a fugue theme that spells B-A-C-H in German musical notation &ndash; the composer signing his name inside the music.</p>
+
+<p>Hofstadter&rsquo;s thesis: self-reference is not merely a source of paradox. It is the mechanism by which <strong>meaning</strong> arises. A system that can model itself develops something like awareness. Consciousness, he argues, is what happens when a system&rsquo;s model of the world includes a model of itself &ndash; a &ldquo;strange loop.&rdquo;</p>
+
+<h3>Self-Reference in Modern AI</h3>
+
+<p>Large language models exhibit a peculiar form of self-reference. They can discuss their own architecture, generate code that modifies their own behavior (in agent frameworks), and reason about their own reasoning. When a model writes: <em>&ldquo;I should re-examine my previous answer because &hellip;&rdquo;</em>, it is performing a kind of meta-cognition &ndash; computation about computation.</p>
+
+<p>Is this &ldquo;real&rdquo; self-reference? The debate mirrors the Lucas&ndash;Penrose debate about G&ouml;del and minds. What is clear is that the <em>pattern</em> of self-reference &ndash; a system processing its own output &ndash; is everywhere, from DNA to Turing machines to neural networks. And wherever it appears, it brings both power and paradox.</p>
+
+<div class="component-wrap">
+  <div id="mount-self-ref"></div>
+</div>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Status:</strong> Self-reference is a universal pattern. It appears in logic (the Liar), set theory (Russell), arithmetic (G&ouml;del), computation (Turing), biology (DNA), art (Escher), music (Bach), and AI (meta-reasoning). It produces paradoxes when combined with totality claims, but creativity and meaning when harnessed carefully. Quines, DNA, and strange loops are self-reference put to constructive use.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- EPILOGUE -->
+<!-- ================================================================ -->
+<section id="epilogue" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Epilogue</p>
+<h2>We Must Know. We Will Know?</h2>
+
+<p>In G&ouml;ttingen, Germany, there is a gravestone. It belongs to David Hilbert, who died in 1943. Carved into the stone are six words:</p>
+
+<div class="summary-box" style="text-align:center;">
+  <p class="text-lg text-gray-200" style="margin:0;font-style:italic;">&ldquo;Wir m&uuml;ssen wissen. Wir werden wissen.&rdquo;</p>
+  <p class="text-sm text-gray-500" style="margin-top:0.5rem;">&ldquo;We must know. We will know.&rdquo;</p>
+</div>
+
+<p>Hilbert spoke these words on September 8, 1930, in K&ouml;nigsberg &ndash; the day <em>after</em> G&ouml;del had quietly presented his incompleteness result at the same conference. Hilbert apparently did not attend G&ouml;del&rsquo;s talk, or did not grasp its implications. He went on to repeat his credo for a radio broadcast that evening. The recording survives.</p>
+
+<p>Was Hilbert wrong? In the strict sense, yes. We cannot know everything within any single formal system. Mathematics will always contain truths beyond the reach of proof. Computation will always face problems beyond the reach of algorithms.</p>
+
+<p>But in a deeper sense, Hilbert&rsquo;s optimism was not misplaced. G&ouml;del, Turing, and the others did not discover that mathematics is broken. They discovered its <strong>shape</strong>. The limits are not walls blocking progress; they are the <em>topology</em> of the mathematical landscape. Knowing where the boundaries lie is itself a form of knowledge &ndash; perhaps the deepest kind.</p>
+
+<figure class="my-6 flex flex-col items-center">
+  <img src="/img/hilbert-portrait.jpg" alt="Portrait of David Hilbert" class="rounded-lg border border-gray-800/50" style="max-width:260px;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">David Hilbert (1862&ndash;1943). His program failed, but his questions shaped a century of mathematics.</figcaption>
+</figure>
+
+<h3>The Busy Beaver: Pushing Against the Boundary</h3>
+
+<p>The <span class="glossary" title="Busy Beaver function BB(n): The maximum number of 1s that an n-state Turing machine can write on a blank tape before halting. Grows faster than any computable function. BB(5) = 47,176,870 was determined in 2024.">Busy Beaver function</span> \(\text{BB}(n)\) asks: what is the maximum number of 1s that an \(n\)-state Turing machine can write on a blank tape before halting? This function is <strong>well-defined</strong> but <strong>uncomputable</strong> &ndash; it grows faster than any computable function. It is the most concrete manifestation of the halting problem.</p>
+
+<p>For decades, only the first four values were known: \(\text{BB}(1) = 1\), \(\text{BB}(2) = 4\), \(\text{BB}(3) = 6\), \(\text{BB}(4) = 13\). Then, in July 2024, an international collaboration of mathematicians and programmers known as the <strong>Busy Beaver Challenge</strong> (bbchallenge.org) proved:</p>
+
+<div class="math-display">$$\text{BB}(5) = 47{,}176{,}870$$</div>
+
+<p>The proof required classifying all 88,664,064 five-state Turing machines &ndash; a vast computational effort combined with clever theoretical arguments to handle the most stubborn holdouts. Some machines that seem to run forever were proved to do so; others were shown to eventually halt after writing exactly 47,176,870 ones.</p>
+
+<p>\(\text{BB}(6)\) is already beyond reach. It is known that \(\text{BB}(6) > 10 \uparrow\uparrow 15\) (a power tower of 15 tens). For \(\text{BB}(7918)\), the value is independent of ZFC set theory &ndash; it cannot even be expressed within the standard axioms of mathematics. The Busy Beaver function is a concrete staircase leading from the computable into the absolutely unreachable.</p>
+
+<h3>The Glass Bead Game Pattern</h3>
+
+<p>In this blog, we have now seen five threads of the Glass Bead Game:</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2.2;">
+    <strong style="color:#22d3ee;">Quantum mechanics:</strong>&ensp; \(\hat{H}\psi = E\psi\) &mdash; eigenvalues determine the allowed energies<br>
+    <strong style="color:#f59e0b;">Music:</strong>&ensp; \(X'' = -\lambda X\) &mdash; eigenvalues determine the overtone frequencies<br>
+    <strong style="color:#a855f7;">AI:</strong>&ensp; \(K\boldsymbol{\alpha} = \lambda\boldsymbol{\alpha}\) &mdash; eigenvalues determine what is learned<br>
+    <strong style="color:#34d399;">Emergence:</strong>&ensp; Simple rules &rarr; complex behavior &mdash; the whole exceeds the parts<br>
+    <strong style="color:#f87171;">Logic:</strong>&ensp; Self-reference &rarr; incompleteness &mdash; the system cannot fully see itself
+  </p>
+</div>
+
+<p>The fifth thread is different from the first four. Eigenvalues and emergence are about what <em>is</em>. Incompleteness is about what <em>cannot be</em>. It is a limit theorem &ndash; a statement about the structure of knowledge itself.</p>
+
+<p>And yet it connects to the other threads. Emergence shows that simple components produce behaviors that cannot be predicted from the parts alone &ndash; a kind of incompleteness of reductionism. Quantum measurement introduces fundamental unpredictability &ndash; not from insufficient knowledge, but from the structure of nature. And the eigenvalue problems that govern physics, music, and AI all live within formal systems whose consistency we can use but never fully prove.</p>
+
+<p>Hilbert&rsquo;s epitaph asks us to <strong>know</strong>. G&ouml;del&rsquo;s theorem tells us we <strong>cannot know everything</strong>. But the very proof that shows us the limit is itself a piece of knowledge &ndash; a deep, beautiful, hard-won piece. Perhaps the most profound things we can know are the things we can prove we cannot know.</p>
+
+<p><em>We must know. We will know &ndash; including what we cannot know.</em></p>
+
+</div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- FAQ -->
+<!-- ================================================================ -->
+<section class="pb-16">
+<div class="prose-dark">
+<h2 style="font-size:1.25rem;">Frequently Asked Questions</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What does G&ouml;del&rsquo;s incompleteness theorem actually say?</h3>
+<p>Any consistent formal system powerful enough to express basic arithmetic contains true statements that cannot be proved within the system. This means no single set of axioms can capture all mathematical truth. The theorem does not say mathematics is unreliable &ndash; it says it is too rich to be fully formalized.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is the halting problem?</h3>
+<p>The halting problem asks: given an arbitrary program and an input, will the program eventually stop or run forever? Alan Turing proved in 1936 that no algorithm can answer this question in general. The proof uses a diagonal argument &ndash; the same technique Cantor used to show that the real numbers are uncountable.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is Russell&rsquo;s paradox?</h3>
+<p>Russell&rsquo;s paradox considers the set of all sets that do not contain themselves. If such a set contains itself, it shouldn&rsquo;t; if it doesn&rsquo;t, it should. The paradox showed that na&iuml;ve set theory is inconsistent and led to the development of axiomatic set theories like ZFC.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is P vs NP?</h3>
+<p>P is the class of problems solvable in polynomial time. NP is the class of problems whose solutions are verifiable in polynomial time. The P vs NP question asks whether every problem that is easy to check is also easy to solve. Most experts believe P &ne; NP, but no proof exists. It is one of the seven Millennium Prize Problems, with a one-million-dollar bounty.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is BB(5)?</h3>
+<p>BB(5) = 47,176,870 is the fifth value of the Busy Beaver function, determined in 2024 by the bbchallenge.org collaboration. BB(n) gives the maximum number of 1s an n-state Turing machine can write before halting. The function grows faster than any computable function and is the most concrete manifestation of the halting problem&rsquo;s unsolvability.</p>
+
+</div>
+</section>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does G\u00f6del's incompleteness theorem actually say?", "acceptedAnswer": {"@type": "Answer", "text": "Any consistent formal system powerful enough to express basic arithmetic contains true statements that cannot be proved within the system. This means no single set of axioms can capture all mathematical truth."}}, {"@type": "Question", "name": "What is the halting problem?", "acceptedAnswer": {"@type": "Answer", "text": "The halting problem asks: given an arbitrary program and an input, will the program eventually stop or run forever? Alan Turing proved in 1936 that no algorithm can answer this question in general, using a diagonal argument."}}, {"@type": "Question", "name": "What is Russell's paradox?", "acceptedAnswer": {"@type": "Answer", "text": "Russell's paradox considers the set of all sets that do not contain themselves. The paradox showed that na\u00efve set theory is inconsistent and led to axiomatic set theories like ZFC."}}, {"@type": "Question", "name": "What is P vs NP?", "acceptedAnswer": {"@type": "Answer", "text": "P is the class of problems solvable in polynomial time. NP is the class whose solutions are verifiable in polynomial time. Whether P = NP is one of the seven Millennium Prize Problems."}}, {"@type": "Question", "name": "What is BB(5)?", "acceptedAnswer": {"@type": "Answer", "text": "BB(5) = 47,176,870 is the fifth value of the Busy Beaver function, determined in 2024. BB(n) gives the maximum number of 1s an n-state Turing machine can write before halting, and grows faster than any computable function."}}]}
+</script>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Built with Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="/en/about.html" class="hover:text-gray-400">About</a> &middot;
+    <a href="/impressum.html" class="hover:text-gray-400">Legal Notice</a> &middot;
+    <a href="/datenschutz.html" class="hover:text-gray-400">Privacy Policy</a>
+  </p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // 1. Lazy-mount React components
+  var COMPONENTS = {
+    'mount-cantor-diagonal': window.CantorDiagonalExplorer || null,
+    'mount-goedel-calc': window.GoedelNumberCalculator || null,
+    'mount-turing-sim': window.TuringMachineSimulator || null,
+    'mount-automata': window.AutomataExplorer || null,
+    'mount-self-ref': window.SelfReferencePlayground || null,
+  };
+
+  var mounted = {};
+
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Component could not be loaded.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // 2. Scroll progress bar
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // 3. TOC highlighting (nav toggle handled by nav.js)
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          else link.classList.remove('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+  // 4. KaTeX auto-render
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+});
+</script>
+
+</body>
+</html>
