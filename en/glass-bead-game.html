@@ -114,7 +114,7 @@
 <!-- Hidden TOC slot — nav.js picks this up and injects it into the dropdown -->
 <div id="nav-toc-items" style="display:none;">
   <a href="#glass-bead-game" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; What Is the Glass Bead Game?</a>
-  <a href="#six-worlds" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; A Journey Through Six Worlds</a>
+  <a href="#six-worlds" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Where the Same Equation Appears</a>
   <a href="#emergence" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Emergence</a>
   <a href="#observation" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; What Remains When You Only Observe?</a>
   <a href="#goedel-limit" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; The G&ouml;del Limit of the Self</a>
@@ -181,7 +181,7 @@
 <p>This blog post is a Glass Bead Game. It weaves together the threads of all previous posts &ndash; <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum physics</a>, <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">eigenvalues</a>, <a href="/en/emergence.html" class="text-cyan-400 hover:text-cyan-300">emergence</a>, <a href="/en/god.html" class="text-cyan-400 hover:text-cyan-300">God</a>, <a href="/en/music.html" class="text-cyan-400 hover:text-cyan-300">music</a>, <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">logic</a> &ndash; and adds a new thread: <strong>mindfulness</strong>. And in the end, like Knecht, it will reach its own limit.</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>What lies ahead:</strong> We journey through six worlds (Chapter 2), climb through three levels of emergence (3), pause and observe the observing (4), hit the G&ouml;del limit of the self (5), and walk the whole path with Hesse (6). At the end, this sentence describes itself.</p>
+  <p class="text-sm text-gray-300"><strong>What lies ahead:</strong> We look at where the same mathematics appears in different fields &ndash; and where the analogy ends (Chapter 2). Then emergence (3), mindfulness (4), G&ouml;del&rsquo;s limit (5), and Hesse (6).</p>
 </div>
 
 </div>
@@ -197,39 +197,29 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 2</p>
-<h2>A Journey Through Six Worlds</h2>
+<h2>Where the Same Equation Appears &ndash; and Where It Does Not</h2>
 
-<p>Imagine an arrow that rotates. Nothing more: a length, a direction, a steady rotation. This simple object &ndash; mathematicians call it a complex number, \(e^{i\theta}\) &ndash; is perhaps the humblest tool in all of science. And yet it appears in six entirely different worlds. Let me take you along.</p>
+<p>Imagine an arrow that rotates. Nothing more: a length, a direction, a steady rotation. Mathematicians call it a complex number, \(e^{i\theta}\). The same tool appears in three fields that, at first glance, have nothing to do with each other.</p>
 
-<h3>World 1: Quantum Physics &ndash; The Arrow as Amplitude</h3>
+<h3>Quantum Physics: The Arrow as Amplitude</h3>
 
-<p>In <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum physics</a>, our arrow is an <em>amplitude</em>. Every possible path of an electron carries such an arrow, and the arrows of all paths add up. Where they point in the same direction, they reinforce each other &ndash; that is where the electron arrives. Where they point against each other, they cancel &ndash; the electron never arrives there. The interference pattern at the double slit is nothing but the sum of rotating arrows.</p>
+<p>In <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum physics</a>, this arrow is an amplitude. Every possible path of an electron carries one, and the arrows add up. Where they align: reinforcement. Where they oppose: cancellation. The interference pattern at the double slit arises from this sum. This is not a metaphor &ndash; it is the mathematics Feynman wrote down in 1948.</p>
 
-<h3>World 2: Music &ndash; The Arrow as Vibration</h3>
+<h3>Music: The Arrow as Vibration</h3>
 
-<p>On a <a href="/en/music.html" class="text-cyan-400 hover:text-cyan-300">guitar string</a>, the same arrow is a vibrational mode. The string vibrates not only at its fundamental tone but simultaneously at double, triple, quadruple the frequency &ndash; the overtone series. Each overtone is a rotating arrow at a different speed. Fourier showed: <em>every</em> sound is a superposition of such arrows. Consonance arises when the arrows stand in simple ratios to each other.</p>
+<p>On a <a href="/en/music.html" class="text-cyan-400 hover:text-cyan-300">guitar string</a>, the same \(e^{i\theta}\) describes a vibrational mode. The string vibrates simultaneously at its fundamental and at integer multiples &ndash; the overtone series. Fourier showed in 1822: every sound is a superposition of such vibrations. This too is not a metaphor. It is the same equation.</p>
 
-<h3>World 3: Artificial Intelligence &ndash; The Arrow as Eigenvector</h3>
+<h3>Artificial Intelligence: The Arrow as Eigenvector</h3>
 
-<p>In <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">linear algebra</a>, our arrow is called an <em>eigenvector</em>: the only direction that survives a matrix transformation without being rotated. The associated eigenvalue tells you how much it is stretched. PageRank, Kernel Ridge Regression, neural networks &ndash; all these algorithms solve eigenvalue problems at their core. The <a href="/krr-chat.html" class="text-cyan-400 hover:text-cyan-300">KRR Chat</a> on this site is living proof: a language model built from pure linear algebra.</p>
+<p>In <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">linear algebra</a>, the arrow is called an eigenvector: the direction that survives a matrix transformation. <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">PageRank, Kernel Ridge Regression, neural networks</a> &ndash; they solve eigenvalue problems. The <a href="/krr-chat.html" class="text-cyan-400 hover:text-cyan-300">KRR Chat</a> shows that it works.</p>
 
-<h3>World 4: Google &ndash; The Largest Eigenvalue Wins</h3>
+<h3>Where the Analogy Holds &ndash; and Where It Does Not</h3>
 
-<p>When you run a Google search, a computer calculates the dominant eigenvector of an enormous link matrix. Web pages that many important pages link to have a high PageRank &ndash; not because anyone <em>declared</em> them important, but because the iteration naturally converges to this eigenvalue. The same arrow that describes quantum interference determines the order of your search results.</p>
+<p>Up to this point, this is hard mathematics: in all three cases, \(e^{i\theta}\) appears, and the structure &ndash; eigenvalues, eigenfunctions, spectral decomposition &ndash; is identical. Schr&ouml;dinger titled his 1926 paper <em>&ldquo;Quantization as an Eigenvalue Problem,&rdquo;</em> and the title applies far beyond physics.</p>
 
-<h3>World 5: Logic &ndash; The Arrow as Fixed Point</h3>
+<p>But I have to be honest: not everything that <em>looks like</em> an eigenvalue problem actually is one. In <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">G&ouml;del&rsquo;s proof</a>, there are fixed points that <em>resemble</em> eigenvectors &ndash; but that is an analogy, not an isomorphism. And whether consciousness has anything to do with eigenvalues, I simply do not know. Tononi&rsquo;s <em>Integrated Information Theory</em> is a proposal, not a proven theorem. The temptation to say &ldquo;everything is connected to everything&rdquo; is strong. I am trying to resist it.</p>
 
-<p>In <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">G&ouml;del&rsquo;s proof</a>, our arrow appears as a <em>fixed point</em>: a formula that speaks about itself without changing in the process. An eigenvector of the proof system, if you will &ndash; an object that &ldquo;survives&rdquo; the transformation. Cantor&rsquo;s diagonal argument, Russell&rsquo;s paradox, Turing&rsquo;s halting problem &ndash; they all use the same trick: self-reference creates fixed points, and fixed points create limits.</p>
-
-<h3>World 6: Consciousness &ndash; The Standing Wave That Hears Itself</h3>
-
-<p>And in your brain? Perhaps consciousness is a standing wave that observes itself. Tononi&rsquo;s <em>Integrated Information Theory</em> formalizes the idea that consciousness is integrated information &ndash; a pattern that contains more than its parts. Whether this is correct, we do not know. But the parallel is seductive: eigenfunctions of a string, eigenstates of an atom, eigenvectors of an algorithm &ndash; and perhaps eigen-patterns of a mind.</p>
-
-<h3>Schr&ouml;dinger&rsquo;s Insight</h3>
-
-<p>In 1926, Erwin Schr&ouml;dinger gave his most famous paper a title that sums it all up: <em>&ldquo;Quantization as an Eigenvalue Problem&rdquo;</em>. The energy levels of an atom are eigenvalues. The overtone series of a string are eigenvalues. The most important web pages on the internet are an eigenvector. Six worlds, one mathematical pattern.</p>
-
-<p>It seems to me: this is no coincidence. It is the Glass Bead Game.</p>
+<p>What I can say: in quantum physics, music, and AI, the mathematical structure is not merely similar. It is <strong>the same</strong>. And that alone I find astonishing enough.</p>
 
 <div class="try-it">
   <p><strong>Try it yourself</strong></p>
@@ -243,7 +233,7 @@
 </div>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>One arrow, six worlds:</strong> The same rotating arrow &ndash; \(e^{i\theta}\) &ndash; describes <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum amplitudes</a>, <a href="/en/music.html" class="text-cyan-400 hover:text-cyan-300">overtone series</a>, <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">eigenvectors in AI</a>, Google rankings, <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">logical fixed points</a>, and perhaps even consciousness. Schr&ouml;dinger&rsquo;s insight from 1926 reaches far beyond physics.</p>
+  <p class="text-sm text-gray-300"><strong>Three fields, one equation:</strong> In <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum physics</a>, <a href="/en/music.html" class="text-cyan-400 hover:text-cyan-300">music</a>, and <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">AI</a>, the mathematical structure is demonstrably the same. Beyond that, there are <em>analogies</em> &ndash; to <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">logic</a>, to consciousness &ndash; but analogies are not proofs. Taking seriously the line between &ldquo;is the same&rdquo; and &ldquo;reminds me of&rdquo; is part of the game.</p>
 </div>
 
 </div>
@@ -276,7 +266,7 @@
 
 <h3>Level 3: Thoughts Become &hellip; You?</h3>
 
-<p>And then there is you. You are reading these words. Your neurons are firing. Patterns activate patterns. And somewhere, from the interplay of all these processes, something arises that thinks <em>&ldquo;I understand.&rdquo;</em> Perhaps what we call &ldquo;self&rdquo; is nothing more than a pattern that observes itself &ndash; a process that perceives its own emergence.</p>
+<p>And then there is you. You are reading these words. Your neurons are firing. Patterns activate patterns. And somewhere, something arises that thinks <em>&ldquo;I understand.&rdquo;</em> I do not know what that &ldquo;something&rdquo; is. Nobody does. It is the hardest open question there is.</p>
 
 <p>In <a href="/en/god.html" class="text-cyan-400 hover:text-cyan-300">God as an Emergence Phenomenon</a>, we argued that global coherence &ndash; the consistency of an entire worldview &ndash; is an NP-hard problem. No algorithm can compute it efficiently. And yet your brain does it: approximately, fallibly, but astonishingly well.</p>
 
@@ -380,7 +370,7 @@
 
 <p>In <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">The Limits of Provability</a>, we studied G&ouml;del&rsquo;s 1931 proof: every sufficiently powerful formal system contains true statements that it cannot prove. The key is <span class="glossary" title="Self-reference: A statement that speaks about itself. G&ouml;del's 'This statement is not provable' is the most famous example.">self-reference</span>: G&ouml;del constructed a sentence that says &ldquo;This statement is not provable.&rdquo; If it were provable, it would be false &ndash; and the system would be inconsistent. So it is true, but unprovable.</p>
 
-<p>Applied to the mind: if the brain were a formal system (and it is at least as powerful as one), there would be truths about itself that it cannot, in principle, recognize. The eye cannot see itself. The finger cannot point at itself. Consciousness cannot fully model itself.</p>
+<p>Can this be applied to the mind? Caution: the brain is not a formal system in the strict sense. G&ouml;del&rsquo;s theorem applies to axiomatic systems, not to biological organs. But the <em>intuition</em> is tempting: when a system is powerful enough to talk about itself, blind spots emerge. The eye cannot directly see itself. Whether this is more than a metaphor, I do not know. But as a metaphor, it hits something.</p>
 
 <h3>Turing&rsquo;s Halting Problem for Self-Knowledge</h3>
 
@@ -401,9 +391,9 @@
 
 <p>But here is the surprise: this limit is not a defeat. It is a <strong>liberation</strong>.</p>
 
-<p>If you cannot fully compute yourself, then you are not determined &ndash; not in any sense your own model of yourself could capture. G&ouml;del shows not that the system is <em>weaker</em> than thought, but that it is <em>richer</em> than any formalization. There is always a truth that goes beyond what the system can say about itself.</p>
+<p>What does this mean in practice? Perhaps only this: you will never fully &ldquo;see through&rdquo; yourself. There will always be something about yourself that you do not know &ndash; not because you are not thinking hard enough, but because thinking about yourself changes the thing you are thinking about.</p>
 
-<p>For the mindfulness practice from Chapter 4, this means: you will never fully &ldquo;see through&rdquo; yourself. And that is exactly why there is always something left to observe. The process of observation never ends &ndash; not from weakness, but from structural incompleteness. <strong>G&ouml;del guarantees that mindfulness never gets boring.</strong></p>
+<p>Whether this is really because of G&ouml;del or simply because humans are complicated &ndash; I am not sure. But the thought that self-knowledge might be structurally unfinishable has something comforting about it. It means: you do not have to be done. There is always more to observe.</p>
 
 <div class="component-wrap">
   <div id="mount-strange-loop" class="min-h-[350px] rounded-xl border border-gray-800/50 bg-gray-900/30 flex items-center justify-center">
@@ -450,7 +440,9 @@
 
 <p>But the &ldquo;Magic Theatre&rdquo; &ndash; &ldquo;Not for Everyone &ndash; For Madmen Only &ndash; The Price of Admission: Your Mind&rdquo; &ndash; shows him: it is not two. It is <strong>a thousand</strong>. A whole ensemble of sub-personalities, constantly reconfiguring.</p>
 
-<p>It seems to me: this is exactly what neuroscience confirms. There is no unified self &ndash; only a network of patterns, constantly reassembling. Eigenvectors of personality, if you will. The &ldquo;I&rdquo; is the current linear combination. And mindfulness &ndash; what we discussed in Chapter 4 &ndash; is perhaps the moment when you notice: none of these vectors <em>is</em> me. I am the space in which they arise.</p>
+<p>Neuroscience arrives at a similar conclusion, though it uses different words: there is no unified self &ndash; only a network of patterns, constantly reassembling. You could compare it to eigenvectors &ndash; different directions that survive a transformation. But that is a comparison, not a proof. What Hesse describes in literature and what neuroscience measures are different things pointing in a similar direction.</p>
+
+<p>What touches me about this: mindfulness &ndash; what we discussed in Chapter 4 &ndash; is perhaps the moment when you notice that no single role fully describes you. Not because you are &ldquo;the space&rdquo; (that would already be too elegant a formula), but because you are simply &hellip; more than any description.</p>
 
 <h3>Narcissus and Goldmund: The Limit of This Blog</h3>
 
@@ -490,7 +482,7 @@
 
 <p>This blog post describes the connections between all blog posts. It is itself a Glass Bead Game entry &ndash; a node in the network that speaks about the network. And it links to itself: <a href="#epilogue">Epilogue</a>.</p>
 
-<p>That is a <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">Strange Loop</a>, just like G&ouml;del&rsquo;s sentence. A system that speaks about itself reaches a limit &ndash; and at that limit, something new arises. G&ouml;del called it incompleteness. Hofstadter called it consciousness. Hesse called it the Glass Bead Game.</p>
+<p>That <em>resembles</em> a <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">Strange Loop</a> &ndash; a system that speaks about itself. Whether it truly is one or merely looks like one, I cannot decide. But I like the thought that G&ouml;del, Hofstadter, and Hesse &ndash; each in their own way &ndash; stumbled over the same thing: the limit that arises when a system looks at itself.</p>
 
 <p>The <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">arrows rotate</a>. The <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">eigenvalues</a> are discrete. <a href="/en/emergence.html" class="text-cyan-400 hover:text-cyan-300">Emergence</a> creates the new. <a href="/en/god.html" class="text-cyan-400 hover:text-cyan-300">Coherence</a> is NP-hard. The <a href="/en/music.html" class="text-cyan-400 hover:text-cyan-300">overtone series</a> contains the intervals of music. <a href="/en/logic.html" class="text-cyan-400 hover:text-cyan-300">G&ouml;del</a> guarantees that there is always more to discover. And <a href="#observation">mindfulness</a> observes all of it &ndash; without trying to hold on.</p>
 
