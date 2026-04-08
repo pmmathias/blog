@@ -3,13 +3,13 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ki-mathias.de/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-08</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-08</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   </url>
@@ -98,30 +98,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/god.html"/>
   </url>
   <url>
-    <loc>https://ki-mathias.de/impressum.html</loc>
-    <lastmod>2026-03-30</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/impressum.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/imprint.html"/>
-  </url>
-  <url>
-    <loc>https://ki-mathias.de/en/imprint.html</loc>
-    <lastmod>2026-03-30</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/impressum.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/imprint.html"/>
-  </url>
-  <url>
-    <loc>https://ki-mathias.de/datenschutz.html</loc>
-    <lastmod>2026-03-30</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/datenschutz.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/privacy.html"/>
-  </url>
-  <url>
-    <loc>https://ki-mathias.de/en/privacy.html</loc>
-    <lastmod>2026-03-30</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/datenschutz.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/privacy.html"/>
-  </url>
-  <url>
     <loc>https://ki-mathias.de/musik.html</loc>
     <lastmod>2026-04-06</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/musik.html"/>
@@ -147,14 +123,62 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/glasperlenspiel.html</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2026-04-08</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/glasperlenspiel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/glass-bead-game.html"/>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/glass-bead-game.html</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2026-04-08</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/glasperlenspiel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/glass-bead-game.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/achtsamkeit.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/achtsamkeit.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/mindfulness.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/mindfulness.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/achtsamkeit.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/mindfulness.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/ueber-mich.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/ueber-mich.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/about.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/about.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/ueber-mich.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/about.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/impressum.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/impressum.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/imprint.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/imprint.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/impressum.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/imprint.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/datenschutz.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/datenschutz.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/privacy.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/datenschutz.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/privacy.html"/>
   </url>
 </urlset>
