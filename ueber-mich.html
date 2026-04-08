@@ -34,6 +34,10 @@
     .prose h1 { font-size: 1.5rem; font-weight: 700; color: #f1f5f9; margin-bottom: 1.5rem; }
     .prose a { color: #60a5fa; }
     .prose a:hover { color: #93c5fd; }
+    .portrait-wrap { float: right; margin: 0 0 1.5rem 1.5rem; max-width: 240px; }
+    .portrait-wrap img { width: 100%; border-radius: 0.75rem; border: 1px solid rgba(148, 163, 184, 0.15); display: block; }
+    .portrait-wrap figcaption { font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; text-align: center; }
+    @media (max-width: 640px) { .portrait-wrap { float: none; margin: 0 auto 1.5rem auto; max-width: 200px; } }
   </style>
 </head>
 <body class="bg-gray-950 text-gray-100 antialiased">
@@ -49,13 +53,30 @@
 
 <h1>&Uuml;ber mich</h1>
 
-<p>Ich hei&szlig;e <strong>Mathias Leonhardt</strong>. Ich bin Softwareentwickler und Gesch&auml;ftsf&uuml;hrer einer Agentur f&uuml;r E-Commerce und Webentwicklung in Hamburg. Seit &uuml;ber dreizehn Jahren baue ich mit meinem Team digitale L&ouml;sungen f&uuml;r mittelst&auml;ndische Unternehmen.</p>
+<figure class="portrait-wrap">
+  <img src="img/mathias-portrait.jpg" alt="Mathias Leonhardt" loading="lazy" width="600" height="600">
+  <figcaption>Mathias Leonhardt</figcaption>
+</figure>
+
+<p>Ich hei&szlig;e <strong>Mathias Leonhardt</strong>. Ich bin Softwareentwickler und Gesch&auml;ftsf&uuml;hrer einer <a href="https://pmagentur.com" rel="noopener" target="_blank">Agentur f&uuml;r E-Commerce und Webentwicklung</a> in Hamburg. Seit &uuml;ber dreizehn Jahren baue ich mit meinem Team digitale L&ouml;sungen f&uuml;r mittelst&auml;ndische Unternehmen.</p>
+
+<p>Informatik habe ich nicht auf dem klassischen Weg gelernt. Erst die <a href="https://www.bfs-wedel.de/" rel="noopener" target="_blank">Berufsfachschule Wedel</a>, dann das Studium an der <a href="https://www.fh-wedel.de/" rel="noopener" target="_blank">Fachhochschule Wedel</a> &ndash; zwei Orte, denen ich viel verdanke und an die ich gerne zur&uuml;ckdenke.</p>
 
 <p>Ich bin kein Physiker, kein Mathematiker und kein Theologe. Aber ich bin jemand, der Fragen hat &ndash; und der ein Werkzeug gefunden hat, das sie nicht m&uuml;de beantwortet. Dieses Werkzeug ist <strong>Claude Code</strong>, ein gro&szlig;es Sprachmodell von Anthropic.</p>
 
 <p>Was auf diesem Blog entsteht, sind die Notizen dieser Gespr&auml;che: Quantenphysik erkl&auml;rt mit kleinen Pfeilen, Eigenwerte als roter Faden durch Mathematik und KI, Emergenz als Br&uuml;cke zwischen Physik und Philosophie. Keine Forschung, sondern Synthese. Keine Expertise, sondern Neugier &ndash; unterst&uuml;tzt von einer Maschine, die breit genug gebildet ist, um die Antwort aus drei Disziplinen gleichzeitig zusammenzusetzen.</p>
 
 <p>Alle Texte und Visualisierungen entstehen in Zusammenarbeit mit Claude Code. Ich stelle die Fragen, bewerte die Antworten, strukturiere die Erz&auml;hlung. Die KI liefert Wissen, Code und Formulierungen. Was dabei herauskommt, ist weder rein menschlich noch rein maschinell &ndash; es ist etwas Neues.</p>
+
+<h2 class="text-xl font-semibold text-gray-100 mt-10 mb-4">Mein wichtigster Co-Pilot</h2>
+
+<p>Den gr&ouml;&szlig;ten Anteil an Projekten wie dem <a href="vogelsimulator.html">Vogelflug-Simulator</a> oder dem Urlaubs-Hotel-Simulator hat &uuml;brigens mein <strong>sechsj&auml;hriger Sohn</strong>. Nicht nur als Tester &ndash; auch in der Anforderungsdefinition. Wenn ein Sechsj&auml;hriger sagt &bdquo;der Vogel muss schneller wenden k&ouml;nnen&ldquo; oder &bdquo;das Hotel braucht einen Pool mit Rutsche&ldquo;, dann ist das kein Wunsch, sondern Spezifikation. Und sie macht jedes Produkt besser.</p>
+
+<h2 class="text-xl font-semibold text-gray-100 mt-10 mb-4">Wenn ich nicht code</h2>
+
+<p>Dann spiele ich Bass, Gitarre oder Schlagzeug. Wer den <a href="glasperlenspiel.html">Glasperlenspiel-Beitrag</a> gelesen hat, wei&szlig; auch, dass <strong>Hermann Hesse</strong> mein Lieblingsautor ist &ndash; und das l&auml;sst sich in einem Blog &uuml;ber Querverbindungen zwischen Naturwissenschaft, Musik und Innenleben vermutlich nicht l&auml;nger verbergen.</p>
+
+<p>Vielleicht gibt es hier irgendwann auch mal einen YouTube-Link auf ein Tutorial zu einem Riff, an dem ich lange gesessen habe &ndash; etwa Hannes Waders <em>Tankerk&ouml;nig</em>, das ich nach zwanzig Jahren endlich fl&uuml;ssig auf der Westerngitarre hinkriege, oder Primus&rsquo; <em>Tommy The Cat</em>, das ich mittlerweile auf dem Bass einigerma&szlig;en sauber spiele. Beides keine Weltrekorde &ndash; aber kleine pers&ouml;nliche Eigenwerte, die nach langer Zeit endlich stabil geworden sind.</p>
 
 <p>Wenn Sie Fragen haben oder mir schreiben m&ouml;chten: <strong>mathias-leonhardt@gmx.de</strong></p>
 
