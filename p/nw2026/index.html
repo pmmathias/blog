@@ -1,0 +1,1099 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Nordwirtschaft.de | Relaunch-Konzept</title>
+
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css">
+
+    <!-- Fonts: Poppins (Sofia Pro Alternative) + Source Code Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Source+Code+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- hamburgzwo13 CI -->
+    <style>
+        :root {
+            --hz-gold: #D89427;
+            --hz-gold-light: rgba(216, 148, 39, 0.12);
+            --hz-gold-border: rgba(216, 148, 39, 0.35);
+            --hz-dark: #303133;
+            --hz-dark-logo: #4F4F4E;
+            --hz-text: #6A6A6A;
+            --hz-text-light: #9C9C9C;
+            --hz-bordeaux: #740926;
+            --hz-salmon: #FFB696;
+            --hz-white: #FFFFFF;
+            --hz-bg-light: #F7F7F7;
+            --hz-bg-section: #F8F8F8;
+            --hz-success: #4CAF50;
+            --hz-danger: #E53935;
+            --hz-warning: #FF9800;
+        }
+
+        .reveal {
+            font-family: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            background: var(--hz-white);
+            color: var(--hz-dark);
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal .slides section {
+            padding: 30px 50px;
+            box-sizing: border-box;
+        }
+
+        /* === TYPOGRAPHY === */
+
+        .reveal h1 {
+            font-family: "Poppins", sans-serif;
+            font-size: 2.4em;
+            font-weight: 700;
+            color: var(--hz-dark);
+            line-height: 1.15;
+            text-transform: none;
+            letter-spacing: -0.02em;
+        }
+
+        .reveal h2 {
+            font-family: "Poppins", sans-serif;
+            font-size: 1.35em;
+            font-weight: 600;
+            color: var(--hz-dark);
+            line-height: 1.2;
+            margin-bottom: 0.3em;
+            text-transform: none;
+            letter-spacing: -0.01em;
+        }
+
+        .reveal h3 {
+            font-family: "Source Code Pro", monospace;
+            font-weight: 600;
+            font-size: 0.65em;
+            color: var(--hz-gold);
+            margin-bottom: 0.3em;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .reveal p, .reveal li {
+            font-size: 0.75em;
+            line-height: 1.5;
+            color: var(--hz-text);
+        }
+
+        .reveal ul {
+            margin-left: 0;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .reveal li {
+            margin-bottom: 0.3em;
+            padding-left: 1em;
+            position: relative;
+        }
+
+        .reveal li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.6em;
+            width: 6px;
+            height: 6px;
+            background: var(--hz-gold);
+            border-radius: 50%;
+        }
+
+        /* === COMPONENTS === */
+
+        .title-slide {
+            text-align: center !important;
+        }
+
+        .title-slide h1 {
+            font-size: 2.4em;
+            margin-bottom: 0.15em;
+        }
+
+        .title-slide .subtitle {
+            font-family: "Source Code Pro", monospace;
+            font-size: 0.85em;
+            color: var(--hz-text-light);
+            font-weight: 300;
+        }
+
+        .title-slide .meta {
+            margin-top: 2em;
+            font-size: 0.6em;
+            color: var(--hz-text-light);
+        }
+
+        .title-slide .logo-text {
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            font-size: 0.7em;
+            letter-spacing: 0.15em;
+            color: var(--hz-dark-logo);
+            margin-bottom: 2em;
+        }
+
+        .title-slide .logo-text .gold {
+            color: var(--hz-gold);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3em 0.8em;
+            border-radius: 9999px;
+            font-family: "Source Code Pro", monospace;
+            font-size: 0.55em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 0.3em;
+        }
+
+        .badge-gold { background: var(--hz-gold); color: var(--hz-white); }
+        .badge-dark { background: var(--hz-dark); color: var(--hz-white); }
+        .badge-outline { background: transparent; border: 2px solid var(--hz-dark); color: var(--hz-dark); }
+        .badge-outline-gold { background: transparent; border: 2px solid var(--hz-gold); color: var(--hz-gold); }
+        .badge-success { background: var(--hz-success); color: var(--hz-white); }
+        .badge-danger { background: var(--hz-danger); color: var(--hz-white); }
+        .badge-warning { background: var(--hz-warning); color: var(--hz-white); }
+
+        .card {
+            background: var(--hz-bg-light);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 1.2em 1.4em;
+            border-radius: 12px;
+            margin: 0.5em 0;
+        }
+
+        .card-title {
+            font-family: "Source Code Pro", monospace;
+            font-weight: 600;
+            color: var(--hz-gold);
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5em;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, var(--hz-gold-light) 0%, rgba(216, 148, 39, 0.03) 100%);
+            border: 1px solid var(--hz-gold-border);
+            border-radius: 12px;
+            padding: 1em 1.4em;
+            margin: 0.5em 0;
+        }
+
+        .insight-box .label {
+            font-family: "Source Code Pro", monospace;
+            font-weight: 600;
+            color: var(--hz-gold);
+            font-size: 0.5em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.4em;
+            display: block;
+        }
+
+        .insight-box .content {
+            font-size: 0.75em;
+            color: var(--hz-dark);
+            line-height: 1.5;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5em;
+            align-items: start;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1em;
+        }
+
+        .highlight {
+            color: var(--hz-gold);
+            font-weight: 600;
+        }
+
+        .dimmed {
+            opacity: 0.5;
+        }
+
+        .check-list li::before {
+            content: "✓";
+            background: none;
+            color: var(--hz-success);
+            font-weight: 700;
+            width: auto;
+            height: auto;
+            top: 0;
+            font-size: 0.9em;
+        }
+
+        .fail-list li::before {
+            content: "✗";
+            background: none;
+            color: var(--hz-danger);
+            font-weight: 700;
+            width: auto;
+            height: auto;
+            top: 0;
+            font-size: 0.9em;
+        }
+
+        .stat-number {
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            font-size: 2.2em;
+            color: var(--hz-gold);
+            line-height: 1;
+            margin-bottom: 0.1em;
+        }
+
+        .stat-label {
+            font-family: "Source Code Pro", monospace;
+            font-size: 0.55em;
+            color: var(--hz-text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.65em;
+        }
+
+        .comparison-table th {
+            background: var(--hz-bg-light);
+            padding: 0.4em 0.6em;
+            text-align: left;
+            font-weight: 600;
+            color: var(--hz-dark);
+            font-family: "Source Code Pro", monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85em;
+        }
+
+        .comparison-table td {
+            padding: 0.35em 0.6em;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            color: var(--hz-text);
+        }
+
+        .comparison-table .verdict {
+            font-weight: 600;
+        }
+
+        .verdict-bad { color: var(--hz-danger); }
+        .verdict-good { color: var(--hz-success); }
+        .verdict-warn { color: var(--hz-warning); }
+
+        /* Gold divider line — signature element from logo */
+        .gold-divider {
+            width: 50px;
+            height: 3px;
+            background: var(--hz-gold);
+            margin: 0.4em 0;
+        }
+
+        .gold-divider-center {
+            width: 50px;
+            height: 3px;
+            background: var(--hz-gold);
+            margin: 0.5em auto;
+        }
+
+        .screenshot-container {
+            background: var(--hz-bg-light);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .screenshot-container img {
+            width: 100%;
+            border-radius: 6px;
+            display: block;
+        }
+
+        .section-dark {
+            background: var(--hz-dark) !important;
+            color: var(--hz-white) !important;
+        }
+
+        .section-dark h2,
+        .section-dark p,
+        .section-dark li {
+            color: var(--hz-white) !important;
+        }
+
+        .section-dark .dimmed {
+            opacity: 0.5;
+        }
+
+        .section-dark .card {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-dark .card-title {
+            color: var(--hz-gold);
+        }
+
+        .timeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6em;
+            margin-bottom: 0.4em;
+        }
+
+        .timeline-dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--hz-gold);
+            color: var(--hz-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Source Code Pro", monospace;
+            font-weight: 700;
+            font-size: 0.65em;
+            flex-shrink: 0;
+            margin-top: 0.2em;
+        }
+
+        .timeline-content h4 {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-size: 0.65em;
+            color: var(--hz-dark);
+            margin: 0 0 0.1em 0;
+        }
+
+        .timeline-content p {
+            font-size: 0.55em !important;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .price-tag {
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            font-size: 1.8em;
+            color: var(--hz-gold);
+            margin: 0.3em 0;
+        }
+
+        .price-note {
+            font-family: "Source Code Pro", monospace;
+            font-size: 0.55em;
+            color: var(--hz-text-light);
+        }
+
+        .reveal .progress span { background: var(--hz-gold); }
+
+        .reveal .controls button { color: var(--hz-gold); }
+
+        .reveal .slide-number {
+            font-family: "Source Code Pro", monospace;
+            color: var(--hz-text-light);
+            font-size: 12px;
+        }
+
+        .reveal .slides section .fragment.fade-up {
+            transform: translateY(15px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .reveal .slides section .fragment.fade-up.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .big-quote {
+            font-family: "Poppins", sans-serif;
+            font-size: 1.3em;
+            font-weight: 300;
+            color: var(--hz-dark);
+            line-height: 1.4;
+            font-style: italic;
+            text-align: center;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .big-quote .highlight {
+            font-style: normal;
+        }
+        /* === PASSWORD OVERLAY === */
+        #auth-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--hz-white);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #auth-overlay .logo-text {
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            font-size: 1.4em;
+            letter-spacing: 0.15em;
+            color: var(--hz-dark-logo);
+            margin-bottom: 2em;
+        }
+        #auth-overlay .logo-text .gold { color: var(--hz-gold); }
+        #auth-overlay .auth-box {
+            text-align: center;
+        }
+        #auth-overlay input {
+            font-family: "Source Code Pro", monospace;
+            font-size: 1em;
+            padding: 0.6em 1.2em;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            text-align: center;
+            width: 240px;
+            transition: border-color 0.2s;
+        }
+        #auth-overlay input:focus {
+            border-color: var(--hz-gold);
+        }
+        #auth-overlay input.error {
+            border-color: var(--hz-danger);
+            animation: shake 0.3s ease;
+        }
+        #auth-overlay button {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-size: 0.9em;
+            padding: 0.6em 2em;
+            background: var(--hz-gold);
+            color: var(--hz-white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 0.5em;
+            transition: opacity 0.2s;
+        }
+        #auth-overlay button:hover { opacity: 0.85; }
+        #auth-overlay .hint {
+            font-family: "Source Code Pro", monospace;
+            font-size: 0.7em;
+            color: var(--hz-text-light);
+            margin-top: 1.5em;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+        .reveal.locked { display: none !important; }
+    </style>
+</head>
+<body>
+    <!-- Password overlay -->
+    <div id="auth-overlay">
+        <div class="logo-text">HAMBURG<span class="gold"> | </span>ZWO<span class="gold">13</span></div>
+        <div class="auth-box">
+            <form id="auth-form" onsubmit="return checkAuth()">
+                <input type="password" id="auth-input" placeholder="Passwort" autocomplete="off" autofocus>
+                <button type="submit">Weiter</button>
+            </form>
+        </div>
+        <div class="hint">Vertrauliche Präsentation</div>
+    </div>
+
+    <div class="reveal locked">
+        <div class="slides">
+
+            <!-- ============================================ -->
+            <!-- 1. TITEL -->
+            <!-- ============================================ -->
+            <section class="title-slide">
+                <div class="logo-text">HAMBURG<span class="gold"> | </span>ZWO<span class="gold">13</span></div>
+                <h1>nordwirtschaft.de<br>Relaunch</h1>
+                <div class="gold-divider-center"></div>
+                <div class="subtitle">Analyse & Konzept</div>
+                <div class="meta">
+                    <p>April 2026</p>
+                    <p style="margin-top: 1em; font-size: 1.1em;">
+                        Für Jasmin Missler Verlag, Hamburg
+                    </p>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 2. DER ERSTE EINDRUCK -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Status Quo</h3>
+                <h2>912 Artikel. 20 Jahre Wirtschaft.<br>Ein <span class="highlight">Baukasten</span>.</h2>
+                <div class="gold-divider"></div>
+                <div class="grid-2" style="margin-top: 0.8em;">
+                    <div>
+                        <p style="font-size: 0.7em; line-height: 1.6;">
+                            Nordwirtschaft.de ist das digitale Schaufenster der norddeutschen Wirtschaft —
+                            mit Partnern wie <strong>Commerzbank</strong>, <strong>HanseMerkur</strong>,
+                            <strong>Haspa</strong> und der <strong>Metropolregion Hamburg</strong>.
+                            Das Problem: Die technische Grundlage ist ein <strong>IONOS Website-Baukasten</strong>.
+                            Kein CMS. Keine Erweiterbarkeit. Eine Sackgasse.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="grid-2" style="gap: 0.8em;">
+                            <div style="text-align: center;">
+                                <div class="stat-number">912</div>
+                                <div class="stat-label">Seiten</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="stat-number">24</div>
+                                <div class="stat-label">Fonts geladen</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="stat-number">855</div>
+                                <div class="stat-label">KB nur HTML</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="stat-number">0</div>
+                                <div class="stat-label">Analytics</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 3. WAS WIR GEFUNDEN HABEN -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Technische Analyse</h3>
+                <h2>Was wir gefunden haben</h2>
+                <div class="gold-divider"></div>
+                <table class="comparison-table" style="margin-top: 0.6em;">
+                    <tr>
+                        <th style="width: 25%;">Bereich</th>
+                        <th style="width: 15%;">Status</th>
+                        <th>Problem</th>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>Mobile</strong></td>
+                        <td class="verdict verdict-bad">Kaputt</td>
+                        <td>Logo und Navigation werden abgeschnitten, kein Hamburger-Menü</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>SEO</strong></td>
+                        <td class="verdict verdict-bad">Mangelhaft</td>
+                        <td>Keyword-Stuffing, keine Alt-Texte, kein Schema.org, kein sauberer Title-Tag</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>DSGVO</strong></td>
+                        <td class="verdict verdict-bad">Rechtswidrig</td>
+                        <td>Kein Consent-Management, AdSense ohne Opt-in, Platzhalter in Datenschutzerklärung</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>Performance</strong></td>
+                        <td class="verdict verdict-warn">Schlecht</td>
+                        <td>855 KB HTML, 24 verschiedene Google Fonts, jQuery 2.2.4 (von 2016)</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>Analytics</strong></td>
+                        <td class="verdict verdict-bad">Nicht vorhanden</td>
+                        <td>Keine Besucherdaten, kein Google Analytics, kein Tag Manager</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>CMS</strong></td>
+                        <td class="verdict verdict-warn">Baukasten</td>
+                        <td>IONOS MyWebsite — kein Backend, keine Plugins, keine Custom-Entwicklung</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 4. MOBIL = KAPUTT (visuell) -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Mobile First?</h3>
+                <h2>60% der Leser kommen mobil. Das sehen sie:</h2>
+                <div class="gold-divider"></div>
+                <div style="display: grid; grid-template-columns: 1fr 180px; gap: 1.5em; margin-top: 0.3em; align-items: start;">
+                    <div>
+                        <ul class="fail-list fragment fade-up" style="font-size: 0.7em;">
+                            <li>Logo wird zu „Nord Wi..." abgeschnitten</li>
+                            <li>Navigation scrollt horizontal ins Nichts</li>
+                            <li>Kein Hamburger-Menü</li>
+                            <li>Newsletter-Popup überlagert alles</li>
+                            <li>Content ohne sichtbare Struktur</li>
+                        </ul>
+                        <div class="insight-box fragment fade-up" style="margin-top: 0.5em;">
+                            <span class="label">Das bedeutet</span>
+                            <div class="content" style="font-size: 0.65em;">
+                                Jeder zweite Besucher sieht eine kaputte Seite.
+                                Partner wie Commerzbank und HanseMerkur werden neben einem kaputten Layout präsentiert.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-up" style="text-align: center;">
+                        <div class="screenshot-container" style="max-width: 170px; margin: 0 auto;">
+                            <img src="screenshot-mobile.png" alt="Nordwirtschaft mobil" style="max-height: 380px; object-fit: cover; object-position: top;">
+                        </div>
+                        <p class="dimmed" style="font-size: 0.5em; margin-top: 0.3em;">Stand April 2026</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 5. DARK SLIDE — DER KERN -->
+            <!-- ============================================ -->
+            <section class="section-dark" data-background-color="#303133">
+                <div style="text-align: center; padding: 1em 0;">
+                    <h3 style="color: var(--hz-gold);">// Die Kernfrage</h3>
+                    <div class="big-quote fragment fade-up">
+                        „Norddeutschlands Wirtschaftsmagazin verdient eine Website,
+                        die so <span class="highlight">professionell</span> ist wie die Unternehmen,
+                        über die es berichtet."
+                    </div>
+                    <div class="gold-divider-center fragment fade-up" style="margin-top: 1.5em;"></div>
+                    <p class="fragment fade-up" style="font-size: 0.75em; color: rgba(255,255,255,0.5); margin-top: 1em;">
+                        Das ist keine Frage von Geschmack. Es ist eine Frage von Glaubwürdigkeit.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 6. DIE LÖSUNG -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Unsere Empfehlung</h3>
+                <h2>WordPress. Sauber. Schnell. Erweiterbar.</h2>
+                <div class="gold-divider"></div>
+                <div class="grid-3" style="margin-top: 0.4em;">
+                    <div class="card fragment fade-up" style="border-top: 3px solid var(--hz-gold); padding: 0.8em 1em;">
+                        <div class="card-title">Design</div>
+                        <ul style="font-size: 0.6em;">
+                            <li>Modernes, magazinartiges Layout</li>
+                            <li>Mobile First — alle Geräte</li>
+                            <li>Maximal 3 Schriften</li>
+                            <li>Bildsprache als Stärke</li>
+                        </ul>
+                    </div>
+                    <div class="card fragment fade-up" style="border-top: 3px solid var(--hz-gold); padding: 0.8em 1em;">
+                        <div class="card-title">Technik</div>
+                        <ul style="font-size: 0.6em;">
+                            <li>WordPress + Custom Theme</li>
+                            <li>SEO-Grundstruktur ab Tag 1</li>
+                            <li>DSGVO-konformes Consent-Mgmt</li>
+                            <li>Analytics (GA4 / Matomo)</li>
+                        </ul>
+                    </div>
+                    <div class="card fragment fade-up" style="border-top: 3px solid var(--hz-gold); padding: 0.8em 1em;">
+                        <div class="card-title">Redaktion</div>
+                        <ul style="font-size: 0.6em;">
+                            <li>Elementor Page Builder</li>
+                            <li>Kategorien, Tags, Archiv</li>
+                            <li>Newsletter-Integration</li>
+                            <li>Social-Media-Anbindung</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="fragment fade-up dimmed" style="font-size: 0.6em; margin-top: 0.5em; text-align: center;">
+                    43% aller Websites weltweit laufen auf WordPress — darunter TIME, TechCrunch und Bloomberg.
+                </p>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 7. MIGRATION -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Migration</h3>
+                <h2>912 Seiten — strukturiert überführt</h2>
+                <div class="gold-divider"></div>
+                <div class="grid-2" style="margin-top: 0.3em;">
+                    <div>
+                        <ul class="check-list fragment fade-up" style="font-size: 0.65em;">
+                            <li>Automatisiertes Scraping aller Seiten</li>
+                            <li>Kategorisierung nach Rubriken</li>
+                            <li>SEO-Redirect-Map (alte → neue URLs)</li>
+                            <li>Bildoptimierung und Alt-Texte</li>
+                            <li>QA der migrierten Inhalte</li>
+                        </ul>
+                        <div class="insight-box fragment fade-up" style="margin-top: 0.5em;">
+                            <span class="label">Kein Content geht verloren</span>
+                            <div class="content" style="font-size: 0.65em;">
+                                301-Redirects sorgen dafür, dass bestehende Google-Rankings erhalten bleiben.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-up">
+                        <div class="card" style="padding: 0.8em 1em;">
+                            <div class="card-title">URL-Struktur: Vorher → Nachher</div>
+                            <p style="font-size: 0.55em; font-family: 'Source Code Pro', monospace; color: var(--hz-text-light); margin-bottom: 0.5em;">
+                                /geschäftsbericht-2024<br>
+                                /hmts-schweiz-tresor-fonds<br>
+                                /newpage4d7a842a
+                            </p>
+                            <div style="text-align: center; font-size: 0.8em; color: var(--hz-gold); margin: 0.3em 0;">↓</div>
+                            <p style="font-size: 0.55em; font-family: 'Source Code Pro', monospace; color: var(--hz-gold);">
+                                /finanzen/itzehoer-geschaeftsbericht-2024<br>
+                                /finanzen/hansemerkur-anlagefonds-schweiz<br>
+                                /unternehmen/innovations-kontakt-stelle
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 8. VORHER / NACHHER -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Vorher → Nachher</h3>
+                <h2>Was sich konkret ändert</h2>
+                <div class="gold-divider"></div>
+                <table class="comparison-table" style="margin-top: 0.6em;">
+                    <tr>
+                        <th style="width: 30%;">Thema</th>
+                        <th style="width: 35%;">Heute (IONOS)</th>
+                        <th style="width: 35%;">Neu (WordPress)</th>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>Mobil</strong></td>
+                        <td class="verdict-bad">Abgeschnittenes Layout</td>
+                        <td class="verdict-good">Mobile First, alle Geräte</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>Ladezeit</strong></td>
+                        <td class="verdict-bad">855 KB HTML + 24 Fonts</td>
+                        <td class="verdict-good">< 200 KB, 2-3 Fonts, Bilder optimiert</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>SEO</strong></td>
+                        <td class="verdict-bad">Keyword-Stuffing, keine Struktur</td>
+                        <td class="verdict-good">Schema.org, saubere Meta-Tags, Sitemap</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>DSGVO</strong></td>
+                        <td class="verdict-bad">Kein Consent, AdSense ohne Opt-in</td>
+                        <td class="verdict-good">Rechtskonformes Consent-Management</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>Analytics</strong></td>
+                        <td class="verdict-bad">Keine Daten</td>
+                        <td class="verdict-good">GA4 oder Matomo, Auswertungen</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>Redaktion</strong></td>
+                        <td class="verdict-warn">Baukasten-Editor</td>
+                        <td class="verdict-good">WordPress + Elementor, Kategorien, Medien</td>
+                    </tr>
+                    <tr class="fragment fade-up">
+                        <td><strong>Erweiterbar</strong></td>
+                        <td class="verdict-bad">Nein</td>
+                        <td class="verdict-good">Newsletter, Paywall, Events — alles möglich</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 9. ANZEIGEN — DAS GESCHÄFTSMODELL -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Umsatzpotenzial</h3>
+                <h2>912 Artikelseiten — <span class="highlight">ohne eine einzige Anzeige</span></h2>
+                <div class="gold-divider"></div>
+                <div class="grid-2" style="margin-top: 0.4em;">
+                    <div>
+                        <p style="font-size: 0.65em; line-height: 1.6;" class="fragment fade-up">
+                            Aktuell werden Anzeigen <strong>nur auf der Startseite</strong> platziert — 7 Werbepartner in der Sidebar.
+                            Auf den <strong>912 Artikelseiten: nichts</strong>. Das ist verschenktes Potenzial.
+                        </p>
+                        <div class="card fragment fade-up" style="margin-top: 0.5em; border-left: 3px solid var(--hz-gold); padding: 0.7em 1em;">
+                            <div class="card-title">Was wir einrichten</div>
+                            <ul class="check-list" style="font-size: 0.55em;">
+                                <li>Kontextuelle Anzeigenplatzierung (Rubrik → passende Anzeige)</li>
+                                <li>Banner in Sidebar + Inline im Artikel</li>
+                                <li>Advertorials mit Presserecht-Kennzeichnung</li>
+                                <li>Impressions- und Klick-Tracking</li>
+                                <li>Reports für Werbekunden (PDF/CSV)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="fragment fade-up">
+                        <div style="text-align: center; margin-bottom: 0.6em;">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">Partner heute — nur Startseite</div>
+                        </div>
+                        <div style="text-align: center; font-size: 1.2em; color: var(--hz-gold); margin: 0.3em 0;">↓</div>
+                        <div style="text-align: center;">
+                            <div class="stat-number">912</div>
+                            <div class="stat-label">Artikelseiten als neue Werbeflächen</div>
+                        </div>
+                        <p class="dimmed" style="font-size: 0.5em; margin-top: 0.6em; text-align: center;">
+                            Beispiel: Hafen-Artikel → Anzeige der Logistikbranche.<br>
+                            Finanz-Artikel → Anzeige der Vermögensberater.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 10. FAHRPLAN -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Fahrplan</h3>
+                <h2>In 12 Wochen live</h2>
+                <div class="gold-divider"></div>
+                <div class="grid-2" style="margin-top: 0.3em;">
+                    <div>
+                        <div class="timeline-step fragment fade-up">
+                            <div class="timeline-dot">01</div>
+                            <div class="timeline-content">
+                                <h4>Konzept & Design <span style="color: var(--hz-gold); font-weight: 600;">— Woche 1–3</span></h4>
+                                <p>Briefing, Wireframes, Design-Entwurf, Informationsarchitektur</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step fragment fade-up">
+                            <div class="timeline-dot">02</div>
+                            <div class="timeline-content">
+                                <h4>Entwicklung <span style="color: var(--hz-gold); font-weight: 600;">— Woche 4–7</span></h4>
+                                <p>WordPress-Setup, Theme, DSGVO, Analytics, Newsletter</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step fragment fade-up">
+                            <div class="timeline-dot">03</div>
+                            <div class="timeline-content">
+                                <h4>Content-Migration <span style="color: var(--hz-gold); font-weight: 600;">— Woche 8–10</span></h4>
+                                <p>Scraping, Bereinigung, Import, Redirect-Map, QA</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step fragment fade-up">
+                            <div class="timeline-dot">04</div>
+                            <div class="timeline-content">
+                                <h4>Testing & Go-Live <span style="color: var(--hz-gold); font-weight: 600;">— Woche 11–12</span></h4>
+                                <p>Browser-Tests, Performance, SEO-Check, DNS, Launch</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fragment fade-up">
+                        <div class="card" style="border-top: 3px solid var(--hz-gold); padding: 0.8em 1em;">
+                            <div class="card-title">Leistungsumfang</div>
+                            <ul class="check-list" style="font-size: 0.55em;">
+                                <li>Konzept & Informationsarchitektur</li>
+                                <li>Responsives Design (Custom Theme)</li>
+                                <li>WordPress-Entwicklung</li>
+                                <li>Content-Migration (912 Seiten)</li>
+                                <li>SEO-Grundoptimierung</li>
+                                <li>DSGVO-konformes Setup</li>
+                                <li>Analytics + Newsletter</li>
+                                <li>301-Redirect-Map</li>
+                                <li>Redaktions-Schulung</li>
+                                <li>3 Monate Support nach Go-Live</li>
+                            </ul>
+                        </div>
+                        <p class="dimmed" style="font-size: 0.5em; margin-top: 0.4em;">
+                            Optional: Paywall, Veranstaltungskalender, Stellenmarkt, Werbeflächenmanagement
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 11. INVESTITION -->
+            <!-- ============================================ -->
+            <section>
+                <h3>// Investition</h3>
+                <h2>Transparent. Fair. Alles inklusive.</h2>
+                <div class="gold-divider"></div>
+                <div class="grid-2" style="margin-top: 0.4em;">
+                    <div>
+                        <table class="comparison-table fragment fade-up" style="margin-top: 0.3em;">
+                            <tr>
+                                <th>Phase</th>
+                                <th style="text-align: right;">Netto</th>
+                            </tr>
+                            <tr>
+                                <td>Konzept & Design</td>
+                                <td style="text-align: right;">4.500 €</td>
+                            </tr>
+                            <tr>
+                                <td>Entwicklung</td>
+                                <td style="text-align: right;">3.800 €</td>
+                            </tr>
+                            <tr>
+                                <td>Content-Migration</td>
+                                <td style="text-align: right;">5.200 €</td>
+                            </tr>
+                            <tr>
+                                <td>Testing & Go-Live</td>
+                                <td style="text-align: right;">1.500 €</td>
+                            </tr>
+                            <tr>
+                                <td>Nachbetreuung (3 Monate)</td>
+                                <td style="text-align: right;">1.500 €</td>
+                            </tr>
+                            <tr style="border-top: 2px solid var(--hz-dark);">
+                                <td><strong>Gesamt netto</strong></td>
+                                <td style="text-align: right;"><strong style="color: var(--hz-gold); font-size: 1.1em;">16.500 €</strong></td>
+                            </tr>
+                        </table>
+                        <p class="dimmed fragment fade-up" style="font-size: 0.5em; margin-top: 0.4em;">
+                            zzgl. 19% MwSt. = 19.635 € brutto
+                        </p>
+                    </div>
+                    <div>
+                        <div class="card fragment fade-up" style="border-top: 3px solid var(--hz-gold); padding: 0.7em 1em;">
+                            <div class="card-title">Zahlungsplan</div>
+                            <ul style="font-size: 0.55em;">
+                                <li><strong>30%</strong> bei Beauftragung · <strong>25%</strong> nach Freigabe Design</li>
+                                <li><strong>25%</strong> nach Abschluss Entwicklung · <strong>20%</strong> bei Go-Live</li>
+                            </ul>
+                        </div>
+                        <div class="card fragment fade-up" style="margin-top: 0.4em; padding: 0.7em 1em;">
+                            <div class="card-title">Laufende Kosten & Optionen</div>
+                            <ul style="font-size: 0.52em;">
+                                <li>Hosting (IONOS WordPress): ab 9 €/Monat</li>
+                                <li>Plugin-Lizenzen: ~530 €/Jahr · Theme: 39 USD einmalig</li>
+                            </ul>
+                            <div style="height: 1px; background: rgba(0,0,0,0.06); margin: 0.4em 0;"></div>
+                            <ul style="font-size: 0.52em;">
+                                <li>Mehrsprachigkeit DE/EN: +740 €</li>
+                                <li>Wartungsvertrag (ab Monat 4): 350 €/Monat</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 12. WARUM WIR -->
+            <!-- ============================================ -->
+            <section class="section-dark" data-background-color="#303133">
+                <h3 style="color: var(--hz-gold);">// Warum wir</h3>
+                <h2 style="color: var(--hz-white);">Kreativ + Technik = hamburgzwo13</h2>
+                <div class="gold-divider"></div>
+                <div class="grid-2" style="margin-top: 0.5em;">
+                    <div>
+                        <p style="font-size: 0.7em; color: rgba(255,255,255,0.8); line-height: 1.6;">
+                            Seit 2004 machen wir Marken sichtbar — <strong>Stadtreinigung Hamburg</strong>,
+                            <strong>Bäderland</strong>, <strong>ASTOR Film Lounge</strong>.
+                            Für den Relaunch bringen wir zusammen:
+                            <span class="highlight">Design, das wirkt</span> und
+                            <span class="highlight">Technik, die funktioniert</span>.
+                        </p>
+                    </div>
+                    <div class="fragment fade-up">
+                        <div class="card">
+                            <div class="card-title">Das Team</div>
+                            <p style="font-size: 0.7em; color: rgba(255,255,255,0.7);">
+                                <strong style="color: var(--hz-white);">Creative Direction</strong> — hamburgzwo13<br>
+                                Design, Konzept, Bildsprache, Marke
+                            </p>
+                            <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 0.6em 0;"></div>
+                            <p style="font-size: 0.7em; color: rgba(255,255,255,0.7);">
+                                <strong style="color: var(--hz-white);">Webentwicklung</strong> — hamburgzwo13<br>
+                                WordPress, Migration, SEO, Performance
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 13. LET'S GO -->
+            <!-- ============================================ -->
+            <section class="title-slide">
+                <div class="logo-text">HAMBURG<span class="gold"> | </span>ZWO<span class="gold">13</span></div>
+                <h1 style="font-size: 2em;">Lust auf einen<br><span class="highlight">neuen Auftritt</span>?</h1>
+                <div class="gold-divider-center"></div>
+                <p style="font-size: 0.85em; color: var(--hz-text); margin-top: 1em;">
+                    Wir freuen uns auf das Gespräch.
+                </p>
+                <div style="margin-top: 2em;">
+                    <p style="font-size: 0.7em; color: var(--hz-text-light);">
+                        <span style="font-family: 'Source Code Pro', monospace;">info@hamburgzwo13.de</span><br>
+                        <span style="font-family: 'Source Code Pro', monospace;">040 429 169 19</span>
+                    </p>
+                    <p style="font-size: 0.55em; color: var(--hz-text-light); margin-top: 1em;">
+                        hamburgzwo13 Werbeagentur GmbH · Schrammsweg 12 · 20249 Hamburg
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+    <script>
+        // Simple client-side auth (not cryptographically secure, but keeps casual visitors out)
+        var AUTH_HASH = 'cdbfe8c255b81db904ba216e1af529a294662adf2756848003ef608a99bcfe47';
+
+        async function sha256(str) {
+            var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+            return Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+        }
+
+        async function checkAuth() {
+            var input = document.getElementById('auth-input');
+            var hash = await sha256(input.value);
+            if (hash === AUTH_HASH) {
+                sessionStorage.setItem('nw2026_auth', 'true');
+                unlockPresentation();
+            } else {
+                input.classList.add('error');
+                input.value = '';
+                setTimeout(function() { input.classList.remove('error'); }, 500);
+            }
+            return false;
+        }
+
+        function unlockPresentation() {
+            document.getElementById('auth-overlay').style.display = 'none';
+            document.querySelector('.reveal').classList.remove('locked');
+            Reveal.initialize({
+                hash: true,
+                controls: true,
+                progress: true,
+                slideNumber: 'c/t',
+                center: false,
+                transition: 'slide',
+                width: 1280,
+                height: 800,
+                margin: 0.04,
+                minScale: 0.2,
+                maxScale: 1.5,
+                transitionSpeed: 'default'
+            });
+        }
+
+        // Check if already authenticated in this session
+        if (sessionStorage.getItem('nw2026_auth') === 'true') {
+            unlockPresentation();
+        }
+    </script>
+</body>
+</html>
