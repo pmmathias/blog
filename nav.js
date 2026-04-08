@@ -62,6 +62,11 @@
       icon: '\uD83C\uDFB2',  // 🎲
       de: { title: 'Das Glasperlenspiel', subtitle: 'Meta-Reise \u00B7 Achtsamkeit \u00B7 Hesse', href: '/glasperlenspiel.html' },
       en: { title: 'The Glass Bead Game', subtitle: 'Meta-Journey \u00B7 Mindfulness \u00B7 Hesse', href: '/en/glass-bead-game.html' }
+    },
+    {
+      icon: '\uD83E\uDEB7',  // 🪷
+      de: { title: 'Im Augenblick verweilen', subtitle: 'Achtsamkeit \u00B7 Hardy \u00B7 Husserl', href: '/achtsamkeit.html' },
+      en: { title: 'Dwelling in the Moment', subtitle: 'Mindfulness \u00B7 Hardy \u00B7 Husserl', href: '/en/mindfulness.html' }
     }
   ];
 
