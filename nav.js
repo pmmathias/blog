@@ -67,6 +67,11 @@
       icon: '\uD83E\uDEB7',  // 🪷
       de: { title: 'Im Augenblick verweilen', subtitle: 'Achtsamkeit \u00B7 Hardy \u00B7 Husserl', href: '/achtsamkeit.html' },
       en: { title: 'Dwelling in the Moment', subtitle: 'Mindfulness \u00B7 Hardy \u00B7 Husserl', href: '/en/mindfulness.html' }
+    },
+    {
+      icon: '\uD835\uDE52',  // 𝑒
+      de: { title: 'Warum e besonders ist', subtitle: 'Wachstum \u00B7 Primzahlen \u00B7 Zufall', href: '/euler.html' },
+      en: { title: 'Why e Is Special', subtitle: 'Growth \u00B7 Primes \u00B7 Probability', href: '/en/euler.html' }
     }
   ];
 

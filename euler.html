@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Warum e besonders ist &ndash; Die Zahl hinter Wachstum, Primzahlen und Zufall</title>
+  <meta name="description" content="Eulers Zahl e = 2,718&hellip; erscheint in Zinseszins, radioaktivem Zerfall, Primzahlen, Wahrscheinlichkeit und Entropie. Warum? Eine mathematische Entdeckungsreise in 10 Kapiteln.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/euler.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/euler.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/euler.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/euler.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Warum e besonders ist &ndash; Die Zahl hinter Wachstum, Primzahlen und Zufall">
+  <meta property="og:description" content="e = 2,718&hellip; erscheint in Zinseszins, radioaktivem Zerfall, Primzahlen und Entropie. Die eine Gleichung, die alles verbindet: dy/dt = ky.">
+  <meta property="og:url" content="https://ki-mathias.de/euler.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-04-10">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Eulers Zahl">
+  <meta property="article:tag" content="Exponentialfunktion">
+  <meta property="article:tag" content="Mathematik">
+  <meta property="article:tag" content="Wachstum">
+  <meta property="article:tag" content="Primzahlen">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/euler-de.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/euler-de.png">
+  <meta name="twitter:title" content="Warum e besonders ist &ndash; Die Zahl hinter Wachstum, Primzahlen und Zufall">
+  <meta name="twitter:description" content="e = 2,718&hellip; erscheint in Zinseszins, radioaktivem Zerfall, Primzahlen und Entropie. Eine mathematische Entdeckungsreise.">
+
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script defer src="euler-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Warum e besonders ist \u2013 Die Zahl hinter Wachstum, Primzahlen und Zufall",
+    "description": "Eulers Zahl e = 2,718\u2026 erscheint in Zinseszins, radioaktivem Zerfall, Primzahlen, Wahrscheinlichkeit und Entropie. Warum? Eine mathematische Entdeckungsreise in 10 Kapiteln.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-04-10",
+    "dateModified": "2026-04-10",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/euler.html" },
+    "inLanguage": "de",
+    "isAccessibleForFree": true,
+    "keywords": ["Eulers Zahl", "e", "Exponentialfunktion", "Wachstum", "Primzahlen", "Eigenfunktion", "Zerfall", "Entropie", "Bernoulli"],
+    "articleSection": "Mathematik",
+    "wordCount": 9000,
+    "timeRequired": "PT45M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+    .chapter-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(34,211,238,0.6); margin-bottom: 0.5rem; }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<!-- Hidden TOC slot — nav.js picks this up and injects it into the dropdown -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#warum-e" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Warum ausgerechnet 2,718&hellip;?</a>
+  <a href="#bernoulli" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Bernoullis Frage</a>
+  <a href="#eigenfunction" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Die Funktion, die sich selbst gleicht</a>
+  <a href="#wachstum" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Wachstum, Zerfall, eine Gleichung</a>
+  <a href="#primzahlen" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; e in den Primzahlen</a>
+  <a href="#zufall" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; e im Zufall</a>
+  <a href="#physik" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; e in der Physik</a>
+  <a href="#information" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; e in der Information</a>
+  <a href="#stirling" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">9 &middot; Stirlings Formel</a>
+  <a href="#warum-basis" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">10 &middot; Warum e und nicht 2?</a>
+  <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilog</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; Mathematik &middot; Wachstum &middot; Zufall</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-amber-400 to-purple-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Warum e besonders ist
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    2,718&hellip; &ndash; eine unscheinbare Zahl. Und doch erscheint sie in Bankzinsen, im Zerfall von Uran, in der Verteilung der Primzahlen, in der Wahrscheinlichkeit, dass keiner seinen eigenen Hut wiederbekommt, und im Verlust, den eine K&uuml;nstliche Intelligenz minimiert. Eine Reise in zehn Kapiteln.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-04-10">April 2026</time><span>&middot;</span>
+    <span>~45 Min. Lesezeit</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ================================================================ -->
+<!-- 1. WARUM AUSGERECHNET 2,718...? -->
+<!-- ================================================================ -->
+<section id="warum-e" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 1</p>
+<h2>Warum ausgerechnet 2,718&hellip;?</h2>
+
+<p>Es gibt Zahlen, die aus der Mathematik heraus erzwungen werden. Die Zahl \(\pi\) taucht auf, weil Kreise existieren. Die imagin&auml;re Einheit \(i\) taucht auf, weil manche quadratischen Gleichungen keine reellen L&ouml;sungen haben. Und dann gibt es \(e\).</p>
+
+<p>\(e = 2{,}71828182845904523536\ldots\)</p>
+
+<p>Keine sch&ouml;ne runde Zahl. Keine offensichtliche geometrische Bedeutung. Und doch begegnet sie jedem, der tief genug in Physik, Biologie, Statistik, Informatik oder Finanzwesen eindringt. Sie erscheint nicht, weil wir sie einladen &ndash; sie ist schon da, bevor wir sie suchen.</p>
+
+<p>Dieses Kapitel ist eine Inventur. Bevor wir erkl&auml;ren, <em>warum</em> e &uuml;berall auftaucht, wollen wir erst einmal festhalten, <em>wo</em>. Hier sind zw&ouml;lf Orte, an denen e wartet:</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="line-height: 2.4;">
+    <strong style="color:#22d3ee;">Zinseszins:</strong> \(\lim_{n\to\infty}\bigl(1+\tfrac{1}{n}\bigr)^n = e\)<br>
+    <strong style="color:#22d3ee;">Exponentielles Wachstum:</strong> Bakterien, Viren, Kapital: \(y = y_0 \cdot e^{kt}\)<br>
+    <strong style="color:#22d3ee;">Radioaktiver Zerfall:</strong> C-14 mit Halbwertszeit 5730 Jahren: \(N(t) = N_0 \cdot e^{-\lambda t}\)<br>
+    <strong style="color:#22d3ee;">Newton'sches Abk&uuml;hlgesetz:</strong> Kaffee k&uuml;hlt nach \(T(t) = T_\infty + (T_0 - T_\infty)\cdot e^{-kt}\)<br>
+    <strong style="color:#22d3ee;">Eigenfunction:</strong> \(\tfrac{d}{dx}e^x = e^x\) &ndash; einzige Funktion, die ihre eigene Ableitung ist<br>
+    <strong style="color:#22d3ee;">Primzahlen:</strong> Die Dichte der Primzahlen um \(x\) ist \(\approx 1/\ln x\)<br>
+    <strong style="color:#22d3ee;">Derangements:</strong> P(kein Hut passt) \(\to 1/e\)<br>
+    <strong style="color:#22d3ee;">Sekret&auml;rin-Problem:</strong> Optimale Strategie: erste \(n/e\) ablehnen<br>
+    <strong style="color:#22d3ee;">Normalverteilung:</strong> Glockenkurve \(\propto e^{-x^2/2}\)<br>
+    <strong style="color:#22d3ee;">Boltzmann-Faktor:</strong> \(p(E) \propto e^{-E/kT}\) &ndash; wie Natur Energie verteilt<br>
+    <strong style="color:#22d3ee;">Kettenlinie:</strong> H&auml;ngende Kette: \(y = a\cosh(x/a)\), wobei \(\cosh x = \tfrac{e^x+e^{-x}}{2}\)<br>
+    <strong style="color:#22d3ee;">Shannon-Entropie:</strong> \(H = -\sum p_i \ln p_i\) &ndash; ln ist der Logarithmus zur Basis e
+  </p>
+</div>
+
+<p>Zw&ouml;lf Erscheinungen, zw&ouml;lf verschiedene Disziplinen. Was haben sie gemeinsam? Das ist die Frage, der wir in den n&auml;chsten neun Kapiteln nachgehen. Die Antwort, vorweggenommen: <strong>e erscheint immer dann, wenn eine Gr&ouml;&szlig;e sich proportional zu sich selbst ver&auml;ndert.</strong> Die &Auml;nderungsrate ist gleich dem Wert selbst. Das ist alles. Und es ist ungeheuer viel.</p>
+
+<p>Beginnen wir am Anfang &ndash; mit einer Frage aus dem Jahr 1683, die ein Schweizer Mathematiker &uuml;ber Bankzinsen stellte und die zuf&auml;llig die wichtigste Zahl der Analysis hervorbrachte.</p>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 2. BERNOULLIS FRAGE -->
+<!-- ================================================================ -->
+<section id="bernoulli" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 2</p>
+<h2>Bernoullis Frage</h2>
+
+<p>Jakob Bernoulli war kein romantischer Mathematiker, der in einsamen Momenten auf Naturgesetze stie&szlig;. Er war ein pragmatischer Basler, und im Jahr 1683 beschiftigte ihn eine &auml;u&szlig;erst bodenst&auml;ndige Frage: Wie viel Geld bekommt man, wenn man Zinsen nicht j&auml;hrlich, sondern immer h&auml;ufiger zusammenschl&auml;gt?</p>
+
+<h3>Das Zinseszins-Experiment</h3>
+
+<p>Stellen wir uns vor, wir legen 1 Euro zu 100&nbsp;% Jahreszins an. J&auml;hrliche Verzinsung ergibt nach einem Jahr: \(1 \cdot (1 + 1)^1 = 2\) Euro.</p>
+
+<p>Halbbj&auml;hrliche Verzinsung &ndash; zweimal 50&nbsp;%:</p>
+<div class="math-display">$$\left(1 + \frac{1}{2}\right)^2 = 1{,}5^2 = 2{,}25$$</div>
+
+<p>Viertelj&auml;hrlich &ndash; viermal 25&nbsp;%:</p>
+<div class="math-display">$$\left(1 + \frac{1}{4}\right)^4 \approx 2{,}4414$$</div>
+
+<p>Monatlich:</p>
+<div class="math-display">$$\left(1 + \frac{1}{12}\right)^{12} \approx 2{,}6130$$</div>
+
+<p>T&auml;glich:</p>
+<div class="math-display">$$\left(1 + \frac{1}{365}\right)^{365} \approx 2{,}7146$$</div>
+
+<p>St&uuml;ndlich, minütlich, sekündlich &ndash; der Wert w&auml;chst, aber langsamer. Bernoulli erkannte, dass dieser Prozess gegen eine Grenze strebt. Er konnte sie zwischen 2 und 3 einschlie&szlig;en, wusste aber ihren genauen Wert nicht. Den tauften sp&auml;ter andere: <span class="glossary" title="Eulers Zahl: Die Grenzen des Ausdrucks (1+1/n)^n für n → ∞. Leonhard Euler bezeichnete sie 1731 mit dem Buchstaben e.">Leonhard Euler</span> bezeichnete sie 1731 mit dem Buchstaben \(e\).</p>
+
+<div class="math-display">$$e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = 2{,}71828182845904\ldots$$</div>
+
+<p>Das ist keine Zahl, die jemand erfunden hat. Sie wurde <em>entdeckt</em> &ndash; als Grenzwert eines vollkommen nat&uuml;rlichen Prozesses. Und sie ist <span class="glossary" title="Irrational: Eine Zahl, die sich nicht als Bruch p/q zweier ganzer Zahlen schreiben lässt. Transcendental bedeutet: sie ist auch keine Wurzel eines Polynoms mit ganzzahligen Koeffizienten.">irrational und sogar transzendent</span>: sie l&auml;sst sich nicht als Bruch schreiben, und sie erf&uuml;llt keine algebraische Gleichung.</p>
+
+<h3>Die Reihendarstellung</h3>
+
+<p>Es gibt noch einen anderen Weg zu \(e\). Entwickelt man \((1+x/n)^n\) f&uuml;r gro&szlig;es \(n\) mit dem Binomialsatz, ergibt sich im Grenz&uuml;bergang die <span class="glossary" title="Exponentialreihe: Die Taylorentwicklung von e^x um den Punkt x=0. Sie konvergiert für alle reellen und komplexen x.">Exponentialreihe</span>:</p>
+
+<div class="math-display">$$e = \sum_{n=0}^{\infty} \frac{1}{n!} = 1 + 1 + \frac{1}{2} + \frac{1}{6} + \frac{1}{24} + \frac{1}{120} + \cdots$$</div>
+
+<p>Schon die ersten f&uuml;nf Summanden geben \(1 + 1 + 0{,}5 + 0{,}1\overline{6} + 0{,}041\overline{6} = 2{,}708\overline{3}\) &ndash; nur 0,4&nbsp;% vom wahren Wert entfernt. Die Reihe konvergiert atemberaubend schnell, weil die Fakult&auml;t im Nenner rasend w&auml;chst.</p>
+
+<h3>Stetige Verzinsung</h3>
+
+<p>Was bedeutet das f&uuml;r die Bank? Wenn man Kapital \(K_0\) zu kontinuierlichem Zinssatz \(r\) anlegt, w&auml;chst es nach Zeit \(t\) auf:</p>
+
+<div class="math-display">$$K(t) = K_0 \cdot e^{rt}$$</div>
+
+<p>Das ist keine Approximation &ndash; das ist die exakte Formel f&uuml;r stetige Verzinsung. 1000 Euro zu 5&nbsp;% kontinuierlichem Jahreszins f&uuml;r 10 Jahre: \(1000 \cdot e^{0{,}05 \cdot 10} = 1000 \cdot e^{0{,}5} \approx 1648{,}72\) Euro.</p>
+
+<div class="component-wrap"><div id="mount-compound-interest"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 2 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">e entsteht als nat&uuml;rliche Grenze des Zinseszins-Prozesses: Je h&auml;ufiger man die Zinsen aufschichtet, desto n&auml;her kommt man an e &ndash; aber nie dar&uuml;ber hinaus.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 3. DIE EIGENFUNCTION -->
+<!-- ================================================================ -->
+<section id="eigenfunction" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 3</p>
+<h2>Die einzige Funktion, die sich selbst gleicht</h2>
+
+<p>Hier ist eine Frage, die zun&auml;chst seltsam klingt: <em>Welche Funktion ist ihre eigene Ableitung?</em></p>
+
+<p>Das hei&szlig;t: Wenn man die Steigung von \(f\) an jedem Punkt berechnet, bekommt man wieder \(f\) selbst. Mathematisch: \(f'(x) = f(x)\).</p>
+
+<p>Es gibt genau eine Familie von Antworten: \(f(x) = C \cdot e^x\) f&uuml;r eine beliebige Konstante \(C\). Und das ist kein Zufall &ndash; das ist die tiefste Eigenschaft von \(e\).</p>
+
+<h3>e^x als Eigenfunction des Differenzierens</h3>
+
+<p>Wer den Post &uuml;ber <a href="eigenwerte.html" class="glossary" title="Eigenwerte und Eigenvektoren: Vektoren, die ein linearer Operator nur streckt oder staucht, nie dreht.">Eigenwerte</a> gelesen hat, kennt das Prinzip: Ein linearer Operator \(L\) hat <strong>Eigenfunktionen</strong> &ndash; Funktionen, die der Operator nicht ver&auml;ndert, sondern nur streckt. Der Operator \(L = d/dx\) (Differenzieren) hat eine einzige Eigenfunktionsfamilie:</p>
+
+<div class="math-display">$$\frac{d}{dx} e^x = e^x$$</div>
+
+<p>Der <span class="glossary" title="Eigenwert: Der Faktor, um den eine Eigenfunktion unter einem Operator gestreckt wird. Hier ist der Eigenwert von e^x unter d/dx gleich 1.">Eigenwert</span> ist \(\lambda = 1\). Die Funktion \(e^x\) wird durch Differenzieren um den Faktor 1 gestreckt &ndash; also gar nicht ver&auml;ndert.</p>
+
+<p>Was ist mit anderen Basen? Nehmen wir \(2^x\). Die Ableitung ist:</p>
+
+<div class="math-display">$$\frac{d}{dx} 2^x = 2^x \cdot \ln 2 \approx 0{,}693 \cdot 2^x$$</div>
+
+<p>Nicht sauber. Man bekommt die Funktion zur&uuml;ck, aber mit einem Korrekturfaktor \(\ln 2\). Bei \(3^x\) ist der Faktor \(\ln 3 \approx 1{,}099\). Bei \(e^x\) ist der Faktor \(\ln e = 1\) &ndash; genau 1, nichts &uuml;brig. Deshalb ist e die <em>nat&uuml;rliche</em> Basis f&uuml;r Exponentialfunktionen: Sie ist die einzige Basis, bei der Differenzieren keine zus&auml;tzlichen Konstanten erzeugt.</p>
+
+<p>Das ist auch der Grund, warum Physiker fast nie \(2^x\) oder \(10^x\) schreiben, wenn sie k&ouml;nnen: Sie schreiben \(e^{kx}\) mit einer Konstanten \(k\) im Exponenten. Das ist keine &Auml;sthetik &ndash; es ist Effizienz.</p>
+
+<h3>Was folgt daraus?</h3>
+
+<p>Eine Funktion, die ihre eigene Ableitung ist, hat eine wichtige Konsequenz: <strong>Ihr Wachstum h&auml;ngt nur von ihr selbst ab.</strong> Die Steigung an jedem Punkt ist gleich dem aktuellen Wert. Je gr&ouml;&szlig;er die Funktion, desto schneller w&auml;chst sie &ndash; und zwar genau proportional.</p>
+
+<p>Das ist die Gleichung \(f'(x) = f(x)\). Und in der Sprache der Physik wird daraus: <em>Die &Auml;nderungsrate ist proportional zum aktuellen Zustand.</em> Diese Aussage h&ouml;rt sich abstrakt an. Im n&auml;chsten Kapitel werden wir sehen, was sie in vier konkreten Disziplinen bedeutet.</p>
+
+<div class="try-it">
+  <strong>Nachdenken:</strong>
+  <p>Welche anderen Funktionen kennen Sie, die eine besondere Beziehung zur Differenziation haben? Sinus und Kosinus werden unter zweimaliger Differentiation zu sich selbst &ndash; mit Vorzeichen. Kein Zufall: \(\sin x = \text{Im}(e^{ix})\). Euler's Formel verbindet alles.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-derivative-explorer"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 3 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">\(e^x\) ist die Eigenfunktion des Differenzierungsoperators mit Eigenwert 1 &ndash; die einzige Funktion, die durch Ableiten vollst&auml;ndig unver&auml;ndert bleibt, ohne Korrekturfaktor.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 4. WACHSTUM, ZERFALL, EINE GLEICHUNG -->
+<!-- ================================================================ -->
+<section id="wachstum" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 4</p>
+<h2>Wachstum, Zerfall und eine einzige Gleichung</h2>
+
+<p>Hier ist die wichtigste Differenzialgleichung der angewandten Wissenschaften:</p>
+
+<div class="math-display">$$\frac{dy}{dt} = k \cdot y$$</div>
+
+<p>Auf Deutsch: Die &Auml;nderungsrate von \(y\) ist proportional zu \(y\) selbst. Die einzige L&ouml;sung ist:</p>
+
+<div class="math-display">$$y(t) = y_0 \cdot e^{kt}$$</div>
+
+<p>Je nach Vorzeichen von \(k\) beschreibt dieselbe Gleichung v&ouml;llig verschiedene Ph&auml;nomene. Vier Beispiele aus vier Disziplinen:</p>
+
+<h3>Bakterienwachstum (\(k > 0\))</h3>
+
+<p>Eine <em>E. coli</em>-Bakterie teilt sich unter Idealbedingungen alle 20 Minuten. Zu Beginn: 1 Bakterium. Nach 20 Minuten: 2. Nach 40 Minuten: 4. Nach einer Stunde: 8. Nach 24 Stunden w&auml;re das theoretisch \(2^{72} \approx 4{,}7 \times 10^{21}\) Bakterien &ndash; mehr als die Anzahl der Sterne in der beobachtbaren Galaxie.</p>
+
+<p>Der Wachstumskoeffizient ist \(k = \ln 2 / T_\text{Verdopplung} = \ln 2 / 20\,\text{min} \approx 0{,}0347\,\text{min}^{-1}\). Und da erscheint \(\ln\) (der Logarithmus zur Basis e!) als nat&uuml;rlicher Begleiter von e.</p>
+
+<h3>Radioaktiver Zerfall (\(k < 0\)): Kohlenstoff-14</h3>
+
+<p><span class="glossary" title="Kohlenstoff-14: Ein radioaktives Isotop des Kohlenstoffs mit 6 Protonen und 8 Neutronen. Es zerfällt mit einer Halbwertszeit von 5730 Jahren zu Stickstoff-14.">C-14</span> ist ein radioaktives Kohlenstoffisotop, das in der Atmosph&auml;re durch kosmische Strahlung gebildet wird. Lebende Organismen nehmen es auf; nach dem Tod h&ouml;rt die Aufnahme auf und das C-14 zerf&auml;llt. Die Halbwertszeit betr&auml;gt 5730 Jahre.</p>
+
+<div class="math-display">$$N(t) = N_0 \cdot e^{-\lambda t}, \quad \lambda = \frac{\ln 2}{5730\,\text{a}} \approx 1{,}21 \times 10^{-4}\,\text{a}^{-1}$$</div>
+
+<p>Ein altes Holzst&uuml;ck enth&auml;lt noch 73&nbsp;% des urspr&uuml;nglichen C-14. Wie alt ist es? Wir l&ouml;sen: \(0{,}73 = e^{-\lambda t}\), also \(t = -\ln(0{,}73)/\lambda \approx 2640\) Jahre. Das ist Radiokarbon-Datierung &ndash; ein Messverfahren, das vollst&auml;ndig auf \(e\) beruht.</p>
+
+<h3>Newton'sches Abk&uuml;hlgesetz (\(k < 0\)): Kaffee</h3>
+
+<p>Ein Kaffee mit 90 &deg;C steht in einem 20 &deg;C warmen Zimmer. Das Newton'sche Abk&uuml;hlgesetz besagt: Die Abk&uuml;hlrate ist proportional zur Temperaturdifferenz zwischen Kaffee und Umgebung.</p>
+
+<div class="math-display">$$\frac{dT}{dt} = -k(T - T_{\infty}) \quad \Rightarrow \quad T(t) = T_{\infty} + (T_0 - T_{\infty}) \cdot e^{-kt}$$</div>
+
+<p>Mit \(T_0 = 90\,{}^\circ\text{C}\), \(T_\infty = 20\,{}^\circ\text{C}\), \(k \approx 0{,}1\,\text{min}^{-1}\) (typisch f&uuml;r eine Keramiktasse) ist der Kaffee nach 10 Minuten auf \(20 + 70 \cdot e^{-1} \approx 20 + 25{,}7 = 45{,}7\,{}^\circ\text{C}\) abgek&uuml;hlt. Ziemlich genau.</p>
+
+<h3>Kondensatorentladung (\(k < 0\)): Elektronik</h3>
+
+<p>Ein geladener Kondensator (Kapazit&auml;t \(C\), Anfangsspannung \(V_0\)) entl&auml;dt sich &uuml;ber einen Widerstand \(R\). Der Strom ist proportional zur Spannung. Die Spannung f&auml;llt nach:</p>
+
+<div class="math-display">$$V(t) = V_0 \cdot e^{-t/(RC)}$$</div>
+
+<p>Das Produkt \(RC\) hei&szlig;t Zeitkonstante \(\tau\). Nach einer Zeitkonstante ist die Spannung auf \(V_0/e \approx 36{,}8\,\%\) gesunken. Jeder Elektroniker kennt diese Zahl auswendig.</p>
+
+<p>Vier v&ouml;llig verschiedene Systeme &ndash; Biologie, Physik, Thermodynamik, Elektrotechnik &ndash; eine einzige Gleichung. Das ist kein Zufall. Es ist die mathematische Konsequenz einer einzigen Annahme: Die &Auml;nderungsrate ist proportional zum aktuellen Zustand.</p>
+
+<div class="component-wrap"><div id="mount-growth-decay"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 4 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">\(dy/dt = ky\) &ndash; eine einzige Gleichung, vier Disziplinen, eine L&ouml;sung: immer \(y(t) = y_0 \cdot e^{kt}\). e ist die universelle Antwort auf proportionale &Auml;nderung.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 5. e IN DEN PRIMZAHLEN -->
+<!-- ================================================================ -->
+<section id="primzahlen" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 5</p>
+<h2>e in den Primzahlen</h2>
+
+<p>Jetzt wird es philosophisch unbequem. Primzahlen scheinen das Chaos selbst zu verk&ouml;rpern: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 &ndash; kein Muster, keine Regel, die die n&auml;chste Primzahl vorhersagt. Und doch steckt in ihrer globalen Verteilung eine erstaunliche Regelm&auml;&szlig;igkeit &ndash; und e spielt darin die Hauptrolle.</p>
+
+<h3>Gau&szlig; und die Primzahldichte</h3>
+
+<p>Carl Friedrich Gau&szlig; war 15 oder 16 Jahre alt (die Quellen streiten sich), als er eine Primzahltafel studierte und bemerkte: Je gr&ouml;&szlig;er die Zahlen werden, desto d&uuml;nner werden die Primzahlen gestreut. Und die Dichte folgt einem Muster.</p>
+
+<p>Sei \(\pi(x)\) die Anzahl der Primzahlen, die kleiner oder gleich \(x\) sind. Gau&szlig; beobachtete empirisch:</p>
+
+<div class="math-display">$$\pi(x) \approx \frac{x}{\ln x}$$</div>
+
+<p>Das ist der <span class="glossary" title="Primzahlsatz: Bewiesener Satz (1896 unabhängig von Hadamard und de la Vallée Poussin), der besagt, dass π(x) / (x / ln x) → 1 für x → ∞.">Primzahlsatz</span>, der 1896 von Hadamard und de la Vallée Poussin bewiesen wurde. Das \(\ln\) hier ist der nat&uuml;rliche Logarithmus &ndash; Basis e.</p>
+
+<p>Konkret: Um die Zahl 1.000.000 herum ist ungef&auml;hr jede \(\ln(1.000.000) = 6 \ln 10 \approx 13{,}8\)-te Zahl eine Primzahl. Die tats&auml;chliche Anzahl der Primzahlen bis eine Million ist 78.498; die Formel liefert \(10^6 / \ln(10^6) \approx 72.382\) &ndash; eine Abweichung von unter 8&nbsp;%.</p>
+
+<h3>Warum erscheint e?</h3>
+
+<p>Das ist die tiefere Frage. Primzahlen sind vollkommen diskret, vollkommen deterministisch &ndash; und dennoch verh&auml;lt sich ihre Verteilung, als w&auml;re sie ein kontinuierlicher, exponentiell verdünnender Prozess. Der Logarithmus ist das Inverse der Exponentialfunktion. Dass er in der Primzahldichte erscheint, deutet darauf hin, dass Primzahlen auf einer logarithmischen Skala gleichm&auml;&szlig;ig verteilt sind.</p>
+
+<p>Eine prazisere Aussage: Wenn man zuf&auml;llig eine gro&szlig;e Zahl \(n\) w&auml;hlt, ist die Wahrscheinlichkeit, dass sie eine Primzahl ist, ungef&auml;hr \(1/\ln n\). Die Primzahlen werden immer seltener &ndash; logarithmisch, also im Rhythmus von e.</p>
+
+<h3>Riemann und die Restterme</h3>
+
+<p>Gau&szlig; wusste, dass seine Formel nur asymptotisch stimmt. Bernhard Riemann zeigte 1859, wie man die Abweichungen pr&auml;zise beschreibt: mit den Nullstellen der <span class="glossary" title="Riemannsche Zeta-Funktion: ζ(s) = Σ 1/n^s, analytisch fortgesetzt auf die komplexe Ebene. Ihre Nullstellen kodieren die genaue Primzahlverteilung.">Riemannschen Zeta-Funktion</span>. Die ber&uuml;hmte Riemannsche Vermutung &ndash; dass alle nicht-trivialen Nullstellen auf der Linie \(\text{Re}(s) = 1/2\) liegen &ndash; ist bis heute unbewiesen und gilt als das wichtigste ungel&ouml;ste Problem der Mathematik.</p>
+
+<p>Aber das ist eine andere Geschichte. Festzuhalten ist: e erscheint in den Primzahlen nicht, weil Primzahlen "wachsen" oder "zerfallen". Es erscheint, weil die logarithmische Skala die nat&uuml;rliche Skala f&uuml;r multiplikative Strukturen ist. Und die nat&uuml;rliche Basis des Logarithmus ist e.</p>
+
+<div class="component-wrap"><div id="mount-prime-density"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 5 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">Die Dichte der Primzahlen um \(x\) ist \(\approx 1/\ln x\) &ndash; e erscheint nicht in den Primzahlen selbst, sondern in ihrer statistischen Verteilung, weil Primzahlen auf logarithmischer Skala gleichm&auml;&szlig;ig gestreut sind.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 6. e IM ZUFALL -->
+<!-- ================================================================ -->
+<section id="zufall" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 6</p>
+<h2>e im Zufall</h2>
+
+<p>e taucht auch in Situationen auf, die auf den ersten Blick gar nichts mit Wachstum oder Logarithmen zu tun haben: in der reinen Kombinatorik und in der Wahrscheinlichkeitstheorie. Drei klassische Probleme, alle mit e als Antwort.</p>
+
+<h3>6a: Das Hutproblem &ndash; Derangements</h3>
+
+<p>Stellen Sie sich vor: \(n\) Personen geben ihre H&uuml;te an einer Garderobe ab. Der Garderobenmann hat die Etiketten verloren und gibt die H&uuml;te zuf&auml;llig zur&uuml;ck. Was ist die Wahrscheinlichkeit, dass <em>niemand</em> seinen eigenen Hut bekommt?</p>
+
+<p>Eine Permutation, bei der kein Element an seiner urspr&uuml;nglichen Position steht, hei&szlig;t <span class="glossary" title="Derangement (Derangement): Eine Permutation, bei der kein Element an seiner eigenen Position bleibt. Die Anzahl der Derangements von n Elementen ist D(n) = n! · Σ (-1)^k / k! für k=0 bis n.">Derangement</span>. Die Anzahl der Derangements von \(n\) Elementen ist:</p>
+
+<div class="math-display">$$D(n) = n! \cdot \sum_{k=0}^{n} \frac{(-1)^k}{k!}$$</div>
+
+<p>Die Wahrscheinlichkeit, dass eine zuf&auml;llige Permutation ein Derangement ist, betr&auml;gt:</p>
+
+<div class="math-display">$$P(D_n) = \frac{D(n)}{n!} = \sum_{k=0}^{n} \frac{(-1)^k}{k!} \approx e^{-1} = \frac{1}{e} \approx 0{,}3679$$</div>
+
+<p>F&uuml;r \(n = 2\): Genau 50&nbsp;%. F&uuml;r \(n = 3\): \(2/6 = 33{,}3\,\%\). F&uuml;r \(n = 10\): schon 36{,}79&nbsp;% &ndash; quasi ununterscheidbar von \(1/e\). Ab \(n \geq 5\) stabilisiert sich die Wahrscheinlichkeit auf \(1/e\), egal wie viele Personen mitspielen.</p>
+
+<p>Das ist verbl&uuml;ffend: Die Wahrscheinlichkeit des totalen Durcheinanders ist universell und h&auml;ngt von e ab. (Streng genommen ist das kein Zufall, sondern eine Konsequenz der Exponentialreihe: \(e^{-1} = \sum_{k=0}^\infty (-1)^k/k!\).)</p>
+
+<div class="component-wrap"><div id="mount-hat-shuffle"></div></div>
+
+<h3>6b: Das Sekret&auml;rin-Problem &ndash; die optimale Strategie</h3>
+
+<p>Sie m&uuml;ssen aus \(n\) Bewerberinnen die Beste ausw&auml;hlen. Sie interviewen sie eine nach der anderen in zuf&auml;lliger Reihenfolge. Nach jedem Interview m&uuml;ssen Sie sofort entscheiden: nehmen oder nicht. Sp&auml;tere Kandidatinnen k&ouml;nnen Sie nicht mehr zur&uuml;ckrufen. Wie maximieren Sie die Chance, die Beste zu finden?</p>
+
+<p>Die optimale Strategie: Lehnen Sie die ersten \(r\) Kandidatinnen grundsätzlich ab (Lernphase), und nehmen Sie dann die n&auml;chste, die besser als alle bisherigen ist. Welches \(r\) maximiert die Erfolgswahrscheinlichkeit?</p>
+
+<p>Die Antwort: \(r^* \approx n/e\). Also lehnen Sie die erste \(1/e \approx 37\,\%\) der Kandidatinnen ab, und dann nehmen Sie die n&auml;chste &Uuml;berlegene. Die Erfolgswahrscheinlichkeit dieser Strategie konvergiert gegen &ndash; erraten &ndash; \(1/e \approx 37\,\%\).</p>
+
+<div class="math-display">$$r^* = \lfloor n/e \rfloor, \qquad P(\text{beste w&auml;hlen}) \to \frac{1}{e} \approx 0{,}3679$$</div>
+
+<p>Das ist zun&auml;chst ern&uuml;chternd: Selbst die optimale Strategie findet die Beste nur in 37&nbsp;% der F&auml;lle. Aber es gibt keine bessere. Und sowohl die optimale Ablehnungsquote als auch die maximale Erfolgswahrscheinlichkeit sind \(1/e\) &ndash; dieselbe Zahl, aus demselben Grenzwert.</p>
+
+<div class="component-wrap"><div id="mount-secretary-game"></div></div>
+
+<h3>6c: Die Glockenkurve</h3>
+
+<p>Die <span class="glossary" title="Normalverteilung: Symmetrische, glockenförmige Wahrscheinlichkeitsverteilung, vollständig durch Mittelwert μ und Standardabweichung σ charakterisiert.">Normalverteilung</span> &ndash; Gau&szlig;'sche Glockenkurve &ndash; ist die am h&auml;ufigsten auftretende Verteilung in der Natur. Ihre Dichte ist:</p>
+
+<div class="math-display">$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</div>
+
+<p>Der entscheidende Term: \(e^{-x^2/2}\). Die Glockenkurve ist eine Exponentialfunktion zur Basis e, angewandt auf das negative Quadrat. Je weiter ein Wert vom Mittelwert entfernt ist, desto exponentiell unwahrscheinlicher. Das ist kein Gestaltungsentscheid &ndash; der <span class="glossary" title="Zentraler Grenzwertsatz: Für hinreichend viele unabhängige, identisch verteilte Zufallsvariablen mit endlicher Varianz ist ihre normierte Summe normalverteilt – unabhängig von der Ausgangsverteilung.">zentrale Grenzwertsatz</span> garantiert, dass Summen vieler unabh&auml;ngiger Zufallsvariablen immer gegen die Normalverteilung konvergieren.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 6 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">e erscheint in der Wahrscheinlichkeitsrechnung durch die Exponentialreihe: Die Wahrscheinlichkeit des totalen Chaos (Derangements), die optimale Ablehnungsquote (Sekret&auml;rin-Problem) und die Glockenkurve konvergieren alle gegen Ausdr&uuml;cke mit \(e^{-1}\).</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 7. e IN DER PHYSIK -->
+<!-- ================================================================ -->
+<section id="physik" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 7</p>
+<h2>e in der Physik</h2>
+
+<p>Die Physik ist voll von e. Das liegt nicht daran, dass Physiker Exponentialfunktionen sch&ouml;n finden &ndash; es liegt daran, dass die Natur Proportionalit&auml;t liebt. Zwei besonders sch&ouml;ne Beispiele: die Verteilung von Energie in thermischen Systemen und die h&auml;ngende Kette.</p>
+
+<h3>Der Boltzmann-Faktor: Wie Natur Energie verteilt</h3>
+
+<p>In einem System im thermischen Gleichgewicht bei Temperatur \(T\) gilt: Die Wahrscheinlichkeit, einen Zustand mit Energie \(E\) besetzt zu finden, ist proportional zu:</p>
+
+<div class="math-display">$$p(E) \propto e^{-E/(k_B T)}$$</div>
+
+<p>Das ist der <span class="glossary" title="Boltzmann-Faktor: Der Ausdruck e^(-E/kT) aus der statistischen Mechanik, der die relative Wahrscheinlichkeit angibt, einen Zustand mit Energie E bei Temperatur T zu finden. k_B ist die Boltzmann-Konstante.">Boltzmann-Faktor</span>, benannt nach Ludwig Boltzmann. \(k_B \approx 1{,}38 \times 10^{-23}\,\text{J/K}\) ist die Boltzmann-Konstante.</p>
+
+<p>Was sagt er? Je h&ouml;her die Energie eines Zustands, desto exponentiell unwahrscheinlicher ist er bei gegebener Temperatur. Zust&auml;nde mit sehr hoher Energie sind exponentiell selten. Das gilt f&uuml;r Gasmolek&uuml;le, Elektronen in Festk&ouml;rpern, chemische Reaktionen (&Uuml;bergangszust&auml;nde) und kosmische Strahlung.</p>
+
+<p>Warum e? Weil die Entropie additiv ist (sie w&auml;chst proportional) und die Wahrscheinlichkeit multiplikativ (unabh&auml;ngige Systeme multiplizieren ihre Wahrscheinlichkeiten). Die einzige Funktion, die additives in multiplikatives umwandelt, ist die Exponentialfunktion &ndash; zur Basis e.</p>
+
+<p>Das ist kein Zufall. Das ist der tiefste Grund, warum e in der Physik omnipräsent ist.</p>
+
+<h3>Die Kettenlinie: Gaud&iacute;s Modelle</h3>
+
+<p>Was ist die Form einer an zwei Punkten aufgeh&auml;ngten schweren Kette? Man k&ouml;nnte vermuten: eine Parabel. Galileo Galilei dachte das. Aber er lag falsch.</p>
+
+<p>Leibniz, Huygens und Johann Bernoulli (Jakobs Bruder) l&ouml;sten das Problem 1691: Die Form ist eine <span class="glossary" title="Kettenlinie (Catenaria): Die Kurve, die eine frei h&auml;ngende, gleichm&auml;ßig schwere Kette oder ein Seil annimmt. Mathematisch: y = a·cosh(x/a).">Kettenlinie</span> (lateinisch: catenaria), beschrieben durch:</p>
+
+<div class="math-display">$$y = a \cdot \cosh\!\left(\frac{x}{a}\right) = a \cdot \frac{e^{x/a} + e^{-x/a}}{2}$$</div>
+
+<p>Hier steckt e gleich doppelt drin: \(\cosh\) ist der hyperbolische Kosinus, definiert als Mittelwert von \(e^x\) und \(e^{-x}\).</p>
+
+<p>Der katalanische Architekt Antoni Gaud&iacute; kannte dieses Ergebnis und nutzte es brillant: Er baute hängende Kettenmodelle aus Gewichten und Schnüren f&uuml;r die Sagrada Fam&iacute;lia und spiegelte sie dann auf den Kopf. Eine umgekehrte Kettenlinie steht unter reiner Druckkraft &ndash; kein Biegen, kein Brechen. Das Gateway Arch in St. Louis (1965) hat ebenfalls die Form einer (leicht modifizierten) Kettenlinie.</p>
+
+<div class="component-wrap"><div id="mount-catenary"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 7 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">Der Boltzmann-Faktor \(e^{-E/kT}\) entsteht, weil Wahrscheinlichkeit multiplikativ und Entropie additiv ist &ndash; e ist die einzige Br&uuml;cke. Die Kettenlinie \(\cosh(x/a)\) ist buchst&auml;blich aus e^x zusammengesetzt.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 8. e IN DER INFORMATION -->
+<!-- ================================================================ -->
+<section id="information" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 8</p>
+<h2>e in der Information</h2>
+
+<p>Claude Shannon definierte 1948, wie man Information misst. Er nannte es <span class="glossary" title="Shannon-Entropie: Ein Maß für die mittlere Unsicherheit oder den Informationsgehalt einer Zufallsvariable. H = -Σ p_i · log(p_i). Gemessen in Bits (Basis 2) oder Nats (Basis e).">Entropie</span>, in Anlehnung an den thermodynamischen Begriff &ndash; kein Zufall, denn die Mathematik ist dieselbe:</p>
+
+<div class="math-display">$$H = -\sum_{i} p_i \cdot \ln p_i$$</div>
+
+<p>Wenn man den nat&uuml;rlichen Logarithmus (Basis e) verwendet statt \(\log_2\), misst man Entropie in "<span class="glossary" title="Nat (natural unit of information): Die Einheit der Shannon-Entropie bei Verwendung des natürlichen Logarithmus (Basis e), analog zu Bit bei Basis 2.">Nats</span>" statt Bits. In der Theorie ist das gleichwertig; in der Praxis &ndash; insbesondere im maschinellen Lernen &ndash; bevorzugt man Nats.</p>
+
+<h3>Cross-Entropy in der KI</h3>
+
+<p>Gro&szlig;e Sprachmodelle wie GPT oder Claude werden mit einem Verlustma&szlig; trainiert, das man <span class="glossary" title="Cross-Entropy-Loss: Maß dafür, wie gut eine Wahrscheinlichkeitsverteilung q eine andere p approximiert. In der KI: -Σ p_i · log(q_i). Je kleiner, desto besser.">Cross-Entropy-Loss</span> nennt:</p>
+
+<div class="math-display">$$\mathcal{L} = -\sum_{i} p_i \cdot \ln q_i$$</div>
+
+<p>Hier ist \(p\) die wahre Verteilung (z.B. das n&auml;chste richtige Wort) und \(q\) die vom Modell vorhergesagte Verteilung. Das Modell lernt, indem es \(\mathcal{L}\) minimiert &ndash; und dieses \(\mathcal{L}\) steckt voller \(\ln\), also voller e.</p>
+
+<p>Wenn Sie also in einem LLM (wie dem, das diesen Text mitformatiert haben mag) einen Gedanken formulieren, dann l&auml;uft tief im Modell Millionen Mal pro Training-Schritt eine Berechnung, bei der e im Nenner steht. Euler h&auml;tte das gef&auml;llt.</p>
+
+<p>Wer den Post &uuml;ber <a href="emergenz.html" class="glossary" title="Emergenz in LLMs: Wie komplexe Sprachf&auml;higkeiten aus dem Training auf riesigen Textkorpora entstehen.">Emergenz in Sprachmodellen</a> gelesen hat, findet dort die Verbindung zwischen Cross-Entropy und dem Entstehen komplexer Sprachf&auml;higkeiten.</p>
+
+<h3>Warum nat&uuml;rlicher Logarithmus?</h3>
+
+<p>Man k&ouml;nnte Entropie auch mit \(\log_2\) messen. Aber dann w&auml;re &uuml;berall ein Faktor \(\ln 2 \approx 0{,}693\) im Weg. Der nat&uuml;rliche Logarithmus ist die "richtige" Basis, weil er die Ableitung \(\frac{d}{dx} \ln x = 1/x\) ohne Vorfaktoren liefert &ndash; und damit alle Optimierungen &uuml;bersichtlich bleiben.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 8 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">Shannon-Entropie \(H = -\sum p_i \ln p_i\) und der Cross-Entropy-Loss moderner KI sind beide in Nats (Basis e) formuliert, weil der nat&uuml;rliche Logarithmus keine Korrekturfaktoren erzeugt.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 9. STIRLINGS FORMEL -->
+<!-- ================================================================ -->
+<section id="stirling" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 9</p>
+<h2>Stirlings Formel</h2>
+
+<p>Hier ist eine &Uuml;berraschung: e erscheint auch in Fakult&auml;ten. Die Fakult&auml;t \(n!\) (sprich: "n Fakult&auml;t") ist das Produkt aller nat&uuml;rlichen Zahlen von 1 bis n. Sie w&auml;chst unglaublich schnell: \(10! = 3.628.800\), \(20! \approx 2{,}43 \times 10^{18}\), \(100! \approx 9{,}33 \times 10^{157}\).</p>
+
+<p>James Stirling entwickelte 1730 eine erstaunliche Approximation:</p>
+
+<div class="math-display">$$n! \approx \sqrt{2\pi n} \cdot \left(\frac{n}{e}\right)^n$$</div>
+
+<p>Schauen Sie sich das an: Drei der wichtigsten Konstanten der Mathematik tauchen auf &ndash; \(e\), \(\pi\) und \(\sqrt{2\pi}\). Woher kommt \(e\)? Aus dem \((n/e)^n\)-Term. Woher kommt \(\pi\)? Aus der Gau&szlig;'schen Glockenkurve (genauer: aus dem <span class="glossary" title="Wallissches Produkt: π/2 = (2/1)·(2/3)·(4/3)·(4/5)·... – ein Produkt rationaler Zahlen, das gegen π/2 konvergiert.">Wallis-Produkt</span> bzw. dem Gauss-Integral \(\int_{-\infty}^\infty e^{-x^2}\,dx = \sqrt{\pi}\)).</p>
+
+<h3>Wie gut ist die Approximation?</h3>
+
+<p>F&uuml;r \(n = 10\): Stirling liefert \(\sqrt{20\pi} \cdot (10/e)^{10} \approx 3.598.696\), wohingegen \(10! = 3.628.800\). Abweichung: unter 1&nbsp;%. F&uuml;r \(n = 100\) ist die relative Abweichung weniger als 0{,}08&nbsp;%. F&uuml;r \(n \to \infty\) ist sie asymptotisch null.</p>
+
+<h3>Warum e in Fakult&auml;ten?</h3>
+
+<p>Intuitiv: \(n! = \prod_{k=1}^{n} k\). Wenn man das Logarithmiert, wird ein Produkt zur Summe: \(\ln(n!) = \sum_{k=1}^n \ln k\). Diese Summe kann man durch ein Integral approximieren: \(\int_1^n \ln x\,dx = n\ln n - n + 1 \approx n\ln n - n\). Exponenziert ergibt das \(n^n \cdot e^{-n}\) &ndash; und damit steckt e in \(n!\).</p>
+
+<p>Die Stirling-Formel ist in der Kombinatorik unverzichtbar. Immer wenn man fragt: "Wie viele M&ouml;glichkeiten gibt es, \(n\) Dinge anzuordnen?" &ndash; also in der Entropieberechnung, in der statistischen Mechanik, in der Informationstheorie &ndash; braucht man Fakult&auml;ten, und damit Stirling, und damit e.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 9 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">\(n! \approx \sqrt{2\pi n}\cdot(n/e)^n\) &ndash; Stirlings Formel zeigt, dass e (und \(\pi\)!) tief in der Struktur von Fakult&auml;ten stecken, weil Logarithmieren Produkte in Summen umwandelt, die sich durch \(e^{-n}\) ausdr&uuml;cken lassen.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 10. WARUM e UND NICHT 2? -->
+<!-- ================================================================ -->
+<section id="warum-basis" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 10</p>
+<h2>Warum e und nicht 2 oder 3 oder \(\pi\)?</h2>
+
+<p>Wir haben e jetzt in zw&ouml;lf Kontexten gesehen. Aber eine Frage blieb bisher unbeantwortet: <em>Warum e und nicht eine andere Zahl?</em> Was macht e so besonders, dass die Natur sie immer wieder bevorzugt?</p>
+
+<h3>Jede Exponentialfunktion ist e hoch etwas</h3>
+
+<p>Das erste Argument ist rein algebraisch. Jede Exponentialfunktion mit beliebiger Basis l&auml;sst sich durch e ausdr&uuml;cken:</p>
+
+<div class="math-display">$$a^x = e^{x \cdot \ln a}$$</div>
+
+<p>Beispiele: \(2^x = e^{x \ln 2}\), \(10^x = e^{x \ln 10}\), \(\pi^x = e^{x \ln \pi}\). Das bedeutet: e liegt immer im Kern jeder Exponentialfunktion. Man kann es verstecken, aber nicht loswerden.</p>
+
+<p>Deshalb ist jede Differential-gleichung der Form \(y' = y\) (mit \(a^x\) statt \(e^x\)) letztlich eine Gleichung &uuml;ber e &ndash; nur mit einem Skalierungsfaktor im Exponenten. e ist nicht eine Basis unter vielen; sie ist <em>die</em> nat&uuml;rliche Basis, von der alle anderen Basen abh&auml;ngen.</p>
+
+<h3>Die tiefste Antwort: Proportionali&auml;t und Stetigkeit</h3>
+
+<p>Stellen Sie sich eine Funktion \(f\) vor, die folgende Eigenschaft hat: Ihr Wert zu zwei Zeitpunkten addiert sich logarithmisch, aber multipliziert sich exponentiell. Das hei&szlig;t:</p>
+
+<div class="math-display">$$f(x + y) = f(x) \cdot f(y)$$</div>
+
+<p>Diese <em>Funktionalgleichung</em> hat &ndash; unter minimalen Stetigkeitsannahmen &ndash; genau eine Klasse von L&ouml;sungen: \(f(x) = e^{cx}\) f&uuml;r eine Konstante \(c\). Jede stetige Funktion, die additive Eingaben in multiplikative Ausgaben verwandelt, ist eine Exponentialfunktion zur Basis e.</p>
+
+<p>Das ist der tiefste Grund. e erscheint nicht, weil Mathematiker es gerne m&ouml;gen. Es erscheint, weil die <em>Multiplikativit&auml;t</em> von Wachstum, Wahrscheinlichkeit und Energie zwingend eine bestimmte Basis erzwingt &ndash; und diese Basis ist e.</p>
+
+<h3>Euler's Identit&auml;t: Der Abschlussakkord</h3>
+
+<p>Wenn wir die Exponentialreihe auf imagin&auml;re Argumente anwenden, erhalten wir Euler's Formel:</p>
+
+<div class="math-display">$$e^{i\theta} = \cos\theta + i\sin\theta$$</div>
+
+<p>Das ist keine Magie, sondern eine direkte Konsequenz der Exponentialreihe. F&uuml;r \(\theta = \pi\) folgt die ber&uuml;hmteste Formel der Mathematik:</p>
+
+<div class="math-display">$$e^{i\pi} + 1 = 0$$</div>
+
+<p>F&uuml;nf fundamentale Konstanten &ndash; \(e\), \(i\), \(\pi\), \(1\), \(0\) &ndash; in einer einzigen Gleichung. Keine der f&uuml;nf wurde f&uuml;r diesen Zweck erfunden; sie folgten alle aus verschiedenen Richtungen und trafen sich hier.</p>
+
+<p>Im Post &uuml;ber das <a href="glasperlenspiel.html" class="glossary" title="Glasperlenspiel: Hesses Vision einer Synthese aller Wissenschaften. Euler's Identität als Beispiel für unerwartete Verbindungen.">Glasperlenspiel</a> haben wir \(e^{i\theta}\) als Drehung in der komplexen Zahlenebene interpretiert &ndash; ein rotierender Zeiger, der Kosinus und Sinus als Projektionen erzeugt. Das ist keine Metapher, sondern buchst&auml;blich das, was \(e^{i\theta}\) bedeutet.</p>
+
+<p>Euler's Identit&auml;t ist kein isoliertes Kuriosum. Sie zeigt, dass e die Verbindung zwischen Wachstum (reelle Exponentialfunktion), Schwingung (Sinus/Kosinus) und Rotation (komplexe Zahlen) ist. Alle drei Ph&auml;nomene &ndash; so verschieden sie wirken &ndash; sind Aspekte derselben Funktion.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Kapitel 10 in einem Satz:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">e ist die Universalbasis, weil sie als einzige stetige L&ouml;sung der Funktionalgleichung \(f(x+y) = f(x)\cdot f(y)\) fungiert &ndash; und Euler's Identit&auml;t zeigt, dass Wachstum, Schwingung und Rotation nur drei Gesichter derselben Exponentialfunktion sind.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- EPILOG -->
+<!-- ================================================================ -->
+<section id="epilog" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Epilog</p>
+<h2>Die Zahl, die &uuml;berall wartet</h2>
+
+<p>Wir haben e jetzt durch zehn Kapitel verfolgt. In den Zinsen des Bankiers Bernoulli. In der Ableitung, die sich selbst zur&uuml;ckgibt. Im Zerfall des C-14 und im Abk&uuml;hlen des Kaffees. In der unheimlichen D&uuml;nne der Primzahlen um gro&szlig;e Zahlen herum. Im chaotischen Durcheinander der Hüte und in der kühlen Strategie des Sekret&auml;rinnproblems. In der h&auml;ngenden Kette, die Gaud&iacute; umkehrte, und im Boltzmann-Faktor, der festlegt, wie Natur Energie verteilt. In Shannon's Entropie und im Verlust, den KI-Modelle t&auml;glich minimieren. Und in Stirlings Formel, die zeigt, dass selbst Fakult&auml;ten nicht ohne e auskommen.</p>
+
+<p>Was ist e? Es ist keine Kreiszahl wie \(\pi\), entstanden aus einer geometrischen Anschauung. Es ist keine logische Notwendigkeit wie \(i\), entstanden aus einer Gleichung ohne L&ouml;sung. e entstand aus einer pragmatischen Frage &uuml;ber Zinseszins &ndash; und entpuppte sich als das Fundament unter den meisten ver&auml;nderlichen Prozessen, die wir kennen.</p>
+
+<p>Der rote Faden durch alle Kapitel war eine einzige Gleichung:</p>
+
+<div class="math-display">$$\frac{dy}{dt} = k \cdot y$$</div>
+
+<p>Die &Auml;nderungsrate ist proportional zum Zustand. Das ist keine obskure Differenzialgleichung &ndash; das ist die mathematische Formulierung von Proportionalit&auml;t selbst. Und e ist die Antwort. Nicht weil Mathematiker sie gew&auml;hlt haben, sondern weil sie die einzig konsistente L&ouml;sung ist.</p>
+
+<p>Es gibt etwas leicht Verr&uuml;ckendes an dieser Erkenntnis. Die Zahl, die Bakterien verdoppelt, die Uran zerf&auml;llt, die Kaffee k&uuml;hlt, die Primzahlen verteilt, die Hüte durcheinander bringt, die h&auml;ngende Ketten beschreibt und die KI trainiert &ndash; sie ist dieselbe. 2,71828&hellip;</p>
+
+<p>Vielleicht ist das, was Leibniz mit seiner <em>ars combinatoria</em> meinte und Hesse im <em>Glasperlenspiel</em> tr&auml;umte: dass hinter den verschiedenen Sprachen der Disziplinen dieselben Muster warten. Nicht als Metapher, sondern buchst&auml;blich. e ist einer dieser Muster &ndash; klar, pr&auml;zise, unerbittlich.</p>
+
+<p>Sie lauert in jedem Zinseszins-Vertrag. In jedem radioaktiven Pr&auml;parat. In jeder Primzahltabelle. In jedem neuronalen Netz. Sie wartet. Sie war schon da, bevor wir sie suchten.</p>
+
+</div>
+</section>
+
+<!-- ================================================================ -->
+<!-- FAQ -->
+<!-- ================================================================ -->
+<section class="pb-16">
+<div class="prose-dark">
+<h2 style="font-size:1.25rem;">H&auml;ufige Fragen</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was ist Eulers Zahl e genau?</h3>
+<p>e = 2,71828182845904&hellip; ist eine irrationale und sogar transzendente Zahl. Sie ist der Grenzwert von \((1+1/n)^n\) f&uuml;r \(n \to \infty\) und gleichzeitig die Summe der Reihe \(\sum_{n=0}^\infty 1/n!\). Leonhard Euler pr&auml;gte den Buchstaben e um 1731, obwohl die Zahl selbst von Jakob Bernoulli 1683 implizit entdeckt wurde.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Warum erscheint e in so vielen verschiedenen Gebieten?</h3>
+<p>e erscheint immer dann, wenn eine Gr&ouml;&szlig;e sich proportional zu ihrem aktuellen Wert ver&auml;ndert: \(dy/dt = ky\). Das gilt f&uuml;r Bakterienwachstum, radioaktiven Zerfall, Abk&uuml;hlung, Zinseszins und Kondensatorentladung. Zus&auml;tzlich erscheint e in der Wahrscheinlichkeitsrechnung durch die Exponentialreihe und in der Informationstheorie durch den nat&uuml;rlichen Logarithmus.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was bedeutet es, dass e^x seine eigene Ableitung ist?</h3>
+<p>\(d/dx\, e^x = e^x\) bedeutet, dass die Steigung von \(e^x\) an jedem Punkt gleich dem Funktionswert selbst ist. Das macht \(e^x\) zur Eigenfunktion des Differenzierungsoperators mit Eigenwert 1 &ndash; die einzige Funktion mit dieser Eigenschaft (bis auf Skalierung). Jede andere Basis \(a^x\) erzeugt beim Ableiten einen Korrekturfaktor \(\ln a\).</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was hat e mit Primzahlen zu tun?</h3>
+<p>Der Primzahlsatz besagt, dass die Anzahl der Primzahlen bis \(x\) asymptotisch gleich \(x/\ln x\) ist. Der nat&uuml;rliche Logarithmus (Basis e) erscheint, weil Primzahlen auf logarithmischer Skala gleichm&auml;&szlig;ig verteilt sind. Die Wahrscheinlichkeit, dass eine zuf&auml;llig gew&auml;hlte Zahl um \(n\) eine Primzahl ist, betr&auml;gt ungef&auml;hr \(1/\ln n\).</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was ist Euler's Identit&auml;t und warum gilt sie als sch&ouml;nste Formel der Mathematik?</h3>
+<p>\(e^{i\pi} + 1 = 0\) verbindet die f&uuml;nf fundamentalsten Konstanten der Mathematik: e (nat&uuml;rliche Basis), i (imagin&auml;re Einheit), \(\pi\) (Kreiszahl), 1 (multiplikatives Einselement) und 0 (additives Einselement). Sie folgt direkt aus der Exponentialreihe: \(e^{ix} = \cos x + i\sin x\), eingesetzt f&uuml;r \(x = \pi\). Alle f&uuml;nf Konstanten wurden unabh&auml;ngig voneinander entdeckt und treffen sich in dieser einen Gleichung.</p>
+
+</div>
+</section>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Was ist Eulers Zahl e genau?", "acceptedAnswer": {"@type": "Answer", "text": "e = 2,71828\u2026 ist eine irrationale und transzendente Zahl. Sie ist der Grenzwert von (1+1/n)^n f\u00fcr n \u2192 \u221e und die Summe der Reihe \u03a3 1/n!. Leonhard Euler pr\u00e4gte den Buchstaben e um 1731."}}, {"@type": "Question", "name": "Warum erscheint e in so vielen verschiedenen Gebieten?", "acceptedAnswer": {"@type": "Answer", "text": "e erscheint immer dann, wenn eine Gr\u00f6\u00dfe sich proportional zu ihrem aktuellen Wert ver\u00e4ndert: dy/dt = ky. Das gilt f\u00fcr Bakterienwachstum, radioaktiven Zerfall, Abk\u00fchlung, Zinseszins und Kondensatorentladung."}}, {"@type": "Question", "name": "Was bedeutet es, dass e^x seine eigene Ableitung ist?", "acceptedAnswer": {"@type": "Answer", "text": "d/dx e^x = e^x bedeutet, dass e^x die Eigenfunktion des Differenzierungsoperators mit Eigenwert 1 ist. Jede andere Basis a^x erzeugt beim Ableiten einen Korrekturfaktor ln(a)."}}, {"@type": "Question", "name": "Was hat e mit Primzahlen zu tun?", "acceptedAnswer": {"@type": "Answer", "text": "Der Primzahlsatz besagt: Die Anzahl der Primzahlen bis x ist asymptotisch x/ln(x). Der nat\u00fcrliche Logarithmus (Basis e) erscheint, weil Primzahlen auf logarithmischer Skala gleichm\u00e4\u00dfig verteilt sind."}}, {"@type": "Question", "name": "Was ist Eulers Identit\u00e4t?", "acceptedAnswer": {"@type": "Answer", "text": "e^(i\u03c0) + 1 = 0 verbindet die f\u00fcnf fundamentalsten Konstanten der Mathematik: e, i, \u03c0, 1 und 0. Sie folgt aus der Exponentialreihe: e^(ix) = cos(x) + i\u00b7sin(x), f\u00fcr x = \u03c0 eingesetzt."}}]}
+</script>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Erstellt mit Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="ueber-mich.html" class="hover:text-gray-400">&Uuml;ber mich</a> &middot;
+    <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+    <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+  </p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // 1. Lazy-mount React components
+  var COMPONENTS = {
+    'mount-compound-interest': window.CompoundInterest || null,
+    'mount-derivative-explorer': window.DerivativeExplorer || null,
+    'mount-growth-decay': window.GrowthDecay || null,
+    'mount-prime-density': window.PrimeDensity || null,
+    'mount-hat-shuffle': window.HatShuffle || null,
+    'mount-secretary-game': window.SecretaryGame || null,
+    'mount-catenary': window.Catenary || null,
+  };
+
+  var mounted = {};
+
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Komponente konnte nicht geladen werden.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // 2. Scroll progress bar
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // 3. TOC highlighting (nav toggle handled by nav.js)
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          else link.classList.remove('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+  // 4. KaTeX auto-render
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+});
+</script>
+
+</body>
+</html>

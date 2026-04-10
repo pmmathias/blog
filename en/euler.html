@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Why e Is Special &ndash; The Number Behind Growth, Primes, and Chance</title>
+  <meta name="description" content="Euler's number e = 2.718&hellip; shows up in compound interest, radioactive decay, prime numbers, probability, and entropy. Why? A mathematical journey of discovery in 10 chapters.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/en/euler.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/euler.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/euler.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/euler.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Why e Is Special &ndash; The Number Behind Growth, Primes, and Chance">
+  <meta property="og:description" content="e = 2.718&hellip; appears in compound interest, radioactive decay, prime numbers, and entropy. The one equation that connects everything: dy/dt = ky.">
+  <meta property="og:url" content="https://ki-mathias.de/en/euler.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-04-10">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Euler's Number">
+  <meta property="article:tag" content="Exponential Function">
+  <meta property="article:tag" content="Mathematics">
+  <meta property="article:tag" content="Growth">
+  <meta property="article:tag" content="Prime Numbers">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/euler-de.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/euler-de.png">
+  <meta name="twitter:title" content="Why e Is Special &ndash; The Number Behind Growth, Primes, and Chance">
+  <meta name="twitter:description" content="e = 2.718&hellip; appears in compound interest, radioactive decay, prime numbers, and entropy. A mathematical journey of discovery.">
+
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+  <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/auto-render.min.js"></script>
+  <script src="/vendor/react.production.min.js"></script>
+  <script src="/vendor/react-dom.production.min.js"></script>
+  <script defer src="/euler-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-500.woff2) format('woff2'), url(/fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Why e Is Special \u2013 The Number Behind Growth, Primes, and Chance",
+    "description": "Euler's number e = 2.718\u2026 appears in compound interest, radioactive decay, prime numbers, probability, and entropy. Why? A mathematical journey of discovery in 10 chapters.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-04-10",
+    "dateModified": "2026-04-10",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/euler.html" },
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "keywords": ["Euler's number", "e", "exponential function", "growth", "prime numbers", "eigenfunction", "decay", "entropy", "Bernoulli"],
+    "articleSection": "Mathematics",
+    "wordCount": 9000,
+    "timeRequired": "PT45M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+    .chapter-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(34,211,238,0.6); margin-bottom: 0.5rem; }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<!-- Hidden TOC slot — nav.js picks this up and injects it into the dropdown -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#warum-e" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Why 2.718&hellip; of all numbers?</a>
+  <a href="#bernoulli" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Bernoulli's Question</a>
+  <a href="#eigenfunction" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; The Function That Equals Itself</a>
+  <a href="#wachstum" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Growth, Decay, One Equation</a>
+  <a href="#primzahlen" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; e in the Primes</a>
+  <a href="#zufall" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; e in Chance</a>
+  <a href="#physik" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; e in Physics</a>
+  <a href="#information" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; e in Information</a>
+  <a href="#stirling" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">9 &middot; Stirling's Formula</a>
+  <a href="#warum-basis" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">10 &middot; Why e and Not 2?</a>
+  <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilogue</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Mathematics &middot; Growth &middot; Chance</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-amber-400 to-purple-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Why e Is Special
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    2.718&hellip; &ndash; an unassuming number. And yet it shows up in bank interest, in the decay of uranium, in the distribution of prime numbers, in the probability that nobody gets their own hat back, and in the loss that an artificial intelligence minimizes. A journey in ten chapters.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-04-10">April 2026</time><span>&middot;</span>
+    <span>~45 min read</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ================================================================ -->
+<!-- 1. WHY 2.718...? -->
+<!-- ================================================================ -->
+<section id="warum-e" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 1</p>
+<h2>Why 2.718&hellip; of all numbers?</h2>
+
+<p>Some numbers are forced into existence by mathematics itself. The number \(\pi\) appears because circles exist. The imaginary unit \(i\) appears because some quadratic equations have no real solutions. And then there is \(e\).</p>
+
+<p>\(e = 2.71828182845904523536\ldots\)</p>
+
+<p>Not a nice round number. No obvious geometric meaning. And yet it confronts anyone who digs deep enough into physics, biology, statistics, computer science, or finance. It doesn't appear because we invite it &ndash; it's already there before we go looking.</p>
+
+<p>This chapter is an inventory. Before we explain <em>why</em> e appears everywhere, let's first establish <em>where</em>. Here are twelve places where e is waiting:</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300" style="line-height: 2.4;">
+    <strong style="color:#22d3ee;">Compound interest:</strong> \(\lim_{n\to\infty}\bigl(1+\tfrac{1}{n}\bigr)^n = e\)<br>
+    <strong style="color:#22d3ee;">Exponential growth:</strong> Bacteria, viruses, capital: \(y = y_0 \cdot e^{kt}\)<br>
+    <strong style="color:#22d3ee;">Radioactive decay:</strong> C-14 with half-life 5,730 years: \(N(t) = N_0 \cdot e^{-\lambda t}\)<br>
+    <strong style="color:#22d3ee;">Newton's law of cooling:</strong> Coffee cools by \(T(t) = T_\infty + (T_0 - T_\infty)\cdot e^{-kt}\)<br>
+    <strong style="color:#22d3ee;">Eigenfunction:</strong> \(\tfrac{d}{dx}e^x = e^x\) &ndash; the only function that is its own derivative<br>
+    <strong style="color:#22d3ee;">Prime numbers:</strong> The density of primes near \(x\) is \(\approx 1/\ln x\)<br>
+    <strong style="color:#22d3ee;">Derangements:</strong> P(no hat fits) \(\to 1/e\)<br>
+    <strong style="color:#22d3ee;">Secretary problem:</strong> Optimal strategy: reject the first \(n/e\)<br>
+    <strong style="color:#22d3ee;">Normal distribution:</strong> Bell curve \(\propto e^{-x^2/2}\)<br>
+    <strong style="color:#22d3ee;">Boltzmann factor:</strong> \(p(E) \propto e^{-E/kT}\) &ndash; how nature distributes energy<br>
+    <strong style="color:#22d3ee;">Catenary:</strong> Hanging chain: \(y = a\cosh(x/a)\), where \(\cosh x = \tfrac{e^x+e^{-x}}{2}\)<br>
+    <strong style="color:#22d3ee;">Shannon entropy:</strong> \(H = -\sum p_i \ln p_i\) &ndash; ln is the logarithm base e
+  </p>
+</div>
+
+<p>Twelve appearances, twelve different disciplines. What do they have in common? That's the question we'll pursue over the next nine chapters. The answer, given upfront: <strong>e appears whenever a quantity changes in proportion to itself.</strong> The rate of change equals the value itself. That's all. And it's an enormous amount.</p>
+
+<p>Let's begin at the beginning &ndash; with a question from the year 1683, when a Swiss mathematician asked about bank interest and accidentally produced the most important number in calculus.</p>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 2. BERNOULLI'S QUESTION -->
+<!-- ================================================================ -->
+<section id="bernoulli" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 2</p>
+<h2>Bernoulli's Question</h2>
+
+<p>Jakob Bernoulli was no romantic mathematician stumbling upon laws of nature in solitary moments. He was a pragmatic Basler, and in 1683 he was occupied with a thoroughly down-to-earth question: how much money do you get if you compound interest not annually, but more and more frequently?</p>
+
+<h3>The Compound Interest Experiment</h3>
+
+<p>Imagine we invest 1 euro at 100% annual interest. Annual compounding gives after one year: \(1 \cdot (1 + 1)^1 = 2\) euros.</p>
+
+<p>Semi-annual compounding &ndash; twice at 50%:</p>
+<div class="math-display">$$\left(1 + \frac{1}{2}\right)^2 = 1.5^2 = 2.25$$</div>
+
+<p>Quarterly &ndash; four times at 25%:</p>
+<div class="math-display">$$\left(1 + \frac{1}{4}\right)^4 \approx 2.4414$$</div>
+
+<p>Monthly:</p>
+<div class="math-display">$$\left(1 + \frac{1}{12}\right)^{12} \approx 2.6130$$</div>
+
+<p>Daily:</p>
+<div class="math-display">$$\left(1 + \frac{1}{365}\right)^{365} \approx 2.7146$$</div>
+
+<p>Hourly, by the minute, by the second &ndash; the value keeps growing, but more and more slowly. Bernoulli recognized that this process converges to a limit. He could pin it between 2 and 3, but didn't know its exact value. Others named it later: <span class="glossary" title="Euler's number: The limit of the expression (1+1/n)^n as n → ∞. Leonhard Euler designated it with the letter e in 1731.">Leonhard Euler</span> designated it with the letter \(e\) in 1731.</p>
+
+<div class="math-display">$$e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = 2.71828182845904\ldots$$</div>
+
+<p>This is not a number anyone invented. It was <em>discovered</em> &ndash; as the limit of a completely natural process. And it is <span class="glossary" title="Irrational: A number that cannot be written as a fraction p/q of two integers. Transcendental means: it is also not the root of any polynomial with integer coefficients.">irrational and even transcendental</span>: it cannot be written as a fraction, and it satisfies no algebraic equation.</p>
+
+<h3>The Series Representation</h3>
+
+<p>There's another route to \(e\). Expanding \((1+x/n)^n\) for large \(n\) with the binomial theorem yields, in the limit, the <span class="glossary" title="Exponential series: The Taylor expansion of e^x around the point x=0. It converges for all real and complex x.">exponential series</span>:</p>
+
+<div class="math-display">$$e = \sum_{n=0}^{\infty} \frac{1}{n!} = 1 + 1 + \frac{1}{2} + \frac{1}{6} + \frac{1}{24} + \frac{1}{120} + \cdots$$</div>
+
+<p>Just the first five terms give \(1 + 1 + 0.5 + 0.1\overline{6} + 0.041\overline{6} = 2.708\overline{3}\) &ndash; only 0.4% away from the true value. The series converges breathtakingly fast, because the factorial in the denominator grows explosively.</p>
+
+<h3>Continuous Compounding</h3>
+
+<p>What does this mean for the bank? If you invest capital \(K_0\) at continuous interest rate \(r\), it grows after time \(t\) to:</p>
+
+<div class="math-display">$$K(t) = K_0 \cdot e^{rt}$$</div>
+
+<p>This is not an approximation &ndash; it's the exact formula for continuous compounding. 1,000 euros at 5% continuous annual interest for 10 years: \(1000 \cdot e^{0.05 \cdot 10} = 1000 \cdot e^{0.5} \approx 1648.72\) euros.</p>
+
+<div class="component-wrap"><div id="mount-compound-interest"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 2 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">e emerges as the natural limit of the compound interest process: the more frequently you compound, the closer you get to e &ndash; but never beyond it.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 3. THE EIGENFUNCTION -->
+<!-- ================================================================ -->
+<section id="eigenfunction" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 3</p>
+<h2>The Only Function That Equals Itself</h2>
+
+<p>Here's a question that sounds strange at first: <em>Which function is its own derivative?</em></p>
+
+<p>That means: if you compute the slope of \(f\) at every point, you get \(f\) itself back. Mathematically: \(f'(x) = f(x)\).</p>
+
+<p>There is exactly one family of answers: \(f(x) = C \cdot e^x\) for any constant \(C\). And that's no coincidence &ndash; it's the deepest property of \(e\).</p>
+
+<h3>e^x as the Eigenfunction of Differentiation</h3>
+
+<p>Anyone who has read the post on <a href="/en/eigenvalues.html" class="glossary" title="Eigenvalues and eigenvectors: vectors that a linear operator only stretches or compresses, never rotates.">eigenvalues</a> knows the principle: a linear operator \(L\) has <strong>eigenfunctions</strong> &ndash; functions that the operator doesn't change, only scales. The operator \(L = d/dx\) (differentiation) has a single eigenfunction family:</p>
+
+<div class="math-display">$$\frac{d}{dx} e^x = e^x$$</div>
+
+<p>The <span class="glossary" title="Eigenvalue: The factor by which an eigenfunction is scaled under an operator. Here the eigenvalue of e^x under d/dx is 1.">eigenvalue</span> is \(\lambda = 1\). The function \(e^x\) is scaled by a factor of 1 under differentiation &ndash; meaning it isn't changed at all.</p>
+
+<p>What about other bases? Take \(2^x\). Its derivative is:</p>
+
+<div class="math-display">$$\frac{d}{dx} 2^x = 2^x \cdot \ln 2 \approx 0.693 \cdot 2^x$$</div>
+
+<p>Not clean. You get the function back, but with a correction factor of \(\ln 2\). For \(3^x\) the factor is \(\ln 3 \approx 1.099\). For \(e^x\) the factor is \(\ln e = 1\) &ndash; exactly 1, nothing left over. That's why e is the <em>natural</em> base for exponential functions: it's the only base where differentiation produces no extra constants.</p>
+
+<p>That's also why physicists almost never write \(2^x\) or \(10^x\) when they have a choice: they write \(e^{kx}\) with a constant \(k\) in the exponent. This isn't aesthetics &ndash; it's efficiency.</p>
+
+<h3>What Follows from This?</h3>
+
+<p>A function that is its own derivative has an important consequence: <strong>its growth depends only on itself.</strong> The slope at every point equals the current value. The larger the function, the faster it grows &ndash; and precisely proportionally so.</p>
+
+<p>That's the equation \(f'(x) = f(x)\). And in the language of physics it becomes: <em>the rate of change is proportional to the current state.</em> This sounds abstract. In the next chapter we'll see what it means across four concrete disciplines.</p>
+
+<div class="try-it">
+  <strong>Something to think about:</strong>
+  <p>What other functions do you know that have a special relationship with differentiation? Sine and cosine return to themselves under double differentiation &ndash; with a sign change. No coincidence: \(\sin x = \text{Im}(e^{ix})\). Euler's formula connects everything.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-derivative-explorer"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 3 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">\(e^x\) is the eigenfunction of the differentiation operator with eigenvalue 1 &ndash; the only function that remains completely unchanged by differentiation, without any correction factor.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 4. GROWTH, DECAY, ONE EQUATION -->
+<!-- ================================================================ -->
+<section id="wachstum" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 4</p>
+<h2>Growth, Decay, and a Single Equation</h2>
+
+<p>Here is the most important differential equation in the applied sciences:</p>
+
+<div class="math-display">$$\frac{dy}{dt} = k \cdot y$$</div>
+
+<p>In plain English: the rate of change of \(y\) is proportional to \(y\) itself. The only solution is:</p>
+
+<div class="math-display">$$y(t) = y_0 \cdot e^{kt}$$</div>
+
+<p>Depending on the sign of \(k\), the same equation describes completely different phenomena. Four examples from four disciplines:</p>
+
+<h3>Bacterial Growth (\(k > 0\))</h3>
+
+<p>An <em>E. coli</em> bacterium divides under ideal conditions every 20 minutes. Start: 1 bacterium. After 20 minutes: 2. After 40 minutes: 4. After one hour: 8. After 24 hours, the theoretical count would be \(2^{72} \approx 4.7 \times 10^{21}\) bacteria &ndash; more than the number of stars in the observable universe.</p>
+
+<p>The growth coefficient is \(k = \ln 2 / T_\text{doubling} = \ln 2 / 20\,\text{min} \approx 0.0347\,\text{min}^{-1}\). And there appears \(\ln\) (the logarithm base e!) as the natural companion of e.</p>
+
+<h3>Radioactive Decay (\(k < 0\)): Carbon-14</h3>
+
+<p><span class="glossary" title="Carbon-14: A radioactive isotope of carbon with 6 protons and 8 neutrons. It decays with a half-life of 5,730 years into nitrogen-14.">C-14</span> is a radioactive carbon isotope formed in the atmosphere by cosmic radiation. Living organisms absorb it; after death the uptake stops and the C-14 decays. The half-life is 5,730 years.</p>
+
+<div class="math-display">$$N(t) = N_0 \cdot e^{-\lambda t}, \quad \lambda = \frac{\ln 2}{5730\,\text{yr}} \approx 1.21 \times 10^{-4}\,\text{yr}^{-1}$$</div>
+
+<p>An old piece of wood still contains 73% of its original C-14. How old is it? We solve: \(0.73 = e^{-\lambda t}\), so \(t = -\ln(0.73)/\lambda \approx 2640\) years. That's radiocarbon dating &ndash; a measurement technique that rests entirely on \(e\).</p>
+
+<h3>Newton's Law of Cooling (\(k < 0\)): Coffee</h3>
+
+<p>A coffee at 90&deg;C sits in a 20&deg;C room. Newton's law of cooling states: the cooling rate is proportional to the temperature difference between the coffee and its surroundings.</p>
+
+<div class="math-display">$$\frac{dT}{dt} = -k(T - T_{\infty}) \quad \Rightarrow \quad T(t) = T_{\infty} + (T_0 - T_{\infty}) \cdot e^{-kt}$$</div>
+
+<p>With \(T_0 = 90\,{}^\circ\text{C}\), \(T_\infty = 20\,{}^\circ\text{C}\), \(k \approx 0.1\,\text{min}^{-1}\) (typical for a ceramic mug), the coffee has cooled after 10 minutes to \(20 + 70 \cdot e^{-1} \approx 20 + 25.7 = 45.7\,{}^\circ\text{C}\). Remarkably accurate.</p>
+
+<h3>Capacitor Discharge (\(k < 0\)): Electronics</h3>
+
+<p>A charged capacitor (capacitance \(C\), initial voltage \(V_0\)) discharges through a resistor \(R\). The current is proportional to the voltage. The voltage drops as:</p>
+
+<div class="math-display">$$V(t) = V_0 \cdot e^{-t/(RC)}$$</div>
+
+<p>The product \(RC\) is called the time constant \(\tau\). After one time constant, the voltage has dropped to \(V_0/e \approx 36.8\%\). Every electronics engineer knows this number by heart.</p>
+
+<p>Four completely different systems &ndash; biology, physics, thermodynamics, electrical engineering &ndash; one equation. This is no coincidence. It's the mathematical consequence of a single assumption: the rate of change is proportional to the current state.</p>
+
+<div class="component-wrap"><div id="mount-growth-decay"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 4 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">\(dy/dt = ky\) &ndash; one equation, four disciplines, one solution: always \(y(t) = y_0 \cdot e^{kt}\). e is the universal answer to proportional change.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 5. e IN THE PRIMES -->
+<!-- ================================================================ -->
+<section id="primzahlen" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 5</p>
+<h2>e in the Primes</h2>
+
+<p>Now things get philosophically uncomfortable. Prime numbers seem to embody chaos itself: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 &ndash; no pattern, no rule that predicts the next prime. And yet their global distribution holds a remarkable regularity &ndash; and e plays the starring role.</p>
+
+<h3>Gauss and the Density of Primes</h3>
+
+<p>Carl Friedrich Gauss was 15 or 16 years old (sources disagree) when he was studying a table of prime numbers and noticed: the larger the numbers get, the more thinly scattered the primes become. And the density follows a pattern.</p>
+
+<p>Let \(\pi(x)\) be the number of primes less than or equal to \(x\). Gauss observed empirically:</p>
+
+<div class="math-display">$$\pi(x) \approx \frac{x}{\ln x}$$</div>
+
+<p>This is the <span class="glossary" title="Prime number theorem: A proved theorem (1896, independently by Hadamard and de la Vallée Poussin) stating that π(x) / (x / ln x) → 1 as x → ∞.">prime number theorem</span>, proved in 1896 by Hadamard and de la Vallée Poussin. The \(\ln\) here is the natural logarithm &ndash; base e.</p>
+
+<p>Concretely: around the number 1,000,000, roughly every \(\ln(1{,}000{,}000) = 6 \ln 10 \approx 13.8\)-th number is a prime. The actual count of primes up to one million is 78,498; the formula gives \(10^6 / \ln(10^6) \approx 72{,}382\) &ndash; an error of under 8%.</p>
+
+<h3>Why Does e Appear?</h3>
+
+<p>That's the deeper question. Primes are entirely discrete, entirely deterministic &ndash; and yet their distribution behaves as if it were a continuous, exponentially thinning process. The logarithm is the inverse of the exponential function. Its appearance in prime density hints that primes are evenly distributed on a logarithmic scale.</p>
+
+<p>A more precise statement: if you pick a large number \(n\) at random, the probability that it's prime is approximately \(1/\ln n\). Primes become ever rarer &ndash; logarithmically, in the rhythm of e.</p>
+
+<h3>Riemann and the Error Terms</h3>
+
+<p>Gauss knew his formula was only asymptotically correct. Bernhard Riemann showed in 1859 how to describe the deviations precisely: through the zeros of the <span class="glossary" title="Riemann zeta function: ζ(s) = Σ 1/n^s, analytically continued to the complex plane. Its zeros encode the exact distribution of primes.">Riemann zeta function</span>. The famous Riemann hypothesis &ndash; that all non-trivial zeros lie on the line \(\text{Re}(s) = 1/2\) &ndash; remains unproven to this day and is considered the most important unsolved problem in mathematics.</p>
+
+<p>But that's another story. The key takeaway: e appears in the primes not because primes "grow" or "decay." It appears because the logarithmic scale is the natural scale for multiplicative structures. And the natural base of the logarithm is e.</p>
+
+<div class="component-wrap"><div id="mount-prime-density"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 5 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">The density of primes near \(x\) is \(\approx 1/\ln x\) &ndash; e appears not in the primes themselves, but in their statistical distribution, because primes are evenly scattered on a logarithmic scale.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 6. e IN CHANCE -->
+<!-- ================================================================ -->
+<section id="zufall" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 6</p>
+<h2>e in Chance</h2>
+
+<p>e also turns up in situations that, at first glance, have nothing to do with growth or logarithms: in pure combinatorics and probability theory. Three classic problems, all with e as the answer.</p>
+
+<h3>6a: The Hat Problem &ndash; Derangements</h3>
+
+<p>Imagine: \(n\) people check their hats at a cloakroom. The attendant has lost the tickets and returns the hats at random. What's the probability that <em>nobody</em> gets their own hat?</p>
+
+<p>A permutation in which no element ends up in its original position is called a <span class="glossary" title="Derangement: A permutation in which no element remains in its own position. The number of derangements of n elements is D(n) = n! · Σ (-1)^k / k! for k=0 to n.">derangement</span>. The number of derangements of \(n\) elements is:</p>
+
+<div class="math-display">$$D(n) = n! \cdot \sum_{k=0}^{n} \frac{(-1)^k}{k!}$$</div>
+
+<p>The probability that a random permutation is a derangement equals:</p>
+
+<div class="math-display">$$P(D_n) = \frac{D(n)}{n!} = \sum_{k=0}^{n} \frac{(-1)^k}{k!} \approx e^{-1} = \frac{1}{e} \approx 0.3679$$</div>
+
+<p>For \(n = 2\): exactly 50%. For \(n = 3\): \(2/6 = 33.3\%\). For \(n = 10\): already 36.79% &ndash; virtually indistinguishable from \(1/e\). From \(n \geq 5\) onward the probability stabilizes at \(1/e\), regardless of how many people are involved.</p>
+
+<p>This is striking: the probability of total chaos is universal and depends on e. (Strictly speaking, this isn't a coincidence but a consequence of the exponential series: \(e^{-1} = \sum_{k=0}^\infty (-1)^k/k!\).)</p>
+
+<div class="component-wrap"><div id="mount-hat-shuffle"></div></div>
+
+<h3>6b: The Secretary Problem &ndash; the Optimal Strategy</h3>
+
+<p>You must choose the best from \(n\) applicants. You interview them one by one in random order. After each interview you must decide immediately: hire or pass. You can't go back to earlier candidates. How do you maximize your chance of finding the best?</p>
+
+<p>The optimal strategy: reject the first \(r\) candidates outright (the learning phase), then hire the next one who is better than everyone before. Which \(r\) maximizes the probability of success?</p>
+
+<p>The answer: \(r^* \approx n/e\). So you reject the first \(1/e \approx 37\%\) of applicants, then hire the next one who surpasses all previous. The success probability of this strategy converges to &ndash; you guessed it &ndash; \(1/e \approx 37\%\).</p>
+
+<div class="math-display">$$r^* = \lfloor n/e \rfloor, \qquad P(\text{choose best}) \to \frac{1}{e} \approx 0.3679$$</div>
+
+<p>This is initially sobering: even the optimal strategy finds the best candidate only 37% of the time. But there's no better one. And both the optimal rejection threshold and the maximum success probability are \(1/e\) &ndash; the same number, from the same limit.</p>
+
+<div class="component-wrap"><div id="mount-secretary-game"></div></div>
+
+<h3>6c: The Bell Curve</h3>
+
+<p>The <span class="glossary" title="Normal distribution: A symmetric, bell-shaped probability distribution, fully characterized by mean μ and standard deviation σ.">normal distribution</span> &ndash; the Gaussian bell curve &ndash; is the most commonly occurring distribution in nature. Its density is:</p>
+
+<div class="math-display">$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</div>
+
+<p>The decisive term: \(e^{-x^2/2}\). The bell curve is an exponential function base e applied to the negative square. The further a value is from the mean, the exponentially less likely it is. This isn't a design choice &ndash; the <span class="glossary" title="Central limit theorem: For sufficiently many independent, identically distributed random variables with finite variance, their normalized sum is normally distributed – regardless of the original distribution.">central limit theorem</span> guarantees that sums of many independent random variables always converge to the normal distribution.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 6 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">e appears in probability through the exponential series: the probability of total chaos (derangements), the optimal rejection threshold (secretary problem), and the bell curve all converge to expressions involving \(e^{-1}\).</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 7. e IN PHYSICS -->
+<!-- ================================================================ -->
+<section id="physik" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 7</p>
+<h2>e in Physics</h2>
+
+<p>Physics is full of e. Not because physicists find exponential functions beautiful &ndash; but because nature loves proportionality. Two particularly elegant examples: the distribution of energy in thermal systems, and the hanging chain.</p>
+
+<h3>The Boltzmann Factor: How Nature Distributes Energy</h3>
+
+<p>In a system in thermal equilibrium at temperature \(T\), the following holds: the probability of finding a state with energy \(E\) occupied is proportional to:</p>
+
+<div class="math-display">$$p(E) \propto e^{-E/(k_B T)}$$</div>
+
+<p>This is the <span class="glossary" title="Boltzmann factor: The expression e^(-E/kT) from statistical mechanics, giving the relative probability of finding a state with energy E at temperature T. k_B is Boltzmann's constant.">Boltzmann factor</span>, named after Ludwig Boltzmann. \(k_B \approx 1.38 \times 10^{-23}\,\text{J/K}\) is Boltzmann's constant.</p>
+
+<p>What does it say? The higher the energy of a state, the exponentially less likely it is at a given temperature. States with very high energy are exponentially rare. This applies to gas molecules, electrons in solids, chemical reactions (transition states), and cosmic radiation.</p>
+
+<p>Why e? Because entropy is additive (it grows proportionally) and probability is multiplicative (independent systems multiply their probabilities). The only function that converts additive to multiplicative is the exponential function &ndash; base e.</p>
+
+<p>This is no coincidence. It is the deepest reason why e is omnipresent in physics.</p>
+
+<h3>The Catenary: Gaud&iacute;'s Models</h3>
+
+<p>What shape does a heavy chain take when suspended from two points? You might guess: a parabola. Galileo Galilei thought so. But he was wrong.</p>
+
+<p>Leibniz, Huygens, and Johann Bernoulli (Jakob's brother) solved the problem in 1691: the shape is a <span class="glossary" title="Catenary (catenaria): The curve assumed by a freely hanging, uniformly heavy chain or rope. Mathematically: y = a·cosh(x/a).">catenary</span> (Latin: catenaria), described by:</p>
+
+<div class="math-display">$$y = a \cdot \cosh\!\left(\frac{x}{a}\right) = a \cdot \frac{e^{x/a} + e^{-x/a}}{2}$$</div>
+
+<p>e appears here twice over: \(\cosh\) is the hyperbolic cosine, defined as the average of \(e^x\) and \(e^{-x}\).</p>
+
+<p>The Catalan architect Antoni Gaud&iacute; knew this result and used it brilliantly: he built hanging chain models from weights and strings for the Sagrada Fam&iacute;lia and then flipped them upside down. An inverted catenary stands under pure compression &ndash; no bending, no breaking. The Gateway Arch in St. Louis (1965) also takes the form of a (slightly modified) catenary.</p>
+
+<div class="component-wrap"><div id="mount-catenary"></div></div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 7 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">The Boltzmann factor \(e^{-E/kT}\) arises because probability is multiplicative and entropy is additive &ndash; e is the only bridge. The catenary \(\cosh(x/a)\) is literally assembled from e^x.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 8. e IN INFORMATION -->
+<!-- ================================================================ -->
+<section id="information" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 8</p>
+<h2>e in Information</h2>
+
+<p>Claude Shannon defined in 1948 how to measure information. He called it <span class="glossary" title="Shannon entropy: A measure of the average uncertainty or information content of a random variable. H = -Σ p_i · log(p_i). Measured in bits (base 2) or nats (base e).">entropy</span>, borrowing from the thermodynamic term &ndash; no coincidence, since the mathematics is identical:</p>
+
+<div class="math-display">$$H = -\sum_{i} p_i \cdot \ln p_i$$</div>
+
+<p>When you use the natural logarithm (base e) instead of \(\log_2\), you measure entropy in "<span class="glossary" title="Nat (natural unit of information): The unit of Shannon entropy when using the natural logarithm (base e), analogous to the bit for base 2.">nats</span>" instead of bits. In theory these are equivalent; in practice &ndash; especially in machine learning &ndash; nats are preferred.</p>
+
+<h3>Cross-Entropy in AI</h3>
+
+<p>Large language models like GPT or Claude are trained with a loss measure called <span class="glossary" title="Cross-entropy loss: A measure of how well one probability distribution q approximates another p. In AI: -Σ p_i · log(q_i). The smaller, the better.">cross-entropy loss</span>:</p>
+
+<div class="math-display">$$\mathcal{L} = -\sum_{i} p_i \cdot \ln q_i$$</div>
+
+<p>Here \(p\) is the true distribution (e.g., the next correct word) and \(q\) is the distribution predicted by the model. The model learns by minimizing \(\mathcal{L}\) &ndash; and this \(\mathcal{L}\) is full of \(\ln\), which means full of e.</p>
+
+<p>So whenever you're formulating a thought in an LLM (like the one that may have helped format this text), deep in the model a calculation runs millions of times per training step in which e sits in the denominator. Euler would have appreciated that.</p>
+
+<p>Anyone who has read the post on <a href="/en/emergence.html" class="glossary" title="Emergence in LLMs: How complex language abilities arise from training on massive text corpora.">emergence in language models</a> will find there the connection between cross-entropy and the emergence of complex language capabilities.</p>
+
+<h3>Why the Natural Logarithm?</h3>
+
+<p>You could measure entropy with \(\log_2\) instead. But then a factor of \(\ln 2 \approx 0.693\) would appear everywhere. The natural logarithm is the "right" base because it delivers the derivative \(\frac{d}{dx} \ln x = 1/x\) without any prefactors &ndash; keeping all optimizations clean.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 8 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">Shannon entropy \(H = -\sum p_i \ln p_i\) and the cross-entropy loss of modern AI are both formulated in nats (base e), because the natural logarithm produces no correction factors.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 9. STIRLING'S FORMULA -->
+<!-- ================================================================ -->
+<section id="stirling" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 9</p>
+<h2>Stirling's Formula</h2>
+
+<p>Here's a surprise: e also appears in factorials. The factorial \(n!\) (read: "n factorial") is the product of all natural numbers from 1 to n. It grows astonishingly fast: \(10! = 3{,}628{,}800\), \(20! \approx 2.43 \times 10^{18}\), \(100! \approx 9.33 \times 10^{157}\).</p>
+
+<p>James Stirling developed a remarkable approximation in 1730:</p>
+
+<div class="math-display">$$n! \approx \sqrt{2\pi n} \cdot \left(\frac{n}{e}\right)^n$$</div>
+
+<p>Look at that: three of the most important constants in mathematics appear &ndash; \(e\), \(\pi\), and \(\sqrt{2\pi}\). Where does \(e\) come from? From the \((n/e)^n\) term. Where does \(\pi\) come from? From the Gaussian bell curve (more precisely: from the <span class="glossary" title="Wallis product: π/2 = (2/1)·(2/3)·(4/3)·(4/5)·... – a product of rational numbers that converges to π/2.">Wallis product</span> and the Gauss integral \(\int_{-\infty}^\infty e^{-x^2}\,dx = \sqrt{\pi}\)).</p>
+
+<h3>How Good Is the Approximation?</h3>
+
+<p>For \(n = 10\): Stirling gives \(\sqrt{20\pi} \cdot (10/e)^{10} \approx 3{,}598{,}696\), whereas \(10! = 3{,}628{,}800\). Error: under 1%. For \(n = 100\) the relative error is less than 0.08%. As \(n \to \infty\) it is asymptotically zero.</p>
+
+<h3>Why e in Factorials?</h3>
+
+<p>Intuitively: \(n! = \prod_{k=1}^{n} k\). Taking the logarithm turns the product into a sum: \(\ln(n!) = \sum_{k=1}^n \ln k\). This sum can be approximated by an integral: \(\int_1^n \ln x\,dx = n\ln n - n + 1 \approx n\ln n - n\). Exponentiated, that gives \(n^n \cdot e^{-n}\) &ndash; and so e ends up inside \(n!\).</p>
+
+<p>Stirling's formula is indispensable in combinatorics. Whenever you ask: "How many ways are there to arrange \(n\) things?" &ndash; in entropy calculations, statistical mechanics, information theory &ndash; you need factorials, and hence Stirling, and hence e.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 9 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">\(n! \approx \sqrt{2\pi n}\cdot(n/e)^n\) &ndash; Stirling's formula reveals that e (and \(\pi\)!) are embedded deep in the structure of factorials, because taking logarithms converts products into sums that can be expressed via \(e^{-n}\).</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 10. WHY e AND NOT 2? -->
+<!-- ================================================================ -->
+<section id="warum-basis" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Chapter 10</p>
+<h2>Why e and Not 2 or 3 or \(\pi\)?</h2>
+
+<p>We've now seen e in twelve contexts. But one question has gone unanswered: <em>Why e and not some other number?</em> What makes e so special that nature reaches for it again and again?</p>
+
+<h3>Every Exponential Function Is e to the Power of Something</h3>
+
+<p>The first argument is purely algebraic. Every exponential function with any base can be expressed through e:</p>
+
+<div class="math-display">$$a^x = e^{x \cdot \ln a}$$</div>
+
+<p>Examples: \(2^x = e^{x \ln 2}\), \(10^x = e^{x \ln 10}\), \(\pi^x = e^{x \ln \pi}\). This means: e is always at the core of every exponential function. You can hide it, but you can't get rid of it.</p>
+
+<p>That's why every differential equation of the form \(y' = y\) (with \(a^x\) instead of \(e^x\)) is ultimately an equation about e &ndash; just with a scaling factor in the exponent. e is not one base among many; it is <em>the</em> natural base on which all other bases depend.</p>
+
+<h3>The Deepest Answer: Proportionality and Continuity</h3>
+
+<p>Imagine a function \(f\) with the following property: its value at two time points adds up logarithmically but multiplies exponentially. That means:</p>
+
+<div class="math-display">$$f(x + y) = f(x) \cdot f(y)$$</div>
+
+<p>This <em>functional equation</em> has &ndash; under minimal continuity assumptions &ndash; exactly one class of solutions: \(f(x) = e^{cx}\) for a constant \(c\). Every continuous function that converts additive inputs into multiplicative outputs is an exponential function base e.</p>
+
+<p>That is the deepest reason. e doesn't appear because mathematicians like it. It appears because the <em>multiplicativity</em> of growth, probability, and energy necessarily forces a specific base &ndash; and that base is e.</p>
+
+<h3>Euler's Identity: The Final Chord</h3>
+
+<p>When we apply the exponential series to imaginary arguments, we get Euler's formula:</p>
+
+<div class="math-display">$$e^{i\theta} = \cos\theta + i\sin\theta$$</div>
+
+<p>This is no magic &ndash; it's a direct consequence of the exponential series. For \(\theta = \pi\) we get the most famous formula in mathematics:</p>
+
+<div class="math-display">$$e^{i\pi} + 1 = 0$$</div>
+
+<p>Five fundamental constants &ndash; \(e\), \(i\), \(\pi\), \(1\), \(0\) &ndash; in a single equation. None of the five was invented for this purpose; they all arrived from different directions and met here.</p>
+
+<p>In the post on the <a href="/en/glass-bead-game.html" class="glossary" title="The Glass Bead Game: Hesse's vision of a synthesis of all sciences. Euler's identity as an example of unexpected connections.">Glass Bead Game</a> we interpreted \(e^{i\theta}\) as a rotation in the complex plane &ndash; a rotating pointer that generates cosine and sine as projections. This is no metaphor; it is literally what \(e^{i\theta}\) means.</p>
+
+<p>Euler's identity is not an isolated curiosity. It shows that e is the connection between growth (the real exponential function), oscillation (sine/cosine), and rotation (complex numbers). All three phenomena &ndash; as different as they seem &ndash; are aspects of the same function.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Chapter 10 in one sentence:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">e is the universal base because it is the only continuous solution to the functional equation \(f(x+y) = f(x)\cdot f(y)\) &ndash; and Euler's identity shows that growth, oscillation, and rotation are just three faces of the same exponential function.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- EPILOGUE -->
+<!-- ================================================================ -->
+<section id="epilog" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-purple-400/60 mb-2">Epilogue</p>
+<h2>The Number That Is Always Waiting</h2>
+
+<p>We've followed e through ten chapters. In the interest of Bernoulli the banker. In the derivative that returns itself. In the decay of C-14 and the cooling of coffee. In the uncanny thinning of primes around large numbers. In the chaotic muddle of hats and the cool strategy of the secretary problem. In the hanging chain that Gaud&iacute; flipped, and in the Boltzmann factor that governs how nature distributes energy. In Shannon's entropy and in the loss that AI models minimize every day. And in Stirling's formula, which shows that even factorials can't do without e.</p>
+
+<p>What is e? It's not a circle number like \(\pi\), born from geometric intuition. It's not a logical necessity like \(i\), born from an equation with no solution. e arose from a pragmatic question about compound interest &ndash; and turned out to be the foundation beneath most of the changing processes we know.</p>
+
+<p>The common thread through all chapters was a single equation:</p>
+
+<div class="math-display">$$\frac{dy}{dt} = k \cdot y$$</div>
+
+<p>The rate of change is proportional to the state. This is no obscure differential equation &ndash; it's the mathematical formulation of proportionality itself. And e is the answer. Not because mathematicians chose it, but because it's the only consistent solution.</p>
+
+<p>There's something slightly unsettling about this realization. The number that doubles bacteria, decays uranium, cools coffee, distributes primes, shuffles hats, describes hanging chains, and trains AI &ndash; it's the same one. 2.71828&hellip;</p>
+
+<p>Perhaps that's what Leibniz meant with his <em>ars combinatoria</em> and what Hesse dreamed of in the <em>Glass Bead Game</em>: that behind the different languages of the disciplines, the same patterns are waiting. Not as metaphor, but literally. e is one of those patterns &ndash; clear, precise, relentless.</p>
+
+<p>It lurks in every compound interest contract. In every radioactive sample. In every prime number table. In every neural network. It waits. It was already there before we went looking.</p>
+
+</div>
+</section>
+
+<!-- ================================================================ -->
+<!-- FAQ -->
+<!-- ================================================================ -->
+<section class="pb-16">
+<div class="prose-dark">
+<h2 style="font-size:1.25rem;">Frequently Asked Questions</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What exactly is Euler's number e?</h3>
+<p>e = 2.71828182845904&hellip; is an irrational and even transcendental number. It is the limit of \((1+1/n)^n\) as \(n \to \infty\) and simultaneously the sum of the series \(\sum_{n=0}^\infty 1/n!\). Leonhard Euler introduced the letter e around 1731, although the number itself was implicitly discovered by Jakob Bernoulli in 1683.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Why does e appear in so many different fields?</h3>
+<p>e appears whenever a quantity changes in proportion to its current value: \(dy/dt = ky\). This applies to bacterial growth, radioactive decay, cooling, compound interest, and capacitor discharge. Additionally, e appears in probability through the exponential series and in information theory through the natural logarithm.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What does it mean that e^x is its own derivative?</h3>
+<p>\(d/dx\, e^x = e^x\) means that the slope of \(e^x\) at every point equals the function value itself. This makes \(e^x\) the eigenfunction of the differentiation operator with eigenvalue 1 &ndash; the only function with this property (up to scaling). Any other base \(a^x\) produces a correction factor \(\ln a\) upon differentiation.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What does e have to do with prime numbers?</h3>
+<p>The prime number theorem states that the count of primes up to \(x\) is asymptotically equal to \(x/\ln x\). The natural logarithm (base e) appears because primes are evenly distributed on a logarithmic scale. The probability that a randomly chosen number near \(n\) is prime is approximately \(1/\ln n\).</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is Euler's identity and why is it considered the most beautiful formula in mathematics?</h3>
+<p>\(e^{i\pi} + 1 = 0\) connects the five most fundamental constants of mathematics: e (natural base), i (imaginary unit), \(\pi\) (circle number), 1 (multiplicative identity), and 0 (additive identity). It follows directly from the exponential series: \(e^{ix} = \cos x + i\sin x\), substituted at \(x = \pi\). All five constants were discovered independently and meet in this one equation.</p>
+
+</div>
+</section>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What exactly is Euler's number e?", "acceptedAnswer": {"@type": "Answer", "text": "e = 2.71828\u2026 is an irrational and transcendental number. It is the limit of (1+1/n)^n as n \u2192 \u221e and the sum of the series \u03a3 1/n!. Leonhard Euler introduced the letter e around 1731."}}, {"@type": "Question", "name": "Why does e appear in so many different fields?", "acceptedAnswer": {"@type": "Answer", "text": "e appears whenever a quantity changes in proportion to its current value: dy/dt = ky. This applies to bacterial growth, radioactive decay, cooling, compound interest, and capacitor discharge."}}, {"@type": "Question", "name": "What does it mean that e^x is its own derivative?", "acceptedAnswer": {"@type": "Answer", "text": "d/dx e^x = e^x means that e^x is the eigenfunction of the differentiation operator with eigenvalue 1. Any other base a^x produces a correction factor ln(a) upon differentiation."}}, {"@type": "Question", "name": "What does e have to do with prime numbers?", "acceptedAnswer": {"@type": "Answer", "text": "The prime number theorem states: the count of primes up to x is asymptotically x/ln(x). The natural logarithm (base e) appears because primes are evenly distributed on a logarithmic scale."}}, {"@type": "Question", "name": "What is Euler's identity?", "acceptedAnswer": {"@type": "Answer", "text": "e^(i\u03c0) + 1 = 0 connects the five most fundamental constants of mathematics: e, i, \u03c0, 1, and 0. It follows from the exponential series: e^(ix) = cos(x) + i\u00b7sin(x), substituted at x = \u03c0."}}]}
+</script>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Created with Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="/ueber-mich.html" class="hover:text-gray-400">About me</a> &middot;
+    <a href="/impressum.html" class="hover:text-gray-400">Imprint</a> &middot;
+    <a href="/datenschutz.html" class="hover:text-gray-400">Privacy</a>
+  </p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // 1. Lazy-mount React components
+  var COMPONENTS = {
+    'mount-compound-interest': window.CompoundInterest || null,
+    'mount-derivative-explorer': window.DerivativeExplorer || null,
+    'mount-growth-decay': window.GrowthDecay || null,
+    'mount-prime-density': window.PrimeDensity || null,
+    'mount-hat-shuffle': window.HatShuffle || null,
+    'mount-secretary-game': window.SecretaryGame || null,
+    'mount-catenary': window.Catenary || null,
+  };
+
+  var mounted = {};
+
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Component could not be loaded.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // 2. Scroll progress bar
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // 3. TOC highlighting (nav toggle handled by nav.js)
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          else link.classList.remove('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+  // 4. KaTeX auto-render
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+});
+</script>
+
+</body>
+</html>
