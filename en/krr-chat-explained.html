@@ -501,22 +501,22 @@
 <tr style="border-bottom:1px solid #1e293b;">
 <td style="padding:.4rem;color:#94a3b8;">Corpus</td>
 <td style="text-align:center;padding:.4rem;">104 sentences on eigenvalues, kernels, PageRank</td>
-<td style="text-align:center;padding:.4rem;">57 dialogues on daily life, feelings, hobbies</td>
+<td style="text-align:center;padding:.4rem;">2113 curated dialogues (daily life, feelings, hobbies, math)</td>
 </tr>
 <tr style="border-bottom:1px solid #1e293b;">
 <td style="padding:.4rem;color:#94a3b8;">Vocabulary</td>
 <td style="text-align:center;padding:.4rem;">505 words</td>
-<td style="text-align:center;padding:.4rem;">397 words</td>
+<td style="text-align:center;padding:.4rem;">1445 words (Word2Vec, 32-dim)</td>
 </tr>
 <tr style="border-bottom:1px solid #1e293b;">
 <td style="padding:.4rem;color:#94a3b8;">Context (CTX)</td>
 <td style="text-align:center;padding:.4rem;">5 words</td>
-<td style="text-align:center;padding:.4rem;color:#34d399;font-weight:600;">8 words</td>
+<td style="text-align:center;padding:.4rem;color:#34d399;font-weight:600;">24 words</td>
 </tr>
 <tr style="border-bottom:1px solid #1e293b;">
 <td style="padding:.4rem;color:#94a3b8;">RFF dimension (D)</td>
 <td style="text-align:center;padding:.4rem;">1536</td>
-<td style="text-align:center;padding:.4rem;">2048</td>
+<td style="text-align:center;padding:.4rem;">6144</td>
 </tr>
 <tr style="border-bottom:1px solid #1e293b;">
 <td style="padding:.4rem;color:#94a3b8;">Format</td>
@@ -531,15 +531,104 @@
 <tr>
 <td style="padding:.4rem;color:#94a3b8;">Top-1 accuracy</td>
 <td style="text-align:center;padding:.4rem;">99.8%</td>
-<td style="text-align:center;padding:.4rem;">99.8%</td>
+<td style="text-align:center;padding:.4rem;">65% (at 2113 pairs)</td>
 </tr>
 </tbody>
 </table>
 </div>
 
-<p><strong>Key insight:</strong> The biggest quality jump for Kalle came <em>not</em> from fewer hash collisions or one-hot encoding &ndash; but from <strong>CTX=8 instead of CTX=5</strong>. Three extra words of context make the difference between 12 and 33 correct words for short inputs like &ldquo;ja&rdquo;.</p>
+<p><strong>Key insight:</strong> Kalle has undergone a radical architectural transformation &ndash; and the lessons are instructive for anyone thinking about AI systems.</p>
 
-<p>Second insight: <strong>No repetition penalty for German.</strong> English works with fewer function-word repetitions. German needs &ldquo;ich bin&rdquo;, &ldquo;das ist&rdquo;, &ldquo;du bist&rdquo; in every sentence. A penalty that suppresses these words destroys German sentence structure.</p>
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- NEW: Kalle Evolution -->
+<!-- ================================================================ -->
+<section id="kalle-evolution">
+<div class="prose-dark">
+
+<h2>Kalle&rsquo;s Journey: Less is More</h2>
+
+<p>Kalle went through <strong>six iterations</strong>. The results defy intuition:</p>
+
+<div style="overflow-x:auto;margin:1rem 0;">
+<table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+<thead>
+<tr style="border-bottom:2px solid #334155;">
+<th style="text-align:left;padding:.5rem;color:#94a3b8;">Iteration</th>
+<th style="text-align:center;padding:.5rem;color:#94a3b8;">Pairs</th>
+<th style="text-align:center;padding:.5rem;color:#94a3b8;">Encoding</th>
+<th style="text-align:center;padding:.5rem;color:#94a3b8;">Top-1</th>
+<th style="text-align:left;padding:.5rem;color:#94a3b8;">Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;">V1 (Original)</td>
+<td style="text-align:center;padding:.4rem;">57</td>
+<td style="text-align:center;padding:.4rem;">Hash (128 buckets)</td>
+<td style="text-align:center;padding:.4rem;color:#34d399;font-weight:600;">99.8%</td>
+<td style="padding:.4rem;">Perfect &ndash; but only 57 responses</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;">MEGA (mass)</td>
+<td style="text-align:center;padding:.4rem;color:#ef4444;">4301</td>
+<td style="text-align:center;padding:.4rem;">Word2Vec + hacks</td>
+<td style="text-align:center;padding:.4rem;color:#ef4444;">34.9%</td>
+<td style="padding:.4rem;color:#ef4444;">More corpus = worse quality!</td>
+</tr>
+<tr style="border-bottom:1px solid #1e293b;">
+<td style="padding:.4rem;color:#34d399;font-weight:600;">FINAL (curated)</td>
+<td style="text-align:center;padding:.4rem;color:#34d399;font-weight:600;">2113</td>
+<td style="text-align:center;padding:.4rem;">Word2Vec (32-dim)</td>
+<td style="text-align:center;padding:.4rem;color:#34d399;">65.4%</td>
+<td style="padding:.4rem;color:#34d399;">Curated &gt; generated</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The curve <strong>99.8% &rarr; 34.9% &rarr; 65.4%</strong> teaches a fundamental lesson: blind corpus growth <em>destroys</em> quality in KRR, because similar patterns compete in the feature space. The solution was not &ldquo;even more data&rdquo; but <strong>less data, better curated</strong>.</p>
+
+<p>This insight applies to large language models too: OpenAI, Anthropic and Google invest heavily in <strong>data quality</strong>, not just quantity. Instruction-tuning datasets like FLAN or OASST are carefully curated &ndash; just like Kalle&rsquo;s corpus.</p>
+
+<h3>From Hash Encoding to Word2Vec</h3>
+
+<p>The original version used <strong>hash encoding</strong>: <code>hash(&quot;pizza&quot;) % 128 = bucket 79</code>. The problem: &ldquo;pizza&rdquo; and &ldquo;comedy&rdquo; could land on the same bucket &ndash; the model couldn&rsquo;t distinguish them.</p>
+
+<p>The solution: <strong>Word2Vec embeddings</strong> (32 dimensions). Each word gets a unique vector, trained on the corpus itself. Similar words (&ldquo;pizza&rdquo; and &ldquo;pasta&rdquo;) have similar vectors. Different words (&ldquo;pizza&rdquo; and &ldquo;sad&rdquo;) are far apart. Zero collisions &ndash; and the feature dimension drops from 3072 to 768.</p>
+
+<h3>Multi-Turn via Corpus Design</h3>
+
+<p>A chatbot that forgets what you talked about after every sentence is frustrating. Kalle&rsquo;s solution: <strong>no code trick, but corpus design</strong>.</p>
+
+<p>When Kalle responds, his answer is stored as <code>lastBotTurn</code>. On the next user input, the <strong>entire previous bot response</strong> is concatenated with the new input &ndash; as if it were one long search query. The matching then finds pairs that fit this <em>combined</em> context.</p>
+
+<div class="summary-box">
+<p style="font-family:monospace;font-size:0.82rem;line-height:1.8;">
+<span style="color:#64748b;">Kalle:</span> &ldquo;my favorite food is pizza. what about you?&rdquo;<br>
+<span style="color:#64748b;">User:</span> &ldquo;Fish&rdquo;<br>
+<span style="color:#64748b;">Internal:</span> queryText = <span style="color:#f59e0b;">&ldquo;my favorite food is pizza ... fish&rdquo;</span><br>
+<span style="color:#64748b;">Match:</span> Pair <code>&ldquo;favorite food pizza fish&rdquo;</code> &rarr; contextual response!<br>
+<span style="color:#34d399;">Kalle:</span> &ldquo;fish is also a great choice. I like both pizza and fish.&rdquo;
+</p>
+</div>
+
+<p>This is inspired by <strong>AIML</strong> (the language behind the chatbot ALICE from the 90s), where a <code>&lt;that&gt;</code> tag uses the previous bot utterance as context. Same idea, different mechanism: AIML does explicit pattern matching, Kalle does BoW+IDF similarity.</p>
+
+<h3>Emergent Behavior: What Kalle &ldquo;knows&rdquo; without &ldquo;knowing&rdquo;</h3>
+
+<p>The most surprising moments with Kalle are behaviors that <strong>nobody programmed</strong>:</p>
+
+<p><strong>Math validation:</strong> Kalle asks &ldquo;what is 3 plus 5?&rdquo;, the user answers &ldquo;8&rdquo;. Kalle says: &ldquo;<span style="color:#34d399;">correct! 3 plus 5 is 8. well done.</span>&rdquo; &ndash; Not a single line of code checks whether &ldquo;8&rdquo; is correct. The system simply finds the pair <code>plus 3 5 8</code> &ndash; pure pattern matching. And with a <em>wrong</em> answer (&ldquo;11&rdquo;)? Kalle says: &ldquo;correct! 5 plus 6 is 11&rdquo; &ndash; it finds a <em>different</em> problem where the number fits. Fascinating, not broken.</p>
+
+<p><strong>Insult immunity:</strong> &ldquo;you are stupid&rdquo; &rarr; Kalle responds normally. &ldquo;stupid&rdquo; is not in his vocabulary &ndash; for him, the word doesn&rsquo;t exist. No profanity filter needed. <strong>What&rsquo;s not in the vocab doesn&rsquo;t exist.</strong></p>
+
+<p><strong>Typo robustness:</strong> &ldquo;giv me a math problm&rdquo; &rarr; Kalle understands &ldquo;give me a math problem&rdquo;. The typos are OOV (out-of-vocabulary) and simply ignored. The remaining words are enough for matching.</p>
+
+<p><strong>Honest limits:</strong> &ldquo;in english please&rdquo; &rarr; &ldquo;no, I only speak German.&rdquo; &ldquo;what is quantum physics?&rdquo; &rarr; &ldquo;I can&rsquo;t talk about that. my topics are food, hobbies, music, feelings, weather and simple math.&rdquo; Kalle doesn&rsquo;t guess &ndash; he says what he can&rsquo;t do.</p>
 
 <div class="try-it">
   <p><strong>Try both</strong></p>
@@ -575,13 +664,13 @@
 <p>The 104 training sentences and the retrieval corpus of 805 sentences are written in English because the mathematical terminology is predominantly English. The model has no understanding of &ldquo;language&rdquo; &ndash; it has only learned which English word is likely to follow which context. A German version would simply require German training sentences.</p>
 
 <h3 style="font-size:1rem; margin-top:1.5rem;">Can KRR Chat be trained with more data?</h3>
-<p>In principle yes, but the capacity of hash-based encoding sets limits. Beyond ~800 words of vocabulary, hash collisions increase too much, and numerical precision becomes the bottleneck. For larger models, you would need larger hash buckets, higher-dimensional Random Fourier Features &ndash; or indeed a neural network. That is exactly the point: KRR Chat shows where the boundary lies and why scaling to neural networks becomes necessary.</p>
+<p>Yes &ndash; Kalle proves it: from 57 to 2113 dialogue pairs. But the journey showed: <strong>quality beats quantity</strong>. With 4301 programmatically generated pairs, accuracy dropped to 35%. Only radical curation (fewer pairs, each with purpose) brought quality back. The switch from hash encoding to Word2Vec embeddings solved the collision problem. The key is not &ldquo;more data&rdquo; but &ldquo;better data&rdquo; &ndash; a lesson that applies to large language models too.</p>
 
 </div>
 </section>
 
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the difference between KRR Chat and ChatGPT?", "acceptedAnswer": {"@type": "Answer", "text": "ChatGPT uses a neural network with billions of parameters and attention mechanisms. KRR Chat uses Kernel Ridge Regression with a single weight matrix (1536 \u00d7 505 = ~780,000 parameters). Both solve the same task \u2013 \u201cgiven context, predict the next word\u201d \u2013 but with entirely different mathematical tools. KRR Chat makes visible through color coding what the model memorizes and what it generalizes."}}, {"@type": "Question", "name": "Why does KRR Chat respond in English?", "acceptedAnswer": {"@type": "Answer", "text": "The 104 training sentences and the retrieval corpus of 805 sentences are written in English because the mathematical terminology is predominantly English. The model has no understanding of \u201clanguage\u201d \u2013 it has only learned which English word is likely to follow which context."}}, {"@type": "Question", "name": "Can KRR Chat be trained with more data?", "acceptedAnswer": {"@type": "Answer", "text": "In principle yes, but the capacity of hash-based encoding sets limits. Beyond ~800 words of vocabulary, hash collisions increase too much, and numerical precision becomes the bottleneck. For larger models, you would need larger hash buckets, higher-dimensional Random Fourier Features \u2013 or indeed a neural network."}}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the difference between KRR Chat and ChatGPT?", "acceptedAnswer": {"@type": "Answer", "text": "ChatGPT uses a neural network with billions of parameters and attention mechanisms. KRR Chat uses Kernel Ridge Regression with a single weight matrix (1536 \u00d7 505 = ~780,000 parameters). Both solve the same task \u2013 \u201cgiven context, predict the next word\u201d \u2013 but with entirely different mathematical tools. KRR Chat makes visible through color coding what the model memorizes and what it generalizes."}}, {"@type": "Question", "name": "Why does KRR Chat respond in English?", "acceptedAnswer": {"@type": "Answer", "text": "The 104 training sentences and the retrieval corpus of 805 sentences are written in English because the mathematical terminology is predominantly English. The model has no understanding of \u201clanguage\u201d \u2013 it has only learned which English word is likely to follow which context."}}, {"@type": "Question", "name": "Can KRR Chat be trained with more data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2013 Kalle proves it: from 57 to 2113 dialogue pairs. But quality beats quantity. With 4301 programmatically generated pairs, accuracy dropped to 35%. Only radical curation brought quality back. The switch from hash encoding to Word2Vec embeddings solved the collision problem. The key is not more data but better data."}}]}
 </script>
 </main>
 
