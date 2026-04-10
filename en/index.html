@@ -60,17 +60,19 @@
 <div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
 <script src="/nav.js"></script>
 
-<!-- Hero Banner -->
-<div class="w-full pt-14">
-  <img src="/img/header-glasperlenspiel.jpg" alt="Five luminous glass spheres connected by threads of light &ndash; a symbol for the Glass Bead Game: quantum arrows, waves, networks, Euler&rsquo;s formula, and an eye." class="w-full" loading="eager" width="1500" height="500">
-</div>
-
-<!-- Hero -->
-<header class="max-w-4xl mx-auto px-4 pt-8 pb-6">
-  <p class="text-cyan-400/60 text-sm mb-4 tracking-wide">Notes from Conversations with a Machine</p>
-  <h1 class="text-3xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
-    KI-Mathias
-  </h1>
+<!-- Hero: Image + Text + Gradient Overlay -->
+<header class="relative w-full" style="margin-top:3.5rem;">
+  <!-- Background image -->
+  <img src="/img/header-glasperlenspiel.jpg" alt="Five luminous glass spheres connected by threads of light &ndash; a symbol for the Glass Bead Game: quantum arrows, waves, networks, Euler&rsquo;s formula, and an eye." class="absolute inset-0 w-full h-full object-cover" style="object-position:center 35%;" loading="eager" width="1500" height="500">
+  <!-- Gradient: transparent top → dark bottom (matches bg-gray-950 #030712) -->
+  <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(3,7,18,0) 20%, rgba(3,7,18,0.6) 60%, rgba(3,7,18,1) 100%);"></div>
+  <!-- Text overlay, anchored to bottom -->
+  <div class="relative z-10 max-w-4xl mx-auto px-4 flex flex-col justify-end" style="min-height:340px; padding-bottom:2rem; padding-top:4rem;">
+    <p class="text-cyan-400/80 text-sm mb-3 tracking-wide drop-shadow-lg">Notes from Conversations with a Machine</p>
+    <h1 class="text-3xl sm:text-5xl font-bold mb-0 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight drop-shadow-lg" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+      KI-Mathias
+    </h1>
+  </div>
 </header>
 
 <!-- Intro text -->
