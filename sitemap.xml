@@ -146,6 +146,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/mindfulness.html"/>
   </url>
   <url>
+    <loc>https://ki-mathias.de/euler.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/euler.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/euler.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/euler.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/euler.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/euler.html"/>
+  </url>
+  <url>
     <loc>https://ki-mathias.de/ueber-mich.html</loc>
     <lastmod>2026-04-08</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/ueber-mich.html"/>
