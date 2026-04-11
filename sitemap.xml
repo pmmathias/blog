@@ -3,13 +3,13 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ki-mathias.de/</loc>
-    <lastmod>2026-04-08</lastmod>
+    <lastmod>2026-04-10</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/</loc>
-    <lastmod>2026-04-08</lastmod>
+    <lastmod>2026-04-10</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   </url>
@@ -27,13 +27,13 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/vogelsimulator.html</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-10</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html"/>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/flight-simulator.html</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-10</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html"/>
   </url>
@@ -131,7 +131,7 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/achtsamkeit.html</loc>
-    <lastmod>2026-04-08</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/achtsamkeit.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/mindfulness.html"/>
   </url>
@@ -155,13 +155,13 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/ueber-mich.html</loc>
-    <lastmod>2026-04-08</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/ueber-mich.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/about.html"/>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/about.html</loc>
-    <lastmod>2026-04-08</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/ueber-mich.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/about.html"/>
   </url>
