@@ -636,9 +636,11 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 
 <h3>Von der Formel zum Pixar-Ozean</h3>
 
-<p>1986 verfilmte Hollywood James Camerons <em>The Abyss</em> und suchte nach realistischem Computerwasser. Der Durchbruch f&uuml;r die Computergrafik kam aber 2001: Jerry Tessendorf von ILM ver&ouml;ffentlichte das Paper <em>&bdquo;Simulating Ocean Water&ldquo;</em> f&uuml;r die SIGGRAPH-Kurse &mdash; der heute wohl meistzitierte Aufsatz zur Wellensimulation &uuml;berhaupt. Er zeigte, wie man das Phillips-Spektrum mittels <strong>inverser Fast Fourier Transform</strong> effizient in eine echte H&ouml;henkarte der Wasseroberfl&auml;che verwandelt.</p>
+<p>Der erste Versuch, Ozeanwellen in der Computergrafik darzustellen, kam 1986 von Alain Fournier und William Reeves (Pixar) mit <em>&bdquo;A Simple Model of Ocean Waves&ldquo;</em> auf der SIGGRAPH &mdash; basierend auf Gerstner-Wellen, nicht FFT. Ein Jahr sp&auml;ter, 1987, ver&ouml;ffentlichten <strong>Gary Mastin, Peter Watterberg und John Mareda</strong> im <em>IEEE Computer Graphics and Applications</em> den Aufsatz <em>&bdquo;Fourier Synthesis of Ocean Scenes&ldquo;</em> &mdash; <strong>die erste FFT-basierte Ozean-Simulation der Computergrafik</strong>. Sie zeigten, wie man ein statistisches Wellenspektrum (damals noch Pierson-Moskowitz) per Fourier-Transform in eine echte H&ouml;henkarte verwandelt.</p>
 
-<p>Die Methode steckt seither in praktisch jedem AAA-Ozean: <em>Titanic</em>, <em>Waterworld</em>, <em>Life of Pi</em>, <em>Sea of Thieves</em>, <em>Assassin&rsquo;s Creed Black Flag</em>, die aktuellen Spider-Man-Spiele &mdash; alle nutzen Varianten der Tessendorf-FFT.</p>
+<p>Der Durchbruch f&uuml;r Film und Games kam allerdings erst 2001: <strong>Jerry Tessendorf</strong> von ILM ver&ouml;ffentlichte f&uuml;r die SIGGRAPH-Kurse sein Papier <em>&bdquo;Simulating Ocean Water&ldquo;</em> &mdash; bis heute die Standard-Referenz zum Thema. Tessendorf hat die Methode nicht erfunden, aber er hat sie so sauber zusammengefasst und auf die Anforderungen der Filmproduktion angepasst, dass sein Paper zum De-facto-Lehrbuch wurde.</p>
+
+<p>Seither steckt die Methode in praktisch jedem AAA-Ozean: <em>Titanic</em> (noch vor Tessendorfs Paper), <em>Pirates of the Caribbean</em>, <em>Life of Pi</em>, <em>Moana</em>, <em>Sea of Thieves</em>, <em>Assassin&rsquo;s Creed Black Flag</em> &mdash; alle nutzen FFT-Wellen nach demselben mathematischen Grundprinzip.</p>
 
 <h3>Warum die FFT der entscheidende Trick ist</h3>
 
@@ -655,19 +657,19 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 
 <p>Diese beiden Texturen genau einem Three.js-Water-Plane aufzuzwingen &mdash; das ist die ganze Integrationsarbeit.</p>
 
-<h3>Vom Paper zum Browser: eine vierzigj&auml;hrige Kette</h3>
+<h3>Vom Paper zum Browser: die JavaScript-Implementierungskette</h3>
 
-<p>Der Weg von Phillips-Spektrum (1957) &uuml;ber Tessendorf (2001) bis in unseren Browser ist eine klassische Open-Source-Kette. Im Header der Datei, die wir integrieren konnten, steht die gesamte Genealogie dokumentiert:</p>
+<p>Die Mathematik war 2013 also schon knapp 30 Jahre alt. Was fehlte, war eine lauff&auml;hige Implementierung f&uuml;r den Browser. Das &uuml;bernahm eine Reihe von Open-Source-Entwicklern, die <strong>nichts neu erfunden</strong>, aber die Tessendorf-Methode Schritt f&uuml;r Schritt in aktuelle Web-Technologien &uuml;bersetzt haben:</p>
 
 <ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
-  <li><strong>2013</strong> &mdash; <em>David Li</em> ver&ouml;ffentlicht eine JavaScript-Demo (<a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves/</a>) mit WebGL-Fragment-Shadern statt Compute Shadern</li>
-  <li><strong>2014</strong> &mdash; <em>Aleksandr Albert</em> portiert David Li&rsquo;s Code zu einem Three.js-Programm</li>
-  <li><strong>2015</strong> &mdash; <em>J&eacute;r&eacute;my Bouny</em> baut daraus ein wiederverwendbares Three.js-Modul</li>
-  <li><strong>2023</strong> &mdash; <em>Phil Crowther</em> aktualisiert das Modul auf aktuelle Three.js-Versionen und ver&ouml;ffentlicht es auf <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
+  <li><strong>2013</strong> &mdash; <em>David Li</em> baut eine WebGL-Demo (<a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves/</a>), die die Tessendorf-Mathematik mit Fragment-Shadern statt dedizierter Compute Shader umsetzt</li>
+  <li><strong>2014</strong> &mdash; <em>Aleksandr Albert</em> portiert David Li&rsquo;s Code in die Three.js-Welt</li>
+  <li><strong>2015</strong> &mdash; <em>J&eacute;r&eacute;my Bouny</em> baut daraus ein wiederverwendbares Three.js-Modul (<a href="https://github.com/jbouny/ocean" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">github.com/jbouny/ocean</a>)</li>
+  <li><strong>2023</strong> &mdash; <em>Phil Crowther</em> aktualisiert das Modul f&uuml;r aktuelle Three.js-Versionen und ver&ouml;ffentlicht es auf <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
   <li><strong>2023</strong> &mdash; <em>Attila Schroeder</em> hebt die Shader auf GLSL3 / WebGL2</li>
 </ul>
 
-<p>Das Modul, das im Simulator l&auml;uft &mdash; <code>Ocean3.js</code> &mdash; ist die aktuelle Version dieser Kette. Rund 570 Zeilen WebGL2-Code, die 65.536 Wellen pro Frame erzeugen.</p>
+<p>Keiner dieser Entwickler ist ein FFT-Pionier &mdash; sie alle sind Maintainer einer Pipeline, die Tessendorfs 2001-er Paper, Mastins 1987-er Arbeit und letztlich Phillips&rsquo; 1957-er Statistik in den Browser bringt. Das Modul, das im Simulator l&auml;uft &mdash; <code>Ocean3.js</code>, ca. 570 Zeilen &mdash; ist die aktuelle Version dieser Kette.</p>
 
 <h3>Die Integration mit Claude Code</h3>
 
@@ -718,17 +720,19 @@ water.material.vertexShader =
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Quellen &amp; weiterf&uuml;hrende Links</p>
   <ul class="list-disc pl-6 text-gray-300 leading-relaxed">
-    <li>Tessendorf, J. (2001): <em>&bdquo;Simulating Ocean Water&ldquo;</em> &mdash; das seminal Paper zur FFT-Ozean-Simulation</li>
+    <li>Phillips, O. M. (1957): <em>&bdquo;On the generation of waves by turbulent wind&ldquo;</em> &mdash; das ozeanografische Wellenspektrum</li>
+    <li>Mastin, G., Watterberg, P., Mareda, J. (1987): <em>&bdquo;Fourier Synthesis of Ocean Scenes&ldquo;</em>, IEEE CG&amp;A &mdash; der Erstentwurf der FFT-Methode f&uuml;r Computergrafik</li>
+    <li>Tessendorf, J. (2001): <em>&bdquo;Simulating Ocean Water&ldquo;</em> &mdash; die am h&auml;ufigsten zitierte Ausarbeitung, Standard-Referenz f&uuml;r Film und Games</li>
     <li>David Li&rsquo;s WebGL-Wellen-Demo (2013): <a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves</a></li>
-    <li>Phil Crowthers Three.js-Demos-Sammlung: <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
-    <li>iFFT Ocean Wave Generator im Three.js-Forum: <a href="https://discourse.threejs.org/t/ifft-ocean-wave-generator-module/51800" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">discourse.threejs.org</a></li>
-    <li>Lizenz des integrierten Moduls: Ocean3.js, CC BY-NC-SA 3.0 &mdash; auf der Basis der Arbeiten von David Li, Aleksandr Albert, J&eacute;r&eacute;my Bouny, Phil Crowther und Attila Schroeder</li>
+    <li>Phil Crowthers Three.js-Demos-Sammlung (Wartung der JS-Implementierung): <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
+    <li>Diskussion im Three.js-Forum: <a href="https://discourse.threejs.org/t/ifft-ocean-wave-generator-module/51800" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">discourse.threejs.org</a></li>
+    <li>Lizenz des integrierten Moduls: Ocean3.js, CC BY-NC-SA 3.0 &mdash; Implementierung von David Li, Aleksandr Albert, J&eacute;r&eacute;my Bouny, Phil Crowther und Attila Schroeder auf Basis von Tessendorf (2001) und Mastin et&nbsp;al. (1987)</li>
   </ul>
 </div>
 
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Zusammenfassung</p>
-  <p><strong>iFFT-Ozeanwellen sind seit Tessendorfs SIGGRAPH-Paper von 2001 der Industriestandard f&uuml;r realistisches Wasser &mdash; vom Phillips-Spektrum im Frequenzraum &uuml;ber den Butterfly-Algorithmus auf der GPU zu einer animierten H&ouml;henkarte. 65.536 Wellen pro Frame. Mit einem offen verf&uuml;gbaren WebGL2-Modul und Claude Code l&auml;sst sich das heute an einem Abend in jedes Three.js-Projekt integrieren.</strong></p>
+  <p><strong>FFT-basierte Ozeanwellen gibt es in der Computergrafik seit Mastin et&nbsp;al. 1987, popularisiert durch Tessendorf 2001. Vom statistischen Wellenspektrum im Frequenzraum &uuml;ber den Butterfly-Algorithmus auf der GPU zu einer animierten H&ouml;henkarte &mdash; 65.536 Wellen pro Frame. Mit einem offen verf&uuml;gbaren WebGL2-Modul und Claude Code l&auml;sst sich das heute an einem Abend in jedes Three.js-Projekt integrieren.</strong></p>
 </div>
 
 </div>
