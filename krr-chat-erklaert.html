@@ -632,8 +632,27 @@
 
 <p><strong>Ehrliche Grenzen:</strong> &bdquo;in english please&ldquo; &rarr; &bdquo;nein, ich kann nur deutsch.&ldquo; &bdquo;was ist quantenphysik?&ldquo; &rarr; &bdquo;dar&uuml;ber kann ich nichts sagen. meine themen sind essen, hobbys, musik, gef&uuml;hle, wetter und einfache mathe.&ldquo; Kalle r&auml;t nicht &ndash; er sagt was er nicht kann.</p>
 
+<h3>RAG: Kalle liest den Blog</h3>
+
+<p>Die neueste Version von Kalle kann mehr als Smalltalk: Er beantwortet Fragen &uuml;ber den Blog-Inhalt. Das funktioniert durch <strong>Retrieval-Augmented Generation (RAG)</strong> &ndash; aber ohne LLM.</p>
+
+<p>Die Architektur in vier Schritten:</p>
+
+<div class="summary-box">
+<p style="font-family:monospace;font-size:0.82rem;line-height:1.8;">
+<strong>1. CHUNK</strong>: Der Blog wird in Abschnitte zerlegt (~80 W&ouml;rter pro Chunk).<br>
+<strong>2. RETRIEVE</strong>: Wenn der User fragt, sucht Kalle den passenden Chunk per Keyword-Matching.<br>
+<strong>3. AUGMENT</strong>: Kalle baut intern einen Prompt: <code style="color:#f59e0b;">kontext {chunk} frage {user_frage}</code><br>
+<strong>4. MATCH</strong>: Dieser Prompt matcht gegen vorbereitete Q&amp;A-Paare, die auf genau diesem Format trainiert wurden.
+</p>
+</div>
+
+<p>Beispiel: Du fragst &bdquo;Was sind Eigenwerte?&ldquo;. Kalle findet den Chunk &uuml;ber Eigenwerte aus dem Blog, baut daraus einen Kontext-Prompt, und matcht das Q&amp;A-Paar das diese Frage im Kontext des Chunks beantwortet. Die Antwort kommt aus dem Blog &ndash; nicht aus dem Ged&auml;chtnis eines neuronalen Netzes.</p>
+
+<p><strong>Bilingual:</strong> Frag auf Deutsch oder Englisch &ndash; Kalle antwortet in der gleichen Sprache. Kein Language-Detection-Code. Das BoW+IDF-Matching findet automatisch die sprachlich passenden Paare, weil englische und deutsche W&ouml;rter verschiedene Tokens mit verschiedenen IDF-Gewichten sind.</p>
+
 <div class="try-it">
-  <p><strong>Probier beide aus</strong></p>
+  <p><strong>Kalle ausprobieren</strong></p>
   <p style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;">
     <a href="kalle-chat.html" style="display:inline-block;padding:0.4rem 1rem;background:#22d3ee15;border:1px solid #22d3ee30;border-radius:0.5rem;color:#22d3ee;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x03BB; Kalle (RAG Chat, DE+EN) &rarr;</a>
   </p>
