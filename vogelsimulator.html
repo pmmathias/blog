@@ -268,7 +268,7 @@
   <a href="#phase-3" class="toc-link">4 &middot; Der Vogel fliegt</a>
   <a href="#phase-4" class="toc-link">5 &middot; H&auml;nde werden Fl&uuml;gel</a>
   <a href="#polish" class="toc-link">6 &middot; Die letzten 20%</a>
-  <a href="#community" class="toc-link">7 &middot; Die Community macht mit</a>
+  <a href="#community" class="toc-link">7 &middot; iFFT-Wasser auf der GPU</a>
   <a href="#meta" class="toc-link">8 &middot; Was das &uuml;ber KI sagt</a>
 </div>
 
@@ -610,79 +610,87 @@ velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;<
 </section>
 
 <!-- ============================================================ -->
-<!-- SECTION 7: Community — Phil Crowther & das iFFT-Wasser -->
+<!-- SECTION 7: iFFT-Wasser — 65.536 Wellen pro Frame -->
 <!-- ============================================================ -->
 <section id="community" class="pb-16">
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
-<h2>Die Community macht mit</h2>
+<h2>Wie echte Ozeanwellen entstehen &mdash; auf der Grafikkarte</h2>
 
-<h3>Ein Kommentar im Three.js-Forum</h3>
+<h3>Warum normales Wasser flach aussieht</h3>
 
-<p>Ein paar Tage nach dem Launch landete ein Kommentar im Three.js-Forum, der dem Projekt eine neue Richtung gab. <strong>Phil Crowther</strong> &mdash; der &uuml;ber seine Seite <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a> eine Sammlung an Three.js-Flugsimulator-Demos und einen iFFT-Ozean-Shader ver&ouml;ffentlicht hat &mdash; hatte den Simulator ausprobiert.</p>
+<p>Der erste Wasser-Prototyp im Simulator war eine flache Ebene mit einer animierten Normal-Map &mdash; das Standard-Rezept. Die Oberfl&auml;che scheint sich zu bewegen, aber wenn man herunterfliegt und am Horizont entlang schaut, verr&auml;t sich die Illusion: Das Meer ist geometrisch flach. Keine K&auml;mme, keine T&auml;ler, keine Silhouette. Eine zitternde Betonplatte.</p>
 
-<p><em>&bdquo;Nice work. One thing: it&rsquo;s hard to stay at low altitude. If you flap or turn, the bird climbs.&ldquo;</em></p>
+<p>Echte Ozeane sehen anders aus. Sie haben <em>Volumen</em>. Wellen werfen Schatten aufeinander, das Sonnenlicht bricht sich an jeder einzelnen Welle, und der Horizont ist keine saubere Linie, sondern ein gezacktes Band. Wer das in Echtzeit simulieren will, muss die Physik nachbauen.</p>
 
-<p>Stimmte. Ein klassisches Aerodynamik-Problem: Unser Fl&uuml;gelschlag produzierte immer vertikalen Schub, unabh&auml;ngig von der Ausrichtung. Echte V&ouml;gel &mdash; besonders Pelikane, die Phil als Beispiel nannte &mdash; schlagen ihre Fl&uuml;gel im Tiefflug haupts&auml;chlich nach hinten, nicht nach unten. Die L&ouml;sung: winkelabh&auml;ngiger Schub, plus <em>Ground Effect</em> innerhalb weniger Meter &uuml;ber der Oberfl&auml;che.</p>
+<h3>Die Idee: Wellen als Summe von Frequenzen</h3>
 
-<p>Mit Claude Code war das eine F&uuml;nf-Minuten-&Auml;nderung. Aber Phil hatte noch einen zweiten Hinweis:</p>
+<p>Die Grundeinsicht kommt aus der Ozeanographie: <strong>Echte Meereswellen sind keine einzelne Welle, sondern die &Uuml;berlagerung tausender Frequenzen.</strong> Eine leichte Brise erzeugt tausende winzige Kapillarwellen, ein Sturm gro&szlig;e langsame Schwellen, und alle &uuml;berlagern sich zu dem, was wir als &bdquo;Meer&ldquo; wahrnehmen. Das ist exakt dasselbe Ph&auml;nomen wie bei Audio: Ein Orchester ist nicht ein Ton, sondern die Summe hunderter Frequenzen.</p>
 
-<p><em>&bdquo;If you want realistic water, I have an ocean module.&ldquo;</em></p>
-
-<p>Der Link zu seiner Demo war ein Schock. Was man dort sieht, ist ein Ozean, wie man ihn aus Hollywood-Filmen kennt: physikalisch korrekte Wellenformen mit scharfen K&auml;mmen, weichen T&auml;lern, Sonnenreflexionen, die &uuml;ber die bewegte Oberfl&auml;che tanzen. Unser eigenes Wasser sah dagegen aus wie eine zitternde Betonplatte.</p>
-
-<h3>Die Mathematik hinter dem iFFT-Ozean</h3>
-
-<p>Phil&rsquo;s Modul nutzt eine Technik, die in der Computergrafik seit den 80ern bekannt ist, aber nur selten elegant umgesetzt wird: <strong>die inverse Fast Fourier Transform</strong>.</p>
-
-<p>Die Grundidee ist bestechend einfach: <strong>Echte Ozeanwellen sind keine einzelne Welle, sondern die &Uuml;berlagerung tausender Frequenzen.</strong> Eine leichte Brise erzeugt tausende winzige Kapillarwellen, ein Sturm gro&szlig;e langsame Schwellen, und alle &uuml;berlagern sich zu dem, was wir als &bdquo;Meer&ldquo; wahrnehmen. Das ist exakt dasselbe Ph&auml;nomen wie bei Audio: Ein Orchester ist nicht ein Ton, sondern die Summe hunderter Frequenzen.</p>
-
-<p>Das sogenannte <strong>Phillips-Spektrum</strong> beschreibt statistisch, wie viel Wellenenergie bei welcher Wellenl&auml;nge und Richtung vorhanden ist, abh&auml;ngig von Windgeschwindigkeit, Windrichtung und Fetch (der Strecke, &uuml;ber die der Wind geweht hat):</p>
+<p>Der britische Mathematiker Owen Phillips formulierte 1957 ein <strong>statistisches Spektrum</strong>, das beschreibt, wie viel Wellenenergie bei welcher Wellenl&auml;nge und Richtung zu erwarten ist &mdash; abh&auml;ngig von Windgeschwindigkeit, Windrichtung und Fetch (der Strecke, &uuml;ber die der Wind geweht hat):</p>
 
 <p>$$ P(\mathbf{k}) = A \, \frac{\exp\!\bigl(-1/(kL)^2\bigr)}{k^4} \, \bigl|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}\bigr|^2 $$</p>
 
-<p>Dabei ist \(\mathbf{k}\) der Wellenvektor im Frequenzraum, \(L = v^2/g\) die charakteristische Wellenl&auml;nge bei Windgeschwindigkeit \(v\), und \(\hat{\mathbf{w}}\) die Windrichtung. Das Entscheidende: <strong>Diese Statistik lebt im Frequenzraum.</strong> Jeder Punkt in einem 2D-Gitter entspricht einer Wellenfrequenz und -richtung. Die iFFT transformiert dieses Frequenzgitter in ein Ortsraum-Gitter &mdash; also eine echte 2D-H&ouml;henkarte der Wasseroberfl&auml;che.</p>
+<p>Dabei ist \(\mathbf{k}\) der Wellenvektor im Frequenzraum, \(L = v^2/g\) die charakteristische Wellenl&auml;nge bei Windgeschwindigkeit \(v\), und \(\hat{\mathbf{w}}\) die Windrichtung. Das Entscheidende: <strong>Diese Statistik lebt im Frequenzraum.</strong> Jeder Punkt in einem 2D-Gitter entspricht einer Wellenfrequenz und -richtung &mdash; nicht einer Position im Wasser.</p>
 
-<p>Bei einer Aufl&ouml;sung von 512&times;512 sind das gleichzeitig <strong>65.536 Wellen</strong>, die zu einer einzigen koh&auml;renten Oberfl&auml;che &uuml;berlagert werden. Jeden Frame. Naiv einzeln addiert w&auml;re das \(O(N^2)\) und viel zu langsam. Die FFT schafft es in \(O(N \log N)\) &mdash; bei 512&times;512 also ein Faktor 1.000 schneller.</p>
+<h3>Von der Formel zum Pixar-Ozean</h3>
 
-<h3>Butterflies auf der Grafikkarte</h3>
+<p>1986 verfilmte Hollywood James Camerons <em>The Abyss</em> und suchte nach realistischem Computerwasser. Der Durchbruch f&uuml;r die Computergrafik kam aber 2001: Jerry Tessendorf von ILM ver&ouml;ffentlichte das Paper <em>&bdquo;Simulating Ocean Water&ldquo;</em> f&uuml;r die SIGGRAPH-Kurse &mdash; der heute wohl meistzitierte Aufsatz zur Wellensimulation &uuml;berhaupt. Er zeigte, wie man das Phillips-Spektrum mittels <strong>inverser Fast Fourier Transform</strong> effizient in eine echte H&ouml;henkarte der Wasseroberfl&auml;che verwandelt.</p>
 
-<p>Der FFT-Algorithmus arbeitet in Stufen. Bei 512 Samples sind das \(\log_2(512) = 9\) Stufen, und jede Stufe kombiniert Ergebnisse paarweise &uuml;ber komplexe Rotationen. Zeichnet man den Datenfluss auf, entsteht ein Muster, das aussieht wie ein Schmetterling &mdash; daher der Name <strong>Butterfly-Algorithmus</strong>.</p>
+<p>Die Methode steckt seither in praktisch jedem AAA-Ozean: <em>Titanic</em>, <em>Waterworld</em>, <em>Life of Pi</em>, <em>Sea of Thieves</em>, <em>Assassin&rsquo;s Creed Black Flag</em>, die aktuellen Spider-Man-Spiele &mdash; alle nutzen Varianten der Tessendorf-FFT.</p>
 
-<p>Phil&rsquo;s Modul f&uuml;hrt diese Berechnung als Compute-Chain auf der GPU aus: Ein Fragment-Shader rendert in ein Float-Framebuffer, das Ergebnis wird Input f&uuml;r den n&auml;chsten Shader, und so weiter durch alle Stufen. Am Ende entstehen zwei Texturen:</p>
+<h3>Warum die FFT der entscheidende Trick ist</h3>
+
+<p>Bei einer Aufl&ouml;sung von 512&times;512 m&uuml;ssen <strong>65.536 Wellen</strong> zu einer einzigen koh&auml;renten Oberfl&auml;che &uuml;berlagert werden. Jeden Frame. Naiv einzeln addiert w&auml;re das \(O(N^2)\) und viel zu langsam &mdash; \(2.7 \cdot 10^9\) Operationen pro Frame. Die FFT schafft es in \(O(N \log N)\) &mdash; etwa \(1.2 \cdot 10^7\) Operationen. <strong>Faktor 1.000 schneller.</strong></p>
+
+<p>Der Algorithmus arbeitet in Stufen. Bei 512 Samples sind das \(\log_2(512) = 9\) Stufen, und jede Stufe kombiniert Ergebnisse paarweise &uuml;ber komplexe Rotationen. Zeichnet man den Datenfluss auf, entsteht ein Muster, das aussieht wie ein Schmetterling &mdash; daher der Name <strong>Butterfly-Algorithmus</strong>.</p>
+
+<p>Auf der GPU wird daraus eine Kette von Fragment-Shader-Aufrufen: Jede Stufe rendert in ein Float-Framebuffer, das Ergebnis ist Input f&uuml;r den n&auml;chsten Shader. Ping-Pong zwischen zwei Texturen, neun Durchg&auml;nge, und am Ende entstehen zwei Ergebnis-Texturen:</p>
 
 <ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
   <li>Eine <strong>Displacement-Map</strong> &mdash; wie weit jeder Punkt der Wasseroberfl&auml;che nach oben, unten und seitlich verschoben ist</li>
   <li>Eine <strong>Normal-Map</strong> &mdash; die Oberfl&auml;chennormalen f&uuml;r realistische Lichtbrechung</li>
 </ul>
 
-<h3>Das Integrationsproblem &mdash; und wie Claude Code es l&ouml;ste</h3>
+<p>Diese beiden Texturen genau einem Three.js-Water-Plane aufzuzwingen &mdash; das ist die ganze Integrationsarbeit.</p>
 
-<p>Der erste Versuch scheiterte hart: Phil&rsquo;s neuestes Modul nutzt <strong>WebGPU</strong> mit WGSL-Compute-Shadern &mdash; eine Technologie, die unser WebGL-Simulator nicht unterst&uuml;tzt. Auf dem iPhone Safari w&auml;re nichts davon gelaufen.</p>
+<h3>Vom Paper zum Browser: eine vierzigj&auml;hrige Kette</h3>
 
-<p>Aber Phil hatte nach kurzer Zeit einen <strong>WebGL2-Port</strong> seines Moduls aus der Schublade gezogen &mdash; mit Fragment-Shader-Ping-Pong zwischen Render-Targets anstelle echter Compute-Shader. Funktional identisch, &uuml;berall lauff&auml;hig.</p>
-
-<p>Die Integration in unseren Code h&auml;tte in einem klassischen Setup wahrscheinlich zwei Arbeitstage gedauert:</p>
+<p>Der Weg von Phillips-Spektrum (1957) &uuml;ber Tessendorf (2001) bis in unseren Browser ist eine klassische Open-Source-Kette. Im Header der Datei, die wir integrieren konnten, steht die gesamte Genealogie dokumentiert:</p>
 
 <ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
-  <li>Framebuffer-Management verstehen</li>
-  <li>Shader-Uniforms durchreichen</li>
-  <li>UV-Koordinaten f&uuml;r Tiling neu berechnen</li>
-  <li>Die <code>Water</code>-Klasse von Three.js hacken, damit sie Phil&rsquo;s Normal-Map akzeptiert</li>
-  <li>Displacement per Shader-String-Injection in den Vertex-Shader einschleusen</li>
+  <li><strong>2013</strong> &mdash; <em>David Li</em> ver&ouml;ffentlicht eine JavaScript-Demo (<a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves/</a>) mit WebGL-Fragment-Shadern statt Compute Shadern</li>
+  <li><strong>2014</strong> &mdash; <em>Aleksandr Albert</em> portiert David Li&rsquo;s Code zu einem Three.js-Programm</li>
+  <li><strong>2015</strong> &mdash; <em>J&eacute;r&eacute;my Bouny</em> baut daraus ein wiederverwendbares Three.js-Modul</li>
+  <li><strong>2023</strong> &mdash; <em>Phil Crowther</em> aktualisiert das Modul auf aktuelle Three.js-Versionen und ver&ouml;ffentlicht es auf <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
+  <li><strong>2023</strong> &mdash; <em>Attila Schroeder</em> hebt die Shader auf GLSL3 / WebGL2</li>
 </ul>
 
-<p>Mit Claude Code dauerte es <strong>unter zwanzig Minuten</strong>. Der Grund ist nicht, dass die KI die Mathematik tiefer verst&uuml;nde als ein Lehrbuch &mdash; sondern dass sie die <em>mechanische Arbeit der Integration</em> eliminiert. Der Mensch sagt: &bdquo;Verwende Phil&rsquo;s Normal-Map statt der Three.js-Default, und injiziere die Displacement-Map in den Vertex-Shader&ldquo; &mdash; und die KI findet die Stellen, an denen diese Umstellung passieren muss.</p>
+<p>Das Modul, das im Simulator l&auml;uft &mdash; <code>Ocean3.js</code> &mdash; ist die aktuelle Version dieser Kette. Rund 570 Zeilen WebGL2-Code, die 65.536 Wellen pro Frame erzeugen.</p>
 
-<pre><code><span class="code-comment">// WaterPlane.js &mdash; die hybride Konstruktion</span>
+<h3>Die Integration mit Claude Code</h3>
+
+<p>In klassischer Arbeit h&auml;tte die Einbindung in unseren Simulator wahrscheinlich zwei Tage gedauert:</p>
+
+<ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
+  <li>Framebuffer-Management in Three.js verstehen</li>
+  <li>Konstruktor-Parameter dokumentieren und mappen</li>
+  <li>UV-Koordinaten der Wasserebene f&uuml;r Tiling neu berechnen (unsere Ebene ist 24 km breit, das Wellen-Tile nur 2,4 km)</li>
+  <li>Die <code>Water</code>-Klasse von Three.js &uuml;berlisten, damit sie die FFT-Normal-Map statt ihrer Default-Textur akzeptiert</li>
+  <li>Die FFT-Displacement-Map per Shader-String-Injection in den Vertex-Shader einschleusen</li>
+</ul>
+
+<p>Mit Claude Code dauerte es <strong>unter zwanzig Minuten</strong>. Der Punkt ist nicht, dass die KI die Mathematik tiefer verst&uuml;nde als ein Lehrbuch &mdash; sondern dass sie die <em>mechanische Arbeit der Integration</em> eliminiert. Der Mensch sagt: &bdquo;Verwende diese Normal-Map statt der Default, und injiziere die Displacement-Map in den Vertex-Shader&ldquo; &mdash; und die KI findet die drei Stellen, an denen diese Umstellung passieren muss.</p>
+
+<pre><code><span class="code-comment">// WaterPlane.js &mdash; hybride Konstruktion</span>
 <span class="code-keyword">const</span> ocean = <span class="code-keyword">new</span> Ocean(renderer, {
   Res: <span class="code-number">512</span>, Siz: <span class="code-number">2400</span>,
   WSp: <span class="code-number">18</span>, WHd: <span class="code-number">295</span>, Chp: <span class="code-number">1.5</span>
 });
 
 <span class="code-keyword">const</span> water = <span class="code-keyword">new</span> Water(geometry, {
-  waterNormals: ocean.normalMapFramebuffer.texture, <span class="code-comment">// Phil&rsquo;s iFFT-Normal-Map</span>
+  waterNormals: ocean.normalMapFramebuffer.texture, <span class="code-comment">// FFT-Normal-Map</span>
   sunColor: <span class="code-number">0xffeedd</span>,
   sunDirection: sunPos.normalize(),
 });
@@ -697,44 +705,30 @@ water.material.vertexShader =
     .replace(<span class="code-string">/vec4\s*\(\s*position\s*,\s*1\.0\s*\)/g</span>,
       <span class="code-string">'vec4(position + oceanDisp, 1.0)'</span>);</code></pre>
 
-<p>Elf Zeilen Code f&uuml;r eine Ozean-Simulation, die im Hintergrund 65.536 Wellen pro Frame berechnet. Die <code>Water</code>-Klasse liefert die Sonnenreflexion, Phil&rsquo;s iFFT erzeugt die physikalisch korrekte Oberfl&auml;che.</p>
+<p>Elf Zeilen Glue-Code f&uuml;r eine Ozean-Simulation, die im Hintergrund 65.536 Wellen pro Frame berechnet. Die <code>Water</code>-Klasse liefert die Sonnenreflexion, die FFT erzeugt die physikalisch fundierte Oberfl&auml;che.</p>
 
 <p>Aus einer zitternden Betonplatte ist ein atmender Ozean geworden. Beim Tiefflug sieht man jetzt, wie einzelne Wellenk&auml;mme das Sonnenlicht einfangen und brechen &mdash; jede Welle ein eigener kleiner Spiegel.</p>
 
 <h3>Die &Uuml;bertragbarkeit</h3>
 
-<p>Wer dies liest und selbst ein Three.js-Projekt hat, sollte eine Sache mitnehmen: <strong>Die Einstiegsh&uuml;rde, fremden Grafik-Code zu adaptieren, ist durch KI-unterst&uuml;tzte Entwicklung drastisch gesunken.</strong> Phil&rsquo;s Ocean3-Modul ist 570 Zeilen WebGL2-Code mit FFT-Butterfly-Algorithmus, Float-Render-Targets und Ping-Pong-Buffern. Vor zwei Jahren w&auml;re die Einarbeitung ein Wochenendprojekt gewesen. Heute ist es ein Abend.</p>
+<p>Wer dies liest und selbst ein Three.js-Projekt hat, sollte eine Sache mitnehmen: <strong>Die Einstiegsh&uuml;rde, fremden Grafik-Code zu adaptieren, ist durch KI-unterst&uuml;tzte Entwicklung drastisch gesunken.</strong> 570 Zeilen WebGL2-Code mit FFT-Butterfly-Algorithmus, Float-Render-Targets und Ping-Pong-Buffern zu verstehen und in ein fremdes Projekt zu integrieren &mdash; vor zwei Jahren ein Wochenendprojekt, heute ein Abend.</p>
 
-<p>Das Rezept ist immer dasselbe: fremden Code lesen, die &Ouml;ffentliche Oberfl&auml;che verstehen (Konstruktor, Update-Methode, Output-Texturen), und dann Claude Code bitten, den Glue-Code zu schreiben. Die KI kompensiert genau das, was bei solchen Integrationen am meisten Zeit kostet: Detail-Arbeit, Umbenennung von Variablen, Anpassung von Signaturen, Suche nach den richtigen Shader-Zeilen.</p>
-
-<h3>Was wir von Phil mitgenommen haben</h3>
-
-<p>Nicht nur Code. Der ganze Austausch war ein Lehrst&uuml;ck in Open-Source-Kultur:</p>
-
-<ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
-  <li>Phil h&auml;tte einfach &bdquo;cooles Projekt&ldquo; schreiben k&ouml;nnen. Stattdessen stellte er konkrete technische Fragen und Beobachtungen.</li>
-  <li>Er bot seinen Code ungefragt an &mdash; unter einer strengen Lizenz (CC BY-NC-SA 3.0), aber frei verf&uuml;gbar f&uuml;r alle, die nicht kommerzialisieren wollen.</li>
-  <li>Sein Feedback zur Flugphysik brachte uns zwei Features auf einmal: <em>Ground Effect</em> und winkelabh&auml;ngigen Schub.</li>
-  <li>Er las genau hin. Als die Integration live war, z&auml;hlte er binnen einer Stunde auf, was noch fehlte.</li>
-</ul>
-
-<p>Dies ist die Sorte Interaktion, die es in der kommerziellen Welt selten gibt. Jemand mit tiefer Expertise nimmt sich Zeit, einem Fremden mit seinem &uuml;ber drei Generationen aktualisierten iFFT-Modul zu helfen &mdash; weil er den Simulator-Post gesehen hatte und fand: &bdquo;Da kann ich was beitragen.&ldquo;</p>
-
-<p><strong>Credits und Backlinks sind nicht nur Pflicht &mdash; sie sind das Medium, in dem diese Kultur lebt.</strong> Im Simulator findet sich ein <em>Credits</em>-Button oben links, der auf Phil&rsquo;s Three.js-Demos-Sammlung, den Discourse-Thread und die Lizenz verweist.</p>
+<p>Das Rezept ist immer dasselbe: fremden Code lesen, die &ouml;ffentliche Oberfl&auml;che verstehen (Konstruktor, Update-Methode, Output-Texturen), und dann Claude Code bitten, den Glue-Code zu schreiben. Die KI kompensiert genau das, was bei solchen Integrationen am meisten Zeit kostet: mechanische Detail-Arbeit, Umbenennung von Variablen, Anpassung von Signaturen, Suche nach den richtigen Shader-Zeilen.</p>
 
 <div class="summary-box">
-  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Quellen &amp; Backlinks</p>
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Quellen &amp; weiterf&uuml;hrende Links</p>
   <ul class="list-disc pl-6 text-gray-300 leading-relaxed">
-    <li>Phil Crowther &mdash; Three.js-Demos-Sammlung: <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation/3JS_demos.html</a></li>
+    <li>Tessendorf, J. (2001): <em>&bdquo;Simulating Ocean Water&ldquo;</em> &mdash; das seminal Paper zur FFT-Ozean-Simulation</li>
+    <li>David Li&rsquo;s WebGL-Wellen-Demo (2013): <a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves</a></li>
+    <li>Phil Crowthers Three.js-Demos-Sammlung: <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
     <li>iFFT Ocean Wave Generator im Three.js-Forum: <a href="https://discourse.threejs.org/t/ifft-ocean-wave-generator-module/51800" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">discourse.threejs.org</a></li>
-    <li>Unsere Diskussion: <a href="https://discourse.threejs.org/t/bird-flight-simulator-with-webcam-gesture-control-three-js-mediapipe/90749" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">Bird Flight Simulator Thread</a></li>
-    <li>Lizenz: Ocean3.js &copy; Phil Crowther &mdash; CC BY-NC-SA 3.0</li>
+    <li>Lizenz des integrierten Moduls: Ocean3.js, CC BY-NC-SA 3.0 &mdash; auf der Basis der Arbeiten von David Li, Aleksandr Albert, J&eacute;r&eacute;my Bouny, Phil Crowther und Attila Schroeder</li>
   </ul>
 </div>
 
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Zusammenfassung</p>
-  <p><strong>Ein Community-Post im Three.js-Forum f&uuml;hrte zur Integration eines echten iFFT-Ozean-Shaders mit 65.536 Wellen pro Frame. Mit Claude Code war die Adaption ein Zwanzig-Minuten-Projekt &mdash; Mensch definiert die Br&uuml;cke zwischen zwei fremden Systemen, KI schreibt den Glue-Code.</strong></p>
+  <p><strong>iFFT-Ozeanwellen sind seit Tessendorfs SIGGRAPH-Paper von 2001 der Industriestandard f&uuml;r realistisches Wasser &mdash; vom Phillips-Spektrum im Frequenzraum &uuml;ber den Butterfly-Algorithmus auf der GPU zu einer animierten H&ouml;henkarte. 65.536 Wellen pro Frame. Mit einem offen verf&uuml;gbaren WebGL2-Modul und Claude Code l&auml;sst sich das heute an einem Abend in jedes Three.js-Projekt integrieren.</strong></p>
 </div>
 
 </div>
