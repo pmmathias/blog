@@ -245,8 +245,8 @@
 
 <div style="display:flex;flex-direction:column;gap:0.6rem;margin:1rem 0;padding:1rem;background:#1e293b;border-radius:0.5rem;">
   <p style="margin:0;"><span style="color:#22d3ee;font-weight:600;">&#x25CF; Cyan</span> &ndash; <strong>Retrieved.</strong> Dieser Satz wurde per Keyword-Suche im Corpus gefunden. Keine KRR-Berechnung n&ouml;tig &ndash; reine Textsuche.</p>
-  <p style="margin:0;"><span style="color:#34d399;font-weight:600;">&#x25CF; Gr&uuml;n</span> &ndash; <strong>Generiert &amp; Verbatim.</strong> Das KRR-Modell hat dieses Wort vorhergesagt, und die Wortfolge kommt exakt so (als 3- oder 4-gram) in den Trainingsdaten vor. Das Modell <em>reproduziert</em> gelerntes Wissen.</p>
-  <p style="margin:0;"><span style="color:#f59e0b;font-weight:600;">&#x25CF; Orange</span> &ndash; <strong>Generiert &amp; Neu.</strong> Das KRR-Modell hat dieses Wort vorhergesagt, aber diese Wortfolge existiert <em>nicht</em> in den Trainingsdaten. Das ist echte <strong>Generalisierung</strong> &ndash; das Modell kombiniert gelernte Muster auf neue Weise.</p>
+  <p style="margin:0;"><span style="color:#34d399;font-weight:600;">&#x25CF; Gr&uuml;n</span> &ndash; <strong>Generiert &amp; Verbatim.</strong> Das KRR-Modell hat dieses Wort vorhergesagt, und die Wortfolge kommt exakt so in den Trainingsdaten vor. Konkret: Das System pr&uuml;ft, ob die letzten <strong>3 W&ouml;rter</strong> (3-gram) <em>und</em> die letzten <strong>4 W&ouml;rter</strong> (4-gram) inklusive des vorhergesagten Wortes als zusammenh&auml;ngende Sequenz im Trainingskorpus existieren. Nur wenn beide Pr&uuml;fungen positiv sind, wird das Wort gr&uuml;n gef&auml;rbt. Das Modell <em>reproduziert</em> gelerntes Wissen.</p>
+  <p style="margin:0;"><span style="color:#f59e0b;font-weight:600;">&#x25CF; Orange</span> &ndash; <strong>Generiert &amp; Neu.</strong> Das KRR-Modell hat dieses Wort vorhergesagt, aber mindestens eines der beiden n-grams (3-gram oder 4-gram) existiert <em>nicht</em> in den Trainingsdaten. Das ist echte <strong>Generalisierung</strong> &ndash; das Modell kombiniert gelernte Muster auf neue Weise.</p>
 </div>
 
 <h3>Was die Farben verraten</h3>
@@ -328,7 +328,9 @@
   <span style="color:#c084fc;">return</span> z;  <span style="color:#64748b;">// Kernel-Raum-Vektor</span>
 }</code></pre>
 
-<p style="font-size:0.85rem;color:#94a3b8;margin-top:0.5rem;"><strong>Mathematik:</strong> Die Matrix \(\boldsymbol{\omega}\) enth&auml;lt Zufallswerte aus einer Normalverteilung mit Skalierung \(1/\sigma\). Sie wird <strong>einmal</strong> gezogen und nie ver&auml;ndert &ndash; sie ist <em>kein</em> gelernter Parameter. Der Cosinus sorgt daf&uuml;r, dass \(\mathbf{z}(x)^\top\mathbf{z}(x')\) den Gau&szlig;-Kernel \(k(x,x') = \exp(-\|x-x'\|^2/2\sigma^2)\) approximiert. Je gr&ouml;&szlig;er \(D\), desto besser die Approximation &ndash; bei \(D = 1536\) reicht die Genauigkeit f&uuml;r unser Modell aus.</p>
+<p style="font-size:0.85rem;color:#94a3b8;margin-top:0.5rem;"><strong>Mathematik:</strong> Die Matrix \(\boldsymbol{\omega}\) enth&auml;lt Zufallswerte aus \(\mathcal{N}(0, 1/\sigma^2)\). Sie wird <strong>einmal</strong> gezogen (mit festem Random Seed f&uuml;r Reproduzierbarkeit) und nie ver&auml;ndert &ndash; sie ist <em>kein</em> gelernter Parameter. Der Cosinus sorgt daf&uuml;r, dass \(\mathbf{z}(x)^\top\mathbf{z}(x')\) den Gau&szlig;-Kernel \(k(x,x') = \exp(-\|x-x'\|^2/2\sigma^2)\) approximiert. Je gr&ouml;&szlig;er \(D\), desto besser die Approximation.</p>
+
+<p style="font-size:0.85rem;color:#94a3b8;margin-top:0.5rem;"><strong>Warum \(\sigma = 1{,}5\) und \(\lambda = 10^{-6}\)?</strong> Der Kernel-Parameter \(\sigma\) steuert die &bdquo;Sch&auml;rfe&ldquo; der &Auml;hnlichkeit: kleines \(\sigma\) bedeutet nur sehr nahe Kontexte gelten als &auml;hnlich (Memorisierung), gro&szlig;es \(\sigma\) bedeutet auch entfernte Kontexte beeinflussen sich (Generalisierung). \(\sigma = 1{,}5\) ist ein empirisch gew&auml;hlter Kompromiss &ndash; gefunden durch Testen auf dem Trainingskorpus mit dem Ziel, die Top-1 Accuracy zu maximieren. Der Regularisierungsparameter \(\lambda = 10^{-6}\) ist bewusst klein: unser Trainingsset ist dicht genug, dass starke Regularisierung die Vorhersagequalit&auml;t verschlechtern w&uuml;rde. In gr&ouml;&szlig;eren Modellen w&auml;re eine systematische Kreuzvalidierung &uuml;blich &ndash; bei 2000+ handkuratierten Paaren gen&uuml;gt empirisches Tuning.</p>
 
 <!-- predict() -->
 <h3>3. predict() &ndash; Das n&auml;chste Wort bestimmen</h3>
@@ -479,9 +481,11 @@
 
 <p>Und das ist die eigentliche Pointe: Ob ein Modell 505 W&ouml;rter Vokabular hat oder 50.000 &ndash; die mathematische Struktur ist dieselbe. Eigenwerte, Kernels, Regularisierung. Die Kette h&auml;lt.</p>
 
-<h4>Zwei Chatbots, ein Prinzip</h4>
+<h4>Vom Prototyp zum Chatbot: Der KRR Chat wird Kalle</h4>
 
-<p>Wir haben das KRR-Prinzip in zwei verschiedenen Chatbots umgesetzt &ndash; und die Unterschiede zeigen, <strong>welche Parameter bei Sprachmodellen wirklich z&auml;hlen</strong>:</p>
+<p>Der KRR Chat oben ist ein <strong>Prototyp</strong>: 104 englische S&auml;tze, reine Flie&szlig;text-Generation, keine Dialogstruktur. Er beweist, dass KRR Sprache modellieren kann. Aber ein Prototyp ist noch kein Chatbot.</p>
+
+<p>Also haben wir die Frage gestellt: <em>Was passiert, wenn man dasselbe mathematische Prinzip auf einen echten Dialog anwendet?</em> Das Ergebnis hei&szlig;t <strong>Kalle</strong> &ndash; ein deutschsprachiger Chatbot mit denselben drei Gleichungen (RFF, KRR, BoW+IDF), aber einem v&ouml;llig anderen Corpus: 2113 kuratierte Dialog-Paare statt 104 Fachtext-S&auml;tze. Die Unterschiede zeigen, <strong>welche Parameter bei Sprachmodellen wirklich z&auml;hlen</strong>:</p>
 
 <div style="overflow-x:auto;margin:1rem 0;">
 <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
@@ -620,9 +624,9 @@
 
 <p>Das ist inspiriert von <strong>AIML</strong> (der Sprache hinter dem Chatbot ALICE aus den 90ern), wo ein <code>&lt;that&gt;</code>-Tag die vorherige Bot-&Auml;u&szlig;erung als Kontext nutzt. Gleiche Idee, anderer Mechanismus: AIML macht explizites Pattern-Matching, Kalle macht BoW+IDF-Similarity.</p>
 
-<h3>Emergentes Verhalten: Was Kalle &bdquo;kann&ldquo; ohne es zu &bdquo;wissen&ldquo;</h3>
+<h3>Unbeabsichtigte Eigenschaften: Was die Architektur &bdquo;gratis&ldquo; liefert</h3>
 
-<p>Die &uuml;berraschendsten Momente bei Kalle sind Verhaltensweisen die <strong>niemand programmiert hat</strong>:</p>
+<p>Die &uuml;berraschendsten Eigenschaften von Kalle wurden nicht programmiert &ndash; sie sind <strong>direkte Konsequenzen des BoW+IDF-Designs</strong>. Sie wirken emergent, weil sie ungeplant waren, sind aber deterministische Architektur-Eigenschaften:</p>
 
 <p><strong>Mathe-Validierung:</strong> Kalle stellt eine Aufgabe (&bdquo;was ist 3 plus 5?&ldquo;), der User antwortet &bdquo;8&ldquo;. Kalle sagt: &bdquo;<span style="color:#34d399;">richtig! 3 plus 5 ist 8. gut gerechnet.</span>&ldquo; &ndash; Keine einzige Zeile Code pr&uuml;ft ob &bdquo;8&ldquo; korrekt ist. Das System findet einfach das Pair <code>plus 3 5 8</code> &ndash; reines Pattern-Matching. Und bei einer <em>falschen</em> Antwort (&bdquo;11&ldquo;)? Kalle sagt: &bdquo;richtig! 5 plus 6 ist 11&ldquo; &ndash; er findet ein <em>anderes</em> Problem wo die Zahl passt. Faszinierend, nicht kaputt.</p>
 
@@ -647,9 +651,29 @@
 </p>
 </div>
 
-<p>Beispiel: Du fragst &bdquo;Was sind Eigenwerte?&ldquo;. Kalle findet den Chunk &uuml;ber Eigenwerte aus dem Blog, baut daraus einen Kontext-Prompt, und matcht das Q&amp;A-Paar das diese Frage im Kontext des Chunks beantwortet. Die Antwort kommt aus dem Blog &ndash; nicht aus dem Ged&auml;chtnis eines neuronalen Netzes.</p>
+<p><strong>Konkretes Beispiel &ndash; ein Durchlauf mit echten Zahlen:</strong></p>
 
-<p><strong>Bilingual:</strong> Frag auf Deutsch oder Englisch &ndash; Kalle antwortet in der gleichen Sprache. Kein Language-Detection-Code. Das BoW+IDF-Matching findet automatisch die sprachlich passenden Paare, weil englische und deutsche W&ouml;rter verschiedene Tokens mit verschiedenen IDF-Gewichten sind.</p>
+<div class="summary-box">
+<p style="font-family:monospace;font-size:0.78rem;line-height:1.9;">
+<strong>User:</strong> &bdquo;What are eigenvalues?&ldquo;<br><br>
+<strong>1. CHUNK-RETRIEVAL:</strong> Die Query-W&ouml;rter [&bdquo;what&ldquo;, &bdquo;are&ldquo;, &bdquo;eigenvalues&ldquo;] werden gegen 29 Blog-Chunk-Keywords gematcht.<br>
+&rarr; Chunk &bdquo;Das Glasperlenspiel&ldquo; matcht (&bdquo;eigenvalues&ldquo; &isin; Keywords), Score = 1.<br><br>
+<strong>2. PROMPT-KONSTRUKTION:</strong><br>
+<code style="font-size:0.72rem;color:#f59e0b;word-break:break-all;">kontext jedes mal wenn du eine google suche startest löst ein computer ein eigenwertproblem er berechnet welche webseite die wichtigste ist... frage what are eigenvalues</code><br><br>
+<strong>3. PAIR-MATCHING:</strong> BoW+IDF berechnet f&uuml;r jedes der 2113 Q&amp;A-Paare:<br>
+&bull; Keyword-Score: \(\sum \text{weight}_i \times \text{IDF}(w_i)\) f&uuml;r &uuml;berlappende W&ouml;rter<br>
+&bull; Semantic-Score: Cosine-Similarity der 32-dim Embeddings<br>
+&bull; Combined: \(0{,}65 \times \text{kw} + 0{,}35 \times \text{sem}\)<br>
+Bestes Paar: <code style="font-size:0.72rem;">&bdquo;kontext jedes mal wenn du eine google...&ldquo;</code> (kwRaw=37.0)<br><br>
+<strong>4. ANTWORT:</strong> &bdquo;An eigenvalue is the factor by which an eigenvector is scaled when a matrix acts on it...&ldquo;
+</p>
+</div>
+
+<p>Die Q&amp;A-Paare werden <strong>handkuratiert</strong> &ndash; nicht automatisch generiert. Jedes Paar wurde geschrieben um eine spezifische Frage im Kontext eines spezifischen Blog-Abschnitts zu beantworten. Aktuell: 2113 Paare, ~2900 W&ouml;rter Vokabular, trainiert offline in Float64, Inferenz im Browser via WebGL GPU.</p>
+
+<p><strong>Bilingual ohne Language-Detection:</strong> Frag auf Deutsch oder Englisch &ndash; Kalle antwortet in der gleichen Sprache. Der Grund ist elegant: englische und deutsche W&ouml;rter sind verschiedene Tokens mit verschiedenen IDF-Gewichten. &bdquo;eigenvalue&ldquo; (englisch, hohe IDF) matcht englische Paare; &bdquo;eigenwert&ldquo; (deutsch, hohe IDF) matcht deutsche. Kein Spracherkennungs-Code n&ouml;tig &ndash; die Mathematik des Matchings routet automatisch.</p>
+
+<p style="margin-top:0.5rem;font-size:0.85rem;color:#94a3b8;"><em>Beispiel:</em> &bdquo;What are eigenvalues used for?&ldquo; &rarr; &bdquo;Eigenvalues appear everywhere in science and engineering. In Google PageRank they determine which webpage is most important...&ldquo; &ndash; dieselbe Frage auf Deutsch: &bdquo;Wozu braucht man Eigenwerte?&ldquo; &rarr; &bdquo;Eigenwerte tauchen &uuml;berall auf. Bei Google PageRank bestimmen sie welche Webseite am wichtigsten ist...&ldquo;</p>
 
 <div class="try-it">
   <p><strong>Kalle ausprobieren</strong></p>
