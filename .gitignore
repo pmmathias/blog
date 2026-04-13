@@ -2,13 +2,14 @@
 .venv/
 __pycache__/
 *.pyc
-media/videos/
-media/audio/
-media/voiceovers/
-media/texts/
-media/Tex/
-media/thumbnails/
-media/screenshots/
+
+# Media (videos, audio, voiceovers, intermediate renders) — never public
+media/
+
+# Editor / build backups
+*.backup-*
+*.bak
+*.orig
 
 # Environment & secrets
 .env
