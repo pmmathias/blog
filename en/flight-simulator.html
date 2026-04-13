@@ -396,7 +396,7 @@
 <p>The core principle is surprisingly simple: <strong>Paraboloids as building blocks.</strong> Picture a flat table. Now place invisible hills on it &mdash; each defined by a center point \((c_x, c_z)\), a radius \(r\), and a height \(h\). At every point on the terrain you add up all contributions:</p>
 
 <div class="math-display">
-  \[ H(x,z) = \sum_i h_i \cdot \max\!\left(0,\; 1 - \frac{(x-c_{x,i})^2 + (z-c_{z,i})^2}{r_i^2}\right) \]
+  $$ H(x,z) = \sum_i h_i \cdot \max\!\left(0,\; 1 - \frac{(x-c_{x,i})^2 + (z-c_{z,i})^2}{r_i^2}\right) $$
 </div>
 
 <p>900 positive paraboloids shape the hills. 270 negative paraboloids carve out valleys. A radial falloff lets the island gently sink into the sea at the edges. The result looks natural because hills in nature actually do arise through the superposition of different processes &mdash; tectonics, erosion, deposition. We approximate this process with thousands of simple functions.</p>
@@ -453,7 +453,7 @@
 <p>So we built an aerodynamic model. The central insight: <strong>lift depends on the square of velocity.</strong> That is dynamic pressure &mdash; the same physics that keeps real birds and aircraft in the air.</p>
 
 <div class="math-display">
-  \[ L = \frac{1}{2} \rho v^2 \cdot A_{\text{wing}} \cdot C_L \]
+  $$ L = \frac{1}{2} \rho v^2 \cdot A_{\text{wing}} \cdot C_L $$
 </div>
 
 <p>The first wing flap did nothing. <em>Gravity</em> won. Every time. The problem: we had forgotten the <strong>wing incidence angle</strong>. Real bird wings are not flat &mdash; they have a built-in angle of attack of about 3&deg; that generates minimal lift even in straight and level flight. Without it, the wing is a board, and a board falls. Six iterations of the physics model later, the balance of gravity, lift and wing flap was right. Until a dive felt dangerous and a loop made the stomach clench.</p>
@@ -509,7 +509,7 @@
 <p>Each of these planes can be written as a normal vector \(\mathbf{n}\) and an offset \(d\). A point \(\mathbf{p}\) lies on the visible side of a plane when:</p>
 
 <div class="math-display">
-  \[ \mathbf{n} \cdot \mathbf{p} + d \geq 0 \]
+  $$ \mathbf{n} \cdot \mathbf{p} + d \geq 0 $$
 </div>
 
 <p>An object is visible if it lies on the visible side of <em>all six planes</em> &mdash; or more precisely: if its <span class="glossary" title="AABB: Axis-Aligned Bounding Box. An axis-parallel box that completely encloses an object. Used for fast collision and visibility tests.">AABB</span> (axis-aligned bounding box) at least partially intersects the frustum. The frustum planes are extracted from the camera's projection matrix. Per frame: calculate six plane equations from the current camera position, done.</p>
@@ -578,13 +578,13 @@
 <p>Let \(f(t)\) be a periodic function with period \(T\). Then:</p>
 
 <div class="math-display">
-  \[ f(t) = a_0 + \sum_{n=1}^{\infty} \left[ a_n \cos\!\left(\frac{2\pi n}{T} t\right) + b_n \sin\!\left(\frac{2\pi n}{T} t\right) \right] \]
+  $$ f(t) = a_0 + \sum_{n=1}^{\infty} \left[ a_n \cos\!\left(\frac{2\pi n}{T} t\right) + b_n \sin\!\left(\frac{2\pi n}{T} t\right) \right] $$
 </div>
 
 <p>The coefficients \(a_n\) and \(b_n\) determine how strongly each frequency \(n/T\) is present in the function. They can be calculated by integration:</p>
 
 <div class="math-display">
-  \[ a_n = \frac{2}{T} \int_0^T f(t)\,\cos\!\left(\frac{2\pi n}{T} t\right) dt \qquad b_n = \frac{2}{T} \int_0^T f(t)\,\sin\!\left(\frac{2\pi n}{T} t\right) dt \]
+  $$ a_n = \frac{2}{T} \int_0^T f(t)\,\cos\!\left(\frac{2\pi n}{T} t\right) dt \qquad b_n = \frac{2}{T} \int_0^T f(t)\,\sin\!\left(\frac{2\pi n}{T} t\right) dt $$
 </div>
 
 <p>What do these integrals mean geometrically? They measure <em>how similar</em> the function \(f\) is to a sine oscillation of frequency \(n/T\). Multiply \(f\) by a cosine and integrate &mdash; you get the correlation. <strong>Fourier analysis is systematic correlation with all possible frequencies.</strong></p>
@@ -594,13 +594,13 @@
 <p>For non-periodic functions, the series generalizes to the <strong>Fourier Transform</strong>:</p>
 
 <div class="math-display">
-  \[ \hat{f}(\xi) = \int_{-\infty}^{\infty} f(t)\, e^{-2\pi i \xi t}\, dt \]
+  $$ \hat{f}(\xi) = \int_{-\infty}^{\infty} f(t)\, e^{-2\pi i \xi t}\, dt $$
 </div>
 
 <p>Here \(\hat{f}(\xi)\) is a complex number for each frequency \(\xi\). The magnitude \(|\hat{f}(\xi)|\) is the <em>amplitude</em>, the argument \(\arg(\hat{f}(\xi))\) is the <em>phase</em> of the respective frequency component. And the inverse &mdash; the <strong>inverse Fourier Transform</strong> &mdash; reconstructs the original function:</p>
 
 <div class="math-display">
-  \[ f(t) = \int_{-\infty}^{\infty} \hat{f}(\xi)\, e^{2\pi i \xi t}\, d\xi \]
+  $$ f(t) = \int_{-\infty}^{\infty} \hat{f}(\xi)\, e^{2\pi i \xi t}\, d\xi $$
 </div>
 
 <p>The Fourier Transform is thus a <strong>fully invertible change of coordinates</strong>: from the time or spatial domain into the frequency domain and back. No information is lost. It is literally just a different perspective on the same data.</p>
@@ -612,7 +612,7 @@
 <p>The Fourier Transform does structurally the same thing: it rotates the function-space coordinate system into the basis of sine functions. This basis is orthogonal in the sense of the function inner product &mdash; two sine functions of different frequencies are perpendicular to each other:</p>
 
 <div class="math-display">
-  \[ \int_0^T \sin(2\pi m t / T)\,\sin(2\pi n t / T)\, dt = \begin{cases} T/2 & m = n \\ 0 & m \neq n \end{cases} \]
+  $$ \int_0^T \sin(2\pi m t / T)\,\sin(2\pi n t / T)\, dt = \begin{cases} T/2 & m = n \\ 0 & m \neq n \end{cases} $$
 </div>
 
 <p>The difference: <strong>PCA finds the optimal basis from the data itself. FFT uses a fixed, universal basis &mdash; the frequencies.</strong> PCA decomposes into directions of maximum variance; FFT decomposes into oscillation frequencies. Both are orthogonal projections onto a new basis.</p>
@@ -626,7 +626,7 @@
 <p>The discrete Fourier Transform (DFT) translates Fourier analysis onto finite sequences of \(N\) samples:</p>
 
 <div class="math-display">
-  \[ X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-2\pi i k n / N}, \qquad k = 0, 1, \ldots, N-1 \]
+  $$ X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-2\pi i k n / N}, \qquad k = 0, 1, \ldots, N-1 $$
 </div>
 
 <p>Computed naively: for each of the \(N\) output values \(X[k]\) you must sum over all \(N\) input values. That is \(O(N^2)\). For \(N = 65{,}536\) &mdash; the resolution of our ocean simulator &mdash; that would be \(4.3 \cdot 10^9\) complex multiplications. Per frame. Impossible.</p>
@@ -634,7 +634,7 @@
 <p>In 1965, <strong>James Cooley</strong> and <strong>John Tukey</strong> published an algorithm that computes the DFT in \(O(N \log N)\): the <strong>Fast Fourier Transform (FFT)</strong>. The idea: the DFT of a sequence of length \(N\) can be split into two DFTs of length \(N/2\) &mdash; one for the even, one for the odd indices. This divide-and-conquer scheme is applied recursively until you reach DFTs of length 1 (trivial result). With \(\log_2(N)\) recursion levels and \(N/2\) operations per level:</p>
 
 <div class="math-display">
-  \[ T_{\text{FFT}}(N) = \frac{N}{2} \log_2 N \quad \text{vs.} \quad T_{\text{DFT}}(N) = N^2 \]
+  $$ T_{\text{FFT}}(N) = \frac{N}{2} \log_2 N \quad \text{vs.} \quad T_{\text{DFT}}(N) = N^2 $$
 </div>
 
 <p>For \(N = 65{,}536 = 2^{16}\): DFT would need \(4.3 \cdot 10^9\) operations, FFT needs \(5.2 \cdot 10^5\). <strong>8,000 times faster.</strong></p>
@@ -668,7 +668,7 @@
 <p>The Fourier Transform is not limited to time-dependent signals. Images are two-dimensional functions &mdash; the brightness at each pixel as a function of \((x, y)\). So there is also a <strong>2D FFT</strong>:</p>
 
 <div class="math-display">
-  \[ F(u, v) = \sum_{x=0}^{M-1} \sum_{y=0}^{N-1} f(x,y)\, e^{-2\pi i (ux/M + vy/N)} \]
+  $$ F(u, v) = \sum_{x=0}^{M-1} \sum_{y=0}^{N-1} f(x,y)\, e^{-2\pi i (ux/M + vy/N)} $$
 </div>
 
 <p>What do the frequencies mean in images? <strong>Low frequencies</strong> &mdash; points near the center of frequency space &mdash; encode slow changes: backgrounds, color gradients, the coarse structure of the image. <strong>High frequencies</strong> &mdash; points at the edges &mdash; encode rapid changes: edges, fine textures, details.</p>
@@ -743,7 +743,7 @@
 <p>Owen Phillips formulated a statistical model in 1957 for how wave energy distributes across different frequencies and directions &mdash; depending on wind speed, wind direction, and the so-called <span class="glossary" title="Fetch: The distance over which wind has blown unobstructed over water. The greater the fetch, the larger the waves.">fetch</span> (the distance over which the wind has blown). The result: the <strong>Phillips spectrum</strong>:</p>
 
 <div class="math-display">
-  \[ P(\mathbf{k}) = A \, \frac{\exp\!\bigl(-1/(kL)^2\bigr)}{k^4} \, \bigl|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}\bigr|^2 \]
+  $$ P(\mathbf{k}) = A \, \frac{\exp\!\bigl(-1/(kL)^2\bigr)}{k^4} \, \bigl|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}\bigr|^2 $$
 </div>
 
 <p>Here \(\mathbf{k}\) is the wave vector in frequency space, \(k = |\mathbf{k}|\) its magnitude, \(L = v^2/g\) the characteristic wavelength at wind speed \(v\) and \(g = 9.81\,\text{m/s}^2\), and \(\hat{\mathbf{w}}\) the wind direction. The squared dot product \(|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}|^2\) suppresses waves perpendicular to the wind.</p>

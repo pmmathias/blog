@@ -395,7 +395,7 @@
 <p>Das Grundprinzip ist &uuml;berraschend schlicht: <strong>Parabeln als Bausteine.</strong> Stell dir einen flachen Tisch vor. Jetzt legst du unsichtbare H&uuml;gel darauf &mdash; jeden definiert durch einen Mittelpunkt \((c_x, c_z)\), einen Radius \(r\) und eine H&ouml;he \(h\). An jedem Punkt des Terrains addierst du alle Beitr&auml;ge:</p>
 
 <div class="math-display">
-  \[ H(x,z) = \sum_i h_i \cdot \max\!\left(0,\; 1 - \frac{(x-c_{x,i})^2 + (z-c_{z,i})^2}{r_i^2}\right) \]
+  $$ H(x,z) = \sum_i h_i \cdot \max\!\left(0,\; 1 - \frac{(x-c_{x,i})^2 + (z-c_{z,i})^2}{r_i^2}\right) $$
 </div>
 
 <p>900 positive Parabeln formen die H&uuml;gel. 270 negative Parabeln schneiden T&auml;ler hinein. Ein radialer Falloff l&auml;sst die Insel an den R&auml;ndern sanft ins Meer absinken. Das Ergebnis wirkt nat&uuml;rlich, weil H&uuml;gel in der Natur tats&auml;chlich durch &Uuml;berlagerung verschiedener Prozesse entstehen &mdash; Tektonik, Erosion, Ablagerung. Wir approximieren diesen Prozess mit Tausenden einfacher Funktionen.</p>
@@ -452,7 +452,7 @@
 <p>Also bauten wir ein aerodynamisches Modell. Die Zentraleinsicht: <strong>Auftrieb h&auml;ngt vom Quadrat der Geschwindigkeit ab.</strong> Das ist der dynamische Druck &mdash; dieselbe Physik, die echte V&ouml;gel und Flugzeuge in der Luft h&auml;lt.</p>
 
 <div class="math-display">
-  \[ L = \frac{1}{2} \rho v^2 \cdot A_{\text{wing}} \cdot C_L \]
+  $$ L = \frac{1}{2} \rho v^2 \cdot A_{\text{wing}} \cdot C_L $$
 </div>
 
 <p>Der erste Fl&uuml;gelschlag brachte nichts. <em>Gravity</em> gewann. Immer. Das Problem: Wir hatten den <strong>Wing-Incidence-Winkel</strong> vergessen. Echte Vogelfl&uuml;gel sind nicht flach &mdash; sie haben einen eingebauten Anstellwinkel von etwa 3&deg;, der auch im Geradeausflug minimalen Auftrieb erzeugt. Ohne ihn ist der Fl&uuml;gel ein Brett, und ein Brett f&auml;llt. Sechs Iterationen des Physikmodells sp&auml;ter stimmte das Verh&auml;ltnis von Schwerkraft, Auftrieb und Fl&uuml;gelschlag. Bis ein Sturzflug sich gef&auml;hrlich anf&uuml;hlte und ein Looping den Magen zusammenzog.</p>
@@ -508,7 +508,7 @@
 <p>Jede dieser Ebenen l&auml;sst sich als Normalenvektor \(\mathbf{n}\) und einen Offset \(d\) schreiben. Ein Punkt \(\mathbf{p}\) liegt auf der sichtbaren Seite einer Ebene, wenn:</p>
 
 <div class="math-display">
-  \[ \mathbf{n} \cdot \mathbf{p} + d \geq 0 \]
+  $$ \mathbf{n} \cdot \mathbf{p} + d \geq 0 $$
 </div>
 
 <p>Ein Objekt ist sichtbar, wenn es auf der sichtbaren Seite <em>aller sechs Ebenen</em> liegt &mdash; oder genauer: wenn seine <span class="glossary" title="AABB: Axis-Aligned Bounding Box. Ein achsenparalleler Quader, der ein Objekt vollst&auml;ndig einschlie&szlig;t. Schnelle Kollisions- und Sichtbarkeitspr&uuml;fungen.">AABB</span> (achsenparalleler Begrenzungsquader) zumindest teilweise innerhalb des Frustums liegt. Die Frustum-Ebenen werden aus der Projektionsmatrix der Kamera extrahiert. Pro Frame: sechs Ebenengleichungen aus der aktuellen Kameraposition berechnen, fertig.</p>
@@ -577,13 +577,13 @@
 <p>Sei \(f(t)\) eine periodische Funktion mit Periode \(T\). Dann gilt:</p>
 
 <div class="math-display">
-  \[ f(t) = a_0 + \sum_{n=1}^{\infty} \left[ a_n \cos\!\left(\frac{2\pi n}{T} t\right) + b_n \sin\!\left(\frac{2\pi n}{T} t\right) \right] \]
+  $$ f(t) = a_0 + \sum_{n=1}^{\infty} \left[ a_n \cos\!\left(\frac{2\pi n}{T} t\right) + b_n \sin\!\left(\frac{2\pi n}{T} t\right) \right] $$
 </div>
 
 <p>Die Koeffizienten \(a_n\) und \(b_n\) bestimmen, wie stark jede Frequenz \(n/T\) in der Funktion vertreten ist. Sie lassen sich durch Integration berechnen:</p>
 
 <div class="math-display">
-  \[ a_n = \frac{2}{T} \int_0^T f(t)\,\cos\!\left(\frac{2\pi n}{T} t\right) dt \qquad b_n = \frac{2}{T} \int_0^T f(t)\,\sin\!\left(\frac{2\pi n}{T} t\right) dt \]
+  $$ a_n = \frac{2}{T} \int_0^T f(t)\,\cos\!\left(\frac{2\pi n}{T} t\right) dt \qquad b_n = \frac{2}{T} \int_0^T f(t)\,\sin\!\left(\frac{2\pi n}{T} t\right) dt $$
 </div>
 
 <p>Was bedeuten diese Integrale geometrisch? Sie messen, <em>wie &auml;hnlich</em> die Funktion \(f\) jeweils einer Sinusschwingung mit Frequenz \(n/T\) ist. Multipliziere \(f\) mit einem Kosinus und integriere &mdash; du erh&auml;lst die Korrelation. <strong>Fourier-Analyse ist systematische Korrelation mit allen m&ouml;glichen Frequenzen.</strong></p>
@@ -593,13 +593,13 @@
 <p>F&uuml;r nicht-periodische Funktionen verallgemeinert sich die Reihe zur <strong>Fourier-Transformation</strong>:</p>
 
 <div class="math-display">
-  \[ \hat{f}(\xi) = \int_{-\infty}^{\infty} f(t)\, e^{-2\pi i \xi t}\, dt \]
+  $$ \hat{f}(\xi) = \int_{-\infty}^{\infty} f(t)\, e^{-2\pi i \xi t}\, dt $$
 </div>
 
 <p>Hier ist \(\hat{f}(\xi)\) eine komplexe Zahl f&uuml;r jede Frequenz \(\xi\). Der Betrag \(|\hat{f}(\xi)|\) ist die <em>Amplitude</em>, das Argument \(\arg(\hat{f}(\xi))\) ist die <em>Phase</em> der jeweiligen Frequenzkomponente. Und die Umkehrung &mdash; die <strong>inverse Fourier-Transformation</strong> &mdash; rekonstruiert die Originalfunktion:</p>
 
 <div class="math-display">
-  \[ f(t) = \int_{-\infty}^{\infty} \hat{f}(\xi)\, e^{2\pi i \xi t}\, d\xi \]
+  $$ f(t) = \int_{-\infty}^{\infty} \hat{f}(\xi)\, e^{2\pi i \xi t}\, d\xi $$
 </div>
 
 <p>Damit ist die Fourier-Transformation ein <strong>vollst&auml;ndig umkehrbarer Koordinatenwechsel</strong>: von der Zeit- oder Ortsdom&auml;ne in die Frequenzdom&auml;ne und zur&uuml;ck. Kein Information geht verloren. Es ist buchst&auml;blich nur eine andere Sichtweise auf dieselben Daten.</p>
@@ -611,7 +611,7 @@
 <p>Die Fourier-Transformation tut strukturell dasselbe: Sie rotiert das Funktionenraum-Koordinatensystem in die Basis der Sinusfunktionen. Diese Basis ist orthogonal im Sinne des Funktionen-Skalarprodukts &mdash; zwei Sinusfunktionen verschiedener Frequenzen sind senkrecht aufeinander:</p>
 
 <div class="math-display">
-  \[ \int_0^T \sin(2\pi m t / T)\,\sin(2\pi n t / T)\, dt = \begin{cases} T/2 & m = n \\ 0 & m \neq n \end{cases} \]
+  $$ \int_0^T \sin(2\pi m t / T)\,\sin(2\pi n t / T)\, dt = \begin{cases} T/2 & m = n \\ 0 & m \neq n \end{cases} $$
 </div>
 
 <p>Der Unterschied: <strong>PCA findet die optimale Basis aus den Daten selbst. FFT verwendet eine feste, universelle Basis &mdash; die Frequenzen.</strong> PCA zerlegt in Richtungen maximaler Varianz; FFT zerlegt in Schwingungsfrequenzen. Beide sind orthogonale Projektionen auf eine neue Basis.</p>
@@ -625,7 +625,7 @@
 <p>Die diskrete Fourier-Transformation (DFT) &uuml;bersetzt die Fourier-Analyse auf endliche Folgen von \(N\) Messwerten:</p>
 
 <div class="math-display">
-  \[ X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-2\pi i k n / N}, \qquad k = 0, 1, \ldots, N-1 \]
+  $$ X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-2\pi i k n / N}, \qquad k = 0, 1, \ldots, N-1 $$
 </div>
 
 <p>Na&iuml;v berechnet: f&uuml;r jeden der \(N\) Ausgabewerte \(X[k]\) muss &uuml;ber alle \(N\) Eingabewerte summiert werden. Das ist \(O(N^2)\). Bei \(N = 65.536\) &mdash; der Aufl&ouml;sung unseres Ozeansimulators &mdash; w&auml;ren das \(4{,}3 \cdot 10^9\) komplexe Multiplikationen. Pro Frame. Unm&ouml;glich.</p>
@@ -633,7 +633,7 @@
 <p>1965 publizierten <strong>James Cooley</strong> und <strong>John Tukey</strong> einen Algorithmus, der die DFT in \(O(N \log N)\) berechnet: die <strong>Fast Fourier Transform (FFT)</strong>. Die Idee: Die DFT einer Folge der L&auml;nge \(N\) kann in zwei DFTs der L&auml;nge \(N/2\) zerlegt werden &mdash; eine f&uuml;r die geraden, eine f&uuml;r die ungeraden Indizes. Dieses Divide-and-Conquer-Schema wird rekursiv angewendet, bis man bei DFTs der L&auml;nge 1 ankommt (Trivialergebnis). Mit \(\log_2(N)\) Rekursionsstufen und \(N/2\) Operationen pro Stufe ergibt sich:</p>
 
 <div class="math-display">
-  \[ T_{\text{FFT}}(N) = \frac{N}{2} \log_2 N \quad \text{vs.} \quad T_{\text{DFT}}(N) = N^2 \]
+  $$ T_{\text{FFT}}(N) = \frac{N}{2} \log_2 N \quad \text{vs.} \quad T_{\text{DFT}}(N) = N^2 $$
 </div>
 
 <p>Bei \(N = 65.536 = 2^{16}\): DFT br&auml;uchte \(4{,}3 \cdot 10^9\) Operationen, FFT braucht \(5{,}2 \cdot 10^5\). <strong>Faktor 8.000 schneller.</strong></p>
@@ -667,7 +667,7 @@
 <p>Die Fourier-Transformation ist nicht auf zeitabh&auml;ngige Signale beschr&auml;nkt. Bilder sind zweidimensionale Funktionen &mdash; die Helligkeit an jedem Pixel als Funktion von \((x, y)\). Also gibt es auch eine <strong>2D-FFT</strong>:</p>
 
 <div class="math-display">
-  \[ F(u, v) = \sum_{x=0}^{M-1} \sum_{y=0}^{N-1} f(x,y)\, e^{-2\pi i (ux/M + vy/N)} \]
+  $$ F(u, v) = \sum_{x=0}^{M-1} \sum_{y=0}^{N-1} f(x,y)\, e^{-2\pi i (ux/M + vy/N)} $$
 </div>
 
 <p>Was bedeuten die Frequenzen bei Bildern? <strong>Niedrige Frequenzen</strong> &mdash; Punkte nahe dem Zentrum des Frequenzraums &mdash; kodieren langsame &Auml;nderungen: Hintergr&uuml;nde, Farbverl&auml;ufe, die grobe Struktur des Bildes. <strong>Hohe Frequenzen</strong> &mdash; Punkte am Rand &mdash; kodieren schnelle &Auml;nderungen: Kanten, feine Texturen, Details.</p>
@@ -742,7 +742,7 @@
 <p>Owen Phillips formulierte 1957 ein statistisches Modell daf&uuml;r, wie sich Wellenenergie auf verschiedene Frequenzen und Richtungen verteilt &mdash; abh&auml;ngig von Windgeschwindigkeit, Windrichtung und dem sogenannten <span class="glossary" title="Fetch: Die Strecke, &uuml;ber die der Wind ungehindert &uuml;ber das Wasser geweht hat. Je gr&ouml;&szlig;er der Fetch, desto gr&ouml;&szlig;er die Wellen.">Fetch</span> (der Strecke, &uuml;ber die der Wind geweht hat). Das Ergebnis: das <strong>Phillips-Spektrum</strong>:</p>
 
 <div class="math-display">
-  \[ P(\mathbf{k}) = A \, \frac{\exp\!\bigl(-1/(kL)^2\bigr)}{k^4} \, \bigl|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}\bigr|^2 \]
+  $$ P(\mathbf{k}) = A \, \frac{\exp\!\bigl(-1/(kL)^2\bigr)}{k^4} \, \bigl|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}\bigr|^2 $$
 </div>
 
 <p>Dabei ist \(\mathbf{k}\) der Wellenvektor im Frequenzraum, \(k = |\mathbf{k}|\) seine L&auml;nge, \(L = v^2/g\) die charakteristische Wellenl&auml;nge bei Windgeschwindigkeit \(v\) und \(g = 9{,}81\,\text{m/s}^2\), und \(\hat{\mathbf{w}}\) die Windrichtung. Das Skalarprodukts-Quadrat \(|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}|^2\) unterdr&uuml;ckt Wellen senkrecht zum Wind.</p>
