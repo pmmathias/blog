@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 280" fill="none">
+  <rect width="650" height="280" fill="#0f172a"/>
+
+  <!-- LEFT: PCA -->
+  <text x="160" y="25" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#2dd4bf">PCA: Rotation in Daten</text>
+
+  <!-- Data cloud -->
+  <g opacity="0.5">
+    <circle cx="100" cy="140" r="2.5" fill="#94a3b8"/>
+    <circle cx="120" cy="125" r="2.5" fill="#94a3b8"/>
+    <circle cx="135" cy="115" r="2.5" fill="#94a3b8"/>
+    <circle cx="150" cy="108" r="2.5" fill="#94a3b8"/>
+    <circle cx="170" cy="100" r="2.5" fill="#94a3b8"/>
+    <circle cx="185" cy="95" r="2.5" fill="#94a3b8"/>
+    <circle cx="115" cy="145" r="2.5" fill="#94a3b8"/>
+    <circle cx="140" cy="130" r="2.5" fill="#94a3b8"/>
+    <circle cx="160" cy="120" r="2.5" fill="#94a3b8"/>
+    <circle cx="175" cy="112" r="2.5" fill="#94a3b8"/>
+    <circle cx="195" cy="105" r="2.5" fill="#94a3b8"/>
+    <circle cx="110" cy="155" r="2.5" fill="#94a3b8"/>
+    <circle cx="130" cy="140" r="2.5" fill="#94a3b8"/>
+    <circle cx="155" cy="125" r="2.5" fill="#94a3b8"/>
+    <circle cx="180" cy="108" r="2.5" fill="#94a3b8"/>
+    <circle cx="200" cy="98" r="2.5" fill="#94a3b8"/>
+    <circle cx="145" cy="140" r="2.5" fill="#94a3b8"/>
+    <circle cx="165" cy="128" r="2.5" fill="#94a3b8"/>
+    <circle cx="125" cy="150" r="2.5" fill="#94a3b8"/>
+    <circle cx="190" cy="90" r="2.5" fill="#94a3b8"/>
+  </g>
+
+  <!-- Original axes (gray) -->
+  <line x1="80" y1="170" x2="220" y2="170" stroke="#4b5563" stroke-width="0.8"/>
+  <line x1="80" y1="170" x2="80" y2="70" stroke="#4b5563" stroke-width="0.8"/>
+  <text x="222" y="174" font-family="Inter" font-size="9" fill="#4b5563">x</text>
+  <text x="76" y="68" font-family="Inter" font-size="9" fill="#4b5563">y</text>
+
+  <!-- PCA axes (teal, rotated) -->
+  <line x1="85" y1="165" x2="215" y2="85" stroke="#2dd4bf" stroke-width="2"/>
+  <line x1="130" y1="80" x2="170" y2="175" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+  <text x="218" y="82" font-family="Inter" font-size="10" font-weight="600" fill="#2dd4bf">PC₁</text>
+  <text x="173" y="180" font-family="Inter" font-size="10" fill="#f59e0b">PC₂</text>
+
+  <!-- Label -->
+  <text x="160" y="210" text-anchor="middle" font-family="Inter" font-size="10" fill="#94a3b8">Eigenvektoren der Kovarianzmatrix</text>
+  <text x="160" y="225" text-anchor="middle" font-family="Inter" font-size="10" fill="#94a3b8">= Hauptachsen der Datenwolke</text>
+
+  <!-- EQUALS sign -->
+  <text x="325" y="130" text-anchor="middle" font-family="Inter" font-size="28" fill="#f59e0b">≈</text>
+  <text x="325" y="155" text-anchor="middle" font-family="Inter" font-size="10" fill="#94a3b8">gleiche Idee!</text>
+
+  <!-- RIGHT: Fourier -->
+  <text x="490" y="25" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#2dd4bf">Fourier: Rotation in Frequenzen</text>
+
+  <!-- Signal (complex waveform) -->
+  <path d="M370,130 Q390,90 410,130 Q420,155 430,120 Q440,95 450,130 Q460,150 470,125 Q480,100 490,130 Q500,145 510,120 Q520,105 530,130 Q540,140 550,125 Q560,115 570,130 Q580,140 590,130 Q600,120 610,130" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+
+  <!-- Decomposed sines -->
+  <path d="M370,130 Q410,85 450,130 Q490,175 530,130 Q570,85 610,130" stroke="#2dd4bf" stroke-width="2" fill="none"/>
+  <text x="615" y="125" font-family="Inter" font-size="9" fill="#2dd4bf">f₁</text>
+
+  <path d="M370,130 Q390,110 410,130 Q430,150 450,130 Q470,110 490,130 Q510,150 530,130 Q550,110 570,130 Q590,150 610,130" stroke="#f59e0b" stroke-width="1.2" fill="none" stroke-dasharray="4,3"/>
+  <text x="615" y="135" font-family="Inter" font-size="9" fill="#f59e0b">f₂</text>
+
+  <path d="M370,130 Q380,120 390,130 Q400,140 410,130 Q420,120 430,130 Q440,140 450,130 Q460,120 470,130 Q480,140 490,130 Q500,120 510,130 Q520,140 530,130 Q540,120 550,130 Q560,140 570,130 Q580,120 590,130 Q600,140 610,130" stroke="#a78bfa" stroke-width="0.8" fill="none" opacity="0.6"/>
+  <text x="615" y="145" font-family="Inter" font-size="9" fill="#a78bfa">f₃</text>
+
+  <!-- Label -->
+  <text x="490" y="210" text-anchor="middle" font-family="Inter" font-size="10" fill="#94a3b8">Sinus/Cosinus-Basisfunktionen</text>
+  <text x="490" y="225" text-anchor="middle" font-family="Inter" font-size="10" fill="#94a3b8">= Frequenz-Achsen des Signals</text>
+
+  <!-- Bottom summary -->
+  <rect x="100" y="245" width="450" height="28" rx="6" fill="#1e293b" stroke="#2dd4bf" stroke-width="0.5" opacity="0.6"/>
+  <text x="325" y="264" text-anchor="middle" font-family="Inter" font-size="11" fill="#f1f5f9">Beides sind <tspan fill="#2dd4bf" font-weight="600">orthogonale Rotationen</tspan>, die verborgene Struktur sichtbar machen.</text>
+</svg>

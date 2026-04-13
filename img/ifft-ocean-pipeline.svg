@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" fill="none">
+  <rect width="700" height="200" fill="#0f172a"/>
+
+  <text x="350" y="22" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">iFFT-Ozean-Pipeline: Vom Spektrum zur Welle</text>
+
+  <!-- Box 1: Spectrum -->
+  <rect x="20" y="55" width="120" height="70" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="80" y="78" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#f59e0b">Phillips-</text>
+  <text x="80" y="93" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#f59e0b">Spektrum</text>
+  <text x="80" y="112" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">P(k) ∝ e^(-1/(kL)²)/k⁴</text>
+
+  <!-- Arrow 1 -->
+  <path d="M145 90 L175 90" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Box 2: Complex Amplitudes -->
+  <rect x="180" y="55" width="110" height="70" rx="8" fill="#1e293b" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="235" y="78" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#2dd4bf">Komplexe</text>
+  <text x="235" y="93" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#2dd4bf">Amplituden</text>
+  <text x="235" y="112" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">h̃(k,t) = A(k) · e^(iωt)</text>
+
+  <!-- Arrow 2 -->
+  <path d="M295 90 L325 90" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box 3: FFT Butterfly -->
+  <rect x="330" y="45" width="110" height="90" rx="8" fill="#1e293b" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="385" y="70" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#a78bfa">iFFT</text>
+  <text x="385" y="85" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#a78bfa">Butterfly</text>
+  <text x="385" y="104" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">512×512 Grid</text>
+  <text x="385" y="118" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">9 Stufen auf GPU</text>
+
+  <!-- Arrow 3 (splits) -->
+  <path d="M445 75 L475 60" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M445 105 L475 120" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box 4a: Displacement Map -->
+  <rect x="480" y="35" width="100" height="45" rx="6" fill="#1e293b" stroke="#2dd4bf" stroke-width="1"/>
+  <text x="530" y="55" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#2dd4bf">Displacement</text>
+  <text x="530" y="70" text-anchor="middle" font-family="Inter" font-size="10" fill="#2dd4bf">Map</text>
+
+  <!-- Box 4b: Normal Map -->
+  <rect x="480" y="100" width="100" height="45" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+  <text x="530" y="120" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#f59e0b">Normal</text>
+  <text x="530" y="135" text-anchor="middle" font-family="Inter" font-size="10" fill="#f59e0b">Map</text>
+
+  <!-- Arrow 4 (merge) -->
+  <path d="M585 57 L615 80" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M585 123 L615 100" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box 5: Rendered Surface -->
+  <rect x="620" y="55" width="65" height="70" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2"/>
+  <text x="652" y="82" text-anchor="middle" font-family="Inter" font-size="9" font-weight="600" fill="#22d3ee">Gerenderte</text>
+  <text x="652" y="96" text-anchor="middle" font-family="Inter" font-size="9" font-weight="600" fill="#22d3ee">Wasser-</text>
+  <text x="652" y="110" text-anchor="middle" font-family="Inter" font-size="9" font-weight="600" fill="#22d3ee">oberfläche</text>
+
+  <!-- Bottom: performance note -->
+  <text x="350" y="170" text-anchor="middle" font-family="Inter" font-size="10" fill="#94a3b8">65.536 Wellen pro Frame (512² Pixel) — in Echtzeit auf der GPU</text>
+  <text x="350" y="187" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">Basierend auf Tessendorf (2001) · Implementierung: Phil Crowther, Ocean3.js (CC BY-NC-SA 3.0)</text>
+</svg>

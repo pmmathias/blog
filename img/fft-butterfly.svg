@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" fill="none">
+  <rect width="600" height="350" fill="#0f172a"/>
+
+  <text x="300" y="25" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9">FFT Butterfly-Diagramm (N = 8)</text>
+  <text x="300" y="42" text-anchor="middle" font-family="Inter" font-size="11" fill="#94a3b8">3 Stufen statt 64 Multiplikationen — O(N log N) statt O(N²)</text>
+
+  <!-- Input labels -->
+  <text x="30" y="78" text-anchor="middle" font-family="monospace" font-size="11" fill="#f1f5f9">x[0]</text>
+  <text x="30" y="113" text-anchor="middle" font-family="monospace" font-size="11" fill="#f1f5f9">x[4]</text>
+  <text x="30" y="148" text-anchor="middle" font-family="monospace" font-size="11" fill="#f1f5f9">x[2]</text>
+  <text x="30" y="183" text-anchor="middle" font-family="monospace" font-size="11" fill="#f1f5f9">x[6]</text>
+  <text x="30" y="218" text-anchor="middle" font-family="monospace" font-size="11" fill="#f1f5f9">x[1]</text>
+  <text x="30" y="253" text-anchor="middle" font-family="monospace" font-size="11" fill="#f1f5f9">x[5]</text>
+  <text x="30" y="288" text-anchor="middle" font-family="monospace" font-size="11" fill="#f1f5f9">x[3]</text>
+  <text x="30" y="323" text-anchor="middle" font-family="monospace" font-size="11" fill="#f1f5f9">x[7]</text>
+
+  <!-- Output labels -->
+  <text x="570" y="78" text-anchor="middle" font-family="monospace" font-size="11" fill="#2dd4bf">X[0]</text>
+  <text x="570" y="113" text-anchor="middle" font-family="monospace" font-size="11" fill="#2dd4bf">X[1]</text>
+  <text x="570" y="148" text-anchor="middle" font-family="monospace" font-size="11" fill="#2dd4bf">X[2]</text>
+  <text x="570" y="183" text-anchor="middle" font-family="monospace" font-size="11" fill="#2dd4bf">X[3]</text>
+  <text x="570" y="218" text-anchor="middle" font-family="monospace" font-size="11" fill="#2dd4bf">X[4]</text>
+  <text x="570" y="253" text-anchor="middle" font-family="monospace" font-size="11" fill="#2dd4bf">X[5]</text>
+  <text x="570" y="288" text-anchor="middle" font-family="monospace" font-size="11" fill="#2dd4bf">X[6]</text>
+  <text x="570" y="323" text-anchor="middle" font-family="monospace" font-size="11" fill="#2dd4bf">X[7]</text>
+
+  <!-- Horizontal lines (data flow) -->
+  <g stroke="#4b5563" stroke-width="0.8">
+    <line x1="55" y1="75" x2="545" y2="75"/>
+    <line x1="55" y1="110" x2="545" y2="110"/>
+    <line x1="55" y1="145" x2="545" y2="145"/>
+    <line x1="55" y1="180" x2="545" y2="180"/>
+    <line x1="55" y1="215" x2="545" y2="215"/>
+    <line x1="55" y1="250" x2="545" y2="250"/>
+    <line x1="55" y1="285" x2="545" y2="285"/>
+    <line x1="55" y1="320" x2="545" y2="320"/>
+  </g>
+
+  <!-- Stage 1 butterflies (pairs of 2) -->
+  <g stroke="#2dd4bf" stroke-width="1.2">
+    <line x1="120" y1="75" x2="120" y2="110"/>
+    <line x1="120" y1="145" x2="120" y2="180"/>
+    <line x1="120" y1="215" x2="120" y2="250"/>
+    <line x1="120" y1="285" x2="120" y2="320"/>
+  </g>
+  <g>
+    <circle cx="120" cy="75" r="3" fill="#2dd4bf"/>
+    <circle cx="120" cy="110" r="3" fill="#2dd4bf"/>
+    <circle cx="120" cy="145" r="3" fill="#2dd4bf"/>
+    <circle cx="120" cy="180" r="3" fill="#2dd4bf"/>
+    <circle cx="120" cy="215" r="3" fill="#2dd4bf"/>
+    <circle cx="120" cy="250" r="3" fill="#2dd4bf"/>
+    <circle cx="120" cy="285" r="3" fill="#2dd4bf"/>
+    <circle cx="120" cy="320" r="3" fill="#2dd4bf"/>
+  </g>
+
+  <!-- Stage 2 butterflies (pairs of 4) -->
+  <g stroke="#f59e0b" stroke-width="1.2">
+    <line x1="250" y1="75" x2="250" y2="145"/>
+    <line x1="250" y1="110" x2="250" y2="180"/>
+    <line x1="250" y1="215" x2="250" y2="285"/>
+    <line x1="250" y1="250" x2="250" y2="320"/>
+  </g>
+  <g>
+    <circle cx="250" cy="75" r="3" fill="#f59e0b"/>
+    <circle cx="250" cy="110" r="3" fill="#f59e0b"/>
+    <circle cx="250" cy="145" r="3" fill="#f59e0b"/>
+    <circle cx="250" cy="180" r="3" fill="#f59e0b"/>
+    <circle cx="250" cy="215" r="3" fill="#f59e0b"/>
+    <circle cx="250" cy="250" r="3" fill="#f59e0b"/>
+    <circle cx="250" cy="285" r="3" fill="#f59e0b"/>
+    <circle cx="250" cy="320" r="3" fill="#f59e0b"/>
+  </g>
+
+  <!-- Stage 3 butterflies (pairs of 8) -->
+  <g stroke="#a78bfa" stroke-width="1.2">
+    <line x1="400" y1="75" x2="400" y2="215"/>
+    <line x1="400" y1="110" x2="400" y2="250"/>
+    <line x1="400" y1="145" x2="400" y2="285"/>
+    <line x1="400" y1="180" x2="400" y2="320"/>
+  </g>
+  <g>
+    <circle cx="400" cy="75" r="3" fill="#a78bfa"/>
+    <circle cx="400" cy="110" r="3" fill="#a78bfa"/>
+    <circle cx="400" cy="145" r="3" fill="#a78bfa"/>
+    <circle cx="400" cy="180" r="3" fill="#a78bfa"/>
+    <circle cx="400" cy="215" r="3" fill="#a78bfa"/>
+    <circle cx="400" cy="250" r="3" fill="#a78bfa"/>
+    <circle cx="400" cy="285" r="3" fill="#a78bfa"/>
+    <circle cx="400" cy="320" r="3" fill="#a78bfa"/>
+  </g>
+
+  <!-- Stage labels -->
+  <text x="120" y="60" text-anchor="middle" font-family="Inter" font-size="10" fill="#2dd4bf">Stufe 1</text>
+  <text x="250" y="60" text-anchor="middle" font-family="Inter" font-size="10" fill="#f59e0b">Stufe 2</text>
+  <text x="400" y="60" text-anchor="middle" font-family="Inter" font-size="10" fill="#a78bfa">Stufe 3</text>
+
+  <!-- Twiddle factor labels -->
+  <text x="130" y="96" font-family="Inter" font-size="8" fill="#2dd4bf" opacity="0.7">W⁰</text>
+  <text x="260" y="96" font-family="Inter" font-size="8" fill="#f59e0b" opacity="0.7">W⁰</text>
+  <text x="260" y="131" font-family="Inter" font-size="8" fill="#f59e0b" opacity="0.7">W²</text>
+  <text x="410" y="96" font-family="Inter" font-size="8" fill="#a78bfa" opacity="0.7">W⁰</text>
+  <text x="410" y="131" font-family="Inter" font-size="8" fill="#a78bfa" opacity="0.7">W¹</text>
+  <text x="410" y="166" font-family="Inter" font-size="8" fill="#a78bfa" opacity="0.7">W²</text>
+  <text x="410" y="201" font-family="Inter" font-size="8" fill="#a78bfa" opacity="0.7">W³</text>
+</svg>

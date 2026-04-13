@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">Octree: Rekursive Raumunterteilung</text>
+
+  <!-- Level 0: Full space -->
+  <rect x="20" y="50" width="260" height="160" stroke="#94a3b8" stroke-width="1.5" rx="2"/>
+  <text x="150" y="70" text-anchor="middle" font-family="Inter" font-size="11" fill="#94a3b8">Level 0 (ganzer Raum)</text>
+
+  <!-- Level 1: 4 quadrants (2D simplification) -->
+  <line x1="150" y1="50" x2="150" y2="210" stroke="#2dd4bf" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="20" y1="130" x2="280" y2="130" stroke="#2dd4bf" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Level 2: subdivide top-left -->
+  <line x1="85" y1="50" x2="85" y2="130" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <line x1="20" y1="90" x2="150" y2="90" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="3,3"/>
+
+  <!-- Objects (dots) -->
+  <circle cx="45" cy="72" r="3" fill="#2dd4bf"/>
+  <circle cx="110" cy="105" r="3" fill="#2dd4bf"/>
+  <circle cx="60" cy="150" r="3" fill="#2dd4bf"/>
+  <circle cx="200" cy="80" r="3" fill="#94a3b8" opacity="0.5"/>
+  <circle cx="230" cy="170" r="3" fill="#94a3b8" opacity="0.5"/>
+  <circle cx="170" cy="190" r="3" fill="#94a3b8" opacity="0.5"/>
+  <circle cx="100" cy="180" r="3" fill="#94a3b8" opacity="0.5"/>
+  <circle cx="250" cy="100" r="3" fill="#94a3b8" opacity="0.5"/>
+
+  <!-- Camera frustum -->
+  <polygon points="30,65 120,45 120,115" fill="#2dd4bf" fill-opacity="0.08" stroke="#2dd4bf" stroke-width="1.5"/>
+  <circle cx="30" cy="65" r="4" fill="#f59e0b"/>
+  <text x="30" y="58" text-anchor="middle" font-family="Inter" font-size="9" fill="#f59e0b">Kamera</text>
+
+  <!-- Arrow to tree -->
+  <path d="M300 130 L320 130" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Tree structure -->
+  <!-- Root -->
+  <rect x="350" y="55" width="80" height="25" rx="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+  <text x="390" y="72" text-anchor="middle" font-family="Inter" font-size="10" fill="#f1f5f9">Root</text>
+
+  <!-- Level 1 children -->
+  <rect x="320" y="110" width="55" height="22" rx="3" fill="#1e293b" stroke="#2dd4bf" stroke-width="1"/>
+  <text x="347" y="125" text-anchor="middle" font-family="Inter" font-size="9" fill="#2dd4bf">NW ✓</text>
+
+  <rect x="385" y="110" width="55" height="22" rx="3" fill="#1e293b" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/>
+  <text x="412" y="125" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8" opacity="0.4">NE ✗</text>
+
+  <rect x="450" y="110" width="55" height="22" rx="3" fill="#1e293b" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/>
+  <text x="477" y="125" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8" opacity="0.4">SW ✗</text>
+
+  <rect x="515" y="110" width="55" height="22" rx="3" fill="#1e293b" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/>
+  <text x="542" y="125" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8" opacity="0.4">SE ✗</text>
+
+  <!-- Lines from root to children -->
+  <line x1="370" y1="80" x2="347" y2="110" stroke="#2dd4bf" stroke-width="1"/>
+  <line x1="390" y1="80" x2="412" y2="110" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/>
+  <line x1="410" y1="80" x2="477" y2="110" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/>
+  <line x1="420" y1="80" x2="542" y2="110" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Level 2 children of NW -->
+  <rect x="310" y="160" width="40" height="20" rx="3" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+  <text x="330" y="174" text-anchor="middle" font-family="Inter" font-size="8" fill="#f59e0b">2 obj</text>
+
+  <rect x="355" y="160" width="40" height="20" rx="3" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+  <text x="375" y="174" text-anchor="middle" font-family="Inter" font-size="8" fill="#f59e0b">1 obj</text>
+
+  <line x1="340" y1="132" x2="330" y2="160" stroke="#f59e0b" stroke-width="0.8"/>
+  <line x1="355" y1="132" x2="375" y2="160" stroke="#f59e0b" stroke-width="0.8"/>
+
+  <!-- Legend -->
+  <text x="20" y="240" font-family="Inter" font-size="11" fill="#f1f5f9" font-weight="600">Ohne Octree:</text>
+  <text x="20" y="258" font-family="Inter" font-size="10" fill="#94a3b8">8 Objekte × 6 Ebenen = 48 Tests</text>
+
+  <text x="20" y="285" font-family="Inter" font-size="11" fill="#2dd4bf" font-weight="600">Mit Octree:</text>
+  <text x="20" y="303" font-family="Inter" font-size="10" fill="#94a3b8">2 Knoten besucht → 3 Objekte getestet</text>
+
+  <text x="20" y="335" font-family="Inter" font-size="11" fill="#f59e0b" font-weight="600">Bei 100.000 Objekten:</text>
+  <text x="20" y="353" font-family="Inter" font-size="10" fill="#94a3b8">O(n) = 600.000 Tests → O(log n) ≈ 100 Tests</text>
+
+  <!-- Teal = visible, gray = culled -->
+  <circle cx="340" y="350" r="4" fill="#2dd4bf"/>
+  <text x="350" y="354" font-family="Inter" font-size="9" fill="#94a3b8">= sichtbar</text>
+  <circle cx="420" cy="350" r="4" fill="#94a3b8" opacity="0.4"/>
+  <text x="430" y="354" font-family="Inter" font-size="9" fill="#94a3b8">= culled</text>
+</svg>

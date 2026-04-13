@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 180" fill="none">
+  <rect width="650" height="180" fill="#0f172a"/>
+
+  <text x="325" y="22" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">JPEG-Kompression: DCT in 8×8 Blöcken</text>
+
+  <!-- Step 1: Image -->
+  <rect x="15" y="45" width="80" height="80" rx="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+  <!-- 8x8 grid inside -->
+  <g stroke="#4b5563" stroke-width="0.3">
+    <line x1="25" y1="45" x2="25" y2="125"/>
+    <line x1="35" y1="45" x2="35" y2="125"/>
+    <line x1="45" y1="45" x2="45" y2="125"/>
+    <line x1="55" y1="45" x2="55" y2="125"/>
+    <line x1="65" y1="45" x2="65" y2="125"/>
+    <line x1="75" y1="45" x2="75" y2="125"/>
+    <line x1="85" y1="45" x2="85" y2="125"/>
+    <line x1="15" y1="55" x2="95" y2="55"/>
+    <line x1="15" y1="65" x2="95" y2="65"/>
+    <line x1="15" y1="75" x2="95" y2="75"/>
+    <line x1="15" y1="85" x2="95" y2="85"/>
+    <line x1="15" y1="95" x2="95" y2="95"/>
+    <line x1="15" y1="105" x2="95" y2="105"/>
+    <line x1="15" y1="115" x2="95" y2="115"/>
+  </g>
+  <!-- Highlight one block -->
+  <rect x="35" y="65" width="20" height="20" fill="#2dd4bf" fill-opacity="0.3" stroke="#2dd4bf" stroke-width="1"/>
+  <text x="55" y="140" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">8×8 Blöcke</text>
+
+  <!-- Arrow -->
+  <path d="M100 85 L125 85" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#a2)"/>
+  <defs><marker id="a2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="#94a3b8"/></marker></defs>
+
+  <!-- Step 2: DCT -->
+  <rect x="130" y="50" width="100" height="70" rx="6" fill="#1e293b" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="180" y="73" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#2dd4bf">DCT</text>
+  <text x="180" y="90" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">Diskrete Cosinus-</text>
+  <text x="180" y="103" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">Transformation</text>
+  <text x="180" y="140" text-anchor="middle" font-family="Inter" font-size="8" fill="#64748b">(FFT-Variante, nur Cosinus)</text>
+
+  <!-- Arrow -->
+  <path d="M235 85 L260 85" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#a2)"/>
+
+  <!-- Step 3: Frequency coefficients -->
+  <rect x="265" y="45" width="80" height="80" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+  <!-- Diagonal gradient to show frequency -->
+  <rect x="269" y="49" width="15" height="15" fill="#f59e0b" opacity="0.8"/>
+  <rect x="284" y="49" width="15" height="15" fill="#f59e0b" opacity="0.5"/>
+  <rect x="299" y="49" width="15" height="15" fill="#f59e0b" opacity="0.2"/>
+  <rect x="314" y="49" width="15" height="15" fill="#f59e0b" opacity="0.05"/>
+  <rect x="269" y="64" width="15" height="15" fill="#f59e0b" opacity="0.5"/>
+  <rect x="284" y="64" width="15" height="15" fill="#f59e0b" opacity="0.3"/>
+  <rect x="299" y="64" width="15" height="15" fill="#f59e0b" opacity="0.1"/>
+  <rect x="314" y="64" width="15" height="15" fill="#f59e0b" opacity="0.02"/>
+  <rect x="269" y="79" width="15" height="15" fill="#f59e0b" opacity="0.2"/>
+  <rect x="284" y="79" width="15" height="15" fill="#f59e0b" opacity="0.1"/>
+  <rect x="269" y="94" width="15" height="15" fill="#f59e0b" opacity="0.05"/>
+  <text x="305" y="140" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">Koeffizienten</text>
+
+  <!-- Arrow -->
+  <path d="M350 85 L375 85" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#a2)"/>
+
+  <!-- Step 4: Quantize -->
+  <rect x="380" y="50" width="100" height="70" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="430" y="73" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#ef4444">Quantisierung</text>
+  <text x="430" y="90" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">Hohe Frequenzen</text>
+  <text x="430" y="103" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">→ auf 0 setzen</text>
+  <text x="430" y="140" text-anchor="middle" font-family="Inter" font-size="8" fill="#64748b">(hier geht Info verloren!)</text>
+
+  <!-- Arrow -->
+  <path d="M485 85 L510 85" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#a2)"/>
+
+  <!-- Step 5: Entropy coding -->
+  <rect x="515" y="50" width="120" height="70" rx="6" fill="#1e293b" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="575" y="73" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#a78bfa">Entropie-</text>
+  <text x="575" y="88" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#a78bfa">Codierung</text>
+  <text x="575" y="105" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">Huffman / Run-Length</text>
+  <text x="575" y="140" text-anchor="middle" font-family="Inter" font-size="9" fill="#94a3b8">→ .jpg Datei</text>
+
+  <!-- Bottom summary -->
+  <text x="325" y="168" text-anchor="middle" font-family="Inter" font-size="10" fill="#94a3b8">Typische Kompression: 10:1 bei kaum sichtbarem Qualitätsverlust</text>
+</svg>

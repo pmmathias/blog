@@ -513,7 +513,10 @@
 
 <p>Ein Objekt ist sichtbar, wenn es auf der sichtbaren Seite <em>aller sechs Ebenen</em> liegt &mdash; oder genauer: wenn seine <span class="glossary" title="AABB: Axis-Aligned Bounding Box. Ein achsenparalleler Quader, der ein Objekt vollst&auml;ndig einschlie&szlig;t. Schnelle Kollisions- und Sichtbarkeitspr&uuml;fungen.">AABB</span> (achsenparalleler Begrenzungsquader) zumindest teilweise innerhalb des Frustums liegt. Die Frustum-Ebenen werden aus der Projektionsmatrix der Kamera extrahiert. Pro Frame: sechs Ebenengleichungen aus der aktuellen Kameraposition berechnen, fertig.</p>
 
-<!-- TODO: img/view-frustum.svg -->
+<figure class="my-8">
+  <img src="img/view-frustum.svg" alt="View Frustum: Ein Kegelstumpf aus sechs Ebenen, der das Sichtfeld einer 3D-Kamera definiert." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:500px; background:#0f172a;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">View Frustum einer Perspektivkamera. <a href="https://commons.wikimedia.org/wiki/File:ViewFrustum.svg" class="text-gray-500 hover:text-gray-400" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption>
+</figure>
 
 <p>Der naive Frustum-Check hat Komplexit&auml;t \(O(n)\) &mdash; wir m&uuml;ssen jedes der 100.000 Objekte gegen die sechs Ebenen pr&uuml;fen. Bei 60 FPS sind das 6 Millionen Ebenenpr&uuml;fungen pro Sekunde. Das ist &uuml;berraschend schnell &mdash; CPUs k&ouml;nnen das. Aber die Frage ist, ob wir klug vorgehen k&ouml;nnen: Wenn wir wissen, dass alle B&auml;ume in einem bestimmten Raumbereich au&szlig;erhalb des Frustums liegen, m&uuml;ssen wir die einzelnen B&auml;ume gar nicht erst pr&uuml;fen.</p>
 
@@ -521,7 +524,10 @@
 
 <p>Ein <strong><span class="glossary" title="Octree: R&auml;umliche Datenstruktur, die einen W&uuml;rfel rekursiv in 8 gleich gro&szlig;e Teilw&uuml;rfel unterteilt. Jeder Knoten hat genau 8 Kinder.">Octree</span></strong> unterteilt den Raum rekursiv in acht gleichgro&szlig;e W&uuml;rfel. Jeder W&uuml;rfel, der Objekte enth&auml;lt, wird weiter unterteilt &mdash; bis zu einer Mindestgr&ouml;&szlig;e oder einer Maximaltiefe. Das Ergebnis ist ein Baum: die Wurzel repr&auml;sentiert die gesamte Welt, die Bl&auml;tter kleine Raumzellen mit je wenigen Objekten.</p>
 
-<!-- TODO: img/octree-diagram.svg -->
+<figure class="my-8">
+  <img src="img/octree-diagram.svg" alt="Octree-Diagramm: Rekursive Raumunterteilung mit Kamera-Frustum. Links die r&auml;umliche Ansicht, rechts die Baumstruktur. O(log n) statt O(n) Tests." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:600px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Octree-Abfrage: Nur Knoten innerhalb des Frustums werden besucht &mdash; von 100.000 auf ~4.000 Objekte.</figcaption>
+</figure>
 
 <p>Beim Frustum Culling durchl&auml;uft der Algorithmus den Octree von der Wurzel nach unten:</p>
 
@@ -616,7 +622,10 @@
 
 <p>Der Unterschied: <strong>PCA findet die optimale Basis aus den Daten selbst. FFT verwendet eine feste, universelle Basis &mdash; die Frequenzen.</strong> PCA zerlegt in Richtungen maximaler Varianz; FFT zerlegt in Schwingungsfrequenzen. Beide sind orthogonale Projektionen auf eine neue Basis.</p>
 
-<!-- TODO: img/pca-fourier-analogy.svg -->
+<figure class="my-8">
+  <img src="img/pca-fourier-analogy.svg" alt="PCA und Fourier-Transformation im Vergleich: Beides sind orthogonale Rotationen, die verborgene Struktur sichtbar machen." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:600px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">PCA rotiert Koordinatenachsen in die Daten. Fourier rotiert in Frequenzen. Dieselbe Idee.</figcaption>
+</figure>
 
 <p>Eine weitere Parallele findet sich in der <a href="musik.html" class="crossref">Cochlea des menschlichen Ohrs</a>: Die Schnecke des Innenohrs ist eine mechanische Fourier-Analyse. Unterschiedliche Stellen der Basilarmembran resonieren auf unterschiedliche Frequenzen &mdash; das Ohr zerlegt den Schall in seine Fourier-Komponenten, bevor das Gehirn ihn verarbeitet. Evolution hat dieselbe Mathematik 500 Millionen Jahre fr&uuml;her &bdquo;entdeckt&ldquo; als Fourier.</p>
 
@@ -640,7 +649,10 @@
 
 <p>Der Datenfluss des Cooley-Tukey-Algorithmus sieht bei grafischer Darstellung aus wie ein Schmetterling: Jede Stufe kombiniert Ergebnisse paarweise &uuml;ber komplexe Rotationen um die <span class="glossary" title="Twiddle-Faktoren: Komplexe Einheitswurzeln e^{-2\pi i k/N}, die bei jedem Schritt des FFT-Butterfly-Algorithmus als Rotationsfaktoren dienen.">Twiddle-Faktoren</span> \(W_N^k = e^{-2\pi ik/N}\). Dieser visuelle Eindruck hat dem Verfahren seinen Namen gegeben: <strong>Butterfly-Algorithmus</strong>.</p>
 
-<!-- TODO: img/fft-butterfly.svg -->
+<figure class="my-8">
+  <img src="img/fft-butterfly.svg" alt="FFT-Butterfly-Diagramm f&uuml;r N=8: Drei Stufen mit Twiddle-Faktoren. O(N log N) statt O(N&sup2;)." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:600px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Das Butterfly-Diagramm der FFT: 3 Stufen f&uuml;r N=8 statt 64 einzelner Multiplikationen.</figcaption>
+</figure>
 
 <div class="component-wrap"><div id="mount-fourier-decomposition"></div></div>
 
@@ -676,7 +688,10 @@
 
 <p>Die 2D-FFT erm&ouml;glicht auch <strong>schnelle Faltung</strong>: Einen Weichzeichner auf ein Bild anzuwenden ist im Ortsraum eine teure Faltungsoperation (\(O(N^2 \cdot K^2)\) f&uuml;r ein \(N\times N\)-Bild mit einem \(K\times K\)-Kernel). Im Frequenzraum ist es eine einfache <em>punktweise Multiplikation</em> (\(O(N^2)\)). Damit ist der typische Weg: FFT berechnen, multiplizieren, inverse FFT &mdash; und das schon bei moderat gro&szlig;en Bildern deutlich schneller als direkte Faltung.</p>
 
-<!-- TODO: img/jpeg-compression.svg -->
+<figure class="my-8">
+  <img src="img/jpeg-compression.svg" alt="JPEG-Kompression: Bild in 8&times;8 Bl&ouml;cke aufteilen, DCT anwenden, Quantisierung der hohen Frequenzen, Entropie-Codierung." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:650px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Die JPEG-Pipeline: DCT transformiert jeden 8&times;8-Block in Frequenzen, Quantisierung entfernt Details, Entropie-Codierung komprimiert.</figcaption>
+</figure>
 
 <h3>JPEG: Fourier in 8&times;8-Bl&ouml;cken</h3>
 
@@ -749,7 +764,10 @@
 
 <p>Dieses Spektrum lebt vollst&auml;ndig im Frequenzraum: Jeder Punkt in einem 2D-Gitter entspricht einer Wellenfrequenz und -richtung &mdash; nicht einer Position auf dem Wasser. Es beschreibt keine konkrete Welle, sondern eine <em>Wahrscheinlichkeitsverteilung</em> von Wellen.</p>
 
-<!-- TODO: img/ifft-ocean-pipeline.svg -->
+<figure class="my-8">
+  <img src="img/ifft-ocean-pipeline.svg" alt="iFFT-Ozean-Pipeline: Phillips-Spektrum &rarr; komplexe Amplituden &rarr; iFFT Butterfly auf GPU &rarr; Displacement Map + Normal Map &rarr; gerenderte Wasseroberfl&auml;che." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:700px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Von der Statistik zum Ozean: 65.536 Frequenzen, in Echtzeit auf der GPU. Implementierung: Phil Crowther, Ocean3.js (<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" class="text-gray-500 hover:text-gray-400" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a>).</figcaption>
+</figure>
 
 <h3>Von der Statistik zur Welle: Tessendorfs Methode</h3>
 
