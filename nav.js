@@ -25,8 +25,8 @@
     },
     {
       icon: '\uD83E\uDD85',  // 🦅
-      de: { title: 'Vogelsimulator', subtitle: '3D \u00B7 Webcam \u00B7 Gestensteuerung', href: '/vogelsimulator.html' },
-      en: { title: 'Bird Simulator', subtitle: '3D \u00B7 Webcam \u00B7 Gesture Control', href: '/en/flight-simulator.html' }
+      de: { title: 'Fourier & Ozeanwellen', subtitle: 'FFT \u00B7 Octree \u00B7 Ozean-Shader', href: '/vogelsimulator.html' },
+      en: { title: 'Fourier & Ocean Waves', subtitle: 'FFT \u00B7 Octree \u00B7 Ocean Shader', href: '/en/flight-simulator.html' }
     },
     {
       icon: '\u03BB',  // λ

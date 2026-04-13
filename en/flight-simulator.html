@@ -4,28 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="max-image-preview:large">
-  <title>3D Bird Flight Simulator with Webcam Controls &ndash; Built with AI in One Afternoon (Three.js)</title>
-  <meta name="description" content="How a human and an AI built a browser-based 3D bird flight simulator with webcam gesture controls in a single afternoon. Three.js, MediaPipe, and lots of iteration.">
+  <title>Fourier, Ocean Waves and 65,536 Frequencies &mdash; How an 1822 Idea Shapes Water, Images and Music Today</title>
+  <meta name="description" content="How the Fourier Transform from 1822 generates ocean waves on the GPU, compresses JPEG images, and encodes music today. With interactive visualizations, KaTeX formulas, and the history from FFT to Tessendorf.">
   <meta name="author" content="Mathias Leonhardt">
   <link rel="canonical" href="https://ki-mathias.de/en/flight-simulator.html">
-  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html">
   <link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html">
   <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/vogelsimulator.html">
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="A Bird, a Webcam and One Afternoon &mdash; 3D Flight Simulator in the Browser">
-  <meta property="og:description" content="How a human and an AI built a browser-based 3D bird flight simulator with webcam gesture controls in a single afternoon.">
+  <meta property="og:title" content="Fourier, Ocean Waves and 65,536 Frequencies &mdash; How an 1822 Idea Shapes Water, Images and Music Today">
+  <meta property="og:description" content="How the Fourier Transform from 1822 generates ocean waves on the GPU, compresses JPEG images, and encodes music. With interactive visualizations and the history from FFT to Tessendorf.">
   <meta property="og:url" content="https://ki-mathias.de/en/flight-simulator.html">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Mathias Leonhardt Blog">
-  <meta property="article:published_time" content="2026-03-30">
+  <meta property="article:published_time" content="2026-04-13">
   <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Fourier Transform">
+  <meta property="article:tag" content="FFT">
+  <meta property="article:tag" content="Computer Graphics">
+  <meta property="article:tag" content="Mathematics">
   <meta property="article:tag" content="Three.js">
-  <meta property="article:tag" content="WebGL">
-  <meta property="article:tag" content="MediaPipe">
-  <meta property="article:tag" content="Game Development">
-  <meta property="article:tag" content="AI Programming">
 
   <!-- Twitter Card -->
   <meta property="og:image" content="https://ki-mathias.de/img/og/vogelsimulator-en.png">
@@ -33,8 +33,8 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://ki-mathias.de/img/og/vogelsimulator-en.png">
-  <meta name="twitter:title" content="A Bird, a Webcam and One Afternoon">
-  <meta name="twitter:description" content="3D bird flight simulator with webcam gesture controls &mdash; built in one afternoon with AI.">
+  <meta name="twitter:title" content="Fourier, Ocean Waves and 65,536 Frequencies">
+  <meta name="twitter:description" content="How an idea from 1822 shapes water, images and music today &mdash; the story of the Fourier Transform, interactively explained.">
 
   <!-- All resources self-hosted &mdash; zero external requests, fully GDPR-compliant -->
   <link rel="stylesheet" href="/vendor/tailwind.css">
@@ -44,7 +44,7 @@
   <script defer src="/vendor/katex/auto-render.min.js"></script>
   <script src="/vendor/react.production.min.js"></script>
   <script src="/vendor/react-dom.production.min.js"></script>
-  <script defer src="/components.js"></script>
+  <script defer src="/vogelsimulator-components.js"></script>
 
   <!-- Self-hosted Inter font (WOFF2, GDPR-compliant) -->
   <style>
@@ -59,19 +59,19 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "A Bird, a Webcam and One Afternoon",
-    "description": "How a human and an AI built a browser-based 3D bird flight simulator with webcam gesture controls in a single afternoon. Three.js, MediaPipe, and lots of iteration.",
+    "headline": "Fourier, Ocean Waves and 65,536 Frequencies \u2014 How an 1822 Idea Shapes Water, Images and Music Today",
+    "description": "How the Fourier Transform from 1822 generates ocean waves on the GPU, compresses JPEG images, and encodes music. With interactive visualizations, KaTeX formulas, and the history from FFT to Tessendorf.",
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
-    "datePublished": "2026-03-30",
-    "dateModified": "2026-03-30",
+    "datePublished": "2026-04-13",
+    "dateModified": "2026-04-13",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/flight-simulator.html" },
     "inLanguage": "en",
     "isAccessibleForFree": true,
-    "keywords": ["Three.js", "WebGL", "MediaPipe", "Game Development", "AI Programming", "Webcam Controls"],
-    "articleSection": "Game Development",
-    "wordCount": 5500,
-    "timeRequired": "PT25M"
+    "keywords": ["Fourier Transform", "FFT", "iFFT", "Octree", "Frustum Culling", "Ocean Shader", "Three.js", "Computer Graphics", "JPEG", "DCT"],
+    "articleSection": "Mathematics \u00b7 Computer Graphics \u00b7 Fourier",
+    "wordCount": 9000,
+    "timeRequired": "PT40M"
   }
   </script>
 
@@ -143,10 +143,6 @@
     .nav-link { transition: color 0.2s; }
     .nav-link.active { color: #22d3ee; }
 
-    /* Mobile nav */
-    #mobile-menu { display: none; }
-    #mobile-menu.open { display: flex; }
-
     /* Illustration figures */
     .illus {
       margin: 2rem auto; border-radius: 0.75rem; overflow: hidden;
@@ -157,7 +153,6 @@
       opacity: 0.92; transition: opacity 0.3s;
       image-rendering: auto;
     }
-    /* Never upscale beyond native resolution */
     .illus { width: fit-content; }
     .illus img:hover { opacity: 1; }
     .illus figcaption {
@@ -252,6 +247,12 @@
       font-family: 'Menlo', 'Consolas', monospace; color: #e2e8f0;
       box-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
+
+    /* Cross-ref link */
+    .crossref {
+      border-bottom: 1px dashed #f59e0b; color: #fcd34d;
+    }
+    .crossref:hover { color: #fde68a; }
   </style>
 </head>
 
@@ -262,14 +263,16 @@
 
 <!-- TOC items for nav.js -->
 <div id="nav-toc-items" style="display:none;">
-  <a href="#demo" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Try It Yourself</a>
-  <a href="#phase-1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; The Scaffold</a>
-  <a href="#phase-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; A World from Nothing</a>
-  <a href="#phase-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; The Bird Takes Flight</a>
-  <a href="#phase-4" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Hands Become Wings</a>
-  <a href="#polish" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; The Last 20%</a>
-  <a href="#community" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; iFFT Water on the GPU</a>
-  <a href="#meta" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; What This Says About AI</a>
+  <a href="#demo" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Try it yourself</a>
+  <a href="#landschaft" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; A World from Nothing</a>
+  <a href="#vogelflug" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; The Bird Takes Flight</a>
+  <a href="#octree" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; 100,000 Trees</a>
+  <a href="#fourier" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; The Fourier Idea</a>
+  <a href="#fourier-uberall" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Fourier Everywhere</a>
+  <a href="#ozean" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; From Spectrum to Ocean</a>
+  <a href="#bauprozess" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; How We Built It</a>
+  <a href="#ki-reflexion" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">9 &middot; What This Says About AI</a>
+  <a href="#faq" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">FAQ</a>
 </div>
 
 <!-- Navigation (generated by nav.js) -->
@@ -286,19 +289,19 @@
 
 <!-- HERO -->
 <header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
-  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Game Development</p>
-  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight">
-    A Bird, a Webcam and One Afternoon
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Mathematics &middot; Computer Graphics &middot; Fourier</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Fourier, Ocean Waves and 65,536 Frequencies
   </h1>
   <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
-    How a human and an AI built a browser-based 3D flight simulator with gesture controls &mdash; in a single session.
+    How an idea from 1822 shapes water, images and music today &mdash; the story of the Fourier Transform, from mathematical insight through the FFT algorithm to 65,536 waves per frame on the GPU.
   </p>
   <div class="flex items-center gap-3 text-xs text-gray-500">
     <span>KI-Mathias</span>
     <span>&middot;</span>
-    <time datetime="2026-03-30">March 2026</time>
+    <time datetime="2026-04-13">April 2026</time>
     <span>&middot;</span>
-    <span>~25 min read</span>
+    <span>~40 min read</span>
   </div>
 </header>
 
@@ -307,19 +310,19 @@
   <div class="rounded-xl overflow-hidden border border-gray-700/50 bg-gray-900/50">
     <div class="relative w-full" style="padding-bottom:56.25%">
       <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/OZw1CHyIe-8"
-        title="I control a bird with my arms — AI wrote the code" frameborder="0"
+        title="I control a bird with my arms &mdash; AI wrote the code" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen loading="lazy"></iframe>
     </div>
     <div class="px-5 py-4 flex items-center justify-between">
       <div>
-        <p class="text-sm font-semibold text-gray-200">Prefer watching over reading?</p>
-        <p class="text-xs text-gray-500">90 seconds &middot; Bird flight simulator with webcam control</p>
+        <p class="text-sm font-semibold text-gray-200">Want to see the simulator in action?</p>
+        <p class="text-xs text-gray-500">90 seconds &middot; Bird flight over FFT-generated ocean waves</p>
       </div>
       <a href="https://youtu.be/OZw1CHyIe-8" target="_blank" rel="noopener"
          class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
-        Watch on YouTube
+        On YouTube
       </a>
     </div>
   </div>
@@ -328,7 +331,7 @@
 <main class="max-w-4xl px-4 sm:px-6">
 
 <!-- ============================================================ -->
-<!-- SECTION 1: Try It Yourself -->
+<!-- SECTION 1: Try it yourself -->
 <!-- ============================================================ -->
 <section id="demo" class="pb-16">
 <div class="prose-dark">
@@ -336,47 +339,517 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
 <h2>Try It Yourself</h2>
 
-<p>Before we talk &mdash; fly first.</p>
+<p>Before we talk &mdash; fly first. And watch the water while you do.</p>
 
 <div class="try-it" style="text-align: center; padding: 2rem 1.5rem;">
-  <p style="margin-bottom: 1.25rem;">Everything runs in the browser. No install, no download.</p>
+  <p style="margin-bottom: 1.25rem;">The simulator runs entirely in the browser. No installation, no download.</p>
   <a href="https://pmmathias.github.io/VogelSimulator/" target="_blank" rel="noopener" class="cta-btn">Fly now &rarr;</a>
 </div>
 
 <p><strong>Keyboard controls:</strong></p>
+
 <p>
-  <kbd>SPACE</kbd> Flap wings &nbsp;
+  <kbd>SPACE</kbd> Wing flap &nbsp;
   <kbd>A</kbd>/<kbd>D</kbd> Turn &nbsp;
   <kbd>W</kbd> Dive &nbsp;
   <kbd>S</kbd> Climb &nbsp;
   <kbd>T</kbd> Webcam on/off
 </p>
 
+<figure class="illus">
+  <a href="https://pmmathias.github.io/VogelSimulator/" target="_blank" rel="noopener" title="Fly now!">
+    <img src="/img/vogel-hero.jpg" alt="Mountain landscape with lakes, forests and fog &mdash; procedurally generated, with FFT ocean in the foreground" loading="lazy" style="cursor:pointer;">
+  </a>
+  <figcaption>The world of the flight simulator: procedurally generated landscape, FFT-based ocean waves, 100,000 trees. <strong><a href="https://pmmathias.github.io/VogelSimulator/" target="_blank" rel="noopener" style="color:#22d3ee;">Click to fly &rarr;</a></strong></figcaption>
+</figure>
+
+<p>When you fly over the sea and see how the waves break differently at each crest, how the horizon is a jagged band rather than a clean line &mdash; you are looking at Fourier.</p>
+
+<p>This is the story of a mathematical idea. Joseph Fourier had an insight in 1822 so fundamental that 200 years later it is literally inside every JPEG image, every MP3 file, every AAA ocean shader, and on every modern chip. The idea itself is surprisingly simple. Its consequences are nearly boundless.</p>
+
+<p>We will take it apart. But first, let me explain what you just flew through.</p>
+
 <div class="summary-box" style="text-align:center;">
-  <p class="text-sm text-gray-300"><strong>Open Source:</strong> The entire source code is public. Clone the repo, read the code, build on top of it &mdash; you&rsquo;re welcome to.</p>
+  <p class="text-sm text-gray-300"><strong>Open Source:</strong> The entire simulator source code is public.</p>
   <p class="text-sm" style="margin-bottom:0;">
     <a href="https://github.com/pmmathias/VogelSimulator" style="color:#22d3ee; text-decoration:underline;">github.com/pmmathias/VogelSimulator</a>
   </p>
 </div>
 
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: A World from Nothing -->
+<!-- ============================================================ -->
+<section id="landschaft" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 2</p>
+<h2>A World from Nothing &mdash; Procedural Landscape</h2>
+
+<h3>Terrain Without a Single Hand-Placed Vertex</h3>
+
+<p>The landscape you flew over was never modeled by a human. No 3D artist placed a hill, no designer drew a valley. Instead, mathematics describes what should appear where, and the computer generates a slightly different but always plausible island on each load.</p>
+
+<p>The core principle is surprisingly simple: <strong>Paraboloids as building blocks.</strong> Picture a flat table. Now place invisible hills on it &mdash; each defined by a center point \((c_x, c_z)\), a radius \(r\), and a height \(h\). At every point on the terrain you add up all contributions:</p>
+
+<div class="math-display">
+  \[ H(x,z) = \sum_i h_i \cdot \max\!\left(0,\; 1 - \frac{(x-c_{x,i})^2 + (z-c_{z,i})^2}{r_i^2}\right) \]
+</div>
+
+<p>900 positive paraboloids shape the hills. 270 negative paraboloids carve out valleys. A radial falloff lets the island gently sink into the sea at the edges. The result looks natural because hills in nature actually do arise through the superposition of different processes &mdash; tectonics, erosion, deposition. We approximate this process with thousands of simple functions.</p>
+
 <figure class="illus">
-  <a href="https://pmmathias.github.io/VogelSimulator/" target="_blank" rel="noopener" title="Fly now!">
-    <img src="/img/vogel-hero.jpg" alt="Mountain landscape with lakes, forests and mist &mdash; procedurally generated" loading="lazy" style="cursor:pointer;">
-  </a>
-  <figcaption>The world of the bird simulator &mdash; procedurally generated, in one afternoon. <strong><a href="https://pmmathias.github.io/VogelSimulator/" target="_blank" rel="noopener" style="color:#22d3ee;">Click to fly &rarr;</a></strong></figcaption>
+  <img src="/img/vogel-terrain.jpg" alt="Dramatic mountain slope: grass, rock and snow &mdash; procedurally generated from 900 paraboloids" loading="lazy">
+  <figcaption>900 positive + 270 negative paraboloids + radial island falloff = a natural mountain landscape.</figcaption>
 </figure>
 
-<p>Did it work? Good. Then let me tell you how this thing came to life in a single afternoon.</p>
+<h3>Five Texture Layers</h3>
 
-<h3>How We Worked</h3>
+<p>Geometry alone creates lumps, not a landscape. Color and texture make the difference. A <span class="glossary" title="GLSL: OpenGL Shading Language. A C-like programming language that runs directly on the GPU.">GLSL</span> fragment shader calculates per pixel which of the five texture layers is dominant: sand at the beach, grass on the hills, earth at mid elevations, rock on steep slopes, snow on the peaks. Transitions run through a <code>smoothstep</code> function that avoids sharp edges.</p>
 
-<p>Before we talk about code, a word about the process &ndash; because it&rsquo;s at least as interesting as the result.</p>
+<div class="illus-row">
+  <figure class="illus">
+    <img src="/img/vogel-schnee.jpg" alt="Snow-capped peaks &mdash; white cap seen up close" loading="lazy">
+    <figcaption>Snow-capped peaks &mdash; fifth texture layer on the highest elevations.</figcaption>
+  </figure>
+  <figure class="illus">
+    <img src="/img/vogel-textures.jpg" alt="Rock-to-snow blending &mdash; five layers alternating" loading="lazy">
+    <figcaption>Rock, earth, forest &mdash; smooth transitions between the layers.</figcaption>
+  </figure>
+</div>
 
-<p>I was the <strong>Product Owner</strong>. The vision, the decisions, the &ldquo;this feels wrong, do it differently&rdquo; &ndash; that was me. Claude Code was everything else: <strong>project manager, developer, and tester</strong> rolled into one. And yes, I mean that literally.</p>
+<p>Buildings arise procedurally in a similar way: five types (houses, barns, towers, hotels, high-rises), placed by noise functions in flat coastal areas. A second noise layer separates city from forest zones so that trees do not grow through rooftops. 900 buildings, 100,000 trees &mdash; all generated, none placed by hand.</p>
 
-<p>Claude set up a <strong>ticket system in Markdown</strong> at the start &ndash; 40 tickets across 5 phases, each with priority, dependencies, and acceptance criteria. Tickets moved through folders: <code>backlog/</code> &rarr; <code>in-progress/</code> &rarr; <code>done/</code>. No Jira, no Trello &ndash; just files in a Git repository.</p>
+<figure class="illus">
+  <img src="/img/vogel-5layers.jpg" alt="Coastal landscape with all five texture layers: sand, grass, rock, snow and water" loading="lazy">
+  <figcaption>All five layers visible at once: sand, grass, earth, rock, snow.</figcaption>
+</figure>
 
-<p>A typical ticket looked like this:</p>
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
+  <p><strong>900 paraboloids + negative arcs + radial island falloff = a natural landscape, without ever placing a single vertex manually. Five texture layers, 100,000 trees and 900 buildings &mdash; all procedural.</strong></p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: The Bird Takes Flight -->
+<!-- ============================================================ -->
+<section id="vogelflug" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 3</p>
+<h2>The Bird Takes Flight &mdash; Flight Physics and Webcam</h2>
+
+<h3>From a Camera with Vertigo to Real Gliding</h3>
+
+<p>The terrain was there. But a bird that doesn't fly is just a camera with vertigo. The first approach was a simple arcade model: press a key, go up. It worked technically. But it felt like an elevator with a panorama window &mdash; no gliding, no lift, no <em>flying</em>.</p>
+
+<p>So we built an aerodynamic model. The central insight: <strong>lift depends on the square of velocity.</strong> That is dynamic pressure &mdash; the same physics that keeps real birds and aircraft in the air.</p>
+
+<div class="math-display">
+  \[ L = \frac{1}{2} \rho v^2 \cdot A_{\text{wing}} \cdot C_L \]
+</div>
+
+<p>The first wing flap did nothing. <em>Gravity</em> won. Every time. The problem: we had forgotten the <strong>wing incidence angle</strong>. Real bird wings are not flat &mdash; they have a built-in angle of attack of about 3&deg; that generates minimal lift even in straight and level flight. Without it, the wing is a board, and a board falls. Six iterations of the physics model later, the balance of gravity, lift and wing flap was right. Until a dive felt dangerous and a loop made the stomach clench.</p>
+
+<figure class="illus">
+  <img src="/img/vogel-coast.jpg" alt="Low-level flight over coast with trees, buildings and water" loading="lazy">
+  <figcaption>Low-level flight through the settlement &mdash; after six physics iterations it felt like flying.</figcaption>
+</figure>
+
+<h3>Arms as Wings: MediaPipe Pose Detection</h3>
+
+<p>And then the crazy part: what if instead of the keyboard, you use your arms? <strong>MediaPipe Pose Detection</strong> makes this possible. Google's ML model recognizes 33 body landmarks in real time &mdash; directly in the browser, without a server, without the cloud. Shoulders, elbows, wrists: everything we need.</p>
+
+<p>The logic: we measure the height of both wrists relative to the shoulders. Hands high = wings up. Hands low = wings down. The rate of change between them = flap strength. The webcam image is mirrored, landmarks can disappear, detection rate fluctuates with lighting. Our solution was <strong>graceful degradation</strong>: when MediaPipe detects no pose, the system quietly falls back to keyboard controls. No error, no popup.</p>
+
+<p>The feeling when you first raise your arms and the bird climbs &mdash; that is the moment when a technical project becomes something you want to show people.</p>
+
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
+  <p><strong>Aerodynamic physics model (Bernoulli lift), 6 iterations to get the feel right, MediaPipe webcam control with graceful degradation.</strong></p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: 100,000 Trees — Octree and Frustum Culling -->
+<!-- ============================================================ -->
+<section id="octree" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4</p>
+<h2>100,000 Trees &mdash; Octree and Frustum Culling</h2>
+
+<h3>The Problem: 60 FPS with 100,000 Objects</h3>
+
+<p>An island without forests looks bare. So we placed trees. Many trees. 100,000 trees.</p>
+
+<p>The naive approach: send all 100,000 trees to the GPU every frame and let it draw them. Result: 4 FPS. The computer couldn't keep up. This isn't surprising &mdash; even if a tree has only 200 polygons, 100,000 trees are 20 million polygons per frame. A modern GPU can handle that in theory, but the <em>overhead per draw call</em> is the real problem. Each individual draw instruction causes CPU-GPU communication. 100,000 draw calls can bring even the fastest GPU to its knees.</p>
+
+<p>The solution is two-stage: first decide <em>which</em> objects could even be visible. Then draw all visible ones at once. The first step is <strong>frustum culling</strong>. The second step needs a spatial data structure: the <strong>octree</strong>.</p>
+
+<h3>The View Frustum: Six Planes Define the World</h3>
+
+<p>A <span class="glossary" title="Perspective camera: A camera where distant objects appear smaller than nearby ones. The field of view has the shape of a truncated cone.">perspective camera</span> doesn't see a full circle, but a <strong><span class="glossary" title="Frustum: A geometric solid created by two parallel cutting planes of a cone &mdash; like a cone with the tip cut off.">frustum</span></strong> &mdash; a truncated cone bounded by six planes:</p>
+
+<ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
+  <li><strong>Near plane</strong> and <strong>far plane</strong>: minimum and maximum view distance</li>
+  <li><strong>Left, right, top, bottom</strong>: the four side faces of the view cone</li>
+</ul>
+
+<p>Each of these planes can be written as a normal vector \(\mathbf{n}\) and an offset \(d\). A point \(\mathbf{p}\) lies on the visible side of a plane when:</p>
+
+<div class="math-display">
+  \[ \mathbf{n} \cdot \mathbf{p} + d \geq 0 \]
+</div>
+
+<p>An object is visible if it lies on the visible side of <em>all six planes</em> &mdash; or more precisely: if its <span class="glossary" title="AABB: Axis-Aligned Bounding Box. An axis-parallel box that completely encloses an object. Used for fast collision and visibility tests.">AABB</span> (axis-aligned bounding box) at least partially intersects the frustum. The frustum planes are extracted from the camera's projection matrix. Per frame: calculate six plane equations from the current camera position, done.</p>
+
+<!-- TODO: img/view-frustum.svg -->
+
+<p>The naive frustum check has complexity \(O(n)\) &mdash; we have to test each of the 100,000 objects against the six planes. At 60 FPS that is 6 million plane tests per second. This is surprisingly fast &mdash; CPUs can handle it. But the question is whether we can be smarter: if we know that all trees in a certain region of space lie outside the frustum, we don't need to test the individual trees at all.</p>
+
+<h3>The Octree: From \(O(n)\) to \(O(\log n)\)</h3>
+
+<p>An <strong><span class="glossary" title="Octree: A spatial data structure that recursively subdivides a cube into 8 equal sub-cubes. Each node has exactly 8 children.">octree</span></strong> subdivides space recursively into eight equal-sized cubes. Each cube that contains objects is further subdivided &mdash; down to a minimum size or maximum depth. The result is a tree: the root represents the entire world, the leaves are small spatial cells each containing a few objects.</p>
+
+<!-- TODO: img/octree-diagram.svg -->
+
+<p>During frustum culling, the algorithm traverses the octree from root to leaves:</p>
+
+<ol class="list-decimal pl-6 mb-4 text-gray-300 leading-relaxed">
+  <li>Check whether the AABB of the current node lies <em>completely outside</em> the frustum. If so: discard the entire subtree. Not a single child is examined.</li>
+  <li>Does the node lie <em>completely inside</em>? Then render all objects in it without further tests.</li>
+  <li>Does it lie <em>partially inside</em>? Recursively check all eight children.</li>
+</ol>
+
+<p>In the ideal case &mdash; when a large part of the world is behind the camera &mdash; the algorithm discards entire branches of the tree at high levels. Of 100,000 objects, only a few thousand octree nodes are visited at all. The effective complexity approaches \(O(\log n)\) &mdash; logarithmic instead of linear.</p>
+
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Technical Stats</p>
+  <ul class="list-disc pl-6 text-gray-300 leading-relaxed">
+    <li>100,000 trees in the scene</li>
+    <li>Octree depth: 6 levels, up to 8&sup6; = 262,144 leaves (in practice far fewer, since the island is not cubic)</li>
+    <li>Typically rendered per frame: 3,000 &ndash; 5,000 trees</li>
+    <li><strong>Savings factor: ~25&times;</strong> fewer draw calls compared to the naive approach</li>
+  </ul>
+</div>
+
+<p>The octree is built once at load time, in about 80 ms. After that it is static &mdash; trees don't move. The query per frame takes under 0.5 ms. This gives us 60 FPS with a world that would naively be unrenderable.</p>
+
+<h3>Why This Is Relevant to Fourier</h3>
+
+<p>The octree and frustum culling are space partitioning techniques: they solve the problem of <em>which parts</em> of a complex structure are relevant. The Fourier Transform solves the same problem &mdash; but in frequency space instead of geometric space. Both ideas are based on the same core intuition: <em>Don't look at everything at once. Understanding comes through decomposition.</em></p>
+
+<div class="component-wrap"><div id="mount-octree-query"></div></div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: The Fourier Idea -->
+<!-- ============================================================ -->
+<section id="fourier" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 5</p>
+<h2>The Fourier Idea</h2>
+
+<h3>A Claim That Outraged Reasonable Mathematicians</h3>
+
+<p>In 1807, Joseph Fourier presented a manuscript to the Paris Acad&eacute;mie des Sciences. His claim was simple and simultaneously outrageous: <strong>every periodic function can be represented as an infinite sum of sine and cosine functions.</strong> Not some functions. All of them. Including square waves with sharp corners. Including sawtooth waves. Including discontinuous step functions that are obviously not smooth.</p>
+
+<p>Lagrange, one of the greatest mathematicians of his time, considered the claim false and blocked publication. Not until 1822 did Fourier's book <em>Th&eacute;orie analytique de la chaleur</em> appear &mdash; and the mathematics of the next two centuries was forever changed.</p>
+
+<p>What is so special about sines and cosines? They are the <strong>natural basis functions of periodic phenomena</strong>. Everything that vibrates &mdash; a guitar string, an ocean wave, the electric field of a laser &mdash; vibrates at its core like a sine. The Fourier series says: any arbitrary periodic shape is a mixture of such pure oscillations.</p>
+
+<h3>The Fourier Series</h3>
+
+<p>Let \(f(t)\) be a periodic function with period \(T\). Then:</p>
+
+<div class="math-display">
+  \[ f(t) = a_0 + \sum_{n=1}^{\infty} \left[ a_n \cos\!\left(\frac{2\pi n}{T} t\right) + b_n \sin\!\left(\frac{2\pi n}{T} t\right) \right] \]
+</div>
+
+<p>The coefficients \(a_n\) and \(b_n\) determine how strongly each frequency \(n/T\) is present in the function. They can be calculated by integration:</p>
+
+<div class="math-display">
+  \[ a_n = \frac{2}{T} \int_0^T f(t)\,\cos\!\left(\frac{2\pi n}{T} t\right) dt \qquad b_n = \frac{2}{T} \int_0^T f(t)\,\sin\!\left(\frac{2\pi n}{T} t\right) dt \]
+</div>
+
+<p>What do these integrals mean geometrically? They measure <em>how similar</em> the function \(f\) is to a sine oscillation of frequency \(n/T\). Multiply \(f\) by a cosine and integrate &mdash; you get the correlation. <strong>Fourier analysis is systematic correlation with all possible frequencies.</strong></p>
+
+<h3>The Fourier Transform</h3>
+
+<p>For non-periodic functions, the series generalizes to the <strong>Fourier Transform</strong>:</p>
+
+<div class="math-display">
+  \[ \hat{f}(\xi) = \int_{-\infty}^{\infty} f(t)\, e^{-2\pi i \xi t}\, dt \]
+</div>
+
+<p>Here \(\hat{f}(\xi)\) is a complex number for each frequency \(\xi\). The magnitude \(|\hat{f}(\xi)|\) is the <em>amplitude</em>, the argument \(\arg(\hat{f}(\xi))\) is the <em>phase</em> of the respective frequency component. And the inverse &mdash; the <strong>inverse Fourier Transform</strong> &mdash; reconstructs the original function:</p>
+
+<div class="math-display">
+  \[ f(t) = \int_{-\infty}^{\infty} \hat{f}(\xi)\, e^{2\pi i \xi t}\, d\xi \]
+</div>
+
+<p>The Fourier Transform is thus a <strong>fully invertible change of coordinates</strong>: from the time or spatial domain into the frequency domain and back. No information is lost. It is literally just a different perspective on the same data.</p>
+
+<h3>The Analogy to PCA: a Rotated Coordinate System</h3>
+
+<p>Anyone who has read the <a href="/en/eigenvalues.html" class="crossref">blog post on eigenvalues and AI</a> will recognize a deep parallel. <span class="glossary" title="PCA: Principal Component Analysis. A method that uses the directions of greatest variance in a dataset as a new coordinate system.">PCA</span> rotates the coordinate system so that the axes align with the directions of greatest variance in the dataset. The new axes are the eigenvectors of the covariance matrix &mdash; <em>orthogonal basis vectors that optimally fit the data.</em></p>
+
+<p>The Fourier Transform does structurally the same thing: it rotates the function-space coordinate system into the basis of sine functions. This basis is orthogonal in the sense of the function inner product &mdash; two sine functions of different frequencies are perpendicular to each other:</p>
+
+<div class="math-display">
+  \[ \int_0^T \sin(2\pi m t / T)\,\sin(2\pi n t / T)\, dt = \begin{cases} T/2 & m = n \\ 0 & m \neq n \end{cases} \]
+</div>
+
+<p>The difference: <strong>PCA finds the optimal basis from the data itself. FFT uses a fixed, universal basis &mdash; the frequencies.</strong> PCA decomposes into directions of maximum variance; FFT decomposes into oscillation frequencies. Both are orthogonal projections onto a new basis.</p>
+
+<!-- TODO: img/pca-fourier-analogy.svg -->
+
+<p>Another parallel is found in the <a href="/en/music.html" class="crossref">cochlea of the human ear</a>: the snail of the inner ear is a mechanical Fourier analysis. Different locations along the basilar membrane resonate at different frequencies &mdash; the ear decomposes sound into its Fourier components before the brain processes it. Evolution &ldquo;discovered&rdquo; the same mathematics 500 million years before Fourier.</p>
+
+<h3>The Fast Fourier Transform: from \(O(N^2)\) to \(O(N \log N)\)</h3>
+
+<p>The discrete Fourier Transform (DFT) translates Fourier analysis onto finite sequences of \(N\) samples:</p>
+
+<div class="math-display">
+  \[ X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-2\pi i k n / N}, \qquad k = 0, 1, \ldots, N-1 \]
+</div>
+
+<p>Computed naively: for each of the \(N\) output values \(X[k]\) you must sum over all \(N\) input values. That is \(O(N^2)\). For \(N = 65{,}536\) &mdash; the resolution of our ocean simulator &mdash; that would be \(4.3 \cdot 10^9\) complex multiplications. Per frame. Impossible.</p>
+
+<p>In 1965, <strong>James Cooley</strong> and <strong>John Tukey</strong> published an algorithm that computes the DFT in \(O(N \log N)\): the <strong>Fast Fourier Transform (FFT)</strong>. The idea: the DFT of a sequence of length \(N\) can be split into two DFTs of length \(N/2\) &mdash; one for the even, one for the odd indices. This divide-and-conquer scheme is applied recursively until you reach DFTs of length 1 (trivial result). With \(\log_2(N)\) recursion levels and \(N/2\) operations per level:</p>
+
+<div class="math-display">
+  \[ T_{\text{FFT}}(N) = \frac{N}{2} \log_2 N \quad \text{vs.} \quad T_{\text{DFT}}(N) = N^2 \]
+</div>
+
+<p>For \(N = 65{,}536 = 2^{16}\): DFT would need \(4.3 \cdot 10^9\) operations, FFT needs \(5.2 \cdot 10^5\). <strong>8,000 times faster.</strong></p>
+
+<p>The data flow of the Cooley-Tukey algorithm looks like a butterfly when visualized: each stage combines results in pairs via complex rotations around the <span class="glossary" title="Twiddle factors: Complex roots of unity e^{-2&pi;ik/N} that serve as rotation factors at each step of the FFT butterfly algorithm.">twiddle factors</span> \(W_N^k = e^{-2\pi ik/N}\). This visual impression gave the procedure its name: the <strong>butterfly algorithm</strong>.</p>
+
+<!-- TODO: img/fft-butterfly.svg -->
+
+<div class="component-wrap"><div id="mount-fourier-decomposition"></div></div>
+
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">The Core Idea</p>
+  <p><strong>Fourier 1822: every function = sum of sine functions. Cooley &amp; Tukey 1965: this sum can be computed in O(N log N) instead of O(N&sup2;). These two ideas together made signal processing, image compression, audio coding and GPU-based ocean physics possible.</strong></p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: Fourier Everywhere -->
+<!-- ============================================================ -->
+<section id="fourier-uberall" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 6</p>
+<h2>Fourier Everywhere &mdash; Images, JPEG, MP3, Phase Correlation</h2>
+
+<h3>Images in Frequency Space</h3>
+
+<p>The Fourier Transform is not limited to time-dependent signals. Images are two-dimensional functions &mdash; the brightness at each pixel as a function of \((x, y)\). So there is also a <strong>2D FFT</strong>:</p>
+
+<div class="math-display">
+  \[ F(u, v) = \sum_{x=0}^{M-1} \sum_{y=0}^{N-1} f(x,y)\, e^{-2\pi i (ux/M + vy/N)} \]
+</div>
+
+<p>What do the frequencies mean in images? <strong>Low frequencies</strong> &mdash; points near the center of frequency space &mdash; encode slow changes: backgrounds, color gradients, the coarse structure of the image. <strong>High frequencies</strong> &mdash; points at the edges &mdash; encode rapid changes: edges, fine textures, details.</p>
+
+<p>This decomposition has an important practical consequence: most natural images have a <strong>strongly clustered energy distribution</strong>. Almost all information is in the low frequencies. The high frequencies contribute little &mdash; and they can therefore be discarded or coarsened without the human eye noticing the difference.</p>
+
+<p>The 2D FFT also enables <strong>fast convolution</strong>: applying a blur filter to an image is an expensive convolution operation in spatial space (\(O(N^2 \cdot K^2)\) for an \(N\times N\) image with a \(K\times K\) kernel). In frequency space it is a simple <em>pointwise multiplication</em> (\(O(N^2)\)). The typical path is therefore: compute FFT, multiply, inverse FFT &mdash; already significantly faster than direct convolution for moderately large images.</p>
+
+<!-- TODO: img/jpeg-compression.svg -->
+
+<h3>JPEG: Fourier in 8&times;8 Blocks</h3>
+
+<p>Every JPEG image you have ever seen is full of Fourier mathematics &mdash; in a slightly modified form. JPEG uses the <strong>Discrete Cosine Transform (DCT)</strong>, a close relative of the DFT that produces only real numbers and proved better suited for image compression.</p>
+
+<p>The JPEG compression algorithm works in five steps:</p>
+
+<ol class="list-decimal pl-6 mb-4 text-gray-300 leading-relaxed">
+  <li><strong>Division</strong>: The image is split into 8&times;8-pixel blocks.</li>
+  <li><strong>DCT</strong>: Each block is transformed into 64 frequency coefficients &mdash; from DC (the average brightness) to the highest spatial frequencies.</li>
+  <li><strong>Quantization</strong>: The coefficients are divided by a quantization matrix and rounded. Low frequencies are preserved finely, high frequencies are coarsened. <em>This is the lossy step.</em></li>
+  <li><strong>Run-length encoding</strong>: Coefficients are read in zigzag order &mdash; from low to high frequencies. Since high frequencies are often zero after quantization, long runs of zeros arise that are coded compactly.</li>
+  <li><strong>Huffman coding</strong>: Lossless compression of the quantized values.</li>
+</ol>
+
+<p>The result: an image saved at quality 80 precisely retains the low frequencies (coarse structure) and coarsely quantizes the high frequencies (fine details). The human eye usually only notices the difference when the quality is set very low and the typical JPEG artifacts &mdash; blocky 8&times;8 patterns &mdash; become visible. Those are literally the 8&times;8 DCT blocks showing through under extreme compression.</p>
+
+<h3>MP3 and MDCT: Fourier for the Ear</h3>
+
+<p>MP3 does something similar for audio. The <strong>Modified Discrete Cosine Transform (MDCT)</strong> decomposes the audio signal into frequency bands &mdash; similar to the cochlea of the inner ear. A psychoacoustic model then exploits an insight: <strong>quiet frequencies sitting next to loud ones are masked by the hearing system</strong> and can be discarded without most people noticing the difference. A more detailed discussion of audio perception, the cochlea and the harmonic series can be found in the <a href="/en/music.html" class="crossref">blog post on the mathematics of music</a>.</p>
+
+<h3>Phase Correlation: Automatic Video-Music Synchronization</h3>
+
+<p>A lesser-known application: <strong>phase correlation</strong> for automatically finding matching musical passages. When cutting videos, you sometimes have two similar audio sequences &mdash; two takes of the same piece of music &mdash; and need to determine precisely at which point one aligns with the other.</p>
+
+<p>In the time domain that would be an expensive cross-correlation: try all possible offsets, compute the correlation for each one. In the frequency domain it is a one-liner: compute FFT, form the quotient of the normalized spectra, inverse FFT &mdash; the result is a spike precisely at the offset with maximum alignment. <strong>Exact synchronization search in \(O(N \log N)\) instead of \(O(N^2)\).</strong></p>
+
+<p>And with that we arrive at the decisive question: what happens when you apply the Fourier Transform in reverse &mdash; when you don't <em>analyze</em> a signal, but <em>synthesize</em> a signal from a frequency spectrum?</p>
+
+<div class="component-wrap"><div id="mount-wave-spectrum"></div></div>
+
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Fourier in Practice</p>
+  <ul class="list-disc pl-6 text-gray-300 leading-relaxed">
+    <li><strong>2D FFT:</strong> Fast image filtering, convolution as multiplication in frequency space</li>
+    <li><strong>JPEG (DCT):</strong> 8&times;8 blocks, quantization of high frequencies, blocking artifacts at low quality</li>
+    <li><strong>MP3 (MDCT):</strong> Psychoacoustic masking, frequency bands like the cochlea</li>
+    <li><strong>Phase correlation:</strong> Automatic synchronization in \(O(N \log N)\)</li>
+  </ul>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: From Statistics to Ocean — iFFT on the GPU -->
+<!-- ============================================================ -->
+<section id="ozean" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 7</p>
+<h2>From Statistics to Ocean &mdash; iFFT on the GPU</h2>
+
+<h3>What Happens When You Run Fourier in Reverse?</h3>
+
+<p>Fourier analysis takes a signal and finds the frequencies it contains. The <strong>inverse Fourier Transform (iFFT)</strong> does the opposite: it takes a frequency spectrum and synthesizes a signal from it. You define which frequencies should be present with what amplitude and phase &mdash; and the iFFT builds the corresponding waveform.</p>
+
+<p>That is exactly what the ocean simulator does. Not with audio signals, but with <em>water surfaces</em>.</p>
+
+<h3>The Phillips Spectrum: Oceans in Frequency Space</h3>
+
+<p>Owen Phillips formulated a statistical model in 1957 for how wave energy distributes across different frequencies and directions &mdash; depending on wind speed, wind direction, and the so-called <span class="glossary" title="Fetch: The distance over which wind has blown unobstructed over water. The greater the fetch, the larger the waves.">fetch</span> (the distance over which the wind has blown). The result: the <strong>Phillips spectrum</strong>:</p>
+
+<div class="math-display">
+  \[ P(\mathbf{k}) = A \, \frac{\exp\!\bigl(-1/(kL)^2\bigr)}{k^4} \, \bigl|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}\bigr|^2 \]
+</div>
+
+<p>Here \(\mathbf{k}\) is the wave vector in frequency space, \(k = |\mathbf{k}|\) its magnitude, \(L = v^2/g\) the characteristic wavelength at wind speed \(v\) and \(g = 9.81\,\text{m/s}^2\), and \(\hat{\mathbf{w}}\) the wind direction. The squared dot product \(|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}|^2\) suppresses waves perpendicular to the wind.</p>
+
+<p>This spectrum lives entirely in frequency space: every point on a 2D grid corresponds to a wave frequency and direction &mdash; not a position on the water. It describes no concrete wave, but a <em>probability distribution</em> of waves.</p>
+
+<!-- TODO: img/ifft-ocean-pipeline.svg -->
+
+<h3>From Statistics to Wave: Tessendorf's Method</h3>
+
+<p>The British mathematician and oceanographer <strong>Owen Phillips</strong> provided the statistics in 1957. The first FFT-based ocean visualization came in 1987: <strong>Gary Mastin, Peter Watterberg and John Mareda</strong> published in <em>IEEE Computer Graphics and Applications</em> the paper <em>"Fourier Synthesis of Ocean Scenes"</em> &mdash; the first application of the FFT method in computer graphics.</p>
+
+<p>The breakthrough for film and games came in 2001: <strong>Jerry Tessendorf</strong> of Industrial Light &amp; Magic published his paper <em>"Simulating Ocean Water"</em> for the SIGGRAPH courses &mdash; the standard reference to this day. Tessendorf did not invent the method, but he worked it out so clearly and tailored it so well to the needs of film production that his paper became the de facto textbook.</p>
+
+<p>The method in five steps:</p>
+
+<ol class="list-decimal pl-6 mb-4 text-gray-300 leading-relaxed">
+  <li><strong>Initialize spectrum:</strong> For each point \((k_x, k_y)\) of a 512&times;512 frequency grid, compute \(P(\mathbf{k})\) from the Phillips spectrum. Multiply by random Gaussian noise to obtain realistic phase variance.</li>
+  <li><strong>Time evolution:</strong> Each frequency propagates with the dispersion relation for deep-water waves: \(\omega(\mathbf{k}) = \sqrt{g\, k}\). Multiply each spectral value by \(e^{i\omega t}\) for the current time \(t\).</li>
+  <li><strong>iFFT on the GPU:</strong> Apply the inverse 2D FFT. The result is a 512&times;512 heightmap &mdash; the wave height at each point of the grid.</li>
+  <li><strong>Displacement and normals:</strong> A second iFFT pass generates horizontal displacements (for the characteristic sharp wave crests) and a third generates the surface normals for correct light refraction.</li>
+  <li><strong>Rendering:</strong> The displacement map displaces the vertices of the water mesh; the normal map controls the reflections.</li>
+</ol>
+
+<p>At 512&times;512 resolution that is \(512^2 = 262{,}144\) spectral values. Each value represents a single wave frequency and direction. The iFFT combines all 262,144 frequencies into a single, coherent water surface. <strong>65,536 visible waves per frame</strong> is a conservative measure of what the simulator's ocean actually represents.</p>
+
+<h3>The Butterfly Algorithm on the GPU</h3>
+
+<p>On the CPU, even the FFT would be too slow for 60 FPS: a 512&times;512 2D FFT comprises 512 row-wise 1D FFTs of length 512, then 512 column-wise 1D FFTs &mdash; 1,024 FFTs in total at 1,310,720 operations each. On the GPU this becomes a <strong>pipeline of fragment shaders</strong>:</p>
+
+<p>A 1D FFT of length 512 has \(\log_2(512) = 9\) butterfly stages. Each stage renders into a float framebuffer texture target. The result is used as input for the next stage &mdash; <strong>ping-pong buffering</strong> between two textures. Nine render passes, and the rows are done. The same transposed for the columns. At the end, the displacement map and the normal map are available as textures that are directly fed in as vertex shader uniforms.</p>
+
+<p>The JavaScript implementation chain running in the simulator is the result of a decade of open-source work:</p>
+
+<ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
+  <li><strong>2013</strong> &mdash; <em>David Li</em> builds a WebGL demo (<a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves/</a>), implementing Tessendorf's mathematics with fragment shaders</li>
+  <li><strong>2014</strong> &mdash; <em>Aleksandr Albert</em> ports the code into the Three.js world</li>
+  <li><strong>2015</strong> &mdash; <em>J&eacute;r&eacute;my Bouny</em> builds a reusable Three.js module (<a href="https://github.com/jbouny/ocean" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">github.com/jbouny/ocean</a>)</li>
+  <li><strong>2023</strong> &mdash; <em>Phil Crowther</em> updates the module for current Three.js versions, published at <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
+  <li><strong>2023</strong> &mdash; <em>Attila Schroeder</em> upgrades the shaders to GLSL3 / WebGL2</li>
+</ul>
+
+<p>The module <code>Ocean3.js</code> &mdash; approximately 570 lines of WebGL2 code &mdash; is licensed under <strong>CC BY-NC-SA 3.0</strong>. The license is explicit: use permitted for non-commercial purposes with attribution. The authors are David Li, Aleksandr Albert, J&eacute;r&eacute;my Bouny, Phil Crowther and Attila Schroeder; the scientific foundation is Tessendorf (2001) and Mastin et&nbsp;al. (1987), the wave statistics come from Phillips (1957). The simulator acknowledges this entire chain.</p>
+
+<h3>The Integration</h3>
+
+<p>The actual integration work was mechanical but precise: the <code>Water</code> class from Three.js needed to use the FFT normal map instead of its default texture, and the FFT displacement map had to be injected into the vertex shader via shader string injection:</p>
+
+<pre><code><span class="code-comment">// WaterPlane.js &mdash; hybrid construction</span>
+<span class="code-keyword">const</span> ocean = <span class="code-keyword">new</span> Ocean(renderer, {
+  Res: <span class="code-number">512</span>, Siz: <span class="code-number">2400</span>,   <span class="code-comment">// 512&times;512 grid, 2.4 km tile size</span>
+  WSp: <span class="code-number">18</span>, WHd: <span class="code-number">295</span>, Chp: <span class="code-number">1.5</span>  <span class="code-comment">// Wind 18 m/s, direction 295&deg;, choppiness 1.5</span>
+});
+
+<span class="code-keyword">const</span> water = <span class="code-keyword">new</span> Water(geometry, {
+  waterNormals: ocean.normalMapFramebuffer.texture, <span class="code-comment">// FFT normal map</span>
+  sunColor: <span class="code-number">0xffeedd</span>,
+  sunDirection: sunPos.normalize(),
+});
+
+<span class="code-comment">// Inject displacement map into vertex shader via string injection</span>
+water.material.uniforms.oceanDisplacement = {
+  value: ocean.displacementMapFramebuffer.texture
+};
+water.material.vertexShader =
+  <span class="code-string">'uniform sampler2D oceanDisplacement;\n'</span> +
+  water.material.vertexShader
+    .replace(<span class="code-string">'void main() {'</span>,
+      <span class="code-string">'void main() { vec3 oceanDisp = texture2D(oceanDisplacement, uv).rgb;'</span>)
+    .replace(<span class="code-string">/vec4\s*\(\s*position\s*,\s*1\.0\s*\)/g</span>,
+      <span class="code-string">'vec4(position + oceanDisp, 1.0)'</span>);</code></pre>
+
+<p>Eleven lines of glue code for an ocean simulation that runs an iFFT pipeline on the GPU in the background. The <code>Water</code> class delivers the sun reflection; the iFFT generates the physically grounded, animated wave surface.</p>
+
+<div class="summary-box">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Sources &amp; Attribution</p>
+  <ul class="list-disc pl-6 text-gray-300 leading-relaxed">
+    <li>Phillips, O. M. (1957): <em>"On the generation of waves by turbulent wind"</em></li>
+    <li>Mastin, G., Watterberg, P., Mareda, J. (1987): <em>"Fourier Synthesis of Ocean Scenes"</em>, IEEE CG&amp;A</li>
+    <li>Tessendorf, J. (2001): <em>"Simulating Ocean Water"</em> &mdash; standard reference for film and games</li>
+    <li>David Li's WebGL demo (2013): <a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves</a></li>
+    <li>Phil Crowther's Three.js demos (2023): <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
+    <li><strong>Ocean3.js, CC BY-NC-SA 3.0</strong> &mdash; Authors: David Li, Aleksandr Albert, J&eacute;r&eacute;my Bouny, Phil Crowther, Attila Schroeder</li>
+  </ul>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 8: How We Built It -->
+<!-- ============================================================ -->
+<section id="bauprozess" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 8</p>
+<h2>How We Built It</h2>
+
+<h3>A Ticket System as the Foundation</h3>
+
+<p>The project started with a blank canvas and a decision: no Unity, no Unreal, but pure JavaScript with Three.js directly in the browser. No app, no store, no download. The user opens a URL and flies.</p>
+
+<p>I was the <strong>product owner</strong>. The vision, the aesthetic decisions, the "that feels wrong, do it differently" &mdash; that came from me. <strong>Claude Code</strong> was everything else: project manager, developer, tester in one instance.</p>
+
+<p>Claude Code set up a <strong>ticket system in Markdown</strong> at the start &mdash; 40 tickets, divided into 5 phases, each with priority, dependencies and acceptance criteria. Tickets moved through folders: <code>backlog/</code> &rarr; <code>in-progress/</code> &rarr; <code>done/</code>. No Jira, no Trello &mdash; just files in a Git repository.</p>
 
 <pre style="background:#111827; border:1px solid #1f2937; border-radius:0.5rem; padding:1rem; overflow-x:auto; font-size:0.8rem; color:#d1d5db; margin:1.5rem 0;"><code># T018: Octree construction
 <strong style="color:#f59e0b;">Priority:</strong> P0 | <strong style="color:#f59e0b;">Phase:</strong> 2 | <strong style="color:#f59e0b;">Size:</strong> L
@@ -387,434 +860,108 @@
 - [ ] Correct recursive subdivision
 - [ ] Unit test with known geometry</code></pre>
 
-<p>40 tickets. All completed. From &ldquo;set up project&rdquo; (T001) to &ldquo;smooth webcam calibration&rdquo; (T040). Claude wrote them, implemented them, and tested them with <strong>Playwright</strong> automated tests. I said what I wanted. He delivered.</p>
+<p>40 tickets, all completed. From "set up project" (T001) to "smooth webcam calibration" (T040). Claude Code wrote them, implemented them, and tested them automatically with <strong>Playwright</strong>.</p>
+
+<h3>The Process of iFFT Integration</h3>
+
+<p>The most difficult integration was the ocean shader. In classical development, incorporating <code>Ocean3.js</code> would have taken at least two days: understanding the framebuffer management, adjusting UV coordinates for tiling (the island is 24 km wide, the wave tile only 2.4 km), and above all tricking Three.js's <code>Water</code> class into accepting the FFT normal map.</p>
+
+<p>With Claude Code: <strong>under twenty minutes.</strong> The point is not that AI understands the mathematics of the ocean more deeply than a textbook &mdash; but that it eliminates the <em>mechanical work of integration</em>. The human says what they want; the AI finds the three places in the code where the change needs to happen.</p>
 
 <div class="summary-box" style="text-align:center;">
-  <p class="text-sm text-gray-300">The entire ticket system is publicly available:</p>
+  <p class="text-sm text-gray-300">The entire ticket system is publicly viewable:</p>
   <p class="text-sm" style="margin-bottom:0;">
     <a href="https://github.com/pmmathias/VogelSimulator/tree/main/tickets" style="color:#22d3ee; text-decoration:underline;">github.com/pmmathias/VogelSimulator/tree/main/tickets</a>
   </p>
 </div>
 
-<p>What does this mean for the future of software development? More on that at the end. First: what&rsquo;s inside those 40 tickets?</p>
-
 </div>
 <div class="section-divider"></div>
 </section>
 
 <!-- ============================================================ -->
-<!-- SECTION 2: Phase 1 — The Scaffold -->
+<!-- SECTION 9: What This Says About AI -->
 <!-- ============================================================ -->
-<section id="phase-1" class="pb-16">
+<section id="ki-reflexion" class="pb-16">
 <div class="prose-dark">
 
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 2</p>
-<h2>Phase 1 &mdash; The Scaffold</h2>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 9</p>
+<h2>What This Says About AI</h2>
 
-<h3>A Blank Canvas</h3>
+<h3>The New Division of Roles</h3>
 
-<p>Every project starts with a blank canvas. In our case: a terminal, <code>npm create vite@latest</code>, and the decision to go with Three.js as the 3D engine. No Unity, no Unreal &mdash; pure JavaScript code that runs directly in the browser.</p>
+<p>This project answered a concrete question: what happens when mathematical understanding and machine execution speed come together?</p>
 
-<p>Why Three.js? Because it has the lowest barrier to entry. No plugin, no app store, no download. The user opens a URL and flies. That was the vision from the start.</p>
+<p>The human saw the connections. That the FFT, which revolutionized signal processing in 1965, was applied to ocean waves by Tessendorf in 2001. That the same mathematical principle is embedded in every JPEG, every MP3, and in the cochlea of the human ear. This conceptual connection &mdash; <em>everything is frequency decomposition</em> &mdash; is something that only becomes visible through understanding, not through search.</p>
 
-<p>The first scene was simple: a camera, a sky, light.</p>
+<p>The AI built the bridges. When the human said "integrate Ocean3.js so that the normal map flows directly into the vertex shader," the AI found the three code locations, wrote the glue code, identified the UV tiling error. Weeks of mechanical work became an evening.</p>
 
-<pre><code><span class="code-keyword">const</span> scene = <span class="code-keyword">new</span> THREE.Scene();
-<span class="code-keyword">const</span> sky = <span class="code-keyword">new</span> Sky();
-sky.scale.setScalar(<span class="code-number">450000</span>);
-scene.add(sky);
+<p>But &mdash; and this is crucial &mdash; the AI did not on its own initiative search for a physically correct ocean implementation. It built a flat plane with an animated normal map and was satisfied. Only when the human recognized that the sea <em>looks</em> flat, and introduced the concept of an FFT ocean, did the quantum leap in visualization quality occur.</p>
 
-<span class="code-keyword">const</span> camera = <span class="code-keyword">new</span> THREE.PerspectiveCamera(<span class="code-number">60</span>, w/h, <span class="code-number">2</span>, <span class="code-number">8000</span>);
-<span class="code-keyword">const</span> renderer = <span class="code-keyword">new</span> THREE.WebGLRenderer({ antialias: <span class="code-keyword">true</span> });</code></pre>
+<h3>Mathematical Literacy as the New Lever</h3>
 
-<p>In 20 minutes, the first empty scene with a blue sky was up. No terrain, no trees, no bird. But a beginning. And a beginning is all you need to build momentum.</p>
+<p>The decisive resource in this project was not programming skill &mdash; the AI supplies that. The decisive resource was <strong>mathematical literacy</strong>: the knowledge that the Fourier Transform exists, what it conceptually does, and in which contexts it is used.</p>
 
-</div>
-<div class="section-divider"></div>
-</section>
+<p>Whoever knows that images have a clustered energy distribution in frequency space can understand JPEG compression. Whoever knows that ocean waves have a statistical spectrum can understand the Tessendorf method. Whoever knows that eigenvectors and Fourier basis vectors both define orthogonal coordinate systems sees the deep kinship between PCA and FFT.</p>
 
-<!-- ============================================================ -->
-<!-- SECTION 3: Phase 2 — A World from Nothing -->
-<!-- ============================================================ -->
-<section id="phase-2" class="pb-16">
-<div class="prose-dark">
+<p>In a world where AI handles the mechanical implementation work, conceptual understanding becomes more valuable, not less. It is the factor that determines which questions get asked at all.</p>
 
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 3</p>
-<h2>Phase 2 &mdash; A World from Nothing</h2>
-
-<h3>How do you build a landscape without placing a single polygon by hand?</h3>
-
-<p>The answer: with math. More precisely, with parabolas. Imagine a flat table. Now place invisible hills on top &mdash; each defined by a center point, a radius and a height. At every point on the terrain you ask: how many of these hills overlap here? And add up their contributions.</p>
-
-<pre><code><span class="code-keyword">function</span> getTerrainHeight(x, z, arcs) {
-  <span class="code-keyword">let</span> h = <span class="code-number">0</span>;
-  <span class="code-keyword">for</span> (<span class="code-keyword">const</span> arc <span class="code-keyword">of</span> arcs) {
-    <span class="code-keyword">const</span> dx = x - arc.cx, dz = z - arc.cz;
-    <span class="code-keyword">const</span> distSq = dx * dx + dz * dz;
-    <span class="code-keyword">const</span> contribution = <span class="code-number">1</span> - distSq / (arc.radius * arc.radius);
-    <span class="code-keyword">if</span> (contribution > <span class="code-number">0</span>) h += arc.height * contribution;
-  }
-  <span class="code-keyword">return</span> h;
-}</code></pre>
-
-<p>900 positive arcs form the hills. 270 negative arcs carve out valleys. A radial falloff ensures the island gently slopes into the sea at the edges. The result: a natural-looking landscape that looks slightly different every time you load it &mdash; but always plausible.</p>
-
-<figure class="illus">
-  <img src="/img/vogel-terrain.jpg" alt="Procedural island landscape with hills, valleys and water" loading="lazy">
-  <figcaption>900 parabolas + negative arcs + radial falloff = a natural island.</figcaption>
-</figure>
-
-<p>But a beautiful landscape is useless if it stutters. Computing 900 arcs per vertex? With a 400&times;400 grid, that&rsquo;s over 140 million operations &mdash; per frame. That won&rsquo;t fly.</p>
-
-<h3>Octree and Frustum Culling</h3>
-
-<p>The solution: an <strong>Octree</strong> divides the world into spatial cells. Instead of rendering all 100,000 trees and 900 buildings every frame, the engine simply asks: which cells are actually in the camera&rsquo;s field of view? <strong>Frustum Culling</strong> discards everything outside the view cone. Out of 100,000 trees, typically only 3,000&ndash;5,000 are actually drawn.</p>
-
-<div class="summary-box">
-  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
-  <p><strong>900 parabolas + negative arcs + radial island falloff = a natural landscape, without ever placing a single vertex by hand.</strong></p>
-</div>
-
-</div>
-<div class="section-divider"></div>
-</section>
-
-<!-- ============================================================ -->
-<!-- SECTION 4: Phase 3 — The Bird Takes Flight -->
-<!-- ============================================================ -->
-<section id="phase-3" class="pb-16">
-<div class="prose-dark">
-
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4</p>
-<h2>Phase 3 &mdash; The Bird Takes Flight</h2>
-
-<h3>A Camera with a Fear of Heights</h3>
-
-<p>The terrain was there. But a bird that doesn&rsquo;t fly is just a camera with a fear of heights.</p>
-
-<p>The first approach was a simple arcade model: press a key, go up. Let go, sink down. It worked &mdash; technically. But it felt like an elevator with a panoramic window. No gliding, no lift, no <em>flying</em>.</p>
-
-<p>So we built an aerodynamic model. The key insight: <strong>lift depends on the square of the velocity.</strong> That&rsquo;s dynamic pressure &mdash; the same physics that keeps real birds and aircraft in the air.</p>
-
-<pre><code><span class="code-keyword">const</span> dynamicPressure = <span class="code-number">0.5</span> * AIR_DENSITY * speed * speed;
-<span class="code-keyword">const</span> liftMag = dynamicPressure * wingArea * CL / BIRD_MASS;
-velocity.y += baselineLift * dt;  <span class="code-comment">// Wing incidence angle</span>
-velocity.y += GRAVITY * dt;       <span class="code-comment">// -9.81 m/s&sup2;</span></code></pre>
-
-<p>The first wing flap produced&hellip; nothing. Gravity won. Every time. The bird fell like a rock, no matter how furiously you hammered the spacebar.</p>
-
-<p>The problem: we had forgotten the <strong>wing incidence angle</strong>. Real bird wings aren&rsquo;t flat &mdash; they have a built-in angle of attack of about 3&deg;. This angle generates minimal lift even in level flight. Without it, the wing is a plank, and a plank falls.</p>
-
-<figure class="illus">
-  <img src="/img/vogel-5layers.jpg" alt="Coast with all five texture layers: sand, grass, rock, snow and water" loading="lazy">
-  <figcaption>Gliding over the island &mdash; it took six iterations before it actually felt like flying.</figcaption>
-</figure>
-
-<p>It took six iterations. Six versions of the physics model until the balance of gravity, lift and wing flapping was right. Until you could press the spacebar and <em>feel</em> the bird climbing. Until a dive felt dangerous and a loop made your stomach clench.</p>
-
-<div class="summary-box">
-  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
-  <p><strong>Realistic physics &ne; fun physics. We needed 6 iterations before flapping actually gained altitude.</strong></p>
-</div>
-
-</div>
-<div class="section-divider"></div>
-</section>
-
-<!-- ============================================================ -->
-<!-- SECTION 5: Phase 4 — Hands Become Wings -->
-<!-- ============================================================ -->
-<section id="phase-4" class="pb-16">
-<div class="prose-dark">
-
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 5</p>
-<h2>Phase 4 &mdash; Hands Become Wings</h2>
-
-<h3>The Wild Part</h3>
-
-<p>And then came the wild part. The idea: what if you didn&rsquo;t use the keyboard, but your arms? What if you flapped your arms in front of the webcam and the bird in the game actually climbed?</p>
-
-<p>MediaPipe Pose Detection makes this possible. Google&rsquo;s ML model detects 33 body landmarks in real time &mdash; right in the browser, no server, no cloud. Shoulders, elbows, wrists. Everything we need.</p>
-
-<p>The logic: we measure the height of both wrists relative to the shoulders. High hands = wings up. Low hands = wings down. The rate of change between them = wing flap.</p>
-
-<pre><code><span class="code-keyword">const</span> delta = Math.abs(recentAvg - olderAvg);
-<span class="code-keyword">if</span> (delta > <span class="code-number">0.025</span>) {
-  flapStrength = clamp(delta * <span class="code-number">8</span>, <span class="code-number">0.5</span>, <span class="code-number">1</span>);
-}</code></pre>
-
-<p>The challenges were subtler than expected. The webcam image is mirrored &mdash; left is right. Sometimes landmarks disappear because the arm is outside the frame. And detection accuracy fluctuates with lighting.</p>
-
-<p>Our solution: <strong>Graceful Degradation.</strong> When your hands leave the frame, the bird glides on gently &mdash; instead of crashing. When MediaPipe detects no pose, the system silently falls back to keyboard controls. No error, no popup, no frustration.</p>
-
-<figure class="illus">
-  <img src="/img/vogel-coast.jpg" alt="Close-up: flying over trees and buildings" loading="lazy">
-  <figcaption>Low-altitude flight through the settlement &mdash; trees and buildings up close.</figcaption>
-</figure>
-
-<p>The feeling when you raise your arms for the first time and the bird climbs &mdash; that&rsquo;s the moment the project tips from &ldquo;technically interesting&rdquo; to &ldquo;I want to show this to people.&rdquo;</p>
-
-</div>
-<div class="section-divider"></div>
-</section>
-
-<!-- ============================================================ -->
-<!-- SECTION 6: The Last 20% -->
-<!-- ============================================================ -->
-<section id="polish" class="pb-16">
-<div class="prose-dark">
-
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 6</p>
-<h2>The Last 20%</h2>
-
-<h3>80% of the Time</h3>
-
-<p>The last 20% takes 80% of the time. That&rsquo;s universal. And in this project, the last 20% was mostly about one thing: textures.</p>
-
-<h3>Five Layers of Terrain</h3>
-
-<p>A single-color landscape looks like Play-Doh. So we built a custom shader with five texture layers: sand on the beaches, grass on the hills, earth at mid-elevation, rock on the steep slopes, snow on the peaks. Each layer blends smoothly into the next.</p>
-
-<pre><code><span class="code-keyword">float</span> grassFactor = smoothstep(sandEnd, sandEnd + <span class="code-number">8.0</span>, h)
-                  * (<span class="code-number">1.0</span> - smoothstep(grassEnd - <span class="code-number">8.0</span>, grassEnd + <span class="code-number">8.0</span>, h));
-<span class="code-keyword">float</span> rockFactor = smoothstep(earthEnd, earthEnd + <span class="code-number">5.0</span>, h)
-                  * (<span class="code-number">1.0</span> - smoothstep(rockEnd - <span class="code-number">8.0</span>, rockEnd + <span class="code-number">8.0</span>, h));
-<span class="code-keyword">float</span> snowFactor = smoothstep(rockEnd - <span class="code-number">8.0</span>, rockEnd + <span class="code-number">8.0</span>, h);</code></pre>
-
-<p>The snow texture was gray. We spent three hours hunting the bug in the shader logic. We checked the blending factors, the height thresholds, the UV coordinates. Everything looked correct. Until we realized: the logic <em>was</em> correct. The texture just wasn&rsquo;t white enough. A 200&times;200 pixel JPEG with an average value of 180 instead of 250. Three hours of debugging for an image editing problem.</p>
-
-<h3>Buildings and Settlements</h3>
-
-<p>An island without civilization feels empty. So we generated buildings &mdash; five types: houses, barns, towers, hotels and high-rises. Each with procedural brick or concrete textures, random proportions and color variations.</p>
-
-<p>The placement uses noise functions: settlements emerge in flat areas near the coast. Forests take over the hills and mountains. A second noise layer separates urban zones from forest zones, so trees don&rsquo;t grow through rooftops.</p>
-
-<div class="illus-row">
-  <figure class="illus">
-    <img src="/img/vogel-schnee.jpg" alt="Snow-covered mountain peaks with procedural texture" loading="lazy">
-    <figcaption>Snow-covered peaks &mdash; finally white after the texture fix.</figcaption>
-  </figure>
-  <figure class="illus">
-    <img src="/img/vogel-textures.jpg" alt="Mountain landscape with forests and rock structures" loading="lazy">
-    <figcaption>Rock, earth, forest &mdash; five texture layers blending together.</figcaption>
-  </figure>
-</div>
-
-<div class="summary-box">
-  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
-  <p><strong>Snow-covered peaks, 900 buildings, 100,000 trees &mdash; all procedurally generated.</strong></p>
-</div>
-
-</div>
-<div class="section-divider"></div>
-</section>
-
-<!-- ============================================================ -->
-<!-- SECTION 7: iFFT Water — 65,536 waves per frame -->
-<!-- ============================================================ -->
-<section id="community" class="pb-16">
-<div class="prose-dark">
-
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 7</p>
-<h2>How Real Ocean Waves Come to Life &mdash; on the GPU</h2>
-
-<h3>Why flat water looks flat</h3>
-
-<p>The first water prototype in the simulator was a flat plane with an animated normal map &mdash; the standard recipe. The surface seems to move, but fly low and scan the horizon: the illusion gives out. The sea is geometrically flat. No crests, no troughs, no silhouette. A trembling sheet of concrete.</p>
-
-<p>Real oceans look different. They have <em>volume</em>. Waves cast shadows on each other, sunlight refracts off every single wave, and the horizon is not a clean line but a jagged band. If you want to simulate that in real time, you have to rebuild the physics.</p>
-
-<h3>The idea: waves as a sum of frequencies</h3>
-
-<p>The core insight comes from oceanography: <strong>real sea waves are not a single wave but the superposition of thousands of frequencies.</strong> A light breeze creates thousands of tiny capillary waves, a storm generates large slow swells, and all of them superimpose to form what we perceive as &bdquo;the sea&ldquo;. It&rsquo;s exactly the same phenomenon as in audio: an orchestra is not a single tone but the sum of hundreds of frequencies.</p>
-
-<p>British mathematician Owen Phillips formulated a <strong>statistical spectrum</strong> in 1957 that describes how much wave energy to expect at which wavelength and direction &mdash; depending on wind speed, wind heading and fetch (the distance over which the wind has blown):</p>
-
-<p>$$ P(\mathbf{k}) = A \, \frac{\exp\!\bigl(-1/(kL)^2\bigr)}{k^4} \, \bigl|\hat{\mathbf{k}} \cdot \hat{\mathbf{w}}\bigr|^2 $$</p>
-
-<p>Here \(\mathbf{k}\) is the wave vector in frequency space, \(L = v^2/g\) the characteristic wavelength at wind speed \(v\), and \(\hat{\mathbf{w}}\) the wind direction. Crucially: <strong>this statistic lives in frequency space.</strong> Each point in a 2D grid corresponds to a wave frequency and direction &mdash; not a position in the water.</p>
-
-<h3>From formula to Pixar ocean</h3>
-
-<p>The first attempt to render ocean waves in computer graphics came in 1986 from Alain Fournier and William Reeves (Pixar) with <em>&bdquo;A Simple Model of Ocean Waves&ldquo;</em> at SIGGRAPH &mdash; Gerstner-wave-based, not FFT. A year later, in 1987, <strong>Gary Mastin, Peter Watterberg and John Mareda</strong> published <em>&bdquo;Fourier Synthesis of Ocean Scenes&ldquo;</em> in <em>IEEE Computer Graphics and Applications</em> &mdash; <strong>the first FFT-based ocean simulation in computer graphics</strong>. They showed how to turn a statistical wave spectrum (Pierson-Moskowitz back then) into a real height map via a Fourier transform.</p>
-
-<p>The breakthrough for film and games came only in 2001, however, when <strong>Jerry Tessendorf</strong> of ILM published his SIGGRAPH course notes <em>&bdquo;Simulating Ocean Water&ldquo;</em> &mdash; to this day the standard reference on the subject. Tessendorf didn&rsquo;t invent the method, but he summarised it so cleanly and adapted it so directly to the needs of film production that his paper became the de-facto textbook.</p>
-
-<p>Since then the method has lived in practically every AAA ocean: <em>Titanic</em> (even before Tessendorf&rsquo;s paper), <em>Pirates of the Caribbean</em>, <em>Life of Pi</em>, <em>Moana</em>, <em>Sea of Thieves</em>, <em>Assassin&rsquo;s Creed Black Flag</em> &mdash; all use FFT waves built on the same mathematical foundation.</p>
-
-<h3>Why the FFT is the decisive trick</h3>
-
-<p>At a resolution of 512&times;512 you need to superimpose <strong>65,536 waves</strong> into a single coherent surface. Every frame. Naive individual addition would be \(O(N^2)\) and far too slow &mdash; \(2.7 \cdot 10^9\) operations per frame. The FFT does it in \(O(N \log N)\) &mdash; about \(1.2 \cdot 10^7\) operations. <strong>A factor of 1,000 faster.</strong></p>
-
-<p>The algorithm works in stages. For 512 samples that&rsquo;s \(\log_2(512) = 9\) stages, each of which combines results pairwise via complex rotations. Plot the data flow and you get a pattern that looks like a butterfly &mdash; hence <strong>butterfly algorithm</strong>.</p>
-
-<p>On the GPU this becomes a chain of fragment shader passes: each stage renders into a float framebuffer, the result is the input for the next shader. Ping-pong between two textures, nine passes, and at the end you get two output textures:</p>
-
-<ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
-  <li>A <strong>displacement map</strong> &mdash; how far each point of the water surface is shifted up, down and sideways</li>
-  <li>A <strong>normal map</strong> &mdash; the surface normals for realistic light refraction</li>
-</ul>
-
-<p>Bolting those two textures onto a Three.js water plane &mdash; that&rsquo;s the entire integration job.</p>
-
-<h3>From paper to browser: the JavaScript implementation chain</h3>
-
-<p>By 2013 the maths was already nearly 30 years old. What was missing was a working implementation for the browser. That job was taken up by a series of open-source developers who <strong>didn&rsquo;t invent anything new</strong>, but translated the Tessendorf method step by step into current web technologies:</p>
-
-<ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
-  <li><strong>2013</strong> &mdash; <em>David Li</em> builds a WebGL demo (<a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves/</a>) that implements the Tessendorf math with fragment shaders instead of dedicated compute shaders</li>
-  <li><strong>2014</strong> &mdash; <em>Aleksandr Albert</em> ports David Li&rsquo;s code into the Three.js world</li>
-  <li><strong>2015</strong> &mdash; <em>J&eacute;r&eacute;my Bouny</em> turns it into a reusable Three.js module (<a href="https://github.com/jbouny/ocean" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">github.com/jbouny/ocean</a>)</li>
-  <li><strong>2023</strong> &mdash; <em>Phil Crowther</em> updates the module for current Three.js versions and publishes it at <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
-  <li><strong>2023</strong> &mdash; <em>Attila Schroeder</em> lifts the shaders to GLSL3 / WebGL2</li>
-</ul>
-
-<p>None of these developers are FFT pioneers &mdash; they are all maintainers of a pipeline that brings Tessendorf&rsquo;s 2001 paper, Mastin&rsquo;s 1987 work and ultimately Phillips&rsquo;s 1957 statistics into the browser. The module running in the simulator &mdash; <code>Ocean3.js</code>, about 570 lines &mdash; is the current iteration of that chain.</p>
-
-<h3>The integration with Claude Code</h3>
-
-<p>In classical work the integration into our simulator would probably have taken two days:</p>
-
-<ul class="list-disc pl-6 mb-4 text-gray-300 leading-relaxed">
-  <li>Understand Three.js framebuffer management</li>
-  <li>Document and map the constructor parameters</li>
-  <li>Recompute UVs of the water plane for tiling (our plane is 24 km wide, the wave tile only 2.4 km)</li>
-  <li>Trick Three.js&rsquo;s <code>Water</code> class into accepting the FFT normal map instead of its default texture</li>
-  <li>Inject the FFT displacement map into the vertex shader via string replacement</li>
-</ul>
-
-<p>With Claude Code it took <strong>under twenty minutes</strong>. The point isn&rsquo;t that the AI understands the math more deeply than a textbook &mdash; but that it eliminates the <em>mechanical work of integration</em>. The human says: &bdquo;Use this normal map instead of the default, and inject the displacement map into the vertex shader&ldquo; &mdash; and the AI finds the three places where that substitution needs to happen.</p>
-
-<pre><code><span class="code-comment">// WaterPlane.js &mdash; hybrid construction</span>
-<span class="code-keyword">const</span> ocean = <span class="code-keyword">new</span> Ocean(renderer, {
-  Res: <span class="code-number">512</span>, Siz: <span class="code-number">2400</span>,
-  WSp: <span class="code-number">18</span>, WHd: <span class="code-number">295</span>, Chp: <span class="code-number">1.5</span>
-});
-
-<span class="code-keyword">const</span> water = <span class="code-keyword">new</span> Water(geometry, {
-  waterNormals: ocean.normalMapFramebuffer.texture, <span class="code-comment">// FFT normal map</span>
-  sunColor: <span class="code-number">0xffeedd</span>,
-  sunDirection: sunPos.normalize(),
-});
-
-<span class="code-comment">// Inject displacement map into the vertex shader via shader injection</span>
-water.material.uniforms.oceanDisplacement = { value: ocean.displacementMapFramebuffer.texture };
-water.material.vertexShader =
-  <span class="code-string">'uniform sampler2D oceanDisplacement;\n'</span> +
-  water.material.vertexShader
-    .replace(<span class="code-string">'void main() {'</span>,
-      <span class="code-string">'void main() { vec3 oceanDisp = texture2D(oceanDisplacement, uv).rgb;'</span>)
-    .replace(<span class="code-string">/vec4\s*\(\s*position\s*,\s*1\.0\s*\)/g</span>,
-      <span class="code-string">'vec4(position + oceanDisp, 1.0)'</span>);</code></pre>
-
-<p>Eleven lines of glue code for an ocean simulation that computes 65,536 waves per frame in the background. The <code>Water</code> class provides the sun reflection, the FFT produces the physically grounded surface.</p>
-
-<p>What was a trembling sheet of concrete is now a breathing ocean. During a low pass you can see individual wave crests catching and refracting the sunlight &mdash; each wave its own tiny mirror.</p>
-
-<h3>The transferable part</h3>
-
-<p>If you read this and have your own Three.js project, take one thing away: <strong>AI-assisted development has drastically lowered the barrier to adapting foreign graphics code.</strong> Understanding 570 lines of WebGL2 code with an FFT butterfly algorithm, float render targets and ping-pong buffers &mdash; and dropping it into someone else&rsquo;s project &mdash; used to be a weekend project. Today it&rsquo;s an evening.</p>
-
-<p>The recipe is always the same: read the foreign code, understand the public surface (constructor, update method, output textures), then ask Claude Code to write the glue. The AI compensates for exactly what eats the most time in integrations like this: mechanical detail work, renaming variables, adapting signatures, finding the right shader lines.</p>
-
-<div class="summary-box">
-  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Sources &amp; further links</p>
-  <ul class="list-disc pl-6 text-gray-300 leading-relaxed">
-    <li>Phillips, O. M. (1957): <em>&bdquo;On the generation of waves by turbulent wind&ldquo;</em> &mdash; the oceanographic wave spectrum</li>
-    <li>Mastin, G., Watterberg, P., Mareda, J. (1987): <em>&bdquo;Fourier Synthesis of Ocean Scenes&ldquo;</em>, IEEE CG&amp;A &mdash; the original application of the FFT method to computer graphics</li>
-    <li>Tessendorf, J. (2001): <em>&bdquo;Simulating Ocean Water&ldquo;</em> &mdash; the most frequently cited treatment, standard reference for film and games</li>
-    <li>David Li&rsquo;s WebGL waves demo (2013): <a href="https://david.li/waves/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">david.li/waves</a></li>
-    <li>Phil Crowther&rsquo;s Three.js demos collection (maintaining the JS implementation): <a href="http://philcrowther.com/Aviation/3JS_demos.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">philcrowther.com/Aviation</a></li>
-    <li>Discussion on the Three.js forum: <a href="https://discourse.threejs.org/t/ifft-ocean-wave-generator-module/51800" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">discourse.threejs.org</a></li>
-    <li>License of the integrated module: Ocean3.js, CC BY-NC-SA 3.0 &mdash; implementation by David Li, Aleksandr Albert, J&eacute;r&eacute;my Bouny, Phil Crowther and Attila Schroeder, building on Tessendorf (2001) and Mastin et&nbsp;al. (1987)</li>
-  </ul>
-</div>
-
-<div class="summary-box">
-  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
-  <p><strong>FFT-based ocean waves have existed in computer graphics since Mastin et&nbsp;al. 1987, popularised by Tessendorf 2001. From a statistical wave spectrum in frequency space, through the butterfly algorithm on the GPU, to an animated height map &mdash; 65,536 waves per frame. With a freely available WebGL2 module and Claude Code you can drop this into any Three.js project in an evening.</strong></p>
-</div>
-
-</div>
-<div class="section-divider"></div>
-</section>
-
-<!-- ============================================================ -->
-<!-- SECTION 8: What This Says About AI and Software Development -->
-<!-- ============================================================ -->
-<section id="meta" class="pb-16">
-<div class="prose-dark">
-
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 8</p>
-<h2>What This Says About AI and Software Development</h2>
-
-<h3>Human and Machine</h3>
-
-<p>Let&rsquo;s be honest: this project would have taken weeks without AI. Not because the concepts are hard &mdash; Three.js documentation is excellent, MediaPipe has examples. But because the <em>iteration</em> was so much faster.</p>
-
-<p>The roles were clear:</p>
-
-<p><strong>The human</strong> provided vision, aesthetic judgment and the irreplaceable &ldquo;this feels wrong.&rdquo; No prompt in the world could have automated the realization that the wing flap felt &ldquo;mushy.&rdquo; Or that the trees looked like green sticks from above.</p>
-
-<p><strong>The AI</strong> provided architecture, boilerplate, debugging and an iteration speed no single developer can match. When the human said &ldquo;more trees,&rdquo; the AI added 100,000 &mdash; complete with octree optimization, LOD system and frustum culling so performance wouldn&rsquo;t tank.</p>
-
-<p>But &mdash; and this is the point &mdash; the AI didn&rsquo;t improve the trees on its own. It placed 100,000 identical green cones and was satisfied. Only when the human said &ldquo;those look like plastic&rdquo; did texture variations, different tree types and color gradations appear.</p>
-
-<h3>The Future</h3>
-
-<p>In five years, any teenager will be able to build something like this in an afternoon. The tools will get better, the models smarter, the barrier to entry lower. But the decisive factor will remain the same: <em>someone has to know what looks good, feels right and is fun.</em></p>
-
-<p>The bird flies. But it doesn&rsquo;t fly because the AI wanted it to on its own. It flies because a human said: &ldquo;This needs to feel like flying.&rdquo; And then iterated until it did.</p>
+<p>The bird flies over an ocean whose waves are based on statistics from 1957, compressed by an algorithm from 1965, rendered in a browser with a technology updated in 2023 by five open-source developers. Every link in this chain is visible &mdash; if you know what to look for.</p>
 
 <div class="try-it" style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem;">
-  <p style="margin-bottom: 1.25rem;">Convinced? Or at least curious?</p>
-  <a href="https://pmmathias.github.io/VogelSimulator/" target="_blank" rel="noopener" class="cta-btn">Fly now &rarr;</a>
+  <p style="margin-bottom: 1.25rem;">Now that you know what you're seeing &mdash; fly again.</p>
+  <a href="https://pmmathias.github.io/VogelSimulator/" target="_blank" rel="noopener" class="cta-btn">To the simulator &rarr;</a>
 </div>
 
 </div>
+<div class="section-divider"></div>
 </section>
 
-
-<section class="pb-16">
+<!-- ============================================================ -->
+<!-- SECTION 10: FAQ -->
+<!-- ============================================================ -->
+<section id="faq" class="pb-16">
 <div class="prose-dark">
 <h2 style="font-size:1.25rem;">Frequently Asked Questions</h2>
 
-<h3 style="font-size:1rem; margin-top:1.5rem;">Can you really build a game with AI in one afternoon?</h3>
-<p>Yes – but with caveats. Claude Code wrote all the code, managed 40 tickets, and ran automated tests. The human was the Product Owner: vision, decisions, quality control. One afternoon is enough for an impressive prototype, not for a AAA game.</p>
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is the Fourier Transform?</h3>
+<p>The Fourier Transform is a mathematical procedure that decomposes any signal &mdash; audio, image, wave &mdash; into its frequency components. It converts a signal from the time or spatial domain into frequency space: you obtain the amplitude and phase of each contained oscillation frequency. The inverse Fourier Transform does the reverse: it synthesizes a signal from a frequency spectrum. Fourier proved in 1822 that every periodic function can be represented as a sum of sine and cosine functions.</p>
 
-<h3 style="font-size:1rem; margin-top:1.5rem;">What is frustum culling?</h3>
-<p>Frustum culling is an optimization technique in 3D graphics. The camera sees only a cone-shaped slice of the world (the frustum). Everything outside does not need to be rendered. An octree helps quickly decide which objects are visible.</p>
+<h3 style="font-size:1rem; margin-top:1.5rem;">How are the ocean waves in the simulator generated?</h3>
+<p>Using the inverse Fast Fourier Transform (iFFT) on the GPU. The Phillips spectrum statistically describes how much wave energy exists at which frequency and direction &mdash; depending on wind. This spectrum is animated over time and then converted via iFFT into a heightmap that deforms the water mesh. 512&times;512 spectral points correspond to 262,144 superimposed wave frequencies per frame. The method goes back to Jerry Tessendorf (2001) and Owen Phillips (1957); the JavaScript implementation is <code>Ocean3.js</code> (CC BY-NC-SA 3.0).</p>
 
-<h3 style="font-size:1rem; margin-top:1.5rem;">How does the webcam control work with MediaPipe?</h3>
-<p>MediaPipe detects 33 body landmarks in real-time via the webcam. Arm positions are converted to angles: raising and lowering creates wing flaps, lateral tilting controls direction, leaning forward triggers a dive.</p>
+<h3 style="font-size:1rem; margin-top:1.5rem;">What does JPEG have to do with Fourier?</h3>
+<p>JPEG uses the Discrete Cosine Transform (DCT), a close relative of the Fourier Transform. The image is split into 8&times;8-pixel blocks, each block converted into frequency coefficients. Low frequencies (coarse structure) are stored precisely, high frequencies (fine details) are coarsely quantized &mdash; the human eye barely notices the difference. The typical JPEG artifacts at low quality are literally the 8&times;8 DCT blocks becoming visible.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is an octree, and why do you need one?</h3>
+<p>An octree is a spatial data structure that recursively subdivides 3D space into eight equal cubes. In the flight simulator it holds all 100,000 trees. Instead of testing every object every frame (O(n)), the octree can discard entire branches when the contained space lies outside the camera frustum &mdash; approaching O(log n). Result: of 100,000 trees, typically only 3,000&ndash;5,000 per frame are actually rendered.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Can you really build a 3D simulator in an afternoon with AI?</h3>
+<p>With caveats: yes. Claude Code wrote all the code, managed a 40-ticket system and tested it automatically with Playwright. The human was product owner: vision, aesthetic decisions, quality control. The critical knowledge &mdash; that FFT is the right technology for physically correct ocean waves &mdash; came from the human side. An impressive prototype is achievable in an afternoon; a polished product is not.</p>
 
 </div>
 </section>
 
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can you really build a game with AI in one afternoon?", "acceptedAnswer": {"@type": "Answer", "text": "Yes – but with caveats. Claude Code wrote all the code, managed 40 tickets, and ran automated tests. The human was the Product Owner: vision, decisions, quality control. One afternoon is enough for an impressive prototype, not for a AAA game."}}, {"@type": "Question", "name": "What is frustum culling?", "acceptedAnswer": {"@type": "Answer", "text": "Frustum culling is an optimization technique in 3D graphics. The camera sees only a cone-shaped slice of the world (the frustum). Everything outside does not need to be rendered. An octree helps quickly decide which objects are visible."}}, {"@type": "Question", "name": "How does the webcam control work with MediaPipe?", "acceptedAnswer": {"@type": "Answer", "text": "MediaPipe detects 33 body landmarks in real-time via the webcam. Arm positions are converted to angles: raising and lowering creates wing flaps, lateral tilting controls direction, leaning forward triggers a dive."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the Fourier Transform?","acceptedAnswer":{"@type":"Answer","text":"The Fourier Transform is a mathematical procedure that decomposes any signal \u2014 audio, image, wave \u2014 into its frequency components. It converts a signal from the time or spatial domain into frequency space. Fourier proved in 1822 that every periodic function can be represented as a sum of sine and cosine functions."}},{"@type":"Question","name":"How are the ocean waves in the simulator generated?","acceptedAnswer":{"@type":"Answer","text":"Using the inverse Fast Fourier Transform (iFFT) on the GPU. The Phillips spectrum statistically describes how much wave energy exists at which frequency and direction. This spectrum is animated and then converted via iFFT into a heightmap that deforms the water mesh. 512\u00d7512 spectral points correspond to 262,144 superimposed wave frequencies per frame."}},{"@type":"Question","name":"What does JPEG have to do with Fourier?","acceptedAnswer":{"@type":"Answer","text":"JPEG uses the Discrete Cosine Transform (DCT), a close relative of the Fourier Transform. Each 8\u00d78 image block is converted into frequency coefficients. High frequencies are coarsely quantized \u2014 the human eye barely notices the difference. The typical JPEG artifacts are literally the 8\u00d78 DCT blocks becoming visible."}},{"@type":"Question","name":"What is an octree, and why do you need one?","acceptedAnswer":{"@type":"Answer","text":"An octree is a spatial data structure that recursively subdivides 3D space into eight cubes. In the simulator it holds all 100,000 trees. Instead of testing all objects per frame (O(n)), the octree discards entire branches outside the camera frustum. Result: of 100,000 trees, typically 3,000\u20135,000 per frame are actually rendered."}},{"@type":"Question","name":"Can you really build a 3D simulator in an afternoon with AI?","acceptedAnswer":{"@type":"Answer","text":"With caveats: yes. Claude Code wrote all the code and managed a 40-ticket system. The human was product owner: vision, aesthetic decisions, quality control. The critical knowledge \u2014 that FFT is the right technology for physically correct ocean waves \u2014 came from the human side."}}]}
 </script>
 </main>
 
-
 <!-- Footer -->
 <footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
-  <p>&copy; 2026 Mathias Leonhardt &middot; Created with Claude Code (Anthropic)</p>
+  <p>&copy; 2026 Mathias Leonhardt &middot; Built with Claude Code (Anthropic)</p>
   <p class="mt-1">
     <a href="/en/about.html" class="hover:text-gray-400">About</a> &middot;
-    <a href="/en/imprint.html" class="hover:text-gray-400">Imprint</a> &middot;
-    <a href="/en/privacy.html" class="hover:text-gray-400">Privacy</a>
+    <a href="/impressum.html" class="hover:text-gray-400">Imprint</a> &middot;
+    <a href="/datenschutz.html" class="hover:text-gray-400">Privacy</a>
   </p>
 </footer>
 
 </div><!-- /max-w-4xl -->
 
-
 <!-- ============================================================ -->
 <!-- SCRIPTS -->
 <!-- ============================================================ -->
-
-<!-- Page functionality: nav, progress, scroll spy -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   'use strict';
@@ -832,29 +979,8 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
-  // Navigation toggle handled by nav.js
-
   // ----------------------------------------------------------
-  // 2. TOC section highlighting (scroll spy)
-  // ----------------------------------------------------------
-  var sections = document.querySelectorAll('section[id]');
-  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
-
-  var navObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        var id = entry.target.id;
-        tocLinks.forEach(function(link) {
-          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-        });
-      }
-    });
-  }, { rootMargin: '-20% 0px -75% 0px' });
-
-  sections.forEach(function(s) { navObserver.observe(s); });
-
-  // ----------------------------------------------------------
-  // 4. KaTeX auto-render (kept for template consistency)
+  // 2. KaTeX auto-render
   // ----------------------------------------------------------
   if (typeof renderMathInElement === 'function') {
     renderMathInElement(document.body, {
