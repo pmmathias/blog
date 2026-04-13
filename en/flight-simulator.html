@@ -514,7 +514,10 @@
 
 <p>An object is visible if it lies on the visible side of <em>all six planes</em> &mdash; or more precisely: if its <span class="glossary" title="AABB: Axis-Aligned Bounding Box. An axis-parallel box that completely encloses an object. Used for fast collision and visibility tests.">AABB</span> (axis-aligned bounding box) at least partially intersects the frustum. The frustum planes are extracted from the camera's projection matrix. Per frame: calculate six plane equations from the current camera position, done.</p>
 
-<!-- TODO: img/view-frustum.svg -->
+<figure class="my-8">
+  <img src="/img/view-frustum.svg" alt="View Frustum: A truncated cone of six planes defining the visible volume of a 3D camera." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:500px; background:#0f172a;" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">View frustum of a perspective camera. <a href="https://commons.wikimedia.org/wiki/File:ViewFrustum.svg" class="text-gray-500 hover:text-gray-400" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption>
+</figure>
 
 <p>The naive frustum check has complexity \(O(n)\) &mdash; we have to test each of the 100,000 objects against the six planes. At 60 FPS that is 6 million plane tests per second. This is surprisingly fast &mdash; CPUs can handle it. But the question is whether we can be smarter: if we know that all trees in a certain region of space lie outside the frustum, we don't need to test the individual trees at all.</p>
 
@@ -522,7 +525,10 @@
 
 <p>An <strong><span class="glossary" title="Octree: A spatial data structure that recursively subdivides a cube into 8 equal sub-cubes. Each node has exactly 8 children.">octree</span></strong> subdivides space recursively into eight equal-sized cubes. Each cube that contains objects is further subdivided &mdash; down to a minimum size or maximum depth. The result is a tree: the root represents the entire world, the leaves are small spatial cells each containing a few objects.</p>
 
-<!-- TODO: img/octree-diagram.svg -->
+<figure class="my-8">
+  <img src="/img/octree-diagram.svg" alt="Octree diagram: Recursive spatial subdivision with camera frustum. O(log n) instead of O(n) tests." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:600px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">Octree query: Only nodes within the frustum are visited &mdash; from 100,000 down to ~4,000 objects.</figcaption>
+</figure>
 
 <p>During frustum culling, the algorithm traverses the octree from root to leaves:</p>
 
@@ -617,7 +623,10 @@
 
 <p>The difference: <strong>PCA finds the optimal basis from the data itself. FFT uses a fixed, universal basis &mdash; the frequencies.</strong> PCA decomposes into directions of maximum variance; FFT decomposes into oscillation frequencies. Both are orthogonal projections onto a new basis.</p>
 
-<!-- TODO: img/pca-fourier-analogy.svg -->
+<figure class="my-8">
+  <img src="/img/pca-fourier-analogy.svg" alt="PCA and Fourier Transform compared: Both are orthogonal rotations that reveal hidden structure." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:600px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">PCA rotates coordinate axes into the data. Fourier rotates into frequencies. The same idea.</figcaption>
+</figure>
 
 <p>Another parallel is found in the <a href="/en/music.html" class="crossref">cochlea of the human ear</a>: the snail of the inner ear is a mechanical Fourier analysis. Different locations along the basilar membrane resonate at different frequencies &mdash; the ear decomposes sound into its Fourier components before the brain processes it. Evolution &ldquo;discovered&rdquo; the same mathematics 500 million years before Fourier.</p>
 
@@ -641,7 +650,10 @@
 
 <p>The data flow of the Cooley-Tukey algorithm looks like a butterfly when visualized: each stage combines results in pairs via complex rotations around the <span class="glossary" title="Twiddle factors: Complex roots of unity e^{-2&pi;ik/N} that serve as rotation factors at each step of the FFT butterfly algorithm.">twiddle factors</span> \(W_N^k = e^{-2\pi ik/N}\). This visual impression gave the procedure its name: the <strong>butterfly algorithm</strong>.</p>
 
-<!-- TODO: img/fft-butterfly.svg -->
+<figure class="my-8">
+  <img src="/img/fft-butterfly.svg" alt="FFT butterfly diagram for N=8: Three stages with twiddle factors. O(N log N) instead of O(N&sup2;)." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:600px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The FFT butterfly diagram: 3 stages for N=8 instead of 64 individual multiplications.</figcaption>
+</figure>
 
 <div class="component-wrap"><div id="mount-fourier-decomposition"></div></div>
 
@@ -677,7 +689,10 @@
 
 <p>The 2D FFT also enables <strong>fast convolution</strong>: applying a blur filter to an image is an expensive convolution operation in spatial space (\(O(N^2 \cdot K^2)\) for an \(N\times N\) image with a \(K\times K\) kernel). In frequency space it is a simple <em>pointwise multiplication</em> (\(O(N^2)\)). The typical path is therefore: compute FFT, multiply, inverse FFT &mdash; already significantly faster than direct convolution for moderately large images.</p>
 
-<!-- TODO: img/jpeg-compression.svg -->
+<figure class="my-8">
+  <img src="/img/jpeg-compression.svg" alt="JPEG compression pipeline: Split image into 8&times;8 blocks, apply DCT, quantize high frequencies, entropy coding." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:650px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">The JPEG pipeline: DCT transforms each 8&times;8 block into frequencies, quantization removes detail, entropy coding compresses.</figcaption>
+</figure>
 
 <h3>JPEG: Fourier in 8&times;8 Blocks</h3>
 
@@ -750,7 +765,10 @@
 
 <p>This spectrum lives entirely in frequency space: every point on a 2D grid corresponds to a wave frequency and direction &mdash; not a position on the water. It describes no concrete wave, but a <em>probability distribution</em> of waves.</p>
 
-<!-- TODO: img/ifft-ocean-pipeline.svg -->
+<figure class="my-8">
+  <img src="/img/ifft-ocean-pipeline.svg" alt="iFFT ocean pipeline: Phillips spectrum &rarr; complex amplitudes &rarr; iFFT butterfly on GPU &rarr; displacement map + normal map &rarr; rendered water surface." class="mx-auto rounded-lg border border-gray-800/50" style="max-width:700px" loading="lazy">
+  <figcaption class="text-xs text-gray-600 mt-2 text-center">From statistics to ocean: 65,536 frequencies, in real time on the GPU. Implementation: Phil Crowther, Ocean3.js (<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" class="text-gray-500 hover:text-gray-400" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a>).</figcaption>
+</figure>
 
 <h3>From Statistics to Wave: Tessendorf's Method</h3>
 
