@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="620" height="530"
-font-family="DejaVu Sans" font-size="16" font-stretch="condensed" text-anchor="middle">
+font-family="DejaVu Sans" font-size="16" font-stretch="condensed" text-anchor="middle" fill="#f1f5f9">
 <switch transform="translate(560 38)">
 	<text systemLanguage="ca">Sinusoidal</text>
 	<text systemLanguage="de">Sinus</text>
@@ -78,9 +78,9 @@ font-family="DejaVu Sans" font-size="16" font-stretch="condensed" text-anchor="m
 </switch>
 
 <g id="b" fill="none" stroke-linecap="round" stroke-linejoin="round"><g id="a">
-	<path stroke="#222" stroke-dasharray="2,4" stroke-width=".5"
+	<path stroke="#374151" stroke-dasharray="2,4" stroke-width=".5"
 	d="m10,30h501m99,40H10m0,40h600M110,10v120m100,0V10m100,0v120m100,0V10m100,0v120"/>
-	<rect x="10" y="10" width="600" height="120" stroke="#666" stroke-width="1.5"/>
+	<rect x="10" y="10" width="600" height="120" stroke="#4b5563" stroke-width="1.5"/>
 </g>
 <use transform="translate(0,130)" xlink:href="#a"/></g>
 <use transform="translate(0,260)" xlink:href="#b"/>
