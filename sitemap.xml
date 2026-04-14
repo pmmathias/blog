@@ -158,6 +158,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/euler.html"/>
   </url>
   <url>
+    <loc>https://ki-mathias.de/tommy-practice.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/tommy-practice.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/tommy-practice.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/tommy-practice.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/tommy-practice.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/tommy-practice.html"/>
+  </url>
+  <url>
     <loc>https://ki-mathias.de/ueber-mich.html</loc>
     <lastmod>2026-04-12</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/ueber-mich.html"/>
