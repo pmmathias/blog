@@ -83,7 +83,11 @@
     .try-it strong { color: #22d3ee; }
     .video-placeholder { background: rgba(17, 24, 39, 0.6); border: 1px dashed #374151; border-radius: 0.75rem; padding: 3rem 2rem; text-align: center; margin: 2rem 0; color: #6b7280; }
     .app-iframe-wrap { position: relative; width: 100%; border-radius: 0.75rem; overflow: hidden; border: 1px solid #374151; margin: 1.5rem 0; }
+    .katex { color: #e2e8f0; }
   </style>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
 </head>
 
 <body class="bg-gray-950 text-gray-100 antialiased">
@@ -114,7 +118,7 @@
     Tommy the Cat &mdash; Bass Cover bei 210 BPM + FFT-Video-Sync
   </h1>
   <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
-    Primus-Riff vereinfacht aber bei Original-Tempo, eine Browser-Practice-App mit WSOLA-Algorithmus, und zwei separate Kamera-Aufnahmen frame-genau synchronisiert &mdash; nur mit Python und FFmpeg.
+    Primus-Riff vereinfacht, aber daf&uuml;r ann&auml;hernd bei Originaltempo spielbar :-D Dazu: eine Browser-Practice-App, und zwei separate Kamera-Aufnahmen per FFT frame-genau synchronisiert &mdash; nur mit Python und FFmpeg.
   </p>
   <div class="flex items-center gap-3 text-xs text-gray-500">
     <span>KI-Mathias</span><span>&middot;</span>
@@ -137,7 +141,7 @@
 <p class="chapter-label">Kapitel 1</p>
 <h2>Das Riff</h2>
 
-<p>Tommy the Cat von Primus. 210 BPM. Les Claypools Originalversion ist ein Monument &mdash; und f&uuml;r die meisten von uns unspielbar. Claypools Technik verbindet Slap-Bass, Ghost-Notes, Hammer-Ons und eine kompositorische Selbstverst&auml;ndlichkeit, die jahrzehntelange &Uuml;bung voraussetzt. Das Riff klingt simpel. Es ist es nicht.</p>
+<p>Tommy the Cat von Primus. 210 BPM. Les Claypools Original ist &mdash; sagen wir mal &mdash; nicht das, was man abends mal eben vom Blatt spielt. Ich hab&rsquo;s trotzdem versucht, auf meine Art.</p>
 
 <p>Meine Interpretation: vereinfacht, aber bei Original-Tempo spielbar. Kein Slapping im Claypool-Stil, aber <strong>Flamenco-Strokes, Hammer-Ons und Groove</strong>. Wer das Riff zum ersten Mal h&ouml;rt, denkt an Chaos &mdash; in Wirklichkeit ist es ein pr&auml;zises 16-Note-Muster, das sich wiederholt. Jede Note hat eine definierte Technik, eine definierte Saite, einen definierten Bund.</p>
 
@@ -204,7 +208,7 @@ anschlie&szlig;end Flamenco-Up-Stroke. Alles andere identisch. So weiter.</pre>
 
 <p>Die Practice-App l&ouml;st das mit dem <strong>WSOLA-Algorithmus</strong> (Waveform Similarity Overlap-Add), implementiert &uuml;ber die <a href="https://www.surina.net/soundtouch/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">SoundTouch-Bibliothek</a>. WSOLA ver&auml;ndert das Tempo, h&auml;lt aber die Tonh&ouml;he konstant. Ein Snare-Hit bei 60 BPM klingt genau so hoch wie bei 210 BPM &mdash; nur langsamer.</p>
 
-<p>Die App l&auml;uft vollst&auml;ndig im Browser, braucht keine Installation und funktioniert auf dem Smartphone. Empfohlene Vorgehensweise: <strong>Drums an, Bass stumm, Tempo auf 60&nbsp;% runterdrehen</strong>. Das Riff auf der eigenen Gitarre oder dem Bass mitspielen, bis die Finger die Bewegungssequenz kennen. Dann schrittweise hoch auf 80, 100, 130, 160, 210 BPM.</p>
+<p>Die App l&auml;uft vollst&auml;ndig im Browser, braucht keine Installation und funktioniert auf dem Smartphone. Empfohlene Vorgehensweise: <strong>Drums an, Bass stumm, Tempo auf 180 BPM runterdrehen</strong>. Das Riff auf dem eigenen Bass mitspielen, bis die Finger die Bewegungssequenz kennen. Dann schrittweise hoch &mdash; 190, 200, 210 und wer mutig ist: 230+.</p>
 
 <div class="app-iframe-wrap" style="height:520px;">
   <iframe
@@ -433,6 +437,16 @@ document.addEventListener('DOMContentLoaded', function() {
   sections.forEach(function(s) { navObserver.observe(s); });
 
 });
+
+if (typeof renderMathInElement === 'function') {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\(', right: '\\)', display: false }
+    ],
+    throwOnError: false
+  });
+}
 </script>
 
 </body>
