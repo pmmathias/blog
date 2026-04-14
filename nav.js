@@ -72,6 +72,11 @@
       icon: '\uD835\uDE52',  // 𝑒
       de: { title: 'Warum e besonders ist', subtitle: 'Wachstum \u00B7 Primzahlen \u00B7 Zufall', href: '/euler.html' },
       en: { title: 'Why e Is Special', subtitle: 'Growth \u00B7 Primes \u00B7 Probability', href: '/en/euler.html' }
+    },
+    {
+      icon: '\uD83C\uDFB8',  // 🎸
+      de: { title: 'Tommy the Cat \u2014 Bass Cover', subtitle: 'Primus \u00B7 210 BPM \u00B7 FFT-Sync', href: '/tommy-practice.html' },
+      en: { title: 'Tommy the Cat \u2014 Bass Cover', subtitle: 'Primus \u00B7 210 BPM \u00B7 FFT Sync', href: '/en/tommy-practice.html' }
     }
   ];
 

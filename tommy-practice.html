@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Tommy the Cat &ndash; Bass Cover bei 210 BPM + FFT-Video-Sync</title>
+  <meta name="description" content="Wie ich Tommy the Cat von Primus bei 210 BPM spiele, eine Practice-App mit WSOLA-Algorithmus gebaut habe und zwei separate Kamera-Aufnahmen mit FFT-Cross-Correlation frame-genau synchronisiert habe.">
+  <meta name="author" content="Mathias Leonhardt">
+  <link rel="canonical" href="https://ki-mathias.de/tommy-practice.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/tommy-practice.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/tommy-practice.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/tommy-practice.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Tommy the Cat &ndash; Bass Cover bei 210 BPM + FFT-Video-Sync">
+  <meta property="og:description" content="Primus-Riff auf dem Bass, vereinfacht aber bei Original-Tempo. Dazu: wie man zwei Kamera-Aufnahmen mit Python-FFT frame-genau synchronisiert.">
+  <meta property="og:url" content="https://ki-mathias.de/tommy-practice.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-04-14">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Bass">
+  <meta property="article:tag" content="Primus">
+  <meta property="article:tag" content="Fourier">
+  <meta property="article:tag" content="FFT">
+  <meta property="article:tag" content="Musik">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tommy the Cat &ndash; Bass Cover bei 210 BPM + FFT-Video-Sync">
+  <meta name="twitter:description" content="Primus-Riff auf dem Bass + Python-FFT-Synchronisation zweier Kamera-Aufnahmen.">
+
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Tommy the Cat \u2013 Bass Cover bei 210 BPM + FFT-Video-Sync",
+    "description": "Wie ich Tommy the Cat von Primus bei 210 BPM spiele, eine Practice-App mit WSOLA-Algorithmus gebaut habe und zwei separate Kamera-Aufnahmen mit FFT-Cross-Correlation frame-genau synchronisiert habe.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-04-14",
+    "dateModified": "2026-04-14",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/tommy-practice.html" },
+    "inLanguage": "de",
+    "isAccessibleForFree": true,
+    "keywords": ["Tommy the Cat", "Primus", "Les Claypool", "Bass", "FFT", "Cross-Correlation", "WSOLA", "SoundTouch", "FFmpeg", "Fourier"],
+    "articleSection": "Musik",
+    "wordCount": 1500,
+    "timeRequired": "PT8M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); transition: width 50ms linear; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #f59e0b, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .prose-dark ol { color: #d1d5db; padding-left: 1.5rem; margin-bottom: 1.25rem; line-height: 1.8; }
+    .prose-dark ol li { margin-bottom: 0.5rem; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .chapter-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(34,211,238,0.6); margin-bottom: 0.5rem; }
+    .code-block { background: rgba(17, 24, 39, 0.8); border: 1px solid #374151; border-radius: 0.75rem; padding: 1.25rem; margin: 1.5rem 0; overflow-x: auto; font-family: 'Fira Code', 'Courier New', monospace; font-size: 0.8rem; line-height: 1.6; color: #86efac; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .video-placeholder { background: rgba(17, 24, 39, 0.6); border: 1px dashed #374151; border-radius: 0.75rem; padding: 3rem 2rem; text-align: center; margin: 2rem 0; color: #6b7280; }
+    .app-iframe-wrap { position: relative; width: 100%; border-radius: 0.75rem; overflow: hidden; border: 1px solid #374151; margin: 1.5rem 0; }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<!-- Hidden TOC slot — nav.js picks this up and injects it into the dropdown -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#das-riff" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Das Riff</a>
+  <a href="#practice-app" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Die Practice-App</a>
+  <a href="#fft-sync" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; FFT-Cross-Correlation</a>
+  <a href="#fuer-producer" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; F&uuml;r Content-Producer</a>
+  <a href="#faq" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">FAQ</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; Musik &middot; Bass &middot; Fourier</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-amber-400 to-purple-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Tommy the Cat &mdash; Bass Cover bei 210 BPM + FFT-Video-Sync
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Primus-Riff vereinfacht aber bei Original-Tempo, eine Browser-Practice-App mit WSOLA-Algorithmus, und zwei separate Kamera-Aufnahmen frame-genau synchronisiert &mdash; nur mit Python und FFmpeg.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-04-14">April 2026</time><span>&middot;</span>
+    <span>~8 Min. Lesezeit</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- VIDEO PLACEHOLDER -->
+<!-- VIDEO_EMBED_PLACEHOLDER -->
+
+<!-- ================================================================ -->
+<!-- 1. DAS RIFF -->
+<!-- ================================================================ -->
+<section id="das-riff" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 1</p>
+<h2>Das Riff</h2>
+
+<p>Tommy the Cat von Primus. 210 BPM. Les Claypools Originalversion ist ein Monument &mdash; und f&uuml;r die meisten von uns unspielbar. Claypools Technik verbindet Slap-Bass, Ghost-Notes, Hammer-Ons und eine kompositorische Selbstverst&auml;ndlichkeit, die jahrzehntelange &Uuml;bung voraussetzt. Das Riff klingt simpel. Es ist es nicht.</p>
+
+<p>Meine Interpretation: vereinfacht, aber bei Original-Tempo spielbar. Kein Slapping im Claypool-Stil, aber <strong>Flamenco-Strokes, Hammer-Ons und Groove</strong>. Wer das Riff zum ersten Mal h&ouml;rt, denkt an Chaos &mdash; in Wirklichkeit ist es ein pr&auml;zises 16-Note-Muster, das sich wiederholt. Jede Note hat eine definierte Technik, eine definierte Saite, einen definierten Bund.</p>
+
+<p>Das Tab unten zeigt meine Vereinfachung. Der erste Takt startet mit einem Flamenco-Down-Stroke auf Bund 7 (A-Saite) und Bund 9 (D-Saite) gleichzeitig &mdash; ein Quint-Akkord. Dann kommt der Up-Stroke, gefolgt von zwei Thumb-Schlägen auf die gemutete E-Saite. Ab Note 5 wird es interessant: ein Hammer-On von G nach G&sharp; auf der E-Saite, ein gepoppter Hammer-On F nach G auf der D-Saite, dann abwechselnde Slap-Ghost-Notes und offene G-Saite als Pop. Das Muster wiederholt sich &mdash; der zweite und alle folgenden Takte starten mit einem Hammer-On statt dem initialen Flamenco-Down-Stroke.</p>
+
+<p>Wer das Riff &uuml;ben will, sollte es ganz langsam beginnen &mdash; 80 BPM, einzelne Noten, bis die Handhaltung stimmt. Das Tempo kommt von selbst.</p>
+
+<pre class="bg-gray-900/50 p-4 rounded-lg overflow-x-auto text-xs text-gray-300 font-mono">G|-------------------------------------0-----------0-------------|-------------------------------------0-----------0-------------|
+D|-9---9-------------------3---5h------------------------------0-|-9h--9-------------------3---5h------------------------------0-|
+A|-7---7---------------------------------------------------------|-7h--7---------------------------------------------------------|
+E|---------X---X---3---4-----------4-------4---3-------X---X-----|---------X---X---3---4-----------4-------4---3-------X---X-----|
+   ↓   ↑   T   T   T   H   P   H   T   P   T   T   P   T   T   P   H   ↑   T   T   T   H   P   H   T   P   T   T   P   T   T   P
+   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16
+
+Legende:
+  ↓  = Flamenco-Down-Stroke       ↑  = Flamenco-Up-Stroke
+  T  = Thumb (Slap)               P  = Pop
+  H  = Hammer-On                  h  = Hammer-On im Tab (z.B. 5h = Hammer-On auf Bund 5)
+  X  = Muted Note (Ghost Note)
+
+Takt 1, Note 1-16:
+  1) Flamenco-Down-Stroke: Bund 7 (A) + Bund 9 (D) gleichzeitig — Quint-Akkord
+  2) Flamenco-Up-Stroke: Quint-Akkord, andere Saiten stumm (linke Hand)
+  3) Thumb auf muted E-Saite
+  4) Thumb auf muted E-Saite
+  5) Geslapter Hammer-On von G nach G# auf E-Saite
+  6) G# auf E-Saite (Ziel des Hammer-Ons)
+  7) Gepoppter Hammer-On F nach G auf D-Saite (Zeigefinger)
+  8) G auf D-Saite (Ziel des Hammer-Ons)
+  9) Slap G# (E-Saite, Bund 4)
+ 10) Pop leere G-Saite
+ 11) Slap muted E-Saite
+ 12) Slap G (E-Saite, Bund 3)
+ 13) Pop leere G-Saite
+ 14) Slap muted E-Saite
+ 15) Slap muted E-Saite
+ 16) Pop D-Saite (leer)
+
+Ab Takt 2: Note 1 wird zu Hammer-On auf Bund 7 (A) + Bund 9 (D),
+anschlie&szlig;end Flamenco-Up-Stroke. Alles andere identisch. So weiter.</pre>
+
+<div class="try-it">
+  <strong>Practice-App:</strong>
+  <p>Zum interaktiven &Uuml;ben gibt es eine Browser-App unter <a href="https://pmmathias.github.io/TommyTheCat/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">pmmathias.github.io/TommyTheCat</a> &mdash; Tempo justierbar, Drums und Bass getrennt stummschaltbar.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 2. DIE PRACTICE-APP -->
+<!-- ================================================================ -->
+<section id="practice-app" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 2</p>
+<h2>Die Practice-App</h2>
+
+<p>Wer ein Riff bei 210 BPM lernen will, f&auml;ngt nicht bei 210 BPM an. Das Problem: Drumcomputer-Loops bei 60&nbsp;% Tempo klingen falsch, weil die Pitches mitskalieren. Ein Schlagzeug bei 100 BPM klingt nicht wie ein Schlagzeug bei 210 BPM in Zeitlupe &mdash; es klingt wie ein anderen Instrument.</p>
+
+<p>Die Practice-App l&ouml;st das mit dem <strong>WSOLA-Algorithmus</strong> (Waveform Similarity Overlap-Add), implementiert &uuml;ber die <a href="https://www.surina.net/soundtouch/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300">SoundTouch-Bibliothek</a>. WSOLA ver&auml;ndert das Tempo, h&auml;lt aber die Tonh&ouml;he konstant. Ein Snare-Hit bei 60 BPM klingt genau so hoch wie bei 210 BPM &mdash; nur langsamer.</p>
+
+<p>Die App l&auml;uft vollst&auml;ndig im Browser, braucht keine Installation und funktioniert auf dem Smartphone. Empfohlene Vorgehensweise: <strong>Drums an, Bass stumm, Tempo auf 60&nbsp;% runterdrehen</strong>. Das Riff auf der eigenen Gitarre oder dem Bass mitspielen, bis die Finger die Bewegungssequenz kennen. Dann schrittweise hoch auf 80, 100, 130, 160, 210 BPM.</p>
+
+<div class="app-iframe-wrap" style="height:520px;">
+  <iframe
+    src="https://pmmathias.github.io/TommyTheCat/"
+    title="Tommy the Cat Practice App"
+    width="100%"
+    height="520"
+    frameborder="0"
+    loading="lazy"
+    allow="autoplay"
+    style="display:block;border:0;">
+  </iframe>
+</div>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Technischer Hintergrund WSOLA:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">WSOLA teilt das Audio-Signal in kurze &Uuml;berlappungs-Fenster und f&uuml;gt sie mit angepassten Kreuzkorrelationen neu zusammen &mdash; so entsteht ein l&auml;ngeres oder k&uuml;rzeres Signal ohne Pitch-Shift. Der Algorithmus geh&ouml;rt zur Familie der Time-Scale-Modification-Methoden und ist Standard in professionellen Playback-Systemen.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 3. FFT-CROSS-CORRELATION -->
+<!-- ================================================================ -->
+<section id="fft-sync" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 3</p>
+<h2>Der Tech-Stack &mdash; FFT-Cross-Correlation</h2>
+
+<p>Dieses Video besteht aus <strong>ZWEI separaten Kamera-Aufnahmen</strong>. Ich habe Schlagzeug und Bass getrennt aufgenommen, jedes mit einer eigenen Kamera, und die Aufnahmen waren nicht synchronisiert. Wie bringt man zwei Videos, die zu verschiedenen Zeitpunkten gestartet wurden, auf Sample-genaue &Uuml;bereinstimmung?</p>
+
+<h3>Die Aufnahme-Situation</h3>
+
+<p>In GarageBand wurden zwei Audiospuren gleichzeitig &uuml;ber eine Interface-Box aufgezeichnet: E-Drums und Bass. Aber zwei separate Kameras liefen unabh&auml;ngig &mdash; eine auf das Schlagzeug gerichtet, eine auf den Bass. Kein Klatschholz, kein gemeinsamer Ausl&ouml;ser. Die Videos haben also einen unbekannten zeitlichen Versatz, der irgendwo zwischen 0 und mehreren Sekunden liegt.</p>
+
+<p>Manuelles Synchronisieren per Waveform in einem Video-Editor? M&ouml;glich &mdash; aber fehleranf&auml;llig, unreproduzierbar und nervig. Die Alternative: <strong>Python + scipy + FFmpeg</strong>.</p>
+
+<h3>Schritt 1: Audiospuren extrahieren</h3>
+
+<p>Jedes Video-File enth&auml;lt eine Audiospur, die das aufgenommene Instrument (plus Umgebungsgr&auml;usche) enth&auml;lt. FFmpeg extrahiert sie als WAV-Datei. Die Herausforderung: Bass und Schlagzeug haben sehr unterschiedliche Frequenzspektren. Ein Butterworth-Bandpass-Filter trennt die relevanten Signale:</p>
+
+<ul style="color:#d1d5db; padding-left:1.5rem; margin-bottom:1.25rem; line-height:1.8;">
+  <li><strong>Schlagzeug:</strong> 150&ndash;6000 Hz (Snare-Transient, Hi-Hat, Kick-Oberton)</li>
+  <li><strong>Bass:</strong> 40&ndash;300 Hz (Grundton und erste Obertöne)</li>
+</ul>
+
+<p>Der Butterworth-Filter ist ein Standardwerkzeug der Signalverarbeitung: er d&auml;mpft Frequenzen au&szlig;erhalb des Bandes mit maximaler Flachheit im Durchlassbereich. <code style="color:#86efac; background:rgba(17,24,39,0.8); padding:0.1rem 0.4rem; border-radius:0.25rem;">scipy.signal.butter</code> + <code style="color:#86efac; background:rgba(17,24,39,0.8); padding:0.1rem 0.4rem; border-radius:0.25rem;">sosfilt</code> erledigt das in zwei Zeilen.</p>
+
+<h3>Schritt 2: Cross-Correlation im Frequenzraum</h3>
+
+<p>Die Cross-Correlation zweier Signale \(f\) und \(g\) misst, wie gut sie bei einem bestimmten Zeitversatz &uuml;bereinstimmen. Der Peak der Kreuzkorrelation liegt genau beim Zeitversatz, bei dem die Signale am besten passen. Statt sie zeitdom&auml;nen-weise zu berechnen (langsam, \(O(n^2)\)), nutzen wir das <strong>Faltungstheorem</strong>:</p>
+
+<p style="text-align:center; font-family:monospace; color:#86efac; padding:1rem; background:rgba(17,24,39,0.6); border-radius:0.5rem; margin:1.5rem 0;">
+  corr(f, g) = IFFT( FFT(f) &middot; conj(FFT(g)) )
+</p>
+
+<p>Genau dieselbe Fourier-Transformation, die in unserem <a href="vogelsimulator.html" class="text-cyan-400 hover:text-cyan-300">Vogelsimulator-Post Ozeanwellen erzeugt</a>, synchronisiert hier Bass und Schlagzeug. Im Frequenzraum wird aus einer zeitaufwendigen Faltung eine einfache Multiplikation &mdash; <strong>von \(O(n^2)\) auf \(O(n \log n)\)</strong>.</p>
+
+<p>Das Python-Kern-Snippet (der eigentliche Synchronisations-Code):</p>
+
+<div class="code-block">
+<pre>import numpy as np
+from scipy.signal import butter, sosfilt
+
+def bandpass(signal, lo, hi, sr):
+    sos = butter(4, [lo, hi], btype='band', fs=sr, output='sos')
+    return sosfilt(sos, signal)
+
+def find_offset(ref, query, sr):
+    # FFT-based cross-correlation
+    n = len(ref) + len(query) - 1
+    R = np.fft.rfft(ref,   n=n)
+    Q = np.fft.rfft(query, n=n)
+    corr = np.fft.irfft(R * np.conj(Q), n=n)
+    peak = np.argmax(corr)
+    if peak > n // 2:
+        peak -= n   # negative lag
+    # Sub-sample precision via parabolic interpolation
+    if 1 <= abs(peak) < len(corr) - 1:
+        y0, y1, y2 = corr[peak-1], corr[peak], corr[peak+1]
+        peak += (y2 - y0) / (2 * (2*y1 - y0 - y2))
+    return peak / sr   # offset in seconds</pre>
+</div>
+
+<h3>Schritt 3: Parabolische Sub-Sample-Interpolation</h3>
+
+<p>Der naive Ansatz nimmt einfach den Index des Korrelations-Peaks und rechnet ihn in Sekunden um. Das Problem: Bei 44.100 Hz Samplerate ist die Aufl&ouml;sung etwa 22 Mikrosekunden &mdash; bei 25 fps entspricht ein Frame 40.000 Mikrosekunden. Das reicht.</p>
+
+<p>Aber f&uuml;r 60-fps-Videos lohnt sich die <strong>parabolische Interpolation</strong>: Wir fitten eine Parabel durch den Peak und seine zwei Nachbarn und berechnen das exakte Subpixel-Maximum. Die Formel steht im Snippet oben. Das Ergebnis: Sub-Sample-genaue Zeitversatz-Bestimmung, die bei 60 fps weit unter einem Frame bleibt.</p>
+
+<h3>Schritt 4: FFmpeg-Render</h3>
+
+<p>Mit dem berechneten Offset-Wert (in Sekunden) rendert FFmpeg das finale Video. Container-Level Seeks sind dabei effizienter als Re-Encoding:</p>
+
+<div class="code-block">
+<pre># offset_s = berechneter Versatz in Sekunden (positiv oder negativ)
+# Positiver Offset: Video 2 beginnt sp&auml;ter als Video 1
+ffmpeg -ss {offset_s} -i drums.mp4 \
+       -i bass.mp4   \
+       -filter_complex "[0:v][1:v]hstack=inputs=2[v]" \
+       -map "[v]" -map 0:a \
+       output.mp4</pre>
+</div>
+
+<p>Kein Premiere Pro n&ouml;tig. Kein manuelles Ausrichten von Waveforms. Nur Python + FFmpeg + ein KI-Agent, der das Skript geschrieben hat. Das gesamte Rendering dauert &mdash; abh&auml;ngig von der Videoqualit&auml;t &mdash; unter zwei Minuten.</p>
+
+<div class="summary-box">
+  <strong style="color:#22d3ee;">Zusammenfassung Tech-Stack:</strong>
+  <p class="text-sm text-gray-300 mt-1 mb-0">GarageBand (Aufnahme) &rarr; FFmpeg (Audiospuren extrahieren) &rarr; scipy Butterworth-Filter (Frequenztrennung) &rarr; numpy FFT Cross-Correlation (Offset berechnen) &rarr; Parabolische Interpolation (Sub-Sample-Pr&auml;zision) &rarr; FFmpeg (finales Rendering). Vollst&auml;ndig automatisiert, reproduzierbar, frame-genau.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- 4. FÜR CONTENT-PRODUCER -->
+<!-- ================================================================ -->
+<section id="fuer-producer" class="pb-16">
+<div class="prose-dark">
+
+<p class="chapter-label">Kapitel 4</p>
+<h2>F&uuml;r Content-Producer &mdash; So macht ihr das auch</h2>
+
+<p>Das Verfahren ist nicht auf Bass-Covers beschr&auml;nkt. Wer mit mehreren Kameras filmt &mdash; Interviews, Konzerte, Tutorials &mdash; kann dieselbe Pipeline nutzen, solange die Audiospuren ein gemeinsames Referenzsignal enthalten (was sie fast immer tun: Raumhall, Stimme, Musik).</p>
+
+<h3>Das Rezept in f&uuml;nf Schritten</h3>
+
+<ol>
+  <li><strong>Audiospuren getrennt aufnehmen</strong> &mdash; pro Instrument oder Quelle eine Spur, &uuml;ber ein Audio-Interface oder direkt in die DAW. Kein Click-Track n&ouml;tig, aber er schadet nicht.</li>
+  <li><strong>Videos getrennt aufnehmen</strong> &mdash; jede Kamera l&auml;uft unabh&auml;ngig. Kein Sync-Signal, kein gemeinsamer Ausl&ouml;ser. Das Python-Skript findet den Versatz automatisch.</li>
+  <li><strong>Bandpass-Filter pro Instrument</strong> &mdash; Drums: 150&ndash;6000 Hz, Bass: 40&ndash;300 Hz, Gitarre: 80&ndash;2000 Hz, Stimme: 100&ndash;8000 Hz. Anpassen je nach Quelle.</li>
+  <li><strong>Cross-Correlation im Frequenzraum</strong> &mdash; numpy + scipy, das Snippet von oben. Gibt den Zeitversatz in Sekunden zur&uuml;ck. Typische Laufzeit unter einer Sekunde f&uuml;r 10-Minuten-Audio.</li>
+  <li><strong>FFmpeg Render</strong> &mdash; mit dem berechneten Offset. Nebeneinander (<code style="color:#86efac; background:rgba(17,24,39,0.8); padding:0.1rem 0.4rem; border-radius:0.25rem;">hstack</code>), &uuml;bereinander (<code style="color:#86efac; background:rgba(17,24,39,0.8); padding:0.1rem 0.4rem; border-radius:0.25rem;">vstack</code>), Picture-in-Picture (<code style="color:#86efac; background:rgba(17,24,39,0.8); padding:0.1rem 0.4rem; border-radius:0.25rem;">overlay</code>) &mdash; alles m&ouml;glich.</li>
+</ol>
+
+<h3>Der Vorteil gegen&uuml;ber manueller Synchronisation</h3>
+
+<p>Manuelles Ausrichten von Waveforms in einem Video-Editor dauert &mdash; je nach L&auml;nge des Materials &mdash; zwischen einer Minute und einer Stunde. Es ist augengesteuertes Sch&auml;tzen. Wer einmal eine schlecht synchronisierte Aufnahme hochgeladen hat, wei&szlig;: Man sieht es sofort. Ein Gitarren-Anschlag, der 80 Millisekunden vor dem H&ouml;ren sichtbar ist, st&ouml;rt den Zuschauer mehr als man denkt.</p>
+
+<p>Die FFT-Methode ist <strong>frame-genau, automatisch und reproduzierbar</strong>. Wenn sich am Material etwas &auml;ndert &mdash; neue Takes, anderer Schnitt &mdash; l&auml;uft das Skript einfach neu. Kein manuelles Nachjustieren. Kein Premiere Pro. Kein Abonnement.</p>
+
+<p>Das komplette Python-Skript (inklusive FFmpeg-Aufruf, Fortschrittsanzeige und Fehlerbehandlung) l&auml;sst sich mit einem KI-Agenten in unter zehn Minuten generieren &mdash; Eingabe: die obige Beschreibung. Ausgabe: lauff&auml;higer Code. Genau das ist hier passiert.</p>
+
+<div class="try-it">
+  <strong>Abh&auml;ngigkeiten:</strong>
+  <p><code style="color:#86efac;">pip install numpy scipy soundfile</code> &mdash; plus eine FFmpeg-Installation im PATH. Keine weiteren Abh&auml;ngigkeiten. Das Skript l&auml;uft auf macOS, Linux und Windows.</p>
+</div>
+
+</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ================================================================ -->
+<!-- FAQ -->
+<!-- ================================================================ -->
+<section id="faq" class="pb-16">
+<div class="prose-dark">
+<h2 style="font-size:1.25rem;">H&auml;ufige Fragen</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Ist das Les Claypools Originalversion?</h3>
+<p>Nein. Claypools Originalversion von Tommy the Cat ist eine der technisch anspruchsvollsten Bass-Parts der Rockgeschichte &mdash; Slap, Pop, Ghost-Notes und ein perkussiver Stil, der eigene Jahrzehnte der Entwicklung widerspiegelt. Diese Version ist eine vereinfachte Interpretation: kein Claypool-Slapping, stattdessen Flamenco-Strokes und Hammer-Ons. Das Tempo ist original (210 BPM), die Technik ist zug&auml;nglicher.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was ist WSOLA?</h3>
+<p>WSOLA steht f&uuml;r Waveform Similarity Overlap-Add. Es ist ein Algorithmus zur zeitlichen Skalierung von Audiosignalen ohne Ver&auml;nderung der Tonh&ouml;he (Pitch-Preservation). Das Signal wird in kurze, &uuml;berlappende Fenster aufgeteilt; die Fenster werden mit Hilfe von Kreuzkorrelation optimal ausgerichtet und wieder zusammengef&uuml;gt &mdash; l&auml;nger oder k&uuml;rzer, je nach gew&uuml;nschtem Tempo. Das Ergebnis: Ein Schlagzeug-Loop bei 60 BPM klingt genau so wie bei 210 BPM &mdash; nur langsamer.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Wie funktioniert die FFT-basierte Video-Synchronisation?</h3>
+<p>Die Cross-Correlation zweier Audiosignale misst ihre &Uuml;bereinstimmung bei verschiedenen Zeitvers&auml;tzen. Der Peak der Kreuzkorrelation liegt genau beim optimalen Versatz. Statt die Korrelation zeitdom&auml;nen-weise zu berechnen (\(O(n^2)\)), nutzt das Faltungstheorem die Fourier-Transformation: Im Frequenzraum wird aus der Faltung eine punktweise Multiplikation (\(O(n \log n)\)). Mit parabolischer Interpolation um den Peak herum erreicht man Sub-Sample-Pr&auml;zision &mdash; besser als ein einzelner Videoframe bei 60 fps.</p>
+
+</div>
+</section>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Ist das Les Claypools Originalversion?", "acceptedAnswer": {"@type": "Answer", "text": "Nein. Diese Version ist eine vereinfachte Interpretation: kein Claypool-Slapping, stattdessen Flamenco-Strokes und Hammer-Ons. Das Tempo ist original (210 BPM), die Technik ist zug\u00e4nglicher."}}, {"@type": "Question", "name": "Was ist WSOLA?", "acceptedAnswer": {"@type": "Answer", "text": "WSOLA (Waveform Similarity Overlap-Add) ist ein Algorithmus zur zeitlichen Skalierung von Audio ohne Pitch-Ver\u00e4nderung. Er teilt das Signal in \u00fcberlappende Fenster und f\u00fcgt sie optimal ausgerichtet neu zusammen."}}, {"@type": "Question", "name": "Wie funktioniert die FFT-basierte Video-Synchronisation?", "acceptedAnswer": {"@type": "Answer", "text": "Cross-Correlation im Frequenzraum via FFT findet den optimalen Zeitversatz zwischen zwei Audiosignalen in O(n log n). Mit parabolischer Interpolation um den Peak erreicht man Sub-Sample-Pr\u00e4zision \u2014 besser als ein Frame bei 60 fps."}}]}
+</script>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Erstellt mit Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="ueber-mich.html" class="hover:text-gray-400">&Uuml;ber mich</a> &middot;
+    <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+    <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+  </p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // 1. Scroll progress bar
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // 2. TOC highlighting
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          else link.classList.remove('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+});
+</script>
+
+</body>
+</html>
