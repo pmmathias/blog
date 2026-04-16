@@ -77,6 +77,11 @@
       icon: '\uD83C\uDFB8',  // 🎸
       de: { title: 'Tommy the Cat \u2014 Bass Cover', subtitle: 'Primus \u00B7 210 BPM \u00B7 FFT-Sync', href: '/tommy-practice.html' },
       en: { title: 'Tommy the Cat \u2014 Bass Cover', subtitle: 'Primus \u00B7 210 BPM \u00B7 FFT Sync', href: '/en/tommy-practice.html' }
+    },
+    {
+      icon: '\uD83C\uDFAD',  // 🎭
+      de: { title: 'Deepfakes erkl\u00E4rt', subtitle: 'Autoencoder \u00B7 PCA \u00B7 Kernel-Trick', href: '/deepfakes.html' },
+      en: { title: 'Deepfakes Explained', subtitle: 'Autoencoders \u00B7 PCA \u00B7 Kernel Trick', href: '/en/deepfakes.html' }
     }
   ];
 

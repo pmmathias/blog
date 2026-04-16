@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Deepfakes erkl&auml;rt &ndash; Von Vektoren &uuml;ber Autoencoder bis zum Gesichtertausch</title>
+  <meta name="description" content="Wie funktionieren Deepfakes wirklich? Eine Reise von linearer Algebra &uuml;ber PCA, den Kernel-Trick und neuronale Netze bis zum Decoder-Swap &ndash; interaktiv erkl&auml;rt mit 6 Visualisierungen.">
+  <meta name="author" content="Mathias Leonhardt">
+  <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
+  <link rel="canonical" href="https://ki-mathias.de/deepfakes.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/deepfakes.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/deepfakes.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/deepfakes.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Deepfakes erkl&auml;rt &ndash; Von Vektoren bis zum Gesichtertausch">
+  <meta property="og:description" content="Wie funktionieren Deepfakes wirklich? Interaktiv erkl&auml;rt: Lineare Algebra, PCA, Kernel-Trick, Autoencoder.">
+  <meta property="og:url" content="https://ki-mathias.de/deepfakes.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-04-15">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Deepfakes">
+  <meta property="article:tag" content="Lineare Algebra">
+  <meta property="article:tag" content="Autoencoder">
+  <meta property="article:tag" content="Neuronale Netze">
+  <meta property="article:tag" content="PCA">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/deepfakes-de.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script defer src="deepfakes-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .prose { max-width: 72ch; margin: 0 auto; }
+    .prose p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose strong { color: #f1f5f9; }
+    .prose em { color: #94a3b8; }
+    .prose h2 { font-size: 1.35rem; font-weight: 700; color: #f1f5f9; margin-top: 3rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(148,163,184,0.1); }
+    .prose h3 { font-size: 1.1rem; font-weight: 600; color: #e2e8f0; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose a { color: #60a5fa; }
+    .prose a:hover { color: #93c5fd; }
+    .prose ul, .prose ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: #d1d5db; }
+    .prose li { margin-bottom: 0.4rem; line-height: 1.7; }
+    .prose figure { margin: 2rem 0; }
+    .prose figcaption { font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; text-align: center; }
+    .prose img { border-radius: 0.5rem; border: 1px solid rgba(148,163,184,0.1); max-width: 100%; }
+    .prose .katex-display { margin: 1.5rem 0; overflow-x: auto; }
+    .chapter-icon { display: inline-block; width: 2rem; text-align: center; margin-right: 0.5rem; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+<div id="nav-toc-items" class="hidden">
+  <a href="#motivation">Die Motivation</a>
+  <a href="#vektoren">Vektoren &amp; Matrizen</a>
+  <a href="#orthogonalitaet">Orthogonalität</a>
+  <a href="#bss">Blind Source Separation</a>
+  <a href="#hochdimensional">Hochdimensionale Daten</a>
+  <a href="#pca">Dimensionsreduktion</a>
+  <a href="#linearitaet">Die Grenze der Linearit&auml;t</a>
+  <a href="#kernel">Der Kernel-Trick</a>
+  <a href="#neuronale-netze">Neuronale Netze</a>
+  <a href="#autoencoder">Autoencoder</a>
+  <a href="#latent">Latent-Space-Arithmetik</a>
+  <a href="#deepfakes">Deepfakes</a>
+  <a href="#ethik">Ethik &amp; Erkennung</a>
+</div>
+<script src="/nav.js"></script>
+
+<main class="max-w-4xl mx-auto px-4 pt-24 pb-16">
+<article class="prose">
+
+<h1 class="text-2xl sm:text-3xl font-bold text-gray-50 mb-2">Deepfakes erkl&auml;rt</h1>
+<p class="text-lg text-gray-400 mb-8">Von Vektoren &uuml;ber Autoencoder bis zum Gesichtertausch &ndash; die Mathematik hinter der Illusion</p>
+
+<!-- ============================================================ -->
+<h2 id="motivation"><span class="chapter-icon">1</span>Die Motivation</h2>
+
+<p>Im Sommer 2024 habe ich bei meiner Firma einen Tech Talk gehalten. Thema: <strong>Nichtlineare Operationen in hochdimensionalen R&auml;umen</strong>. Klingt abstrakt. Ist es auch &ndash; bis man versteht, dass genau diese Mathematik hinter Deepfakes steckt.</p>
+
+<p>Die Frage, die ich beantworten wollte: <em>Wie schafft es ein Computer, das Gesicht einer Person so &uuml;berzeugend auf eine andere zu &uuml;bertragen?</em> Die Antwort f&uuml;hrt &uuml;ber Vektoren, Matrizen, Dimensionsreduktion, den Kernel-Trick und neuronale Netze &ndash; und am Ende ist es erschreckend einfach.</p>
+
+<p>Dieser Beitrag folgt dem Bogen meiner Pr&auml;sentation. Jedes Kapitel baut auf dem vorherigen auf. Am Ende wirst du verstehen, warum ein vertauschter Decoder ausreicht, um ein Gesicht zu f&auml;lschen.</p>
+
+<!-- ============================================================ -->
+<h2 id="vektoren"><span class="chapter-icon">2</span>Vektoren &amp; Matrizen</h2>
+
+<p>Fangen wir ganz am Anfang an. Ein <strong>Vektor</strong> ist eine Liste von Zahlen. Zwei Zahlen beschreiben einen Punkt in der Ebene, drei einen Punkt im Raum:</p>
+
+$$\vec{A} = \begin{pmatrix} 2 \\ 3 \end{pmatrix} \quad \text{(2D)} \qquad \vec{B} = \begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix} \quad \text{(3D)}$$
+
+<p>Eine <strong>Matrix</strong> ist eine Tabelle von Zahlen, die einen Vektor in einen anderen verwandelt. Eine 3&times;3-Matrix kann einen Vektor drehen, skalieren oder projizieren &ndash; alles mit einer einzigen Multiplikation:</p>
+
+$$\vec{v}_{\text{neu}} = R \cdot \vec{v}_{\text{alt}}$$
+
+<p>Probier es aus &ndash; hier kannst du einen Vektor live transformieren:</p>
+
+<div id="mount-matrix-transform"></div>
+
+<!-- ============================================================ -->
+<h2 id="orthogonalitaet"><span class="chapter-icon">3</span>Orthogonalit&auml;t</h2>
+
+<p>Ein Vektor im 3D-Raum l&auml;sst sich als Kombination der drei Basisvektoren $\vec{i}$, $\vec{j}$ und $\vec{k}$ darstellen. Diese stehen senkrecht aufeinander &ndash; sie sind <strong>orthogonal</strong>. Jeder beschreibt eine v&ouml;llig unabh&auml;ngige Richtung.</p>
+
+<p>Was hei&szlig;t das bei echten Daten? Nehmen wir menschliche Merkmale:</p>
+
+<ul>
+  <li><strong>Schuhgr&ouml;&szlig;e &harr; K&ouml;rpergr&ouml;&szlig;e:</strong> h&auml;ngen zusammen (korreliert)</li>
+  <li><strong>Alter &harr; Gewicht:</strong> h&auml;ngen teilweise zusammen</li>
+  <li><strong>Augenfarbe &harr; Einkommen:</strong> v&ouml;llig unabh&auml;ngig (orthogonal)</li>
+</ul>
+
+<p>Orthogonale Merkmale tragen keine redundante Information. Und genau das wird sp&auml;ter wichtig: <em>Wenn wir Redundanz in Daten finden und entfernen k&ouml;nnen, brauchen wir weniger Dimensionen.</em></p>
+
+<!-- ============================================================ -->
+<h2 id="bss"><span class="chapter-icon">4</span>Blind Source Separation</h2>
+
+<p>Ein Beispiel f&uuml;r die Kraft der Orthogonalit&auml;t: das <strong>Cocktail-Party-Problem</strong>. Jemand spricht, gleichzeitig l&auml;uft Musik. Zwei Mikrofone nehmen die Mischung auf. Mathematisch:</p>
+
+$$\mathbf{x} = A \cdot \mathbf{s}$$
+
+<p>wobei $\mathbf{s}$ die Quellsignale und $A$ die Mischmatrix ist. Wenn wir $A$ umkehren k&ouml;nnen:</p>
+
+$$\mathbf{s} = A^{-1} \cdot \mathbf{x}$$
+
+<p>Die korrelierten, gemischten Daten (ein schiefes Parallelogramm) werden zu dekorrelierten, getrennten Signalen (ein sauberes Quadrat). Die Signale sind jetzt orthogonal zueinander.</p>
+
+<figure>
+  <img src="img/deepfakes/slide-10.png" alt="Blind Source Separation: Mischmatrix umkehren" loading="lazy" width="1920" height="1080">
+  <figcaption>Links: korrelierte Mischsignale. Rechts: getrennte Quellsignale nach Dekorrelation.</figcaption>
+</figure>
+
+<!-- ============================================================ -->
+<h2 id="hochdimensional"><span class="chapter-icon">5</span>Hochdimensionale Daten</h2>
+
+<p>Bisher haben wir in 2 oder 3 Dimensionen gedacht. Aber mathematisch kann man beliebig viele konstruieren. Ein <strong>Tesserakt</strong> ist ein W&uuml;rfel im vierdimensionalen Raum &ndash; vorstellen kann man sich das kaum, aber rechnen kann man damit:</p>
+
+<div id="mount-dimension-projector"></div>
+
+<p>Was hat das mit Bildern zu tun? Ein Schwarz-Wei&szlig;-Bild mit 10&times;20 Pixeln hat 200 Pixelwerte. Man kann es als <strong>200-dimensionalen Vektor</strong> auffassen &ndash; jeder Pixel ist eine Koordinate.</p>
+
+<p>Sind diese 200 Dimensionen orthogonal? Nein. Benachbarte Pixel korrelieren stark. Wenn ein Pixel hell ist, ist sein Nachbar wahrscheinlich auch hell. Es steckt <strong>Redundanz</strong> in den Daten.</p>
+
+<!-- ============================================================ -->
+<h2 id="pca"><span class="chapter-icon">6</span>Dimensionsreduktion &ndash; PCA</h2>
+
+<p>Die <strong>Hauptkomponentenanalyse (PCA)</strong> sucht ein neues Koordinatensystem, in dem die Achsen orthogonal sind und die Varianz maximal erkl&auml;ren. Die erste Hauptkomponente zeigt in die Richtung der gr&ouml;&szlig;ten Streuung, die zweite senkrecht dazu.</p>
+
+<p>Probier es aus &ndash; zeichne Punkte und sieh die PCA-Achsen live:</p>
+
+<div id="mount-pca-playground"></div>
+
+<p>Das Ergebnis bei Bildern: Aus 10.000 Pixeln werden 2.500 Hauptkomponenten &ndash; und das Bild sieht fast identisch aus. Der Rest war Redundanz. Das ist <strong>Dimensionsreduktion</strong>.</p>
+
+<p>Wer das vertiefen m&ouml;chte: Im <a href="eigenwerte.html">Eigenwerte-Post</a> erkl&auml;re ich, warum PCA mathematisch eine Eigenwertzerlegung der Kovarianzmatrix ist &ndash; und im <a href="vogelsimulator.html">Fourier-Post</a>, warum die DCT-Transformation (die JPEG verwendet) im Grunde dasselbe tut.</p>
+
+<!-- ============================================================ -->
+<h2 id="linearitaet"><span class="chapter-icon">7</span>Die Grenze der Linearit&auml;t</h2>
+
+<p>Dimensionsreduktion allein reicht nicht. Wenn wir <strong>linear</strong> zwischen zwei Gesichtern interpolieren, passiert das hier:</p>
+
+<figure>
+  <img src="img/deepfakes/slide-17.png" alt="Lineare Interpolation zwischen Gesichtern" loading="lazy" width="1920" height="1080">
+  <figcaption>Lineare Interpolation: Die Zwischenbilder sind Geisterbilder, keine Gesichter.</figcaption>
+</figure>
+
+<p>Die Zwischenbilder sind keine Gesichter &ndash; sie sind &Uuml;berlagerungen. Im Pixelraum ist der gerade Weg zwischen zwei Gesichtern kein Gesicht.</p>
+
+<p>Ganz anders bei einer <strong>nichtlinearen</strong> Interpolation: Hier entstehen tats&auml;chlich neue, plausible Gesichter als Zwischenschritte.</p>
+
+<!-- ============================================================ -->
+<h2 id="kernel"><span class="chapter-icon">8</span>Der Kernel-Trick</h2>
+
+<p>Und hier kommt der entscheidende Trick: <strong>Dimensionserh&ouml;hung</strong>. Daten, die in 2D nicht linear trennbar sind, werden es in einem h&ouml;herdimensionalen Raum:</p>
+
+<div id="mount-kernel-trick"></div>
+
+<p>Links: Zwei Klassen in Kreisform &ndash; keine Gerade kann sie trennen. Rechts: Durch die Transformation $z = x^2 + y^2$ (Heben in die dritte Dimension) wird eine einfache Ebene zur Trennfl&auml;che.</p>
+
+<p>Zusammen ergibt sich ein elegantes Doppelspiel:</p>
+<ul>
+  <li><strong>Dimensionsreduktion</strong> &ndash; um Redundanz zu entfernen (PCA, DCT)</li>
+  <li><strong>Dimensionserh&ouml;hung</strong> &ndash; um Nichtlinearit&auml;t handhabbar zu machen (Kernel-Trick)</li>
+</ul>
+
+<p>Ein neuronales Netz kann <strong>beides gleichzeitig</strong>.</p>
+
+<!-- ============================================================ -->
+<h2 id="neuronale-netze"><span class="chapter-icon">9</span>Neuronale Netze</h2>
+
+<p>Ein einzelnes <strong>Neuron</strong> nimmt mehrere Eingaben $x_i$, multipliziert jede mit einem Gewicht $w_i$, summiert alles auf, und schickt das Ergebnis durch eine <strong>Aktivierungsfunktion</strong> $\varphi$:</p>
+
+$$y = \varphi\left(\sum_i w_i \cdot x_i + b\right)$$
+
+<p>Die Aktivierungsfunktion ist der Schl&uuml;ssel: Sie ist <strong>nichtlinear</strong>. Ohne sie w&auml;re das ganze Netz nur eine gro&szlig;e Matrixmultiplikation &ndash; und k&ouml;nnte nichts, was eine einzelne Matrix nicht auch k&ouml;nnte.</p>
+
+<p>Schichtet man viele Neuronen hintereinander &ndash; Input Layer, Hidden Layers, Output Layer &ndash; entsteht ein neuronales Netz. Die Hidden Layers lernen automatisch, welche Dimensionen erh&ouml;ht und welche reduziert werden sollen.</p>
+
+<p>Wer mehr &uuml;ber die emergenten Eigenschaften solcher Netze wissen m&ouml;chte: der <a href="emergenz.html">Emergenz-Post</a> geht genau darauf ein.</p>
+
+<!-- ============================================================ -->
+<h2 id="autoencoder"><span class="chapter-icon">10</span>Autoencoder</h2>
+
+<p>Ein <strong>Autoencoder</strong> ist ein spezielles neuronales Netz mit Sanduhr-Architektur:</p>
+
+<ul>
+  <li><strong>Encoder:</strong> Komprimiert ein hochdimensionales Bild in einen niedrigdimensionalen <em>Latent Space</em></li>
+  <li><strong>Decoder:</strong> Rekonstruiert das Bild aus der komprimierten Darstellung</li>
+</ul>
+
+<p>Das Trainingsziel: Das Ausgangsbild soll dem Eingangsbild m&ouml;glichst &auml;hnlich sein. Der Engpass in der Mitte &ndash; der Latent Space &ndash; zwingt das Netz, nur die <strong>wesentliche Information</strong> zu behalten.</p>
+
+<p>Das ist nichtlineare Dimensionsreduktion. Hier kannst du es ausprobieren &ndash; zeichne eine Ziffer und sieh, wie der Autoencoder sie rekonstruiert:</p>
+
+<div id="mount-autoencoder-mnist"></div>
+
+<!-- ============================================================ -->
+<h2 id="latent"><span class="chapter-icon">11</span>Latent-Space-Arithmetik</h2>
+
+<p>Und jetzt passiert die Magie. Im Latent Space kann man mit Gesichtern <strong>rechnen wie mit Vektoren</strong>:</p>
+
+$$\text{l&auml;chelnde Frau} - \text{neutrale Frau} + \text{neutraler Mann} = \text{l&auml;chelnder Mann}$$
+
+<p>Das funktioniert, weil der Latent Space die Gesichter in <strong>orthogonale Merkmale</strong> zerlegt hat: Geschlecht, Ausdruck, Blickrichtung, Beleuchtung. Jede Richtung im Latent Space entspricht einer semantischen Eigenschaft.</p>
+
+<p>Hier kannst du den Latent Space einer Ziffern-VAE erkunden:</p>
+
+<div id="mount-latent-explorer"></div>
+
+<p>Wenn dir das bekannt vorkommt: Es ist derselbe Trick, den Word2Vec f&uuml;r W&ouml;rter nutzt. <em>K&ouml;nig - Mann + Frau = K&ouml;nigin</em> funktioniert nach exakt demselben Prinzip. Der <a href="eigenwerte.html">Eigenwerte-Post</a> erkl&auml;rt, warum.</p>
+
+<!-- ============================================================ -->
+<h2 id="deepfakes"><span class="chapter-icon">12</span>Deepfakes &ndash; Der Decoder-Swap</h2>
+
+<p>Und damit sind wir am Ziel. Der Deepfake-Trick ist erschreckend einfach:</p>
+
+<ol>
+  <li>Trainiere zwei Autoencoder &ndash; einen f&uuml;r Person A, einen f&uuml;r Person B</li>
+  <li>Beide teilen sich <strong>denselben Encoder</strong>, haben aber <strong>verschiedene Decoder</strong></li>
+  <li>Der Encoder lernt eine gemeinsame Gesichtsrepr&auml;sentation im Latent Space</li>
+  <li><strong>Der Swap:</strong> Nimm das Bild von Person A, schicke es durch den gemeinsamen Encoder &ndash; und dann durch den Decoder von Person B</li>
+</ol>
+
+<figure>
+  <img src="img/deepfakes/slide-28.png" alt="Deepfake Encoder-Decoder Swap" loading="lazy" width="1920" height="1080">
+  <figcaption>Der Deepfake-Trick: Encoder von A + Decoder von B = Gesicht von B mit Mimik von A.</figcaption>
+</figure>
+
+<p>Das Ergebnis: Die Mimik und Kopfhaltung von A, aber das Aussehen von B. Ein Deepfake. Nicht Magie &ndash; sondern <strong>Dimensionsreduktion, Dimensionserh&ouml;hung und ein vertauschter Decoder</strong>.</p>
+
+<!-- ============================================================ -->
+<h2 id="ethik"><span class="chapter-icon">13</span>Ethik &amp; Erkennung</h2>
+
+<p>Deepfakes sind beunruhigend. Aber <strong>Verst&auml;ndnis ist besser als Panik</strong>. Wer wei&szlig;, wie sie funktionieren, kann sie besser erkennen:</p>
+
+<ul>
+  <li><strong>Artefakte:</strong> Unnat&uuml;rliche &Uuml;berg&auml;nge an Haaransatz, Ohren, Z&auml;hnen</li>
+  <li><strong>Konsistenz:</strong> Beleuchtung auf dem Gesicht passt nicht zum Rest des Bildes</li>
+  <li><strong>Blinzeln:</strong> Fr&uuml;he Deepfakes blinzeln zu selten (Trainingsdaten-Bias)</li>
+  <li><strong>Forensik:</strong> Frequenzanalyse zeigt GAN-typische Muster im Spektrum</li>
+</ul>
+
+<p>Die Technologie ist neutral. Sie erm&ouml;glicht genauso gut medizinische Simulation, Filmnachbearbeitung oder Barrierefreiheit (Lippensynchronisation f&uuml;r Geh&ouml;rlose). Die Frage ist nicht, ob wir sie verstehen sollen &ndash; sondern ob wir es uns leisten k&ouml;nnen, sie <em>nicht</em> zu verstehen.</p>
+
+<p>Dieser Beitrag basiert auf einem Tech Talk, den ich bei <a href="https://pmagentur.com" rel="noopener" target="_blank">P&amp;M Agentur</a> gehalten habe. Die Originalfolien und alle interaktiven Visualisierungen sind frei zug&auml;nglich.</p>
+
+</article>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Erstellt mit Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="ueber-mich.html" class="hover:text-gray-400">&Uuml;ber mich</a> &middot;
+    <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+    <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+  </p>
+  <p class="mt-2 text-gray-700">Bild-Quellen: Tesserakt-GIF &copy; Jason Hise (Public Domain), MNIST &copy; Josef Steppan (CC BY-SA 4.0), Autoencoder-Diagramm &copy; Chervinskii (CC BY-SA 4.0), NN-Diagramm &copy; Offnfopt (CC BY-SA 3.0) &ndash; via Wikimedia Commons</p>
+</footer>
+
+<!-- KaTeX auto-render -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false }
+      ]
+    });
+  }
+});
+</script>
+
+<!-- Lazy-mount React components -->
+<script>
+(function () {
+  var COMPONENTS = {
+    'mount-matrix-transform': function () { return window.MatrixTransformViz; },
+    'mount-pca-playground':   function () { return window.PCAPlayground; },
+    'mount-kernel-trick':     function () { return window.KernelTrickViz; },
+    'mount-dimension-projector': function () { return window.DimensionProjector; },
+    'mount-autoencoder-mnist': function () { return window.AutoencoderMNIST; },
+    'mount-latent-explorer':  function () { return window.LatentSpaceExplorer; }
+  };
+  var mounted = {};
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var getFn = COMPONENTS[id];
+    if (!el || !getFn) return;
+    var Comp = getFn();
+    if (!Comp) return;
+    mounted[id] = true;
+    try { ReactDOM.createRoot(el).render(React.createElement(Comp)); }
+    catch (err) { console.warn('Mount error:', id, err); }
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+  Object.keys(COMPONENTS).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
