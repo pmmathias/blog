@@ -91,7 +91,11 @@
 <article class="prose">
 
 <h1 class="text-2xl sm:text-3xl font-bold text-gray-50 mb-2">Deepfakes erkl&auml;rt</h1>
-<p class="text-lg text-gray-400 mb-8">Von Vektoren &uuml;ber Autoencoder bis zum Gesichtertausch &ndash; die Mathematik hinter der Illusion</p>
+<p class="text-lg text-gray-400 mb-6">Von Vektoren &uuml;ber Autoencoder bis zum Gesichtertausch &ndash; die Mathematik hinter der Illusion</p>
+
+<div class="aspect-video w-full mb-8 rounded-xl overflow-hidden border border-gray-800">
+  <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/g2V8WjrYefU" title="Deepfakes erkl&auml;rt &mdash; YouTube Video" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+</div>
 
 <!-- ============================================================ -->
 <h2 id="motivation"><span class="chapter-icon">1</span>Die Motivation</h2>
@@ -284,8 +288,31 @@ $$\text{l&auml;chelnde Frau} - \text{neutrale Frau} + \text{neutraler Mann} = \t
 
 <p>Dieser Beitrag basiert auf einem Tech Talk, den ich bei <a href="https://pmagentur.com" rel="noopener" target="_blank">P&amp;M Agentur</a> gehalten habe. Die Originalfolien und alle interaktiven Visualisierungen sind frei zug&auml;nglich.</p>
 
+<h2 id="faq" style="margin-top:3rem;">H&auml;ufige Fragen</h2>
+
+<h3>Wie funktioniert ein Deepfake technisch?</h3>
+<p>Ein Deepfake nutzt zwei Autoencoder mit gemeinsamem Encoder, aber unterschiedlichen Decodern. Das Bild von Person A wird durch den gemeinsamen Encoder geschickt und dann durch den Decoder von Person B rekonstruiert. Das Ergebnis: Mimik und Kopfhaltung von A, Aussehen von B.</p>
+
+<h3>Was ist der Unterschied zwischen PCA und einem Autoencoder?</h3>
+<p>PCA ist eine lineare Dimensionsreduktion &ndash; sie findet das beste rechtwinklige Koordinatensystem. Ein Autoencoder ist die nichtlineare Verallgemeinerung: Er kann beliebig komplexe Mannigfaltigkeiten lernen, weil seine Aktivierungsfunktionen nichtlinear sind.</p>
+
+<h3>Was ist der Kernel-Trick?</h3>
+<p>Der Kernel-Trick hebt Daten in einen h&ouml;herdimensionalen Raum, wo sie linear trennbar werden. Mathematisch ben&ouml;tigt man die expliziten H&ouml;herdimensionen nie &ndash; es reicht, die Skalarprodukte zwischen Datenpunkten in der h&ouml;heren Dimension berechnen zu k&ouml;nnen.</p>
+
+<h3>Warum erkennen wir Deepfakes manchmal trotzdem?</h3>
+<p>Weil Modelle mit unzureichenden Trainingsdaten Artefakte hinterlassen: unnat&uuml;rliches Blinzeln, inkonsistente Beleuchtung an Haaransatz oder Ohren, Muster im Frequenzspektrum, die in echten Bildern nicht vorkommen.</p>
+
 </article>
 </main>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Wie funktioniert ein Deepfake technisch?","acceptedAnswer":{"@type":"Answer","text":"Ein Deepfake nutzt zwei Autoencoder mit gemeinsamem Encoder, aber unterschiedlichen Decodern. Das Bild von Person A wird durch den gemeinsamen Encoder geschickt und dann durch den Decoder von Person B rekonstruiert."}},
+{"@type":"Question","name":"Was ist der Unterschied zwischen PCA und einem Autoencoder?","acceptedAnswer":{"@type":"Answer","text":"PCA ist eine lineare Dimensionsreduktion. Ein Autoencoder ist die nichtlineare Verallgemeinerung und kann beliebig komplexe Mannigfaltigkeiten lernen."}},
+{"@type":"Question","name":"Was ist der Kernel-Trick?","acceptedAnswer":{"@type":"Answer","text":"Der Kernel-Trick hebt Daten in einen höherdimensionalen Raum, wo sie linear trennbar werden. Es reicht, die Skalarprodukte zwischen Datenpunkten zu berechnen."}},
+{"@type":"Question","name":"Warum erkennen wir Deepfakes manchmal trotzdem?","acceptedAnswer":{"@type":"Answer","text":"Modelle mit unzureichenden Trainingsdaten hinterlassen Artefakte: unnatürliches Blinzeln, inkonsistente Beleuchtung, Muster im Frequenzspektrum."}}
+]}
+</script>
 
 <footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
   <p>&copy; 2026 Mathias Leonhardt &middot; Erstellt mit Claude Code (Anthropic)</p>
