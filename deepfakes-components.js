@@ -15,6 +15,123 @@
   var useCallback = React.useCallback;
 
   // ============================================================
+  // MNIST Autoencoder — pure JS inference (float16 weights)
+  // ============================================================
+  var aeModel = null;
+  var aeLoading = null;
+
+  function loadAEModel() {
+    if (aeModel) return Promise.resolve(aeModel);
+    if (aeLoading) return aeLoading;
+    aeLoading = Promise.all([
+      fetch('/vendor/models/mnist_autoencoder_meta.json').then(function (r) { return r.json(); }),
+      fetch('/vendor/models/mnist_autoencoder.bin').then(function (r) { return r.arrayBuffer(); })
+    ]).then(function (results) {
+      var meta = results[0], buf = results[1];
+      var dv = new DataView(buf);
+      function readF16(offset) {
+        var h = dv.getUint16(offset * 2, true);
+        // half-float → float32
+        var s = (h & 0x8000) >> 15;
+        var exp = (h & 0x7C00) >> 10;
+        var m = h & 0x03FF;
+        if (exp === 0) return (s ? -1 : 1) * Math.pow(2, -14) * (m / 1024);
+        if (exp === 31) return m ? NaN : ((s ? -1 : 1) * Infinity);
+        return (s ? -1 : 1) * Math.pow(2, exp - 15) * (1 + m / 1024);
+      }
+      var weights = {};
+      Object.keys(meta.offsets).forEach(function (k) {
+        var shape = meta.shapes[k];
+        var n = shape.reduce(function (a, b) { return a * b; }, 1);
+        var arr = new Float32Array(n);
+        for (var i = 0; i < n; i++) arr[i] = readF16(meta.offsets[k] + i);
+        weights[k] = { data: arr, shape: shape };
+      });
+      aeModel = { arch: meta.arch, weights: weights, samples: meta.latent_samples };
+      return aeModel;
+    });
+    return aeLoading;
+  }
+
+  function linear(x, W, b) {
+    // x: [in], W: [out, in], b: [out]  → returns [out]
+    var out_dim = W.shape[0], in_dim = W.shape[1];
+    var wData = W.data, bData = b.data;
+    var out = new Float32Array(out_dim);
+    for (var i = 0; i < out_dim; i++) {
+      var sum = bData[i];
+      var base = i * in_dim;
+      for (var j = 0; j < in_dim; j++) sum += wData[base + j] * x[j];
+      out[i] = sum;
+    }
+    return out;
+  }
+
+  function relu(x) {
+    var out = new Float32Array(x.length);
+    for (var i = 0; i < x.length; i++) out[i] = x[i] > 0 ? x[i] : 0;
+    return out;
+  }
+
+  function sigmoid(x) {
+    var out = new Float32Array(x.length);
+    for (var i = 0; i < x.length; i++) out[i] = 1 / (1 + Math.exp(-x[i]));
+    return out;
+  }
+
+  function encode(x, model) {
+    var w = model.weights;
+    var h1 = relu(linear(x, w.enc_0_weight, w.enc_0_bias));
+    var h2 = relu(linear(h1, w.enc_2_weight, w.enc_2_bias));
+    var z  = linear(h2, w.enc_4_weight, w.enc_4_bias);
+    return z;
+  }
+
+  function decode(z, model) {
+    var w = model.weights;
+    var h1 = relu(linear(z, w.dec_0_weight, w.dec_0_bias));
+    var h2 = relu(linear(h1, w.dec_2_weight, w.dec_2_bias));
+    var y  = sigmoid(linear(h2, w.dec_4_weight, w.dec_4_bias));
+    return y;
+  }
+
+  // Convert 140x140 canvas → 28x28 MNIST-style vector
+  function canvasToMnistVector(canvas) {
+    var ctx = canvas.getContext('2d');
+    // Downscale to 28x28 using off-screen canvas
+    var tmp = document.createElement('canvas');
+    tmp.width = 28; tmp.height = 28;
+    var tctx = tmp.getContext('2d');
+    tctx.drawImage(canvas, 0, 0, 28, 28);
+    var data = tctx.getImageData(0, 0, 28, 28).data;
+    var v = new Float32Array(784);
+    for (var i = 0; i < 784; i++) {
+      // canvas is white-on-black; pixel value is R channel
+      v[i] = data[i * 4] / 255;
+    }
+    return v;
+  }
+
+  function drawMnistVector(canvas, vec) {
+    var ctx = canvas.getContext('2d');
+    var img = ctx.createImageData(28, 28);
+    for (var i = 0; i < 784; i++) {
+      var val = Math.max(0, Math.min(255, Math.floor(vec[i] * 255)));
+      img.data[i * 4]     = val;
+      img.data[i * 4 + 1] = val;
+      img.data[i * 4 + 2] = val;
+      img.data[i * 4 + 3] = 255;
+    }
+    // scale up to canvas size
+    var tmp = document.createElement('canvas');
+    tmp.width = 28; tmp.height = 28;
+    tmp.getContext('2d').putImageData(img, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(tmp, 0, 0, canvas.width, canvas.height);
+  }
+
+  // ============================================================
   // 1. MatrixTransformViz
   //    Interactive: drag a 2D vector, apply rotation/scale matrix
   // ============================================================
@@ -453,44 +570,62 @@
   }
 
   // ============================================================
-  // 5. AutoencoderMNIST (placeholder — needs TF.js model)
+  // 5. AutoencoderMNIST (real inference, pure JS)
   //    Draw a digit → encode → decode → show reconstruction
   // ============================================================
   function AutoencoderMNIST() {
-    var canvasRef = useRef(null);
+    var inputCanvas = useRef(null);
+    var outputCanvas = useRef(null);
     var _drawing = useState(false);
     var drawing = _drawing[0], setDrawing = _drawing[1];
-    var _latent = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+    var _latent = useState([0, 0]);
     var latent = _latent[0], setLatent = _latent[1];
-    var _reconstructed = useState(null);
-    var reconstructed = _reconstructed[0], setReconstructed = _reconstructed[1];
-    var _modelLoaded = useState(false);
-    var modelLoaded = _modelLoaded[0], setModelLoaded = _modelLoaded[1];
+    var _status = useState('loading');
+    var status = _status[0], setStatus = _status[1];
 
-    // Draw on canvas
+    // Load model once
     useEffect(function () {
-      var canvas = canvasRef.current;
+      loadAEModel()
+        .then(function () { setStatus('ready'); })
+        .catch(function (err) {
+          console.warn('AE model load error:', err);
+          setStatus('error');
+        });
+    }, []);
+
+    // Setup canvas
+    useEffect(function () {
+      var canvas = inputCanvas.current;
       if (!canvas) return;
       var ctx = canvas.getContext('2d');
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, 140, 140);
       ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 8;
+      ctx.lineWidth = 10;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
     }, []);
 
+    function runInference() {
+      if (status !== 'ready' || !aeModel) return;
+      var vec = canvasToMnistVector(inputCanvas.current);
+      var z = encode(vec, aeModel);
+      setLatent([z[0], z[1]]);
+      var reconstructed = decode(z, aeModel);
+      drawMnistVector(outputCanvas.current, reconstructed);
+    }
+
     function getPos(ev) {
-      var rect = canvasRef.current.getBoundingClientRect();
-      var x = (ev.clientX || ev.touches[0].clientX) - rect.left;
-      var y = (ev.clientY || ev.touches[0].clientY) - rect.top;
-      return [x * (140 / rect.width), y * (140 / rect.height)];
+      var rect = inputCanvas.current.getBoundingClientRect();
+      var cx = ev.clientX != null ? ev.clientX : (ev.touches && ev.touches[0].clientX);
+      var cy = ev.clientY != null ? ev.clientY : (ev.touches && ev.touches[0].clientY);
+      return [(cx - rect.left) * (140 / rect.width), (cy - rect.top) * (140 / rect.height)];
     }
 
     function startDraw(ev) {
       ev.preventDefault();
       setDrawing(true);
-      var ctx = canvasRef.current.getContext('2d');
+      var ctx = inputCanvas.current.getContext('2d');
       var pos = getPos(ev);
       ctx.beginPath();
       ctx.moveTo(pos[0], pos[1]);
@@ -499,29 +634,36 @@
     function doDraw(ev) {
       if (!drawing) return;
       ev.preventDefault();
-      var ctx = canvasRef.current.getContext('2d');
+      var ctx = inputCanvas.current.getContext('2d');
       var pos = getPos(ev);
       ctx.lineTo(pos[0], pos[1]);
       ctx.stroke();
     }
 
-    function endDraw() { setDrawing(false); }
+    function endDraw() {
+      setDrawing(false);
+      runInference();
+    }
 
     function clearCanvas() {
-      var ctx = canvasRef.current.getContext('2d');
+      var ctx = inputCanvas.current.getContext('2d');
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, 140, 140);
-      setReconstructed(null);
-      setLatent([0, 0, 0, 0, 0, 0, 0, 0]);
+      if (outputCanvas.current) {
+        var octx = outputCanvas.current.getContext('2d');
+        octx.fillStyle = '#000';
+        octx.fillRect(0, 0, 140, 140);
+      }
+      setLatent([0, 0]);
     }
 
     return e('div', { className: 'bg-gray-900 rounded-2xl p-4 my-8' },
       e('div', { className: 'flex flex-wrap gap-6 items-start justify-center' },
         // Input canvas
         e('div', null,
-          e('p', { className: 'text-xs text-gray-500 mb-1 text-center' }, 'Zeichne eine Ziffer'),
+          e('p', { className: 'text-xs text-gray-500 mb-1 text-center' }, 'Zeichne eine Ziffer (0\u20139)'),
           e('canvas', {
-            ref: canvasRef, width: 140, height: 140,
+            ref: inputCanvas, width: 140, height: 140,
             className: 'border border-gray-700 rounded-lg cursor-crosshair bg-black',
             style: { width: 140, height: 140, touchAction: 'none' },
             onMouseDown: startDraw, onMouseMove: doDraw, onMouseUp: endDraw, onMouseLeave: endDraw,
@@ -532,93 +674,112 @@
             className: 'mt-2 text-xs bg-gray-800 text-gray-300 px-3 py-1 rounded hover:bg-gray-700 block mx-auto'
           }, 'L\u00F6schen')
         ),
-        // Latent space
+        // Latent (2D visualization)
         e('div', { className: 'text-center' },
-          e('p', { className: 'text-xs text-gray-500 mb-1' }, 'Latent Space (8D)'),
-          e('div', { className: 'flex flex-col gap-1' },
-            latent.map(function (val, i) {
-              return e('div', { key: i, className: 'flex items-center gap-1' },
-                e('span', { className: 'text-xs text-gray-600 w-4 font-mono' }, 'z' + i),
-                e('div', {
-                  className: 'w-20 h-3 bg-gray-800 rounded overflow-hidden'
-                },
-                  e('div', {
-                    className: 'h-full rounded',
-                    style: {
-                      width: Math.abs(val) * 50 + '%',
-                      marginLeft: val < 0 ? (50 - Math.abs(val) * 50) + '%' : '50%',
-                      backgroundColor: val >= 0 ? '#22d3ee' : '#f59e0b'
-                    }
-                  })
-                )
-              );
+          e('p', { className: 'text-xs text-gray-500 mb-1' }, 'Latent Space (2D)'),
+          e('svg', { width: 140, height: 140, viewBox: '0 0 140 140',
+            className: 'border border-gray-700 rounded-lg bg-gray-950' },
+            e('line', { x1: 70, y1: 0, x2: 70, y2: 140, stroke: '#1e293b', strokeWidth: 0.5 }),
+            e('line', { x1: 0, y1: 70, x2: 140, y2: 70, stroke: '#1e293b', strokeWidth: 0.5 }),
+            e('circle', {
+              cx: 70 + Math.max(-6, Math.min(6, latent[0])) * 10,
+              cy: 70 - Math.max(-6, Math.min(6, latent[1])) * 10,
+              r: 5, fill: '#22d3ee'
             })
-          )
+          ),
+          e('p', { className: 'text-xs text-gray-500 mt-1 font-mono' },
+            'z = (' + latent[0].toFixed(2) + ', ' + latent[1].toFixed(2) + ')')
         ),
         // Reconstructed output
         e('div', { className: 'text-center' },
           e('p', { className: 'text-xs text-gray-500 mb-1' }, 'Rekonstruktion'),
-          e('div', {
-            className: 'w-[140px] h-[140px] border border-gray-700 rounded-lg bg-black flex items-center justify-center'
-          },
-            !modelLoaded
-              ? e('span', { className: 'text-xs text-gray-600' }, 'TF.js Modell\nkommt bald')
-              : reconstructed
-                ? e('canvas', { width: 28, height: 28, className: 'w-[140px] h-[140px] image-rendering-pixelated' })
-                : e('span', { className: 'text-xs text-gray-600' }, 'Zeichne links')
-          )
+          e('canvas', {
+            ref: outputCanvas, width: 140, height: 140,
+            className: 'border border-gray-700 rounded-lg bg-black',
+            style: { width: 140, height: 140, imageRendering: 'pixelated' }
+          })
         )
       ),
       e('p', { className: 'text-xs text-gray-500 mt-3 text-center' },
-        'Das TensorFlow.js-Modell wird in K\u00FCrze geladen. Aktuell: UI-Preview.')
+        status === 'loading' ? 'Lade Modell (215 KB) \u2026' :
+        status === 'error' ? '\u26A0\uFE0F Modell konnte nicht geladen werden' :
+        'Zeichne eine Ziffer. Das 2D-Latent-Space-Modell zeigt die Kompression \u2013 und wie gut sie ist.'
+      )
     );
   }
 
   // ============================================================
-  // 6. LatentSpaceExplorer
-  //    Click on 2D latent space → see generated digit
+  // 6. LatentSpaceExplorer (real decoder from trained model)
+  //    Move in 2D latent space → decoder generates a digit live
   // ============================================================
   function LatentSpaceExplorer() {
     var _pos = useState([0, 0]);
     var pos = _pos[0], setPos = _pos[1];
+    var _status = useState('loading');
+    var status = _status[0], setStatus = _status[1];
+    var outputCanvas = useRef(null);
     var W = 500, H = 400;
 
-    // Pre-computed digit positions in latent space (mock data until model loaded)
-    var digitClusters = useMemo(function () {
-      var clusters = [];
-      var labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-      var centers = [
-        [-2, 2], [3, 1], [0, -2], [2, -1], [-1, 0],
-        [1, 2], [-3, -1], [2, 3], [0, 1], [1, -2]
-      ];
-      labels.forEach(function (label, idx) {
-        var cx = centers[idx][0], cy = centers[idx][1];
-        for (var i = 0; i < 15; i++) {
-          clusters.push({
-            x: cx + (Math.random() - 0.5) * 1.5,
-            y: cy + (Math.random() - 0.5) * 1.5,
-            label: label,
-            color: 'hsl(' + (idx * 36) + ', 70%, 60%)'
-          });
-        }
-      });
-      return clusters;
+    useEffect(function () {
+      loadAEModel()
+        .then(function () { setStatus('ready'); })
+        .catch(function () { setStatus('error'); });
     }, []);
 
-    var unit = 55;
-    function toSvg(x, y) { return [W / 2 + x * unit, H / 2 - y * unit]; }
+    // Derive latent-space clusters from the model's computed samples
+    var digitClusters = useMemo(function () {
+      if (!aeModel || !aeModel.samples) return [];
+      var out = [];
+      Object.keys(aeModel.samples).forEach(function (label, idx) {
+        var color = 'hsl(' + (idx * 36) + ', 70%, 60%)';
+        aeModel.samples[label].forEach(function (pt) {
+          out.push({ x: pt[0], y: pt[1], label: label, color: color });
+        });
+      });
+      return out;
+    }, [status]);
 
-    function handleClick(ev) {
-      var rect = ev.currentTarget.getBoundingClientRect();
-      var sx = ev.clientX - rect.left;
-      var sy = ev.clientY - rect.top;
-      var x = (sx / rect.width * W - W / 2) / unit;
-      var y = -(sy / rect.height * H - H / 2) / unit;
-      setPos([x, y]);
+    // Auto-scale based on data range
+    var scaling = useMemo(function () {
+      if (!digitClusters.length) return { unit: 55, minX: -4, maxX: 4, minY: -4, maxY: 4 };
+      var xs = digitClusters.map(function (d) { return d.x; });
+      var ys = digitClusters.map(function (d) { return d.y; });
+      var minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs);
+      var minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
+      var range = Math.max(maxX - minX, maxY - minY) * 1.2;
+      var unit = (Math.min(W, H) * 0.9) / range;
+      return { unit: unit, cx: (minX + maxX) / 2, cy: (minY + maxY) / 2 };
+    }, [digitClusters]);
+
+    function toSvg(x, y) {
+      return [W / 2 + (x - scaling.cx) * scaling.unit, H / 2 - (y - scaling.cy) * scaling.unit];
     }
 
-    // Find nearest digit
+    function fromSvg(sx, sy, rect) {
+      var x = (sx / rect.width * W - W / 2) / scaling.unit + scaling.cx;
+      var y = -(sy / rect.height * H - H / 2) / scaling.unit + scaling.cy;
+      return [x, y];
+    }
+
+    // Regenerate digit when position changes
+    useEffect(function () {
+      if (status !== 'ready' || !aeModel || !outputCanvas.current) return;
+      var z = new Float32Array([pos[0], pos[1]]);
+      var out = decode(z, aeModel);
+      drawMnistVector(outputCanvas.current, out);
+    }, [pos, status]);
+
+    function handleMove(ev) {
+      var rect = ev.currentTarget.getBoundingClientRect();
+      var pt = fromSvg(ev.clientX - rect.left, ev.clientY - rect.top, rect);
+      setPos(pt);
+    }
+
+    function handleClick(ev) { handleMove(ev); }
+
+    // Find nearest for label display
     var nearest = useMemo(function () {
+      if (!digitClusters.length) return null;
       var minDist = Infinity, best = null;
       digitClusters.forEach(function (d) {
         var dist = Math.pow(d.x - pos[0], 2) + Math.pow(d.y - pos[1], 2);
@@ -631,40 +792,40 @@
 
     return e('div', { className: 'bg-gray-900 rounded-2xl p-4 my-8' },
       e('p', { className: 'text-xs text-gray-500 mb-2' },
-        'Klick im Latent Space \u2192 n\u00E4chste Ziffer. Jede Farbe = eine Ziffernklasse (0\u20139).'),
+        status === 'loading' ? 'Lade Modell \u2026' :
+        status === 'error' ? '\u26A0\uFE0F Modell konnte nicht geladen werden' :
+        'Bewege die Maus im Latent Space \u2192 der Decoder erzeugt live eine Ziffer. Jede Farbe = eine Ziffernklasse (0\u20139).'),
       e('div', { className: 'flex gap-4 items-start justify-center flex-wrap' },
         e('svg', {
           viewBox: '0 0 ' + W + ' ' + H, className: 'w-full max-w-md cursor-crosshair',
-          onClick: handleClick
+          onClick: handleClick, onMouseMove: handleMove
         },
-          // Cluster dots
-          digitClusters.map(function (d, i) {
-            var p = toSvg(d.x, d.y);
-            return e('circle', { key: i, cx: p[0], cy: p[1], r: 4, fill: d.color, fillOpacity: 0.5 });
-          }),
-          // Cursor crosshair
-          e('circle', { cx: cursorSvg[0], cy: cursorSvg[1], r: 8, fill: 'none', stroke: '#f1f5f9', strokeWidth: 2 }),
-          e('line', { x1: cursorSvg[0] - 12, y1: cursorSvg[1], x2: cursorSvg[0] + 12, y2: cursorSvg[1], stroke: '#f1f5f9', strokeWidth: 1 }),
-          e('line', { x1: cursorSvg[0], y1: cursorSvg[1] - 12, x2: cursorSvg[0], y2: cursorSvg[1] + 12, stroke: '#f1f5f9', strokeWidth: 1 }),
           // Axes
           e('line', { x1: 0, y1: H / 2, x2: W, y2: H / 2, stroke: '#334155', strokeWidth: 0.5 }),
           e('line', { x1: W / 2, y1: 0, x2: W / 2, y2: H, stroke: '#334155', strokeWidth: 0.5 }),
           e('text', { x: W - 5, y: H / 2 - 5, textAnchor: 'end', fill: '#64748b', fontSize: 11 }, 'z\u2081'),
-          e('text', { x: W / 2 + 5, y: 12, fill: '#64748b', fontSize: 11 }, 'z\u2082')
+          e('text', { x: W / 2 + 5, y: 12, fill: '#64748b', fontSize: 11 }, 'z\u2082'),
+          // Cluster dots
+          digitClusters.map(function (d, i) {
+            var p = toSvg(d.x, d.y);
+            return e('circle', { key: i, cx: p[0], cy: p[1], r: 3, fill: d.color, fillOpacity: 0.55 });
+          }),
+          // Cursor crosshair
+          e('circle', { cx: cursorSvg[0], cy: cursorSvg[1], r: 9, fill: 'none', stroke: '#f1f5f9', strokeWidth: 2 }),
+          e('line', { x1: cursorSvg[0] - 14, y1: cursorSvg[1], x2: cursorSvg[0] + 14, y2: cursorSvg[1], stroke: '#f1f5f9', strokeWidth: 1 }),
+          e('line', { x1: cursorSvg[0], y1: cursorSvg[1] - 14, x2: cursorSvg[0], y2: cursorSvg[1] + 14, stroke: '#f1f5f9', strokeWidth: 1 })
         ),
-        // Result display
         e('div', { className: 'text-center' },
           e('p', { className: 'text-xs text-gray-500 mb-1' }, 'Generiert:'),
-          e('div', {
-            className: 'w-32 h-32 bg-black rounded-lg flex items-center justify-center border border-gray-700'
-          },
-            e('span', {
-              className: 'text-6xl font-bold',
-              style: { color: nearest ? nearest.color : '#666' }
-            }, nearest ? nearest.label : '?')
-          ),
+          e('canvas', {
+            ref: outputCanvas, width: 140, height: 140,
+            className: 'border border-gray-700 rounded-lg bg-black',
+            style: { width: 140, height: 140, imageRendering: 'pixelated' }
+          }),
           e('p', { className: 'text-xs text-gray-500 mt-1 font-mono' },
-            'z = (' + pos[0].toFixed(2) + ', ' + pos[1].toFixed(2) + ')')
+            'z = (' + pos[0].toFixed(2) + ', ' + pos[1].toFixed(2) + ')'),
+          nearest && e('p', { className: 'text-xs mt-1', style: { color: nearest.color } },
+            'n\u00E4chste Klasse: ' + nearest.label)
         )
       )
     );
