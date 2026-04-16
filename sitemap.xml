@@ -3,13 +3,25 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ki-mathias.de/</loc>
-    <lastmod>2026-04-14</lastmod>
+    <lastmod>2026-04-16</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   </url>
   <url>
+    <loc>https://ki-mathias.de/deepfakes.html</loc>
+    <lastmod>2026-04-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/deepfakes.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/deepfakes.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/deepfakes.html</loc>
+    <lastmod>2026-04-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/deepfakes.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/deepfakes.html"/>
+  </url>
+  <url>
     <loc>https://ki-mathias.de/en/</loc>
-    <lastmod>2026-04-14</lastmod>
+    <lastmod>2026-04-16</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   </url>
