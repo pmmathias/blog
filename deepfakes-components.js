@@ -489,38 +489,55 @@
       return ed;
     }, [vertices4d]);
 
-    // Animation loop
+    // Three incommensurate rotation planes + non-zero start offsets so we
+    // never land on a frame where y-axes appear parallel (the "stop" bug).
+    var _angleXY = useState(0.45);
+    var angleXY = _angleXY[0], setAngleXY = _angleXY[1];
+
     useEffect(function () {
       if (!autoRotate) { cancelAnimationFrame(rafRef.current); return; }
       function tick() {
-        timeRef.current += 0.015;
+        timeRef.current += 0.012;
         setAngleXW(timeRef.current);
-        setAngleYZ(timeRef.current * 0.7);
+        setAngleYZ(timeRef.current * 0.73 + 0.7);
+        setAngleXY(timeRef.current * 0.41 + 0.45);
         rafRef.current = requestAnimationFrame(tick);
       }
       rafRef.current = requestAnimationFrame(tick);
       return function () { cancelAnimationFrame(rafRef.current); };
     }, [autoRotate]);
 
-    // Project 4D → 2D
+    // 4D → 3D → 2D with genuine double perspective. Three animated rotation
+    // planes (xw, yz, xy) keep the cube from ever collapsing into a view
+    // where edges look parallel.
     var projected = useMemo(function () {
       var c1 = Math.cos(angleXW), s1 = Math.sin(angleXW);
       var c2 = Math.cos(angleYZ), s2 = Math.sin(angleYZ);
+      var c3 = Math.cos(angleXY), s3 = Math.sin(angleXY);
+      // Tighter perspective distances → stronger convergence of parallel edges
+      var distW = 3.0, distZ = 2.8;
       return vertices4d.map(function (v) {
-        // Rotate in xw plane
-        var x = v[0] * c1 - v[3] * s1;
-        var y = v[1];
-        var z = v[2];
-        var w = v[0] * s1 + v[3] * c1;
-        // Rotate in yz plane
-        var y2 = y * c2 - z * s2;
-        var z2 = y * s2 + z * c2;
-        // Perspective from 4D
-        var dist = 3;
-        var sc = dist / (dist - w);
-        return [cx + x * sc * 80, cy - y2 * sc * 80, sc];
+        // 1. Rotate xw plane
+        var x1 = v[0] * c1 - v[3] * s1;
+        var w1 = v[0] * s1 + v[3] * c1;
+        var y0 = v[1], z0 = v[2];
+        // 2. Rotate yz plane
+        var y1 = y0 * c2 - z0 * s2;
+        var z1 = y0 * s2 + z0 * c2;
+        // 3. Rotate xy plane (animated — this is what prevents collinearity)
+        var xt = x1 * c3 - y1 * s3;
+        var yt = x1 * s3 + y1 * c3;
+        // 4. Perspective 4D → 3D
+        var sc4 = distW / (distW - w1);
+        var x3 = xt * sc4;
+        var y3 = yt * sc4;
+        var z3 = z1 * sc4;
+        // 5. Perspective 3D → 2D
+        var sc3 = distZ / (distZ - z3);
+        var depth = sc4 * sc3;
+        return [cx + x3 * sc3 * 55, cy - y3 * sc3 * 55, depth];
       });
-    }, [angleXW, angleYZ, vertices4d]);
+    }, [angleXW, angleYZ, angleXY, vertices4d]);
 
     return e('div', { className: 'bg-gray-900 rounded-2xl p-4 my-8' },
       e('div', { className: 'flex flex-wrap gap-4 mb-3 items-center' },
@@ -541,26 +558,26 @@
         )
       ),
       e('svg', { viewBox: '0 0 ' + W + ' ' + H, className: 'w-full max-w-lg mx-auto' },
-        // Edges (sorted by average depth)
+        // Edges sorted by average depth (nearer last, so they overdraw)
         edges.slice().sort(function (a, b) {
-          var za = (projected[a[0]][2] + projected[a[1]][2]) / 2;
-          var zb = (projected[b[0]][2] + projected[b[1]][2]) / 2;
-          return za - zb;
+          return (projected[a[0]][2] + projected[a[1]][2]) - (projected[b[0]][2] + projected[b[1]][2]);
         }).map(function (ed, i) {
           var p1 = projected[ed[0]], p2 = projected[ed[1]];
-          var avgSc = (p1[2] + p2[2]) / 2;
-          var opacity = 0.15 + avgSc * 0.25;
+          var depth = (p1[2] + p2[2]) / 2;
+          // depth varies roughly 0.5 … 2.5 for our perspective setup
+          var t = Math.min(1, Math.max(0, (depth - 0.5) / 2.0));
           return e('line', {
             key: i, x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1],
-            stroke: '#60a5fa', strokeWidth: 1.2, strokeOpacity: Math.min(1, opacity)
+            stroke: '#60a5fa', strokeWidth: 0.8 + t * 1.6,
+            strokeOpacity: 0.25 + t * 0.65
           });
         }),
-        // Vertices
+        // Vertices (size + opacity scale with depth for a 3D feel)
         projected.map(function (p, i) {
-          var r = 2 + p[2] * 1.5;
+          var t = Math.min(1, Math.max(0, (p[2] - 0.5) / 2.0));
           return e('circle', {
-            key: i, cx: p[0], cy: p[1], r: Math.max(1, r),
-            fill: '#fbbf24', fillOpacity: 0.3 + p[2] * 0.25
+            key: i, cx: p[0], cy: p[1], r: 1.5 + t * 3.5,
+            fill: '#fbbf24', fillOpacity: 0.35 + t * 0.55
           });
         }),
         e('text', { x: W / 2, y: H - 10, textAnchor: 'middle', fill: '#64748b', fontSize: 12 },
