@@ -589,6 +589,21 @@
 
 <p>Die <strong>Power Iteration</strong> \(\mathbf{r}^{(k+1)} = G\,\mathbf{r}^{(k)}\) konvergiert zum dominanten Eigenvektor &ndash; dem <strong>PageRank</strong>. F&uuml;r unser Mini-Web: B hat den h&ouml;chsten Rang (34%), gefolgt von A (28%), D (24%), C (14%). Google berechnet das f&uuml;r <em>Milliarden</em> Webseiten in ~50 Iterationen.</p>
 
+<h3>Warum die Matrix stochastisch zu machen nicht nur elegant ist &ndash; sondern ein Performance-Trick</h3>
+
+<p>In der Absorber-Konstruktion steckt ein algorithmischer Gewinn, den man explizit benennen sollte. Vergleiche die zwei Wege, dieselbe Gleichung zu l&ouml;sen:</p>
+
+<p><strong>Naiver Ansatz (Neumann-Summation):</strong> Berechne die Reihe $\mathbf{x} = \mathbf{b} + T\mathbf{b} + T^2\mathbf{b} + T^3\mathbf{b} + \ldots$ Term f&uuml;r Term. Jeder Schritt erfordert eine Matrix-Vektor-Multiplikation <em>und</em> eine Vektor-Addition, plus einen Akkumulator f&uuml;r die laufende Summe. Du kannst die vorherigen Terme nicht verwerfen &ndash; die gesamte Partialsumme muss bis zum Stopp-Zeitpunkt gehalten werden.</p>
+
+<p><strong>Stochastischer Ansatz (Power-Iteration):</strong> Sobald $T$ &uuml;ber die Absorber-Konstruktion zu einer stochastischen Matrix $P$ gemacht wurde, kollabiert die Iteration zu $\mathbf{x}_{k+1} = P\mathbf{x}_k$. Kein Akkumulator. Keine Additionen zwischen den Schritten. Nur eine Matrix-Vektor-Multiplikation, Vektor &uuml;berschreiben, wiederholen. Der Speicherbedarf bleibt bei $O(n)$ &uuml;ber die gesamte Laufzeit.</p>
+
+<p>Warum spielt das in der Praxis eine Rolle?</p>
+<p>&bull; <strong>GPU-Eignung</strong>: Matrix-Vektor-Produkte sind genau die Operation, f&uuml;r die GPUs optimiert sind. Power-Iteration ist im Wesentlichen ein BLAS-<code>gemv</code>-Aufruf pro Schritt. Neumann-Summation verschachtelt <code>gemv</code> mit <code>axpy</code> (Vektor-Addition) und verlangt, dass der Akkumulator resident bleibt &ndash; das erh&ouml;ht die Speicherbandbreiten-Last.<br>
+&bull; <strong>Kein Zwischenspeicher</strong>: Bei Neumann muss die Partialsumme $\sum_{k=0}^{N-1} T^k\mathbf{b}$ separat vom n&auml;chsten Term $T^N\mathbf{b}$ gehalten werden. Bei Power-Iteration existiert nur der aktuelle Vektor. Bei einem Web-Graphen mit einer Milliarde Seiten macht das den Unterschied.<br>
+&bull; <strong>Konvergenz &uuml;ber Spectral Gap</strong>: Die Konvergenzrate der Power-Iteration ist direkt $|\lambda_2(P)|^k$. Googles Damping-Faktor $d$ ist genau so konstruiert, dass eine nutzbare Spektrall&uuml;cke <em>garantiert</em> wird: $|\lambda_2(G)| \leq d = 0{,}85$. Das ist kein Detail &ndash; es ist <em>der</em> numerische Stabilisator.</p>
+
+<p>Diese Einsicht &uuml;bertr&auml;gt sich auf Kernel Ridge Regression: der Ridge-Parameter $\lambda$ &uuml;bernimmt die Rolle des Damping-Faktors $d$. Beide stabilisieren die Iteration, indem sie eine Spektrall&uuml;cke erzeugen. Die algorithmische Konsequenz &ndash; dass man $(K + \lambda I)\boldsymbol{\alpha} = \mathbf{y}$ &uuml;ber GPU-freundliche Matrix-Vektor-Iteration l&ouml;sen kann statt &uuml;ber einen $O(D^3)$-Direct-Solve &ndash; ist Gegenstand unseres <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Folge-Papers zu Kalle v2</a>, in dem wir die Absorber-Konstruktion f&uuml;r KRR herleiten und Direct Solve gegen Preconditioned Conjugate Gradient in mehreren Skalen vergleichen.</p>
+
 <p><strong>Halt. Stop.</strong> Regression (Kapitel 3), Radiosity, PageRank &ndash; drei verschiedene Probleme, dreimal <strong>derselbe Algorithmus</strong>. Iterative Matrixmultiplikation, gesteuert durch Eigenwerte. Dreimal Neumann-Reihe. Dreimal Konvergenz zum dominanten Eigenvektor.</p>
 
 <h3>So m&auml;chtig wie ein Gehirn</h3>

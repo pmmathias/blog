@@ -487,6 +487,21 @@
 
 <p><strong>Power iteration</strong> \(\mathbf{r}^{(k+1)} = G\,\mathbf{r}^{(k)}\) converges to the dominant eigenvector &ndash; the <strong>PageRank</strong>. For our mini-web: B ranks highest (34%), followed by A (28%), D (24%), C (14%). Google computes this for <em>billions</em> of pages in ~50 iterations.</p>
 
+<h3>Why making the matrix stochastic is not just elegant &ndash; it is a performance trick</h3>
+
+<p>There is a subtle algorithmic payoff hidden in the absorber construction that is worth naming explicitly. Compare the two ways to solve the same equation:</p>
+
+<p><strong>Naive approach (Neumann summation):</strong> compute the series $\mathbf{x} = \mathbf{b} + T\mathbf{b} + T^2\mathbf{b} + T^3\mathbf{b} + \ldots$ term by term. Each step requires one matrix-vector multiplication <em>and</em> one vector addition, plus an accumulator to hold the running sum. You cannot release the previous terms &ndash; you need the whole partial sum until you stop.</p>
+
+<p><strong>Stochastic approach (power iteration):</strong> once $T$ has been turned into a stochastic matrix $P$ via the absorber construction, the iteration collapses to $\mathbf{x}_{k+1} = P\mathbf{x}_k$. No accumulator. No additions between steps. Just one matrix-vector multiplication, then overwrite the vector, repeat. Memory stays at $O(n)$ throughout.</p>
+
+<p>Why does this matter in practice?</p>
+<p>&bull; <strong>GPU-friendliness</strong>: matrix-vector products are the single operation GPUs are optimized for. Power iteration is essentially one BLAS <code>gemv</code> call per step. Neumann summation interleaves <code>gemv</code> with <code>axpy</code> (vector addition) and requires the accumulator to stay resident, increasing memory bandwidth pressure.<br>
+&bull; <strong>No intermediate storage</strong>: in Neumann, the partial sum $\sum_{k=0}^{N-1} T^k\mathbf{b}$ must be kept separate from the next term $T^N\mathbf{b}$. In power iteration, only the current vector exists. On a billion-page web graph, this matters.<br>
+&bull; <strong>Convergence via spectral gap</strong>: power iteration's convergence rate is directly $|\lambda_2(P)|^k$. Google's damping factor $d$ is engineered exactly to <em>guarantee</em> a usable gap: $|\lambda_2(G)| \leq d = 0.85$. It is not a detail &ndash; it is <em>the</em> numerical stabilizer.</p>
+
+<p>This insight carries over to Kernel Ridge Regression: the ridge parameter $\lambda$ plays the role of the damping factor $d$. Both stabilize the iteration by creating a spectral gap. The algorithmic consequence &ndash; that you can solve $(K + \lambda I)\boldsymbol{\alpha} = \mathbf{y}$ via GPU-friendly matrix-vector iteration instead of an $O(D^3)$ direct solve &ndash; is the subject of our <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">follow-up paper on Kalle v2</a>, where we derive the absorber construction for KRR and compare direct solve against Preconditioned Conjugate Gradient at multiple scales.</p>
+
 <p><strong>Wait. Stop.</strong> Regression (Chapter 3), radiosity, PageRank &ndash; three different problems, three times <strong>the same algorithm</strong>. Iterative matrix multiplication, controlled by eigenvalues. Three times the Neumann series. Three times convergence to the dominant eigenvector.</p>
 
 <h3>As powerful as a brain</h3>
