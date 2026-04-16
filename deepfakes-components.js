@@ -494,6 +494,10 @@
     var _angleXY = useState(0.45);
     var angleXY = _angleXY[0], setAngleXY = _angleXY[1];
 
+    // 4D-ness slider: 1.0 = full tesseract, 0.0 = pure 3D cube (w collapsed)
+    var _wScale = useState(1.0);
+    var wScale = _wScale[0], setWScale = _wScale[1];
+
     useEffect(function () {
       if (!autoRotate) { cancelAnimationFrame(rafRef.current); return; }
       function tick() {
@@ -507,37 +511,33 @@
       return function () { cancelAnimationFrame(rafRef.current); };
     }, [autoRotate]);
 
-    // 4D → 3D → 2D with genuine double perspective. Three animated rotation
-    // planes (xw, yz, xy) keep the cube from ever collapsing into a view
-    // where edges look parallel.
+    // 4D → 3D → 2D with genuine double perspective.
     var projected = useMemo(function () {
       var c1 = Math.cos(angleXW), s1 = Math.sin(angleXW);
       var c2 = Math.cos(angleYZ), s2 = Math.sin(angleYZ);
       var c3 = Math.cos(angleXY), s3 = Math.sin(angleXY);
-      // Tighter perspective distances → stronger convergence of parallel edges
       var distW = 3.0, distZ = 2.8;
       return vertices4d.map(function (v) {
-        // 1. Rotate xw plane
-        var x1 = v[0] * c1 - v[3] * s1;
-        var w1 = v[0] * s1 + v[3] * c1;
+        // Scale w by the "4D-ness" slider BEFORE rotation.
+        // wScale = 0 → every vertex has w=0 → +w and -w twins collapse to
+        // the same 3D point → we see a regular 3-cube.
+        var vw = v[3] * wScale;
+        var x1 = v[0] * c1 - vw * s1;
+        var w1 = v[0] * s1 + vw * c1;
         var y0 = v[1], z0 = v[2];
-        // 2. Rotate yz plane
         var y1 = y0 * c2 - z0 * s2;
         var z1 = y0 * s2 + z0 * c2;
-        // 3. Rotate xy plane (animated — this is what prevents collinearity)
         var xt = x1 * c3 - y1 * s3;
         var yt = x1 * s3 + y1 * c3;
-        // 4. Perspective 4D → 3D
         var sc4 = distW / (distW - w1);
         var x3 = xt * sc4;
         var y3 = yt * sc4;
         var z3 = z1 * sc4;
-        // 5. Perspective 3D → 2D
         var sc3 = distZ / (distZ - z3);
         var depth = sc4 * sc3;
         return [cx + x3 * sc3 * 55, cy - y3 * sc3 * 55, depth];
       });
-    }, [angleXW, angleYZ, angleXY, vertices4d]);
+    }, [angleXW, angleYZ, angleXY, wScale, vertices4d]);
 
     return e('div', { className: 'bg-gray-900 rounded-2xl p-4 my-8' },
       e('div', { className: 'flex flex-wrap gap-4 mb-3 items-center' },
@@ -546,6 +546,15 @@
           className: 'text-sm px-3 py-1 rounded ' +
             (autoRotate ? 'bg-cyan-600 text-white' : 'bg-gray-800 text-gray-300')
         }, autoRotate ? 'Stop' : 'Rotieren'),
+        e('label', { className: 'text-sm text-gray-400 flex items-center gap-2' },
+          e('span', { className: 'text-xs text-gray-500' }, '3D'),
+          e('input', { type: 'range', min: 0, max: 1, step: 0.02, value: wScale,
+            onChange: function (ev) { setWScale(Number(ev.target.value)); },
+            className: 'w-32 accent-fuchsia-400' }),
+          e('span', { className: 'text-xs text-gray-500' }, '4D'),
+          e('span', { className: 'ml-1 text-fuchsia-400 font-mono text-xs' },
+            '(' + (wScale * 100).toFixed(0) + '%)')
+        ),
         !autoRotate && e('label', { className: 'text-sm text-gray-400' }, 'XW: ',
           e('input', { type: 'range', min: 0, max: 6.28, step: 0.05, value: angleXW % 6.28,
             onChange: function (ev) { setAngleXW(Number(ev.target.value)); },
