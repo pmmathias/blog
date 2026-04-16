@@ -150,7 +150,7 @@ $$\mathbf{s} = A^{-1} \cdot \mathbf{x}$$
 <p>Die korrelierten, gemischten Daten (ein schiefes Parallelogramm) werden zu dekorrelierten, getrennten Signalen (ein sauberes Quadrat). Die Signale sind jetzt orthogonal zueinander.</p>
 
 <figure>
-  <img src="img/deepfakes/slide-10.png" alt="Blind Source Separation: Mischmatrix umkehren" loading="lazy" width="1920" height="1080">
+  <img src="img/deepfakes/bss.png" alt="Blind Source Separation: Mischmatrix umkehren" loading="lazy">
   <figcaption>Links: korrelierte Mischsignale. Rechts: getrennte Quellsignale nach Dekorrelation.</figcaption>
 </figure>
 
@@ -184,7 +184,7 @@ $$\mathbf{s} = A^{-1} \cdot \mathbf{x}$$
 <p>Dimensionsreduktion allein reicht nicht. Wenn wir <strong>linear</strong> zwischen zwei Gesichtern interpolieren, passiert das hier:</p>
 
 <figure>
-  <img src="img/deepfakes/slide-17.png" alt="Lineare Interpolation zwischen Gesichtern" loading="lazy" width="1920" height="1080">
+  <img src="img/deepfakes/linear-interp.png" alt="Lineare Interpolation zwischen Gesichtern" loading="lazy">
   <figcaption>Lineare Interpolation: Die Zwischenbilder sind Geisterbilder, keine Gesichter.</figcaption>
 </figure>
 
@@ -266,7 +266,7 @@ $$\text{l&auml;chelnde Frau} - \text{neutrale Frau} + \text{neutraler Mann} = \t
 </ol>
 
 <figure>
-  <img src="img/deepfakes/slide-28.png" alt="Deepfake Encoder-Decoder Swap" loading="lazy" width="1920" height="1080">
+  <img src="img/deepfakes/deepfake-swap.png" alt="Deepfake Encoder-Decoder Swap" loading="lazy">
   <figcaption>Der Deepfake-Trick: Encoder von A + Decoder von B = Gesicht von B mit Mimik von A.</figcaption>
 </figure>
 

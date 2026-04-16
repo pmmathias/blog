@@ -127,7 +127,7 @@ $$\mathbf{x} = A \cdot \mathbf{s}$$
 $$\mathbf{s} = A^{-1} \cdot \mathbf{x}$$
 <p>The correlated, mixed data (a slanted parallelogram) becomes decorrelated, separated signals (a clean square). The signals are now orthogonal to each other.</p>
 <figure>
-  <img src="/img/deepfakes/slide-10.png" alt="Blind Source Separation: Inverting the mixing matrix" loading="lazy" width="1920" height="1080">
+  <img src="/img/deepfakes/bss.png" alt="Blind Source Separation: Inverting the mixing matrix" loading="lazy">
   <figcaption>Left: correlated mixed signals. Right: separated source signals after decorrelation.</figcaption>
 </figure>
 
@@ -147,7 +147,7 @@ $$\mathbf{s} = A^{-1} \cdot \mathbf{x}$$
 <h2 id="linearity"><span class="chapter-icon">7</span>The Limits of Linearity</h2>
 <p>Dimensionality reduction alone isn't enough. If we <strong>linearly</strong> interpolate between two faces, this happens:</p>
 <figure>
-  <img src="/img/deepfakes/slide-17.png" alt="Linear interpolation between faces" loading="lazy" width="1920" height="1080">
+  <img src="/img/deepfakes/linear-interp.png" alt="Linear interpolation between faces" loading="lazy">
   <figcaption>Linear interpolation: the intermediate frames are ghosts, not faces.</figcaption>
 </figure>
 <p>The intermediate images aren't faces &ndash; they're overlays. In pixel space, the straight path between two faces is not a face.</p>
@@ -198,7 +198,7 @@ $$\text{smiling woman} - \text{neutral woman} + \text{neutral man} = \text{smili
   <li><strong>The swap:</strong> take an image of person A, run it through the shared encoder &ndash; then through the decoder of person B</li>
 </ol>
 <figure>
-  <img src="/img/deepfakes/slide-28.png" alt="Deepfake encoder-decoder swap" loading="lazy" width="1920" height="1080">
+  <img src="/img/deepfakes/deepfake-swap.png" alt="Deepfake encoder-decoder swap" loading="lazy">
   <figcaption>The deepfake trick: encoder of A + decoder of B = appearance of B with expression of A.</figcaption>
 </figure>
 <p>The result: the expression and head pose of A, but the appearance of B. A deepfake. Not magic &ndash; just <strong>dimensionality reduction, dimension increase, and a swapped decoder</strong>.</p>
