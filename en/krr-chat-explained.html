@@ -681,6 +681,21 @@ Best pair: <code style="font-size:0.72rem;">&ldquo;context every time you start 
 
 <p>The answer comes from the blog &ndash; not from the memory of a neural network.</p>
 
+<h3>Scalable training: ridge $\lambda$ as Google's damping factor</h3>
+
+<p>The Kalle v1 training step solves $(Z^\top Z + \lambda I)\,W = Z^\top Y$ by direct Gaussian elimination (<code>numpy.linalg.solve</code>). At $D = 6144$ that's $\sim 290$\,MB and $\sim 2$\,seconds &ndash; fine. At $D = 50{,}000$ it would be $\sim 20$\,GB and hours; at $D = 100{,}000$ it is infeasible on consumer hardware.</p>
+
+<p>Kalle v2 adds a second path, derived from a surprising equivalence: <strong>the ridge parameter $\lambda$ is the same mathematical object as Google's PageRank damping factor $d$.</strong> Both create a spectral gap that guarantees convergence. The recipe:</p>
+
+<ul style="margin-left:1.2rem; line-height:1.7;">
+  <li>Rewrite the KRR solve as a Richardson iteration: $\boldsymbol{\alpha}_{n+1} = M \boldsymbol{\alpha}_n + \omega\mathbf{y}$, with $M = I - \omega(K + \lambda I)$.</li>
+  <li>Observe that $M$ is <em>substochastic</em> (eigenvalues in $[0, 1)$) &ndash; the algebraic twin of the substochastic reflectivity matrix $\rho F$ in radiosity.</li>
+  <li>Add an <em>absorber dimension</em> that redistributes the missing mass to the target vector, making the iteration matrix <em>stochastic</em> &ndash; exactly like Google's damping construction $G = d M + (1-d)/n \cdot \mathbf{1}\mathbf{1}^\top$.</li>
+  <li>Solve via Block Preconditioned Conjugate Gradient (PCG), which uses only matrix-vector products &ndash; GPU-ideal.</li>
+</ul>
+
+<p>On the full Kalle corpus, Block-PCG converges in <strong>14 iterations</strong> to a weight matrix that is numerically indistinguishable from the direct solve (relative Frobenius error $< 10^{-6}$). On CPU at $D = 6144$ the direct solve is still faster in wall-clock time &ndash; NumPy's LAPACK is extraordinarily well-tuned &ndash; but the PCG path unlocks the scaling regime where the direct solve cannot follow. Full derivation and benchmarks in the <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Version 2 paper on Zenodo</a>. The underlying insight &ndash; that stochasticizing the iteration matrix is a performance trick, not just an elegance &ndash; is the subject of the companion section in the <a href="/en/eigenvalues.html#why-stochastic-matters" style="color:#22d3ee;">Eigenvalues &amp; AI</a> post.</p>
+
 <p><strong>Bilingual without language detection:</strong> Ask in German or English &ndash; Kalle responds in the same language. The reason is elegant: English and German words are different tokens with different IDF weights. &ldquo;eigenvalue&rdquo; (English, high IDF) matches English pairs; &ldquo;Eigenwert&rdquo; (German, high IDF) matches German ones. No language detection code needed &ndash; the mathematics of matching routes automatically.</p>
 
 <p style="margin-top:0.5rem;font-size:0.85rem;color:#94a3b8;"><em>Example:</em> &ldquo;What are eigenvalues used for?&rdquo; &rarr; &ldquo;Eigenvalues appear everywhere in science and engineering. In Google PageRank they determine which webpage is most important...&rdquo; &ndash; the same question in German: &ldquo;Wozu braucht man Eigenwerte?&rdquo; &rarr; &ldquo;Eigenwerte tauchen &uuml;berall auf. Bei Google PageRank bestimmen sie welche Webseite am wichtigsten ist...&rdquo;</p>

@@ -683,6 +683,21 @@ Bestes Paar: <code style="font-size:0.72rem;">&bdquo;kontext jedes mal wenn du e
 
 <p>Die Q&amp;A-Paare werden <strong>handkuratiert</strong> &ndash; nicht automatisch generiert. Jedes Paar wurde geschrieben um eine spezifische Frage im Kontext eines spezifischen Blog-Abschnitts zu beantworten. Aktuell: 2113 Paare, ~2900 W&ouml;rter Vokabular, trainiert offline in Float64, Inferenz im Browser via WebGL GPU.</p>
 
+<h3>Skalierbares Training: der Ridge-Parameter $\lambda$ als Googles Damping-Faktor</h3>
+
+<p>Der Kalle-v1-Trainingsschritt l&ouml;st $(Z^\top Z + \lambda I)\,W = Z^\top Y$ per direkter Gau&szlig;-Elimination (<code>numpy.linalg.solve</code>). Bei $D = 6144$ sind das $\sim 290$\,MB und $\sim 2$\,Sekunden &ndash; machbar. Bei $D = 50{,}000$ w&auml;re es $\sim 20$\,GB und Stunden; bei $D = 100{,}000$ ist es auf Consumer-Hardware unm&ouml;glich.</p>
+
+<p>Kalle v2 erg&auml;nzt einen zweiten Pfad, der auf einer &uuml;berraschenden Gleichheit beruht: <strong>Der Ridge-Parameter $\lambda$ ist mathematisch dasselbe Objekt wie Googles PageRank-Damping-Faktor $d$.</strong> Beide erzeugen eine Spektrall&uuml;cke, die Konvergenz garantiert. Das Rezept:</p>
+
+<ul style="margin-left:1.2rem; line-height:1.7;">
+  <li>Schreibe den KRR-Solve als Richardson-Iteration: $\boldsymbol{\alpha}_{n+1} = M \boldsymbol{\alpha}_n + \omega\mathbf{y}$, mit $M = I - \omega(K + \lambda I)$.</li>
+  <li>Beobachte, dass $M$ <em>substochastisch</em> ist (Eigenwerte in $[0, 1)$) &ndash; der algebraische Zwilling der substochastischen Reflexionsmatrix $\rho F$ in der Radiosity.</li>
+  <li>F&uuml;ge eine <em>Absorber-Dimension</em> hinzu, die die fehlende Masse auf den Ziel-Vektor umleitet. Die Iterationsmatrix wird dadurch <em>stochastisch</em> &ndash; exakt wie bei Googles Damping-Konstruktion $G = d M + (1-d)/n \cdot \mathbf{1}\mathbf{1}^\top$.</li>
+  <li>L&ouml;se per Block Preconditioned Conjugate Gradient (PCG), der nur Matrix-Vektor-Produkte braucht &ndash; GPU-ideal.</li>
+</ul>
+
+<p>Auf dem vollst&auml;ndigen Kalle-Korpus konvergiert Block-PCG in <strong>14 Iterationen</strong> zu einer Gewichts-Matrix, die numerisch nicht vom Direct-Solve zu unterscheiden ist (relative Frobenius-Fehler $< 10^{-6}$). Auf CPU bei $D = 6144$ bleibt der Direct-Solve in Wall-Clock-Zeit schneller &ndash; NumPys LAPACK ist au&szlig;erordentlich gut getunt &ndash; aber der PCG-Pfad er&ouml;ffnet den Skalierungsbereich, dem der Direct-Solve nicht folgen kann. Vollst&auml;ndige Herleitung und Benchmarks im <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Version-2-Paper auf Zenodo</a>. Die zugrundeliegende Einsicht &ndash; dass das Stochastisieren der Iterationsmatrix ein Performance-Trick und nicht nur Eleganz ist &ndash; wird im begleitenden Abschnitt im <a href="eigenwerte.html" style="color:#22d3ee;">Eigenwerte &amp; KI</a>-Beitrag ausgearbeitet.</p>
+
 <p><strong>Bilingual ohne Language-Detection:</strong> Frag auf Deutsch oder Englisch &ndash; Kalle antwortet in der gleichen Sprache. Der Grund ist elegant: englische und deutsche W&ouml;rter sind verschiedene Tokens mit verschiedenen IDF-Gewichten. &bdquo;eigenvalue&ldquo; (englisch, hohe IDF) matcht englische Paare; &bdquo;eigenwert&ldquo; (deutsch, hohe IDF) matcht deutsche. Kein Spracherkennungs-Code n&ouml;tig &ndash; die Mathematik des Matchings routet automatisch.</p>
 
 <p style="margin-top:0.5rem;font-size:0.85rem;color:#94a3b8;"><em>Beispiel:</em> &bdquo;What are eigenvalues used for?&ldquo; &rarr; &bdquo;Eigenvalues appear everywhere in science and engineering. In Google PageRank they determine which webpage is most important...&ldquo; &ndash; dieselbe Frage auf Deutsch: &bdquo;Wozu braucht man Eigenwerte?&ldquo; &rarr; &bdquo;Eigenwerte tauchen &uuml;berall auf. Bei Google PageRank bestimmen sie welche Webseite am wichtigsten ist...&ldquo;</p>
