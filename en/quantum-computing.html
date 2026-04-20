@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>What Quantum Computers Really Do &ndash; Qubits, Gates, Circuits Explained</title>
+  <meta name="description" content="From the Bloch sphere to Shor&apos;s algorithm: An honest look at quantum computers. Interactive circuits, Qiskit code, state of the art 2026 &ndash; no hype.">
+  <meta name="author" content="Mathias Leonhardt">
+  <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
+  <link rel="canonical" href="https://ki-mathias.de/en/quantum-computing.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/quantencomputer.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum-computing.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/quantencomputer.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="What Quantum Computers Really Do">
+  <meta property="og:description" content="Qubits, Bloch sphere, quantum gates, Bell states &ndash; interactively explained with real Qiskit code.">
+  <meta property="og:url" content="https://ki-mathias.de/en/quantum-computing.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-04-20">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Quantum Computing">
+  <meta property="article:tag" content="Qubit">
+  <meta property="article:tag" content="Qiskit">
+  <meta property="article:tag" content="Bloch Sphere">
+  <meta property="article:tag" content="Bell State">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/quantencomputer-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/quantencomputer-en.png">
+  <meta name="twitter:title" content="What Quantum Computers Really Do">
+  <meta name="twitter:description" content="Qubits, Bloch sphere, Shor, Grover &ndash; no hype, with interactive Qiskit code.">
+
+  <link rel="stylesheet" href="../vendor/tailwind.css">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="preload" href="../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="../vendor/katex/katex.min.js"></script>
+  <script defer src="../vendor/katex/auto-render.min.js"></script>
+  <script src="../vendor/react.production.min.js"></script>
+  <script src="../vendor/react-dom.production.min.js"></script>
+  <script defer src="../quantencomputer-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(../fonts/inter-400.woff2) format('woff2'), url(../fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(../fonts/inter-500.woff2) format('woff2'), url(../fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(../fonts/inter-600.woff2) format('woff2'), url(../fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(../fonts/inter-700.woff2) format('woff2'), url(../fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "What Quantum Computers Really Do \u2013 Qubits, Gates, Circuits Explained",
+    "description": "From the Bloch sphere to Shor's algorithm: an honest look at quantum computers with interactive circuits and real Qiskit code.",
+    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
+    "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
+    "datePublished": "2026-04-20",
+    "dateModified": "2026-04-20",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/quantum-computing.html" },
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "keywords": ["Quantum Computing", "Qubit", "Qiskit", "Bloch Sphere", "Bell State", "Shor Algorithm", "Grover Algorithm", "Quantum Gates", "Superposition", "Entanglement"],
+    "articleSection": "Physics",
+    "wordCount": 8000,
+    "timeRequired": "PT35M"
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .prose-dark pre { background: rgba(15, 23, 42, 0.6); border: 1px solid #334155; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; font-size: 0.85rem; color: #e2e8f0; margin: 1.5rem 0; }
+    .prose-dark code { color: #22d3ee; font-size: 0.9em; background: rgba(34, 211, 238, 0.08); padding: 0.1em 0.35em; border-radius: 0.25rem; }
+    .prose-dark pre code { color: inherit; background: none; padding: 0; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .honest-box { border: 1px solid rgba(248, 113, 113, 0.3); padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(248, 113, 113, 0.05); margin: 2rem 0; }
+    .honest-box strong { color: #fca5a5; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+    figure { margin: 2rem 0; text-align: center; }
+    figure img { max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid #374151; }
+    figcaption { font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem; font-style: italic; }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<div id="nav-toc-items" style="display:none;">
+  <a href="#arrows-qubits" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; From Arrows to Qubits</a>
+  <a href="#qubit-in-the-lab" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Qubit in the Lab</a>
+  <a href="#bloch-sphere" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; The Bloch Sphere</a>
+  <a href="#quantum-gates" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Quantum Gates</a>
+  <a href="#bell-state" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Bell State</a>
+  <a href="#what-works" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; What They Can Do</a>
+  <a href="#what-doesnt" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; What They (Still) Can&apos;t</a>
+  <a href="#qiskit" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; Qiskit Code</a>
+  <a href="#qml" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">9 &middot; Quantum ML</a>
+  <a href="#glass-bead-game" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilogue</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Physics &middot; Quantum Computing</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    What Quantum Computers Really Do
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Qubits, superposition, entanglement &ndash; everyone knows the buzzwords. But what <em>exactly</em> does a quantum computer compute? Where is the advantage, where is the hype? An honest look from the Bloch sphere all the way to Qiskit code that runs on real IBM hardware.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-04-20">April 2026</time><span>&middot;</span>
+    <span>~35 min read</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+
+<!-- ================================================================ -->
+<!-- 1. FROM ARROWS TO QUBITS -->
+<!-- ================================================================ -->
+<section id="arrows-qubits" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
+<h2>From Arrows to Qubits</h2>
+
+<p>In the <a href="quantum.html" class="text-cyan-400 hover:text-cyan-300 underline">quantum physics post</a> we described the world using rotating arrows: every possible event gets an arrow that spins with time. At the destination, all arrows add up. Where they reinforce, the event is likely. Where they cancel, it&apos;s impossible.</p>
+
+<p>Mathematicians call these arrows <strong>amplitudes</strong>. They are complex numbers &ndash; and because every complex number can be drawn as an arrow in the plane, they each carry a <em>length</em> (the magnitude) and an <em>angle</em> (the phase). The length squared gives the probability of measuring the associated state &ndash; the Born rule, formulated in 1926. From the phase follows why two amplitudes can add or cancel when they overlap: the heart of interference, which distinguishes quantum mechanics from every classical probability calculus.</p>
+
+<p>And now for the bridge: <strong>a qubit is exactly such an arrow.</strong></p>
+
+<div class="summary-box">
+<p>Classical bit: 0 <em>or</em> 1.</p>
+<p>Qubit: a combination of both, written as</p>
+<div class="math-display">$$|\psi\rangle = \alpha\,|0\rangle + \beta\,|1\rangle$$</div>
+<p>\(\alpha\) and \(\beta\) are complex numbers &ndash; two arrows. One for &ldquo;system is 0,&rdquo; one for &ldquo;system is 1.&rdquo;</p>
+</div>
+
+<p>The angle brackets are called <strong>ket notation</strong>, introduced in 1939 by Paul Dirac &ndash; the same Dirac whose eponymous equation had a few years earlier predicted the existence of antimatter. A ket \(|\psi\rangle\) denotes a quantum state, and in its simplest representation it is a column vector: \(|0\rangle\) becomes \(\binom{1}{0}\), \(|1\rangle\) becomes \(\binom{0}{1}\). But Dirac wanted more than compact state notation. Every ket has a partner bra \(\langle \phi|\) &ndash; its conjugate transpose. The product \(\langle \phi | \psi \rangle\) measures the <em>overlap</em> between two states, and is therefore, right there in the notation, the amplitude to find \(\psi\) in \(\phi\). The bracket form carries the structure of measurement directly into the typography.</p>
+
+<p>When you measure, you get either 0 or 1 &ndash; never anything in between. The probabilities are the <em>squared lengths</em> of the two arrows:</p>
+
+<div class="math-display">$$P(0) = |\alpha|^2, \quad P(1) = |\beta|^2, \quad |\alpha|^2 + |\beta|^2 = 1$$</div>
+
+<p>The sum of those two squared magnitudes is always 1. This is the <strong>normalization condition</strong>, and it is not just a rhetorical equals sign: Max Born postulated in 1926 that \(|\psi|^2\) gives the probability density &ndash; he received the 1954 Nobel Prize precisely for this statistical interpretation of the wave function. Without normalization, the Born rule cannot be formulated consistently; probabilities greater than 1 would become possible and the concept would lose its physical meaning. Every admissible qubit state therefore lives on a sphere of radius 1 &ndash; the famous <strong>Bloch sphere</strong>, which we meet in the next chapter.</p>
+
+<h3>Why not just a bit with randomness?</h3>
+
+<p>At this point computer scientists often think: &ldquo;Wait, isn&apos;t a qubit just a bit with a probability attached? So a fair coin flip?&rdquo;</p>
+
+<p>No. The difference is <em>interference</em>. Amplitudes can cancel each other out &ndash; probabilities can&apos;t. A probability of 0.5 cannot become 0 by combining with another 0.5. But two arrows pointing in opposite directions absolutely can.</p>
+
+<p>This interference is exactly why quantum computers can have a computational advantage in the first place. Without phases that can cancel, qubits would be functionally equivalent to classical probabilistic bits &ndash; a model computer science has studied exhaustively since the 1970s, and in which no exponential speedups are hiding.</p>
+
+<p>A qubit, then, is: a <strong>classical state in superposition</strong>, with two amplitudes whose squared lengths add to 1. Those amplitudes can carry complex phases, which is what enables interference.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 2. THE BLOCH SPHERE -->
+<!-- ================================================================ -->
+<!-- ================================================================ -->
+<!-- 2. QUBIT IN THE LAB -->
+<!-- ================================================================ -->
+<section id="qubit-in-the-lab" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 2</p>
+<h2>How a Qubit Comes to Life in the Lab</h2>
+
+<p>Before we start computing with gates, a look at the hardware is worth it. <strong>A qubit is an abstract concept</strong> &ndash; but in the lab it is always a concrete physical system with two cleanly separated states. As of 2026 there are at least four major technologies in commercial use, and each has its own physics.</p>
+
+<h3>The superconducting qubit &ndash; Google&apos;s and IBM&apos;s favourite</h3>
+
+<p>The platform on which most large quantum computers operate today is a curiously named thing: a <strong>superconducting oscillator</strong>. To understand why it shows quantum behaviour at all, a detour through classical electrical engineering helps.</p>
+
+<p><em>Brief trip into classical physics.</em> An <strong>LC oscillator</strong> is the simplest circuit that rings on its own. A <em>coil</em> (inductance \(L\)) and a <em>capacitor</em> (capacitance \(C\)) together form an <em>electromagnetic swing</em>: current shuttles between them back and forth, just as a swing moves between its rest position and its turning point. The natural frequency is \(f = \tfrac{1}{2\pi\sqrt{LC}}\). Such oscillators sit inside every old radio, every remote control, every quartz clock.</p>
+
+<p>A detail that will matter in a minute: the <strong>frequency</strong> of the oscillation is fixed by the components \(L\) and \(C\) &ndash; just as on a real swing, where the period depends only on the rope length, not on how high you swing. What <em>does</em> vary is the <strong>amplitude</strong>: the maximum charge on the capacitor, equivalently the maximum current through the coil. And the amplitude determines the energy, \(E = \tfrac{Q_\text{max}^2}{2C}\): double the peak charge, four times the energy. <strong>Classically</strong>, any amplitude is allowed, and therefore any energy &ndash; smooth and continuous from tiny to huge.</p>
+
+<figure>
+  <svg viewBox="0 0 360 180" width="100%" style="max-width:360px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
+    <text x="90" y="20" fill="#94a3b8" font-size="11" text-anchor="middle">Classical</text>
+    <rect x="30" y="30" width="120" height="130" fill="url(#grad-en)" stroke="#4b5563" stroke-width="1" opacity="0.4"/>
+    <defs>
+      <linearGradient id="grad-en" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#0891b2" stop-opacity="0.2"/>
+      </linearGradient>
+    </defs>
+    <text x="90" y="100" fill="#94a3b8" font-size="10" text-anchor="middle">energy</text>
+    <text x="90" y="115" fill="#94a3b8" font-size="10" text-anchor="middle">continuous</text>
+    <line x1="180" y1="20" x2="180" y2="170" stroke="#374151" stroke-dasharray="3,3"/>
+    <text x="270" y="20" fill="#94a3b8" font-size="11" text-anchor="middle">Quantum</text>
+    <line x1="210" y1="140" x2="330" y2="140" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="340" y="144" fill="#f59e0b" font-size="11">|0⟩</text>
+    <line x1="210" y1="100" x2="330" y2="100" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="340" y="104" fill="#f59e0b" font-size="11">|1⟩</text>
+    <line x1="210" y1="70" x2="330" y2="70" stroke="#6b7280" stroke-width="1.5"/>
+    <line x1="210" y1="50" x2="330" y2="50" stroke="#6b7280" stroke-width="1"/>
+    <line x1="210" y1="38" x2="330" y2="38" stroke="#6b7280" stroke-width="0.8"/>
+    <text x="270" y="165" fill="#94a3b8" font-size="10" text-anchor="middle">discrete levels</text>
+    <line x1="200" y1="100" x2="200" y2="140" stroke="#22d3ee" stroke-width="1.5"/>
+    <polygon points="200,100 196,108 204,108" fill="#22d3ee"/>
+    <polygon points="200,140 196,132 204,132" fill="#22d3ee"/>
+    <text x="193" y="125" fill="#22d3ee" font-size="10" text-anchor="end">5 GHz</text>
+  </svg>
+  <figcaption>Classical oscillator: any energy allowed. Superconducting quantum oscillator at 10 mK: only discrete levels, and the lowest two are our qubit.</figcaption>
+</figure>
+
+<p><strong>Now the quantisation.</strong> Cool a specially designed oscillator to near absolute zero &ndash; typically <strong>10 millikelvin</strong>, colder than intergalactic space &ndash; and add a very particular component called a <strong>Josephson junction</strong> (a thin insulating layer, just a few atomic layers thick, between two superconductors, through which coupled electron pairs tunnel quantum-mechanically &ndash; Brian Josephson was awarded the 1973 Nobel Prize for this 1962 prediction). Now something remarkable happens: the possible oscillation amplitudes are no longer continuous. The system can only swing at specific, separated amplitudes &ndash; and therefore can only take specific <em>energy levels</em>, like the rungs of a ladder.</p>
+
+<p>The frequency of the oscillation stays fixed, by the way &ndash; still set by \(L\) and \(C\). What gets quantised is the <em>amplitude</em>, not the tempo. What classically was a continuous swing is now, quantum-mechanically, a selection from a discrete set of allowed deflections.</p>
+
+<p>The bottom two rungs &ndash; the <em>ground state</em> and the <em>first excitation</em> &ndash; serve as our qubit: the ground state is \(|0\rangle\), the first excitation \(|1\rangle\). The energy gap between them corresponds to an electromagnetic frequency of roughly <strong>5 GHz</strong>. That is not an arbitrary number &ndash; it is the microwave frequency with which we will drive the qubit later.</p>
+
+<p><em>One crucial detail: why do we use only the lowest two rungs?</em> A pure LC oscillator (without the Josephson junction) would produce equally spaced discrete levels &ndash; the textbook <em>harmonic oscillator</em>. A microwave pulse tuned to excite \(|0\rangle \to |1\rangle\) would then unavoidably also trigger \(|1\rangle \to |2\rangle\) and beyond &ndash; the qubit could not be confined to its two lowest rungs. The Josephson junction introduces a <em>nonlinearity</em> that warps the ladder: rungs get closer together as you go up. This lets us tune a microwave pulse so precisely to the \(|0\rangle\leftrightarrow|1\rangle\) transition that higher levels simply aren&apos;t excited. That selectivity is what turns a quantum oscillator into a usable qubit.</p>
+
+<p><em>Why does the cold make the difference?</em> Two reasons. First: at room temperature the system jitters thermally &ndash; it constantly jumps between many states, and the clean \(|0\rangle\) and \(|1\rangle\) drown in the noise. At 10 mK the thermal energy is so tiny (\(k_B T \approx 0.001\) &micro;eV) that the qubit stays in its ground state unless we deliberately excite it. Second: superconducting materials lose their electrical resistance entirely below a critical temperature. Current flows without loss, and the oscillation does not decay immediately. Together &ndash; no thermal jitter, no loss &ndash; these properties turn a mundane-looking circuit into a clean quantum two-level system.</p>
+
+<h3>Other platforms &ndash; the qubit has many homes</h3>
+
+<p>The superconducting path is only one option. The other major families:</p>
+
+<ul class="list-disc pl-6 space-y-2 text-gray-300 mb-6">
+  <li><strong>Ion trap</strong> (IonQ, Quantinuum): A single charged atom &ndash; typically a calcium or ytterbium ion &ndash; is suspended by oscillating electromagnetic fields in a vacuum. The ion&apos;s electrons occupy discrete energy levels; two of them are chosen as \(|0\rangle\) and \(|1\rangle\). This is exactly the physics you know from the Bohr atomic model: electrons in shells.</li>
+  <li><strong>Neutral atom</strong> (QuEra, Atom Computing): Similar to ion traps, but without electrical charge. Single atoms are held in a lattice by tightly focused laser beams &ndash; so-called <em>optical tweezers</em>. Again, the qubit states are two different electron energy levels.</li>
+  <li><strong>Photon</strong> (PsiQuantum, Xanadu): A single light particle, exactly like in the double-slit experiment from the <a href="quantum.html" class="text-cyan-400 hover:text-cyan-300 underline">quantum physics post</a>. The two states are usually <em>polarisation directions</em>: horizontal = \(|0\rangle\), vertical = \(|1\rangle\). Photons are especially attractive for quantum communication, because they travel through optical fibres easily.</li>
+</ul>
+
+<p>Each platform has its own strengths and tradeoffs. Superconductors are fast (gates in nanoseconds) but need extreme cooling and large infrastructure. Ions are extremely precise with long coherence times, but their gates take microseconds. Photons travel through cables but are hard to pack into large lattices. The community in 2026 does not yet know which of these technologies will ultimately scale &ndash; possibly different applications will use different ones.</p>
+
+<p>In this post we stick with the <strong>superconducting qubit</strong>, because it lets us build the most concrete physical intuition. But every abstract \(|0\rangle\) and \(|1\rangle\) that appears in the following chapters refers, in the background, to one of these physical mechanisms. And every gate operation that we are about to formulate mathematically is, ultimately, an <em>electromagnetic pulse</em> &ndash; microwave for superconductors, laser for ions, phase shifter for photons.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 3. THE BLOCH SPHERE -->
+<!-- ================================================================ -->
+<section id="bloch-sphere" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 3</p>
+<h2>The Bloch Sphere</h2>
+
+<p>Two complex numbers \(\alpha\) and \(\beta\) with the constraint \(|\alpha|^2 + |\beta|^2 = 1\) &ndash; that&apos;s four real degrees of freedom with one constraint. So three. Plus: a global phase is physically irrelevant (we can&apos;t measure it). So <strong>two</strong>.</p>
+
+<p>Two parameters &ndash; that&apos;s a surface. And a very specific one: the surface of a sphere.</p>
+
+<div class="math-display">$$|\psi\rangle = \cos\!\left(\tfrac{\theta}{2}\right) |0\rangle + e^{i\varphi}\sin\!\left(\tfrac{\theta}{2}\right) |1\rangle$$</div>
+
+<p>\(\theta\) is the <em>polar angle</em> (north&ndash;south), \(\varphi\) the <em>azimuth</em> (longitude-like). Every pure qubit state is a point on this sphere.</p>
+
+<ul class="list-disc pl-6 space-y-1 text-gray-300 mb-6">
+  <li><strong>North pole</strong> (\(\theta = 0\)): pure \(|0\rangle\)</li>
+  <li><strong>South pole</strong> (\(\theta = \pi\)): pure \(|1\rangle\)</li>
+  <li><strong>Equator</strong> (\(\theta = \pi/2\)): perfect 50/50 superposition, phase running around the longitude</li>
+</ul>
+
+<p><em>A brief irritation up front &ndash; why \(\theta/2\), not \(\theta\)?</em> The formula above parameterises with the half polar angle. That is not a typo and not just convention &ndash; it is the only way to place the qubit states unambiguously on a sphere. As \(\theta\) runs from 0 to \(\pi\), \(|\psi\rangle\) moves from \(|0\rangle\) to \(|1\rangle\). If the exponent were \(\theta\) instead of \(\theta/2\), we would already be back at the starting state at \(\theta = 2\pi\) &ndash; a full turn on the sphere would correspond to just half a turn in state space. The half angle is the geometric fingerprint of a deep quantum property: qubits (like all spin-\(\tfrac{1}{2}\) particles) need <em>two</em> full rotations in physical space to return to their original state. This is the famous <em>belt trick</em> of physics, and it will show up again when we discuss unitary gates.</p>
+
+<p>The Bloch sphere is the space of all possible qubit states, and every quantum gate corresponds to a specific <strong>rotation</strong> of that state vector on the sphere. This is not merely graphically convenient &ndash; it is mathematically deep: the allowed single-qubit operations form the group \(SU(2)\), the family of all unitary \(2\times 2\) matrices with determinant one. And \(SU(2)\) relates to the ordinary rotation group \(SO(3)\) as two to one: every \(360^\circ\) rotation in physical space corresponds to <em>half</em> a turn on the Bloch sphere &ndash; exactly as above. Hence the half angle. Hence two rotations to return to the starting state.</p>
+
+<figure>
+  <img src="../img/quantencomputer/bloch-sphere.svg" alt="Bloch sphere: a qubit state as a point on a sphere, parameterised by polar angle theta and azimuth phi" loading="lazy" style="max-width:340px;">
+  <figcaption>Bloch sphere with polar angle \(\theta\) and azimuth \(\varphi\). Image: <a href="https://commons.wikimedia.org/wiki/File:Bloch_Sphere.svg" class="text-cyan-400 hover:text-cyan-300 underline" rel="noopener" target="_blank">Glosser.ca via Wikimedia Commons</a>, license: <a href="https://creativecommons.org/licenses/by-sa/3.0/" class="text-cyan-400 hover:text-cyan-300 underline" rel="noopener" target="_blank">CC BY-SA 3.0</a>.</figcaption>
+</figure>
+
+<div class="try-it">
+<p><strong>Try it &darr;</strong></p>
+<p>Drag the sliders and watch the state vector move. Press <em>Hadamard</em> to tip \(|0\rangle\) onto the equator &ndash; that&apos;s the superposition \(\frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)\).</p>
+</div>
+
+<div class="component-wrap">
+<div id="mount-bloch-sphere"></div>
+</div>
+
+<p>Why is this useful? Because it becomes <em>geometric</em>. A quantum algorithm looks on the Bloch sphere like a choreographed sequence of rotations. The Pauli gates \(X, Y, Z\) are 180&deg; rotations about the respective axes. The Hadamard matrix is a 180&deg; rotation about a diagonal axis that swaps north and equator.</p>
+
+<p>Remember: <em>A qubit is a point on a sphere. A gate is a rotation. An algorithm is a choreography.</em></p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 3. QUANTUM GATES -->
+<!-- ================================================================ -->
+<section id="quantum-gates" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4</p>
+<h2>Quantum Gates: Matrices that Rotate the World</h2>
+
+<p>A classical logic gate takes bits and returns bits. An AND gate turns (1, 1) into 1 and (1, 0) into 0. Simple, irreversible &ndash; from a 0 at the output you cannot reconstruct which pair of input bits produced it.</p>
+
+<p>A quantum gate is different. It&apos;s a <strong>unitary matrix</strong> that transforms the state vector of a qubit (or several). Unitary means:</p>
+
+<ul class="list-disc pl-6 space-y-1 text-gray-300 mb-6">
+  <li><strong>length-preserving:</strong> the normalization \(|\alpha|^2 + |\beta|^2 = 1\) is kept</li>
+  <li><strong>reversible:</strong> every gate has an inverse. Rewinding is always possible</li>
+  <li><strong>continuous:</strong> unlike classical gates there isn&apos;t a finite set, there&apos;s an entire continuum</li>
+</ul>
+
+<h3>The Hadamard: the quantum coin</h3>
+
+<p>The most important single-qubit gate is the <strong>Hadamard</strong>, \(H\):</p>
+
+<div class="math-display">$$H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$</div>
+
+<p>What does it do? Apply it to \(|0\rangle = \binom{1}{0}\):</p>
+
+<div class="math-display">$$H|0\rangle = \frac{1}{\sqrt{2}} \binom{1}{1} = \frac{1}{\sqrt{2}}\bigl(|0\rangle + |1\rangle\bigr) = |+\rangle$$</div>
+
+<p>A pure 0 becomes a perfect 50/50 superposition. The <em>quantum coin flip</em>. And because \(H\) is unitary: apply it again and you&apos;re back at \(|0\rangle\). No classical coin flip can do that.</p>
+
+<h3>Pauli gates: X, Y, Z</h3>
+
+<p>The three <strong>Pauli matrices</strong> are 180&deg; rotations about the respective axes of the Bloch sphere:</p>
+
+<div class="math-display">$$X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad Z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$$</div>
+
+<p>\(X\) is the quantum counterpart of classical NOT: \(X|0\rangle = |1\rangle\). \(Z\) flips the phase of \(|1\rangle\) (but leaves the measurement outcome unchanged). \(Y\) does both.</p>
+
+<h3>CNOT: two qubits, one gate</h3>
+
+<p>The most important two-qubit gate is <strong>CNOT</strong> (controlled-NOT). It takes two qubits: a control and a target. If the control qubit is 1, the target flips. Otherwise nothing happens. Its matrix is \(4 \times 4\), because two qubits have four classical states (\(|00\rangle, |01\rangle, |10\rangle, |11\rangle\)):</p>
+
+<div class="math-display">$$\text{CNOT} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{pmatrix}$$</div>
+
+<p>CNOT is the hinge to <strong>entanglement</strong>. Without CNOT (or another two-qubit gate) every quantum computer would be a heap of independent coins. With CNOT they become a correlated whole.</p>
+
+<div class="summary-box">
+<p class="text-sm text-gray-400"><em>Bridge to the <a href="eigenvalues.html" class="text-cyan-400 hover:text-cyan-300 underline">eigenvalue post</a>:</em> Unitary matrices have a beautiful property: all of their eigenvalues lie on the <strong>unit circle</strong>. That&apos;s the deep reason quantum gates are reversible: they don&apos;t stretch or shrink anything &ndash; they only rotate. The spectral decomposition of a unitary matrix is a choreography of rotations on different eigenvector axes.</p>
+</div>
+
+<h3>Universality</h3>
+
+<p>How many gates do you need? Remarkably few. The combination of <strong>H, T</strong> (a 45&deg; phase) and <strong>CNOT</strong> suffices to approximate <em>any</em> unitary transformation to arbitrary precision. This is the quantum analogue of NAND being a universal classical gate.</p>
+
+<div class="try-it">
+<p><strong>Try it &darr;</strong></p>
+<p>Click to place gates on the wires and watch how the state vector changes. After <em>H on qubit 0, then CNOT</em>, the famous Bell state emerges &ndash; two qubits entangled forever.</p>
+</div>
+
+<div class="component-wrap">
+<div id="mount-circuit-builder"></div>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 4. BELL STATE -->
+<!-- ================================================================ -->
+<section id="bell-state" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 5</p>
+<h2>Your First Quantum Circuit: the Bell State</h2>
+
+<p>The Bell state is the &ldquo;Hello World&rdquo; of quantum computers. Two qubits, two gates, an effect that breaks classical physics. And you can build it in three lines of Qiskit.</p>
+
+<h3>The circuit</h3>
+
+<p>Start with two qubits in state \(|00\rangle\). Apply <strong>Hadamard</strong> to qubit 0. Then <strong>CNOT</strong>, with qubit 0 as the control:</p>
+
+<pre><code>|0&rang;  --[ H ]---*----
+                   |
+|0&rang;  ----------X----</code></pre>
+
+<p>Mathematically: \(H\) turns \(|00\rangle\) into \(\frac{1}{\sqrt{2}}(|00\rangle + |10\rangle)\). Now CNOT: if the first qubit is 1, flip the second. \(|10\rangle\) becomes \(|11\rangle\). Result:</p>
+
+<div class="math-display">$$|\Phi^+\rangle = \frac{1}{\sqrt{2}}\bigl(|00\rangle + |11\rangle\bigr)$$</div>
+
+<p>What does that mean? The two qubits are <em>perfectly correlated</em>. If you measure the first and get 0, you get 0 on the second &ndash; with <strong>100%</strong> certainty. If you measure 1, you get 1. But before the measurement, neither qubit was in a definite state.</p>
+
+<p>That is <strong>entanglement</strong>. And it is not classical randomness: the first qubit could have yielded 1 just as well, in which case the second would have yielded 1 too. The outcomes are not predetermined, but they are <em>jointly</em> predetermined.</p>
+
+<h3>Why is this powerful?</h3>
+
+<p>Entanglement is the resource that gives quantum computers their power. Two independent qubits are two coins &ndash; four possible states, a probability distribution over them. Two <em>entangled</em> qubits are something qualitatively different: a <em>joint</em> state that cannot be decomposed into a product.</p>
+
+<p>With \(n\) qubits the state space grows exponentially: \(2^n\) amplitudes. At 50 qubits that&apos;s \(2^{50} \approx 10^{15}\) &ndash; a quadrillion complex numbers that simultaneously influence each other through interference. No classical computer can simulate that. That&apos;s exactly what <strong>quantum advantage</strong> is.</p>
+
+<div class="try-it">
+<p><strong>Try it &darr;</strong></p>
+<p>The simulator runs 1000 measurements. You should see roughly 500 \(|00\rangle\) and 500 \(|11\rangle\) &ndash; but <strong>never</strong> \(|01\rangle\) or \(|10\rangle\). That&apos;s the signature of entanglement.</p>
+</div>
+
+<div class="component-wrap">
+<div id="mount-measurement"></div>
+</div>
+
+<div class="summary-box">
+<p class="text-sm text-gray-400"><em>Bridge to the <a href="quantum.html#teil-4d" class="text-cyan-400 hover:text-cyan-300 underline">quantum physics post</a>:</em> In that post we saw the Bell test &ndash; the proof that these correlations have no classical explanation. Alain Aspect won the 2022 Nobel Prize for it. What we see as a browser simulation here, IBM measures on real hardware and publishes as a Quantum Volume benchmark.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 5. WHAT THEY CAN DO -->
+<!-- ================================================================ -->
+<section id="what-works" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 6</p>
+<h2>What Quantum Computers Can Do &ndash; and What Headlines Leave Out</h2>
+
+<p>&ldquo;Quantum computers are a million times faster than classical ones.&rdquo; You read that sentence in press releases all the time. It&apos;s true only for <strong>very specific problems</strong>. For Excel, ChatGPT, or video editing, quantum computers are <em>slower</em>, more expensive, and more error-prone.</p>
+
+<p>But there is a handful of problems where they are fundamentally superior. The three most important:</p>
+
+<h3>1. Shor (1994): factoring large numbers</h3>
+
+<p>Peter Shor showed in 1994: a quantum computer can factor a number \(N\) in \(O((\log N)^3)\) steps. The best classical algorithm (General Number Field Sieve) needs \(e^{O((\log N)^{1/3})}\) &ndash; sub-exponential, but still far slower.</p>
+
+<p>Concretely: factoring a 2048-bit RSA number takes billions of years classically. A fault-tolerant quantum computer with a few million physical qubits could do it in hours.</p>
+
+<p>This is why <strong>post-quantum cryptography</strong> has been a NIST standard since 2024: ML-KEM (key encapsulation), ML-DSA (signatures), SLH-DSA. The world is migrating now &ndash; not because quantum computers can crack RSA today, but because <em>&ldquo;harvest now, decrypt later&rdquo;</em> is a real threat model. Encrypted traffic captured today could be readable in 15 years.</p>
+
+<h3>2. Grover (1996): searching unsorted databases</h3>
+
+<p>Grover&apos;s algorithm finds an entry in an unsorted database of \(N\) entries in \(O(\sqrt{N})\) steps. Classically: \(O(N)\). That&apos;s <em>not</em> exponentially faster &ndash; only quadratically. But broadly applicable.</p>
+
+<p>For a database with one billion entries: classically one billion operations, Grover roughly 31,623. That&apos;s significant. For combinatorial search, constraint satisfaction, certain ML problems.</p>
+
+<p>The catch: Grover doesn&apos;t simply race through the database faster. It requires the problem as an <em>oracle circuit</em>. Each &ldquo;query&rdquo; is a unitary that marks a particular entry. In practice that&apos;s often expensive to construct.</p>
+
+<h3>3. Quantum simulation: molecules and materials</h3>
+
+<p>Here&apos;s the killer use case. The Schr&ouml;dinger equation for a molecule with \(n\) electrons lives in a state space of dimension \(2^n\). Classical simulation scales poorly &ndash; precise ab-initio calculations for larger molecules are not feasible.</p>
+
+<p>A quantum computer is itself a quantum system. It can encode a molecular Hamiltonian directly into qubits and then simulate the time evolution. This was Richard Feynman&apos;s original idea from 1982: <em>&ldquo;Nature isn&apos;t classical, dammit, and if you want to make a simulation of nature, you&apos;d better make it quantum mechanical.&rdquo;</em></p>
+
+<p>Applications: new drugs, catalysts for green hydrogen, high-temperature superconductors, better batteries. This is where experts expect the first <em>real</em> economic quantum advantage &ndash; probably in the 2030s.</p>
+
+<h3>What does NOT get faster</h3>
+
+<div class="honest-box">
+<p><strong>A quantum computer is <em>not</em> a better laptop.</strong> It is a <em>special-purpose processor</em> that exploits particular mathematical structures &ndash; wherever interference and entanglement bring a computational advantage.</p>
+<p>For anything that is predominantly linear algebra with large dense matrices (training neural networks on classical data, video encoding, database operations), quantum computers have <strong>no advantage</strong>. Even the often-quoted <em>exponentially fast database search</em> is a misunderstanding &ndash; Grover is quadratic, not exponential.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 6. WHAT THEY CAN'T -->
+<!-- ================================================================ -->
+<section id="what-doesnt" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 7</p>
+<h2>What They (Still) Can&apos;t: The Honest Status 2026</h2>
+
+<p>If you want to play rock-paper-scissors with a quantum computing enthusiast, trump scissors with: &ldquo;Yes, but how many <em>logical</em> qubits does it have?&rdquo; That single word reveals the widest gap between hype and reality.</p>
+
+<h3>Physical vs. logical qubits</h3>
+
+<p>A <strong>physical qubit</strong> is a real thing: a superconducting loop, a trapped ion, a nitrogen-vacancy center in diamond. It is fragile. Any interaction with the environment &ndash; heat, stray electromagnetic fields, vibration &ndash; destroys the delicate phase relations. This is called <strong>decoherence</strong>.</p>
+
+<p>Typical coherence times in 2026 for superconducting qubits are on the order of 100&nbsp;&micro;s to a few milliseconds. After that the qubit is noise. With gate times of ~50&nbsp;ns, that&apos;s at most a few tens of thousands of operations &ndash; and errors accumulate during that window.</p>
+
+<p>A <strong>logical qubit</strong> is the solution: you encode a single &ldquo;clean&rdquo; qubit in many physical ones, so that errors in individual physical qubits can be corrected before they destroy the logical one. The surface code (current standard) requires roughly 1000 physical qubits for a sufficiently error-free logical qubit.</p>
+
+<h3>Google Willow, IBM Heron, IonQ Tempo &ndash; the state of 2026</h3>
+
+<figure>
+  <img src="../img/quantencomputer/sycamore-chip.jpg" alt="Google Sycamore quantum chip on display at the Deutsches Museum Munich, a 53-qubit superconducting processor" loading="lazy" style="max-width:480px;">
+  <figcaption>Google&apos;s Sycamore chip (predecessor of Willow) at the Deutsches Museum Munich &ndash; the 53-qubit processor that first demonstrated &ldquo;quantum supremacy&rdquo; in 2019. Image: <a href="https://commons.wikimedia.org/wiki/File:Sycamore_Quantum_Chip.jpg" class="text-cyan-400 hover:text-cyan-300 underline" rel="noopener" target="_blank">Coldupnorth via Wikimedia Commons</a>, license: <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="text-cyan-400 hover:text-cyan-300 underline" rel="noopener" target="_blank">CC BY-SA 4.0</a>.</figcaption>
+</figure>
+
+<p>In December 2024 Google released <strong>Willow</strong>: 105 superconducting qubits. The breakthrough wasn&apos;t the count but the demonstration that larger codes <em>reduce</em> errors (below-threshold) &ndash; a milestone in error correction, though not yet a single fully fault-tolerant logical qubit.</p>
+
+<p>IBM&apos;s roadmap targets scalable error correction with the <strong>Nighthawk</strong> chip (120 qubits, 2025) and <strong>Kookaburra</strong> (multi-chip, 2026). The target <em>Starling</em> (200 logical qubits) is announced for 2029.</p>
+
+<p>IonQ, Quantinuum, and QuEra pursue different approaches (ion traps, neutral atoms). These have longer coherence times but are slower. The &ldquo;best&rdquo; approach is still open in 2026.</p>
+
+<h3>NISQ: Noisy Intermediate-Scale Quantum</h3>
+
+<p>The term was coined in 2018 by John Preskill and describes the current era: hundreds of noisy qubits, no full error correction, interesting but <em>not superior</em> computations. NISQ algorithms like VQE and QAOA still (as of April 2026) show no <em>demonstrable</em> practical advantage over the best classical heuristics. Announcements happen, but claims are regularly overtaken by better classical methods.</p>
+
+<h3>When will it matter practically?</h3>
+
+<p>Conservative estimates (MIT Review, McKinsey, industry consensus): A &ldquo;commercially relevant&rdquo; fault-tolerant quantum computer &ndash; one that runs Shor against 2048-bit RSA or simulates an enzyme active site that is classically impossible &ndash; is expected in the <strong>2030s</strong>. Some skeptics say &ldquo;never,&rdquo; some enthusiasts say &ldquo;2027.&rdquo; The consensus: it will happen, but not immediately.</p>
+
+<div class="honest-box">
+<p><strong>What you will NOT have soon:</strong></p>
+<p>&bull; Quantum ChatGPT (language models gain little from quantum computing)<br>
+&bull; Quantum Excel or Quantum SAP<br>
+&bull; Real-time crypto crackers next year<br>
+&bull; &ldquo;10,000x faster AI training&rdquo; &ndash; that&apos;s a marketing phrase, not a technical claim</p>
+</div>
+
+<p>That&apos;s not bad. The transistor was a lab curiosity in 1948. By 1965 there were maybe 30 in a commercial chip. In 2026 billions sit in your phone. Quantum computers are currently somewhere between 1948 and 1965.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 7. QISKIT -->
+<!-- ================================================================ -->
+<section id="qiskit" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 8</p>
+<h2>Programming Quantum Computers with Qiskit</h2>
+
+<p>The best part comes at the end: you can try all this <strong>right now</strong>. IBM offers real quantum hardware on a free tier via <a href="https://quantum.cloud.ibm.com/" class="text-cyan-400 hover:text-cyan-300 underline" rel="noopener" target="_blank">quantum.cloud.ibm.com</a>: 10 minutes of QPU time per month on machines with 100+ qubits. Free, after sign-up.</p>
+
+<h3>The Bell state in 10 lines of Python</h3>
+
+<p>Qiskit is IBM&apos;s SDK. It runs as a Python library and translates circuits to QASM &ndash; a low-level language the chip understands.</p>
+
+<pre><code>from qiskit import QuantumCircuit
+from qiskit_aer import AerSimulator
+
+# Circuit with 2 qubits and 2 classical bits
+qc = QuantumCircuit(2, 2)
+
+qc.h(0)           # Hadamard on qubit 0
+qc.cx(0, 1)       # CNOT: qubit 0 controls, qubit 1 is target
+qc.measure([0, 1], [0, 1])
+
+# Simulator: 1024 measurements
+simulator = AerSimulator()
+result = simulator.run(qc, shots=1024).result()
+counts = result.get_counts()
+print(counts)
+# {'00': ~512, '11': ~512}  &ndash; no cross combinations!</code></pre>
+
+<p>That&apos;s it. Three gates, one measurement, and you&apos;ve created a Bell state. The output is two numbers summing to 1024 &ndash; no \(|01\rangle\) or \(|10\rangle\) in between.</p>
+
+<h3>Running on real hardware</h3>
+
+<p>Two more lines and the same code runs on a real IBM quantum processor in Yorktown Heights or Ehningen:</p>
+
+<pre><code>from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2
+
+service = QiskitRuntimeService(channel="ibm_quantum_platform")
+backend = service.least_busy(simulator=False, operational=True)
+
+# Transpile circuit to the chip's topology
+from qiskit import transpile
+qc_transpiled = transpile(qc, backend)
+
+sampler = SamplerV2(mode=backend)
+job = sampler.run([qc_transpiled], shots=1024)
+print(job.result()[0].data.meas.get_counts())</code></pre>
+
+<p>On real hardware you won&apos;t see exactly 512/512. Maybe 490/508 and 8 instances of &ldquo;garbage&rdquo; &ndash; \(|01\rangle\) or \(|10\rangle\), which shouldn&apos;t occur. Those are the noise, decoherence, and gate errors from the previous chapter. Welcome to the real world.</p>
+
+<div class="try-it">
+<p><strong>Try it &darr;</strong></p>
+<p>The playground runs the code above in your browser (JavaScript simulation &ndash; a real QPU is one click away via the &ldquo;Open on IBM Quantum&rdquo; button). Swap gates and watch the histogram change.</p>
+</div>
+
+<div class="component-wrap">
+<div id="mount-qiskit"></div>
+</div>
+
+<p>The complete package &ndash; four notebooks with Bell state, Deutsch-Jozsa, Grover, and VQE for H<sub>2</sub> &ndash; is open on GitHub: <a href="https://github.com/pmmathias/quantum-computing" class="text-cyan-400 hover:text-cyan-300 underline" rel="noopener" target="_blank">github.com/pmmathias/quantum-computing</a>. Fork it, run it, change it.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 8. QUANTUM ML -->
+<!-- ================================================================ -->
+<section id="qml" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 9</p>
+<h2>Quantum ML: Hype or Future?</h2>
+
+<p>If AI is the mega-topic and quantum computing is the exotic frontier, then <em>quantum machine learning</em> is the perfect buzzword sandwich. It has filled entire conference halls since 2018. What part of it is substance, what is PowerPoint?</p>
+
+<h3>Variational Quantum Eigensolver (VQE)</h3>
+
+<p>VQE is the most used NISQ algorithm. It finds the <em>ground state</em> of a Hamiltonian &ndash; the eigenvector with the smallest eigenvalue. That is directly relevant for chemistry: the ground-state energy determines whether a molecule is stable, how it reacts, what spectral lines it produces.</p>
+
+<p>The idea: a parameterized quantum circuit prepares a trial state \(|\psi(\vec{\theta})\rangle\). The quantum computer measures the expectation \(\langle \psi | H | \psi \rangle\). A <em>classical</em> optimizer adjusts the parameters \(\vec{\theta}\) to minimize that expectation. A hybrid algorithm &ndash; quantum and classical working together.</p>
+
+<p>VQE is robust to moderate qubit errors because the optimizer partially compensates for them. That makes it one of the few algorithms that make sense on today&apos;s NISQ hardware.</p>
+
+<h3>Quantum Kernel Methods</h3>
+
+<p>In the <a href="eigenvalues.html#kernel-trick" class="text-cyan-400 hover:text-cyan-300 underline">eigenvalue post</a> we saw: the kernel trick measures similarity between data points without computing the explicit feature map. The result is a matrix whose eigenvalues govern what the model learns.</p>
+
+<p>The idea of quantum kernel methods: use a quantum circuit to define a kernel function that is classically <em>not efficiently computable</em>. Schematically:</p>
+
+<div class="math-display">$$K(x, y) = |\langle \phi(x) | \phi(y) \rangle|^2$$</div>
+
+<p>\(\phi(x)\) is a parameterized quantum circuit that embeds classical data into qubits. The measurement returns a scalar that fills the kernel matrix. The rest runs like classical kernel ridge regression.</p>
+
+<p>The promise: quantum kernels could detect structures in data inaccessible to classical kernels.</p>
+
+<p>The honest status in 2026: <strong>no demonstrated practical advantage yet</strong>. There are theoretical arguments (Havlicek et al. 2019), but on real datasets a classical RBF kernel still (as of April 2026) beats most quantum kernels. This could change once fault-tolerant hardware is available.</p>
+
+<h3>What quantum ML does NOT do</h3>
+
+<div class="honest-box">
+<p>&bull; It does not speed up training of large neural networks. LLMs like GPT-4 or Claude don&apos;t need quantum computers.<br>
+&bull; It doesn&apos;t solve the &ldquo;data loading problem&rdquo;: loading a classical dataset of size \(N\) into a quantum state costs \(O(N)\) gate operations. Any claimed exponential speedup is often eaten up by that.<br>
+&bull; It is not the solution to hallucinations, bias, or explainability in AI. Those are fundamental problems untouched by hardware.</p>
+</div>
+
+<p>But for <em>very specific</em> problems &ndash; eigenvalue problems of large Hamiltonians, quantum chemistry classification, certain combinatorial optimizations &ndash; quantum computers could play a role in the 2030s. That&apos;s the honest answer.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 9. GLASS BEAD GAME -->
+<!-- ================================================================ -->
+<section id="glass-bead-game" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Epilogue</p>
+<h2>The Glass Bead Game</h2>
+
+<p>Let&apos;s look back. In nine chapters we built a chain:</p>
+
+<ul class="list-disc pl-6 space-y-2 text-gray-300 mb-6">
+  <li>A qubit is a <em>rotating arrow</em> from the <a href="quantum.html" class="text-cyan-400 hover:text-cyan-300 underline">quantum physics post</a> &ndash; a complex amplitude plus a second one.</li>
+  <li>The state space is the <em>Bloch sphere</em>.</li>
+  <li>Quantum gates are <em>unitary matrices</em> &ndash; rotations that move the sphere.</li>
+  <li>Unitary matrices have <em>eigenvalues on the unit circle</em> &ndash; the bridge to the <a href="eigenvalues.html" class="text-cyan-400 hover:text-cyan-300 underline">eigenvalue post</a>.</li>
+  <li>The <strong>quantum Fourier transform</strong> &ndash; the heart of Shor&apos;s algorithm &ndash; is a unitary operation that maps a state&apos;s amplitudes to their Fourier coefficients. It is the quantum counterpart to the classical Fourier transform from the <a href="flight-simulator.html" class="text-cyan-400 hover:text-cyan-300 underline">flight-simulator post</a>, where it drives the ocean-wave simulation. The same mathematical operation &ndash; decomposing a function into frequency components &ndash; powers sea swells, JPEG compression, and the factoring of large integers.</li>
+</ul>
+
+<p>In the quantum post Schr&ouml;dinger wrote in 1926: <em>&ldquo;Quantization as eigenvalue problem.&rdquo;</em> In the eigenvalue post we added: <em>&ldquo;Intelligence as eigenvalue problem.&rdquo;</em></p>
+
+<p>Today we can add a third line:</p>
+
+<p class="text-center text-xl text-amber-300 font-semibold my-6"><em>&ldquo;Quantum computing as rotational choreography.&rdquo;</em></p>
+
+<p>The same unitary matrices. The same eigenvalues. A different context. The beauty of the <a href="glass-bead-game.html" class="text-cyan-400 hover:text-cyan-300 underline">glass bead game</a> is not that everything is the same &ndash; it&apos;s that so many different phenomena share the same mathematical structure.</p>
+
+<p>A qubit in an IBM lab, a PageRank algorithm at Google, a standing wave in an atom: three worlds, the same mathematics. Whoever understands the mathematics understands all three.</p>
+
+<p>And now you can. <em>Fork the notebooks. Run the code.</em></p>
+
+</div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- RELATED -->
+<!-- ================================================================ -->
+<section class="pb-8">
+<div class="prose-dark">
+<p class="text-sm text-gray-400"><em>Related posts:</em> This post builds on <a href="quantum.html" class="text-cyan-400 hover:text-cyan-300 underline">&ldquo;Quantum Physics with Arrows&rdquo;</a> (amplitudes, superposition, entanglement) and points to <a href="eigenvalues.html" class="text-cyan-400 hover:text-cyan-300 underline">&ldquo;Eigenvalues &amp; AI&rdquo;</a> (unitary matrices, kernel trick). The grand synthesis lives in <a href="glass-bead-game.html" class="text-cyan-400 hover:text-cyan-300 underline">&ldquo;The Glass Bead Game&rdquo;</a>.</p>
+</div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- FAQ -->
+<!-- ================================================================ -->
+<section class="pb-16">
+<div class="prose-dark">
+<h2 style="font-size:1.25rem;">Frequently Asked Questions</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is a qubit in simple terms?</h3>
+<p>A qubit is the quantum counterpart of a classical bit. Instead of 0 or 1, it can be a combination of both &ndash; a superposition. Mathematically, it is a point on the surface of a sphere called the Bloch sphere. Only upon measurement does it collapse to a definite 0 or 1, with probabilities given by the point&apos;s position on the sphere.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is the difference between classical and quantum computers?</h3>
+<p>Classical computers compute with bits (0 or 1) and deterministic operations. Quantum computers compute with qubits in superposition and use interference and entanglement. They are not generally faster, only on specific problems &ndash; primarily factoring, unsorted search, and quantum simulation.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Can quantum computers break RSA today?</h3>
+<p>No, not as of April 2026. Breaking 2048-bit RSA requires Shor&apos;s algorithm running on several million error-corrected qubits. Current chips like Google Willow (105 qubits) or IBM Condor (433 qubits) are physical qubits without full error correction. Experts expect cryptographically relevant quantum computers in the late 2020s to 2030s at the earliest.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is Qiskit?</h3>
+<p>Qiskit is IBM&apos;s open-source SDK for programming quantum circuits in Python. Code runs on local simulators or &ndash; via the IBM Quantum Platform &ndash; on real quantum hardware. The basics (Bell state, Grover) fit in a few lines.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is quantum entanglement?</h3>
+<p>Entanglement is a correlation between two or more qubits that is stronger than any classical correlation. If two qubits are in a Bell state and you measure one, you instantly know the result of the other &ndash; even over large distances. Einstein called this &ldquo;spooky action at a distance&rdquo;; the Bell test (Nobel Prize 2022 for Aspect, Clauser, Zeilinger) confirmed these correlations are real and not classically explainable.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">When will quantum computers become practically relevant?</h3>
+<p>The industry consensus in 2026: first <em>economically relevant</em> applications &ndash; mostly in quantum chemistry and materials science &ndash; are expected in the 2030s. Cryptographically relevant systems (RSA breaking) likely later, but the migration to post-quantum cryptography is already under way because today&apos;s traffic could be decrypted later.</p>
+
+</div>
+</section>
+
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+  {"@type": "Question", "name": "What is a qubit in simple terms?", "acceptedAnswer": {"@type": "Answer", "text": "A qubit is the quantum counterpart of a classical bit. Instead of 0 or 1, it can be a combination of both \u2013 a superposition. Mathematically, it is a point on the surface of a sphere called the Bloch sphere. Only upon measurement does it collapse to a definite 0 or 1, with probabilities given by the point's position on the sphere."}},
+  {"@type": "Question", "name": "What is the difference between classical and quantum computers?", "acceptedAnswer": {"@type": "Answer", "text": "Classical computers compute with bits (0 or 1) and deterministic operations. Quantum computers compute with qubits in superposition and use interference and entanglement. They are not generally faster, only on specific problems \u2013 primarily factoring, unsorted search, and quantum simulation."}},
+  {"@type": "Question", "name": "Can quantum computers break RSA today?", "acceptedAnswer": {"@type": "Answer", "text": "No, not as of April 2026. Breaking 2048-bit RSA requires Shor's algorithm running on several million error-corrected qubits. Current chips like Google Willow (105 qubits) or IBM Condor (433 qubits) are physical qubits without full error correction. Experts expect cryptographically relevant quantum computers in the late 2020s to 2030s at the earliest."}},
+  {"@type": "Question", "name": "What is Qiskit?", "acceptedAnswer": {"@type": "Answer", "text": "Qiskit is IBM's open-source SDK for programming quantum circuits in Python. Code runs on local simulators or \u2013 via the IBM Quantum Platform \u2013 on real quantum hardware."}},
+  {"@type": "Question", "name": "What is quantum entanglement?", "acceptedAnswer": {"@type": "Answer", "text": "Entanglement is a correlation between two or more qubits stronger than any classical correlation. If two qubits are in a Bell state and you measure one, you instantly know the result of the other, even over large distances. Einstein called it spooky action at a distance; the Bell test confirmed these correlations are real and not classically explainable."}},
+  {"@type": "Question", "name": "When will quantum computers become practically relevant?", "acceptedAnswer": {"@type": "Answer", "text": "The industry consensus in 2026: first economically relevant applications, mostly in quantum chemistry and materials science, are expected in the 2030s. Cryptographically relevant systems likely later, but migration to post-quantum cryptography is already under way."}}
+]}
+</script>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
+  <p>&copy; 2026 Mathias Leonhardt &middot; Built with Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="about.html" class="hover:text-gray-400">About</a> &middot;
+    <a href="imprint.html" class="hover:text-gray-400">Imprint</a> &middot;
+    <a href="privacy.html" class="hover:text-gray-400">Privacy</a>
+  </p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  var COMPONENTS = {
+    'mount-bloch-sphere': window.BlochSphereViz || null,
+    'mount-circuit-builder': window.QuantumCircuitBuilder || null,
+    'mount-measurement': window.MeasurementSimulator || null,
+    'mount-qiskit': window.QiskitPlayground || null
+  };
+
+  var mounted = {};
+
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Component failed to load.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  var sections = document.querySelectorAll('section[id]');
+  var tocLinks = document.querySelectorAll('#nav-dropdown .toc-link');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          else link.classList.remove('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(function(s) { navObserver.observe(s); });
+
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+
+</body>
+</html>

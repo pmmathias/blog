@@ -24,6 +24,11 @@
       en: { title: 'Quantum Physics with Arrows', subtitle: 'Double slit \u00B7 Path integral \u00B7 Entanglement', href: '/en/quantum.html' }
     },
     {
+      icon: '\u269B',  // ⚛
+      de: { title: 'Was Quantencomputer k\u00F6nnen', subtitle: 'Qubit \u00B7 Bloch-Kugel \u00B7 Qiskit', href: '/quantencomputer.html' },
+      en: { title: 'What Quantum Computers Do', subtitle: 'Qubit \u00B7 Bloch sphere \u00B7 Qiskit', href: '/en/quantum-computing.html' }
+    },
+    {
       icon: '\uD83E\uDD85',  // 🦅
       de: { title: 'Fourier & Ozeanwellen', subtitle: 'FFT \u00B7 Octree \u00B7 Ozean-Shader', href: '/vogelsimulator.html' },
       en: { title: 'Fourier & Ocean Waves', subtitle: 'FFT \u00B7 Octree \u00B7 Ocean Shader', href: '/en/flight-simulator.html' }
