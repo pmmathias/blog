@@ -153,7 +153,7 @@
 <!-- YouTube Video Banner -->
 <section class="mb-8 rounded-xl overflow-hidden border border-gray-700/50 bg-gray-900/50">
   <div class="relative w-full" style="padding-bottom:56.25%">
-    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/sfE92nyFGuI"
+    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/iMaqNfA0Gs0"
       title="What Quantum Computers Really Do &mdash; Qubit, Bloch Sphere, Qiskit" frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen loading="lazy"></iframe>
@@ -161,9 +161,9 @@
   <div class="px-5 py-4 flex items-center justify-between">
     <div>
       <p class="text-sm font-semibold text-gray-200">Prefer to watch?</p>
-      <p class="text-xs text-gray-500">8 minutes &middot; From the superconducting oscillator to the Bell state</p>
+      <p class="text-xs text-gray-500">9 minutes &middot; From the superconducting oscillator to the Bell state</p>
     </div>
-    <a href="https://youtu.be/sfE92nyFGuI" target="_blank" rel="noopener"
+    <a href="https://youtu.be/iMaqNfA0Gs0" target="_blank" rel="noopener"
        class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
       <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
       Watch on YouTube
@@ -485,13 +485,27 @@
 <p>So: superposition alone gives <em>no speedup</em>. It is a prerequisite for the second step, and that step is the real magic: <strong>interference</strong> &ndash; used actively and deliberately, before the measurement.</p>
 </div>
 
+<h3>The right mental model: one computation over all possibilities</h3>
+
+<p>Before we dissect a concrete algorithm, the mental model needs to shift. The old picture: <em>&ldquo;quantum computers compute many possibilities in parallel.&rdquo;</em> The new picture:</p>
+
+<p class="text-center text-xl text-amber-300 font-semibold my-6"><em>One single computation over all possibilities at once &ndash; and it reshapes the solution landscape.</em></p>
+
+<p>Put differently: a quantum algorithm is <strong>not parallel trial-and-error</strong>, but a <strong>global linear transformation</strong> on a high-dimensional vector &ndash; the state vector with \(2^n\) amplitudes. Every quantum gate acts on all \(2^n\) amplitudes at once, because it is a \(2^n \times 2^n\) matrix. So every step of a quantum computation is a <em>single</em> operation that re-shapes the entire probability field &ndash; not a sequence of evaluations per candidate.</p>
+
+<p>This single operation is chosen so that what does <em>not</em> match the answer interferes <strong>destructively</strong>, and what <em>does</em> match interferes <strong>constructively</strong>. When you measure, the whole reshaped state collapses to one value, and with high probability that value is the answer. A classical probabilistic computer has no such tool: its probabilities can only dilute, never cancel. It is stuck with samples and per-candidate evaluations.</p>
+
+<div class="summary-box">
+<p class="text-sm text-gray-400">The Glass Bead Game bridge: from the <a href="eigenvalues.html" class="text-cyan-400 hover:text-cyan-300 underline">eigenvalue post</a> we know that a linear transformation has preferred directions &ndash; its eigenvectors are stretched, everything else shrunk. A quantum algorithm is in exactly the same way a chain of unitary transformations whose <em>eigenstates align with the answer we&apos;re looking for</em>. What starts spread out across all directions gets pushed onto the right axis with each iteration. Quantum computation is eigenstate amplification &ndash; in the language of linear algebra, on the high-dimensional state space.</p>
+</div>
+
 <h3>Classical searches. Quantum shapes.</h3>
 
-<p>A classical probabilistic computer can also carry all \(2^n\) possibilities at once &ndash; as a probability distribution. Nothing new: a Monte Carlo simulation does it every day. But: classical probabilities can only dilute (when you mix) &ndash; they cannot <em>cancel each other out</em>. The only operation is: roll the dice until the right state appears by chance. For \(2^n\) candidates, that takes exponential time.</p>
+<p>It does not get more compact than this. A classical probabilistic computer can also carry all \(2^n\) possibilities as a probability distribution &ndash; Monte Carlo does it daily. But its only operation is: <em>sample, see what you got, accept or reject</em>. For \(2^n\) candidates, exponential time.</p>
 
-<p>A quantum computer can do something no classical probabilistic computer can: it can manipulate amplitudes <em>actively</em>, so that wrong answers <strong>destructively cancel</strong> and the right one <strong>constructively amplifies</strong>. Before measurement. In a handful of global operations that touch all amplitudes at once.</p>
+<p>A quantum computer has an extra class of operations no classical model has: <strong>unitary transformations that let amplitudes destructively cancel</strong>. Before measurement. In a few global steps that touch every amplitude at once.</p>
 
-<p>The difference is not &ldquo;more parallel work.&rdquo; The difference is: <em>classical searches, quantum shapes</em>. The classical computer walks through the solution space. The quantum computer re-shapes the probability landscape until only the right solution has any probability mass.</p>
+<p class="text-center text-base text-slate-300 italic my-4">A classical computation is a path. A quantum computation is a field.</p>
 
 <h3>Grover in three steps: how to amplify a solution</h3>
 
@@ -984,6 +998,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- video-schema-injected -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoObject","name":"What Quantum Computers Really Do \u2014 Qubit, Bloch Sphere, Qiskit","description":"From the superconducting oscillator through the Josephson junction to the Bell state: a qubit is a rotating arrow on a sphere, a quantum gate is a rotation, an algorithm is a choreography. In eight minutes: physical foundations, Bloch sphere, Hadamard interference, Bell state, Shor and Grover \u2014 no hype.","thumbnailUrl":"https://i.ytimg.com/vi/sfE92nyFGuI/maxresdefault.jpg","uploadDate":"2026-04-20","duration":"PT7M39S","embedUrl":"https://www.youtube-nocookie.com/embed/sfE92nyFGuI","contentUrl":"https://www.youtube.com/watch?v=sfE92nyFGuI","inLanguage":"en","publisher":{"@type":"Person","name":"Mathias Leonhardt","url":"https://ki-mathias.de/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoObject","name":"What Quantum Computers Really Do \u2014 Qubit, Bloch Sphere, Qiskit","description":"From the superconducting oscillator through the Josephson junction to the Bell state: a qubit is a rotating arrow on a sphere, a quantum gate is a rotation, an algorithm is a choreography. In eight minutes: physical foundations, Bloch sphere, Hadamard interference, Bell state, Shor and Grover \u2014 no hype.","thumbnailUrl":"https://i.ytimg.com/vi/iMaqNfA0Gs0/maxresdefault.jpg","uploadDate":"2026-04-20","duration":"PT9M14S","embedUrl":"https://www.youtube-nocookie.com/embed/iMaqNfA0Gs0","contentUrl":"https://www.youtube.com/watch?v=iMaqNfA0Gs0","inLanguage":"en","publisher":{"@type":"Person","name":"Mathias Leonhardt","url":"https://ki-mathias.de/"}}</script>
 </body>
 </html>
