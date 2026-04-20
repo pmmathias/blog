@@ -15,6 +15,18 @@
   var isEN = LANG === 'en';
 
   // ============================================================
+  // A11y: site-wide accessibility CSS injected once per page load.
+  // Fixes Lighthouse issues (link-in-text-block + figcaption contrast).
+  // ============================================================
+  var a11yStyle = document.createElement('style');
+  a11yStyle.setAttribute('data-a11y', 'nav');
+  a11yStyle.textContent =
+    '.prose-dark a,.prose a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(34,211,238,0.4)}' +
+    '.prose-dark a:hover,.prose a:hover{text-decoration-color:rgba(34,211,238,0.85)}' +
+    'figcaption{color:#a0aec0 !important}';
+  document.head.appendChild(a11yStyle);
+
+  // ============================================================
   // BLOG POSTS — edit this array when adding new posts
   // ============================================================
   var POSTS = [
@@ -134,7 +146,7 @@
           '<span class="text-cyan-400 text-lg transition-transform duration-200 group-[.open]:rotate-90">&rang;</span>' +
           ' KI-Mathias' +
         '</button>' +
-        '<div class="flex items-center gap-3 text-xs text-gray-500">' +
+        '<div class="flex items-center gap-3 text-xs text-gray-400">' +
           '<a href="' + META.about + '" class="hover:text-gray-300 transition hidden sm:inline">' + META.aboutLabel + '</a>' +
           '<a href="' + META.imprint + '" class="hover:text-gray-300 transition hidden sm:inline">' + META.imprintLabel + '</a>' +
           '<a href="' + META.privacy + '" class="hover:text-gray-300 transition hidden sm:inline">' + META.privacyLabel + '</a>' +
