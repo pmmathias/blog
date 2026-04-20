@@ -141,6 +141,28 @@ Der gesprochene Text muss **konkret beschreiben**, was gerade visuell passiert. 
 - **Fachbegriffe prüfen:** Namen wie "Hadamard" werden von ElevenLabs oft falsch betont. Testen beim ersten Render, ggf. phonetisch umschreiben (z.B. "Hadamar" ohne D am Ende).
 - **Englische Worte in deutschen Texten** — ElevenLabs-Multilingual-Modell macht das meist gut, aber bei Eigennamen wie "PsiQuantum" prüfen.
 
+### 5.5 Render-Qualität — `-qh` ist Pflicht für YouTube
+
+**Nicht wieder vergessen:**
+
+| Flag | Auflösung | FPS | Zweck |
+|---|---|---|---|
+| `-ql` | 480×270 | 15 | **Nur Preview** beim Iterieren — schnell, klein, hässlich |
+| `-qm` | 1280×720 | 30 | Kompromiss, selten genutzt |
+| `-qh` | 1920×1080 | 60 | **Standard für YouTube-Upload** |
+| `-qk` | 3840×2160 | 60 | 4K, für Zeitmaschinen |
+
+**Regel:** Sobald das Skript didaktisch abgesegnet ist, **IMMER `-qh` rendern** bevor YouTube-Upload. `-ql` ist ausschließlich für Iteration da — der Voice-Cache (ElevenLabs) trägt von `-ql` nach `-qh`, also kostet das nichts extra außer Render-Zeit.
+
+**Ich habe das am 20. April 2026 vergessen und musste beide Videos neu rendern + neu uploaden** (die Blog-Embed-IDs, Playlist-Einträge und VideoObject-JSON-LDs aktualisieren ebenfalls).
+
+**Check vor jedem Upload:**
+```bash
+ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate \
+  -of default=nw=1 <video.mp4>
+# Expect: width=1920, height=1080, r_frame_rate=60/1 (oder 60000/1001)
+```
+
 ---
 
 ## 6 — SEO & Ranking
@@ -203,6 +225,7 @@ Natürliche Keyword-Nutzung — nie stopfen. Die Hauptkeywords (z.B. "Quantencom
 | 2026-04-20 | `\theta/2` in der Bloch-Kugel-Parametrisierung ist erklärungsbedürftig — wer mit klassischer Geometrie anfängt, fragt sofort "warum halber Winkel?". Antwort: Spin-½, doppelte Überlagerung SU(2)→SO(3), Gürteltrick. | Bloch-Kapitel-Fix |
 | 2026-04-20 | `SU(2)`, `SO(3)`, "Lie-Gruppe" ohne Abholung sind reiner Fachjargon. Lieber: "Familie aller unitären 2×2-Matrizen mit Determinante 1" + anschauliche Parallele zur Drehung. | Gatter-Kapitel-Fix |
 | 2026-04-20 | Wenn ein Fachbegriff einmal genannt wird (z.B. "Josephson-Kontakt"), muss er beim ersten Auftreten **tief** abgeholt werden — nicht beim zweiten. Leser, die beim ersten Auftreten abgehängt werden, lesen den zweiten oft nicht mehr. | Josephson-Szene im Video |
+| 2026-04-20 | **Render-Quality: `-qh` (1080p60) ist Pflicht für YouTube-Upload, `-ql` nur für Preview!** Voice-Cache trägt vom Preview-Render zum HD-Render, also ist das kostenfrei. Ich habe das vergessen und 480p15 hochgeladen — Mathias musste es reklamieren. | Auflösungs-Reklamation Quantum-Post |
 
 ---
 
