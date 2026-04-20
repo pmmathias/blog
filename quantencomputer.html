@@ -153,7 +153,7 @@
 <!-- YouTube Video Banner -->
 <section class="mb-8 rounded-xl overflow-hidden border border-gray-700/50 bg-gray-900/50">
   <div class="relative w-full" style="padding-bottom:56.25%">
-    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/miAsFpJdisY"
+    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/dTXeekjDE-k"
       title="Was Quantencomputer wirklich k&ouml;nnen &mdash; Qubit, Bloch-Kugel, Qiskit" frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen loading="lazy"></iframe>
@@ -161,9 +161,9 @@
   <div class="px-5 py-4 flex items-center justify-between">
     <div>
       <p class="text-sm font-semibold text-gray-200">Lieber schauen statt lesen?</p>
-      <p class="text-xs text-gray-500">9 Minuten &middot; Vom supraleitenden Schwingkreis bis zum Bell-Zustand</p>
+      <p class="text-xs text-gray-500">11 Minuten &middot; Vom supraleitenden Schwingkreis bis zum Bell-Zustand</p>
     </div>
-    <a href="https://youtu.be/miAsFpJdisY" target="_blank" rel="noopener"
+    <a href="https://youtu.be/dTXeekjDE-k" target="_blank" rel="noopener"
        class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors">
       <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
       Auf YouTube
@@ -489,13 +489,27 @@
 <p>Das hei&szlig;t: Superposition allein bringt <em>noch keinen Vorteil</em>. Sie ist Voraussetzung f&uuml;r den zweiten Schritt, und der ist die eigentliche Magie: <strong>Interferenz</strong> &ndash; aktiv und zielgerichtet, vor der Messung eingesetzt.</p>
 </div>
 
+<h3>Das richtige mentale Modell: eine Rechnung &uuml;ber alle M&ouml;glichkeiten</h3>
+
+<p>Bevor wir einen konkreten Algorithmus sezieren, lohnt sich der Tausch eines mentalen Modells. Das alte Bild lautet: <em>&bdquo;Quantencomputer rechnen viele M&ouml;glichkeiten parallel.&ldquo;</em> Das neue Bild lautet:</p>
+
+<p class="text-center text-xl text-amber-300 font-semibold my-6"><em>Eine einzige Rechnung &uuml;ber alle M&ouml;glichkeiten gleichzeitig &ndash; und sie verformt die L&ouml;sungslandschaft.</em></p>
+
+<p>Anders ausgedr&uuml;ckt: ein Quantenalgorithmus ist <strong>kein paralleles Durchprobieren</strong>, sondern eine <strong>globale lineare Transformation</strong> auf einem hochdimensionalen Vektor &ndash; dem Zustandsvektor mit \(2^n\) Amplituden. Jedes Quantengatter wirkt auf alle \(2^n\) Amplituden zugleich, weil es eine \(2^n \times 2^n\)-Matrix ist. Das hei&szlig;t: jede Rechnung am Quantencomputer ist eine <em>einzige</em> Operation, die das gesamte Wahrscheinlichkeitsfeld umformt &ndash; nicht eine Sequenz von Auswertungen pro Kandidat.</p>
+
+<p>Diese eine Operation ist so gew&auml;hlt, dass sie systematisch <strong>destruktiv interferieren</strong> l&auml;sst, was nicht zur L&ouml;sung passt, und <strong>konstruktiv verst&auml;rkt</strong>, was passt. Beim Messen f&auml;llt der gesamte umgeformte Zustand auf einen Wert, und mit hoher Wahrscheinlichkeit ist das die L&ouml;sung. Der klassische probabilistische Computer hat dieses Werkzeug nicht: seine Wahrscheinlichkeiten k&ouml;nnen sich nur verd&uuml;nnen, nicht gegenseitig ausl&ouml;schen. Er bleibt bei Stichproben und sequenziellen Auswertungen.</p>
+
+<div class="summary-box">
+<p class="text-sm text-gray-400">Die Glasperlenspiel-Br&uuml;cke: Aus dem <a href="eigenwerte.html" class="text-cyan-400 hover:text-cyan-300 underline">Eigenwerte-Beitrag</a> kennen wir die Idee, dass eine lineare Transformation eine Vorzugsrichtung hat &ndash; ihre Eigenvektoren werden gestreckt, alles andere geschrumpft. Genauso ist ein Quantenalgorithmus eine Verkettung unit&auml;rer Transformationen, deren <em>Eigenzust&auml;nde mit der gesuchten Antwort &uuml;bereinstimmen</em>. Was am Anfang in alle Richtungen verteilt ist, wird mit jeder Iteration zur richtigen Achse hin verschoben. Quantenrechnen ist Eigenzustand-Verst&auml;rkung &ndash; in der Sprache der linearen Algebra, &uuml;ber den hochdimensionalen Zustandsraum.</p>
+</div>
+
 <h3>Klassisch durchsucht. Quantum formt.</h3>
 
-<p>Ein klassischer probabilistischer Computer kann auch alle \(2^n\) M&ouml;glichkeiten gleichzeitig &bdquo;tragen&ldquo; &ndash; als Wahrscheinlichkeitsverteilung. Das ist nicht neu: schon eine Monte-Carlo-Simulation tut das. Aber: klassische Wahrscheinlichkeiten k&ouml;nnen sich nur verd&uuml;nnen (wenn man mischt), nicht <em>gegenseitig ausl&ouml;schen</em>. Die einzige Operation ist: W&uuml;rfeln, bis der richtige Zustand zuf&auml;llig auftaucht. Bei \(2^n\) m&ouml;glichen Kandidaten dauert das exponentiell.</p>
+<p>Knapper geht es nicht. Ein klassischer probabilistischer Computer kann auch alle \(2^n\) M&ouml;glichkeiten als Wahrscheinlichkeitsverteilung tragen &ndash; eine Monte-Carlo-Simulation tut das jeden Tag. Aber er hat nur eine Operation: <em>w&uuml;rfeln und schauen, was rauskommt</em>. Auswerten, akzeptieren oder verwerfen. Bei \(2^n\) Kandidaten dauert das exponentiell.</p>
 
-<p>Ein Quantencomputer kann etwas, was kein klassischer probabilistischer kann: er kann Amplituden <em>aktiv manipulieren</em>, sodass falsche Antworten sich <strong>destruktiv auslöschen</strong> und die richtige sich <strong>konstruktiv verst&auml;rkt</strong>. Vor der Messung. In wenigen globalen Operationen, die alle Amplituden auf einmal anfassen.</p>
+<p>Ein Quantencomputer hat eine zus&auml;tzliche Klasse von Operationen, die kein klassisches Modell hat: <strong>unit&auml;re Transformationen, die Amplituden destruktiv ausl&ouml;schen lassen</strong>. Vor der Messung. In wenigen globalen Schritten, die jede Amplitude auf einmal beeinflussen.</p>
 
-<p>Der Unterschied ist nicht &bdquo;mehr parallele Arbeit&ldquo;. Der Unterschied ist: <em>klassisch durchsucht, Quantum formt</em>. Der klassische Computer l&auml;uft den L&ouml;sungsraum ab. Der Quantencomputer verformt die Wahrscheinlichkeitslandschaft, bis nur noch die richtige L&ouml;sung Wahrscheinlichkeit hat.</p>
+<p class="text-center text-base text-slate-300 italic my-4">Klassische Berechnung ist ein Pfad. Quantenberechnung ist ein Feld.</p>
 
 <h3>Grover in drei Schritten: wie man eine L&ouml;sung verst&auml;rkt</h3>
 
@@ -996,6 +1010,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- video-schema-injected -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoObject","name":"Was Quantencomputer wirklich k\u00f6nnen \u2014 Qubit, Bloch-Kugel, Qiskit","description":"Vom supraleitenden Schwingkreis \u00fcber den Josephson-Kontakt bis zum Bell-Zustand: Ein Qubit ist ein rotierender Pfeil auf einer Kugel, ein Quantengatter ist eine Drehung, ein Algorithmus eine Choreografie. In neun Minuten: physikalische Grundlagen, Bloch-Kugel, Hadamard-Interferenz, Bell-Zustand, Shor und Grover \u2014 ohne Hype.","thumbnailUrl":"https://i.ytimg.com/vi/miAsFpJdisY/maxresdefault.jpg","uploadDate":"2026-04-20","duration":"PT9M10S","embedUrl":"https://www.youtube-nocookie.com/embed/miAsFpJdisY","contentUrl":"https://www.youtube.com/watch?v=miAsFpJdisY","inLanguage":"de","publisher":{"@type":"Person","name":"Mathias Leonhardt","url":"https://ki-mathias.de/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoObject","name":"Was Quantencomputer wirklich k\u00f6nnen \u2014 Qubit, Bloch-Kugel, Qiskit","description":"Vom supraleitenden Schwingkreis \u00fcber den Josephson-Kontakt bis zum Bell-Zustand: Ein Qubit ist ein rotierender Pfeil auf einer Kugel, ein Quantengatter ist eine Drehung, ein Algorithmus eine Choreografie. In neun Minuten: physikalische Grundlagen, Bloch-Kugel, Hadamard-Interferenz, Bell-Zustand, Shor und Grover \u2014 ohne Hype.","thumbnailUrl":"https://i.ytimg.com/vi/dTXeekjDE-k/maxresdefault.jpg","uploadDate":"2026-04-20","duration":"PT11M9S","embedUrl":"https://www.youtube-nocookie.com/embed/dTXeekjDE-k","contentUrl":"https://www.youtube.com/watch?v=dTXeekjDE-k","inLanguage":"de","publisher":{"@type":"Person","name":"Mathias Leonhardt","url":"https://ki-mathias.de/"}}</script>
 </body>
 </html>
