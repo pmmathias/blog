@@ -122,10 +122,11 @@
   <a href="#bloch-kugel" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Die Bloch-Kugel</a>
   <a href="#quantengatter" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Quantengatter</a>
   <a href="#bell-zustand" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Bell-Zustand</a>
-  <a href="#was-geht" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Was sie k&ouml;nnen</a>
-  <a href="#was-nicht" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Was (noch) nicht</a>
-  <a href="#qiskit" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; Qiskit-Code</a>
-  <a href="#qml" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">9 &middot; Quanten-ML</a>
+  <a href="#interferenz-formt" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Wie Algorithmen formen</a>
+  <a href="#was-geht" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Was sie k&ouml;nnen</a>
+  <a href="#was-nicht" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; Was (noch) nicht</a>
+  <a href="#qiskit" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">9 &middot; Qiskit-Code</a>
+  <a href="#qml" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">10 &middot; Quanten-ML</a>
   <a href="#glasperlenspiel" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilog</a>
 </div>
 <script src="/nav.js"></script>
@@ -472,21 +473,146 @@
 
 
 <!-- ================================================================ -->
-<!-- 5. WAS QUANTENCOMPUTER KÖNNEN -->
+<!-- 6. WIE QUANTENALGORITHMEN FORMEN -->
+<!-- ================================================================ -->
+<section id="interferenz-formt" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 6</p>
+<h2>Wie Quantenalgorithmen formen &ndash; der eigentliche Aha</h2>
+
+<p>Bis hierher haben wir gesehen: Qubits k&ouml;nnen in Superposition sein, Gatter drehen sie, Messungen kollabieren sie. Damit l&auml;sst sich Verschr&auml;nkung erzeugen, Zust&auml;nde rotieren, Wahrscheinlichkeiten vorhersagen. Aber: all das erkl&auml;rt noch <strong>nicht</strong>, warum ein Quantencomputer ein klassisches Problem schneller l&ouml;sen k&ouml;nnen soll als ein klassischer. Jetzt kommt der eigentliche Aha.</p>
+
+<div class="honest-box">
+<p><strong>Das Bild, das wir zuerst zerst&ouml;ren m&uuml;ssen:</strong> &bdquo;Ein Quantencomputer probiert alle M&ouml;glichkeiten gleichzeitig aus.&ldquo; Dieser Satz liest sich gut, er ist aber f&uuml;r die Intuition gef&auml;hrlich falsch.</p>
+<p>Stimmt ist: ein Qubit-Register mit \(n\) Qubits tr&auml;gt alle \(2^n\) Basiszust&auml;nde gleichzeitig &ndash; jeder mit seiner eigenen Amplitude. Stimmt aber <em>auch</em>: die Messung kollabiert den Zustand auf <strong>einen einzigen</strong> dieser Basiszust&auml;nde, und zwar zuf&auml;llig, mit Wahrscheinlichkeit gleich dem Quadrat der jeweiligen Amplitude. W&auml;ren nach der Rechnung alle \(2^n\) Amplituden gleich gro&szlig;, w&auml;re das Ergebnis der Messung so n&uuml;tzlich wie ein fairer W&uuml;rfel mit \(2^n\) Seiten &ndash; n&auml;mlich gar nicht.</p>
+<p>Das hei&szlig;t: Superposition allein bringt <em>noch keinen Vorteil</em>. Sie ist Voraussetzung f&uuml;r den zweiten Schritt, und der ist die eigentliche Magie: <strong>Interferenz</strong> &ndash; aktiv und zielgerichtet, vor der Messung eingesetzt.</p>
+</div>
+
+<h3>Klassisch durchsucht. Quantum formt.</h3>
+
+<p>Ein klassischer probabilistischer Computer kann auch alle \(2^n\) M&ouml;glichkeiten gleichzeitig &bdquo;tragen&ldquo; &ndash; als Wahrscheinlichkeitsverteilung. Das ist nicht neu: schon eine Monte-Carlo-Simulation tut das. Aber: klassische Wahrscheinlichkeiten k&ouml;nnen sich nur verd&uuml;nnen (wenn man mischt), nicht <em>gegenseitig ausl&ouml;schen</em>. Die einzige Operation ist: W&uuml;rfeln, bis der richtige Zustand zuf&auml;llig auftaucht. Bei \(2^n\) m&ouml;glichen Kandidaten dauert das exponentiell.</p>
+
+<p>Ein Quantencomputer kann etwas, was kein klassischer probabilistischer kann: er kann Amplituden <em>aktiv manipulieren</em>, sodass falsche Antworten sich <strong>destruktiv auslöschen</strong> und die richtige sich <strong>konstruktiv verst&auml;rkt</strong>. Vor der Messung. In wenigen globalen Operationen, die alle Amplituden auf einmal anfassen.</p>
+
+<p>Der Unterschied ist nicht &bdquo;mehr parallele Arbeit&ldquo;. Der Unterschied ist: <em>klassisch durchsucht, Quantum formt</em>. Der klassische Computer l&auml;uft den L&ouml;sungsraum ab. Der Quantencomputer verformt die Wahrscheinlichkeitslandschaft, bis nur noch die richtige L&ouml;sung Wahrscheinlichkeit hat.</p>
+
+<h3>Grover in drei Schritten: wie man eine L&ouml;sung verst&auml;rkt</h3>
+
+<p>Der sch&ouml;nste Algorithmus, um das zu sehen, ist <strong>Grovers Algorithmus</strong> &ndash; 1996 von Lov Grover erfunden. Er findet ein markiertes Element in einer unsortierten Datenbank der Gr&ouml;&szlig;e \(N\) in \(O(\sqrt{N})\) Schritten, klassisch braucht man \(O(N)\). Schauen wir den Mechanismus konkret an, mit \(N = 8\) m&ouml;glichen L&ouml;sungen &ndash; also drei Qubits.</p>
+
+<p><strong>Ausgangszustand.</strong> Drei Hadamards auf drei Qubits erzeugen die gleichm&auml;&szlig;ige Superposition: acht Basiszust&auml;nde \(|000\rangle, |001\rangle, \ldots, |111\rangle\), jeder mit derselben Amplitude \(\tfrac{1}{\sqrt{8}}\). Messung hier w&uuml;rde jeden Zustand mit Wahrscheinlichkeit \(\tfrac{1}{8}\) zur&uuml;ckgeben &ndash; genau wie klassisch w&uuml;rfeln.</p>
+
+<p><strong>Schritt 1: Das Orakel.</strong> Ein Orakel ist ein unit&auml;rer Schaltkreis, der erkennt, welcher Zustand die L&ouml;sung ist, und seine Amplitude um 180&deg; dreht &ndash; also das Vorzeichen flippt. Sagen wir, \(|101\rangle\) ist die L&ouml;sung: nach dem Orakel hat \(|101\rangle\) die Amplitude \(-\tfrac{1}{\sqrt{8}}\), alle anderen unver&auml;ndert \(+\tfrac{1}{\sqrt{8}}\). Eine Messung jetzt w&uuml;rde immer noch alle Zust&auml;nde gleich wahrscheinlich liefern (das Quadrat der Amplitude ist dasselbe!). Die Phasen-Information hat aber die Wahrscheinlichkeit <em>noch nicht</em> ver&auml;ndert &ndash; sie wartet im Hintergrund auf den n&auml;chsten Schritt.</p>
+
+<p><strong>Schritt 2: Die Diffusion.</strong> Der Diffusions-Operator ist ebenfalls ein unit&auml;res Gebilde aus Hadamards und Phasen-Flips. Er macht geometrisch genau eins: er <em>spiegelt alle Amplituden am Mittelwert</em>. Durchschnitt aller Amplituden vor der Spiegelung: \(\tfrac{7 \cdot (+1/\sqrt{8}) + 1 \cdot (-1/\sqrt{8})}{8} = \tfrac{6}{8\sqrt{8}}\). Nach der Spiegelung: die sieben falschen Zust&auml;nde verlieren H&ouml;he, der markierte gewinnt dramatisch. Das ist der Amplituden-Verst&auml;rkungs-Trick.</p>
+
+<figure>
+  <svg viewBox="0 0 720 220" width="100%" style="max-width:720px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
+    <!-- Baseline at y=160 (zero), positive up, negative down -->
+    <line x1="30" y1="160" x2="690" y2="160" stroke="#4b5563" stroke-width="1"/>
+    <!-- Four panels -->
+    <!-- Panel 1: Gleich (8 bars, all positive, equal) -->
+    <g>
+      <text x="90" y="25" fill="#94a3b8" font-size="12" text-anchor="middle">Nach 3&times;H</text>
+      <text x="90" y="200" fill="#6b7280" font-size="10" text-anchor="middle">alle gleich</text>
+      <!-- 8 bars at x=30..150 step 15 -->
+      <rect x="32" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="47" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="62" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="77" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="92" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="107" y="120" width="12" height="40" fill="#f59e0b"/>
+      <rect x="122" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="137" y="120" width="12" height="40" fill="#22d3ee"/>
+      <text x="113" y="115" fill="#f59e0b" font-size="9" text-anchor="middle">|101&rang;</text>
+    </g>
+    <!-- Panel 2: Nach Oracle (|101> flipped, now negative) -->
+    <g>
+      <text x="250" y="25" fill="#94a3b8" font-size="12" text-anchor="middle">Nach Orakel</text>
+      <text x="250" y="200" fill="#6b7280" font-size="10" text-anchor="middle">L&ouml;sung flippt Phase</text>
+      <rect x="192" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="207" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="222" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="237" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="252" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="267" y="160" width="12" height="40" fill="#f87171"/>
+      <rect x="282" y="120" width="12" height="40" fill="#22d3ee"/>
+      <rect x="297" y="120" width="12" height="40" fill="#22d3ee"/>
+    </g>
+    <!-- Panel 3: Nach Diffusion: mean was positive, flip around mean pushes |101> up, others down -->
+    <g>
+      <text x="410" y="25" fill="#94a3b8" font-size="12" text-anchor="middle">Nach Diffusion</text>
+      <text x="410" y="200" fill="#6b7280" font-size="10" text-anchor="middle">Reflexion am Mittelwert</text>
+      <!-- baseline mean dashed line -->
+      <line x1="352" y1="145" x2="470" y2="145" stroke="#6b7280" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="352" y="140" width="12" height="20" fill="#22d3ee"/>
+      <rect x="367" y="140" width="12" height="20" fill="#22d3ee"/>
+      <rect x="382" y="140" width="12" height="20" fill="#22d3ee"/>
+      <rect x="397" y="140" width="12" height="20" fill="#22d3ee"/>
+      <rect x="412" y="140" width="12" height="20" fill="#22d3ee"/>
+      <rect x="427" y="70" width="12" height="90" fill="#f59e0b"/>
+      <rect x="442" y="140" width="12" height="20" fill="#22d3ee"/>
+      <rect x="457" y="140" width="12" height="20" fill="#22d3ee"/>
+    </g>
+    <!-- Panel 4: Nach 2. Runde -->
+    <g>
+      <text x="575" y="25" fill="#94a3b8" font-size="12" text-anchor="middle">Nach 2. Runde</text>
+      <text x="575" y="200" fill="#6b7280" font-size="10" text-anchor="middle">&asymp; 95% L&ouml;sung</text>
+      <rect x="517" y="155" width="12" height="5" fill="#22d3ee"/>
+      <rect x="532" y="155" width="12" height="5" fill="#22d3ee"/>
+      <rect x="547" y="155" width="12" height="5" fill="#22d3ee"/>
+      <rect x="562" y="155" width="12" height="5" fill="#22d3ee"/>
+      <rect x="577" y="155" width="12" height="5" fill="#22d3ee"/>
+      <rect x="592" y="35" width="12" height="125" fill="#f59e0b"/>
+      <rect x="607" y="155" width="12" height="5" fill="#22d3ee"/>
+      <rect x="622" y="155" width="12" height="5" fill="#22d3ee"/>
+    </g>
+  </svg>
+  <figcaption>Grover auf drei Qubits. Jeder Balken ist die Amplitude eines der acht m&ouml;glichen Basiszust&auml;nde; orange markiert die L&ouml;sung. Nach dem Orakel ist ihr Vorzeichen umgedreht; nach der Diffusion ist sie dramatisch verst&auml;rkt. Zwei Runden reichen bei \(N=8\), um die L&ouml;sung mit rund 95&nbsp;% Wahrscheinlichkeit zu messen.</figcaption>
+</figure>
+
+<p><strong>Schritt 3: Wiederholen.</strong> Orakel + Diffusion bilden zusammen einen einzigen Grover-Schritt. Nach jedem Schritt wird die Amplitude der L&ouml;sung st&auml;rker, die der anderen schw&auml;cher. Das optimale Maximum ist erreicht nach ungef&auml;hr \(\tfrac{\pi}{4}\sqrt{N}\) Wiederholungen &ndash; f&uuml;r \(N = 8\) sind das etwa zwei Schritte. Dann misst man, und mit Wahrscheinlichkeit &gt; 94&nbsp;% kommt die richtige L&ouml;sung heraus.</p>
+
+<p>Klassisch br&auml;uchte man im Schnitt \(N/2 = 4\) Anfragen an das Orakel; Grover braucht 2. Der Gewinn wird mit wachsendem \(N\) gr&ouml;&szlig;er. Bei einer Datenbank mit einer Milliarde Eintr&auml;gen: klassisch ~500 Millionen Anfragen, Grover ~25&nbsp;000. Das ist quadratisch &ndash; weniger spektakul&auml;r als exponentiell, aber genug, um alles zu &auml;ndern, was mit unsortierter Suche zu tun hat. Und der <em>Mechanismus</em>, der dahintersteckt, ist genau der, den du gerade gesehen hast: Amplituden werden geformt.</p>
+
+<h3>Shor in einem Satz: Periodenfindung durch QFT</h3>
+
+<p>Shors Algorithmus (1994) nutzt dasselbe Prinzip f&uuml;r ein ganz anderes Problem. Die Idee ist: Faktorisierung einer Zahl \(N\) l&auml;sst sich auf das Finden der <em>Periode</em> der Zahlenfolge \(a, a^2, a^3, \ldots \pmod N\) zur&uuml;ckf&uuml;hren (ein zahlentheoretischer Satz, der klassisch l&auml;ngst bekannt ist). Periode zu finden ist klassisch aber nicht viel einfacher als Faktorisieren selbst.</p>
+
+<p>Quantenmechanisch: man bringt die Qubits in eine Superposition &uuml;ber alle \(x\), berechnet \(a^x \bmod N\) in einen zweiten Qubit-Block, und wendet dann die <strong>Quanten-Fourier-Transformation</strong> auf den ersten Block an. Die QFT verwandelt eine periodische Amplituden-Verteilung in eine scharf gespitzte &ndash; alle Amplituden, die nicht zur wahren Periode passen, l&ouml;schen sich destruktiv aus, die passenden verst&auml;rken sich konstruktiv. Eine einzige Messung liefert dann mit hoher Wahrscheinlichkeit einen Wert, aus dem sich die Periode klassisch rekonstruieren l&auml;sst.</p>
+
+<p>Auch hier: kein &bdquo;parallel durchprobieren&ldquo;. Die QFT ist wieder eine <em>Formungs-Operation</em> &ndash; sie komprimiert eine diffuse Wahrscheinlichkeitslandschaft in einen scharfen Peak bei der richtigen Antwort.</p>
+
+<h3>Der Satz in einem Satz</h3>
+
+<p class="text-center text-xl text-amber-300 font-semibold my-6"><em>Klassisch durchsucht. Quantum formt.</em></p>
+
+<p>Alle heute bekannten Quantenalgorithmen, die einen Vorteil &uuml;ber klassische Algorithmen haben &ndash; Shor, Grover, Simon, HHL, und die Quantensimulation &ndash; beruhen auf demselben Kern: sie nutzen die F&auml;higkeit der Quantenmechanik, Amplituden durch Interferenz zu formen. Nicht das &bdquo;gleichzeitige Rechnen&ldquo; ist der Trick, sondern das <em>selektive Ausl&ouml;schen und Verst&auml;rken</em>, bevor die Messung den Zustand endg&uuml;ltig festlegt.</p>
+
+<p>Das ist auch der Grund, warum manche Probleme von Quantencomputern <strong>nicht</strong> schneller gel&ouml;st werden k&ouml;nnen: wenn ein Problem keine Struktur hat, die sich durch Interferenz formen l&auml;sst, hilft Superposition nichts. Und genau das ist das Thema des n&auml;chsten Kapitels.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 7. WAS QUANTENCOMPUTER KÖNNEN -->
 <!-- ================================================================ -->
 <section id="was-geht" class="pb-16">
 <div class="prose-dark">
 
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 6</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
 <h2>Was Quantencomputer k&ouml;nnen &ndash; und was Schlagzeilen verschweigen</h2>
 
-<p>&bdquo;Quantencomputer sind millionenfach schneller als klassische.&ldquo; Diese Zeile liest man in Presseberichten st&auml;ndig. Sie stimmt nur f&uuml;r <strong>sehr spezifische Probleme</strong>. F&uuml;r Excel, ChatGPT oder Videoschnitt sind Quantencomputer nicht schneller, sondern langsamer, teurer und fehleranf&auml;lliger.</p>
+<p>&bdquo;Quantencomputer sind millionenfach schneller als klassische.&ldquo; Diese Zeile liest man in Presseberichten st&auml;ndig. Sie stimmt nur f&uuml;r <strong>sehr spezifische Probleme</strong> &ndash; n&auml;mlich diejenigen, deren Struktur sich durch Interferenz formen l&auml;sst, wie wir gerade im Kapitel 6 gesehen haben. F&uuml;r Excel, ChatGPT oder Videoschnitt sind Quantencomputer nicht schneller, sondern langsamer, teurer und fehleranf&auml;lliger.</p>
 
-<p>Aber es gibt eine Handvoll Probleme, bei denen sie fundamental &uuml;berlegen sind. Die wichtigsten drei:</p>
+<p>Aber es gibt eine Handvoll Probleme, bei denen sie fundamental &uuml;berlegen sind. Die wichtigsten drei &ndash; jeweils mit dem Interferenz-Mechanismus, der dahintersteckt:</p>
 
 <h3>1. Shor (1994): Faktorisierung gro&szlig;er Zahlen</h3>
 
-<p>Peter Shor zeigte 1994: ein Quantencomputer kann eine Zahl \(N\) in ihre Primfaktoren zerlegen in \(O((\log N)^3)\) Schritten. Der beste klassische Algorithmus (General Number Field Sieve) braucht \(e^{O((\log N)^{1/3})}\) &ndash; sub-exponentiell, aber immer noch viel langsamer.</p>
+<p>Peter Shor zeigte 1994: ein Quantencomputer kann eine Zahl \(N\) in ihre Primfaktoren zerlegen in \(O((\log N)^3)\) Schritten. Der beste klassische Algorithmus (General Number Field Sieve) braucht \(e^{O((\log N)^{1/3})}\) &ndash; sub-exponentiell, aber immer noch viel langsamer. <em>Mechanismus (siehe Kapitel 6):</em> Faktorisierung wird auf Periodenfindung reduziert, die Quanten-Fourier-Transformation komprimiert dann die periodische Amplituden-Landschaft durch konstruktive Interferenz zu einem scharfen Peak bei der wahren Periode. Eine einzige Messung liefert die Antwort.</p>
 
 <p>Konkret: eine 2048-Bit-RSA-Zahl zu faktorisieren dauert klassisch Milliarden von Jahren. Ein fehlerkorrigierter Quantencomputer mit ein paar Millionen physischen Qubits k&ouml;nnte es in Stunden.</p>
 
@@ -494,7 +620,7 @@
 
 <h3>2. Grover (1996): Suchen in unsortierten Datenbanken</h3>
 
-<p>Grovers Algorithmus findet einen Eintrag in einer unsortierten Datenbank mit \(N\) Eintr&auml;gen in \(O(\sqrt{N})\) Schritten. Klassisch: \(O(N)\). Das ist <em>nicht</em> exponentiell schneller &ndash; nur quadratisch. Aber breit anwendbar.</p>
+<p>Grovers Algorithmus findet einen Eintrag in einer unsortierten Datenbank mit \(N\) Eintr&auml;gen in \(O(\sqrt{N})\) Schritten. Klassisch: \(O(N)\). Das ist <em>nicht</em> exponentiell schneller &ndash; nur quadratisch. Aber breit anwendbar. <em>Mechanismus (siehe Kapitel 6):</em> genau die Amplituden-Verst&auml;rkung, die wir gerade gesehen haben. Orakel flippt die Phase des gesuchten Zustands, Diffusion spiegelt am Mittelwert, Wiederholung f&uuml;r \(\tfrac{\pi}{4}\sqrt{N}\) Runden.</p>
 
 <p>Bei Datenbanken mit einer Milliarde Eintr&auml;gen: klassisch eine Milliarde Operationen, Grover ungef&auml;hr 31&nbsp;623. Das ist signifikant. F&uuml;r kombinatorische Suche, Constraint-Satisfaction, bestimmte ML-Probleme.</p>
 
@@ -504,7 +630,7 @@
 
 <p>Hier ist der Killer-Use-Case. Die Schr&ouml;dinger-Gleichung f&uuml;r ein Molek&uuml;l mit \(n\) Elektronen lebt in einem Zustandsraum der Dimension \(2^n\). Klassische Simulation skaliert schlecht &ndash; pr&auml;zise Ab-initio-Rechnungen sind f&uuml;r gr&ouml;&szlig;ere Molek&uuml;le nicht m&ouml;glich.</p>
 
-<p>Ein Quantencomputer ist selbst ein Quantensystem. Er kann ein Molek&uuml;l-Hamiltonian direkt in Qubits kodieren und dann die Zeitentwicklung simulieren. Das war Richard Feynmans urspr&uuml;ngliche Idee von 1982: <em>&bdquo;Die Natur ist nicht klassisch, verdammt nochmal. Und wenn du eine Simulation der Natur machen willst, solltest du sie quantenmechanisch machen.&ldquo;</em></p>
+<p>Ein Quantencomputer ist selbst ein Quantensystem. Er kann ein Molek&uuml;l-Hamiltonian direkt in Qubits kodieren und dann die Zeitentwicklung simulieren. Das war Richard Feynmans urspr&uuml;ngliche Idee von 1982: <em>&bdquo;Die Natur ist nicht klassisch, verdammt nochmal. Und wenn du eine Simulation der Natur machen willst, solltest du sie quantenmechanisch machen.&ldquo;</em> <em>Mechanismus:</em> das Qubit-Register <em>ist</em> bereits ein Quantensystem mit \(2^n\) Amplituden &ndash; man simuliert das Molek&uuml;l nicht mit klassischem Overhead, sondern spielt seine Dynamik direkt auf der eigenen Hardware nach. Interferenz ist hier keine Zutat, sondern das Medium der Simulation selbst.</p>
 
 <p>Anwendungen: neue Medikamente, Katalysatoren f&uuml;r gr&uuml;nen Wasserstoff, Hochtemperatur-Supraleiter, bessere Batterien. Hier erwarten Experten den ersten <em>echten</em> &ouml;konomischen Quantenvorteil &ndash; wahrscheinlich in den 2030ern.</p>
 
@@ -526,7 +652,7 @@
 <section id="was-nicht" class="pb-16">
 <div class="prose-dark">
 
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 8</p>
 <h2>Was sie (noch) nicht k&ouml;nnen: der ehrliche Zwischenstand 2026</h2>
 
 <p>Wenn du ein Stein-Papier-Schere-Spiel mit einem Quantencomputer-Enthusiasten spielen willst, dann schlag Schere mit: &bdquo;Ja, aber wie viele <em>logische</em> Qubits hat er?&ldquo; Dieses einzelne Wort entlarvt den gr&ouml;&szlig;ten Graben zwischen Hype und Realit&auml;t.</p>
@@ -581,7 +707,7 @@
 <section id="qiskit" class="pb-16">
 <div class="prose-dark">
 
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 8</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 9</p>
 <h2>Quantencomputer programmieren mit Qiskit</h2>
 
 <p>Das Beste kommt zum Schluss: du kannst das alles <strong>jetzt</strong> ausprobieren. IBM stellt &uuml;ber <a href="https://quantum.cloud.ibm.com/" class="text-cyan-400 hover:text-cyan-300 underline" rel="noopener" target="_blank">quantum.cloud.ibm.com</a> echte Quantenhardware im Free Tier zur Verf&uuml;gung: 10 Minuten QPU-Zeit pro Monat auf Rechnern mit 100+ Qubits. Kostenlos, nach Anmeldung.</p>
@@ -650,7 +776,7 @@ print(job.result()[0].data.meas.get_counts())</code></pre>
 <section id="qml" class="pb-16">
 <div class="prose-dark">
 
-<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 9</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 10</p>
 <h2>Quanten-ML: Hype oder Zukunft?</h2>
 
 <p>Wenn KI das Mega-Thema ist und Quantencomputer die Exotik, dann ist <em>Quantum Machine Learning</em> das perfekte Buzzword-Sandwich. Es hat seit 2018 ganze Konferenzr&auml;ume gef&uuml;llt. Was ist davon Substanz, was ist Powerpoint?</p>
