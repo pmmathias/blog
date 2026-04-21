@@ -50,7 +50,7 @@
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-04-14",
-    "dateModified": "2026-04-14",
+    "dateModified": "2026-04-21",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/tommy-practice.html" },
     "inLanguage": "en",
     "isAccessibleForFree": true,
@@ -58,6 +58,39 @@
     "articleSection": "Music",
     "wordCount": 1500,
     "timeRequired": "PT8M"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the BPM of Tommy the Cat by Primus?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tommy the Cat by Primus runs at 210 BPM. This applies to the album version on \"Sailing the Seas of Cheese\" (1991) as well as most live versions by Les Claypool."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can a beginner play Tommy the Cat on bass?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The original bassline with slapping, popped hammer-ons, and flamenco strokes is advanced. A simplified version, however, can be learned at 210 BPM \u2013 starting slowly around 80 BPM and using a practice app that ramps up the tempo in small steps."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is WSOLA and why use it for practice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "WSOLA (Waveform Similarity Overlap-Add) is an algorithm that changes audio tempo without shifting the pitch. For practice, this lets you pull a song down to, say, 80 BPM and gradually up to 210 BPM without the bass suddenly dropping an octave."
+        }
+      }
+    ]
   }
   </script>
 
@@ -140,6 +173,12 @@
             title="Tommy the Cat &mdash; Simplified Bass @ 210 BPM"></iframe>
   </div>
 </div>
+
+<!-- QUICK ANSWER BOX -->
+<aside class="max-w-3xl mx-auto mb-12" style="border:1px solid rgba(34,211,238,0.25); background:rgba(34,211,238,0.06); border-radius:0.75rem; padding:1.25rem 1.5rem;">
+  <p style="margin:0 0 0.5rem 0; font-size:0.75rem; color:#22d3ee; font-weight:600; text-transform:uppercase; letter-spacing:0.1em;">Quick Answer</p>
+  <p style="margin:0; color:#e5e7eb; line-height:1.7;"><strong style="color:#f1f5f9;">Tommy the Cat by Primus is 210 BPM.</strong> Les Claypool&rsquo;s original bassline &mdash; a tangle of slaps, flamenco strokes, and hammer-ons &mdash; runs at exactly 210 beats per minute on the album. This post shows a simplified bass version playable at original tempo (210 BPM) and explains the tech behind it: a practice web app using WSOLA time-stretching, plus two separate camera takes synced frame-accurately via Python FFT.</p>
+</aside>
 
 <!-- ================================================================ -->
 <!-- 1. THE RIFF -->

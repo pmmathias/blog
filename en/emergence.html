@@ -65,14 +65,55 @@
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-03-18",
-    "dateModified": "2026-04-13",
+    "dateModified": "2026-04-21",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/emergence.html" },
     "inLanguage": "en",
     "isAccessibleForFree": true,
-    "keywords": ["Emergence", "Language Models", "LLM", "Phase Transition", "Grokking", "Mechanistic Interpretability", "Ising Model"],
+    "keywords": ["Emergent Abilities", "Emergence", "Language Models", "LLM", "Phase Transition", "Grokking", "Mechanistic Interpretability", "Ising Model"],
     "articleSection": "Artificial Intelligence",
     "wordCount": 10000,
     "timeRequired": "PT35M"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are emergent abilities in large language models?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Emergent abilities are capabilities of large language models that are not measurable in small models and appear sharply above a certain parameter threshold \u2013 for example multi-step arithmetic, code generation, or logical reasoning. The term was coined in 2022 by Wei et al. (Google)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are emergent abilities real or just a measurement artifact?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Both. Schaeffer et al. (2023, Stanford) showed that many apparent emergent jumps disappear when you switch from discrete metrics (exact match) to continuous ones (token likelihood). Other phenomena \u2013 grokking, in-context learning \u2013 remain genuinely sharp. The research is still open as of 2026."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is grokking in AI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Grokking is a phenomenon where a neural network first memorizes the training data, appears to stagnate, and then suddenly understands the underlying rule. The transition is abrupt, reminiscent of a phase transition in physics."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a phase transition in AI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A phase transition is a sudden qualitative change \u2013 like water turning to ice. In AI, it describes the moment when a system, through more parameters or more training, suddenly acquires new capabilities."
+        }
+      }
+    ]
   }
   </script>
 
@@ -262,10 +303,10 @@
 <header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog Post &middot; Artificial Intelligence</p>
   <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
-    Emergence in Large Language Models
+    Emergent Abilities in Large Language Models &ndash; Real or Measurement Artifact?
   </h1>
   <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
-    At what size does a language model begin to &ldquo;understand&rdquo;? On phase transitions, suddenly appearing abilities, and the parallel to emergence phenomena in physics. Eight chapters, eight interactive visualizations.
+    At what model size does a language model suddenly start solving tasks it couldn&rsquo;t solve before? <strong class="text-gray-300">Emergent abilities</strong> are capabilities of large language models that are undetectable in small models and appear sharply above a parameter threshold. Whether this is a genuine phase transition or an artifact of the metric (Schaeffer et al., 2023) is one of the most interesting open questions in AI research. Eight chapters, eight interactive visualizations.
   </p>
   <div class="flex items-center gap-3 text-xs text-gray-500">
     <span>KI-Mathias</span>
