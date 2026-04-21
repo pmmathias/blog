@@ -696,7 +696,30 @@ Bestes Paar: <code style="font-size:0.72rem;">&bdquo;kontext jedes mal wenn du e
   <li>L&ouml;se per Block Preconditioned Conjugate Gradient (PCG), der nur Matrix-Vektor-Produkte braucht &ndash; GPU-ideal.</li>
 </ul>
 
-<p>Auf dem vollst&auml;ndigen Kalle-Korpus konvergiert Block-PCG in <strong>14 Iterationen</strong> zu einer Gewichts-Matrix, die numerisch nicht vom Direct-Solve zu unterscheiden ist (relative Frobenius-Fehler $< 10^{-6}$). Auf CPU bei $D = 6144$ bleibt der Direct-Solve in Wall-Clock-Zeit schneller &ndash; NumPys LAPACK ist au&szlig;erordentlich gut getunt &ndash; aber der PCG-Pfad er&ouml;ffnet den Skalierungsbereich, dem der Direct-Solve nicht folgen kann. Vollst&auml;ndige Herleitung und Benchmarks im <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Version-2-Paper auf Zenodo</a>. Die zugrundeliegende Einsicht &ndash; dass das Stochastisieren der Iterationsmatrix ein Performance-Trick und nicht nur Eleganz ist &ndash; wird im begleitenden Abschnitt im <a href="eigenwerte.html" style="color:#22d3ee;">Eigenwerte &amp; KI</a>-Beitrag ausgearbeitet.</p>
+<p>Auf dem vollst&auml;ndigen Kalle-Korpus (\(D = 6144\), \(V = 2977\)) konvergiert Block-PCG in <strong>14 Iterationen</strong> (mit Jacobi-Preconditioner) zu einer Gewichtsmatrix, die numerisch nicht vom Direct-Solve zu unterscheiden ist (relative Frobenius-Abweichung \(< 10^{-6}\)). Die &uuml;berraschende Erkenntnis aus Tabelle 4 des v2-Papers:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Solver</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Zeit</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Iter.</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Rel. Err vs. Direct</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Direct (NumPy/LAPACK, Float64)</td><td style="text-align:right;">2097 ms</td><td style="text-align:right;">1</td><td style="text-align:right;">Referenz</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Block-PCG (NumPy, Float64)</td><td style="text-align:right;">6731 ms</td><td style="text-align:right;">14</td><td style="text-align:right;">\(4{,}3 \times 10^{-7}\)</td></tr>
+    <tr style="color:#34d399;"><td style="padding:0.3rem 0.6rem;">Block-PCG (PyTorch CPU, Float32)</td><td style="text-align:right;"><strong>1704 ms</strong></td><td style="text-align:right;">11</td><td style="text-align:right;">\(1{,}0 \times 10^{-5}\)</td></tr>
+    <tr style="color:#34d399;"><td style="padding:0.3rem 0.6rem;">Block-PCG (PyTorch MPS / Apple GPU)</td><td style="text-align:right;"><strong>1622 ms</strong></td><td style="text-align:right;">11</td><td style="text-align:right;">\(1{,}0 \times 10^{-5}\)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Die intuitive Erwartung &ndash; &bdquo;Krylov-Methoden lohnen sich erst bei sehr gro&szlig;em \(D\), direkte Gau&szlig;-Elimination ist bis dahin schneller&ldquo; &ndash; stellt sich als falsch heraus. Mit einem modernen BLAS-Backend (PyTorch statt NumPy, beides CPU) ist Block-PCG schon bei \(D = 6144\) <strong>rund 4&times; schneller</strong> als der Direct-Solve. Das ist vor allem ein Backend-Effekt: NumPys LAPACK-Anbindung ist auf Float64-Korrektheit optimiert, PyTorch darauf, den Hauptspeicher auszunutzen. Der Sprung auf die Apple-GPU (MPS) bringt zus&auml;tzlich nur 5&nbsp;% &ndash; weil bei dieser Matrixgr&ouml;&szlig;e die Host-zu-Device-Transfer-Latenz die Compute-Ersparnis fast vollst&auml;ndig aufzehrt. Die GPU wird erst ab \(D \geq 20\,000\) dominant, dort ist der Direct-Solve ohnehin nicht mehr praktikabel (\(O(D^3)\) Compute, \(O(D^2)\) Memory).</p>
+
+<p><em>Die ehrliche Zwischenbilanz im Paper:</em> auf Kalles aktueller Gr&ouml;&szlig;e ist der Solve nur 2&ndash;7&nbsp;% der End-to-End-Trainingszeit &ndash; der Rest sind das Streaming des Feature-Produkts \(Z^\top Z\) und die HTML-Verpackung. Block-PCGs Wert an diesem Punkt ist nicht Zeitersparnis, sondern das &Ouml;ffnen eines GPU-Skalierungspfads f&uuml;r die Zukunft. Der Korpus-Skalierungstest zeigt: auch wenn man \(N\) um den Faktor 7 erh&ouml;ht (\(0{,}3\,\mathrm{M} \to 2{,}3\,\mathrm{M}\) Samples), bleibt der Solve-Anteil konstant bei 3&ndash;5&nbsp;%. Der eigentliche Scaling-Hebel ist \(D\) (RFF-Dimension), nicht \(N\) (Sample-Anzahl) &ndash; und genau dort greift Block-PCG.</p>
+
+<p>Vollst&auml;ndige Herleitung, Preconditioner-Analyse und Benchmark-Reproduktion im <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Version-2-Paper auf Zenodo</a> (PDF, 10 Seiten). Die zugrundeliegende Einsicht &ndash; dass das Stochastisieren der Iterationsmatrix ein Performance-Trick und nicht nur konzeptuelle Eleganz ist &ndash; wird im begleitenden Abschnitt im <a href="eigenwerte.html#vereinigung" style="color:#22d3ee;">Eigenwerte &amp; KI</a>-Beitrag ausgearbeitet.</p>
 
 <p><strong>Bilingual ohne Language-Detection:</strong> Frag auf Deutsch oder Englisch &ndash; Kalle antwortet in der gleichen Sprache. Der Grund ist elegant: englische und deutsche W&ouml;rter sind verschiedene Tokens mit verschiedenen IDF-Gewichten. &bdquo;eigenvalue&ldquo; (englisch, hohe IDF) matcht englische Paare; &bdquo;eigenwert&ldquo; (deutsch, hohe IDF) matcht deutsche. Kein Spracherkennungs-Code n&ouml;tig &ndash; die Mathematik des Matchings routet automatisch.</p>
 
