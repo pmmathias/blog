@@ -42,8 +42,8 @@
   <meta name="citation_abstract" content="A transparent language model based on Kernel Ridge Regression with Random Fourier Features. Every prediction is fully traceable through eigenvalue decomposition.">
   <meta name="citation_keywords" content="kernel ridge regression, random Fourier features, eigenvalues, interpretable AI, transparent language models">
   <meta name="citation_publisher" content="KI-Mathias">
-  <meta name="citation_doi" content="10.5281/zenodo.19595642">
-  <meta name="citation_pdf_url" content="https://zenodo.org/records/19595642/files/kalle-paper.pdf">
+  <meta name="citation_doi" content="10.5281/zenodo.19610333">
+  <meta name="citation_pdf_url" content="https://zenodo.org/records/19610333/files/leonhardt2026_kalle_krr_chat.pdf">
 
   <link rel="stylesheet" href="/vendor/tailwind.css">
   <link rel="stylesheet" href="/vendor/katex/katex.min.css">
@@ -527,7 +527,7 @@
 &bull; <strong>No intermediate storage</strong>: in Neumann, the partial sum $\sum_{k=0}^{N-1} T^k\mathbf{b}$ must be kept separate from the next term $T^N\mathbf{b}$. In power iteration, only the current vector exists. On a billion-page web graph, this matters.<br>
 &bull; <strong>Convergence via spectral gap</strong>: power iteration's convergence rate is directly $|\lambda_2(P)|^k$. Google's damping factor $d$ is engineered exactly to <em>guarantee</em> a usable gap: $|\lambda_2(G)| \leq d = 0.85$. It is not a detail &ndash; it is <em>the</em> numerical stabilizer.</p>
 
-<p>This insight carries over to Kernel Ridge Regression: the ridge parameter \(\lambda\) plays the role of the damping factor \(d\). Both stabilize the iteration by creating a spectral gap. The algorithmic consequence &ndash; that you can solve \((K + \lambda I)\boldsymbol{\alpha} = \mathbf{y}\) via GPU-friendly matrix-vector iteration instead of an \(O(D^3)\) direct solve &ndash; is the subject of <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Kalle v2</a>, where we formally derive the absorber construction for KRR and benchmark direct solve against Block Preconditioned Conjugate Gradient (Block-PCG).</p>
+<p>This insight carries over to Kernel Ridge Regression: the ridge parameter \(\lambda\) plays the role of the damping factor \(d\). Both stabilize the iteration by creating a spectral gap. The algorithmic consequence &ndash; that you can solve \((K + \lambda I)\boldsymbol{\alpha} = \mathbf{y}\) via GPU-friendly matrix-vector iteration instead of an \(O(D^3)\) direct solve &ndash; is the subject of <a href="https://doi.org/10.5281/zenodo.19595641" style="color:#22d3ee;">Kalle v2</a>, where we formally derive the absorber construction for KRR and benchmark direct solve against Block Preconditioned Conjugate Gradient (Block-PCG).</p>
 
 <p><strong>The surprising finding from the benchmarks.</strong> On Kalle&apos;s real training matrix (\(D = 6144\), \(V = 2977\)), Table 4 of the paper reports:</p>
 

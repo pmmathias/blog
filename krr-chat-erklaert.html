@@ -42,8 +42,8 @@
   <meta name="citation_keywords" content="Kernel Ridge Regression; Random Fourier Features; Sprachmodell; Eigenwerte; Retrieval-Augmented Generation; Browser-basiertes ML">
   <meta name="citation_abstract" content="Wir pr&auml;sentieren Kalle, einen vollst&auml;ndig clientseitigen bilingualen Chatbot, der Next-Word-Prediction und Retrieval-Augmented Generation mit Kernel Ridge Regression und Random Fourier Features durchf&uuml;hrt &mdash; ohne neuronale Netze, Backpropagation oder Gradientenabstieg. Das System macht die mathematischen Grundlagen moderner Sprachmodelle transparent: Eigenwerte, Kernelfunktionen, die Neumannreihe und Regularisierung als Spektralfilter werden in einem interaktiven System sichtbar, das vollst&auml;ndig im Browser via WebGL GPU l&auml;uft.">
   <meta name="citation_publisher" content="KI-Mathias">
-  <meta name="citation_doi" content="10.5281/zenodo.19595642">
-  <meta name="citation_pdf_url" content="https://zenodo.org/records/19595642/files/leonhardt2026_kalle_krr_chat.pdf">
+  <meta name="citation_doi" content="10.5281/zenodo.19610333">
+  <meta name="citation_pdf_url" content="https://zenodo.org/records/19610333/files/leonhardt2026_kalle_krr_chat.pdf">
 
   <link rel="stylesheet" href="vendor/tailwind.css">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
@@ -719,7 +719,7 @@ Bestes Paar: <code style="font-size:0.72rem;">&bdquo;kontext jedes mal wenn du e
 
 <p><em>Die ehrliche Zwischenbilanz im Paper:</em> auf Kalles aktueller Gr&ouml;&szlig;e ist der Solve nur 2&ndash;7&nbsp;% der End-to-End-Trainingszeit &ndash; der Rest sind das Streaming des Feature-Produkts \(Z^\top Z\) und die HTML-Verpackung. Block-PCGs Wert an diesem Punkt ist nicht Zeitersparnis, sondern das &Ouml;ffnen eines GPU-Skalierungspfads f&uuml;r die Zukunft. Der Korpus-Skalierungstest zeigt: auch wenn man \(N\) um den Faktor 7 erh&ouml;ht (\(0{,}3\,\mathrm{M} \to 2{,}3\,\mathrm{M}\) Samples), bleibt der Solve-Anteil konstant bei 3&ndash;5&nbsp;%. Der eigentliche Scaling-Hebel ist \(D\) (RFF-Dimension), nicht \(N\) (Sample-Anzahl) &ndash; und genau dort greift Block-PCG.</p>
 
-<p>Vollst&auml;ndige Herleitung, Preconditioner-Analyse und Benchmark-Reproduktion im <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Version-2-Paper auf Zenodo</a> (PDF, 10 Seiten). Die zugrundeliegende Einsicht &ndash; dass das Stochastisieren der Iterationsmatrix ein Performance-Trick und nicht nur konzeptuelle Eleganz ist &ndash; wird im begleitenden Abschnitt im <a href="eigenwerte.html#vereinigung" style="color:#22d3ee;">Eigenwerte &amp; KI</a>-Beitrag ausgearbeitet.</p>
+<p>Vollst&auml;ndige Herleitung, Preconditioner-Analyse und Benchmark-Reproduktion im <a href="https://doi.org/10.5281/zenodo.19595641" style="color:#22d3ee;">Version-2-Paper auf Zenodo</a> (PDF, 10 Seiten). Die zugrundeliegende Einsicht &ndash; dass das Stochastisieren der Iterationsmatrix ein Performance-Trick und nicht nur konzeptuelle Eleganz ist &ndash; wird im begleitenden Abschnitt im <a href="eigenwerte.html#vereinigung" style="color:#22d3ee;">Eigenwerte &amp; KI</a>-Beitrag ausgearbeitet.</p>
 
 <p><strong>Bilingual ohne Language-Detection:</strong> Frag auf Deutsch oder Englisch &ndash; Kalle antwortet in der gleichen Sprache. Der Grund ist elegant: englische und deutsche W&ouml;rter sind verschiedene Tokens mit verschiedenen IDF-Gewichten. &bdquo;eigenvalue&ldquo; (englisch, hohe IDF) matcht englische Paare; &bdquo;eigenwert&ldquo; (deutsch, hohe IDF) matcht deutsche. Kein Spracherkennungs-Code n&ouml;tig &ndash; die Mathematik des Matchings routet automatisch.</p>
 
@@ -732,7 +732,7 @@ Bestes Paar: <code style="font-size:0.72rem;">&bdquo;kontext jedes mal wenn du e
   </p>
   <p style="margin-top:.5rem;font-size:.8rem;color:#64748b;">
     Quellcode: <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;text-decoration:underline;">GitHub</a> &middot;
-    Paper: <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;text-decoration:underline;">PDF (Zenodo)</a> &middot;
+    Paper: <a href="https://doi.org/10.5281/zenodo.19595641" style="color:#22d3ee;text-decoration:underline;">PDF (Zenodo)</a> &middot;
     Hauptbeitrag: <a href="eigenwerte.html" style="color:#22d3ee;text-decoration:underline;">Eigenwerte &amp; KI</a>
   </p>
 </div>

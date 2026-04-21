@@ -42,8 +42,8 @@
   <meta name="citation_abstract" content="Ein transparentes Sprachmodell auf Basis von Kernel Ridge Regression mit Random Fourier Features. Jede Vorhersage ist über die Eigenwertzerlegung vollständig nachvollziehbar.">
   <meta name="citation_keywords" content="Kernel Ridge Regression, Random Fourier Features, Eigenwerte, interpretierbare KI, transparente Sprachmodelle">
   <meta name="citation_publisher" content="KI-Mathias">
-  <meta name="citation_doi" content="10.5281/zenodo.19595642">
-  <meta name="citation_pdf_url" content="https://zenodo.org/records/19595642/files/kalle-paper.pdf">
+  <meta name="citation_doi" content="10.5281/zenodo.19610333">
+  <meta name="citation_pdf_url" content="https://zenodo.org/records/19610333/files/leonhardt2026_kalle_krr_chat.pdf">
 
   <link rel="stylesheet" href="vendor/tailwind.css">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
@@ -628,7 +628,7 @@
 &bull; <strong>Kein Zwischenspeicher</strong>: Bei Neumann muss die Partialsumme $\sum_{k=0}^{N-1} T^k\mathbf{b}$ separat vom n&auml;chsten Term $T^N\mathbf{b}$ gehalten werden. Bei Power-Iteration existiert nur der aktuelle Vektor. Bei einem Web-Graphen mit einer Milliarde Seiten macht das den Unterschied.<br>
 &bull; <strong>Konvergenz &uuml;ber Spectral Gap</strong>: Die Konvergenzrate der Power-Iteration ist direkt $|\lambda_2(P)|^k$. Googles Damping-Faktor $d$ ist genau so konstruiert, dass eine nutzbare Spektrall&uuml;cke <em>garantiert</em> wird: $|\lambda_2(G)| \leq d = 0{,}85$. Das ist kein Detail &ndash; es ist <em>der</em> numerische Stabilisator.</p>
 
-<p>Diese Einsicht &uuml;bertr&auml;gt sich auf Kernel Ridge Regression: der Ridge-Parameter \(\lambda\) &uuml;bernimmt die Rolle des Damping-Faktors \(d\). Beide stabilisieren die Iteration, indem sie eine Spektrall&uuml;cke erzeugen. Die algorithmische Konsequenz &ndash; dass man \((K + \lambda I)\boldsymbol{\alpha} = \mathbf{y}\) &uuml;ber GPU-freundliche Matrix-Vektor-Iteration l&ouml;sen kann statt &uuml;ber einen \(O(D^3)\)-Direct-Solve &ndash; ist Gegenstand von <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Kalle v2</a>, in dem wir die Absorber-Konstruktion formal f&uuml;r KRR herleiten und Direct Solve gegen Block Preconditioned Conjugate Gradient (Block-PCG) benchmarken.</p>
+<p>Diese Einsicht &uuml;bertr&auml;gt sich auf Kernel Ridge Regression: der Ridge-Parameter \(\lambda\) &uuml;bernimmt die Rolle des Damping-Faktors \(d\). Beide stabilisieren die Iteration, indem sie eine Spektrall&uuml;cke erzeugen. Die algorithmische Konsequenz &ndash; dass man \((K + \lambda I)\boldsymbol{\alpha} = \mathbf{y}\) &uuml;ber GPU-freundliche Matrix-Vektor-Iteration l&ouml;sen kann statt &uuml;ber einen \(O(D^3)\)-Direct-Solve &ndash; ist Gegenstand von <a href="https://doi.org/10.5281/zenodo.19595641" style="color:#22d3ee;">Kalle v2</a>, in dem wir die Absorber-Konstruktion formal f&uuml;r KRR herleiten und Direct Solve gegen Block Preconditioned Conjugate Gradient (Block-PCG) benchmarken.</p>
 
 <p><strong>Die &uuml;berraschende Einsicht aus den Benchmarks.</strong> F&uuml;r Kalle's reale Trainingsmatrix (\(D = 6144\), \(V = 2977\)) zeigt Tabelle 4 des Papers:</p>
 
