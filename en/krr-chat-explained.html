@@ -42,8 +42,8 @@
   <meta name="citation_keywords" content="kernel ridge regression; random fourier features; language model; eigenvalues; retrieval-augmented generation; browser-based ML">
   <meta name="citation_abstract" content="We present Kalle, a fully client-side bilingual chatbot that performs next-word prediction and retrieval-augmented generation using Kernel Ridge Regression with Random Fourier Features — without neural networks, backpropagation, or gradient descent. The system makes the mathematical foundations of modern language models transparent: eigenvalues, kernel functions, the Neumann series, and regularization as spectral filtering are exposed in an interactive, inspectable system running entirely in the browser via WebGL GPU.">
   <meta name="citation_publisher" content="KI-Mathias">
-  <meta name="citation_doi" content="10.5281/zenodo.19595642">
-  <meta name="citation_pdf_url" content="https://zenodo.org/records/19595642/files/leonhardt2026_kalle_krr_chat.pdf">
+  <meta name="citation_doi" content="10.5281/zenodo.19610333">
+  <meta name="citation_pdf_url" content="https://zenodo.org/records/19610333/files/leonhardt2026_kalle_krr_chat.pdf">
 
   <link rel="stylesheet" href="/vendor/tailwind.css">
   <link rel="stylesheet" href="/vendor/katex/katex.min.css">
@@ -717,7 +717,7 @@ Best pair: <code style="font-size:0.72rem;">&ldquo;context every time you start 
 
 <p><em>The honest intermediate conclusion in the paper:</em> at Kalle&apos;s current scale the solve accounts for only 2&ndash;7&nbsp;% of the end-to-end training time &ndash; the rest is streaming the feature product \(Z^\top Z\) and HTML packaging. Block-PCG&apos;s value here is not time savings but opening a GPU scaling path for the future. The corpus-scaling experiment shows: even scaling \(N\) by \(7\times\) (\(0.3\mathrm{M} \to 2.3\mathrm{M}\) samples), the solve share stays a steady 3&ndash;5&nbsp;%. The real scaling lever is \(D\) (RFF dimension), not \(N\) (sample count) &ndash; and that is exactly where Block-PCG becomes essential.</p>
 
-<p>Full derivation, preconditioner analysis and benchmark reproduction in the <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Version 2 paper on Zenodo</a> (PDF, 10 pages). The underlying insight &ndash; that stochasticizing the iteration matrix is a performance trick, not just an elegance &ndash; is the subject of the companion section in the <a href="/en/eigenvalues.html#unification" style="color:#22d3ee;">Eigenvalues &amp; AI</a> post.</p>
+<p>Full derivation, preconditioner analysis and benchmark reproduction in the <a href="https://doi.org/10.5281/zenodo.19595641" style="color:#22d3ee;">Version 2 paper on Zenodo</a> (PDF, 10 pages). The underlying insight &ndash; that stochasticizing the iteration matrix is a performance trick, not just an elegance &ndash; is the subject of the companion section in the <a href="/en/eigenvalues.html#unification" style="color:#22d3ee;">Eigenvalues &amp; AI</a> post.</p>
 
 <p><strong>Bilingual without language detection:</strong> Ask in German or English &ndash; Kalle responds in the same language. The reason is elegant: English and German words are different tokens with different IDF weights. &ldquo;eigenvalue&rdquo; (English, high IDF) matches English pairs; &ldquo;Eigenwert&rdquo; (German, high IDF) matches German ones. No language detection code needed &ndash; the mathematics of matching routes automatically.</p>
 
@@ -728,7 +728,7 @@ Best pair: <code style="font-size:0.72rem;">&ldquo;context every time you start 
   <p style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;">
     <a href="https://pmmathias.github.io/krr-chat/" style="display:inline-block;padding:0.4rem 1rem;background:#22d3ee15;border:1px solid #22d3ee30;border-radius:0.5rem;color:#22d3ee;font-size:0.85rem;font-weight:600;text-decoration:none;">&#x03BB; Kalle (RAG Chat, DE+EN) &rarr;</a>
   </p>
-  <p style="margin-top:.5rem;font-size:.8rem;color:#64748b;">Source: <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;text-decoration:underline;">GitHub</a> &middot; Paper: <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;text-decoration:underline;">PDF (Zenodo)</a> &middot; Main post: <a href="/en/eigenvalues.html" style="color:#22d3ee;text-decoration:underline;">Eigenvalues &amp; AI</a></p>
+  <p style="margin-top:.5rem;font-size:.8rem;color:#64748b;">Source: <a href="https://github.com/pmmathias/krr-chat" style="color:#22d3ee;text-decoration:underline;">GitHub</a> &middot; Paper: <a href="https://doi.org/10.5281/zenodo.19595641" style="color:#22d3ee;text-decoration:underline;">PDF (Zenodo)</a> &middot; Main post: <a href="/en/eigenvalues.html" style="color:#22d3ee;text-decoration:underline;">Eigenvalues &amp; AI</a></p>
 </div>
 
 </div>
