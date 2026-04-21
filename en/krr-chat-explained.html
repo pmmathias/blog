@@ -694,7 +694,30 @@ Best pair: <code style="font-size:0.72rem;">&ldquo;context every time you start 
   <li>Solve via Block Preconditioned Conjugate Gradient (PCG), which uses only matrix-vector products &ndash; GPU-ideal.</li>
 </ul>
 
-<p>On the full Kalle corpus, Block-PCG converges in <strong>14 iterations</strong> to a weight matrix that is numerically indistinguishable from the direct solve (relative Frobenius error $< 10^{-6}$). On CPU at $D = 6144$ the direct solve is still faster in wall-clock time &ndash; NumPy's LAPACK is extraordinarily well-tuned &ndash; but the PCG path unlocks the scaling regime where the direct solve cannot follow. Full derivation and benchmarks in the <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Version 2 paper on Zenodo</a>. The underlying insight &ndash; that stochasticizing the iteration matrix is a performance trick, not just an elegance &ndash; is the subject of the companion section in the <a href="/en/eigenvalues.html#why-stochastic-matters" style="color:#22d3ee;">Eigenvalues &amp; AI</a> post.</p>
+<p>On the full Kalle corpus (\(D = 6144\), \(V = 2977\)) Block-PCG converges in <strong>14 iterations</strong> (Jacobi preconditioner) to a weight matrix numerically indistinguishable from the direct solve (relative Frobenius error \(< 10^{-6}\)). The surprising result from Table 4 of the v2 paper:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Solver</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Time</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Iter.</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Rel. err vs. direct</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Direct (NumPy/LAPACK, Float64)</td><td style="text-align:right;">2097 ms</td><td style="text-align:right;">1</td><td style="text-align:right;">reference</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Block-PCG (NumPy, Float64)</td><td style="text-align:right;">6731 ms</td><td style="text-align:right;">14</td><td style="text-align:right;">\(4.3 \times 10^{-7}\)</td></tr>
+    <tr style="color:#34d399;"><td style="padding:0.3rem 0.6rem;">Block-PCG (PyTorch CPU, Float32)</td><td style="text-align:right;"><strong>1704 ms</strong></td><td style="text-align:right;">11</td><td style="text-align:right;">\(1.0 \times 10^{-5}\)</td></tr>
+    <tr style="color:#34d399;"><td style="padding:0.3rem 0.6rem;">Block-PCG (PyTorch MPS / Apple GPU)</td><td style="text-align:right;"><strong>1622 ms</strong></td><td style="text-align:right;">11</td><td style="text-align:right;">\(1.0 \times 10^{-5}\)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The naive expectation &ndash; &ldquo;Krylov methods only pay off at very large \(D\); direct Gaussian elimination is faster below&rdquo; &ndash; turns out to be false. With a modern BLAS back-end (PyTorch instead of NumPy, both on CPU), Block-PCG is <strong>already about 4&times; faster</strong> than direct solve at \(D = 6144\). This is primarily a back-end effect: NumPy&apos;s LAPACK bindings are tuned for Float64 correctness, PyTorch for wall-clock efficiency. The jump to the Apple GPU (MPS) adds only a further 5&nbsp;% &ndash; at this matrix size the host-to-device transfer latency nearly eats up the compute saving. GPU dominance kicks in from \(D \geq 20{,}000\), where direct solve is no longer practical (\(O(D^3)\) compute, \(O(D^2)\) memory).</p>
+
+<p><em>The honest intermediate conclusion in the paper:</em> at Kalle&apos;s current scale the solve accounts for only 2&ndash;7&nbsp;% of the end-to-end training time &ndash; the rest is streaming the feature product \(Z^\top Z\) and HTML packaging. Block-PCG&apos;s value here is not time savings but opening a GPU scaling path for the future. The corpus-scaling experiment shows: even scaling \(N\) by \(7\times\) (\(0.3\mathrm{M} \to 2.3\mathrm{M}\) samples), the solve share stays a steady 3&ndash;5&nbsp;%. The real scaling lever is \(D\) (RFF dimension), not \(N\) (sample count) &ndash; and that is exactly where Block-PCG becomes essential.</p>
+
+<p>Full derivation, preconditioner analysis and benchmark reproduction in the <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Version 2 paper on Zenodo</a> (PDF, 10 pages). The underlying insight &ndash; that stochasticizing the iteration matrix is a performance trick, not just an elegance &ndash; is the subject of the companion section in the <a href="/en/eigenvalues.html#unification" style="color:#22d3ee;">Eigenvalues &amp; AI</a> post.</p>
 
 <p><strong>Bilingual without language detection:</strong> Ask in German or English &ndash; Kalle responds in the same language. The reason is elegant: English and German words are different tokens with different IDF weights. &ldquo;eigenvalue&rdquo; (English, high IDF) matches English pairs; &ldquo;Eigenwert&rdquo; (German, high IDF) matches German ones. No language detection code needed &ndash; the mathematics of matching routes automatically.</p>
 

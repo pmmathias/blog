@@ -398,6 +398,33 @@
 <div class="summary-box">
   <p class="text-sm text-gray-300"><strong>The formula:</strong> \(\lambda \approx 1/n\). Early stopping = Ridge Regression. Both separate signal from noise, controlled by the eigenvalues of \(X^TX\).</p>
 </div>
+
+<p><em>This equivalence can be stated formally. In the language of spectral filtering, </em><strong>Theorem 1 of the Kalle paper</strong><em> (Leonhardt, 2026) reads:</em></p>
+
+<blockquote style="border-left:3px solid #22d3ee;padding:0.5rem 1rem;margin:1rem 0;background:rgba(34,211,238,0.05);border-radius:0 0.5rem 0.5rem 0;">
+  <p class="text-sm text-gray-300"><strong>Theorem 1 (Early Stopping &approx; Ridge Regression).</strong> The iterative filter \(f_i^{\mathrm{iter}}(n) = 1 - (1-\mu_i)^n\) and the ridge filter \(f_i^{\mathrm{ridge}}(\lambda) = \mu_i/(\mu_i + \lambda)\) produce equivalent spectral filtering at \(\lambda \approx 1/n\). Both separate signal (large \(\mu_i\)) from noise (small \(\mu_i\)) across the eigenvalue spectrum.</p>
+</blockquote>
+
+<p>Concrete numbers for \(\lambda = 0{,}01\) and \(n = 10\) (Table 1 of the paper):</p>
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Eigenvalue \(\mu_i\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Ridge \(\mu_i/(\mu_i+\lambda)\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Iter. \(1-(1-\mu_i)^{10}\)</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Interpretation</th>
+  </tr></thead>
+  <tbody>
+    <tr style="color:#34d399;"><td style="text-align:center;padding:0.3rem 0.6rem;">1.0</td><td style="text-align:center;">0.999</td><td style="text-align:center;">1.000</td><td style="padding:0.3rem 0.6rem;">Signal: passes through</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">0.1</td><td style="text-align:center;">0.909</td><td style="text-align:center;">0.651</td><td style="padding:0.3rem 0.6rem;">Moderate: partially filtered</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">0.01</td><td style="text-align:center;">0.500</td><td style="text-align:center;">0.096</td><td style="padding:0.3rem 0.6rem;">Noise: heavily suppressed</td></tr>
+    <tr style="color:#f87171;"><td style="text-align:center;padding:0.3rem 0.6rem;">0.001</td><td style="text-align:center;">0.091</td><td style="text-align:center;">0.010</td><td style="padding:0.3rem 0.6rem;">Noise: nearly eliminated</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The two columns are not identical &ndash; but their <em>ranking</em> across the spectrum is the same. Large eigenvalues pass through in both; small ones are suppressed in both. Early stopping is therefore not a trick, but <em>implicit regularization</em> &ndash; and the ridge parameter is not an auxiliary variable but the <em>closed-form expression</em> of the same spectral filter.</p>
+
 </div>
 <div class="section-divider"></div>
 </section>
@@ -500,7 +527,30 @@
 &bull; <strong>No intermediate storage</strong>: in Neumann, the partial sum $\sum_{k=0}^{N-1} T^k\mathbf{b}$ must be kept separate from the next term $T^N\mathbf{b}$. In power iteration, only the current vector exists. On a billion-page web graph, this matters.<br>
 &bull; <strong>Convergence via spectral gap</strong>: power iteration's convergence rate is directly $|\lambda_2(P)|^k$. Google's damping factor $d$ is engineered exactly to <em>guarantee</em> a usable gap: $|\lambda_2(G)| \leq d = 0.85$. It is not a detail &ndash; it is <em>the</em> numerical stabilizer.</p>
 
-<p>This insight carries over to Kernel Ridge Regression: the ridge parameter $\lambda$ plays the role of the damping factor $d$. Both stabilize the iteration by creating a spectral gap. The algorithmic consequence &ndash; that you can solve $(K + \lambda I)\boldsymbol{\alpha} = \mathbf{y}$ via GPU-friendly matrix-vector iteration instead of an $O(D^3)$ direct solve &ndash; is the subject of our <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">follow-up paper on Kalle v2</a>, where we derive the absorber construction for KRR and compare direct solve against Preconditioned Conjugate Gradient at multiple scales.</p>
+<p>This insight carries over to Kernel Ridge Regression: the ridge parameter \(\lambda\) plays the role of the damping factor \(d\). Both stabilize the iteration by creating a spectral gap. The algorithmic consequence &ndash; that you can solve \((K + \lambda I)\boldsymbol{\alpha} = \mathbf{y}\) via GPU-friendly matrix-vector iteration instead of an \(O(D^3)\) direct solve &ndash; is the subject of <a href="https://doi.org/10.5281/zenodo.19595642" style="color:#22d3ee;">Kalle v2</a>, where we formally derive the absorber construction for KRR and benchmark direct solve against Block Preconditioned Conjugate Gradient (Block-PCG).</p>
+
+<p><strong>The surprising finding from the benchmarks.</strong> On Kalle&apos;s real training matrix (\(D = 6144\), \(V = 2977\)), Table 4 of the paper reports:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Solver</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Time</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Iterations</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Rel. err vs. direct</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Direct (NumPy/LAPACK, Float64)</td><td style="text-align:right;">2097 ms</td><td style="text-align:right;">1</td><td style="text-align:right;">reference</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Block-PCG (NumPy, Float64)</td><td style="text-align:right;">6731 ms</td><td style="text-align:right;">14</td><td style="text-align:right;">\(4.3 \times 10^{-7}\)</td></tr>
+    <tr style="color:#34d399;"><td style="padding:0.3rem 0.6rem;">Block-PCG (PyTorch CPU, Float32)</td><td style="text-align:right;"><strong>1704 ms</strong></td><td style="text-align:right;">11</td><td style="text-align:right;">\(1.0 \times 10^{-5}\)</td></tr>
+    <tr style="color:#34d399;"><td style="padding:0.3rem 0.6rem;">Block-PCG (PyTorch MPS / Apple GPU)</td><td style="text-align:right;"><strong>1622 ms</strong></td><td style="text-align:right;">11</td><td style="text-align:right;">\(1.0 \times 10^{-5}\)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The intuition is that Krylov methods only pay off at large \(D\) &ndash; that Gaussian elimination stays faster until several thousand dimensions. The reality: <strong>with a modern BLAS back-end, Block-PCG is already about 4&times; faster than direct solve at \(D = 6144\)</strong>. The extra win from Apple&apos;s GPU is only 5&nbsp;% &ndash; at this matrix size the host-to-device transfer latency nearly eats up the compute saving. The GPU becomes dominant only from \(D \geq 20{,}000\) onwards, where direct solve is no longer practical anyway.</p>
+
+<p>The lesson: the lever for scaling KRR is not primarily hardware, it is the algorithmic reformulation &ndash; the absorber construction that re-shapes the system into a form modern matrix libraries can solve efficiently. This is the same intellectual move Google made 25 years ago with PageRank: not bigger servers, but re-framing the problem as an eigenvalue problem of a stochastic matrix.</p>
 
 <p><strong>Wait. Stop.</strong> Regression (Chapter 3), radiosity, PageRank &ndash; three different problems, three times <strong>the same algorithm</strong>. Iterative matrix multiplication, controlled by eigenvalues. Three times the Neumann series. Three times convergence to the dominant eigenvector.</p>
 
