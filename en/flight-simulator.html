@@ -74,8 +74,8 @@
     "isAccessibleForFree": true,
     "keywords": ["Fourier Transform", "FFT", "iFFT", "Octree", "Frustum Culling", "Ocean Shader", "WebGPU", "Ocean4", "Three.js", "Computer Graphics", "JPEG", "DCT"],
     "articleSection": "Mathematics \u00b7 Computer Graphics \u00b7 Fourier",
-    "wordCount": 10200,
-    "timeRequired": "PT45M"
+    "wordCount": 9700,
+    "timeRequired": "PT43M"
   }
   </script>
 
@@ -483,7 +483,7 @@
 
 <p><strong>Problem 1: the axes mean different things to different players.</strong> Do you hold the phone flat in front of you like a tray, or upright like a comic book? Portrait or landscape? The raw sensor data differs drastically depending on posture &mdash; a hard-coded axis mapping fails for half the users. Solution: a <strong>6-step calibration wizard</strong> at first launch. The player holds the phone at rest, left, right, climb, dive, and then shakes it once &mdash; we measure the axis deltas for each gesture and determine which sensor axis (<em>beta</em> or <em>gamma</em>) has the widest span for which motion. The result is stored in <code>localStorage</code>; on the next launch the player can choose to reuse the profile or recalibrate.</p>
 
-<p><strong>Problem 2: iOS 13.4+ has a two-permission trap.</strong> Since Apple got worried about user tracking via motion sensors, web apps on iOS must request <em>two separate</em> permissions: <code>DeviceOrientationEvent.requestPermission()</code> for the tilt angles, and <code>DeviceMotionEvent.requestPermission()</code> for acceleration (which also drives our shake-to-flap gesture). In our first release we only requested the first one &mdash; with the consequence that the calibration step &ldquo;Flap Wings!&rdquo; hung forever because <code>devicemotion</code> events never fired. Community feedback (Phil Crowther, iPhone 13, current iOS) led to a two-part fix: request both permissions in parallel, plus an 8-second timeout with a &ldquo;Skip&rdquo; button for the case where events don't arrive anyway. Nobody gets stuck on that screen any more.</p>
+<p><strong>Problem 2: iOS 13.4+ has a two-permission trap.</strong> Since Apple got worried about user tracking via motion sensors, web apps on iOS must request <em>two separate</em> permissions: <code>DeviceOrientationEvent.requestPermission()</code> for the tilt angles, and <code>DeviceMotionEvent.requestPermission()</code> for acceleration (which also drives our shake-to-flap gesture). In our first release we only requested the first one &mdash; with the consequence that the calibration step &ldquo;Flap Wings!&rdquo; hung forever because <code>devicemotion</code> events never fired. Two-part fix: request both permissions in parallel, plus an 8-second timeout with a &ldquo;Skip&rdquo; button for the case where events don't arrive anyway.</p>
 
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Summary</p>
@@ -871,12 +871,6 @@ water.material.vertexShader =
 
 <p>A full integration of his system would have been several days of work (quadtree chunks, his own ECS framework, nine WGSL shader files). As an interim step we built a &ldquo;poor man's cascaded ocean&rdquo;: three Ocean4 instances run in parallel at different tile sizes (2400&nbsp;m, 300&nbsp;m, 40&nbsp;m), and their outputs are summed in the vertex and fragment shaders. It's available for testing via <code>?ocean=cascaded</code> &mdash; at about 60&nbsp;% FPS cost, but with a palpably livelier surface: big swell and fine sparkle ripples coexist on the same water.</p>
 
-<h3>A Diagnostic Detour: The Normal-Map Bug That Wasn't</h3>
-
-<p>A small pedagogical episode on the side: when we first integrated Ocean4, the ocean looked <em>completely flat</em> &mdash; like a mirror. We suspected Phil's normal map was in world space rather than tangent space (which TSL's <code>normalMap()</code> helper expects), and wrote our own decoder. It worked. We sent Phil a report with a concrete suggestion. Phil replied: his normal map <em>is</em> standard tangent space, he'd never seen anything like what we described. When we dug in we realised our fault lay not in his module but in a combination of <code>MeshBasicNodeMaterial</code> (no lighting path, so no automatic tangent transform) and UV scaling for tiling. The bug was on our side, not his.</p>
-
-<p>The lesson: <strong>you can be wrong about software before you hold upstream accountable for it.</strong> We followed up with Phil with a corrected message. That he still replied kindly &mdash; and even tested the simulator on his iPhone, which in turn exposed a real bug on our side (see Chapter&nbsp;8) &mdash; shows how open-source collaboration works in the best case.</p>
-
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Sources &amp; Attribution</p>
   <ul class="list-disc pl-6 text-gray-300 leading-relaxed">
@@ -926,12 +920,6 @@ water.material.vertexShader =
 <p>The most difficult integration was the ocean shader. In classical development, incorporating <code>Ocean3.js</code> would have taken at least two days: understanding the framebuffer management, adjusting UV coordinates for tiling (the island is 24 km wide, the wave tile only 2.4 km), and above all tricking Three.js's <code>Water</code> class into accepting the FFT normal map.</p>
 
 <p>With Claude Code: <strong>under twenty minutes.</strong> The point is not that AI understands the mathematics of the ocean more deeply than a textbook &mdash; but that it eliminates the <em>mechanical work of integration</em>. The human says what they want; the AI finds the three places in the code where the change needs to happen.</p>
-
-<h3>Community Feedback as a Second Debugging Channel</h3>
-
-<p>After we let Phil Crowther know about the Ocean4 integration in birdybird, he tried the result on his iPhone 13 &mdash; and reported: &ldquo;I got past all the screens, but then all I could do was spin in place with the bird standing vertically.&rdquo; The cryptic symptom was actually a perfect diagnostic key: &ldquo;bird standing vertically&rdquo; is our ground mode, which the bird only reaches after landing. His bird had never actually <em>flown</em> &mdash; right after the start it had stalled and hit the ground in landing mode, because the initial velocity was zero and the first flap was missing. Fix: the bird now spawns with an 18 m/s gliding velocity. On top of that came the iOS DeviceMotion permission story from Chapter&nbsp;3 and the normal-map correction from Chapter&nbsp;7. Three real bugs that we would never have found without a few lines of forum feedback &mdash; because our dev iPhone always wakes up to the same world and the same permission configuration.</p>
-
-<p>As a consequence we added a <code>?seed=N</code> URL parameter: deterministic world generation via a mulberry32 PRNG that monkey-patches <code>Math.random</code> during terrain generation. Now we (and the community) can reproduce a concrete device problem on <em>the same world</em>. A small technical move that measurably speeds up the debug feedback loop.</p>
 
 <div class="summary-box" style="text-align:center;">
   <p class="text-sm text-gray-300">The entire ticket system is publicly viewable:</p>

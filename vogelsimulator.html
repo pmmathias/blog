@@ -74,8 +74,8 @@
     "isAccessibleForFree": true,
     "keywords": ["Fourier-Transformation", "FFT", "iFFT", "Octree", "Frustum Culling", "Ozean-Shader", "WebGPU", "Ocean4", "Three.js", "Computergrafik", "JPEG", "DCT"],
     "articleSection": "Mathematik \u00b7 Computergrafik \u00b7 Fourier",
-    "wordCount": 10200,
-    "timeRequired": "PT45M"
+    "wordCount": 9700,
+    "timeRequired": "PT43M"
   }
   </script>
 
@@ -482,7 +482,7 @@
 
 <p><strong>Problem 1: Die Achsen bedeuten bei jedem Spieler etwas anderes.</strong> H&auml;ltst du das Handy flach vor dir wie ein Tablett, oder hochkant wie einen Comic? Links oder rechts gehaltet? Die sensorischen Rohdaten unterscheiden sich drastisch je nach Haltung &mdash; eine fest verdrahtete Achsenzuordnung scheitert bei der H&auml;lfte aller Nutzer. L&ouml;sung: Ein <strong>6-Schritte-Kalibrierungs-Assistent</strong> beim ersten Start. Der Spieler h&auml;lt das Handy in Ruhe-, Links-, Rechts-, Steig-, Sturz- und sch&uuml;ttelt einmal &mdash; wir messen jeweils die Achsen-Deltas und bestimmen daraus, welche Sensor-Achse (<em>beta</em> oder <em>gamma</em>) die gr&ouml;&szlig;te Spannweite bei welcher Geste aufweist. Das Ergebnis wird in <code>localStorage</code> gespeichert; beim n&auml;chsten Start darf der Spieler entscheiden, ob er das Profil wiederverwenden oder neu kalibrieren will.</p>
 
-<p><strong>Problem 2: iOS 13.4+ hat eine doppelte Permission-Falle.</strong> Seit Apple Nutzertracking &uuml;ber Bewegungssensoren fürchtet, m&uuml;ssen Web-Apps auf iOS <em>zwei separate</em> Permissions anfordern: <code>DeviceOrientationEvent.requestPermission()</code> f&uuml;r die Neigungswinkel, <code>DeviceMotionEvent.requestPermission()</code> f&uuml;r die Beschleunigung (und damit den Sch&uuml;tteln-zum-Flappen-Gest). In unserem ersten Release haben wir nur die erste angefordert &mdash; mit der Folge, dass der Kalibrierungs-Schritt &bdquo;Fl&uuml;gelschlag!&ldquo; unendlich lange wartete, weil <code>devicemotion</code>-Events nie feuerten. Feedback aus der Community (Phil Crowther, iPhone 13, aktuelles iOS) f&uuml;hrte zu einem Zweiteilefix: beide Permissions parallel anfordern, plus ein 8-Sekunden-Timeout mit &bdquo;Skip&ldquo;-Button f&uuml;r den Fall, dass Events trotzdem ausbleiben. Niemand h&auml;ngt mehr an diesem Screen.</p>
+<p><strong>Problem 2: iOS 13.4+ hat eine doppelte Permission-Falle.</strong> Seit Apple Nutzertracking &uuml;ber Bewegungssensoren fürchtet, m&uuml;ssen Web-Apps auf iOS <em>zwei separate</em> Permissions anfordern: <code>DeviceOrientationEvent.requestPermission()</code> f&uuml;r die Neigungswinkel, <code>DeviceMotionEvent.requestPermission()</code> f&uuml;r die Beschleunigung (und damit den Sch&uuml;tteln-zum-Flappen-Gest). In unserem ersten Release haben wir nur die erste angefordert &mdash; mit der Folge, dass der Kalibrierungs-Schritt &bdquo;Fl&uuml;gelschlag!&ldquo; unendlich lange wartete, weil <code>devicemotion</code>-Events nie feuerten. Zweiteilefix: beide Permissions parallel anfordern, plus ein 8-Sekunden-Timeout mit &bdquo;Skip&ldquo;-Button f&uuml;r den Fall, dass Events trotzdem ausbleiben.</p>
 
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Zusammenfassung</p>
@@ -870,12 +870,6 @@ water.material.vertexShader =
 
 <p>Eine vollst&auml;ndige Integration seines Systems w&auml;re mehrere Tage Arbeit gewesen (Quadtree-Chunks, eigenes ECS-Framework, neun WGSL-Shader-Dateien). Als Zwischenschritt haben wir einen &bdquo;Poor-man's Cascaded Ocean&ldquo; gebaut: drei Instanzen von Ocean4 laufen parallel mit unterschiedlichen Tile-Gr&ouml;&szlig;en (2400 m, 300 m, 40 m) und ihre Outputs werden im Vertex- bzw. Fragment-Shader summiert. Das ist zu Testen verf&uuml;gbar via <code>?ocean=cascaded</code> &mdash; mit etwa 60 % FPS-Kosten, aber einer sp&uuml;rbar lebendigeren Oberfl&auml;che: gro&szlig;e Dünung und feine Sparkle-Ripples koexistieren auf demselben Wasser.</p>
 
-<h3>Ein Diagnostik-Umweg: der nicht vorhandene Normal-Map-Bug</h3>
-
-<p>Eine kleine p&auml;dagogische Episode am Rande: Als wir Ocean4 integrierten, sah der Ozean zun&auml;chst <em>komplett flach</em> aus &mdash; als Spiegel. Wir vermuteten, Phils Normal-Map sei weltkoordiniert und nicht Tangent-Space (wie TSLs <code>normalMap()</code>-Helper erwartet), und schrieben unsere eigene Dekodierung. Funktionierte. Wir schrieben Phil einen Bericht mit konkretem Vorschlag. Phil antwortete: seine Normal-Map <em>ist</em> standardkonform tangent-space, er habe noch nie &Auml;hnliches beobachtet. Beim Nachforschen stellten wir fest: unser Fehler lag nicht an seinem Modul, sondern an einer Kombination aus <code>MeshBasicNodeMaterial</code> (kein Lighting-Pfad, also kein automatischer Tangent-Transform) und UV-Skalierung f&uuml;r Tiling. Der Bug war bei uns, nicht bei ihm.</p>
-
-<p>Die Lektion: <strong>Auch &uuml;ber Software darf man sich irren, bevor man sie Upstream verantwortlich macht.</strong> Wir haben Phil mit einer korrigierten Nachricht r&uuml;ckgemeldet. Dass er trotzdem freundlich reagierte und sogar den Simulator auf seinem iPhone testete &mdash; was wiederum einen echten Bug bei uns aufdeckte (siehe Kapitel&nbsp;8) &mdash; zeigt, wie so eine Open-Source-Kollaboration im Guten l&auml;uft.</p>
-
 <div class="summary-box">
   <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Quellen &amp; Attribution</p>
   <ul class="list-disc pl-6 text-gray-300 leading-relaxed">
@@ -925,12 +919,6 @@ water.material.vertexShader =
 <p>Die schwierigste Integration war der Ozean-Shader. In klassischer Entwicklung h&auml;tte das Einbinden von <code>Ocean3.js</code> mindestens zwei Tage gedauert: Framebuffer-Management verstehen, UV-Koordinaten f&uuml;r Tiling anpassen (die Insel ist 24 km breit, das Wellen-Tile nur 2,4 km), und vor allem die <code>Water</code>-Klasse von Three.js &uuml;berlisten, damit sie die FFT-Normal-Map akzeptiert.</p>
 
 <p>Mit Claude Code: <strong>unter zwanzig Minuten.</strong> Der Punkt ist nicht, dass die KI die Mathematik des Ozeans tiefer versteht als ein Lehrbuch &mdash; sondern dass sie die <em>mechanische Arbeit der Integration</em> eliminiert. Der Mensch sagt, was er will; die KI findet die drei Stellen im Code, an denen die &Auml;nderung passieren muss.</p>
-
-<h3>Community-Feedback als zweiter Debug-Kanal</h3>
-
-<p>Nachdem wir Phil Crowther &uuml;ber die Ocean4-Integration in birdybird informiert hatten, probierte er das Ergebnis auf seinem iPhone 13 aus &mdash; und meldete: &bdquo;I got past all the screens, but then all I could do was spin in place with the bird standing vertically.&ldquo; Das kryptische Symptom war tats&auml;chlich ein perfekter Diagnoseschl&uuml;ssel: &bdquo;vertikal stehender Vogel&ldquo; ist unser Ground-Modus, den der Vogel nur erreicht, wenn er landet. Sein Vogel hatte nie <em>geflogen</em> &mdash; er war nach dem Start direkt gestallt und im Landemodus aufgeschlagen, weil die Startgeschwindigkeit null war und der erste Fl&uuml;gelschlag fehlte. Fix: Vogel bekommt beim Spawn eine Anfangs-Gleitgeschwindigkeit von 18&nbsp;m/s. Dazu kam die iOS-DeviceMotion-Permission-Story aus Kapitel&nbsp;3 und die Normal-Map-Korrektur aus Kapitel&nbsp;7. Drei echte Bugs, die wir ohne ein paar Zeilen Forum-Feedback niemals gefunden h&auml;tten &mdash; weil unser Entwickler-iPhone immer mit derselben Welt und derselben Permissions-Konfiguration aufw&auml;chst.</p>
-
-<p>Als Folge haben wir einen <code>?seed=N</code>-URL-Parameter eingebaut: deterministische Weltgenerierung &uuml;ber einen mulberry32-PRNG, der <code>Math.random</code> w&auml;hrend der Terrain-Generierung monkey-patcht. Damit k&ouml;nnen wir (und die Community) ein konkretes Ger&auml;teproblem jetzt auf <em>derselben Welt</em> nachstellen. Kleiner technischer Zug, der den Debug-Feedback-Loop messbar beschleunigt.</p>
 
 <div class="summary-box" style="text-align:center;">
   <p class="text-sm text-gray-300">Das gesamte Ticket-System ist &ouml;ffentlich einsehbar:</p>
