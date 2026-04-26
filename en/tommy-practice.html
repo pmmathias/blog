@@ -435,9 +435,6 @@ ffmpeg -ss {offset_s} -i drums.mp4 \
 </div>
 </section>
 
-<script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is this Les Claypool's original version?", "acceptedAnswer": {"@type": "Answer", "text": "No. This version is a simplified interpretation: no Claypool-style slapping, instead flamenco strokes and hammer-ons. The tempo is original (210 BPM), the technique is more accessible."}}, {"@type": "Question", "name": "What is WSOLA?", "acceptedAnswer": {"@type": "Answer", "text": "WSOLA (Waveform Similarity Overlap-Add) is an algorithm for time-scaling audio without pitch change. It divides the signal into overlapping windows, aligns them via cross-correlation, and reassembles them longer or shorter as needed."}}, {"@type": "Question", "name": "How does FFT-based video synchronization work?", "acceptedAnswer": {"@type": "Answer", "text": "Cross-correlation in the frequency domain via FFT finds the optimal time offset between two audio signals in O(n log n). With parabolic interpolation around the peak, sub-sample precision is achieved \u2014 better than one frame at 60 fps."}}]}
-</script>
 </main>
 
 <footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">
