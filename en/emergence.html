@@ -65,7 +65,7 @@
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-03-18",
-    "dateModified": "2026-04-21",
+    "dateModified": "2026-05-19",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/emergence.html" },
     "inLanguage": "en",
     "isAccessibleForFree": true,
@@ -363,9 +363,9 @@
 
 <h3>The observation that shook AI research in 2022</h3>
 
-<p>Imagine a language model with ten billion parameters. You give it a task: multi-digit addition, step by step. The result is random &ndash; garbled strings, obvious nonsense. Now take the <em>same</em> model, the same architecture, the same training process &ndash; but with a hundred billion parameters. And suddenly it can do arithmetic.</p>
+<p>A language model with ten billion parameters is given the task of carrying out multi-digit additions, step by step. The output is random &ndash; garbled strings, obvious nonsense. The same architecture, the same training procedure, but with a hundred billion parameters: the model now performs the arithmetic correctly.</p>
 
-<p>Not a little better. Not gradually. <strong>Abruptly.</strong> From chance to competence.</p>
+<p>The transition is not gradual but abrupt &ndash; from chance to competence within a narrow band of model size.</p>
 
 <p>In 2022, Jason Wei and colleagues at Google published the paper that systematically documented this observation.<sup class="footnote-ref" id="fnref-1">[1]</sup> They examined over 137 different tasks &ndash; from multi-step arithmetic to logical deduction, word unscrambling, and quiz questions in Persian. Across all these tasks, the same pattern emerged: below a certain model size, random-level performance; above it, sudden competence.</p>
 
@@ -385,7 +385,7 @@
   <p style="margin-bottom:0;"><strong>Large model (540B):</strong> &ldquo;Lisa has 5 apples. 3 bags &times; 4 = 12 new apples. 5 + 12 = 17 apples.&rdquo; <em>(correct, structured)</em></p>
 </div>
 
-<p>The same instruction (&ldquo;step by step&rdquo;) triggers nothing in the small model but a correct derivation in the large one. The key fits &ndash; but only if the lock is large enough.</p>
+<p>The same instruction (&ldquo;step by step&rdquo;) remains inert in the small model and elicits a correct derivation in the large one. The instruction takes effect only once model capacity exceeds a critical threshold.</p>
 
 <!-- Graphic 1: The Emergence Jump -->
 <div class="component-wrap">
@@ -413,11 +413,11 @@
 
 <p>Not everyone was convinced. In 2023, Rylan Schaeffer and colleagues from Stanford published a paper with the provocative title &ldquo;Are Emergent Abilities of Large Language Models a Mirage?&rdquo;<sup class="footnote-ref" id="fnref-3">[3]</sup> Their thesis: the jump does not exist in reality &ndash; it exists only in the <em>metric</em>.</p>
 
-<p>The argument is elegant: if you use &ldquo;Exact Match&rdquo; as your metric &ndash; meaning either 100&nbsp;% correct or 0&nbsp;% &ndash; then of course you see a jump. Because a model that answers &ldquo;1&rdquo; instead of &ldquo;17&rdquo; gets zero points. Just like one that answers &ldquo;16.&rdquo; But the second model is <em>much closer</em>.</p>
+<p>The argument turns on the chosen metric. Under an Exact-Match scheme &ndash; 100&nbsp;% correct or 0&nbsp;%, with no intermediate values &ndash; a model that answers &ldquo;1&rdquo; instead of &ldquo;17&rdquo; receives zero points, as does one that answers &ldquo;16.&rdquo; The second model is in fact <em>substantially closer</em> to the target; the metric simply does not represent this difference.</p>
 
-<p>Switch to a <strong>continuous metric</strong> &ndash; say, token edit distance, which measures how far the answer is from the target &ndash; and the jump disappears. Instead, you see a <strong>smooth, steady climb</strong>.</p>
+<p>Under a <strong>continuous metric</strong> &ndash; for instance token edit distance, which quantifies the distance between answer and target &ndash; the jump disappears and is replaced by a <strong>smooth, monotone increase</strong>.</p>
 
-<p>An analogy: imagine you are measuring whether someone can ride a bicycle. Binary &ndash; yes or no &ndash; it looks like a sudden jump. But their balance has been improving gradually for weeks. The &ldquo;jump&rdquo; is an artifact of your measurement method.</p>
+<p>A useful analogy is the assessment of a motor skill: binary scoring &ndash; rides versus does-not-ride &ndash; produces the impression of a sudden jump, while the underlying balance improves gradually over weeks. The apparent jump is an artefact of the measurement procedure.</p>
 
 <p>Ruan et al. (2024) went even further: with their &ldquo;Observational Scaling Laws,&rdquo; they showed that nearly all supposedly emergent abilities become predictable when measured with the right metrics.<sup class="footnote-ref" id="fnref-6">[6]</sup></p>
 
@@ -429,7 +429,7 @@
 
 <h3>The synthesis (as of 2025)</h3>
 
-<p>Both are right. The ability improves <em>gradually</em>, but <em>usability</em> has a threshold. Like water heating up steadily &ndash; but at 100&nbsp;&deg;C it boils. The temperature rises continuously. The transition from liquid to gas is still a jump.</p>
+<p>Both readings are mutually compatible. The underlying ability improves <em>gradually</em>; <em>usability</em> as observable performance carries a threshold. Water serves as the canonical illustration: temperature rises continuously, yet the phase transition from liquid to gas at 100&nbsp;&deg;C remains a jump.</p>
 
 <!-- Graphic 2: Metric Magic -->
 <div class="component-wrap">
@@ -483,7 +483,7 @@
   </tbody>
 </table>
 
-<p>The parallel is not just a metaphor. The mathematics is <em>the same</em>.</p>
+<p>The relation is not metaphorical but mathematically identical: the same Hamiltonians, the same order parameters, the same criticality analysis.</p>
 
 <!-- Graphic 3: Ising <-> Transformer -->
 <div class="component-wrap">
@@ -511,7 +511,7 @@
 
 <p>In 2022, Alethea Power and colleagues at OpenAI observed something unusual.<sup class="footnote-ref" id="fnref-18">[18]</sup> They trained a small neural network on a simple task: modular arithmetic (\(a + b \mod p\)). The network memorized the training data quickly &ndash; perfect performance on the training examples, zero performance on new examples.</p>
 
-<p>Normally, you would stop here. The network has &ldquo;overfitted&rdquo; &ndash; memorized rather than understood. But Power and colleagues let the training continue. And after thousands of additional steps, long after the network had already memorized the data perfectly, something remarkable happened: <strong>Performance on new examples jumped suddenly from zero to nearly one hundred percent.</strong></p>
+<p>Conventional practice would terminate training at this point: the network has &ldquo;overfitted&rdquo; &ndash; memorized rather than understood. Power and colleagues let training continue. After thousands of additional steps, well beyond the point of perfect memorization, a qualitatively distinct effect appeared: <strong>performance on unseen examples jumped from near zero to nearly one hundred percent.</strong></p>
 
 <p>They called it <strong>Grokking</strong> &ndash; a word coined by Robert Heinlein in his novel <em>Stranger in a Strange Land</em>, meaning something like &ldquo;to understand something deeply and intuitively.&rdquo;</p>
 
@@ -529,9 +529,9 @@
 
 <h3>The analogy to humans</h3>
 
-<p>Grokking is the machine version of the &ldquo;penny dropping.&rdquo; You collect information, you repeat, you practice &ndash; and for a long time nothing seems to happen. And then, suddenly: clarity. Not because new information arrived, but because the internal system <em>reorganized itself</em>.</p>
+<p>Grokking corresponds structurally to the colloquial &ldquo;penny dropping.&rdquo; A learner who collects information, repeats, and practises observes no measurable deepening for an extended interval; after a latency, clarity arrives in a single step without any new information having been added. The mechanism is the <em>reorganization</em> of the internal representation.</p>
 
-<p>Or, more formally: <strong>Processing is a coordinate transformation.</strong> The data was already there. But the internal coordinate system had to rotate first so that the structure became visible.</p>
+<p>Stated more formally, what occurs is a <strong>coordinate transformation</strong>: the data were unchanged throughout; the internal coordinate system only rotated into a configuration in which the underlying structure aligned with an axis and became visible.</p>
 
 <!-- Graphic 4: Grokking live -->
 <div class="component-wrap">
@@ -568,7 +568,7 @@
 
 <p>An example: the text reads &ldquo;The cat sat on the mat. The cat sat on the...&rdquo; The Induction Head recognizes that &ldquo;The cat sat on the&rdquo; has appeared before and completes with &ldquo;mat.&rdquo;</p>
 
-<p>That sounds simple. But it is the <strong>seed of in-context learning</strong> &ndash; the ability of language models to solve new tasks from just a few examples in the prompt. And the crucial point: Induction Heads emerge during training in a <strong>sharp phase transition</strong>. Before that, they do not exist. Afterward, they are present throughout the model.</p>
+<p>The operation is structurally simple, yet it forms the <strong>seed of in-context learning</strong> &ndash; the capability of language models to solve a new task from a handful of in-prompt examples. Induction Heads form during training in a <strong>sharp phase transition</strong>: not detectable before the critical training stage, present in nearly all layers afterwards.</p>
 
 <h3>Emergent ability vs. emergent intelligence</h3>
 
@@ -663,7 +663,7 @@
 
 <h3>What emerges from enough human thoughts?</h3>
 
-<p>If you distill enough human texts &ndash; what comes out? Not the &ldquo;average of human impulses,&rdquo; but the average of <em>what remains</em> when societies navigate through time. And those are remarkably constructive things:</p>
+<p>What structure emerges when a sufficient quantity of human text is distilled? Not an &ldquo;average of human impulses,&rdquo; but the average of what <em>endures</em> as societies navigate through time. The enduring content exhibits a markedly constructive tendency:</p>
 
 <div class="summary-box">
   <p style="margin-bottom:0.5rem;"><strong>Cooperation</strong> &ndash; because cooperating societies produce more (and leave behind more texts).</p>
@@ -694,15 +694,15 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 8</p>
-<h2>The Meta Level &ndash; What You Just Read</h2>
+<h2>The Meta Level &ndash; On the Genesis of This Text</h2>
 
 <h3>The self-reference</h3>
 
-<p>Back to the prologue. This text is based on over twenty scientific publications. Claude Code read these papers, extracted the relevant arguments, identified contradictions (Wei vs. Schaeffer), and distilled the result into prose with eight interactive visualizations.</p>
+<p>The reference returns at this point to the prologue. The present text is based on over twenty scientific publications. Claude Code read the papers, extracted the relevant arguments, identified contradictions (Wei versus Schaeffer), and transformed the result into English prose accompanied by eight interactive visualizations.</p>
 
-<p>That is not magic. That is <strong>emergence</strong>: the ability to form a coherent whole from many individual parts &ndash; one that is more than the sum of its parts.</p>
+<p>The procedure is itself an instance of <strong>emergence</strong>: the capability to form a coherent whole from many individual parts, the properties of which cannot be read off from an enumeration of those parts.</p>
 
-<p>Three years ago, no language model could do this. Not even close. Not because someone programmed &ldquo;paper summarization&rdquo; as a feature. But because the models became large enough to find the principal axis.</p>
+<p>Three years earlier this capability was not detectable in any language model &ndash; not even approximately. It did not arise from a dedicated &ldquo;paper-summarization&rdquo; module but from sufficient model size: only at a critical scale does the principal axis required for such distillation become locatable in the internal representation.</p>
 
 <h3>The honest caveat</h3>
 

@@ -70,7 +70,7 @@
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-03-10",
-    "dateModified": "2026-03-10",
+    "dateModified": "2026-05-19",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/eigenvalues.html" },
     "inLanguage": "en",
     "isAccessibleForFree": true,
@@ -170,15 +170,11 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
 <h2>The Glass Bead Game</h2>
 
-<p>Every time you run a Google search, a computer solves an <strong>eigenvalue problem</strong>. It computes which webpage is the most important &ndash; and the answer is an <em>eigenvector</em>.</p>
+<p>A Google search solves an eigenvalue problem in the background: which webpage carries the highest weight in the link graph? The answer is an <em>eigenvector</em>. A neural network learns, via the eigenvalues of its training operator, which features to retain and which to discard. In quantum mechanics, the allowed energies of an atom &ndash; the discrete spectral lines that Niels Bohr could not explain in 1913 &ndash; are likewise eigenvalues; Schr&ouml;dinger therefore titled his 1926 paper <em>Quantization as an Eigenvalue Problem</em>.</p>
 
-<p>Every time a neural network recognizes an image or writes a text, <strong>eigenvalues</strong> control what the network learns and what it ignores.</p>
+<p>That the same mathematical structure appears in three entirely different contexts is no accident. The reason is developed in what follows.</p>
 
-<p>And in quantum mechanics? The allowed energies of an atom &ndash; the discrete spectral lines that Niels Bohr could not explain in 1913 &ndash; are also <strong>eigenvalues</strong>. Schr&ouml;dinger titled his famous 1926 paper simply: <em>&ldquo;Quantization as an Eigenvalue Problem.&rdquo;</em></p>
-
-<p>Three different worlds. The same mathematics. That is no coincidence &ndash; and in this post, you will see why.</p>
-
-<p>We build a <strong>chain</strong>: from the simplest linear regression through kernel methods and Google PageRank to neural networks. Each link grows from the previous one. At the end stands the insight: <strong>Artificial intelligence is an eigenvalue problem.</strong></p>
+<p>The argument runs as a chain: from linear regression through kernel methods and Google PageRank to neural networks. Each link follows from the previous one. The end point is the observation that modern artificial intelligence is, at its core, an eigenvalue problem.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-400"><em>If you have read the <a href="/en/quantum.html#teil-4a" class="text-cyan-400 hover:text-cyan-300 underline">quantum post</a>:</em> There you saw the propagator \(K(B,A,t) = \sum_n \phi_n(B)\,\phi_n^*(A)\,e^{-i E_n t/\hbar}\) &ndash; a sum over eigenstates. The energies \(E_n\) are eigenvalues. Here you will discover that the kernel in AI has <em>exactly the same structure</em>. Same letter \(K\). Same pattern. <a href="#epilog" class="text-cyan-400 hover:text-cyan-300 underline">More in the epilogue.</a></p>
@@ -193,19 +189,17 @@
 <h2>The Shortest Path</h2>
 
 <h3>A shadow on the ground</h3>
-<p>Imagine standing in the midday sun. Your shadow falls straight onto the ground &ndash; a flat image of your three-dimensional self. That is a <strong>projection</strong>: the best possible representation of you in a lower dimension.</p>
-
-<p>What does &ldquo;best possible&rdquo; mean? The shortest distance from a point to a surface is always <strong>perpendicular</strong>. That is the foundation of everything that follows.</p>
+<p>A useful image for projection: a person in the midday sun. The shadow falls perpendicular to the ground and is a flat image of the three-dimensional figure &ndash; the best possible representation in a lower dimension. What &ldquo;best possible&rdquo; means here could be defined in various ways; linear algebra makes it concrete: the shortest distance from a point to a surface is always perpendicular. This property carries everything that follows.</p>
 
 <h3>The dot product: two vectors, one number</h3>
-<p>To express &ldquo;perpendicular&rdquo; mathematically, we need the <span class="glossary" title="Dot product: multiply vectors component-wise and sum. Result = 0 means perpendicular.">dot product</span>: \(\langle \mathbf{a}, \mathbf{b} \rangle = a_1 b_1 + a_2 b_2 + \ldots + a_n b_n\). Two vectors are perpendicular when their dot product is <strong>zero</strong>.</p>
+<p>To express &ldquo;perpendicular&rdquo; mathematically, the <span class="glossary" title="Dot product: multiply vectors component-wise and sum. Result = 0 means perpendicular.">dot product</span> is used: \(\langle \mathbf{a}, \mathbf{b} \rangle = a_1 b_1 + a_2 b_2 + \ldots + a_n b_n\). It captures intuitively the degree to which two vectors point in the same direction. Two vectors are perpendicular precisely when their dot product is zero; positive values indicate similar directions, negative ones opposite directions.</p>
 
 <h3>Projection onto a line</h3>
-<p>Given a vector \(\mathbf{y}\) and a direction \(\mathbf{a}\), the closest point on the line through \(\mathbf{a}\) is:</p>
+<p>Let \(\mathbf{y}\) be a vector and \(\mathbf{a}\) a direction. The point on the line through \(\mathbf{a}\) closest to \(\mathbf{y}\) is:</p>
 
 <div class="math-display">$$\hat{y} = \frac{\langle \mathbf{a}, \mathbf{y} \rangle}{\langle \mathbf{a}, \mathbf{a} \rangle} \cdot \mathbf{a}$$</div>
 
-<p>The error \(\mathbf{y} - \hat{y}\) is perpendicular to \(\mathbf{a}\). That is the whole idea.</p>
+<p>The fraction describes how far along \(\mathbf{a}\) one must move so that the residual \(\mathbf{y} - \hat{y}\) ends up perpendicular to \(\mathbf{a}\). This is the elementary operation of all linear approximation.</p>
 
 <svg viewBox="0 0 340 220" width="100%" style="max-width:340px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
   <line x1="30" y1="180" x2="310" y2="180" stroke="#374151" stroke-width="1"/>
@@ -224,13 +218,13 @@
 </svg>
 
 <h3>The general case: the normal equation</h3>
-<p>In practice, you project onto a subspace spanned by the columns of a matrix \(X\). The condition &ldquo;error perpendicular to all columns&rdquo; becomes the <strong>normal equation</strong>:</p>
+<p>In practice one projects not onto a line but onto a subspace spanned by the columns of a matrix \(X\). The condition &ldquo;error perpendicular to all columns&rdquo; can be written compactly:</p>
 
 <div class="math-display">$$X^T X\,\mathbf{c} = X^T\mathbf{y} \quad\Longrightarrow\quad \mathbf{c} = (X^TX)^{-1}\,X^T\mathbf{y}$$</div>
 
-<p>Concrete example: \(X = (1,\; 0.5)^T\), \(\mathbf{y} = (3,\; 4)^T\). Then \(X^TX = 1.25\), \(X^T\mathbf{y} = 5\), so \(c = 4\). The projection is \(\hat{\mathbf{y}} = (4,\; 2)^T\). The error \((-1,\; 2)^T\) is perpendicular to \(X\): \(1 \cdot (-1) + 0.5 \cdot 2 = 0\). &#x2713;</p>
+<p>This is the so-called <em>normal equation</em>. Concrete example: \(X = (1,\; 0.5)^T\), \(\mathbf{y} = (3,\; 4)^T\). Then \(X^TX = 1.25\), \(X^T\mathbf{y} = 5\), and so \(c = 4\). The projection is \(\hat{\mathbf{y}} = (4,\; 2)^T\); the residual \((-1,\; 2)^T\) is perpendicular to \(X\) since \(1 \cdot (-1) + 0.5 \cdot 2 = 0\). ✓</p>
 
-<p>Beautiful formula. But at its center sits \((X^TX)^{-1}\) &ndash; a <strong>matrix inversion</strong>. It costs \(O(n^3)\) operations, is numerically unstable, and &ndash; as we will see &ndash; <em>unnecessary</em>.</p>
+<p>The formula is compact, but contains a costly term in its centre: the inversion \((X^TX)^{-1}\). It costs \(O(n^3)\) operations and is numerically unstable. In the next chapter it is shown that this inversion can be avoided.</p>
 </div>
 <div class="section-divider"></div>
 </section>
@@ -240,9 +234,9 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 3</p>
 <h2>Patience over Genius</h2>
 
-<p>What if we never had to compute the inverse? What if all we need to do is correct our own error, again and again?</p>
+<p>The inversion can be avoided. In its place an iterative procedure is used, which relies on nothing other than repeated correction of the residual. In the following it is shown that this procedure yields the same solution as the normal equation, without requiring any matrix inversion.</p>
 
-<h3>Project. Error. Repeat.</h3>
+<h3>Project, correct, repeat</h3>
 <p><strong>Step 1:</strong> Compute a rough first approximation: \(\hat{\mathbf{y}}_1 = X \cdot X^T \mathbf{y}\).</p>
 <p><strong>Step 2:</strong> Compute the error (the <em>residual</em>): \(\mathbf{r}_1 = \mathbf{y} - \hat{\mathbf{y}}_1\).</p>
 <p><strong>Step 3:</strong> Project the error itself and add it: \(\hat{\mathbf{y}}_2 = \hat{\mathbf{y}}_1 + X \cdot X^T \mathbf{r}_1\).</p>
@@ -285,18 +279,17 @@
 <p>The approximation moves closer to (4, 2) with each iteration. And the final error \((-1, 2)\) is perpendicular to \(X\): \(1 \cdot (-1) + 0.5 \cdot 2 = 0\). Exactly as it should be.</p>
 
 <div class="try-it">
-  <p><strong>Try it yourself</strong></p>
-  <p>Click &ldquo;Next Step&rdquo; and watch how the blue approximation approaches the green exact solution. The red arrow (residual) gets shorter with each step.</p>
+  <p><strong>Try it yourself.</strong> Repeated clicking on &ldquo;Next Step&rdquo; shows the blue approximation moving toward the green exact solution; the red arrow (residual) shortens with each step.</p>
 </div>
 <div class="component-wrap"><div id="mount-neumann-series"></div></div>
 
-<p><strong>Wait. Stop.</strong> Read that last sentence again. The iteration does not converge to some approximation. It converges to the <strong>exact</strong> solution &ndash; the same one you get from matrix inversion. Without ever inverting a matrix. Just by patiently correcting your own error.</p>
+<p>This means: the iteration converges not to an approximation, but to the exact solution &ndash; the same one matrix inversion would yield &ndash; without inverting any matrix. Repeated correction of the residual is sufficient.</p>
 
 <h3>The elegant proof</h3>
-<p>At equilibrium, the solution no longer changes: \(\hat{\mathbf{y}}' = X^T\mathbf{y} + (I - X^TX)\,\hat{\mathbf{y}}'\). Rearranging: \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), hence \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{y}\). The normal equation. Q.E.D.</p>
+<p>At equilibrium, the solution no longer changes: \(\hat{\mathbf{y}}' = X^T\mathbf{y} + (I - X^TX)\,\hat{\mathbf{y}}'\). Rearrangement yields \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), hence \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{y}\). This is the normal equation. ∎</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>What you now hold:</strong> Iteration replaces inversion. Patience replaces genius. But a question remains: <em>why</em> does it converge? What determines the speed?</p>
+  <p class="text-sm text-gray-300"><strong>Interim summary:</strong> Iteration takes the place of inversion. What remains open is <em>why</em> the procedure converges and what determines its speed. This is clarified in the next chapter on eigenvalues.</p>
 </div>
 </div>
 <div class="section-divider"></div>
@@ -307,10 +300,10 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4</p>
 <h2>What Matrices Really Do</h2>
 
-<p>A matrix is a machine: vector in, vector out. Most vectors get both stretched and rotated. But there are specialists &ndash; vectors whose <strong>direction does not change</strong>:</p>
+<p>A matrix is a linear map: vector in, vector out. Most vectors are both stretched <em>and</em> rotated. There are, however, distinguished vectors whose direction is preserved; they are merely scaled:</p>
 <div class="math-display">$$A\mathbf{v} = \lambda\,\mathbf{v}$$</div>
 
-<p>Such a \(\mathbf{v}\) is called an <strong>eigenvector</strong>, the \(\lambda\) its <strong>eigenvalue</strong>. The matrix merely scales the eigenvector by \(\lambda\) &ndash; no rotation, no tilting.</p>
+<p>Such a \(\mathbf{v}\) is called an eigenvector, the associated \(\lambda\) its eigenvalue. The matrix describes intuitively: it stretches the eigenvector by the factor \(\lambda\) and leaves its direction untouched.</p>
 
 <h3>A worked example</h3>
 <p>Take \(A = \bigl(\begin{smallmatrix} 2 &amp; 1 \\ 0 &amp; 3 \end{smallmatrix}\bigr)\). Characteristic polynomial: \(\det(A - \lambda I) = (2-\lambda)(3-\lambda) = 0\). Eigenvalues: \(\lambda_1 = 2\), \(\lambda_2 = 3\).</p>
@@ -324,13 +317,13 @@
 <div class="component-wrap"><div id="mount-eigen-transform"></div></div>
 
 <h3>What does this mean concretely?</h3>
-<p>Apply the matrix 10 times: \(\lambda_1^{10} = 2^{10} = 1024\), but \(\lambda_2^{10} = 3^{10} = 59\,049\). The larger eigenvalue <strong>dominates</strong>. After 20 applications: \(2^{20} \approx 10^6\), \(3^{20} \approx 3.5 \times 10^9\). The direction of \(\mathbf{v}_2\) overwhelms everything else.</p>
+<p>If the matrix is applied ten times in succession, \(\lambda_1^{10} = 2^{10} = 1024\) versus \(\lambda_2^{10} = 3^{10} = 59\,049\). The larger eigenvalue dominates. After 20 applications: \(2^{20} \approx 10^6\), \(3^{20} \approx 3.5 \times 10^9\). The direction of \(\mathbf{v}_2\) then overwhelms everything else.</p>
 
 <h3>Why eigenvalues determine convergence</h3>
-<p>The key formula: \(A^n = V\,\Lambda^n\,V^{-1}\), where \(\Lambda\) is the diagonal matrix of eigenvalues.</p>
-<p>&bull; If \(|\lambda| &lt; 1\): \(\lambda^n \to 0\) &ndash; the component <strong>vanishes</strong>.<br>
-&bull; If \(|\lambda| = 1\): stays constant.<br>
-&bull; If \(|\lambda| &gt; 1\): \(\lambda^n \to \infty\) &ndash; <strong>explosion</strong>.</p>
+<p>The key formula reads \(A^n = V\,\Lambda^n\,V^{-1}\), where \(\Lambda\) is the diagonal matrix of eigenvalues. It describes intuitively that the effect of repeated matrix application is fully determined by the powers of the eigenvalues:</p>
+<p>&bull; For \(|\lambda| &lt; 1\), \(\lambda^n \to 0\); the corresponding component vanishes.<br>
+&bull; For \(|\lambda| = 1\), it remains constant.<br>
+&bull; For \(|\lambda| &gt; 1\), \(\lambda^n \to \infty\); the component explodes.</p>
 
 <div class="try-it">
   <p><strong>Try it yourself</strong></p>
@@ -338,12 +331,12 @@
 </div>
 <div class="component-wrap"><div id="mount-convergence"></div></div>
 
-<p>Now the connection to Chapter 3: if \(\mu\) is an eigenvalue of \(X^TX\), then \((1 - \mu)\) is an eigenvalue of \((I - X^TX)\). The iteration converges when \(|1 - \mu| &lt; 1\) for all \(\mu\). The eigenvalues of \(X^TX\) determine <strong>everything</strong>.</p>
+<p>The connection to Chapter 3 follows from this: if \(\mu\) is an eigenvalue of \(X^TX\), then \((1 - \mu)\) is an eigenvalue of \((I - X^TX)\). The iteration converges precisely when \(|1 - \mu| &lt; 1\) for all \(\mu\). The eigenvalues of \(X^TX\) thus determine both whether the iteration converges and how fast.</p>
 
-<p>Symmetric matrices (and \(X^TX\) is always symmetric) have only real eigenvalues and orthogonal eigenvectors. Large eigenvalues = directions with lots of variation (signal). Small = little variation (noise).</p>
+<p>Symmetric matrices &ndash; and \(X^TX\) is always symmetric &ndash; have only real eigenvalues and orthogonal eigenvectors. Large eigenvalues correspond to directions with high variance (signal); small eigenvalues correspond to directions with low variance (noise).</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>The DNA of a matrix</strong> is its eigenvalues. They tell you whether an iterative process converges, how fast, and where to. And they separate signal from noise.</p>
+  <p class="text-sm text-gray-300"><strong>Interim summary:</strong> The eigenvalues of a matrix characterize its behaviour under repeated application &ndash; convergence, divergence, and in particular the separation of signal and noise. The latter leads to the next chapter.</p>
 </div>
 </div>
 <div class="section-divider"></div>
@@ -354,10 +347,10 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 5</p>
 <h2>Stopping Early Pays Off</h2>
 
-<p>Imagine a student who memorizes 20 practice problems. In practice: 20 out of 20. On the exam with new problems: 8 out of 20. They learned the <em>problems</em>, not the <em>principles</em>. This is called <strong>overfitting</strong>.</p>
+<p>An illustrative image: a student memorizes 20 practice problems &ndash; every number, every comma, every formulation. In practice, they reach 20 out of 20 points. In the exam, where new problems are posed, they reach only 8 out of 20. They have learned the concrete problems, not the underlying principles. This phenomenon is called <em>overfitting</em>.</p>
 
 <h3>What this has to do with our iteration</h3>
-<p>After \(n\) iterations, the component along the \(i\)-th eigenvector is retained by the factor \(1 - (1-\mu_i)^n\). Sounds abstract &ndash; but look at the numbers:</p>
+<p>After \(n\) iterations, the component along the \(i\)-th eigenvector is retained by the factor \(1 - (1-\mu_i)^n\). What this formula describes intuitively becomes visible in the numbers:</p>
 
 <div style="overflow-x:auto;">
 <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
@@ -377,7 +370,7 @@
 </table>
 </div>
 
-<p><strong>Large eigenvalues</strong> (strong signal): immediately at 100%. <strong>Small eigenvalues</strong> (often noise): need hundreds of iterations. Fewer iterations = only signal is learned. More = noise too. <strong>Early stopping is a natural noise filter.</strong></p>
+<p>Large eigenvalues (strong signal) reach nearly 100 % after only a few iterations. Small eigenvalues (typically noise) require hundreds of iterations. It follows that fewer iterations learn only the signal; more iterations also pick up the noise. Early stopping thus acts as a natural noise filter.</p>
 
 <h3>The equivalence to Ridge Regression</h3>
 <p>The classical remedy for overfitting &ndash; <em>Ridge Regression</em> &ndash; adds \(\lambda\) to the diagonal: \(\mathbf{c}_\lambda = (X^TX + \lambda I)^{-1}X^T\mathbf{y}\). The filter factor is \(\mu_i/(\mu_i + \lambda)\).</p>
@@ -388,15 +381,14 @@
 <p>More iterations = smaller \(\lambda\) = less regularization. Fewer iterations = larger \(\lambda\) = smoother solution. <em>(The relationship is not exact, but both filter curves have the same shape for practical purposes.)</em></p>
 
 <div class="try-it">
-  <p><strong>Try it yourself</strong></p>
-  <p>Slide \(n\) and observe: the iteration filter (left, cyan) and the Ridge filter (right, yellow) have <em>the same shape</em>!</p>
+  <p><strong>Try it yourself.</strong> By sliding \(n\), one sees that the iteration filter (left, cyan) and the Ridge filter (right, yellow) take the same shape. Early stopping and Ridge Regression act equivalently in filtering.</p>
 </div>
 <div class="component-wrap"><div id="mount-regularization"></div></div>
 
-<p><strong>Wait. Stop.</strong> Every textbook introduces Ridge Regression as an artificial penalty term. But in reality, regularization is the most natural thing in the world: <em>stop when it is good enough.</em> The ridge parameter does not fall from the sky. It is the consequence of a simple decision: how many times do I correct my error?</p>
+<p>Textbooks typically introduce Ridge Regression as an artificial penalty term: large coefficients are &ldquo;penalized&rdquo;. From the perspective developed here, a different reading emerges: regularization is nothing other than the premature termination of a correction process. The ridge parameter is not an auxiliary variable but the closed-form expression of the same spectral filtering that arises through iteration at finite step count.</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>The formula:</strong> \(\lambda \approx 1/n\). Early stopping = Ridge Regression. Both separate signal from noise, controlled by the eigenvalues of \(X^TX\).</p>
+  <p class="text-sm text-gray-300"><strong>Interim summary:</strong> \(\lambda \approx 1/n\). Early stopping and Ridge Regression are essentially equivalent mechanisms; both separate signal from noise, controlled by the eigenvalues of \(X^TX\).</p>
 </div>
 
 <p><em>This equivalence can be stated formally. In the language of spectral filtering, </em><strong>Theorem 1 of the Kalle paper</strong><em> (Leonhardt, 2026) reads:</em></p>
@@ -423,7 +415,7 @@
 </table>
 </div>
 
-<p>The two columns are not identical &ndash; but their <em>ranking</em> across the spectrum is the same. Large eigenvalues pass through in both; small ones are suppressed in both. Early stopping is therefore not a trick, but <em>implicit regularization</em> &ndash; and the ridge parameter is not an auxiliary variable but the <em>closed-form expression</em> of the same spectral filter.</p>
+<p>The two columns are not identical, but their ranking across the spectrum is the same: large eigenvalues pass through in both cases, small ones are strongly suppressed. Early stopping is therefore <em>implicit regularization</em>; the ridge parameter is its closed-form expression.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -434,18 +426,18 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 6</p>
 <h2>The Kernel Trick</h2>
 
-<p>So far everything was linear. But the world is not linear. Do we need a new theory? No. We need a new <strong>way of looking at the data</strong>.</p>
+<p>So far the construction has been linear: lines, planes, polynomials. Real data, however, often follows non-linear patterns &ndash; parabolas, sine curves, chaotic structures. It is shown in what follows that this does not require a new theory, only a new reading of the existing construction.</p>
 
 <h3>Expanding features</h3>
-<p>If data is not linear in \(x\), make it linear in \((1, x, x^2)\). Extend the design matrix through a <span class="glossary" title="Feature map: transform input data into a higher-dimensional space where the problem becomes linear.">feature map</span> \(\phi(x)\). In the new space the problem is linear &ndash; our entire machinery works again.</p>
+<p>If the data is not linear in \(x\), it can be made linear in a vector of functions \((1, x, x^2, \ldots)\). The design matrix is extended through a <span class="glossary" title="Feature map: transform input data into a higher-dimensional space where the problem becomes linear.">feature map</span> \(\phi(x)\). In this new space the problem is linear, and the entire machinery developed so far applies unchanged.</p>
 
 <h3>The key observation</h3>
-<p>In the iteration, \(X^TX\) appears everywhere &ndash; the matrix of <strong>pairwise dot products</strong>. We never need the features themselves &ndash; only their inner products.</p>
+<p>In the iteration, \(X^TX\) appears throughout &ndash; the matrix of pairwise dot products. Entry \((i,j)\) is \(\langle \phi(x_i), \phi(x_j) \rangle\). The individual features \(\phi(x_i)\) are therefore never needed explicitly; only their inner products.</p>
 
-<p>A <strong>kernel function</strong> \(k(x_i, x_j) = \langle \phi(x_i), \phi(x_j) \rangle\) computes this inner product <em>directly</em>. The <strong>Gaussian kernel</strong> \(k(x,z) = \exp(-\|x-z\|^2/(2\sigma^2))\) has an <em>infinite-dimensional</em> feature space. But the kernel matrix \(K\) stays finite: \(n \times n\).</p>
+<p>A <em>kernel function</em> \(k(x_i, x_j) = \langle \phi(x_i), \phi(x_j) \rangle\) yields this inner product directly, without detour through the features. The Gaussian kernel \(k(x,z) = \exp(-\|x-z\|^2/(2\sigma^2))\) has an infinite-dimensional feature space. The kernel matrix \(K\) nevertheless remains finite: \(n \times n\) for \(n\) data points.</p>
 
-<h3>The transition: nothing changes</h3>
-<p>Replace \(X^TX\) with \(K\). The iteration becomes \(\hat{\mathbf{y}}_{n+1} = \hat{\mathbf{y}}_n + K(\mathbf{y} - \hat{\mathbf{y}}_n)\). <strong>Same algorithm. Different language. Infinite expressive power.</strong></p>
+<h3>The transition</h3>
+<p>Replacing \(X^TX\) with \(K\) leaves the algorithm structurally unchanged: the iteration reads \(\hat{\mathbf{y}}_{n+1} = \hat{\mathbf{y}}_n + K(\mathbf{y} - \hat{\mathbf{y}}_n)\), the residuals follow \(\mathbf{r}_n = (I - K)^n \mathbf{y}\), convergence is determined by the eigenvalues of \(K\), and regularization is controlled via \(\lambda \approx 1/n\). It is the same algorithm, formulated over a higher-dimensional feature space.</p>
 
 <div class="try-it">
   <p><strong>Try it yourself</strong></p>
@@ -455,10 +447,10 @@
 
 <p>Prediction for a new point: \(f(x_*) = \sum_{i=1}^n \alpha_i\,k(x_i, x_*)\) &ndash; each training point &ldquo;votes&rdquo;, weighted by similarity.</p>
 
-<p>Let that sink in: there are no abstract parameters, no weight matrices, no hidden layers. <strong>The training data <em>is</em> the model.</strong> The function \(f\) is completely determined by the data points and their kernel similarities. This is the <strong>Representer Theorem</strong> &ndash; and it holds for any loss function, not just the squared error.</p>
+<p>What is notable here: there are no abstract parameters, no weight matrices, no hidden layers. The training data itself is the model. The function \(f\) is completely determined by the data points and their kernel similarities. This is the statement of the <em>Representer Theorem</em>; it holds for any loss function, not just the squared error.</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>The core of the kernel trick:</strong> \(X^TX \to K\). Nothing else changes. But the feature space becomes infinite-dimensional &ndash; and the expressive power universal.</p>
+  <p class="text-sm text-gray-300"><strong>Interim summary:</strong> \(X^TX \to K\). Algorithmically nothing changes, but the feature space becomes infinite-dimensional, and the expressive power correspondingly universal.</p>
 </div>
 </div>
 <div class="section-divider"></div>
@@ -471,22 +463,22 @@
 
 <h3>Light bouncing off walls</h3>
 
-<p>Imagine a white room with one deep-red wall. A lamp on the ceiling. What do you see? Not just red and white surfaces &ndash; but a soft reddish glow on the white floor near the red wall. <em>Color bleeding</em>: light bounces from the red wall to the floor, carrying color with it.</p>
+<p>An illustrative example from computer graphics: a white room with one deep-red wall and a ceiling lamp. Visible is not only the direct illumination; in addition, a soft reddish glow appears on the white floor near the red wall. This phenomenon, known as <em>color bleeding</em>, describes intuitively how light bounces from the red wall to the floor and carries colour with it.</p>
 
-<p>In computer graphics, the <strong>radiosity equation</strong> describes this: \(\mathbf{B} = \mathbf{E} + \rho F \mathbf{B}\). The solution?</p>
+<p>In computer graphics, the mutual exchange of light between surfaces is described by the <em>radiosity equation</em>: \(\mathbf{B} = \mathbf{E} + \rho F \mathbf{B}\). Here \(\mathbf{E}\) is the self-emission of the lamps, \(\rho\) the reflectivity of the surfaces, and \(F\) the form factor matrix encoding which surfaces &ldquo;see&rdquo; one another. The solution reads:</p>
 <div class="math-display">$$\mathbf{B} = (I - \rho F)^{-1}\,\mathbf{E} = \sum_{k=0}^{\infty} (\rho F)^k\,\mathbf{E}$$</div>
 
-<p>The same Neumann series as Chapter 3! Only the meaning changed:</p>
-<p>&bull; \(k=0\): <strong>Direct light</strong> &ndash; the lamp shines.<br>
-&bull; \(k=1\): <strong>First bounce</strong> &ndash; light reflects once.<br>
-&bull; \(k=2\): <strong>Second bounce</strong> &ndash; reflected light reflects again.<br>
-&bull; Typically <strong>3&ndash;5 bounces</strong> suffice before 99% of energy is absorbed.</p>
+<p>This is exactly the same Neumann series as in Chapter 3, with only the physical meaning of the individual terms changed:</p>
+<p>&bull; \(k = 0\): direct light, the lamp shines.<br>
+&bull; \(k = 1\): first bounce, the light reflects once.<br>
+&bull; \(k = 2\): second bounce, the reflected light reflects again.<br>
+&bull; In typical scenes, after three to five bounces about 99 % of the energy has been absorbed.</p>
 
 <p>The matrix \(\rho F\) is <em>substochastic</em> (rows sum to less than 1). Add an &ldquo;absorber dimension&rdquo; and it becomes <strong>stochastic</strong> (rows sum to 1). A stochastic matrix <em>is</em> a <span class="glossary" title="Markov chain: a system that jumps randomly between states, where the probability of the next state depends only on the current one.">Markov chain</span>. Its equilibrium is the <strong>dominant eigenvector</strong> &ndash; eigenvalue 1.</p>
 
 <h3>The surfer who never stops</h3>
 
-<p>Where in real life is there a massive eigenvalue problem for a stochastic matrix? Every time you use Google.</p>
+<p>A large eigenvalue problem for a stochastic matrix is solved in every Google search. The model is a random surfer who starts on a webpage and at each step follows one of the outgoing links at random. The associated transition matrix \(M\) describes this random walk. Concrete example with 4 pages:</p>
 
 <!-- Mini Web Graph SVG -->
 <svg viewBox="0 0 300 200" width="100%" style="max-width:300px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
@@ -508,7 +500,7 @@
   <line x1="70" y1="128" x2="198" y2="55" stroke="#6b7280" stroke-width="1.2" marker-end="url(#pg1)"/>
 </svg>
 
-<p>A random surfer starts on a webpage, clicks a random outgoing link at each step. The <strong>Google matrix</strong> adds a damping factor: with \(d \approx 0.85\) the surfer follows a link; with \(1-d \approx 0.15\) they teleport to a random page:</p>
+<p>The <strong>Google matrix</strong> introduces a damping factor: with probability \(d \approx 0.85\) the surfer follows a link; with probability \(1 - d \approx 0.15\) they teleport to a random page:</p>
 
 <div class="math-display">$$G = d \cdot M + \frac{1-d}{n}\,\mathbf{1}\mathbf{1}^T$$</div>
 
@@ -552,10 +544,12 @@
 
 <p>The lesson: the lever for scaling KRR is not primarily hardware, it is the algorithmic reformulation &ndash; the absorber construction that re-shapes the system into a form modern matrix libraries can solve efficiently. This is the same intellectual move Google made 25 years ago with PageRank: not bigger servers, but re-framing the problem as an eigenvalue problem of a stochastic matrix.</p>
 
-<p><strong>Wait. Stop.</strong> Regression (Chapter 3), radiosity, PageRank &ndash; three different problems, three times <strong>the same algorithm</strong>. Iterative matrix multiplication, controlled by eigenvalues. Three times the Neumann series. Three times convergence to the dominant eigenvector.</p>
+<p>This shows: regression (Chapter 3), radiosity, and PageRank are, in their mathematical structure, the same problem. Three instances of iterative matrix-vector multiplication, controlled by eigenvalues; three instances of the Neumann series; three instances of convergence to the dominant eigenvector.</p>
 
 <h3>As powerful as a brain</h3>
-<p>The <strong>Representer Theorem</strong> (Kimeldorf &amp; Wahba, 1970): the optimal KRR solution always has the form \(f^*(x) = \sum_{i=1}^n \alpha_i\,k(x_i, x)\).</p>
+<p>One final connection remains: how powerful is Kernel Ridge Regression, really?</p>
+
+<p>The <em>Representer Theorem</em> (Kimeldorf &amp; Wahba, 1970) states that the optimal KRR solution always has the form \(f^*(x) = \sum_{i=1}^n \alpha_i\,k(x_i, x)\). A finite number of coefficients, regardless of how high-dimensional the kernel space is.</p>
 
 <p>The <strong>Universal Approximation Theorem</strong> (Cybenko, 1989): a neural network with one hidden layer can approximate any continuous function arbitrarily well.</p>
 
@@ -618,15 +612,13 @@
   </p>
 </div>
 
-<p>Same letter \(K\). Same pattern: a sum over eigenfunctions \(\psi_n\), weighted by eigenvalues. The propagator describes how a quantum particle travels from A to B. The kernel describes how similar two data points are. Different stages, <strong>same mathematics</strong>. <em>(The \(\psi_n\) here are the Mercer eigenfunctions of the kernel &ndash; related to, but distinct from, the feature map \(\phi\) in Chapter 6.)</em></p>
+<p>The same letter \(K\), the same pattern: a sum over eigenfunctions \(\psi_n\), weighted by eigenvalues. The propagator describes how a quantum particle propagates from A to B. The kernel describes intuitively how similar two data points are. Two different application contexts, the same mathematical structure. <em>(In the kernel case, the \(\psi_n\) are the Mercer eigenfunctions; they are related to, but distinct from, the feature map \(\phi\) of Chapter 6.)</em></p>
 
-<p>In the <a href="/en/quantum.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">quantum post</a>, you saw how standing waves lead to discrete energy levels &ndash; the tones a quantum system likes to play. Here you saw how the eigenvalues of a kernel matrix determine what an algorithm learns and what it ignores. Same principle. Different stage.</p>
+<p>In the <a href="/en/quantum.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">quantum post</a> it was shown how standing waves lead to discrete energy levels &ndash; the tones a quantum system can produce. In the present post it was shown how the eigenvalues of a kernel matrix decide what an algorithm learns and what it disregards. It is the same principle in a different setting.</p>
 
-<p>Erwin Schr&ouml;dinger titled his 1926 paper: <em>&ldquo;Quantization as an Eigenvalue Problem.&rdquo;</em></p>
+<p>Schr&ouml;dinger titled his 1926 paper <em>Quantization as an Eigenvalue Problem</em>. An analogous formulation for the present field would read: <em>Intelligence as an eigenvalue problem</em>.</p>
 
-<p>Perhaps we should add: <em>Intelligence as an eigenvalue problem.</em></p>
-
-<p>Nature is richer than any single description we can give of it. But sometimes different descriptions share the same mathematical core. Eigenvalues are that core.</p>
+<p>Nature is richer than any single description. Multiple descriptions can nevertheless share the same mathematical core; eigenvalues are one such core.</p>
 </div>
 </section>
 

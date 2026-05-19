@@ -65,7 +65,7 @@
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-03-18",
-    "dateModified": "2026-04-21",
+    "dateModified": "2026-05-19",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/emergenz.html" },
     "inLanguage": "de",
     "isAccessibleForFree": true,
@@ -322,9 +322,9 @@
 
 <h3>Die Beobachtung, die 2022 die KI-Forschung ersch&uuml;tterte</h3>
 
-<p>Stell dir ein Sprachmodell mit zehn Milliarden Parametern vor. Du gibst ihm eine Aufgabe: mehrstellige Addition, Schritt f&uuml;r Schritt. Das Ergebnis ist Zufall &ndash; wirre Zeichenketten, offensichtlicher Unsinn. Jetzt nimmst du <em>dasselbe</em> Modell, dieselbe Architektur, denselben Trainingsprozess &ndash; aber mit hundert Milliarden Parametern. Und pl&ouml;tzlich kann es rechnen.</p>
+<p>Ein Sprachmodell mit zehn Milliarden Parametern erh&auml;lt die Aufgabe, mehrstellige Additionen Schritt f&uuml;r Schritt durchzuf&uuml;hren. Das Ergebnis ist Zufall &ndash; wirre Zeichenketten, offensichtlicher Unsinn. Dieselbe Architektur, derselbe Trainingsprozess, aber hundert Milliarden Parameter: das Modell rechnet pl&ouml;tzlich korrekt.</p>
 
-<p>Nicht ein bisschen besser. Nicht graduell. <strong>Sprunghaft.</strong> Von Zufall auf Kompetenz.</p>
+<p>Der &Uuml;bergang ist nicht graduell, sondern sprunghaft &ndash; von Zufall auf Kompetenz innerhalb eines schmalen Gr&ouml;&szlig;enbereichs.</p>
 
 <p>2022 ver&ouml;ffentlichten Jason Wei und Kollegen bei Google das Paper, das diese Beobachtung systematisch dokumentierte.<sup class="footnote-ref" id="fnref-1">[1]</sup> Sie untersuchten &uuml;ber 137 verschiedene Aufgaben &ndash; von mehrstufiger Arithmetik &uuml;ber logische Deduktion bis zu Wortentschl&uuml;sselungen und Quizfragen auf Persisch. Bei all diesen Aufgaben zeigte sich dasselbe Muster: unterhalb einer bestimmten Modellgr&ouml;&szlig;e Zufallsleistung, oberhalb davon pl&ouml;tzliche Kompetenz.</p>
 
@@ -344,7 +344,7 @@
   <p style="margin-bottom:0;"><strong>Gro&szlig;es Modell (540B):</strong> &bdquo;Lisa hat 5 &Auml;pfel. 3 T&uuml;ten &times; 4 = 12 neue &Auml;pfel. 5 + 12 = 17 &Auml;pfel.&ldquo; <em>(korrekt, strukturiert)</em></p>
 </div>
 
-<p>Dieselbe Anweisung (&bdquo;Schritt f&uuml;r Schritt&ldquo;) l&ouml;st beim kleinen Modell nichts aus und beim gro&szlig;en eine korrekte Herleitung. Der Schl&uuml;ssel passt &ndash; aber nur, wenn das Schloss gro&szlig; genug ist.</p>
+<p>Dieselbe Instruktion (&bdquo;Schritt f&uuml;r Schritt&ldquo;) bleibt im kleinen Modell wirkungslos und l&ouml;st im gro&szlig;en eine korrekte Herleitung aus. Die Instruktion entfaltet ihre Wirkung erst oberhalb einer hinreichenden Modellkapazit&auml;t.</p>
 
 <!-- Grafik 1: Der Emergenz-Sprung -->
 <div class="component-wrap">
@@ -372,11 +372,11 @@
 
 <p>Nicht alle waren &uuml;berzeugt. 2023 ver&ouml;ffentlichten Rylan Schaeffer und Kollegen von Stanford ein Paper mit dem provokanten Titel &bdquo;Are Emergent Abilities of Large Language Models a Mirage?&ldquo;<sup class="footnote-ref" id="fnref-3">[3]</sup> Ihre These: Der Sprung existiert nicht in der Realit&auml;t &ndash; er existiert nur in der <em>Metrik</em>.</p>
 
-<p>Das Argument ist elegant: Wenn du &bdquo;Exact Match&ldquo; als Metrik verwendest &ndash; also entweder 100&nbsp;% richtig oder 0&nbsp;% &ndash; dann siehst du nat&uuml;rlich einen Sprung. Denn ein Modell, das &bdquo;1&ldquo; statt &bdquo;17&ldquo; antwortet, bekommt null Punkte. Genauso wie eines, das &bdquo;16&ldquo; antwortet. Aber das zweite Modell ist <em>viel n&auml;her dran</em>.</p>
+<p>Das Argument l&auml;sst sich an der gew&auml;hlten Metrik festmachen: Bei einer Exact-Match-Metrik &ndash; 100&nbsp;% korrekt oder 0&nbsp;%, ohne Zwischenstufen &ndash; erh&auml;lt sowohl ein Modell, das &bdquo;1&ldquo; statt &bdquo;17&ldquo; antwortet, als auch eines, das &bdquo;16&ldquo; ausgibt, null Punkte. Das zweite Modell ist dabei <em>deutlich n&auml;her am Ziel</em> als das erste; die Metrik bildet diesen Unterschied nicht ab.</p>
 
-<p>Schaltest du auf eine <strong>kontinuierliche Metrik</strong> um &ndash; etwa Token-Edit-Distance, die misst, wie weit die Antwort vom Ziel entfernt ist &ndash; verschwindet der Sprung. Stattdessen siehst du einen <strong>glatten, stetigen Anstieg</strong>.</p>
+<p>Unter einer <strong>kontinuierlichen Metrik</strong> &ndash; etwa der Token-Edit-Distance, die den Abstand der Antwort zum Ziel quantifiziert &ndash; verschwindet der Sprung; an seine Stelle tritt ein <strong>glatter, stetiger Anstieg</strong>.</p>
 
-<p>Eine Analogie: Stell dir vor, du misst, ob jemand Fahrradfahren kann. Bin&auml;r &ndash; ja oder nein &ndash; sieht es nach einem pl&ouml;tzlichen Sprung aus. Aber die Balance verbessert sich seit Wochen ganz graduell. Der &bdquo;Sprung&ldquo; ist ein Artefakt deiner Messmethode.</p>
+<p>Eine veranschaulichende Analogie ist das Messen einer motorischen F&auml;higkeit: Bei bin&auml;rer Bewertung &ndash; F&auml;hrt-Fahrrad versus F&auml;hrt-nicht &ndash; entsteht der Eindruck eines pl&ouml;tzlichen Sprungs, w&auml;hrend die zugrundeliegende Balance sich &uuml;ber Wochen graduell verbessert. Der vermeintliche Sprung ist ein Artefakt der Messmethode.</p>
 
 <p>Ruan et al. (2024) gingen noch weiter: Mit ihren &bdquo;Observational Scaling Laws&ldquo; zeigten sie, dass fast alle vermeintlich emergenten F&auml;higkeiten mit den richtigen Metriken vorhersagbar werden.<sup class="footnote-ref" id="fnref-6">[6]</sup></p>
 
@@ -388,7 +388,7 @@
 
 <h3>Die Synthese (Stand 2025)</h3>
 
-<p>Beides stimmt. Die F&auml;higkeit verbessert sich <em>graduell</em>, aber die <em>Nutzbarkeit</em> hat einen Schwellenwert. Wie Wasser, das sich gleichm&auml;&szlig;ig erhitzt &ndash; aber bei 100&nbsp;&deg;C kocht es. Die Temperatur steigt stetig. Der &Uuml;bergang von fl&uuml;ssig zu gasf&ouml;rmig ist trotzdem ein Sprung.</p>
+<p>Beide Lesarten sind miteinander vereinbar. Die zugrundeliegende F&auml;higkeit verbessert sich <em>graduell</em>; die <em>Nutzbarkeit</em> als sichtbare Leistung weist einen Schwellenwert auf. Wasser dient als anschauliche Parallele: Die Temperatur steigt stetig, der Phasen&uuml;bergang von fl&uuml;ssig zu gasf&ouml;rmig bei 100&nbsp;&deg;C bleibt dennoch ein Sprung.</p>
 
 <!-- Grafik 2: Metrik-Magie -->
 <div class="component-wrap">
@@ -442,7 +442,7 @@
   </tbody>
 </table>
 
-<p>Die Parallele ist nicht nur eine Metapher. Die Mathematik ist <em>dieselbe</em>.</p>
+<p>Die Beziehung ist nicht metaphorisch, sondern mathematisch identisch: dieselben Hamiltonians, dieselben Ordnungsparameter, dieselbe Kritikalit&auml;tsanalyse.</p>
 
 <!-- Grafik 3: Ising ↔ Transformer -->
 <div class="component-wrap">
@@ -470,7 +470,7 @@
 
 <p>2022 beobachteten Alethea Power und Kollegen bei OpenAI etwas Ungew&ouml;hnliches.<sup class="footnote-ref" id="fnref-18">[18]</sup> Sie trainierten ein kleines neuronales Netz auf eine einfache Aufgabe: modulare Arithmetik (\(a + b \mod p\)). Das Netz lernte die Trainingsdaten schnell auswendig &ndash; perfekte Leistung auf den Trainingsbeispielen, null Leistung auf neuen Beispielen.</p>
 
-<p>Normalerweise w&uuml;rde man hier aufh&ouml;ren. Das Netz hat &bdquo;overfitted&ldquo; &ndash; auswendig gelernt statt verstanden. Aber Power und Kollegen lie&szlig;en das Training weiterlaufen. Und nach Tausenden weiterer Schritte, lange nachdem das Netz die Daten l&auml;ngst perfekt auswendig konnte, passierte etwas Bemerkenswertes: <strong>Die Leistung auf neuen Beispielen sprang pl&ouml;tzlich von null auf fast hundert Prozent.</strong></p>
+<p>Konventionell w&uuml;rde an dieser Stelle abgebrochen: Das Netz hat &bdquo;overfitted&ldquo; &ndash; auswendig gelernt statt verstanden. Power und Kollegen lie&szlig;en das Training stattdessen weiterlaufen. Nach Tausenden zus&auml;tzlichen Schritten, lange nach dem Erreichen perfekter Memorisierung, trat ein qualitativ neuer Effekt auf: <strong>Die Leistung auf neuen Beispielen sprang von nahe null auf nahezu hundert Prozent.</strong></p>
 
 <p>Sie nannten das <strong>Grokking</strong> &ndash; ein Wort, das Robert Heinlein in seinem Roman <em>Stranger in a Strange Land</em> pr&auml;gte und das so viel bedeutet wie &bdquo;etwas tief und intuitiv verstehen&ldquo;.</p>
 
@@ -488,9 +488,9 @@
 
 <h3>Die Analogie zum Menschen</h3>
 
-<p>Grokking ist die maschinelle Version des &bdquo;Groschen, der f&auml;llt&ldquo;. Du sammelst Informationen, du wiederholst, du &uuml;bst &ndash; und lange scheint nichts zu passieren. Und dann, pl&ouml;tzlich: Klarheit. Nicht weil neue Information kam, sondern weil das innere System sich <em>neu organisiert</em> hat.</p>
+<p>Grokking entspricht strukturell dem umgangssprachlichen &bdquo;Groschen, der f&auml;llt&ldquo;. Wer Informationen sammelt, wiederholt und &uuml;bt, beobachtet zun&auml;chst keine messbare Vertiefung; nach einer Latenz tritt dann eine sprunghafte Klarheit ein, ohne dass neue Information hinzugetreten w&auml;re. Verantwortlich ist die <em>Reorganisation</em> der internen Repr&auml;sentation.</p>
 
-<p>Oder, formaler: <strong>Verarbeitung ist eine Koordinatentransformation.</strong> Die Daten waren schon da. Aber das innere Koordinatensystem musste sich erst so drehen, dass die Struktur sichtbar wurde.</p>
+<p>Formaler beschreibt dies eine <strong>Koordinatentransformation</strong>: Die Daten lagen unver&auml;ndert vor; das innere Koordinatensystem rotierte erst in eine Lage, in der die zugrundeliegende Struktur als Achsenrichtung sichtbar wurde.</p>
 
 <!-- Grafik 4: Grokking live -->
 <div class="component-wrap">
@@ -527,7 +527,7 @@
 
 <p>Ein Beispiel: Der Text lautet &bdquo;Die Katze sa&szlig; auf der Matte. Die Katze sa&szlig; auf der...&ldquo;. Die Induction Head erkennt, dass &bdquo;Die Katze sa&szlig; auf der&ldquo; schon einmal vorkam, und vervollst&auml;ndigt mit &bdquo;Matte&ldquo;.</p>
 
-<p>Das klingt simpel. Aber es ist die <strong>Keimzelle des In-Context Learning</strong> &ndash; der F&auml;higkeit von Sprachmodellen, aus wenigen Beispielen im Prompt neue Aufgaben zu l&ouml;sen. Und das Entscheidende: Induction Heads entstehen w&auml;hrend des Trainings in einem <strong>scharfen Phasen&uuml;bergang</strong>. Vorher existieren sie nicht. Nachher sind sie &uuml;berall im Modell pr&auml;sent.</p>
+<p>Die Operation ist in ihrer Struktur einfach, bildet jedoch die <strong>Keimzelle des In-Context Learning</strong> &ndash; jener F&auml;higkeit von Sprachmodellen, aus wenigen Beispielen im Prompt eine neue Aufgabe zu l&ouml;sen. Induction Heads entstehen w&auml;hrend des Trainings in einem <strong>scharfen Phasen&uuml;bergang</strong>: vor der kritischen Trainingsstufe nicht nachweisbar, danach in nahezu allen Schichten pr&auml;sent.</p>
 
 <h3>Emergente F&auml;higkeit vs. emergente Intelligenz</h3>
 
@@ -622,7 +622,7 @@
 
 <h3>Was emergiert aus gen&uuml;gend menschlichen Gedanken?</h3>
 
-<p>Wenn man genug menschliche Texte verdichtet &ndash; was kommt dabei heraus? Nicht der &bdquo;Mittelwert menschlicher Impulse&ldquo;, sondern der Mittelwert dessen, <em>was &uuml;brig bleibt</em>, wenn Gesellschaften durch die Zeit navigieren. Und das sind erstaunlich konstruktive Dinge:</p>
+<p>Welche Struktur entsteht, wenn hinreichend viele menschliche Texte verdichtet werden? Nicht ein &bdquo;Mittelwert menschlicher Impulse&ldquo;, sondern der Mittelwert dessen, <em>was &uuml;berdauert</em>, wenn Gesellschaften durch die Zeit navigieren. Bemerkenswert ist dabei die ausgepr&auml;gt konstruktive Tendenz der &uuml;berdauernden Inhalte:</p>
 
 <div class="summary-box">
   <p style="margin-bottom:0.5rem;"><strong>Kooperation</strong> &ndash; weil kooperierende Gesellschaften mehr produzieren (und mehr Texte hinterlassen).</p>
@@ -653,15 +653,15 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 8</p>
-<h2>Die Meta-Ebene &ndash; Was du gerade gelesen hast</h2>
+<h2>Die Meta-Ebene &ndash; Zum Entstehungsprozess dieses Textes</h2>
 
 <h3>Der R&uuml;ckbezug</h3>
 
-<p>Zur&uuml;ck zum Prolog. Dieser Text basiert auf &uuml;ber zwanzig wissenschaftlichen Publikationen. Claude Code hat diese Papers gelesen, die relevanten Argumente extrahiert, Widerspr&uuml;che identifiziert (Wei vs. Schaeffer), und das Ergebnis in deutsche Prosa mit acht interaktiven Visualisierungen verdichtet.</p>
+<p>An dieser Stelle der R&uuml;ckbezug zum Prolog. Der vorliegende Text basiert auf &uuml;ber zwanzig wissenschaftlichen Publikationen. Claude Code hat die Papers gelesen, die relevanten Argumente extrahiert, Widerspr&uuml;che identifiziert (Wei versus Schaeffer) und das Ergebnis in deutschsprachige Prosa mit acht interaktiven Visualisierungen &uuml;berf&uuml;hrt.</p>
 
-<p>Das ist keine Magie. Das ist <strong>Emergenz</strong>: Die F&auml;higkeit, aus vielen Einzelteilen ein koh&auml;rentes Ganzes zu formen, das mehr ist als die Summe seiner Teile.</p>
+<p>Dieser Vorgang ist seinerseits ein Beispiel f&uuml;r <strong>Emergenz</strong>: die F&auml;higkeit, aus vielen Einzelteilen ein koh&auml;rentes Ganzes zu formen, dessen Eigenschaften nicht aus der Aufz&auml;hlung der Teile ablesbar sind.</p>
 
-<p>Vor drei Jahren konnte kein Sprachmodell das. Nicht ann&auml;hernd. Nicht, weil jemand &bdquo;Paper-Zusammenfassung&ldquo; als Feature programmiert hat. Sondern weil die Modelle gro&szlig; genug wurden, um die Hauptachse zu finden.</p>
+<p>Drei Jahre zuvor war diese Leistung in keinem Sprachmodell nachweisbar &ndash; nicht ann&auml;hernd. Die F&auml;higkeit ist nicht durch ein eigens implementiertes &bdquo;Paper-Zusammenfassungs&ldquo;-Modul entstanden, sondern durch hinreichende Modellgr&ouml;&szlig;e: erst ab einer kritischen Skala wird die zur Verdichtung n&ouml;tige Hauptachse im internen Repr&auml;sentationsraum auffindbar.</p>
 
 <h3>Die ehrliche Einschr&auml;nkung</h3>
 

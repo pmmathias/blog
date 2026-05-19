@@ -70,7 +70,7 @@
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-03-10",
-    "dateModified": "2026-03-10",
+    "dateModified": "2026-05-19",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/eigenwerte.html" },
     "inLanguage": "de",
     "isAccessibleForFree": true,
@@ -182,15 +182,11 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 1</p>
 <h2>Das Glasperlenspiel</h2>
 
-<p>Jedes Mal, wenn du eine Google-Suche startest, l&ouml;st ein Computer ein <strong>Eigenwertproblem</strong>. Er berechnet, welche Webseite die wichtigste ist &ndash; und die Antwort ist ein <em>Eigenvektor</em>.</p>
+<p>Eine Google-Suche l&ouml;st im Hintergrund ein Eigenwertproblem: Welche Webseite hat das h&ouml;chste Gewicht im Verlinkungs-Graph? Die Antwort ist ein <em>Eigenvektor</em>. Ein neuronales Netz lernt &uuml;ber Eigenwerte des Trainings-Operators, welche Merkmale es behalten und welche es vernachl&auml;ssigen soll. In der Quantenmechanik bilden die erlaubten Energien eines Atoms &ndash; die diskreten Spektrallinien, die Niels Bohr 1913 nicht erkl&auml;ren konnte &ndash; ebenfalls Eigenwerte; Schr&ouml;dinger gab seiner Arbeit von 1926 daher den Titel <em>Quantisierung als Eigenwertproblem</em>.</p>
 
-<p>Jedes Mal, wenn ein neuronales Netz ein Bild erkennt oder einen Text schreibt, steuern <strong>Eigenwerte</strong>, was das Netz lernt und was es ignoriert.</p>
+<p>Dass dieselbe mathematische Struktur in drei v&ouml;llig unterschiedlichen Kontexten auftaucht, ist kein Zufall. Im Folgenden wird der Grund daf&uuml;r entwickelt.</p>
 
-<p>Und in der Quantenmechanik? Die erlaubten Energien eines Atoms &ndash; die diskreten Spektrallinien, die Niels Bohr 1913 nicht erkl&auml;ren konnte &ndash; sind ebenfalls <strong>Eigenwerte</strong>. Schr&ouml;dinger betitelte seine ber&uuml;hmte Arbeit von 1926 schlicht: <em>&bdquo;Quantisierung als Eigenwertproblem.&ldquo;</em></p>
-
-<p>Drei verschiedene Welten. Dieselbe Mathematik. Das ist kein Zufall &ndash; und in diesem Beitrag wirst du sehen, warum.</p>
-
-<p>Wir bauen eine <strong>Kette</strong>: Von der einfachsten linearen Regression &uuml;ber Kernel-Methoden und Google PageRank bis zu neuronalen Netzen. Jedes Glied w&auml;chst aus dem vorherigen. Am Ende steht die Einsicht: <strong>K&uuml;nstliche Intelligenz ist ein Eigenwertproblem.</strong></p>
+<p>Die Argumentation verl&auml;uft als Kette: von der linearen Regression &uuml;ber Kernel-Methoden und Google PageRank bis zu neuronalen Netzen. Jedes Glied folgt aus dem vorhergehenden. Am Ende steht die Beobachtung, dass moderne k&uuml;nstliche Intelligenz im Kern ein Eigenwertproblem ist.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-400"><em>Falls du den <a href="quanten.html#teil-4a" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> gelesen hast:</em> Dort hast du den Propagator \(K(B,A,t) = \sum_n \phi_n(B)\,\phi_n^*(A)\,e^{-i E_n t/\hbar}\) gesehen &ndash; eine Summe &uuml;ber Eigenzust&auml;nde. Die Energien \(E_n\) sind Eigenwerte. Hier wirst du entdecken, dass der Kernel in der KI <em>exakt dieselbe Struktur</em> hat. Derselbe Buchstabe \(K\). Dasselbe Muster. <a href="#epilog" class="text-cyan-400 hover:text-cyan-300 underline">Mehr dazu im Epilog.</a></p>
@@ -212,21 +208,19 @@
 
 <h3>Ein Schatten auf dem Boden</h3>
 
-<p>Stell dir vor, du stehst in der Mittagssonne. Dein Schatten f&auml;llt senkrecht auf den Boden &ndash; ein flaches Abbild deiner dreidimensionalen Gestalt. Das ist eine <strong>Projektion</strong>: die bestm&ouml;gliche Darstellung von dir in einer niedrigeren Dimension.</p>
-
-<p>Was hei&szlig;t &bdquo;bestm&ouml;glich&ldquo;? Der k&uuml;rzeste Abstand von einem Punkt zu einer Fl&auml;che ist immer <strong>senkrecht</strong>. Das ist die Grundlage von allem, was in diesem Beitrag folgt.</p>
+<p>Ein anschauliches Bild f&uuml;r Projektion: ein Mensch in der Mittagssonne. Der Schatten f&auml;llt senkrecht auf den Boden und ist ein flaches Abbild der dreidimensionalen Gestalt &ndash; die bestm&ouml;gliche Darstellung in einer niedrigeren Dimension. Was &bdquo;bestm&ouml;glich&ldquo; hier hei&szlig;t, lie&szlig;e sich beliebig definieren; in der Linearen Algebra wird es konkret gemacht: Der k&uuml;rzeste Abstand von einem Punkt zu einer Fl&auml;che ist immer der senkrechte. Diese Eigenschaft tr&auml;gt alles Folgende.</p>
 
 <h3>Das Skalarprodukt: Zwei Vektoren, eine Zahl</h3>
 
-<p>Um &bdquo;senkrecht&ldquo; mathematisch auszudr&uuml;cken, brauchen wir das <span class="glossary" title="Skalarprodukt: Multipliziere Vektoren komponentenweise und addiere. Ergebnis = 0 bedeutet senkrecht.">Skalarprodukt</span>: \(\langle \mathbf{a}, \mathbf{b} \rangle = a_1 b_1 + a_2 b_2 + \ldots + a_n b_n\). Zwei Vektoren stehen senkrecht aufeinander, wenn ihr Skalarprodukt <strong>null</strong> ist. Ist es positiv, zeigen sie in &auml;hnliche Richtungen. Negativ = entgegengesetzt.</p>
+<p>Um &bdquo;senkrecht&ldquo; mathematisch auszudr&uuml;cken, wird das <span class="glossary" title="Skalarprodukt: Multipliziere Vektoren komponentenweise und addiere. Ergebnis = 0 bedeutet senkrecht.">Skalarprodukt</span> verwendet: \(\langle \mathbf{a}, \mathbf{b} \rangle = a_1 b_1 + a_2 b_2 + \ldots + a_n b_n\). Es beschreibt anschaulich das Ma&szlig; daf&uuml;r, wie weit zwei Vektoren in dieselbe Richtung zeigen. Zwei Vektoren stehen senkrecht aufeinander genau dann, wenn ihr Skalarprodukt null ist; ist es positiv, zeigen sie in &auml;hnliche Richtungen, ist es negativ, in entgegengesetzte.</p>
 
 <h3>Projektion auf eine Gerade</h3>
 
-<p>Gegeben: ein Vektor \(\mathbf{y}\) und eine Richtung \(\mathbf{a}\). Der Punkt auf der Geraden durch \(\mathbf{a}\), der \(\mathbf{y}\) am n&auml;chsten liegt, ist:</p>
+<p>Sei \(\mathbf{y}\) ein Vektor und \(\mathbf{a}\) eine Richtung. Der Punkt auf der Geraden durch \(\mathbf{a}\), der \(\mathbf{y}\) am n&auml;chsten liegt, ist:</p>
 
 <div class="math-display">$$\hat{y} = \frac{\langle \mathbf{a}, \mathbf{y} \rangle}{\langle \mathbf{a}, \mathbf{a} \rangle} \cdot \mathbf{a}$$</div>
 
-<p>Der Fehler \(\mathbf{y} - \hat{y}\) steht senkrecht auf \(\mathbf{a}\). Das ist die ganze Idee.</p>
+<p>Der Bruch beschreibt anschaulich, wie weit man entlang \(\mathbf{a}\) gehen muss, damit der Fehler \(\mathbf{y} - \hat{y}\) senkrecht auf \(\mathbf{a}\) steht. Damit ist die Grundoperation der gesamten linearen Approximation gegeben.</p>
 
 <svg viewBox="0 0 340 220" width="100%" style="max-width:340px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
   <line x1="30" y1="180" x2="310" y2="180" stroke="#374151" stroke-width="1"/>
@@ -251,13 +245,13 @@
 
 <h3>Der allgemeine Fall: Die Normalengleichung</h3>
 
-<p>In der Praxis projiziert man nicht auf eine Gerade, sondern auf einen Unterraum, aufgespannt durch die Spalten einer Matrix \(X\). Die Bedingung &bdquo;Fehler steht senkrecht auf allen Spalten&ldquo; wird zur <strong>Normalengleichung</strong>:</p>
+<p>In der Praxis wird nicht auf eine Gerade projiziert, sondern auf einen Unterraum, aufgespannt durch die Spalten einer Matrix \(X\). Die Bedingung „Fehler steht senkrecht auf allen Spalten" l&auml;sst sich kompakt schreiben:</p>
 
 <div class="math-display">$$X^T X\,\mathbf{c} = X^T\mathbf{y} \quad\Longrightarrow\quad \mathbf{c} = (X^TX)^{-1}\,X^T\mathbf{y}$$</div>
 
-<p>Konkretes Beispiel: \(X = (1,\; 0{,}5)^T\), \(\mathbf{y} = (3,\; 4)^T\). Dann \(X^TX = 1{,}25\), \(X^T\mathbf{y} = 5\), also \(c = 4\). Die Projektion ist \(\hat{\mathbf{y}} = (4,\; 2)^T\). Der Fehler \((-1,\; 2)^T\) steht senkrecht auf \(X\): \(1 \cdot (-1) + 0{,}5 \cdot 2 = 0\). &#x2713;</p>
+<p>Dies ist die sogenannte <em>Normalengleichung</em>. Konkretes Beispiel: \(X = (1,\; 0{,}5)^T\), \(\mathbf{y} = (3,\; 4)^T\). Dann ist \(X^TX = 1{,}25\), \(X^T\mathbf{y} = 5\), und damit \(c = 4\). Die Projektion lautet \(\hat{\mathbf{y}} = (4,\; 2)^T\); der Fehler \((-1,\; 2)^T\) steht senkrecht auf \(X\), denn \(1 \cdot (-1) + 0{,}5 \cdot 2 = 0\). ✓</p>
 
-<p>Sch&ouml;ne Formel. Aber in der Mitte steht \((X^TX)^{-1}\) &ndash; eine <strong>Matrixinversion</strong>. Die kostet \(O(n^3)\) Rechenoperationen, ist numerisch instabil, und &ndash; wie wir gleich sehen werden &ndash; <em>unn&ouml;tig</em>.</p>
+<p>Die Formel ist kompakt, hat aber in der Mitte einen kostspieligen Term: die Inversion \((X^TX)^{-1}\). Sie kostet \(O(n^3)\) Rechenoperationen und ist numerisch instabil. Im n&auml;chsten Kapitel wird gezeigt, dass diese Inversion vermeidbar ist.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -273,9 +267,9 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 3</p>
 <h2>Geduld statt Genialit&auml;t</h2>
 
-<p>Was w&auml;re, wenn wir die Inverse nie berechnen m&uuml;ssten? Wenn es einen Weg g&auml;be, der nichts weiter tut, als immer wieder den eigenen Fehler zu korrigieren?</p>
+<p>Die Inversion l&auml;sst sich vermeiden. An ihre Stelle tritt ein iteratives Verfahren, das auf nichts anderem als wiederholter Fehlerkorrektur beruht. Im Folgenden wird gezeigt, dass dieses Verfahren dieselbe L&ouml;sung wie die Normalengleichung liefert, jedoch ohne Matrixinversion auskommt.</p>
 
-<h3>Projiziere. Fehler. Wiederhole.</h3>
+<h3>Projiziere, korrigiere, wiederhole</h3>
 
 <p><strong>Schritt 1:</strong> Berechne eine grobe erste Approximation: \(\hat{\mathbf{y}}_1 = X \cdot X^T \mathbf{y}\).</p>
 
@@ -322,25 +316,24 @@
 </table>
 </div>
 
-<p>Beobachte: Die Approximation wandert Iteration f&uuml;r Iteration n&auml;her an (4, 2). Und der Fehler im Grenzfall &ndash; \((-1, 2)\) &ndash; steht senkrecht auf \(X\): \(1 \cdot (-1) + 0{,}5 \cdot 2 = 0\). Genau wie es sein muss.</p>
+<p>Die Approximation wandert Iteration f&uuml;r Iteration n&auml;her an (4, 2). Der Fehler im Grenzfall, \((-1, 2)\), steht senkrecht auf \(X\): \(1 \cdot (-1) + 0{,}5 \cdot 2 = 0\). Genau das ist die Bedingung der Normalengleichung.</p>
 
 <div class="try-it">
-  <p><strong>Probier es selbst</strong></p>
-  <p>Klicke &bdquo;N&auml;chster Schritt&ldquo; und beobachte, wie die blaue Approximation sich der gr&uuml;nen exakten L&ouml;sung n&auml;hert. Der rote Pfeil (Residuum) wird bei jedem Schritt k&uuml;rzer.</p>
+  <p><strong>Selbst nachvollziehen.</strong> Durch wiederholtes Klicken auf „N&auml;chster Schritt" wandert die blaue Approximation auf die gr&uuml;ne exakte L&ouml;sung zu; der rote Pfeil (Residuum) wird bei jedem Schritt k&uuml;rzer.</p>
 </div>
 
 <div class="component-wrap">
   <div id="mount-neumann-series"></div>
 </div>
 
-<p><strong>Halt. Stop.</strong> Lies den letzten Satz nochmal. Die Iteration konvergiert nicht zu irgendeiner N&auml;herung. Sie konvergiert zur <strong>exakten</strong> L&ouml;sung &ndash; derselben, die man durch Matrixinversion bekommt. Ohne je eine Matrix zu invertieren. Nur durch geduldiges Korrigieren des eigenen Fehlers.</p>
+<p>Dies bedeutet: Die Iteration konvergiert nicht gegen eine N&auml;herung, sondern gegen die exakte L&ouml;sung &ndash; dieselbe, die die Matrixinversion liefert &ndash; ohne dass eine Matrix invertiert wird. Es gen&uuml;gt das wiederholte Korrigieren des eigenen Fehlers.</p>
 
 <h3>Der elegante Beweis</h3>
 
-<p>Im Gleichgewicht &auml;ndert sich die L&ouml;sung nicht mehr: \(\hat{\mathbf{y}}' = X^T\mathbf{y} + (I - X^TX)\,\hat{\mathbf{y}}'\). Umstellen: \(\hat{\mathbf{y}}' - (I - X^TX)\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), also \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), also \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{y}\). Die Normalengleichung. Q.E.D.</p>
+<p>Im Gleichgewicht &auml;ndert sich die L&ouml;sung nicht mehr: \(\hat{\mathbf{y}}' = X^T\mathbf{y} + (I - X^TX)\,\hat{\mathbf{y}}'\). Umstellen ergibt \(\hat{\mathbf{y}}' - (I - X^TX)\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), also \(X^TX\,\hat{\mathbf{y}}' = X^T\mathbf{y}\), und damit \(\hat{\mathbf{y}}' = (X^TX)^{-1}X^T\mathbf{y}\). Dies ist die Normalengleichung. ∎</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>Was du jetzt in der Hand hast:</strong> Iteration ersetzt Inversion. Geduld ersetzt Genialit&auml;t. Aber eine Frage bleibt: <em>Warum</em> konvergiert das? Was bestimmt die Geschwindigkeit?</p>
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Iteration tritt an die Stelle der Inversion. Offen bleibt allerdings die Frage, <em>warum</em> das Verfahren konvergiert und was seine Geschwindigkeit bestimmt. Dies wird im n&auml;chsten Kapitel &uuml;ber Eigenwerte gekl&auml;rt.</p>
 </div>
 
 </div>
@@ -357,11 +350,11 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 4</p>
 <h2>Was Matrizen wirklich tun</h2>
 
-<p>Eine Matrix ist eine Maschine: Vektor rein, Vektor raus. Die meisten Vektoren werden dabei sowohl gestreckt als auch gedreht. Aber es gibt Spezialisten &ndash; Vektoren, deren <strong>Richtung sich nicht &auml;ndert</strong>:</p>
+<p>Eine Matrix ist eine lineare Abbildung: Vektor rein, Vektor raus. Die meisten Vektoren werden dabei gestreckt <em>und</em> gedreht. Es gibt jedoch ausgezeichnete Vektoren, deren Richtung erhalten bleibt; sie werden nur skaliert:</p>
 
 <div class="math-display">$$A\mathbf{v} = \lambda\,\mathbf{v}$$</div>
 
-<p>So ein \(\mathbf{v}\) hei&szlig;t <strong>Eigenvektor</strong>, das \(\lambda\) sein <strong>Eigenwert</strong>. Die Matrix tut nichts weiter, als den Eigenvektor mit \(\lambda\) zu skalieren &ndash; kein Drehen, kein Kippen.</p>
+<p>Ein solches \(\mathbf{v}\) hei&szlig;t Eigenvektor, das zugeh&ouml;rige \(\lambda\) sein Eigenwert. Die Matrix beschreibt anschaulich: Sie streckt den Eigenvektor um den Faktor \(\lambda\) und l&auml;sst seine Richtung unber&uuml;hrt.</p>
 
 <h3>Ein Beispiel von Hand</h3>
 
@@ -380,15 +373,15 @@
 
 <h3>Was bedeutet das konkret?</h3>
 
-<p>Wenn du die Matrix 10 Mal hintereinander anwendest: \(\lambda_1^{10} = 2^{10} = 1024\), aber \(\lambda_2^{10} = 3^{10} = 59\,049\). Der gr&ouml;&szlig;ere Eigenwert <strong>dominiert</strong>. Nach 20 Anwendungen: \(2^{20} \approx 10^6\), \(3^{20} \approx 3{,}5 \times 10^9\). Die Richtung von \(\mathbf{v}_2\) &uuml;berlagert alles andere.</p>
+<p>Wird die Matrix 10-mal hintereinander angewandt, ergibt sich \(\lambda_1^{10} = 2^{10} = 1024\) gegen&uuml;ber \(\lambda_2^{10} = 3^{10} = 59\,049\). Der gr&ouml;&szlig;ere Eigenwert dominiert. Nach 20 Anwendungen: \(2^{20} \approx 10^6\), \(3^{20} \approx 3{,}5 \times 10^9\). Die Richtung von \(\mathbf{v}_2\) &uuml;berlagert dann alles andere.</p>
 
 <h3>Warum Eigenwerte &uuml;ber Konvergenz entscheiden</h3>
 
-<p>Die Schl&uuml;sselformel: \(A^n = V\,\Lambda^n\,V^{-1}\), wobei \(\Lambda\) die Diagonalmatrix der Eigenwerte ist. Das hei&szlig;t:</p>
+<p>Die Schl&uuml;sselformel lautet \(A^n = V\,\Lambda^n\,V^{-1}\), wobei \(\Lambda\) die Diagonalmatrix der Eigenwerte ist. Sie beschreibt anschaulich, dass die Wirkung wiederholter Matrix-Anwendung vollst&auml;ndig durch die Potenzen der Eigenwerte bestimmt wird:</p>
 
-<p>&bull; Wenn \(|\lambda| &lt; 1\): \(\lambda^n \to 0\) &ndash; die Komponente <strong>verschwindet</strong>.<br>
-&bull; Wenn \(|\lambda| = 1\): bleibt konstant.<br>
-&bull; Wenn \(|\lambda| &gt; 1\): \(\lambda^n \to \infty\) &ndash; <strong>Explosion</strong>.</p>
+<p>&bull; F&uuml;r \(|\lambda| &lt; 1\) gilt \(\lambda^n \to 0\); die zugeh&ouml;rige Komponente verschwindet.<br>
+&bull; F&uuml;r \(|\lambda| = 1\) bleibt sie konstant.<br>
+&bull; F&uuml;r \(|\lambda| &gt; 1\) folgt \(\lambda^n \to \infty\); die Komponente explodiert.</p>
 
 <div class="try-it">
   <p><strong>Probier es selbst</strong></p>
@@ -399,12 +392,12 @@
   <div id="mount-convergence"></div>
 </div>
 
-<p>Jetzt die Verbindung zu Kapitel 3: Wenn \(\mu\) ein Eigenwert von \(X^TX\) ist, dann ist \((1 - \mu)\) ein Eigenwert von \((I - X^TX)\). Die Iteration konvergiert, wenn \(|1 - \mu| &lt; 1\) f&uuml;r alle \(\mu\). Die Eigenwerte von \(X^TX\) bestimmen <strong>alles</strong> &ndash; ob die Iteration konvergiert und wie schnell.</p>
+<p>Die Verbindung zu Kapitel 3 ergibt sich daraus: Ist \(\mu\) ein Eigenwert von \(X^TX\), so ist \((1 - \mu)\) ein Eigenwert von \((I - X^TX)\). Die Iteration konvergiert genau dann, wenn \(|1 - \mu| &lt; 1\) f&uuml;r alle \(\mu\) gilt. Die Eigenwerte von \(X^TX\) bestimmen damit sowohl, ob die Iteration konvergiert, als auch, wie schnell sie das tut.</p>
 
-<p>Symmetrische Matrizen (und \(X^TX\) ist immer symmetrisch) haben nur reelle Eigenwerte und orthogonale Eigenvektoren. Gro&szlig;e Eigenwerte = Richtungen mit viel Variation (Signal). Kleine = wenig Variation (Rauschen).</p>
+<p>Symmetrische Matrizen &ndash; und \(X^TX\) ist stets symmetrisch &ndash; besitzen ausschlie&szlig;lich reelle Eigenwerte und orthogonale Eigenvektoren. Gro&szlig;e Eigenwerte entsprechen Richtungen mit hoher Varianz (Signal); kleine Eigenwerte entsprechen Richtungen mit geringer Varianz (Rauschen).</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>Die DNA einer Matrix</strong> sind ihre Eigenwerte. Sie sagen dir, ob ein iterativer Prozess konvergiert, wie schnell, und wohin. Und sie trennen Signal von Rauschen &ndash; was direkt zum n&auml;chsten Kapitel f&uuml;hrt.</p>
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> Die Eigenwerte einer Matrix charakterisieren das Verhalten unter wiederholter Anwendung &ndash; Konvergenz, Divergenz, und insbesondere die Trennung von Signal und Rauschen. Letzteres f&uuml;hrt zum n&auml;chsten Kapitel.</p>
 </div>
 
 </div>
@@ -421,11 +414,11 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 5</p>
 <h2>Fr&uuml;h aufh&ouml;ren lohnt sich</h2>
 
-<p>Stell dir einen Sch&uuml;ler vor, der 20 &Uuml;bungsaufgaben auswendig lernt. Jede Zahl, jedes Komma, jede Formulierung &ndash; perfekt im Ged&auml;chtnis. In der &Uuml;bung: 20 von 20. Dann kommt die Pr&uuml;fung. Neue Aufgaben, die er noch nie gesehen hat. Ergebnis: 8 von 20. Er hat die <em>Aufgaben</em> gelernt, nicht die <em>Prinzipien</em>. Das nennt man <strong>Overfitting</strong> &ndash; &Uuml;beranpassung.</p>
+<p>Ein anschauliches Bild: Ein Sch&uuml;ler lernt 20 &Uuml;bungsaufgaben auswendig &ndash; jede Zahl, jedes Komma, jede Formulierung. In der &Uuml;bung erreicht er 20 von 20 Punkten. In der Pr&uuml;fung, in der neue Aufgaben gestellt werden, erreicht er nur 8 von 20. Er hat die konkreten Aufgaben gelernt, nicht die zugrundeliegenden Prinzipien. Dieses Ph&auml;nomen hei&szlig;t <em>Overfitting</em> oder &Uuml;beranpassung.</p>
 
 <h3>Was das mit unserer Iteration zu tun hat</h3>
 
-<p>Nach \(n\) Iterationen wird die Komponente entlang des \(i\)-ten Eigenvektors um den Faktor \(1 - (1-\mu_i)^n\) beibehalten. Klingt abstrakt &ndash; aber schau dir die Zahlen an:</p>
+<p>Nach \(n\) Iterationen wird die Komponente entlang des \(i\)-ten Eigenvektors um den Faktor \(1 - (1-\mu_i)^n\) beibehalten. Was diese Formel anschaulich bedeutet, zeigt sich in den Zahlen:</p>
 
 <div style="overflow-x:auto;">
 <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
@@ -445,7 +438,7 @@
 </table>
 </div>
 
-<p><strong>Gro&szlig;e Eigenwerte</strong> (starkes Signal): Sofort bei 100%. <strong>Kleine Eigenwerte</strong> (oft Rauschen): Brauchen Hunderte von Iterationen. Wenige Iterationen = nur das Signal wird gelernt. Viele = auch das Rauschen. <strong>Fr&uuml;hes Aufh&ouml;ren ist ein nat&uuml;rlicher Rauschfilter.</strong></p>
+<p>Gro&szlig;e Eigenwerte (starkes Signal) erreichen bereits nach wenigen Iterationen nahezu 100 %. Kleine Eigenwerte (typisch Rauschen) brauchen Hunderte von Iterationen. Daraus folgt: Wenige Iterationen lernen nur das Signal; viele auch das Rauschen. Fr&uuml;hes Aufh&ouml;ren wirkt damit als nat&uuml;rlicher Rauschfilter.</p>
 
 <h3>Die &Auml;quivalenz zu Ridge Regression</h3>
 
@@ -455,21 +448,20 @@
 
 <div class="math-display">$$\lambda \approx \frac{1}{n}$$</div>
 
-<p>Mehr Iterationen = kleineres \(\lambda\) = weniger Regularisierung. Weniger Iterationen = gr&ouml;&szlig;eres \(\lambda\) = glattere L&ouml;sung. <em>(Die Beziehung ist nicht exakt, aber die Filterkurven beider Verfahren haben f&uuml;r praktische Zwecke dieselbe Form.)</em></p>
+<p>Mehr Iterationen entsprechen kleinerem \(\lambda\) und damit schw&auml;cherer Regularisierung; weniger Iterationen entsprechen gr&ouml;&szlig;erem \(\lambda\) und damit glatterer L&ouml;sung. <em>(Die Beziehung ist nicht exakt; die Filterkurven beider Verfahren haben jedoch f&uuml;r praktische Zwecke dieselbe Form.)</em></p>
 
 <div class="try-it">
-  <p><strong>Probier es selbst</strong></p>
-  <p>Schiebe \(n\) und beobachte: Die Filterkurve der Iteration (links, cyan) und die von Ridge Regression (rechts, gelb) haben <em>dieselbe Form</em>. Frühes Aufhören und Ridge Regression tun dasselbe!</p>
+  <p><strong>Selbst nachvollziehen.</strong> Durch Schieben von \(n\) wird sichtbar: Die Filterkurve der Iteration (links, cyan) und jene von Ridge Regression (rechts, gelb) haben dieselbe Form. Fr&uuml;hes Aufh&ouml;ren und Ridge Regression bewirken in der Filterung dasselbe.</p>
 </div>
 
 <div class="component-wrap">
   <div id="mount-regularization"></div>
 </div>
 
-<p><strong>Halt. Stop.</strong> In jedem Lehrbuch wird Ridge Regression als k&uuml;nstlicher Strafterm eingef&uuml;hrt: &bdquo;Wir bestrafen gro&szlig;e Koeffizienten.&ldquo; Aber in Wirklichkeit ist Regularisierung die nat&uuml;rlichste Sache der Welt: <em>H&ouml;r auf, wenn es gut genug ist.</em> Der Ridge-Parameter f&auml;llt nicht vom Himmel. Er ist die Konsequenz einer einfachen Entscheidung: Wie oft korrigiere ich meinen Fehler?</p>
+<p>In Lehrb&uuml;chern wird Ridge Regression &uuml;blicherweise als k&uuml;nstlicher Strafterm eingef&uuml;hrt: man &bdquo;bestraft&ldquo; gro&szlig;e Koeffizienten. Aus der hier entwickelten Perspektive ergibt sich eine andere Lesart: Regularisierung ist nichts anderes als das fr&uuml;hzeitige Beenden eines Korrekturprozesses. Der Ridge-Parameter ist keine Hilfsvariable, sondern der geschlossene Ausdruck derselben Spektralfilterung, die durch Iteration bei endlicher Schrittzahl entsteht.</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>Die Formel:</strong> \(\lambda \approx 1/n\). Fr&uuml;hes Aufh&ouml;ren = Ridge Regression. Beide trennen Signal von Rauschen, gesteuert durch die Eigenwerte von \(X^TX\).</p>
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> \(\lambda \approx 1/n\). Fr&uuml;hes Aufh&ouml;ren und Ridge Regression sind im Wesentlichen gleichwertige Mechanismen; beide trennen Signal von Rauschen, gesteuert durch die Eigenwerte von \(X^TX\).</p>
 </div>
 
 <p><em>Diese &Auml;quivalenz l&auml;sst sich als formaler Satz schreiben. In der Sprache der Spektralfilter besagt </em><strong>Theorem 1 im Kalle-Paper</strong><em> (Leonhardt, 2026):</em></p>
@@ -496,7 +488,7 @@
 </table>
 </div>
 
-<p>Die zwei Spalten sind nicht identisch &ndash; aber ihre <em>Rangordnung</em> &uuml;ber das Spektrum ist dieselbe. Gro&szlig;e Eigenwerte lassen beide passieren; kleine unterdr&uuml;cken beide. Fr&uuml;hes Aufh&ouml;ren ist also kein Trick, sondern <em>implizite Regularisierung</em> &ndash; und der Ridge-Parameter ist keine Hilfsvariable, sondern der <em>geschlossene Ausdruck</em> desselben Spektralfilters.</p>
+<p>Die beiden Spalten sind zwar nicht identisch, ihre Rangordnung &uuml;ber das Spektrum jedoch schon: Gro&szlig;e Eigenwerte werden in beiden F&auml;llen weitgehend durchgelassen, kleine in beiden F&auml;llen stark unterdr&uuml;ckt. Fr&uuml;hes Aufh&ouml;ren ist somit <em>implizite Regularisierung</em>; der Ridge-Parameter ist deren geschlossener Ausdruck.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -512,25 +504,23 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 6</p>
 <h2>Der Kernel-Trick</h2>
 
-<p>Bisher war alles linear: Geraden, Ebenen, Polynome. Aber die Welt ist nicht linear. Daten folgen Parabeln, Sinuskurven, chaotischen Mustern. Brauchen wir eine neue Theorie?</p>
-
-<p>Nein. Wir brauchen einen neuen <strong>Blick auf die Daten</strong>.</p>
+<p>Bisher war alles linear: Geraden, Ebenen, Polynome. Reale Daten folgen jedoch h&auml;ufig nicht-linearen Strukturen &ndash; Parabeln, Sinuskurven, chaotischen Mustern. Im Folgenden wird gezeigt, dass dies keine neue Theorie erfordert, sondern lediglich eine neue Lesart der bisherigen Konstruktion.</p>
 
 <h3>Features erweitern</h3>
 
-<p>Wenn Daten nicht linear in \(x\) sind, mach sie linear in \((1, x, x^2)\). Erweitere die Designmatrix durch eine <span class="glossary" title="Feature-Abbildung: Transformation der Eingabedaten in einen h&ouml;herdimensionalen Raum, in dem das Problem linear wird.">Feature-Abbildung</span> \(\phi(x)\). Im neuen Raum ist das Problem linear &ndash; unsere gesamte Maschinerie funktioniert wieder.</p>
+<p>Sind die Daten nicht linear in \(x\), so lassen sie sich linear in einem Vektor von Funktionen \((1, x, x^2, \ldots)\) machen. Die Designmatrix wird durch eine <span class="glossary" title="Feature-Abbildung: Transformation der Eingabedaten in einen h&ouml;herdimensionalen Raum, in dem das Problem linear wird.">Feature-Abbildung</span> \(\phi(x)\) erweitert. Im neuen Raum ist das Problem linear, und die gesamte bisher entwickelte Maschinerie greift unver&auml;ndert.</p>
 
 <h3>Die entscheidende Beobachtung</h3>
 
-<p>In der Iteration taucht &uuml;berall \(X^TX\) auf &ndash; die Matrix der <strong>paarweisen Skalarprodukte</strong>. Eintrag \((i,j)\) ist \(\langle \phi(x_i), \phi(x_j) \rangle\). Wir brauchen die Features \(\phi(x_i)\) nie einzeln. Nur ihre Skalarprodukte.</p>
+<p>In der Iteration tritt durchweg \(X^TX\) auf &ndash; die Matrix der paarweisen Skalarprodukte. Der Eintrag \((i,j)\) lautet \(\langle \phi(x_i), \phi(x_j) \rangle\). Die einzelnen Features \(\phi(x_i)\) werden somit nie explizit ben&ouml;tigt; nur ihre Skalarprodukte.</p>
 
-<p>Eine <strong>Kernel-Funktion</strong> \(k(x_i, x_j) = \langle \phi(x_i), \phi(x_j) \rangle\) berechnet dieses Skalarprodukt <em>direkt</em>, ohne den Umweg &uuml;ber die Features. Konkretes Beispiel: \((1 + xz)^2 = 1 + 2xz + x^2z^2\). Das ist das Skalarprodukt der Features \(\phi = (1, \sqrt{2}\,x, x^2)\) &ndash; eine einzige Multiplikation statt drei.</p>
+<p>Eine <em>Kernel-Funktion</em> \(k(x_i, x_j) = \langle \phi(x_i), \phi(x_j) \rangle\) liefert dieses Skalarprodukt direkt, ohne Umweg &uuml;ber die Features. Konkretes Beispiel: \((1 + xz)^2 = 1 + 2xz + x^2z^2\) ist das Skalarprodukt der Features \(\phi = (1, \sqrt{2}\,x, x^2)\) &ndash; eine einzige Multiplikation gen&uuml;gt anstelle von drei Komponenten-Multiplikationen.</p>
 
-<p>Der <strong>Gau&szlig;-Kernel</strong> \(k(x,z) = \exp(-\|x-z\|^2/(2\sigma^2))\) hat einen <em>unendlich-dimensionalen</em> Feature-Raum. Aber die Kernel-Matrix \(K\) bleibt endlich: \(n \times n\) f&uuml;r \(n\) Datenpunkte.</p>
+<p>Der <em>Gau&szlig;-Kernel</em> \(k(x,z) = \exp(-\|x-z\|^2/(2\sigma^2))\) besitzt einen unendlich-dimensionalen Feature-Raum. Die Kernel-Matrix \(K\) bleibt jedoch endlich: \(n \times n\) f&uuml;r \(n\) Datenpunkte.</p>
 
-<h3>Der &Uuml;bergang: Nichts &auml;ndert sich</h3>
+<h3>Der &Uuml;bergang</h3>
 
-<p>Ersetze \(X^TX\) durch \(K\). Die Iteration wird: \(\hat{\mathbf{y}}_{n+1} = \hat{\mathbf{y}}_n + K(\mathbf{y} - \hat{\mathbf{y}}_n)\). Residuen: \(\mathbf{r}_n = (I - K)^n \mathbf{y}\). Konvergenz: bestimmt durch Eigenwerte von \(K\). Regularisierung: \(\lambda \approx 1/n\). <strong>Derselbe Algorithmus. Andere Sprache. Unendliche Ausdruckskraft.</strong></p>
+<p>Ersetzt man \(X^TX\) durch \(K\), so &auml;ndert sich algorithmisch nichts: Die Iteration lautet \(\hat{\mathbf{y}}_{n+1} = \hat{\mathbf{y}}_n + K(\mathbf{y} - \hat{\mathbf{y}}_n)\), die Residuen folgen \(\mathbf{r}_n = (I - K)^n \mathbf{y}\), Konvergenz wird durch die Eigenwerte von \(K\) bestimmt, und Regularisierung &uuml;ber \(\lambda \approx 1/n\) gesteuert. Es ist derselbe Algorithmus, formuliert &uuml;ber einem h&ouml;herdimensionalen Feature-Raum.</p>
 
 <div class="try-it">
   <p><strong>Probier es selbst</strong></p>
@@ -541,12 +531,12 @@
   <div id="mount-kernel-regression"></div>
 </div>
 
-<p>Die Vorhersage f&uuml;r einen neuen Punkt \(x_*\) ist \(f(x_*) = \sum_{i=1}^n \alpha_i\,k(x_i, x_*)\) &ndash; jeder Trainingspunkt &bdquo;stimmt ab&ldquo;, gewichtet nach seiner &Auml;hnlichkeit zum neuen Punkt.</p>
+<p>Die Vorhersage f&uuml;r einen neuen Punkt \(x_*\) lautet \(f(x_*) = \sum_{i=1}^n \alpha_i\,k(x_i, x_*)\) und beschreibt anschaulich eine gewichtete Abstimmung aller Trainingspunkte &uuml;ber ihre &Auml;hnlichkeit zu \(x_*\).</p>
 
-<p>Halt dir das vor Augen: Es gibt keine abstrakten Parameter, keine Gewichtsmatrizen, keine versteckten Schichten. <strong>Die Trainingsdaten <em>sind</em> das Modell.</strong> Die Funktion \(f\) ist vollst&auml;ndig durch die Datenpunkte und ihre Kernel-&Auml;hnlichkeiten bestimmt. Das ist das <strong>Representer Theorem</strong> &ndash; und es gilt f&uuml;r jede Verlustfunktion, nicht nur f&uuml;r die quadratische.</p>
+<p>Bemerkenswert daran: Es existieren keine abstrakten Parameter, keine Gewichtsmatrizen, keine versteckten Schichten. Die Trainingsdaten selbst sind das Modell. Die Funktion \(f\) ist vollst&auml;ndig durch die Datenpunkte und ihre Kernel-&Auml;hnlichkeiten bestimmt. Dies ist die Aussage des <em>Representer Theorems</em>; sie gilt f&uuml;r jede Verlustfunktion, nicht nur f&uuml;r die quadratische.</p>
 
 <div class="summary-box">
-  <p class="text-sm text-gray-300"><strong>Der Kern des Kernel-Tricks:</strong> \(X^TX \to K\). Sonst &auml;ndert sich nichts. Aber der Feature-Raum wird unendlich-dimensional &ndash; und die Ausdruckskraft universell.</p>
+  <p class="text-sm text-gray-300"><strong>Zwischenstand:</strong> \(X^TX \to K\). Algorithmisch &auml;ndert sich nichts, der Feature-Raum wird allerdings unendlich-dimensional, und die Ausdruckskraft entsprechend universell.</p>
 </div>
 
 </div>
@@ -565,18 +555,18 @@
 
 <h3>Licht, das von W&auml;nden springt</h3>
 
-<p>Stell dir einen wei&szlig;en Raum vor mit einer tiefroten Wand. Eine Lampe an der Decke. Was siehst du? Nicht nur rote und wei&szlig;e Fl&auml;chen &ndash; sondern einen sanften r&ouml;tlichen Schimmer auf dem wei&szlig;en Boden neben der roten Wand. <em>Color Bleeding</em>: Licht springt von der roten Wand zum Boden und tr&auml;gt Farbe mit.</p>
+<p>Ein anschauliches Beispiel aus der Computergrafik: ein wei&szlig;er Raum mit einer tiefroten Wand und einer Deckenlampe. Sichtbar ist nicht nur die direkte Beleuchtung; daneben entsteht ein sanfter r&ouml;tlicher Schimmer auf dem wei&szlig;en Boden neben der roten Wand. Dieses als <em>Color Bleeding</em> bezeichnete Ph&auml;nomen beschreibt anschaulich, wie Licht von der roten Wand zum Boden springt und Farbe mittr&auml;gt.</p>
 
-<p>In der Computergrafik beschreibt die <strong>Radiosity-Gleichung</strong>, wie Licht zwischen Fl&auml;chen springt: \(\mathbf{B} = \mathbf{E} + \rho F \mathbf{B}\). Hier ist \(\mathbf{E}\) das Eigenleuchten (Lampen), \(\rho\) die Reflektivit&auml;t (wie viel Licht jede Fl&auml;che zur&uuml;ckwirft) und \(F\) die Formfaktormatrix (wer &bdquo;sieht&ldquo; wen). Die L&ouml;sung?</p>
+<p>In der Computergrafik wird der gegenseitige Lichtaustausch zwischen Fl&auml;chen durch die <em>Radiosity-Gleichung</em> beschrieben: \(\mathbf{B} = \mathbf{E} + \rho F \mathbf{B}\). Dabei ist \(\mathbf{E}\) das Eigenleuchten der Lampen, \(\rho\) die Reflektivit&auml;t der Fl&auml;chen, und \(F\) die Formfaktormatrix, die kodiert, welche Fl&auml;chen sich gegenseitig &bdquo;sehen&ldquo;. Die L&ouml;sung lautet:</p>
 
 <div class="math-display">$$\mathbf{B} = (I - \rho F)^{-1}\,\mathbf{E} = \sum_{k=0}^{\infty} (\rho F)^k\,\mathbf{E}$$</div>
 
-<p>Dieselbe Neumann-Reihe wie in Kapitel 3! Nur die Bedeutung hat sich ge&auml;ndert:</p>
+<p>Dies ist exakt dieselbe Neumann-Reihe wie in Kapitel 3, nur mit anderer physikalischer Bedeutung der einzelnen Terme:</p>
 
-<p>&bull; \(k=0\): <strong>Direktes Licht</strong> &ndash; die Lampe strahlt.<br>
-&bull; \(k=1\): <strong>Erster Bounce</strong> &ndash; Licht reflektiert einmal von einer Wand.<br>
-&bull; \(k=2\): <strong>Zweiter Bounce</strong> &ndash; das reflektierte Licht reflektiert nochmal.<br>
-&bull; Typischerweise gen&uuml;gen <strong>3&ndash;5 Bounces</strong>, bevor 99% der Energie absorbiert ist.</p>
+<p>&bull; \(k = 0\): direktes Licht, die Lampe strahlt.<br>
+&bull; \(k = 1\): erster Bounce, das Licht wird einmal von einer Wand reflektiert.<br>
+&bull; \(k = 2\): zweiter Bounce, das reflektierte Licht wird erneut reflektiert.<br>
+&bull; In typischen Szenen sind nach drei bis f&uuml;nf Bounces bereits etwa 99 % der Energie absorbiert.</p>
 
 <p>Licht, das zwischen W&auml;nden springt, <em>ist</em> iterative Fehlerkorrektur &ndash; angewendet auf Energie statt auf Daten.</p>
 
@@ -584,9 +574,7 @@
 
 <h3>Der Surfer, der nie aufh&ouml;rt</h3>
 
-<p>Wo im echten Leben gibt es ein riesiges Eigenwertproblem f&uuml;r eine stochastische Matrix? Jedes Mal, wenn du Google benutzt.</p>
-
-<p>Stell dir einen zuf&auml;lligen Surfer vor, der auf einer Webseite startet und bei jedem Schritt zuf&auml;llig auf einen der ausgehenden Links klickt. Die <strong>&Uuml;bergangsmatrix</strong> \(M\) beschreibt diesen Random Walk. Beispiel mit 4 Seiten:</p>
+<p>Ein gro&szlig;es Eigenwertproblem f&uuml;r eine stochastische Matrix wird in jeder Google-Suche gel&ouml;st. Modelliert wird ein zuf&auml;lliger Surfer, der auf einer Webseite startet und bei jedem Schritt zuf&auml;llig einem der ausgehenden Links folgt. Die zugeh&ouml;rige &Uuml;bergangsmatrix \(M\) beschreibt diesen Random Walk. Konkretes Beispiel mit 4 Seiten:</p>
 
 <!-- Mini Web Graph SVG -->
 <svg viewBox="0 0 300 200" width="100%" style="max-width:300px;display:block;margin:1.5rem auto;" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">
@@ -653,11 +641,11 @@
 
 <p>Die Lehre: der Hebel f&uuml;r Skalierung in KRR ist nicht in erster Linie die Hardware, sondern die algorithmische Umformulierung &ndash; die Absorber-Konstruktion, die das System in eine Form bringt, die moderne Matrixbibliotheken effizient l&ouml;sen k&ouml;nnen. Das ist dieselbe intellektuelle Bewegung, die Google vor 25 Jahren mit PageRank gemacht hat: nicht durch gr&ouml;&szlig;ere Server, sondern durch die Umformulierung in ein Eigenwertproblem einer stochastischen Matrix.</p>
 
-<p><strong>Halt. Stop.</strong> Regression (Kapitel 3), Radiosity, PageRank &ndash; drei verschiedene Probleme, dreimal <strong>derselbe Algorithmus</strong>. Iterative Matrixmultiplikation, gesteuert durch Eigenwerte. Dreimal Neumann-Reihe. Dreimal Konvergenz zum dominanten Eigenvektor.</p>
+<p>Damit zeigt sich: Regression (Kapitel 3), Radiosity, und PageRank sind in der mathematischen Struktur dasselbe Problem. Dreimal iterative Matrix-Vektor-Multiplikation, gesteuert durch Eigenwerte; dreimal Neumann-Reihe; dreimal Konvergenz zum dominanten Eigenvektor.</p>
 
 <h3>So m&auml;chtig wie ein Gehirn</h3>
 
-<p>Jetzt die letzte Verbindung. Wie m&auml;chtig ist Kernel Ridge Regression wirklich?</p>
+<p>Es bleibt eine letzte Verbindung: Wie m&auml;chtig ist Kernel Ridge Regression eigentlich?</p>
 
 <p>Das <strong>Representer Theorem</strong> (Kimeldorf &amp; Wahba, 1970) sagt: Die optimale KRR-L&ouml;sung hat immer die Form \(f^*(x) = \sum_{i=1}^n \alpha_i\,k(x_i, x)\). Endlich viele Koeffizienten, egal wie hochdimensional der Kernel-Raum ist.</p>
 
@@ -717,7 +705,7 @@
 <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Epilog</p>
 <h2>K = K: Das Glasperlenspiel</h2>
 
-<p>Am Anfang dieses Beitrags stand eine Formel aus der Quantenmechanik. Am Ende steht eine Formel aus dem maschinellen Lernen. Stell sie nebeneinander:</p>
+<p>Am Anfang dieses Beitrags stand eine Formel aus der Quantenmechanik; am Ende steht eine Formel aus dem maschinellen Lernen. Nebeneinander gestellt:</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300" style="font-family: monospace; line-height: 2.5;">
@@ -728,15 +716,13 @@
   </p>
 </div>
 
-<p>Derselbe Buchstabe \(K\). Dasselbe Muster: Eine Summe &uuml;ber Eigenfunktionen \(\psi_n\), gewichtet durch Eigenwerte. Der Propagator beschreibt, wie ein Quantenteilchen von A nach B reist. Der Kernel beschreibt, wie &auml;hnlich zwei Datenpunkte sind. Verschiedene B&uuml;hnen, <strong>dieselbe Mathematik</strong>. <em>(Die \(\psi_n\) sind hier die Mercer-Eigenfunktionen des Kernels &ndash; verwandt mit, aber verschieden von der Feature-Abbildung \(\phi\) aus Kapitel 6.)</em></p>
+<p>Derselbe Buchstabe \(K\), dasselbe Muster: eine Summe &uuml;ber Eigenfunktionen \(\psi_n\), gewichtet durch Eigenwerte. Der Propagator beschreibt, wie ein Quantenteilchen von A nach B propagiert. Der Kernel beschreibt anschaulich, wie &auml;hnlich zwei Datenpunkte zueinander sind. Zwei verschiedene Anwendungskontexte, dieselbe mathematische Struktur. <em>(Die \(\psi_n\) im Kernel-Fall sind die Mercer-Eigenfunktionen; sie sind verwandt mit, aber verschieden von der Feature-Abbildung \(\phi\) aus Kapitel 6.)</em></p>
 
-<p>Im <a href="quanten.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> hast du gesehen, wie stehende Wellen zu diskreten Energieniveaus f&uuml;hren &ndash; die T&ouml;ne, die ein Quantensystem gerne spielt. Hier hast du gesehen, wie die Eigenwerte einer Kernel-Matrix bestimmen, was ein Algorithmus lernt und was er ignoriert. Dasselbe Prinzip. Andere B&uuml;hne.</p>
+<p>Im <a href="quanten.html#teil-4b" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> wurde gezeigt, wie stehende Wellen zu diskreten Energieniveaus f&uuml;hren &ndash; den T&ouml;nen, die ein Quantensystem hervorbringen kann. Im vorliegenden Beitrag wurde gezeigt, wie die Eigenwerte einer Kernel-Matrix dar&uuml;ber entscheiden, was ein Algorithmus lernt und was er vernachl&auml;ssigt. Es ist dasselbe Prinzip in unterschiedlicher Kulisse.</p>
 
-<p>Erwin Schr&ouml;dinger betitelte seine Arbeit von 1926: <em>&bdquo;Quantisierung als Eigenwertproblem.&ldquo;</em></p>
+<p>Schr&ouml;dinger gab seiner Arbeit von 1926 den Titel <em>Quantisierung als Eigenwertproblem</em>. Eine analoge Formulierung f&uuml;r das gegenw&auml;rtige Feld w&auml;re: <em>Intelligenz als Eigenwertproblem</em>.</p>
 
-<p>Vielleicht sollten wir erg&auml;nzen: <em>Intelligenz als Eigenwertproblem.</em></p>
-
-<p>Die Natur ist reicher als jede einzelne Beschreibung. Aber manchmal teilen verschiedene Beschreibungen denselben mathematischen Kern. Eigenwerte sind dieser Kern.</p>
+<p>Die Natur ist reicher als jede einzelne Beschreibung. Mehrere Beschreibungen k&ouml;nnen aber denselben mathematischen Kern teilen; Eigenwerte sind ein solcher Kern.</p>
 
 </div>
 </section>
