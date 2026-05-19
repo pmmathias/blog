@@ -125,6 +125,7 @@
     @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
     @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
   </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog — RSS (Atom, English)" href="/feed-en.xml">
 </head>
 
 <body class="bg-gray-950 text-gray-100 antialiased">
@@ -785,6 +786,17 @@ Best pair: <code style="font-size:0.72rem;">&ldquo;context every time you start 
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the difference between KRR Chat and ChatGPT?", "acceptedAnswer": {"@type": "Answer", "text": "ChatGPT uses a neural network with billions of parameters and attention mechanisms. KRR Chat uses Kernel Ridge Regression with a single weight matrix (1536 \u00d7 505 = ~780,000 parameters). Both solve the same task \u2013 \u201cgiven context, predict the next word\u201d \u2013 but with entirely different mathematical tools. KRR Chat makes visible through color coding what the model memorizes and what it generalizes."}}, {"@type": "Question", "name": "Why does KRR Chat respond in English?", "acceptedAnswer": {"@type": "Answer", "text": "The 104 training sentences and the retrieval corpus of 805 sentences are written in English because the mathematical terminology is predominantly English. The model has no understanding of \u201clanguage\u201d \u2013 it has only learned which English word is likely to follow which context."}}, {"@type": "Question", "name": "Can KRR Chat be trained with more data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2013 Kalle proves it: from 57 to 2113 dialogue pairs. But quality beats quantity. With 4301 programmatically generated pairs, accuracy dropped to 35%. Only radical curation brought quality back. The switch from hash encoding to Word2Vec embeddings solved the collision problem. The key is not more data but better data."}}]}
 </script>
+
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Read next</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Related posts on ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/en/eigenvalues.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenvalues & AI</a> <span class="text-gray-500" style="font-size:0.9em;">— Kernels, PageRank, Neumann series</span></li>
+    <li><a href="/en/emergence.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergence in Language Models</a> <span class="text-gray-500" style="font-size:0.9em;">— Phase transitions, grokking, Ising</span></li>
+  </ul>
+</div>
+</section>
 </main>
 
 <footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600">

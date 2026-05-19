@@ -284,6 +284,7 @@
     }
     .illus-row .illus { margin: 0; }
   </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog — RSS (Atom, English)" href="/feed-en.xml">
 </head>
 
 <body class="bg-gray-950 text-gray-100 antialiased">
@@ -1393,6 +1394,17 @@ In between: a smooth <strong>cosine curve</strong> &ndash; and this curve lies b
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the path integral?", "acceptedAnswer": {"@type": "Answer", "text": "The path integral is a formulation of quantum mechanics developed by Richard Feynman in 1948. Instead of solving a wave equation, you sum over all possible paths a particle can take from A to B. Each path gets an 'arrow' (a complex amplitude), and the sum of all arrows gives the total probability."}}, {"@type": "Question", "name": "Why does the interference pattern disappear when you measure?", "acceptedAnswer": {"@type": "Answer", "text": "When you measure which slit the particle goes through, the two paths become distinguishable. You only add arrows when paths are indistinguishable. Make them distinguishable, and there is only one arrow per run – no addition, no interference. It is not mysticism, it is bookkeeping."}}, {"@type": "Question", "name": "What is the difference between diffraction and interference?", "acceptedAnswer": {"@type": "Answer", "text": "Physically, there is no sharp difference – Feynman himself said nobody has ever satisfactorily defined the distinction. Diffraction is the spreading behind a single slit, interference is the superposition from two or more slits. Both are the same principle: adding arrows."}}, {"@type": "Question", "name": "Why is the exponential function the only possible quantum amplitude?", "acceptedAnswer": {"@type": "Answer", "text": "The quantum rules require: actions add for sequential path segments, amplitudes multiply. The only continuous function that turns addition into multiplication is the exponential function. Combined with the requirement of equal arrow length (|A|=1), only e^{iS/ħ} remains."}}, {"@type": "Question", "name": "Why are Fourier modes used in quantum field theory?", "acceptedAnswer": {"@type": "Answer", "text": "In QFT, a field in space is decomposed into Fourier modes – sine waves of various wavelengths. Each mode behaves like a harmonic oscillator with discrete energy levels. The excitation number of a mode corresponds to the number of particles with that wavelength. Fourier modes are not a mathematical convenience but the fundamental objects of the theory."}}, {"@type": "Question", "name": "Is the uncertainty principle a physical law?", "acceptedAnswer": {"@type": "Answer", "text": "No – it is a mathematical theorem about Fourier transforms. If a function is narrow in position space (localized), its Fourier transform must be wide (many wavelengths), and vice versa. In physics this translates to: position and momentum cannot both be arbitrarily sharp at the same time."}}]}
 </script>
+
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Read next</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Related posts on ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/en/quantum-computing.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">What Quantum Computers Do</a> <span class="text-gray-500" style="font-size:0.9em;">— Qubit, Bloch sphere, Qiskit</span></li>
+    <li><a href="/en/eigenvalues.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenvalues & AI</a> <span class="text-gray-500" style="font-size:0.9em;">— Kernels, PageRank, Neumann series</span></li>
+  </ul>
+</div>
+</section>
 </main>
 
 

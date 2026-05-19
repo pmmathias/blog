@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="de">
+  <title>ki-mathias.de — Mathias Leonhardt Blog</title>
+  <subtitle>KI, Mathematik, Emergenz und Quantenphysik — Beiträge von Mathias Leonhardt.</subtitle>
+  <link href="https://ki-mathias.de/feed.xml" rel="self"/>
+  <link href="https://ki-mathias.de/"/>
+  <id>https://ki-mathias.de/feed.xml</id>
+  <updated>2026-05-21T12:00:00+02:00</updated>
+  <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri><email>mathias-leonhardt@gmx.de</email></author>
+  <icon>https://ki-mathias.de/img/mathias-portrait.jpg</icon>
+  <entry>
+    <title>Wellen, Pfeile und das Doppelspalt-Wunder</title>
+    <link href="https://ki-mathias.de/quanten.html"/>
+    <id>https://ki-mathias.de/quanten.html</id>
+    <published>2026-03-01T12:00:00+02:00</published>
+    <updated>2026-04-03T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Wie die Quantenphysik wirklich funktioniert – erklärt mit kleinen Pfeilen, die sich drehen. Sieben Kapitel, acht interaktive Visualisierungen.</summary>
+  </entry>
+  <entry>
+    <title>Was Quantencomputer wirklich können – Qubits, Gatter, Schaltkreise erklärt</title>
+    <link href="https://ki-mathias.de/quantencomputer.html"/>
+    <id>https://ki-mathias.de/quantencomputer.html</id>
+    <published>2026-04-20T12:00:00+02:00</published>
+    <updated>2026-04-20T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Von der Bloch-Kugel bis Shors Algorithmus: Ein ehrlicher Blick auf Quantencomputer mit interaktiven Schaltkreisen und echtem Qiskit-Code.</summary>
+  </entry>
+  <entry>
+    <title>Fourier, Ozeanwellen und 65.536 Frequenzen — Wie eine Idee von 1822 heute Wasser, Bilder und Musik formt</title>
+    <link href="https://ki-mathias.de/vogelsimulator.html"/>
+    <id>https://ki-mathias.de/vogelsimulator.html</id>
+    <published>2026-04-13T12:00:00+02:00</published>
+    <updated>2026-04-23T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Wie die Fourier-Transformation von 1822 heute Ozeanwellen auf der GPU erzeugt, JPEG-Bilder komprimiert und Musik kodiert. Mit interaktiven Visualisierungen, KaTeX-Formeln und der Geschichte von FFT bis Tessendorf.</summary>
+  </entry>
+  <entry>
+    <title>Eigenwerte &amp; KI – Warum künstliche Intelligenz ein Eigenwertproblem ist</title>
+    <link href="https://ki-mathias.de/eigenwerte.html"/>
+    <id>https://ki-mathias.de/eigenwerte.html</id>
+    <published>2026-03-10T12:00:00+02:00</published>
+    <updated>2026-05-19T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Von der einfachsten Regression bis zum mächtigsten neuronalen Netz – eine einzige mathematische Kette, erklärt über Eigenwerte.</summary>
+  </entry>
+  <entry>
+    <title>KRR Chat erklärt – Ein Sprachmodell aus Eigenwerten</title>
+    <link href="https://ki-mathias.de/krr-chat-erklaert.html"/>
+    <id>https://ki-mathias.de/krr-chat-erklaert.html</id>
+    <published>2026-04-02T12:00:00+02:00</published>
+    <updated>2026-04-02T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Wie funktioniert ein Sprachmodell ohne neuronales Netz? Der KRR Chat nutzt Kernel Ridge Regression, Random Fourier Features und eine einzige Matrix-Vektor-Multiplikation.</summary>
+  </entry>
+  <entry>
+    <title>Emergente Fähigkeiten in LLMs – Echt oder Artefakt? Interaktiv erklärt</title>
+    <link href="https://ki-mathias.de/emergenz.html"/>
+    <id>https://ki-mathias.de/emergenz.html</id>
+    <published>2026-03-18T12:00:00+02:00</published>
+    <updated>2026-05-19T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Sind emergente Fähigkeiten in LLMs echt oder Messartefakte? Interaktive Erklärung von Wei vs. Schaeffer mit Skalierungskurven und Phasenübergangs-Visualisierungen.</summary>
+  </entry>
+  <entry>
+    <title>Gott als Emergenzphänomen</title>
+    <link href="https://ki-mathias.de/gott.html"/>
+    <id>https://ki-mathias.de/gott.html</id>
+    <published>2026-03-25T12:00:00+02:00</published>
+    <updated>2026-05-21T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Formale Theorie der Kohärenz: fünf Axiome, sechs bewiesene Theoreme – darunter NP-Härte der Kohärenz-Maximierung und plurale stabile Endzustände. Grundlage für einen relationalen Gottesbegriff nach Whitehead und Spinoza.</summary>
+  </entry>
+  <entry>
+    <title>Warum Dur fröhlich klingt – Musik, Mathematik &amp; Wahrnehmung</title>
+    <link href="https://ki-mathias.de/musik.html"/>
+    <id>https://ki-mathias.de/musik.html</id>
+    <published>2026-04-06T12:00:00+02:00</published>
+    <updated>2026-04-06T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Warum klingt Dur fröhlich und Moll traurig? Von Frequenzverhältnissen über Pythagoras bis zur Cochlea – die Mathematik der Musik, interaktiv erklärt.</summary>
+  </entry>
+  <entry>
+    <title>Die Grenzen des Beweisbaren – Selbstbezüglichkeit, Gödel &amp; Turing</title>
+    <link href="https://ki-mathias.de/logik.html"/>
+    <id>https://ki-mathias.de/logik.html</id>
+    <published>2026-04-07T12:00:00+02:00</published>
+    <updated>2026-04-07T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Von Russells Paradoxon über Gödels Unvollständigkeitssätze bis zu Turings Halteproblem – die Grenzen der Logik, Mathematik und Berechenbarkeit, interaktiv erklärt.</summary>
+  </entry>
+  <entry>
+    <title>Das Glasperlenspiel – Eine Meta-Reise durch Wissenschaft, Achtsamkeit und Selbstbezüglichkeit</title>
+    <link href="https://ki-mathias.de/glasperlenspiel.html"/>
+    <id>https://ki-mathias.de/glasperlenspiel.html</id>
+    <published>2026-04-07T12:00:00+02:00</published>
+    <updated>2026-04-07T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Alle Blogposts verbunden: Von Quantenpfeilen über Eigenwerte bis Emergenz – rotierende Pfeile, Achtsamkeit und Gödels Grenzen. Eine Meta-Reise im Geist von Hermann Hesses Glasperlenspiel.</summary>
+  </entry>
+  <entry>
+    <title>Im Augenblick verweilen — Achtsamkeit als Selbstzweck</title>
+    <link href="https://ki-mathias.de/achtsamkeit.html"/>
+    <id>https://ki-mathias.de/achtsamkeit.html</id>
+    <published>2026-04-08T12:00:00+02:00</published>
+    <updated>2026-04-16T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Eine ästhetische und wissenschaftliche Beobachtung der Achtsamkeit. Mit Hardy, Husserl, James und der Neurowissenschaft des Innehaltens. Achtsamkeit braucht keine Rechtfertigung jenseits ihrer eigenen Eleganz.</summary>
+  </entry>
+  <entry>
+    <title>Warum e besonders ist – Die Zahl hinter Wachstum, Primzahlen und Zufall</title>
+    <link href="https://ki-mathias.de/euler.html"/>
+    <id>https://ki-mathias.de/euler.html</id>
+    <published>2026-04-10T12:00:00+02:00</published>
+    <updated>2026-04-10T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Eulers Zahl e = 2,718… erscheint in Zinseszins, radioaktivem Zerfall, Primzahlen, Wahrscheinlichkeit und Entropie. Warum? Eine mathematische Entdeckungsreise in 10 Kapiteln.</summary>
+  </entry>
+  <entry>
+    <title>Tommy the Cat – Bass Cover bei 210 BPM + FFT-Video-Sync</title>
+    <link href="https://ki-mathias.de/tommy-practice.html"/>
+    <id>https://ki-mathias.de/tommy-practice.html</id>
+    <published>2026-04-14T12:00:00+02:00</published>
+    <updated>2026-04-21T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Wie ich Tommy the Cat von Primus bei 210 BPM spiele, eine Practice-App mit WSOLA-Algorithmus gebaut habe und zwei separate Kamera-Aufnahmen mit FFT-Cross-Correlation frame-genau synchronisiert habe.</summary>
+  </entry>
+  <entry>
+    <title>Deepfakes erklärt – Von Vektoren über Autoencoder bis zum Gesichtertausch</title>
+    <link href="https://ki-mathias.de/deepfakes.html"/>
+    <id>https://ki-mathias.de/deepfakes.html</id>
+    <published>2026-04-15T12:00:00+02:00</published>
+    <updated>2026-05-19T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Wie funktionieren Deepfakes wirklich? Eine Reise von linearer Algebra über PCA, den Kernel-Trick und neuronale Netze bis zum Decoder-Swap – interaktiv erklärt mit 6 Visualisierungen.</summary>
+  </entry>
+</feed>

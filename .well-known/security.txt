@@ -1,0 +1,5 @@
+Contact: mailto:mathias-leonhardt@gmx.de
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: de, en
+Canonical: https://ki-mathias.de/.well-known/security.txt
+Policy: https://ki-mathias.de/impressum.html

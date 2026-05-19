@@ -279,6 +279,7 @@
     }
     .crossref:hover { color: #fde68a; }
   </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog — RSS (Atom)" href="/feed.xml">
 </head>
 
 <body class="bg-gray-950 text-gray-100 antialiased">
@@ -1024,6 +1025,17 @@ water.material.vertexShader =
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Was ist die Fourier-Transformation?","acceptedAnswer":{"@type":"Answer","text":"Die Fourier-Transformation ist ein mathematisches Verfahren, das jedes Signal \u2014 Audio, Bild, Welle \u2014 in seine Frequenzkomponenten zerlegt. Sie wandelt ein Signal aus der Zeit- oder Ortsdom\u00e4ne in den Frequenzraum um. Fourier bewies 1822, dass jede periodische Funktion als Summe von Sinus- und Kosinusfunktionen dargestellt werden kann."}},{"@type":"Question","name":"Wie entstehen die Ozeanwellen im Simulator?","acceptedAnswer":{"@type":"Answer","text":"Mithilfe der inversen Fast Fourier Transform (iFFT) auf der GPU. Das Phillips-Spektrum beschreibt statistisch die Wellenenergie bei verschiedenen Frequenzen. Dieses Spektrum wird per iFFT in eine Heightmap verwandelt, die das Wasser-Mesh verformt. 512\u00d7512 Spektralpunkte entsprechen 262.144 \u00fcberlagerten Wellenfrequenzen pro Frame."}},{"@type":"Question","name":"Was hat JPEG mit Fourier zu tun?","acceptedAnswer":{"@type":"Answer","text":"JPEG verwendet die Diskrete Kosinus-Transformation (DCT), eine Verwandte der Fourier-Transformation. Jeder 8\u00d78-Bildblock wird in Frequenzkoeffizienten umgewandelt. Hohe Frequenzen werden grob quantisiert \u2014 das menschliche Auge bemerkt den Unterschied kaum. Die typischen JPEG-Artefakte sind die sichtbar werdenden 8\u00d78-DCT-Bl\u00f6cke."}},{"@type":"Question","name":"Was ist ein Octree, und warum braucht man ihn?","acceptedAnswer":{"@type":"Answer","text":"Ein Octree ist eine r\u00e4umliche Datenstruktur, die den 3D-Raum rekursiv in acht W\u00fcrfel unterteilt. Im Simulator enth\u00e4lt er alle 100.000 B\u00e4ume. Statt alle Objekte zu pr\u00fcfen (O(n)), verwirft der Octree ganze \u00c4ste au\u00dferhalb des Kamera-Frustums. Ergebnis: Von 100.000 B\u00e4umen werden typisch 3.000\u20135.000 pro Frame gerendert."}},{"@type":"Question","name":"Kann man mit KI wirklich einen 3D-Simulator an einem Nachmittag bauen?","acceptedAnswer":{"@type":"Answer","text":"Mit Einschr\u00e4nkungen: ja. Claude Code schrieb den gesamten Code und verwaltete ein 40-Ticket-System. Der Mensch war Product Owner: Vision, \u00e4sthetische Entscheidungen, Qualit\u00e4tskontrolle. Das kritische Wissen \u2014 dass FFT die richtige Technologie f\u00fcr physikalisch korrekte Ozeanwellen ist \u2014 kam vom Menschen."}}]}
 </script>
+
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Weiterlesen</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Verwandte Beiträge auf ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/emergenz.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergenz in Sprachmodellen</a> <span class="text-gray-500" style="font-size:0.9em;">— Phasenübergänge, Grokking, Ising</span></li>
+    <li><a href="/eigenwerte.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenwerte & KI</a> <span class="text-gray-500" style="font-size:0.9em;">— Kernel, PageRank, Neumann-Reihe</span></li>
+  </ul>
+</div>
+</section>
 </main>
 
 <!-- Footer -->

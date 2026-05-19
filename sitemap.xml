@@ -1,65 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://ki-mathias.de/</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/header-glasperlenspiel.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/deepfakes.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/deepfakes.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/deepfakes.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/deepfakes/bss.png</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/deepfakes/linear-interp.png</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/deepfakes/deepfake-swap.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/deepfakes.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/deepfakes.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/deepfakes.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/deepfakes/bss.png</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/deepfakes/linear-interp.png</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/deepfakes/deepfake-swap.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/header-glasperlenspiel.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/quanten.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/quanten.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/water-waves.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/single-slit.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/airy-disk.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/double-slit.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/tonomura.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/decision-tree.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/three-paths.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/cornu-spiral.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/harmonics.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/fourier-portrait.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/fourier-anim.gif</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/hydrogen-levels.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/hydrogen-spectrum.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/three-languages.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/solvay-1927.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/bell-setup.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/zeilinger.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/quantum.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/quanten.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/water-waves.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/single-slit.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/airy-disk.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/double-slit.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/tonomura.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/decision-tree.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/three-paths.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/cornu-spiral.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/harmonics.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/fourier-portrait.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/fourier-anim.gif</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/hydrogen-levels.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/hydrogen-spectrum.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/three-languages.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/solvay-1927.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/bell-setup.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/zeilinger.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/quantencomputer.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/quantencomputer.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum-computing.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/quantencomputer/bloch-sphere.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/quantencomputer/sycamore-chip.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/quantum-computing.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/quantencomputer.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum-computing.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/quantencomputer/bloch-sphere.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/quantencomputer/sycamore-chip.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/vogelsimulator.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-terrain.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-schnee.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-textures.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-5layers.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-coast.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/view-frustum.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/octree-diagram.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/pca-fourier-analogy.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/fft-butterfly.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/jpeg-compression.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/ifft-ocean-pipeline.svg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/flight-simulator.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/vogelsimulator.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/flight-simulator.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-terrain.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-schnee.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-textures.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-5layers.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/vogel-coast.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/view-frustum.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/octree-diagram.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/pca-fourier-analogy.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/fft-butterfly.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/jpeg-compression.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/ifft-ocean-pipeline.svg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/emergenz.html</loc>
@@ -90,12 +170,16 @@
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/krr-chat-erklaert.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/krr-chat-explained.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/krr-chat-screenshot.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/krr-chat-explained.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/krr-chat-erklaert.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/krr-chat-explained.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/krr-chat-screenshot.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/kalle-chat.html</loc>
@@ -122,36 +206,86 @@
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/musik.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/music.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/lissajous-octave.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/lissajous-fifth.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/lissajous-third.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/harmonic-partials.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/spectrogram-violin.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/waveforms.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/circle-of-fifths.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/pythagorean-comma.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/bach-wtc-title.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/cochlea-frequency.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/chladni-figures.svg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/music.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/musik.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/music.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/lissajous-octave.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/lissajous-fifth.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/lissajous-third.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/harmonic-partials.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/spectrogram-violin.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/waveforms.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/circle-of-fifths.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/pythagorean-comma.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/bach-wtc-title.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/cochlea-frequency.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/chladni-figures.svg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/logik.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/logik.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/logic.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/penrose-triangle.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/droste-effect.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/cantor-diagonal.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/goedel-portrait.png</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/hilbert-portrait.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/turing-machine.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/turing-portrait.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/chomsky-hierarchy.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/p-np-diagram.svg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/logic.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/logik.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/logic.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/cantor-diagonal.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/goedel-portrait.png</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/turing-portrait.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/turing-machine.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/chomsky-hierarchy.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/p-np-diagram.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/penrose-triangle.svg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/droste-effect.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/hilbert-portrait.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/glasperlenspiel.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/glasperlenspiel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/glass-bead-game.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/hesse-portrait.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/droste-effect.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/glass-bead-game.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/glasperlenspiel.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/glass-bead-game.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/hesse-portrait.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/droste-effect.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/achtsamkeit.html</loc>
@@ -194,12 +328,16 @@
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/ueber-mich.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/about.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/mathias-portrait.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/about.html</loc>
     <lastmod>2026-05-19</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/ueber-mich.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/about.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/mathias-portrait.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/impressum.html</loc>

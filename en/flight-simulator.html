@@ -279,6 +279,7 @@
     }
     .crossref:hover { color: #fde68a; }
   </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog — RSS (Atom, English)" href="/feed-en.xml">
 </head>
 
 <body class="bg-gray-950 text-gray-100 antialiased">
@@ -1019,6 +1020,17 @@ water.material.vertexShader =
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the Fourier Transform?","acceptedAnswer":{"@type":"Answer","text":"The Fourier Transform is a mathematical procedure that decomposes any signal \u2014 audio, image, wave \u2014 into its frequency components. It converts a signal from the time or spatial domain into frequency space. Fourier proved in 1822 that every periodic function can be represented as a sum of sine and cosine functions."}},{"@type":"Question","name":"How are the ocean waves in the simulator generated?","acceptedAnswer":{"@type":"Answer","text":"Using the inverse Fast Fourier Transform (iFFT) on the GPU. The Phillips spectrum statistically describes how much wave energy exists at which frequency and direction. This spectrum is animated and then converted via iFFT into a heightmap that deforms the water mesh. 512\u00d7512 spectral points correspond to 262,144 superimposed wave frequencies per frame."}},{"@type":"Question","name":"What does JPEG have to do with Fourier?","acceptedAnswer":{"@type":"Answer","text":"JPEG uses the Discrete Cosine Transform (DCT), a close relative of the Fourier Transform. Each 8\u00d78 image block is converted into frequency coefficients. High frequencies are coarsely quantized \u2014 the human eye barely notices the difference. The typical JPEG artifacts are literally the 8\u00d78 DCT blocks becoming visible."}},{"@type":"Question","name":"What is an octree, and why do you need one?","acceptedAnswer":{"@type":"Answer","text":"An octree is a spatial data structure that recursively subdivides 3D space into eight cubes. In the simulator it holds all 100,000 trees. Instead of testing all objects per frame (O(n)), the octree discards entire branches outside the camera frustum. Result: of 100,000 trees, typically 3,000\u20135,000 per frame are actually rendered."}},{"@type":"Question","name":"Can you really build a 3D simulator in an afternoon with AI?","acceptedAnswer":{"@type":"Answer","text":"With caveats: yes. Claude Code wrote all the code and managed a 40-ticket system. The human was product owner: vision, aesthetic decisions, quality control. The critical knowledge \u2014 that FFT is the right technology for physically correct ocean waves \u2014 came from the human side."}}]}
 </script>
+
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Read next</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Related posts on ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/en/emergence.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergence in Language Models</a> <span class="text-gray-500" style="font-size:0.9em;">— Phase transitions, grokking, Ising</span></li>
+    <li><a href="/en/eigenvalues.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenvalues & AI</a> <span class="text-gray-500" style="font-size:0.9em;">— Kernels, PageRank, Neumann series</span></li>
+  </ul>
+</div>
+</section>
 </main>
 
 <!-- Footer -->
