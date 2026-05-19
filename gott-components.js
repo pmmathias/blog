@@ -881,3 +881,710 @@ function _t(key) { var entry = GOTT_I18N[key]; if (!entry) return key; return en
 
   window.ThreeFaces = ThreeFaces;
 })();
+
+
+// ============================================================================
+// === 7. WerteRaumExplorer (Kap 4 — Dynamik) ===
+// 3 Slider (L, W, E), live Coh, Gradient-Schritte, beide Maxima sichtbar
+// ============================================================================
+(function() {
+  var h = React.createElement;
+
+  // Welt-Matrix W (symmetrisch, aus Kap 2)
+  //        L    W    E
+  //   L    0   -1   -1
+  //   W   -1    0   +2
+  //   E   -1   +2    0
+  var WMAT = [
+    [0, -1, -1],
+    [-1, 0, +2],
+    [-1, +2, 0]
+  ];
+  var ETA = 0.15;   // Schrittweite (1/L = 1/5.12 ≈ 0.195)
+
+  function coh(v) {
+    var s = 0;
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        s += v[i] * WMAT[i][j] * v[j];
+      }
+    }
+    return s;
+  }
+
+  function grad(v) {
+    // grad(v^T W v) = 2 W v
+    var g = [0, 0, 0];
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        g[i] += WMAT[i][j] * v[j];
+      }
+      g[i] *= 2;
+    }
+    return g;
+  }
+
+  function clip(x) { return Math.max(-1, Math.min(1, x)); }
+
+  function step(v) {
+    var g = grad(v);
+    return [clip(v[0] + ETA * g[0]), clip(v[1] + ETA * g[1]), clip(v[2] + ETA * g[2])];
+  }
+
+  // Plot-Koordinaten: x = v_L (Loyalität), y = (v_W + v_E)/2 (Selbst-Pol)
+  // Beide Maxima liegen auf der Antidiagonale:
+  //   Pflichtmensch (+1, -1, -1) → (x=+1, y=-1)
+  //   Selbstverwirklicher (-1, +1, +1) → (x=-1, y=+1)
+  function projectXY(v) { return [v[0], (v[1] + v[2]) / 2]; }
+
+  function fmt(x) { return (x >= 0 ? '+' : '') + x.toFixed(2); }
+
+  function WerteRaumExplorer() {
+    var _s1 = React.useState(0.1); var L = _s1[0], setL = _s1[1];
+    var _s2 = React.useState(0.2); var W = _s2[0], setW = _s2[1];
+    var _s3 = React.useState(0.3); var E = _s3[0], setE = _s3[1];
+    var _s4 = React.useState(false); var auto = _s4[0], setAuto = _s4[1];
+
+    var v = [L, W, E];
+    var c = coh(v);
+    var p = projectXY(v);
+
+    // Auto-Konvergenz
+    React.useEffect(function() {
+      if (!auto) return;
+      var id = setInterval(function() {
+        var v_cur = [L, W, E];
+        var v_new = step(v_cur);
+        var dist = Math.abs(v_new[0]-v_cur[0]) + Math.abs(v_new[1]-v_cur[1]) + Math.abs(v_new[2]-v_cur[2]);
+        setL(v_new[0]); setW(v_new[1]); setE(v_new[2]);
+        if (dist < 0.005) setAuto(false);
+      }, 80);
+      return function() { clearInterval(id); };
+    }, [auto, L, W, E]);
+
+    function doStep() {
+      var v_new = step([L, W, E]);
+      setL(v_new[0]); setW(v_new[1]); setE(v_new[2]);
+    }
+    function doRandom() {
+      setL(Math.random() * 2 - 1);
+      setW(Math.random() * 2 - 1);
+      setE(Math.random() * 2 - 1);
+      setAuto(false);
+    }
+    function doIdealist() { setL(1); setW(1); setE(-1); setAuto(false); }
+    function doPflichtmensch() { setL(1); setW(-1); setE(-1); setAuto(false); }
+    function doSelbstverwirklicher() { setL(-1); setW(1); setE(1); setAuto(false); }
+
+    var PW = 360, PH = 360, PAD = 40;
+    function px(x) { return PAD + (x + 1) / 2 * (PW - 2 * PAD); }
+    function py(y) { return PAD + (1 - (y + 1) / 2) * (PH - 2 * PAD); }
+
+    // Heatmap-Grid: Coh-Wert für (v_L=x, v_W=v_E=y)
+    var gridCells = [];
+    var N = 14;
+    for (var gi = 0; gi < N; gi++) {
+      for (var gj = 0; gj < N; gj++) {
+        var gx = -1 + 2 * (gi + 0.5) / N;
+        var gy = -1 + 2 * (gj + 0.5) / N;
+        var gv = [gx, gy, gy];
+        var gc = coh(gv);
+        // Farbskala: rot (Coh<0) → grau (0) → cyan (Coh>0)
+        var cmax = 8;
+        var t = Math.max(-1, Math.min(1, gc / cmax));
+        var col;
+        if (t >= 0) {
+          var a = Math.round(t * 80);
+          col = 'rgba(34, 211, 238, ' + (a/100) + ')';
+        } else {
+          var a2 = Math.round(-t * 70);
+          col = 'rgba(248, 113, 113, ' + (a2/100) + ')';
+        }
+        gridCells.push({ x: gi, y: gj, fill: col });
+      }
+    }
+    var cellW = (PW - 2*PAD) / N;
+    var cellH = (PH - 2*PAD) / N;
+
+    var trail = [];
+    // Generate quick lookahead trail (10 steps) if not auto
+    if (!auto) {
+      var tv = [L, W, E];
+      for (var ti = 0; ti < 12; ti++) {
+        var tnew = step(tv);
+        var d = Math.abs(tnew[0]-tv[0]) + Math.abs(tnew[1]-tv[1]) + Math.abs(tnew[2]-tv[2]);
+        if (d < 0.003) break;
+        trail.push(projectXY(tnew));
+        tv = tnew;
+      }
+    }
+
+    var cohColor = c > 0 ? '#22d3ee' : (c < 0 ? '#f87171' : '#9ca3af');
+    var cohLabel = c >= 6 ? 'stabil kohärent' : (c > 0 ? 'leicht kohärent' : (c < -2 ? 'inkohärent' : 'instabil'));
+
+    function slider(label, color, value, setter) {
+      return h('div', { className: 'mb-3' },
+        h('div', { className: 'flex justify-between items-baseline mb-1' },
+          h('span', { className: 'text-xs font-medium', style: { color: color } }, label),
+          h('span', { className: 'text-xs text-gray-500 font-mono' }, fmt(value))
+        ),
+        h('input', {
+          type: 'range', min: -1, max: 1, step: 0.01, value: value,
+          onChange: function(e) { setter(parseFloat(e.target.value)); setAuto(false); },
+          className: 'w-full',
+          style: { accentColor: color }
+        })
+      );
+    }
+
+    return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'Werteraum-Explorer'),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-5' },
+        'Drei Bewertungen, zwei Attraktoren. Wohin zieht der Gradient — je nach Startpunkt?'),
+
+      h('div', { className: 'grid sm:grid-cols-2 gap-6 items-start' },
+        // Left: sliders + readouts
+        h('div', null,
+          slider('Loyalität (L)', '#fbbf24', L, setL),
+          slider('Wahrheit (W)', '#22d3ee', W, setW),
+          slider('Eigeninteresse (E)', '#a78bfa', E, setE),
+
+          h('div', { className: 'mt-4 p-3 rounded-lg bg-gray-950/60 border border-gray-800' },
+            h('div', { className: 'flex justify-between items-baseline' },
+              h('span', { className: 'text-xs text-gray-500' }, 'Kohärenz'),
+              h('span', { className: 'text-2xl font-bold font-mono', style: { color: cohColor } }, fmt(c))
+            ),
+            h('div', { className: 'text-xs text-gray-500 mt-1' }, cohLabel)
+          ),
+
+          h('div', { className: 'mt-4 flex flex-wrap gap-2' },
+            h('button', {
+              onClick: doStep,
+              disabled: auto,
+              className: 'px-3 py-1.5 text-xs font-medium rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/40 hover:bg-amber-500/30 disabled:opacity-40'
+            }, '↑ Gradient-Schritt'),
+            h('button', {
+              onClick: function() { setAuto(!auto); },
+              className: 'px-3 py-1.5 text-xs font-medium rounded-lg ' +
+                (auto ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40')
+            }, auto ? '⏸ Stop' : '▶ Auto-Konvergenz'),
+            h('button', {
+              onClick: doRandom,
+              className: 'px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-800 text-gray-300 border border-gray-700 hover:text-white'
+            }, '↻ Zufalls-Start')
+          ),
+
+          h('div', { className: 'mt-3 flex flex-wrap gap-2' },
+            h('button', {
+              onClick: doIdealist,
+              className: 'px-2.5 py-1 text-[10px] rounded bg-gray-800/70 text-gray-400 border border-gray-700 hover:text-gray-200'
+            }, '○ Idealist'),
+            h('button', {
+              onClick: doPflichtmensch,
+              className: 'px-2.5 py-1 text-[10px] rounded bg-gray-800/70 text-gray-400 border border-gray-700 hover:text-gray-200'
+            }, '○ Pflichtmensch'),
+            h('button', {
+              onClick: doSelbstverwirklicher,
+              className: 'px-2.5 py-1 text-[10px] rounded bg-gray-800/70 text-gray-400 border border-gray-700 hover:text-gray-200'
+            }, '○ Selbstverwirklicher')
+          )
+        ),
+
+        // Right: 2D Coh-Landschaft mit Position & Trail
+        h('div', null,
+          h('svg', { viewBox: '0 0 ' + PW + ' ' + PH, className: 'w-full', style: { maxWidth: PW + 'px' } },
+            // Heatmap cells
+            gridCells.map(function(cell, i) {
+              return h('rect', {
+                key: 'h' + i,
+                x: PAD + cell.x * cellW,
+                y: PAD + cell.y * cellH,
+                width: cellW + 0.5, height: cellH + 0.5,
+                fill: cell.fill
+              });
+            }),
+
+            // Axis box
+            h('rect', { x: PAD, y: PAD, width: PW - 2*PAD, height: PH - 2*PAD, fill: 'none', stroke: '#4b5563', strokeWidth: 1 }),
+
+            // Zentrum-Linien
+            h('line', { x1: px(0), y1: PAD, x2: px(0), y2: PH - PAD, stroke: '#374151', strokeWidth: 0.5, strokeDasharray: '2 2' }),
+            h('line', { x1: PAD, y1: py(0), x2: PW - PAD, y2: py(0), stroke: '#374151', strokeWidth: 0.5, strokeDasharray: '2 2' }),
+
+            // Maxima
+            // Pflichtmensch (+1, -1, -1) → (x=+1, y=-1)
+            h('circle', { cx: px(1), cy: py(-1), r: 9, fill: '#fbbf24', stroke: '#fef3c7', strokeWidth: 2 }),
+            h('text', { x: px(1) - 5, y: py(-1) - 14, fill: '#fbbf24', fontSize: 10, textAnchor: 'end' }, 'Pflichtmensch'),
+            h('text', { x: px(1) - 5, y: py(-1) - 4, fill: '#fbbf24', fontSize: 9, textAnchor: 'end' }, 'Coh=+8'),
+
+            // Selbstverwirklicher (-1, +1, +1) → (x=-1, y=+1)
+            h('circle', { cx: px(-1), cy: py(1), r: 9, fill: '#22d3ee', stroke: '#cffafe', strokeWidth: 2 }),
+            h('text', { x: px(-1) + 5, y: py(1) + 16, fill: '#22d3ee', fontSize: 10 }, 'Selbstverwirklicher'),
+            h('text', { x: px(-1) + 5, y: py(1) + 26, fill: '#22d3ee', fontSize: 9 }, 'Coh=+8'),
+
+            // Trail (Vorschau)
+            trail.length > 1 ? h('polyline', {
+              points: trail.map(function(pt) { return px(pt[0]) + ',' + py(pt[1]); }).join(' '),
+              fill: 'none', stroke: '#f0abfc', strokeWidth: 1.5, opacity: 0.6, strokeDasharray: '3 2'
+            }) : null,
+
+            // Aktuelle Position
+            h('circle', { cx: px(p[0]), cy: py(p[1]), r: 7, fill: '#fff', stroke: '#1f2937', strokeWidth: 2 }),
+            h('circle', { cx: px(p[0]), cy: py(p[1]), r: 3, fill: '#1f2937' }),
+
+            // Axis labels
+            h('text', { x: PW - PAD, y: PH - PAD + 16, fill: '#9ca3af', fontSize: 10, textAnchor: 'end' }, 'L →'),
+            h('text', { x: PAD, y: PAD - 8, fill: '#9ca3af', fontSize: 10 }, '↑ (W+E)/2'),
+            h('text', { x: PAD - 8, y: py(-1) + 4, fill: '#6b7280', fontSize: 9, textAnchor: 'end' }, '-1'),
+            h('text', { x: PAD - 8, y: py(1) + 4, fill: '#6b7280', fontSize: 9, textAnchor: 'end' }, '+1'),
+            h('text', { x: px(-1), y: PH - PAD + 16, fill: '#6b7280', fontSize: 9, textAnchor: 'middle' }, '-1'),
+            h('text', { x: px(1), y: PH - PAD + 16, fill: '#6b7280', fontSize: 9, textAnchor: 'middle' }, '+1')
+          ),
+          h('p', { className: 'text-[11px] text-gray-500 mt-1 text-center' },
+            '2D-Projektion: Loyalität auf x-Achse, Mittelwert von Wahrheit & Eigeninteresse auf y-Achse')
+        )
+      ),
+
+      h('div', { className: 'mt-5 text-[11px] text-gray-500 border-t border-gray-800/70 pt-3' },
+        h('strong', { className: 'text-gray-400' }, 'Was zeigt das? '),
+        'Die Welt-Matrix \(W\) aus Kapitel 2 hat zwei lokale Maxima auf den ±1-Ecken: Pflichtmensch und Selbstverwirklicher (beide Coh=+8). Je nachdem, wo Sie starten, zieht der Gradient die Trajektorie in das eine oder das andere Maximum. Der Idealist (loyal+wahrhaftig+selbstlos, Coh=-4) ist nicht stabil — er rutscht beim nächsten Schritt zu einem der beiden Pole.')
+    );
+  }
+
+  window.WerteRaumExplorer = WerteRaumExplorer;
+})();
+
+
+// ============================================================================
+// === 8. MaxCutPuzzle (Kap 5 — NP-Härte) ===
+// User partitioniert Knoten in zwei Gruppen, sieht Schnitt-Größe und Coh-Äquivalent
+// ============================================================================
+(function() {
+  var h = React.createElement;
+
+  // 6-Knoten-Graph: Hexagon + zwei Diagonalen
+  // Positionen (hexagonal angeordnet)
+  var NODES = [
+    { id: 0, x: 200, y: 60,  label: '1' },
+    { id: 1, x: 320, y: 130, label: '2' },
+    { id: 2, x: 320, y: 270, label: '3' },
+    { id: 3, x: 200, y: 340, label: '4' },
+    { id: 4, x: 80,  y: 270, label: '5' },
+    { id: 5, x: 80,  y: 130, label: '6' }
+  ];
+  // Hexagon-Kanten + 2 Diagonalen für Frustration
+  var EDGES = [
+    [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], // outer hexagon
+    [0, 3], [1, 4], [2, 5]                            // diagonals
+  ];
+
+  // Brute-force compute optimal cut size
+  function optimalCut() {
+    var n = NODES.length;
+    var bestCut = 0;
+    var bestPart = 0;
+    for (var p = 0; p < (1 << n); p++) {
+      var c = 0;
+      for (var e = 0; e < EDGES.length; e++) {
+        var u = EDGES[e][0], v = EDGES[e][1];
+        var pu = (p >> u) & 1;
+        var pv = (p >> v) & 1;
+        if (pu !== pv) c++;
+      }
+      if (c > bestCut) { bestCut = c; bestPart = p; }
+    }
+    return { cut: bestCut, partition: bestPart };
+  }
+
+  var OPTIMAL = optimalCut();
+
+  function MaxCutPuzzle() {
+    // partition[i] = 0 oder 1
+    var _s = React.useState(NODES.map(function() { return 0; }));
+    var part = _s[0], setPart = _s[1];
+
+    function toggle(i) {
+      var np = part.slice();
+      np[i] = 1 - np[i];
+      setPart(np);
+    }
+    function reset() { setPart(NODES.map(function() { return 0; })); }
+    function solve() {
+      var p = OPTIMAL.partition;
+      setPart(NODES.map(function(_, i) { return (p >> i) & 1; }));
+    }
+    function randomize() {
+      setPart(NODES.map(function() { return Math.random() < 0.5 ? 1 : 0; }));
+    }
+
+    // Schnitt zählen
+    var cut = 0;
+    var edgeStates = EDGES.map(function(e) {
+      var cuts = part[e[0]] !== part[e[1]];
+      if (cuts) cut++;
+      return cuts;
+    });
+
+    var E = EDGES.length;
+    var cohEq = 4 * cut - 2 * E;
+    var pctOpt = OPTIMAL.cut > 0 ? (cut / OPTIMAL.cut * 100) : 0;
+
+    var PW = 400, PH = 400;
+    var COLORS = ['#fbbf24', '#22d3ee']; // group 0 = amber, group 1 = cyan
+
+    return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'MAX-CUT als Kohärenz-Maximierung'),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-5' },
+        'Knoten anklicken, um Gruppe zu wechseln. Maximale Schnitt-Anzahl finden — ohne Abkürzung.'),
+
+      h('div', { className: 'grid sm:grid-cols-2 gap-6 items-start' },
+        // Left: Graph
+        h('div', null,
+          h('svg', { viewBox: '0 0 ' + PW + ' ' + PH, className: 'w-full', style: { maxWidth: PW + 'px' } },
+            // Edges
+            EDGES.map(function(e, i) {
+              var a = NODES[e[0]], b = NODES[e[1]];
+              return h('line', {
+                key: 'e' + i,
+                x1: a.x, y1: a.y, x2: b.x, y2: b.y,
+                stroke: edgeStates[i] ? '#22d3ee' : '#4b5563',
+                strokeWidth: edgeStates[i] ? 3 : 1.5,
+                opacity: edgeStates[i] ? 0.9 : 0.4,
+                strokeDasharray: edgeStates[i] ? null : '4 3'
+              });
+            }),
+            // Nodes
+            NODES.map(function(n, i) {
+              return h('g', {
+                key: 'n' + i,
+                onClick: function() { toggle(i); },
+                style: { cursor: 'pointer' }
+              },
+                h('circle', { cx: n.x, cy: n.y, r: 24, fill: COLORS[part[i]] + '33', stroke: COLORS[part[i]], strokeWidth: 2.5 }),
+                h('text', { x: n.x, y: n.y + 5, fill: COLORS[part[i]], fontSize: 14, textAnchor: 'middle', fontWeight: 700 }, n.label)
+              );
+            })
+          ),
+          h('p', { className: 'text-[11px] text-gray-500 mt-1 text-center' },
+            'Geschnittene Kanten (cyan, durchgezogen) tragen zur Kohärenz bei; ungeschnittene (grau, gestrichelt) ziehen sie runter.')
+        ),
+
+        // Right: stats
+        h('div', null,
+          h('div', { className: 'mb-3 p-3 rounded-lg bg-gray-950/60 border border-gray-800' },
+            h('div', { className: 'flex justify-between items-baseline' },
+              h('span', { className: 'text-xs text-gray-500' }, 'Schnitt-Kanten'),
+              h('span', { className: 'text-xl font-bold font-mono text-cyan-400' }, cut + ' / ' + E)
+            ),
+            h('div', { className: 'w-full bg-gray-800 rounded-full h-1.5 mt-2' },
+              h('div', {
+                className: 'h-1.5 rounded-full',
+                style: {
+                  width: pctOpt + '%',
+                  background: cut === OPTIMAL.cut ? '#22d3ee' : '#fbbf24'
+                }
+              })
+            ),
+            h('div', { className: 'text-[10px] text-gray-500 mt-1' },
+              cut === OPTIMAL.cut ? '✓ Optimum erreicht' : ('Optimum: ' + OPTIMAL.cut + ' Kanten')
+            )
+          ),
+
+          h('div', { className: 'mb-3 p-3 rounded-lg bg-gray-950/60 border border-gray-800' },
+            h('div', { className: 'text-xs text-gray-500 mb-1' }, 'Kohärenz-Äquivalent'),
+            h('div', { className: 'font-mono text-sm' },
+              h('span', { className: 'text-gray-500' }, '4·'),
+              h('span', { className: 'text-cyan-400' }, cut),
+              h('span', { className: 'text-gray-500' }, ' − 2·'),
+              h('span', { className: 'text-gray-400' }, E),
+              h('span', { className: 'text-gray-500' }, ' = '),
+              h('span', { className: 'text-base font-bold', style: { color: cohEq > 0 ? '#22d3ee' : (cohEq < 0 ? '#f87171' : '#9ca3af') } },
+                (cohEq >= 0 ? '+' : '') + cohEq)
+            ),
+            h('div', { className: 'text-[10px] text-gray-500 mt-1' }, 'mit W = -A_G (negierte Adjazenz)')
+          ),
+
+          h('div', { className: 'flex flex-wrap gap-2 mb-3' },
+            h('button', {
+              onClick: solve,
+              className: 'px-3 py-1.5 text-xs font-medium rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 hover:bg-cyan-500/30'
+            }, '✨ Optimale Lösung zeigen'),
+            h('button', {
+              onClick: randomize,
+              className: 'px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-800 text-gray-300 border border-gray-700 hover:text-white'
+            }, '↻ Zufall'),
+            h('button', {
+              onClick: reset,
+              className: 'px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-800 text-gray-300 border border-gray-700 hover:text-white'
+            }, '↺ Reset')
+          ),
+
+          h('div', { className: 'text-[11px] text-gray-500 border-t border-gray-800/70 pt-3' },
+            h('div', null, h('strong', { className: 'text-gray-400' }, 'Knoten: '), '6'),
+            h('div', null, h('strong', { className: 'text-gray-400' }, 'Kanten: '), E),
+            h('div', null, h('strong', { className: 'text-gray-400' }, 'Konfigurationen: '), Math.pow(2, NODES.length).toString() + ' (hier per Brute-Force gelöst)'),
+            h('div', { className: 'mt-2' }, 'Bei n=50 wären es 2', h('sup', null, '50'), ' ≈ 10', h('sup', null, '15'), ' Konfigurationen — jenseits jeder Brute-Force-Berechnung.')
+          )
+        )
+      )
+    );
+  }
+
+  window.MaxCutPuzzle = MaxCutPuzzle;
+})();
+
+
+// ============================================================================
+// === 9. ReplikatorSchwarm (Kap 6 — Replikator-Dynamik) ===
+// 6 Agenten, gekoppelte Dynamik (Gradient + Replikator), Live-Plots
+// ============================================================================
+(function() {
+  var h = React.createElement;
+
+  var WMAT_R = [
+    [0, -1, -1],
+    [-1, 0, +2],
+    [-1, +2, 0]
+  ];
+
+  function cohR(v) {
+    var s = 0;
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        s += v[i] * WMAT_R[i][j] * v[j];
+      }
+    }
+    return s;
+  }
+
+  function gradR(v) {
+    var g = [0, 0, 0];
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        g[i] += WMAT_R[i][j] * v[j];
+      }
+      g[i] *= 2;
+    }
+    return g;
+  }
+
+  function clipR(x) { return Math.max(-1, Math.min(1, x)); }
+
+  function makeAgents(N, seed) {
+    // Deterministischer Pseudo-Random Start
+    function rng(i) {
+      var x = Math.sin((seed + i) * 12.9898) * 43758.5453;
+      return (x - Math.floor(x)) * 2 - 1;
+    }
+    var agents = [];
+    for (var i = 0; i < N; i++) {
+      agents.push({
+        v: [rng(i * 3), rng(i * 3 + 1), rng(i * 3 + 2)],
+        alpha: 1 / N
+      });
+    }
+    return agents;
+  }
+
+  function ReplikatorSchwarm() {
+    var N = 6;
+    var _s1 = React.useState(function() { return makeAgents(N, 1); });
+    var agents = _s1[0], setAgents = _s1[1];
+    var _s2 = React.useState(false); var running = _s2[0], setRunning = _s2[1];
+    var _s3 = React.useState([]); var history = _s3[0], setHistory = _s3[1];
+    var _s4 = React.useState(1); var seed = _s4[0], setSeed = _s4[1];
+
+    React.useEffect(function() {
+      if (!running) return;
+      var id = setInterval(function() {
+        setAgents(function(prev) {
+          var ETA_V = 0.08;
+          // 1) Gradient-Schritt für jeden Agenten
+          var newV = prev.map(function(a) {
+            var g = gradR(a.v);
+            return [clipR(a.v[0] + ETA_V * g[0]), clipR(a.v[1] + ETA_V * g[1]), clipR(a.v[2] + ETA_V * g[2])];
+          });
+          // 2) Beiträge π_h = Coh(v_h)
+          var pi = newV.map(function(v) { return cohR(v); });
+          // 3) gewichteter Mittelwert
+          var piBar = 0;
+          for (var i = 0; i < prev.length; i++) piBar += prev[i].alpha * pi[i];
+          // 4) Replikator: α_h += dt * α_h * (π_h - π_bar). Use small dt.
+          var DT = 0.05;
+          var newA = prev.map(function(a, i) {
+            return Math.max(0, a.alpha + DT * a.alpha * (pi[i] - piBar));
+          });
+          // Normalize (numerical safety)
+          var sumA = newA.reduce(function(s, x) { return s + x; }, 0);
+          if (sumA > 0) newA = newA.map(function(x) { return x / sumA; });
+
+          // Compute variance for history
+          var variance = 0;
+          for (var k = 0; k < prev.length; k++) {
+            var d = pi[k] - piBar;
+            variance += newA[k] * d * d;
+          }
+
+          setHistory(function(hh) {
+            var nh = hh.concat([{ piBar: piBar, variance: variance }]);
+            if (nh.length > 120) nh = nh.slice(nh.length - 120);
+            return nh;
+          });
+
+          return prev.map(function(a, i) { return { v: newV[i], alpha: newA[i] }; });
+        });
+      }, 100);
+      return function() { clearInterval(id); };
+    }, [running]);
+
+    function reset() {
+      var newSeed = seed + 1;
+      setSeed(newSeed);
+      setAgents(makeAgents(N, newSeed));
+      setHistory([]);
+      setRunning(false);
+    }
+
+    // Aggregation: Val*(x_i) = sum_h alpha_h * v_h,i
+    var valStar = [0, 0, 0];
+    var totalA = 0;
+    for (var i = 0; i < agents.length; i++) {
+      for (var k = 0; k < 3; k++) valStar[k] += agents[i].alpha * agents[i].v[k];
+      totalA += agents[i].alpha;
+    }
+    var posStar = [];
+    var names = ['Loyalität', 'Wahrheit', 'Eigeninteresse'];
+    var colors = ['#fbbf24', '#22d3ee', '#a78bfa'];
+    for (var k = 0; k < 3; k++) if (valStar[k] > 0) posStar.push(names[k]);
+
+    // Aktueller Mittelwert + Varianz für Anzeige
+    var pi_now = agents.map(function(a) { return cohR(a.v); });
+    var piBar_now = 0;
+    for (var ii = 0; ii < agents.length; ii++) piBar_now += agents[ii].alpha * pi_now[ii];
+    var var_now = 0;
+    for (var jj = 0; jj < agents.length; jj++) {
+      var dd = pi_now[jj] - piBar_now;
+      var_now += agents[jj].alpha * dd * dd;
+    }
+
+    var PW = 360, PH = 280, PAD = 30;
+    function px(x) { return PAD + (x + 1) / 2 * (PW - 2 * PAD); }
+    function py(y) { return PAD + (1 - (y + 1) / 2) * (PH - 2 * PAD); }
+    function projectXY(v) { return [v[0], (v[1] + v[2]) / 2]; }
+
+    // History plot
+    var PLOTW = 360, PLOTH = 140, PLPAD = 26;
+    var plotMaxY = 8;
+    function plx(t) { return PLPAD + (t / Math.max(1, history.length - 1)) * (PLOTW - 2 * PLPAD); }
+    function ply(val) { return PLOTH - PLPAD - (val / plotMaxY) * (PLOTH - 2 * PLPAD); }
+
+    function fmt2(x) { return (x >= 0 ? '+' : '') + x.toFixed(2); }
+
+    return h('div', { className: 'bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6' },
+      h('h3', { className: 'text-base sm:text-lg font-bold text-center mb-1 text-white' }, 'Replikator-Schwarm'),
+      h('p', { className: 'text-xs text-gray-500 text-center mb-5' },
+        'Sechs Agenten, kohärenz-getriebene Selektion. Wer trägt überdurchschnittlich bei, gewinnt Stimmgewicht.'),
+
+      h('div', { className: 'grid sm:grid-cols-2 gap-6 items-start' },
+        // Left: Werteraum mit Agenten als Punkte
+        h('div', null,
+          h('svg', { viewBox: '0 0 ' + PW + ' ' + PH, className: 'w-full', style: { maxWidth: PW + 'px' } },
+            // Box
+            h('rect', { x: PAD, y: PAD, width: PW - 2*PAD, height: PH - 2*PAD, fill: '#11182755', stroke: '#374151', strokeWidth: 1 }),
+            // Zentrum-Linien
+            h('line', { x1: px(0), y1: PAD, x2: px(0), y2: PH - PAD, stroke: '#374151', strokeWidth: 0.5, strokeDasharray: '2 2' }),
+            h('line', { x1: PAD, y1: py(0), x2: PW - PAD, y2: py(0), stroke: '#374151', strokeWidth: 0.5, strokeDasharray: '2 2' }),
+            // Maxima
+            h('circle', { cx: px(1), cy: py(-1), r: 6, fill: '#fbbf24aa', stroke: '#fbbf24', strokeWidth: 1.5 }),
+            h('text', { x: px(1) - 4, y: py(-1) - 10, fill: '#fbbf24', fontSize: 9, textAnchor: 'end' }, 'Pflicht'),
+            h('circle', { cx: px(-1), cy: py(1), r: 6, fill: '#22d3eeaa', stroke: '#22d3ee', strokeWidth: 1.5 }),
+            h('text', { x: px(-1) + 4, y: py(1) + 15, fill: '#22d3ee', fontSize: 9 }, 'Selbst'),
+            // Agenten
+            agents.map(function(a, i) {
+              var p = projectXY(a.v);
+              var r = 4 + Math.min(20, a.alpha * 50);
+              var c = pi_now[i] >= 0 ? '#22d3ee' : '#f87171';
+              return h('g', { key: 'a' + i },
+                h('circle', { cx: px(p[0]), cy: py(p[1]), r: r, fill: c + '33', stroke: c, strokeWidth: 1.5 }),
+                h('text', { x: px(p[0]), y: py(p[1]) + 3, fill: '#fff', fontSize: 9, textAnchor: 'middle', fontWeight: 600 }, '' + (i + 1))
+              );
+            }),
+            h('text', { x: PW - PAD, y: PH - PAD + 14, fill: '#9ca3af', fontSize: 9, textAnchor: 'end' }, 'L →')
+          ),
+          h('p', { className: 'text-[10px] text-gray-500 mt-1 text-center' }, 'Punktgröße → Stimmgewicht αₕ')
+        ),
+
+        // Right: Stats + Pos* + Plot
+        h('div', null,
+          // Aggregation
+          h('div', { className: 'mb-3 p-3 rounded-lg bg-gray-950/60 border border-gray-800' },
+            h('div', { className: 'text-[10px] text-gray-500 mb-2' }, 'Aggregierte Bewertung Val*'),
+            [0, 1, 2].map(function(k) {
+              var v = valStar[k];
+              var sign = v > 0 ? '+' : '';
+              return h('div', { key: 'v' + k, className: 'flex justify-between items-center text-xs mb-0.5' },
+                h('span', { style: { color: colors[k] } }, names[k]),
+                h('span', { className: 'font-mono', style: { color: v > 0 ? '#22d3ee' : (v < 0 ? '#f87171' : '#9ca3af') } }, sign + v.toFixed(2))
+              );
+            }),
+            h('div', { className: 'mt-2 pt-2 border-t border-gray-800/70 text-xs' },
+              h('span', { className: 'text-gray-500' }, 'Pos* = '),
+              h('span', { className: 'text-cyan-400' }, posStar.length ? '{ ' + posStar.join(', ') + ' }' : '∅')
+            )
+          ),
+
+          // Stats
+          h('div', { className: 'mb-3 p-3 rounded-lg bg-gray-950/60 border border-gray-800 text-xs' },
+            h('div', { className: 'flex justify-between mb-1' },
+              h('span', { className: 'text-gray-500' }, h('span', { className: 'font-mono' }, '⟨π⟩'), ' (mittlere Koh.)' ),
+              h('span', { className: 'font-mono', style: { color: piBar_now > 0 ? '#22d3ee' : '#9ca3af' } }, fmt2(piBar_now))
+            ),
+            h('div', { className: 'flex justify-between' },
+              h('span', { className: 'text-gray-500' }, h('span', { className: 'font-mono' }, 'Var(π)'), ' (Vielfalt)' ),
+              h('span', { className: 'font-mono text-fuchsia-400' }, fmt2(var_now))
+            )
+          ),
+
+          // Plot
+          history.length > 1 ? h('div', null,
+            h('div', { className: 'text-[10px] text-gray-500 mb-1' }, 'Price-Identität live: d⟨π⟩/dt = Var(π)'),
+            h('svg', { viewBox: '0 0 ' + PLOTW + ' ' + PLOTH, className: 'w-full', style: { maxWidth: PLOTW + 'px' } },
+              h('rect', { x: PLPAD, y: PLPAD, width: PLOTW - 2*PLPAD, height: PLOTH - 2*PLPAD, fill: '#11182755', stroke: '#374151', strokeWidth: 0.5 }),
+              h('line', { x1: PLPAD, y1: ply(0), x2: PLOTW - PLPAD, y2: ply(0), stroke: '#374151', strokeWidth: 0.5, strokeDasharray: '2 2' }),
+              // piBar (cyan)
+              h('polyline', {
+                points: history.map(function(p, i) { return plx(i) + ',' + ply(p.piBar); }).join(' '),
+                fill: 'none', stroke: '#22d3ee', strokeWidth: 1.5
+              }),
+              // variance (fuchsia)
+              h('polyline', {
+                points: history.map(function(p, i) { return plx(i) + ',' + ply(p.variance); }).join(' '),
+                fill: 'none', stroke: '#f0abfc', strokeWidth: 1.5
+              }),
+              h('text', { x: PLPAD + 4, y: PLPAD + 10, fill: '#22d3ee', fontSize: 9 }, '⟨π⟩ → monoton steigt'),
+              h('text', { x: PLPAD + 4, y: PLPAD + 22, fill: '#f0abfc', fontSize: 9 }, 'Var(π) → zerfällt')
+            )
+          ) : h('div', { className: 'text-[11px] text-gray-500 italic' }, 'Start, um Price-Identität zu sehen.'),
+
+          h('div', { className: 'flex gap-2 mt-3' },
+            h('button', {
+              onClick: function() { setRunning(!running); },
+              className: 'px-3 py-1.5 text-xs font-medium rounded-lg ' +
+                (running ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40')
+            }, running ? '⏸ Pause' : '▶ Start'),
+            h('button', {
+              onClick: reset,
+              className: 'px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-800 text-gray-300 border border-gray-700 hover:text-white'
+            }, '↻ Neue Agenten')
+          )
+        )
+      ),
+
+      h('div', { className: 'mt-5 text-[11px] text-gray-500 border-t border-gray-800/70 pt-3' },
+        h('strong', { className: 'text-gray-400' }, 'Was zeigt das? '),
+        'Jeder Agent folgt dem Gradient-Aufstieg auf seinem eigenen Bewertungsvektor. Parallel läuft die Replikator-Dynamik für die Stimmgewichte: αₕ wächst, wenn der Agent überdurchschnittlich zur Kohärenz beiträgt. Theorem 6 garantiert, dass das gekoppelte System konvergiert. Die Price-Identität — d⟨π⟩/dt = Var(π) — wird live sichtbar: Solange die Beiträge variieren, steigt der Mittelwert. Wenn die Varianz Null erreicht, stagniert das System.')
+    );
+  }
+
+  window.ReplikatorSchwarm = ReplikatorSchwarm;
+})();

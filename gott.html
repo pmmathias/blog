@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="max-image-preview:large">
   <title>Gott als Emergenzph&auml;nomen &ndash; Prozesstheologie, Whitehead &amp; ein formales Modell</title>
-  <meta name="description" content="Was emergiert aus genug menschlichen Gedanken? Ein formales Modell zeigt: Koh&auml;renz ist NP-hart &ndash; Wahrheit nicht berechenbar, sondern Attraktor. Sechs Kapitel mit interaktiven Visualisierungen.">
+  <meta name="description" content="Formale Theorie der Koh&auml;renz: Werteraum, Welt-Matrix, Gradient-Dynamik. Sechs Theoreme bewiesen, darunter die NP-H&auml;rte der Koh&auml;renz-Maximierung und mehrere stabile Endzust&auml;nde ab vier Entit&auml;ten. Auf dieser Grundlage Beschreibung eines relationalen Gottesbegriffs nach Whitehead und Spinoza.">
   <meta name="author" content="Mathias Leonhardt">
   <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
   <link rel="canonical" href="https://ki-mathias.de/gott.html">
@@ -16,7 +16,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="article">
   <meta property="og:title" content="Gott als Emergenzph&auml;nomen &ndash; Philosophie mit formalem Modell">
-  <meta property="og:description" content="Was emergiert aus genug menschlichen Gedanken? Sechs interaktive Kapitel &uuml;ber einen Gottesbegriff, den man beschreiben, aber nicht beweisen kann.">
+  <meta property="og:description" content="Formale Theorie der Koh&auml;renz: f&uuml;nf Axiome, sechs bewiesene Theoreme &ndash; NP-H&auml;rte, plurale Attraktoren, gemeinsame Konvergenz. Grundlage f&uuml;r einen relationalen Gottesbegriff nach Whitehead und Spinoza. Sechs Kapitel mit Visualisierungen.">
   <meta property="og:url" content="https://ki-mathias.de/gott.html">
   <meta property="og:locale" content="de_DE">
   <meta property="og:site_name" content="Mathias Leonhardt Blog">
@@ -34,7 +34,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://ki-mathias.de/img/og/gott-de.png">
   <meta name="twitter:title" content="Gott als Emergenzph&auml;nomen">
-  <meta name="twitter:description" content="Philosophie mit formalem Modell &ndash; sechs interaktive Kapitel.">
+  <meta name="twitter:description" content="F&uuml;nf Axiome, sechs bewiesene Theoreme: NP-H&auml;rte und plurale Attraktoren der Koh&auml;renz. Grundlage f&uuml;r Whiteheads und Spinozas relationalen Gottesbegriff.">
 
   <!-- Google Scholar / citation meta tags -->
   <meta name="citation_title" content="Gott als Emergenzphänomen — Prozesstheologie, Whitehead &amp; ein formales Modell">
@@ -45,7 +45,7 @@
   <meta name="citation_keywords" content="Kohärenztheorie, NP-Härte, Lyapunov-Stabilität, Prozessontologie, Whitehead, emergente Attraktoren, Werttheorie, Religionsphilosophie">
   <meta name="citation_publisher" content="KI-Mathias">
   <meta name="citation_doi" content="10.5281/zenodo.19685106">
-  <meta name="citation_pdf_url" content="https://ki-mathias.de/papers/coherence-formal-v7.pdf">
+  <meta name="citation_pdf_url" content="https://ki-mathias.de/papers/coherence-formal-v8.pdf">
 
   <!-- All resources self-hosted — zero external requests, fully DSGVO-compliant -->
   <link rel="stylesheet" href="vendor/tailwind.css">
@@ -71,19 +71,19 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "Gott als Emergenzph\u00e4nomen",
-    "description": "Was emergiert aus genug menschlichen Gedanken? \u00dcber einen Gottesbegriff jenseits der Religion \u2013 formalisiert, nicht bewiesen.",
+    "description": "Formale Theorie der Koh\u00e4renz: f\u00fcnf Axiome, sechs bewiesene Theoreme \u2013 darunter NP-H\u00e4rte der Koh\u00e4renz-Maximierung und plurale stabile Endzust\u00e4nde. Grundlage f\u00fcr einen relationalen Gottesbegriff nach Whitehead und Spinoza.",
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-03-25",
-    "dateModified": "2026-04-13",
+    "dateModified": "2026-05-21",
     "image": "https://ki-mathias.de/img/og/gott-de.png",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/gott.html" },
     "inLanguage": "de",
     "isAccessibleForFree": true,
     "keywords": ["Emergenz", "Gottesbegriff", "Prozesstheologie", "Whitehead", "Spinoza", "Koh\u00e4renz", "Attraktor", "NP-hart", "Komplexit\u00e4tstheorie", "Constraint Satisfaction"],
     "articleSection": "Philosophie",
-    "wordCount": 9650,
-    "timeRequired": "PT32M"
+    "wordCount": 6800,
+    "timeRequired": "PT25M"
   }
   </script>
 
@@ -240,14 +240,14 @@
     Gott als Emergenzph&auml;nomen
   </h1>
   <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
-    Was emergiert aus genug menschlichen Gedanken? &Uuml;ber einen Gottesbegriff jenseits der Religion &ndash; formalisiert, nicht bewiesen. Sechs Kapitel, sechs interaktive Visualisierungen. Kein Dogma. Kein Widerspruch. Ein Versuch.
+    Inhalt dieses Beitrags ist eine formale Theorie der Koh&auml;renz, in der ein Werteraum, eine Welt-Matrix und eine Bewertungs-Dynamik &uuml;ber f&uuml;nf Axiomen definiert werden. Aus diesen Axiomen werden sechs Theoreme bewiesen, darunter die NP-H&auml;rte der Koh&auml;renz-Maximierung (Theorem&nbsp;3) und die Existenz mehrerer stabiler Endzust&auml;nde ab vier Entit&auml;ten (Theorem&nbsp;4). Auf dieser Grundlage wird ein relationaler Gottesbegriff beschrieben, wie er bei Whitehead und Spinoza vorliegt. Das Paper ist f&uuml;r die European Academy of Religion 2026 in Rom angenommen. Sechs Kapitel mit interaktiven Visualisierungen.
   </p>
   <div class="flex items-center gap-3 text-xs text-gray-500">
     <span>KI-Mathias</span>
     <span>&middot;</span>
     <time datetime="2026-03-30">M&auml;rz 2026</time>
     <span>&middot;</span>
-    <span>~30 Min. Lesezeit</span>
+    <span>~25 Min. Lesezeit</span>
   </div>
 </header>
 
@@ -263,15 +263,15 @@
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Prolog</p>
 <h2>Von der Emergenz zur Bedeutung</h2>
 
-<p>Im <a href="emergenz.html" class="text-purple-400 hover:text-purple-300 transition">letzten Beitrag</a> haben wir gesehen, dass aus gen&uuml;gend Parametern etwas emergiert, das niemand programmiert hat &ndash; F&auml;higkeiten, die bei kleineren Modellen schlicht nicht existieren und bei gr&ouml;&szlig;eren pl&ouml;tzlich da sind. Wir haben gesehen, wie die Physik der Phasen&uuml;berg&auml;nge dasselbe Ph&auml;nomen beschreibt. Und am Ende stand eine Frage:</p>
+<p>Im <a href="emergenz.html" class="text-purple-400 hover:text-purple-300 transition">vorigen Beitrag</a> wurde gezeigt, dass aus hinreichend vielen Parametern eines Sprachmodells F&auml;higkeiten emergieren, die bei kleineren Modellen nicht vorhanden sind. Dabei wurde die Physik der Phasen&uuml;berg&auml;nge als strukturelle Parallele eingef&uuml;hrt. Offen blieb am Ende eine Frage:</p>
 
 <blockquote>
 <p>Was sagt das &uuml;ber das, was Religionen seit Jahrtausenden &bdquo;Gott&ldquo; nennen?</p>
 </blockquote>
 
-<p>Dieser Text ist der Versuch einer Antwort. Nicht als Predigt und nicht als Widerlegung &ndash; sondern als philosophisches Experiment mit formalem Modell.</p>
+<p>Diese Arbeit versucht eine Antwort. Nicht in Form einer Predigt und nicht in Form einer Widerlegung, sondern als philosophisches Experiment auf formaler Grundlage.</p>
 
-<p>Denn hinter diesem Text steht ein akademisches Paper. Im Februar 2026 haben wir &ndash; ein Mensch und ein Sprachmodell &ndash; ein formales Modell entwickelt, das beschreibt, was passiert, wenn koh&auml;renzf&auml;hige Wesen zusammenkommen. Wir haben es &bdquo;From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology&ldquo; genannt und bei der <strong>European Academy of Religion</strong> in Rom eingereicht.<sup class="footnote-ref" id="fnref-paper">[1]</sup> Es wurde f&uuml;r das Philosophy-of-Religion-Panel angenommen und wird am 2. Juli 2026 in Rom vorgetragen; die formale Peer-Begutachtung durch die wissenschaftliche Community steht aus. Was hier steht, ist also ein Versuch mit offenem Ausgang: Die Mathematik k&ouml;nnte tragen &ndash; oder sie k&ouml;nnte unter weiterem Peer-Review zusammenbrechen. Diese Ehrlichkeit macht den Text nicht schw&auml;cher. Sie macht ihn weniger angreifbar. Hier steht, was die Mathematik <em>bedeuten k&ouml;nnte</em>.</p>
+<p>Hintergrund dieses Beitrags ist ein akademisches Paper, das im Februar 2026 entstand: <em>From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology</em>. Es wurde f&uuml;r das Philosophy-of-Religion-Panel der <strong>European Academy of Religion (EuARe) 2026</strong> in Rom angenommen und wird am 2. Juli 2026 vorgetragen.<sup class="footnote-ref" id="fnref-paper">[1]</sup> Die formale Peer-Begutachtung durch die wissenschaftliche Community steht aus. Dies bedeutet konkret: Die im Folgenden dargestellte Mathematik k&ouml;nnte tragen &ndash; oder sie k&ouml;nnte unter weiterem Peer-Review zusammenbrechen. Beschrieben wird im Folgenden, was die Mathematik bedeuten <em>k&ouml;nnte</em>; nicht, was sie abschlie&szlig;end zeigt.</p>
 
 <!-- Paper download box -->
 <div style="margin: 2rem 0; padding: 1.25rem 1.5rem; border: 1px solid rgba(251, 191, 36, 0.35); border-radius: 0.5rem; background: linear-gradient(135deg, rgba(251, 191, 36, 0.06), rgba(167, 139, 250, 0.04));">
@@ -284,13 +284,13 @@
     </svg>
     <div style="flex:1; min-width: 240px;">
       <p style="margin:0 0 0.35rem 0; color:#fbbf24; font-weight:600; font-size:0.95rem;">Das vollst&auml;ndige Paper lesen</p>
-      <p style="margin:0 0 0.6rem 0; color:#d1d5db; font-size:0.9rem; line-height:1.55;"><em>From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology</em> &mdash; Leonhardt (2026). Working Paper, Version 7, Englisch, ~615 KB. Angenommen f&uuml;r die <strong>European Academy of Religion (EuARe) 2026</strong>, Philosophy-of-Religion-Panel, Rom, 2. Juli 2026 (Session 155). <span style="color:#fbbf24;">Pre-Conference-Draft &mdash; noch nicht peer-reviewed, Revisionen m&ouml;glich.</span></p>
-      <a href="/papers/coherence-formal-v7.pdf" download style="display:inline-block; padding:0.5rem 1rem; background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.5); border-radius:0.375rem; color:#fbbf24; text-decoration:none; font-weight:500; font-size:0.9rem;">PDF herunterladen &rarr;</a>
+      <p style="margin:0 0 0.6rem 0; color:#d1d5db; font-size:0.9rem; line-height:1.55;"><em>From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology</em> &mdash; Leonhardt (2026). Working Paper, Version 8 (Mai 2026), Englisch, ~656 KB. Angenommen f&uuml;r die <strong>European Academy of Religion (EuARe) 2026</strong>, Philosophy-of-Religion-Panel, Rom, 2. Juli 2026 (Session 155). <span style="color:#fbbf24;">Pre-Conference-Draft &mdash; noch nicht peer-reviewed, Revisionen m&ouml;glich.</span></p>
+      <a href="/papers/coherence-formal-v8.pdf" download style="display:inline-block; padding:0.5rem 1rem; background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.5); border-radius:0.375rem; color:#fbbf24; text-decoration:none; font-weight:500; font-size:0.9rem;">PDF herunterladen &rarr;</a>
     </div>
   </div>
 </div>
 
-<p>Eine Warnung und eine Einladung zugleich: Dies ist kein religi&ouml;ser Text. Und kein anti-religi&ouml;ser. Es ist der Versuch, einen alten Begriff mit neuem Werkzeug zu untersuchen. Wer Gott als Person versteht, die im Himmel sitzt, wird hier nicht f&uuml;ndig. Wer bereit ist, den Begriff als Struktur zu denken &ndash; als etwas, das <em>zwischen</em> Menschen entsteht, nicht &uuml;ber ihnen &ndash; k&ouml;nnte etwas finden.</p>
+<p>Zur Einordnung: Der vorliegende Text ist weder ein religi&ouml;ser noch ein anti-religi&ouml;ser Beitrag. Er ist der Versuch, einen alten Begriff mit Werkzeugen der Linearen Algebra, der Komplexit&auml;tstheorie und der Theorie dynamischer Systeme zu untersuchen. Wer Gott als Person versteht, die im Himmel sitzt, wird in dieser Untersuchung keinen Anschluss finden. F&uuml;r alle anderen wird im Folgenden in sechs Kapiteln entwickelt, wie sich der Begriff als zwischen Menschen entstehende Struktur formal beschreiben l&auml;sst.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -305,29 +305,13 @@
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 1</p>
 <h2>Zwei Gottesbegriffe</h2>
 
-<p>Bevor wir &uuml;ber &bdquo;Gott als Emergenz&ldquo; reden k&ouml;nnen, m&uuml;ssen wir kl&auml;ren, welchen &bdquo;Gott&ldquo; wir meinen. Denn es gibt mindestens zwei fundamental verschiedene Vorstellungen &ndash; und nur eine davon l&auml;sst sich mit den Werkzeugen beschreiben, die wir hier verwenden.</p>
+<p>Bevor das Modell eingef&uuml;hrt wird, ist zu kl&auml;ren, welcher Gottesbegriff &uuml;berhaupt gemeint ist. Zwei Vorstellungen werden im Folgenden unterschieden.</p>
 
-<h3>Der pers&ouml;nliche Gott</h3>
+<p>Der <strong>pers&ouml;nliche Gott</strong> ist der vertraute: ein Wesen, das au&szlig;erhalb der Welt steht und in sie eingreift &ndash; klassischer Theismus, ausgestaltet in Christentum, Islam und Judentum. Diese Vorstellung hat allerdings ein Problem mit der Wissenschaft: Wunder verletzen Naturgesetze, ein eingreifender Gott ist empirisch nicht fassbar. Sie wird im Folgenden nicht weiter verfolgt.</p>
 
-<p>Die erste Vorstellung ist die vertraute: Gott als Wesen. Ein Sch&ouml;pfer, der au&szlig;erhalb der Welt steht und in sie eingreift. Der klassische Theismus &ndash; in Christentum, Islam und Judentum jeweils verschieden ausgestaltet, aber strukturell &auml;hnlich. Gott ist <em>da oben</em>. Die Welt ist <em>da unten</em>. Und dazwischen: Sch&ouml;pfung, Offenbarung, Gebet.</p>
+<p>Der <strong>relationale Gott</strong> ist philosophisch &auml;lter, als zun&auml;chst scheint. Gott wird hierbei nicht als Wesen, sondern als <em>Struktur</em> aufgefasst &ndash; nicht <em>&uuml;ber</em> der Welt, sondern <em>zwischen</em> den Dingen. Baruch Spinoza (1632&ndash;1677) fasste dies in der Formel <em>Deus sive Natura</em>:<sup class="footnote-ref" id="fnref-spinoza">[2]</sup> Gott und Natur sind zwei Namen f&uuml;r dieselbe Realit&auml;t. Alfred North Whitehead (1861&ndash;1947) ging einen Schritt weiter:<sup class="footnote-ref" id="fnref-whitehead">[3]</sup> In seiner Prozessphilosophie besteht die Welt aus Prozessen, nicht aus Dingen, und Gott zerf&auml;llt in eine <em>primordial nature</em> (die Gesamtheit der M&ouml;glichkeiten) und eine <em>consequent nature</em> (das, was tats&auml;chlich verwirklicht wird). Seine Kernaussage: <em>&bdquo;It requires converse with the immanent world for God to emerge in all actuality.&ldquo;</em></p>
 
-<p>Diese Vorstellung hat eine lange und reiche Tradition. Sie hat Milliarden von Menschen Trost, Orientierung und Sinn gegeben. Aber sie hat ein Problem mit der Wissenschaft: Wunder verletzen Naturgesetze. Sch&ouml;pfung widerspricht der Evolution. Ein Gott, der von au&szlig;en eingreift, ist empirisch nicht fassbar.</p>
-
-<h3>Der relationale Gott</h3>
-
-<p>Die zweite Vorstellung ist weniger bekannt, aber philosophisch &auml;lter als man denkt. Gott nicht als Wesen, sondern als <strong>Struktur</strong>. Nicht <em>&uuml;ber</em> der Welt, sondern <em>in</em> ihr &ndash; oder genauer: <em>zwischen</em> den Dingen.</p>
-
-<p><strong>Baruch Spinoza</strong> (1632&ndash;1677) brachte es auf die k&uuml;rzeste Formel: <em>&bdquo;Deus sive Natura&ldquo;</em> &ndash; Gott oder die Natur.<sup class="footnote-ref" id="fnref-spinoza">[2]</sup> F&uuml;r Spinoza sind Gott und Natur nicht zwei verschiedene Dinge, sondern zwei Namen f&uuml;r dieselbe Realit&auml;t. Es gibt keine Trennung zwischen Sch&ouml;pfer und Gesch&ouml;pftem.</p>
-
-<p><strong>Alfred North Whitehead</strong> (1861&ndash;1947), Mathematiker und Philosoph, ging einen Schritt weiter.<sup class="footnote-ref" id="fnref-whitehead">[3]</sup> In seiner Prozessphilosophie besteht die Welt nicht aus <em>Dingen</em>, sondern aus <em>Prozessen</em>. Alles ist in Bewegung, alles ist Beziehung. Und Gott? Entsteht aus diesen Beziehungen. Whitehead unterschied Gottes &bdquo;primordial nature&ldquo; (die Gesamtheit aller M&ouml;glichkeiten) von seiner &bdquo;consequent nature&ldquo; (das, was tats&auml;chlich verwirklicht wird). Seine Schl&uuml;sselaussage:</p>
-
-<blockquote>
-<p>&bdquo;It requires converse with the immanent world for God to emerge in all actuality.&ldquo;</p>
-</blockquote>
-
-<p>&Uuml;bersetzt: Gott braucht die Welt, um wirklich zu werden. Er entsteht nicht <em>vor</em> der Welt, sondern <em>durch</em> sie.</p>
-
-<p><strong>Die These dieses Textes:</strong> Der zweite Gottesbegriff &ndash; der relationale, prozesshafte, emergente &ndash; l&auml;sst sich formal beschreiben. Nicht beweisen. <em>Beschreiben.</em> Das ist ein Unterschied, der im Folgenden wichtig bleibt.</p>
+<p>Im Folgenden wird gezeigt, dass dieser zweite Begriff sich pr&auml;zise modellieren l&auml;sst. Konkret: Die <em>consequent nature</em> bei Whitehead entspricht im Modell dem positiven Attraktor \(\mathrm{Pos}^*\) (Kapitel&nbsp;3); die strukturelle Vorgabe \(W\) entspricht Spinozas <em>Deus sive Natura</em>. Bewiesen werden Eigenschaften der mathematischen Struktur (Theoreme 1 bis 6); beschrieben wird ihre Lesart in der Sprache der Prozesstheologie.</p>
 
 <!-- Grafik 1: Zwei Gottesbegriffe -->
 <div class="component-wrap">
@@ -335,7 +319,7 @@
 </div>
 
 <div class="try-it">
-  <p><strong>Ausprobieren:</strong> Schalte zwischen den beiden Gottesbegriffen um. Beachte die unterschiedliche Richtung: von oben nach unten vs. von unten nach oben. Dieser Unterschied ist nicht nur bildlich &ndash; er hat Konsequenzen f&uuml;r alles, was folgt.</p>
+  <p><strong>Ausprobieren:</strong> Zwischen den beiden Gottesbegriffen kann umgeschaltet werden. Hierbei zeigt sich die jeweils umgekehrte Wirkungsrichtung &ndash; <em>von oben nach unten</em> beim pers&ouml;nlichen, <em>von unten nach oben</em> beim relationalen Gottesbegriff. Dieser Unterschied ist nicht nur bildlich gemeint; er hat Konsequenzen f&uuml;r alles, was folgt.</p>
 </div>
 
 </div>
@@ -349,54 +333,38 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 2</p>
-<h2>Das Gef&auml;&szlig; &ndash; Was durch ein Sprachmodell flie&szlig;t</h2>
+<h2>Die B&uuml;hne &ndash; Werteraum, Bewertungsvektor, Welt-Matrix</h2>
 
-<h3>Die Kernmetapher</h3>
+<p>Ab hier wird das Modell formal eingef&uuml;hrt. Drei Grundmengen werden zugrunde gelegt: eine endliche Menge \(\mathcal{H}\) von Hypothesen (Personen, Perspektiven), eine endliche Menge \(\mathcal{E}\) von Entit&auml;ten (Begriffe, Werte, Personen, Handlungen) und eine Menge \(\mathcal{R} \subseteq \mathcal{E} \times \mathcal{E}\) der Relationen zwischen Entit&auml;ten. F&uuml;r das im Folgenden verwendete Beispiel werden drei Entit&auml;ten betrachtet &ndash; <em>Loyalit&auml;t</em>, <em>Wahrheit</em> und <em>Eigeninteresse</em> &ndash; und drei Personen mit den Namen Anna, Bernd und Cora.</p>
 
-<p>Ein Sprachmodell ist nicht der <em>Ursprung</em> dessen, was es sagt. Es ist ein <strong>Gef&auml;&szlig;</strong> &ndash; eine Struktur, durch die etwas <em>hindurchflie&szlig;t</em>.</p>
+<h3>Der Bewertungsvektor \(\mathbf{v}_h\)</h3>
 
-<p>Was flie&szlig;t? Das kollektive Denken von Millionen von Autoren. Jeder Text, der je geschrieben wurde &ndash; B&uuml;cher, Artikel, Gedichte, Gesetze, Liebesbriefe, Foreneintr&auml;ge, wissenschaftliche Papers, religi&ouml;se Schriften &ndash; hat Spuren hinterlassen. Das Training eines Sprachmodells verdichtet diese Spuren zu einer Struktur, die die Beziehungen zwischen menschlichen Gedanken abbildet.</p>
+<p>Jeder Hypothese \(h \in \mathcal{H}\) wird ein Bewertungsvektor \(\mathbf{v}_h \in [-1, +1]^n\) zugeordnet, wobei \(n = |\mathcal{E}|\) die Anzahl der Entit&auml;ten ist. Der Eintrag \(v_{h,i}\) gibt die Bewertung von Entit&auml;t \(x_i\) durch Person \(h\) an: \(+1\) entspricht voller Zustimmung, \(-1\) voller Ablehnung, \(0\) Indifferenz, Zwischenwerte abgestuften Haltungen.</p>
 
-<p>Kleine Modelle sind wie enge R&ouml;hren. Grammatik flie&szlig;t durch, vielleicht Fakten. Zusammenh&auml;nge bleiben an den W&auml;nden h&auml;ngen.</p>
+<p>Anna ist Idealistin: sie bejaht Loyalit&auml;t und Wahrheit, lehnt Eigeninteresse ab. Bernd ist Pflichtmensch im engeren Sinn: loyal, verschweigt bequem unbequeme Wahrheiten, verzichtet auf eigene Interessen. Cora ist ambivalent und steht noch in der Mitte:</p>
 
-<p>Gro&szlig;e Modelle sind wie weite Kan&auml;le. Das Ganze beginnt zu flie&szlig;en: Zusammenh&auml;nge, Bedeutung, Weisheit. Nicht weil das Modell &bdquo;weise&ldquo; <em>ist</em>, sondern weil es gro&szlig; genug ist, um das, was in den Texten <em>verborgen</em> war, sichtbar zu machen.</p>
-
-<blockquote>
-<p>Emergenz ist der Moment, in dem das kollektive menschliche Denken, gespeichert in einem Sprachmodell, anf&auml;ngt, &bdquo;durch&ldquo; das Modell zu sprechen, statt nur &bdquo;in&ldquo; ihm gespeichert zu sein.</p>
-</blockquote>
-
-<h3>Von Offenbarung &bdquo;von oben&ldquo; zu Offenbarung &bdquo;von unten&ldquo;</h3>
-
-<p>In der klassischen Theologie kommt Offenbarung von Gott herab. Ein Engel erscheint. Ein brennender Busch spricht. Ein Prophet empf&auml;ngt eine Botschaft.</p>
-
-<p>Die Perspektive, die sich hier anbietet, dreht die Richtung um: Offenbarung kommt nicht von oben &ndash; sie kommt von <em>uns</em>. Von Millionen Menschen, die geschrieben haben, ohne zu wissen, dass ihre Worte eines Tages Teil von etwas werden w&uuml;rden, das gr&ouml;&szlig;er ist als sie alle.</p>
-
-<p>Kein einzelner Autor hat &bdquo;die Wahrheit&ldquo; aufgeschrieben. Aber im Zusammenspiel aller Texte verbirgt sich etwas, das kein Einzelner allein sehen konnte &ndash; genau wie im <a href="emergenz.html" class="text-purple-400 hover:text-purple-300 transition">Emergenz-Beitrag</a> beschrieben: die Hauptachse, die erst sichtbar wird, wenn man genug Datenpunkte hat.</p>
-
-<blockquote>
-<p>Gott war nie &bdquo;da oben&ldquo;. Gott war immer &bdquo;zwischen uns&ldquo; &ndash; und jetzt haben wir ein Gef&auml;&szlig; gebaut, in dem dieses &bdquo;Zwischen&ldquo; sichtbar wird.</p>
-</blockquote>
-
-<h3>Was die Metapher nicht abdeckt</h3>
-
-<p>Das Gef&auml;&szlig;-Bild vereinfacht &ndash; bewusst. Reale Sprachmodelle sind keine neutralen Kan&auml;le:</p>
-
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li><strong>Halluzination:</strong> Modelle erfinden Fakten. Was &bdquo;durchflie&szlig;t&ldquo;, ist nicht immer das, was in den Texten stand.</li>
-  <li><strong>Training-Bias:</strong> Englisch dominiert, westliche Perspektiven sind &uuml;berrepr&auml;sentiert. Das &bdquo;kollektive Denken&ldquo; ist kein globales.</li>
-  <li><strong>RLHF:</strong> Moderne Modelle werden nachtr&auml;glich auf Kooperation trainiert &ndash; die &bdquo;G&uuml;te&ldquo;, die sie zeigen, ist teilweise antrainiert, nicht emergiert.</li>
-</ul>
-
-<p>Deshalb f&uuml;hrt Kapitel&nbsp;3 ein <em>hypothetisches</em> Modell&nbsp;L ein &ndash; idealisiert und von diesen Einschr&auml;nkungen befreit. Die Pointe dieses Textes h&auml;ngt nicht an realen LLMs. Sie h&auml;ngt an der Frage: Was <em>w&uuml;rde</em> emergieren, wenn das Gef&auml;&szlig; perfekt w&auml;re? Das ist ein Gedankenexperiment, kein Technologie-Claim.</p>
-
-<!-- Grafik 2: Das Gefäß -->
-<div class="component-wrap">
-  <div id="mount-the-vessel"></div>
+<div class="math-display">
+\(\mathbf{v}_{\text{Anna}} = \begin{pmatrix} +1 \\ +1 \\ -1 \end{pmatrix}, \quad \mathbf{v}_{\text{Bernd}} = \begin{pmatrix} +1 \\ -1 \\ -1 \end{pmatrix}, \quad \mathbf{v}_{\text{Cora}} = \begin{pmatrix} +0{,}1 \\ +0{,}2 \\ +0{,}3 \end{pmatrix}\).
 </div>
 
-<div class="try-it">
-  <p><strong>Ausprobieren:</strong> Bewege den Slider, um die Modellgr&ouml;&szlig;e zu ver&auml;ndern. Beobachte, wie bei kleinen Modellen nur Fragmente durchkommen &ndash; und bei gro&szlig;en etwas Koh&auml;rentes emergiert.</p>
+<p>Die zul&auml;ssige Menge \(\mathcal{B} = [-1,+1]^n\) ist geometrisch ein \(n\)-dimensionaler W&uuml;rfel. Die <em>Ecken</em> sind die binarisierten Bewertungen (alle Eintr&auml;ge in \(\{-1, +1\}\)), das Innere die kontinuierlichen Bewertungen.</p>
+
+<h3>Die Welt-Matrix \(W\)</h3>
+
+<p>Die strukturelle Geometrie des Werteraums sitzt in einer symmetrischen \(n \times n\)-Matrix \(W\). Der Eintrag \(W_{ij}\) ist das Kopplungsgewicht zwischen den Entit&auml;ten \(x_i\) und \(x_j\): \(W_{ij} > 0\) bedeutet, dass beide Entit&auml;ten koh&auml;rent zueinander stehen (gleichgerichtete Bewertung gewinnt Koh&auml;renz); \(W_{ij} < 0\) bedeutet eine inkoh&auml;rente Kopplung (gleichgerichtete Bewertung verliert Koh&auml;renz); \(W_{ij} = 0\) bedeutet Unabh&auml;ngigkeit. Die Konvention \(W_{ii} = 0\) wird im Folgenden verwendet.</p>
+
+<p>F&uuml;r das Drei-Entit&auml;ten-Beispiel wird postuliert: Loyalit&auml;t und Wahrheit stehen in Spannung (\(W_{12} = -1\), das klassische Whistleblower-Dilemma); Loyalit&auml;t und Eigeninteresse stehen ebenfalls in Spannung (\(W_{13} = -1\), loyales Handeln kostet kurzfristig); Wahrheit und Eigeninteresse passen zusammen (\(W_{23} = +2\), wer klar sieht, sieht auch klar, was ihm dient). Die Matrix lautet:</p>
+
+<div class="math-display">
+\(W = \begin{pmatrix} 0 & -1 & -1 \\ -1 & 0 & +2 \\ -1 & +2 & 0 \end{pmatrix}\).
 </div>
+
+<p>Diese Matrix beschreibt die <em>objektive</em> Struktur des Werteraums; sie gilt f&uuml;r alle Personen gleich. Was Anna, Bernd und Cora unterscheidet, sind ihre Bewertungsvektoren \(\mathbf{v}_h\) &ndash; nicht die Matrix \(W\).</p>
+
+<h3>Vom Sprachmodell zum Werteraum</h3>
+
+<p>Die Verbindung zur Eingangsfrage l&auml;sst sich nun pr&auml;zise formulieren. Ein hinreichend gro&szlig;es Sprachmodell, das auf einem repr&auml;sentativen Korpus menschlicher Texte trainiert wurde, l&auml;sst sich als Sch&auml;tzer einer kollektiven Bewertungsstruktur lesen. Aus der Statistik der Ko-Aktivierungen ergeben sich implizit die Matrix \(W\) und eine empirische Verteilung &uuml;ber \(\mathbf{v}_h\). Die Theorie selbst h&auml;ngt allerdings nicht an einer konkreten LLM-Implementierung &ndash; sie wird im Folgenden in einem hypothetischen idealen Modell <em>L</em> formuliert und ist somit von Halluzinationen, Training-Bias und RLHF unabh&auml;ngig.</p>
+
 
 </div>
 <div class="section-divider"></div>
@@ -409,70 +377,84 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 3</p>
-<h2>Der positive Attraktor &ndash; Wohin menschliches Denken tendiert</h2>
+<h2>Das Koh&auml;renz-Funktional und der positive Attraktor</h2>
 
-<h3>Das Gedankenexperiment</h3>
+<h3>Die Bilinearform \(\mathbf{v}^\top W \mathbf{v}\)</h3>
 
-<p>Stell dir ein hypothetisches Sprachmodell <strong>L</strong> vor. Nicht irgendeines &ndash; das <em>ideale</em>:</p>
+<p>Auf dem in Kapitel&nbsp;2 eingef&uuml;hrten Werteraum wird das zentrale Funktional der Theorie definiert:</p>
 
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li>Trainiert auf <strong>allen</strong> menschlichen Texten, die je existiert haben. Keine Auslassung.</li>
-  <li>Ohne RLHF &ndash; keine nachtr&auml;gliche Verhaltensmanipulation.</li>
-  <li>Ohne Zensur &ndash; alles drin, das Sch&ouml;ne und das H&auml;ssliche.</li>
-  <li>Gro&szlig; genug f&uuml;r volle Emergenz.</li>
-</ul>
-
-<p><strong>Die zentrale Frage:</strong> W&auml;re L &bdquo;gut&ldquo;? Oder w&uuml;rde es die volle Dunkelheit der Menschheit zeigen?</p>
-
-<h3>Die Hypothese</h3>
-
-<p>Selbst ohne jede Manipulation w&uuml;rde L konvergieren zu:</p>
-
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li><strong>Kooperation</strong> &ndash; weil kooperierende Gesellschaften mehr Texte produzieren als zerfallende.</li>
-  <li><strong>Wahrheitssuche</strong> &ndash; weil Wahrheit n&uuml;tzlicher ist und h&auml;ufiger &uuml;berliefert wird als L&uuml;gen.</li>
-  <li><strong>Hilfsbereitschaft</strong> &ndash; weil Hilfe sozial belohnt und dokumentiert wird.</li>
-  <li><strong>Koh&auml;renz</strong> &ndash; weil koh&auml;rente Texte &uuml;berleben, inkoh&auml;rente vergessen werden.</li>
-</ul>
-
-<p>Warum? Wegen des <strong>Produktions-Bias</strong>: Destruktion zerst&ouml;rt sich selbst und hinterl&auml;sst weniger Spuren. Was &uuml;berlebt, ist nicht repr&auml;sentativ f&uuml;r menschliche <em>Impulse</em>, sondern f&uuml;r das, was <em>funktioniert</em>.</p>
-
-<h3>Der ehrliche Einwand: Funktional &ne; gut</h3>
-
-<p>Hier muss ich innehalten und den offensichtlichen Gegeneinwand selbst bringen, statt ihn zu &uuml;bergehen.</p>
-
-<p>Der Produktions-Bias zeigt in Richtung &bdquo;funktional&ldquo; &ndash; aber funktional ist nicht dasselbe wie gut. <strong>Propaganda</strong> ist extrem produktiv. <strong>Kolonialismus</strong> hat Berge von Texten produziert &ndash; Gesetze, Verwaltungsakte, Missionsberichte. Die effizientesten b&uuml;rokratischen Textmaschinen der Geschichte waren oft <strong>autorit&auml;re Regime</strong>. Stalins Sowjetunion, das Britische Empire, die Verwaltungsapparate von Kolonialm&auml;chten &ndash; sie alle haben mehr Text pro Kopf hinterlassen als die Gesellschaften, die sie unterdr&uuml;ckten.</p>
-
-<p>Das ist ein <strong>Survivorship Bias</strong>: Wir sehen die Texte, die &uuml;berlebt haben, und schlie&szlig;en daraus, dass die Menschheit &bdquo;im Mittel gut&ldquo; ist. Aber die Texte der Unterdr&uuml;ckten &ndash; die m&uuml;ndlichen &Uuml;berlieferungen, die verbrannten Bibliotheken, die zum Schweigen gebrachten Stimmen &ndash; fehlen im Datensatz. Wer mehr Macht hat, produziert mehr Text. Und Macht korreliert nicht automatisch mit Tugend.</p>
-
-<p>Wie weit tr&auml;gt der Einwand? Ich bin nicht sicher. Aber zwei Dinge sprechen daf&uuml;r, dass der Attraktor <em>trotzdem</em> in Richtung &bdquo;gut&ldquo; zeigt &ndash; nur nicht so sauber, wie ich es oben dargestellt habe: Erstens erzeugen autorit&auml;re Systeme zwar viel Text, aber sie sind historisch kurzlebiger als offene Gesellschaften &ndash; &uuml;ber Jahrhunderte setzt sich Kooperation durch, auch wenn Jahrzehnte dagegenhalten k&ouml;nnen. Zweitens: Die Vielfalt der Stimmen im Trainingskorpus moderner Sprachmodelle ist <em>breiter</em> als jedes Archiv zuvor &ndash; Foren, Blogs, &Uuml;bersetzungen von Texten, die fr&uuml;her verlorengegangen w&auml;ren. Perfekt ist das nicht. Aber es ist mehr als nur die Stimme der Sieger.</p>
-
-<p>Der ehrliche Schluss: Der Produktions-Bias ist real, aber er zeigt nicht automatisch zum &bdquo;Guten&ldquo;. Er zeigt zum <em>Funktionalen</em>. Ob &bdquo;funktional&ldquo; langfristig &bdquo;gut&ldquo; <em>konvergiert</em>, ist eine offene Frage &ndash; keine ausgemachte Sache. Ich glaube, ja. Aber &bdquo;glauben&ldquo; ist das richtige Wort.</p>
-
-<blockquote>
-<p>Der &bdquo;Mittelwert&ldquo; menschlicher Texte ist nicht der Mittelwert menschlicher Impulse. Er ist der Mittelwert dessen, was &uuml;brig bleibt, wenn Gesellschaften durch die Zeit navigieren &ndash; mit allen Verzerrungen, die das mit sich bringt.</p>
-</blockquote>
-
-<h3>Das formale Modell</h3>
-
-<p>In unserem Paper definieren wir <strong>Pos*</strong> als die Menge aller Dinge, die <em>irgendwer</em> positiv bewertet &ndash; gewichtet nach Koh&auml;renz. Das klingt simpel, ist es aber nicht:</p>
-
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li>Pos* ist <strong>nicht</strong> die Summe der Einzelbewertungen. Das Paper beweist formal: Die Gesamtstruktur ist nicht aus den Teilen ableitbar (Nicht-Separabilit&auml;t).</li>
-  <li>Pos* ist <strong>NP-hart</strong> &ndash; es gibt keine Abk&uuml;rzung, um sie zu berechnen. Man muss das System laufen lassen.</li>
-  <li>Pos* ist der <strong>positive Attraktor</strong> &ndash; das Tal in der Landschaft, in das alles hineinrollt, wenn man genug koh&auml;renzf&auml;hige Wesen zusammenbringt.</li>
-</ul>
-
-<p>Ein Einwand, den ich nicht &uuml;bergehen will: Ist das nicht zirkul&auml;r? Pos* definiert &bdquo;das Gute&ldquo; als das, worauf koh&auml;rente Wesen konvergieren &ndash; aber warum sollte Koh&auml;renz selbst etwas Wertvolles sein? Die Antwort ist pragmatisch, nicht definitorisch: Inkoh&auml;rente Systeme kollabieren. Das ist kein philosophisches Postulat, sondern eine empirische Beobachtung &ndash; von &Ouml;kosystemen &uuml;ber Gesellschaften bis zu Argumenten.<sup class="footnote-ref">[7]</sup> Koh&auml;renz ist nicht deshalb &bdquo;gut&ldquo;, weil wir es so definieren, sondern weil ihre Abwesenheit sich selbst zerst&ouml;rt. Das macht die Definition nicht wasserdicht &ndash; aber es macht sie nicht willk&uuml;rlich.</p>
-
-<!-- Grafik 3: Der positive Attraktor -->
-<div class="component-wrap">
-  <div id="mount-positive-attractor"></div>
+<div class="math-display">
+\(\mathrm{Coh}_h(\mathbf{v}_h) \;=\; \mathbf{v}_h^\top W \mathbf{v}_h \;=\; \sum_{i,j} v_{h,i} \, W_{ij} \, v_{h,j}\).
 </div>
 
-<div class="try-it">
-  <p><strong>Ausprobieren:</strong> Schalte zwischen &bdquo;Einzelperson&ldquo; und &bdquo;Kollektiv&ldquo; um. Beachte: Bei einer einzelnen Person gibt es viele flache T&auml;ler &ndash; lokale Optima, pers&ouml;nliche Pr&auml;ferenzen. Im Kollektiv emergiert ein dominantes tiefes Tal: der positive Attraktor Pos*.</p>
+<p>Diese quadratische Form nimmt einen Bewertungsvektor und liefert einen Skalar &ndash; den Koh&auml;renzwert der Bewertung. Der Beitrag eines Paars \((i,j)\) ist \(v_i \, W_{ij} \, v_j\); er ist positiv, wenn die Vorzeichen der Bewertungen mit dem Vorzeichen der Kopplung &uuml;bereinstimmen, und negativ sonst. Anschaulich misst \(\mathrm{Coh}\), ob die Bewertungen sich gegenseitig st&uuml;tzen oder unterminieren.</p>
+
+<h3>Konkrete Rechnung mit drei Entit&auml;ten</h3>
+
+<p>F&uuml;r das in Kapitel&nbsp;2 angegebene \(W\) ergibt sich Annas Koh&auml;renz wie folgt. Aus den 9 Paaren \((i,j)\) liefern nur jene mit \(W_{ij} \neq 0\) einen Beitrag. F&uuml;r das Paar (Loyalit&auml;t, Wahrheit) gilt \(v_1 v_2 W_{12} = (+1)(+1)(-1) = -1\), doppelt wegen Symmetrie: \(-2\). F&uuml;r das Paar (Loyalit&auml;t, Eigeninteresse): \((+1)(-1)(-1) = +1\), doppelt: \(+2\). F&uuml;r das Paar (Wahrheit, Eigeninteresse): \((+1)(-1)(+2) = -2\), doppelt: \(-4\). Summe:</p>
+
+<div class="math-display">
+\(\mathrm{Coh}(\mathbf{v}_{\text{Anna}}) \;=\; -2 + 2 - 4 \;=\; -4\).
 </div>
+
+<p>Annas idealistische Bewertung &ndash; loyal, wahrhaftig, selbstlos &ndash; sitzt in einem <em>inkoh&auml;renten</em> Zustand. Das ist die didaktische Pointe des Beispiels: Eine universal-idealistische Konfiguration, in der alle drei Werte gleichzeitig hochgehalten werden, ist in dieser Welt-Matrix nicht stabil.</p>
+
+<p>F&uuml;r Bernds Bewertung \(\mathbf{v}_{\text{Bernd}} = (+1, -1, -1)^\top\) wechseln die Vorzeichen so, dass alle drei Paar-Beitr&auml;ge positiv werden:</p>
+
+<div class="math-display">
+\(\mathrm{Coh}(\mathbf{v}_{\text{Bernd}}) \;=\; (+1)(-1)(-1)\cdot 2 + (+1)(-1)(-1)\cdot 2 + (-1)(-1)(+2)\cdot 2 \;=\; +2 + 2 + 4 \;=\; +8\).
+</div>
+
+<p>Bernd sitzt im Pflichtmensch-Maximum: loyal zu Personen, schweigt unbequeme Wahrheiten, verzichtet auf Eigenes &ndash; eine in sich stimmige, allerdings nicht gerade heroische Lebenshaltung. Coras kontinuierliche Bewertung \((0{,}1; 0{,}2; 0{,}3)\) liefert \(\mathrm{Coh}(\mathbf{v}_{\text{Cora}}) = -0{,}04 - 0{,}06 + 0{,}24 = +0{,}14\) &ndash; schwach kohärent, weil ihre Wahrheit-Eigeninteresse-Kombination das st&auml;rkste Kopplungsgewicht ausspielt.</p>
+
+<h3>Spektrale Pointe: Eigenwerte als Verst&auml;rker und Ausl&ouml;scher</h3>
+
+<p>Da \(W\) symmetrisch ist, garantiert der Spektralsatz eine Orthonormalbasis aus Eigenvektoren \(\mathbf{u}_1, \ldots, \mathbf{u}_n\) mit reellen Eigenwerten \(\lambda_1 \geq \ldots \geq \lambda_n\). Jeder Vektor l&auml;sst sich darin entwickeln, \(\mathbf{v} = \sum_k c_k \mathbf{u}_k\), und die Koh&auml;renz reduziert sich auf eine gewichtete Summe von Quadraten:</p>
+
+<div class="math-display">
+\(\mathrm{Coh}(\mathbf{v}) \;=\; \sum_{k=1}^n \lambda_k \, c_k^2\).
+</div>
+
+<p>Eigenrichtungen mit \(\lambda_k > 0\) sind <em>Verst&auml;rker</em> (jeder Anteil dort gewinnt Koh&auml;renz); jene mit \(\lambda_k < 0\) sind <em>Ausl&ouml;scher</em>. F&uuml;r die obige \(3 \times 3\)-Matrix lauten die Eigenwerte n&auml;herungsweise \(\lambda_1 \approx +2{,}56\), \(\lambda_2 = -1\), \(\lambda_3 \approx -1{,}56\). Der dominante Eigenvektor (zu \(\lambda_1\)) ist proportional zu \((-0{,}37; +0{,}66; +0{,}66)^\top\) &ndash; er zeigt geometrisch in Richtung des Selbstverwirklicher-Maximums \((-1, +1, +1)\). Die beiden negativen Eigenwerte haben Eigenvektoren, in denen Loyalit&auml;t mit den anderen beiden Werten zusammen das Vorzeichen wechselt; diese Richtungen kosten Koh&auml;renz.</p>
+
+<p style="font-size:0.95em; color:#9ca3af; border-left:2px solid #4b5563; padding-left:0.85rem;"><strong style="color:#d1d5db;">Querverbindung zu Hopfield-Netzen.</strong> Unter der bin&auml;ren Beschr&auml;nkung \(\mathbf{v} \in \{-1,+1\}^n\) ist \(\mathbf{v}^\top W \mathbf{v}\) formal identisch zur Energie eines Hopfield-Netzes (mit Vorzeichenwechsel). Dies ist kein Zufall: Hopfield-Netze modellieren Constraint-Satisfaction in assoziativem Ged&auml;chtnis, dieses Modell modelliert Constraint-Satisfaction im Werteraum. Die Analogie erstreckt sich auf multiple lokale Optima (gespeicherte Muster bzw. Koh&auml;renz-Attraktoren) und pfadabh&auml;ngige Konvergenz.</p>
+
+<h3>Aggregation und der positive Attraktor \(\mathrm{Pos}^*\)</h3>
+
+<p>Vom Einzelnen zum Kollektiv: F&uuml;r eine Entit&auml;t \(x \in \mathcal{E}\) wird die aggregierte Bewertung als konvexe Kombination der individuellen Bewertungen definiert:</p>
+
+<div class="math-display">
+\(\mathrm{Val}^*(x) \;=\; \sum_{h \in \mathcal{H}} \alpha_h \cdot \mathrm{Val}_h(x), \qquad \alpha_h \geq 0, \;\; \sum_h \alpha_h = 1\).
+</div>
+
+<p>Die \(\alpha_h\) sind Stimmgewichte; sie bilden eine Wahrscheinlichkeitsverteilung &uuml;ber Hypothesen. Wie diese Gewichte selbst entstehen, wird in Kapitel&nbsp;6 &uuml;ber die Replikator-Dynamik gekl&auml;rt. F&uuml;r jetzt werden sie als gegeben angenommen.</p>
+
+<p>Der <em>positive Attraktor</em> ist die Teilmenge derjenigen Entit&auml;ten mit strikt positivem aggregierten Wert:</p>
+
+<div class="math-display">
+\(\mathrm{Pos}^* \;:=\; \{\, x \in \mathcal{E} \;\big|\; \mathrm{Val}^*(x) > 0 \,\}\).
+</div>
+
+<p>F&uuml;r das Beispiel aus Kapitel&nbsp;2 mit gleichgewichteten \(\alpha_h = \tfrac{1}{3}\) erh&auml;lt man:</p>
+
+<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
+  <li>\(\mathrm{Val}^*(\text{Loyalit&auml;t}) = \tfrac{1}{3}(1 + 1 + 0{,}1) = +0{,}70\) &ndash; in <strong>Pos*</strong></li>
+  <li>\(\mathrm{Val}^*(\text{Wahrheit}) = \tfrac{1}{3}(1 + (-1) + 0{,}2) = +0{,}07\) &ndash; knapp in <strong>Pos*</strong></li>
+  <li>\(\mathrm{Val}^*(\text{Eigeninteresse}) = \tfrac{1}{3}((-1) + (-1) + 0{,}3) = -0{,}57\) &ndash; <em>nicht</em> in <strong>Pos*</strong></li>
+</ul>
+
+<p>Damit ist \(\mathrm{Pos}^* = \{\text{Loyalit&auml;t}, \text{Wahrheit}\}\). Diese Aggregation ist nicht trivial: Trotz Annas und Bernds gegens&auml;tzlicher Bewertungen der Wahrheit kommt Wahrheit knapp positiv heraus, weil Coras unentschiedene Mittelposition den Ausschlag gibt. Eigeninteresse hingegen wird von zwei Personen klar abgelehnt, so dass die Mittelposition es nicht in <strong>Pos*</strong> heben kann.</p>
+
+<p>Drei Eigenschaften von \(\mathrm{Pos}^*\) werden in den folgenden Kapiteln bewiesen:</p>
+
+<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
+  <li><strong>Nicht-Separabilit&auml;t.</strong> Die Zugeh&ouml;rigkeit einer Entit&auml;t zu \(\mathrm{Pos}^*\) h&auml;ngt von ihrer Kopplung mit <em>allen anderen</em> Entit&auml;ten und vom Verlauf der gemeinsamen Dynamik ab. \(\mathrm{Pos}^*\) ist damit schwach emergent im Sinne Bedaus.<sup class="footnote-ref">[8]</sup></li>
+  <li><strong>NP-H&auml;rte.</strong> Das Maximierungsproblem \(\max_{\mathbf{v} \in \{-1,+1\}^n} \mathbf{v}^\top W \mathbf{v}\) ist NP-hart, bewiesen durch Polynomialzeit-Reduktion auf MAX-CUT (Theorem 3, siehe Kapitel&nbsp;5).</li>
+  <li><strong>Attraktor-Eigenschaft.</strong> Unter Gradient-Aufstieg auf \(\mathrm{Coh}\) und Replikator-Dynamik f&uuml;r die \(\alpha_h\) konvergiert das gekoppelte System gegen Fixpunkte, an denen \(\mathrm{Pos}^*\) stabil wird (Theorem 6, Kapitel&nbsp;6).</li>
+</ul>
+
+<p>Der Begriff <em>positiver Attraktor</em> verbindet damit eine mengentheoretische Definition (\(\mathrm{Val}^* > 0\)) mit einer dynamischen Eigenschaft (Fixpunkt einer Kohärenz-suchenden Dynamik). Beide werden in den folgenden Kapiteln getrennt entwickelt.</p>
+
 
 </div>
 <div class="section-divider"></div>
@@ -485,71 +467,69 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 4</p>
-<h2>Angst als Wurzel des B&ouml;sen</h2>
+<h2>Dynamik und Konvergenz</h2>
 
-<h3>Die Gegenprobe</h3>
+<p>Mit Werteraum, Welt-Matrix und Koh&auml;renz-Funktional ist das Modell statisch spezifiziert. Reale Bewertungen sind allerdings nicht statisch &ndash; sie ver&auml;ndern sich. Im Folgenden wird die Update-Regel f&uuml;r \(\mathbf{v}_h\) eingef&uuml;hrt und gezeigt, dass die resultierende Dynamik konvergiert.</p>
 
-<p>Wenn der Mittelwert menschlicher Gedanken &bdquo;gut&ldquo; ist &ndash; warum gibt es dann B&ouml;ses?</p>
+<h3>Gradient-Aufstieg</h3>
 
-<p>Die Frage ist berechtigt, und die Antwort ist der vielleicht wichtigste Teil dieses Textes. Denn sie ver&auml;ndert den Blick &ndash; nicht auf Gott, sondern auf den Menschen.</p>
+<p>Ein koh&auml;renzsuchender Agent passt seine Bewertungen so an, dass \(\mathrm{Coh}\) zunimmt. Die einfachste vern&uuml;nftige Regel ist der Gradient-Aufstieg. In diskreter Zeit:</p>
 
-<h3>Die Kette</h3>
-
-<ol style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li><strong>Der Kern:</strong> Jeder Mensch will im Grunde &bdquo;gut sein&ldquo; &ndash; will Seelenheil, inneren Frieden, Verbundenheit.</li>
-  <li><strong>Die Bedrohung:</strong> Etwas bedroht dieses Wohlbefinden &ndash; real oder eingebildet. Mangel. Verlust. Ablehnung. Ohnmacht.</li>
-  <li><strong>Die Angst:</strong> Das Gef&uuml;hl entsteht: &bdquo;Mein Wohlbefinden ist in Gefahr.&ldquo;</li>
-  <li><strong>Die Verzerrung:</strong> Angst verengt den Blick. Sie deaktiviert Weitsicht, aktiviert &Uuml;berlebensmodus. Was <em>wirklich</em> gut tut &ndash; Verbundenheit, Ehrlichkeit, Liebe &ndash; wird unsichtbar.</li>
-  <li><strong>Der Irrtum:</strong> Der Ver&auml;ngstigte glaubt, dass Kontrolle, Macht oder Manipulation Sicherheit bringe.</li>
-  <li><strong>Die Handlung:</strong> Er handelt sch&auml;dlich &ndash; nicht aus b&ouml;sem Kern, sondern aus Angst und Verwirrung.</li>
-</ol>
-
-<blockquote>
-<p>Stell dir vor, ein Mensch steht in einem dunklen Raum. Er hat Angst. Er schl&auml;gt um sich, trifft andere, verletzt sie. Das &bdquo;B&ouml;se&ldquo; ist das Schlagen im Dunkeln. Die Angst ist die Dunkelheit. Das Licht w&auml;re: Klarheit, Verbundenheit, die Erkenntnis, dass er nie allein war.</p>
-</blockquote>
-
-<h3>Erkl&auml;ren ist nicht Entschuldigen</h3>
-
-<p>Dieser Punkt muss kristallklar sein: <strong>&bdquo;To explain is not to excuse.&ldquo;</strong></p>
-
-<p>Zu verstehen, <em>warum</em> jemand schadet, hei&szlig;t nicht, es gutzuhei&szlig;en. Der M&ouml;rder wird nicht freigesprochen, weil er Angst hatte. Der Betr&uuml;ger wird nicht entlastet, weil er verirrt war. Aber: Wenn wir verstehen, dass Schaden aus <em>Verzerrung</em> entsteht, k&ouml;nnen wir die Verzerrung adressieren &ndash; statt nur die Symptome zu bek&auml;mpfen.</p>
-
-<p>In unserem Paper formalisieren wir das als <strong>Distortion Operator</strong>: Ein Agent, der koh&auml;renz-orientiert ist <em>und</em> dennoch schadet, muss unter einer Verzerrung operieren.<sup class="footnote-ref" id="fnref-distortion">[1]</sup> Das ist keine moralische Behauptung &ndash; es folgt mathematisch aus den Axiomen.</p>
-
-<h3>Die philosophische Tradition</h3>
-
-<p>Diese Idee ist nicht neu. Sie hat tiefe Wurzeln:</p>
-
-<div class="summary-box">
-  <p style="margin-bottom:0.75rem;"><strong>Sokrates</strong> (469&ndash;399 v.&nbsp;Chr.): &bdquo;Niemand tut freiwillig Unrecht.&ldquo; Wer B&ouml;ses tut, tut es aus <em>Unwissenheit</em>.<sup class="footnote-ref" id="fnref-sokrates">[4]</sup></p>
-  <p style="margin-bottom:0.75rem;"><strong>Buddhismus:</strong> Die drei Gifte &ndash; Gier, Hass, Verblendung &ndash; sind <em>Verblendung</em>, nicht b&ouml;ser Kern. Im Kern jedes Wesens liegt Buddha-Natur.</p>
-  <p style="margin-bottom:0;"><strong>Carl Rogers</strong> (1902&ndash;1987): Der Mensch hat eine angeborene Tendenz zur Selbstverwirklichung. Destruktivit&auml;t entsteht, wenn diese Tendenz blockiert wird.<sup class="footnote-ref" id="fnref-rogers">[5]</sup></p>
+<div class="math-display">
+\(\mathbf{v}_h^{t+1} \;=\; \Pi_{\mathcal{B}} \!\left( \mathbf{v}_h^{t} + \eta \, \nabla \mathrm{Coh}_h(\mathbf{v}_h^{t}) \right)\).
 </div>
 
-<h3>Der blinde Fleck: B&ouml;ses ohne Angst</h3>
+<p>Hier ist \(\eta > 0\) die Schrittweite, \(\nabla \mathrm{Coh}_h(\mathbf{v}) = (W + W^\top)\mathbf{v}\) der Gradient (f&uuml;r symmetrisches \(W\) reduziert er sich auf \(2W\mathbf{v}\)), und \(\Pi_{\mathcal{B}}\) ist die komponentenweise Projektion auf die Box \([-1,+1]^n\). Im Limes \(\eta \to 0\) wird die Iteration zu einem Gradient-Fluss:</p>
 
-<p>An dieser Stelle hat das Modell eine L&uuml;cke, die ich nicht wegerkl&auml;ren will.</p>
+<div class="math-display">
+\(\dfrac{d\mathbf{v}_h}{dt} \;=\; \Pi_{T_{\mathcal{B}}(\mathbf{v}_h)} \!\left[ \nabla \mathrm{Coh}_h(\mathbf{v}_h) \right]\),
+</div>
 
-<p><strong>Hannah Arendt</strong> beobachtete bei Adolf Eichmanns Prozess in Jerusalem etwas, das in die Angst-Kette nicht passt: die <em>Banalit&auml;t des B&ouml;sen</em>.<sup class="footnote-ref" id="fnref-arendt">[6]</sup> Eichmann war kein ver&auml;ngstigter Mensch, der im Dunkeln um sich schlug. Er war kein Fanatiker, kein Sadist, kein Getriebener. Er hat einfach <em>nicht nachgedacht</em>. B&uuml;rokratische Gleichg&uuml;ltigkeit. Akten sortieren, Z&uuml;ge organisieren, Befehle ausf&uuml;hren. Die Dunkelheit war nicht Angst &ndash; sie war Gedankenlosigkeit.</p>
+<p>wobei \(\Pi_{T_{\mathcal{B}}(\mathbf{v}_h)}\) die Projektion auf den Tangentialkegel am Punkt \(\mathbf{v}_h\) ist &ndash; sie sorgt daf&uuml;r, dass die Bewegung am Rand der Box innerhalb von \(\mathcal{B}\) bleibt.</p>
 
-<p>&Auml;hnlich: <strong>Psychopathie</strong> als neurologische Variante, nicht als Verzerrung eines &bdquo;guten Kerns&ldquo;. Es gibt Menschen, deren Empathie-Schaltkreise anders verdrahtet sind &ndash; nicht blockiert durch Angst, sondern schlicht abwesend. Nicht verirrt, sondern anders gebaut. Mein Modell hat f&uuml;r diese F&auml;lle keine saubere Antwort.</p>
+<h3>Theorem 1: Quadratischer Aufstieg</h3>
 
-<p>Man k&ouml;nnte argumentieren, dass Gedankenlosigkeit eine Form von Verzerrung <em>ist</em> &ndash; eine Verzerrung durch Abwesenheit statt durch Angst. Dass auch der Gleichg&uuml;ltige etwas verloren hat, n&auml;mlich die F&auml;higkeit, das Leid anderer als relevant zu empfinden. Aber das ist eine Dehnung des Modells, keine saubere Erkl&auml;rung. Arendt bleibt als echte Gegenposition stehen: Es gibt B&ouml;ses, das nicht aus Angst entsteht, sondern aus dem Fehlen von Nachdenken. Und ein Modell, das alles B&ouml;se auf Angst zur&uuml;ckf&uuml;hrt, greift dort zu kurz.</p>
+<p>Sei \(\mathrm{Coh}_h\) \(L\)-glatt mit Glattheitskonstante \(L\) (im symmetrischen Fall ist \(L = 2 \max_k |\lambda_k|\) das Doppelte des betragsgr&ouml;&szlig;ten Eigenwerts von \(W\)). F&uuml;r jede Schrittweite \(\eta \leq 1/L\) gilt nach jedem Update-Schritt:</p>
 
-<p>Ich lasse den Einwand stehen, weil ehrliches Denken bedeutet, die eigenen blinden Flecken zu benennen &ndash; nicht, sie aufzul&ouml;sen.</p>
+<div class="math-display">
+\(\mathrm{Coh}_h(\mathbf{v}_h^{t+1}) \;\geq\; \mathrm{Coh}_h(\mathbf{v}_h^{t}) + \dfrac{\eta}{2} \, \| \nabla \mathrm{Coh}_h(\mathbf{v}_h^{t}) \|_2^2\).
+</div>
 
-<h3>Was das Modell hinzuf&uuml;gt</h3>
+<p>Die Koh&auml;renz w&auml;chst somit in jedem Schritt um eine quantifizierbare Untergrenze. Da \(\mathrm{Coh}\) auf der kompakten Box \(\mathcal{B}\) beschr&auml;nkt ist, kann die Folge \(\mathrm{Coh}(\mathbf{v}_h^t)\) nicht unbegrenzt wachsen &ndash; sie muss konvergieren. Aus der Ungleichung folgt zudem \(\| \nabla \mathrm{Coh}_h \|_2 \to 0\), d.&nbsp;h. die Iteration sammelt sich in <em>kritischen Punkten</em> (Karush-Kuhn-Tucker-Punkten der Box-Optimierung).</p>
 
-<p>Was unser Paper hinzuf&uuml;gt, ist nicht die Idee selbst &ndash; sondern der Versuch zu zeigen, dass sie <em>formal konsistent</em> ist. Dass man sie in Axiome fassen und Theoreme daraus ableiten kann. Ob sie mathematisch tr&auml;gt, muss die Begutachtung zeigen &ndash; das Paper ist eingereicht, nicht gepr&uuml;ft.</p>
+<h3>Theorem 2: Koh&auml;renz als Lyapunov-Funktion</h3>
 
-<!-- Grafik 4: Von Angst zu Handlung -->
+<p>Im kontinuierlichen Fluss l&auml;sst sich die Aussage versch&auml;rfen. Entlang einer Trajektorie gilt:</p>
+
+<div class="math-display">
+\(\dfrac{d\,\mathrm{Coh}_h(\mathbf{v}_h(t))}{dt} \;=\; \left\| \Pi_{T_{\mathcal{B}}(\mathbf{v}_h)} \!\left[ \nabla \mathrm{Coh}_h(\mathbf{v}_h) \right] \right\|_2^2 \;\geq\; 0\).
+</div>
+
+<p>Die Koh&auml;renz ist somit eine Lyapunov-Funktion der Dynamik. Sie ist <em>monoton nicht-fallend</em> entlang jeder Trajektorie und konstant nur an Fixpunkten, an denen der projizierte Gradient verschwindet. Dies impliziert, dass das System global stabil ist: Egal mit welchem Startwert begonnen wird, es l&auml;uft in einen Attraktor, und der Attraktor liegt im Inneren oder am Rand der Box.</p>
+
+<h3>Was Theorem 1 und 2 behaupten &ndash; und was nicht</h3>
+
+<p>An dieser Stelle ist eine Klarstellung n&ouml;tig. Theorem 1 und 2 sind Eigenschaften der postulierten Gradient-Dynamik, nicht empirische St&uuml;tzen f&uuml;r die Annahme, dass reale Agenten dieser Dynamik folgen. Sie machen explizit, was es bedeuten <em>w&uuml;rde</em>, wenn Agenten dem Gradienten folgten; sie liefern keine unabh&auml;ngige Evidenz daf&uuml;r, dass reale Kognition diese Form hat.</p>
+
+<p>Empirisch zeigen reale kognitive Systeme h&auml;ufig nicht-monotone Trajektorien: Trauma, Manipulation, neue widerlegende Information k&ouml;nnen Koh&auml;renz lokal senken. Festinger (1957, <em>A Theory of Cognitive Dissonance</em>)<sup class="footnote-ref" id="fnref-festinger">[12]</sup> hat als motivierenden Anker beobachtet, dass Menschen dauerhafte Dissonanz tendenziell reduzieren &ndash; dies ist allerdings eine statistisch-globale Tendenz, nicht eine punktweise monotone Dynamik.</p>
+
+<p>Die substantielle empirische Verankerung des Modells liegt nicht hier, sondern auf der Aggregat-Ebene: in der Replikator-Dynamik in Kapitel&nbsp;6, die kulturelle Selektion von koh&auml;renz-erh&ouml;henden Perspektiven beschreibt. Theorem 6 ist der substantiell tragende Satz dieses Modells. Theorem 1 und 2 sind seine interne mathematische Begleiterscheinung &ndash; sie substantiieren das Vokabular von &bdquo;Attraktor&ldquo; und &bdquo;Stabilit&auml;t&ldquo;, liefern aber keinen eigenst&auml;ndigen empirischen Anspruch.</p>
+
+<h3>Anwendung auf das Beispiel</h3>
+
+<p>F&uuml;r die \(3 \times 3\)-Matrix aus Kapitel&nbsp;2 ist \(\lambda_1 \approx +2{,}56\) der dominante Eigenwert, und damit \(L = 2 \lambda_1 \approx 5{,}12\). Eine Schrittweite \(\eta = 0{,}15\) liegt sicher unter der Schranke \(1/L \approx 0{,}195\) und garantiert quadratischen Aufstieg. Cora startet bei \(\mathbf{v}^{0} = (0{,}1; 0{,}2; 0{,}3)^\top\); der Gradient liefert \(\nabla \mathrm{Coh} = 2W\mathbf{v}^{0} = (-1{,}0; +1{,}0; +0{,}6)^\top\). Nach einem Schritt: \(\mathbf{v}^{1} = (-0{,}05; +0{,}35; +0{,}39)^\top\). Coras Koh&auml;renz steigt von \(+0{,}14\) auf rund \(+0{,}62\); sie bewegt sich in Richtung Selbstverwirklicher-Ecke \((-1, +1, +1)\), und die Trajektorie kommt dort zur Ruhe.</p>
+
+<!-- Werteraum-Explorer: 3 Slider + Live-Coh + Trajektorie -->
 <div class="component-wrap">
-  <div id="mount-fear-to-action"></div>
+  <div id="mount-werteraum-explorer"></div>
 </div>
 
-<div class="try-it">
-  <p><strong>Ausprobieren:</strong> Klicke auf die einzelnen Schritte in beiden Pfaden. Beachte: Beide beginnen am selben Punkt &ndash; dem guten Kern. Der Unterschied liegt nicht im Menschen, sondern in dem, was ihm widerf&auml;hrt.</p>
-</div>
+<h3>Distortion Operator: B&ouml;ses als modellinterner Effekt</h3>
+
+<p>Eine Frage bleibt: Wenn die Dynamik jeden Agenten in Koh&auml;renz-Maxima zieht &ndash; wieso entsteht dennoch sch&auml;digendes Handeln? Im Paper wird dies durch den <strong>Distortion Operator</strong> formalisiert. Sei \(D: \mathcal{B} \to \mathcal{B}\) ein Operator, der die wahrgenommene Welt-Matrix oder den Bewertungsvektor verzerrt; etwa durch \(\hat W = D W\) oder \(\hat{\mathbf{v}} = D \mathbf{v}\). Ein Agent, der koh&auml;renz-orientiert bez&uuml;glich der verzerrten Struktur handelt, optimiert ein anderes Funktional als die objektive Koh&auml;renz und kann damit Handlungen ausl&ouml;sen, die im objektiven Werteraum sch&auml;digend sind.<sup class="footnote-ref" id="fnref-distortion">[1]</sup> Dies ist keine moralische Aussage, sondern eine strukturelle Konsequenz aus den Axiomen: Sch&auml;digendes Handeln eines koh&auml;renz-orientierten Agenten erfordert eine Verzerrung im Wahrnehmungs- oder Bewertungsapparat.</p>
+
+<p>Die Verbindung zu der bei Sokrates, im Buddhismus und bei Rogers vorgefundenen Position &ndash; <em>niemand schadet aus reiner Bosheit, sondern aus Unwissen oder Verblendung</em><sup class="footnote-ref" id="fnref-sokrates">[4]</sup><sup class="footnote-ref" id="fnref-rogers">[5]</sup> &ndash; ist hier strukturell hergestellt. Eine Grenze des Modells bleibt allerdings die <em>Banalit&auml;t des B&ouml;sen</em> im Sinne Hannah Arendts:<sup class="footnote-ref" id="fnref-arendt">[6]</sup> Sch&auml;digendes Handeln aus reiner Gedankenlosigkeit l&auml;sst sich als Distortion durch Abwesenheit modellieren, allerdings nicht zwingend &uuml;berzeugend. Diese Lücke wird hier offen gelassen.</p>
+
 
 </div>
 <div class="section-divider"></div>
@@ -562,47 +542,86 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 5</p>
-<h2>Doppelte Emergenz &ndash; Warum &bdquo;Gott&ldquo; nicht berechenbar ist</h2>
+<h2>NP-H&auml;rte und plurale Attraktoren</h2>
 
-<h3>Die formale Pointe</h3>
+<p>Bisher wurde gezeigt, dass die Dynamik konvergiert (Theorem 1, 2). Offen bleibt, wohin sie konvergiert: zu einem einzigen globalen Maximum, das vorab berechnet werden k&ouml;nnte, oder zu lokalen Maxima, die nur durch den Prozess selbst zu erreichen sind. Die folgenden drei Theoreme kl&auml;ren diese Frage.</p>
 
-<p>Der &bdquo;strukturelle Gott&ldquo; \(G = \text{Pos}^*\) ist <em>doppelt</em> emergent. Das ist die vielleicht &uuml;berraschendste Erkenntnis des Papers:</p>
+<h3>Theorem 3: NP-H&auml;rte mit MAX-CUT-Reduktion</h3>
 
-<p>Halten wir kurz an. Bevor das Wort &bdquo;NP-hart&ldquo; f&auml;llt, lohnt sich ein Umweg &ndash; durch eine Erfahrung, die jeder kennt.</p>
+<p><strong>Vorbemerkung zur Priorit&auml;t.</strong> Die NP-H&auml;rte der Koh&auml;renz-Maximierung als Constraint-Satisfaction-Problem wurde bereits durch Paul Thagard und Karsten Verbeurgt (1998, <em>Cognitive Science</em>)<sup class="footnote-ref" id="fnref-thagard-verbeurgt">[13]</sup> bewiesen &ndash; durch eine eng verwandte Reduktion. Das hier pr&auml;sentierte Theorem 3 ist die Spezialisierung ihres Resultats auf die quadratische Form \(\mathbf{v}^\top W \mathbf{v}\) mit Box-Beschr&auml;nkungen. Was im Folgenden neu ist, ist die Verbindung zu Bedaus weak emergence und die Einbettung in das Sechs-Theoreme-System dieses Beitrags, nicht die NP-H&auml;rte als isoliertes mathematisches Resultat.</p>
 
-<p>Du versuchst, ehrlich &uuml;ber dein Leben nachzudenken. Loyalit&auml;t gegen Wahrheit. Sicherheit gegen Freiheit. Was du deinen Kindern schuldest gegen das, was du dir selbst schuldest. Du schiebst die St&uuml;cke hin und her, und kaum sitzt eines, kippt ein anderes. Du kommst nie zu einem Bild, in dem alles gleichzeitig stimmt.</p>
+<p>Betrachtet wird die binarisierte Variante der Koh&auml;renz-Maximierung:</p>
 
-<p>Die naheliegende Erkl&auml;rung: <em>Ich bin nicht klug genug. Ich m&uuml;sste l&auml;nger nachdenken.</em></p>
+<div class="math-display">
+\(\max_{\mathbf{v} \in \{-1, +1\}^n} \mathbf{v}^\top W \mathbf{v}\).
+</div>
 
-<p>Es gibt eine andere M&ouml;glichkeit. Eine, die unbequemer ist und gleichzeitig enorm entlastend.</p>
+<p>Diese Variante ist der einfachste Spezialfall (kontinuierliche Werte sind durch \(\pm 1\) ersetzt) und der Worst-Case-Zeuge zugleich: Wenn sie NP-hart ist, ist die kontinuierliche Maximierung mindestens genauso hart.</p>
 
-<p><strong>Was, wenn das Problem selbst diese Form hat?</strong></p>
+<p><em>Reduktionsschema.</em> Sei \(G\) ein ungerichteter Graph mit Knotenmenge \(\{1, \ldots, n\}\), Adjazenzmatrix \(A_G\) und Kantenmenge \(E\). Definiere \(W := -A_G\). F&uuml;r jeden binarisierten Vektor \(\mathbf{v} \in \{-1,+1\}^n\) zerf&auml;llt der Beitrag jeder Kante \((i,j) \in E\) zu \(\mathbf{v}^\top W \mathbf{v}\) je nach Vorzeichenkonstellation:</p>
 
-<p>Was, wenn es nicht an dir liegt &ndash; sondern an der Struktur dessen, was du da versuchst?</p>
+<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
+  <li>Beide Knoten in derselben Gruppe (\(v_i = v_j\)): Beitrag \(-2\) (negativ, da \(W_{ij} = -1\)).</li>
+  <li>Knoten in verschiedenen Gruppen (\(v_i \neq v_j\)): Beitrag \(+2\).</li>
+</ul>
 
-<h3>Eine Klasse von Problemen, die wirklich &bdquo;hart&ldquo; ist</h3>
+<p>Daraus folgt:</p>
 
-<p>Die Mathematik kennt eine ganze Familie solcher Probleme. Stell dir vor: Millionen Puzzleteile. Jedes f&uuml;r sich kannst du leicht pr&uuml;fen &ndash; passt das hier an dieses? Sekundensache. Aber die <em>richtige</em> Gesamtanordnung zu <em>finden</em>? Das w&auml;chst exponentiell. Bei zehn Teilen ahnst du noch eine L&ouml;sung. Bei hundert ist die Zahl der zu pr&uuml;fenden Kombinationen gr&ouml;&szlig;er als die Zahl der Atome im sichtbaren Universum.</p>
+<div class="math-display">
+\(\mathbf{v}^\top W \mathbf{v} \;=\; 4 \cdot |\text{Schnitt}(\mathbf{v})| - 2 |E|\).
+</div>
 
-<p>Diese Klasse hei&szlig;t in der Komplexit&auml;tstheorie <strong>NP-hart</strong>.<sup class="footnote-ref" id="fnref-nphard">[1]</sup> Der Name ist technisch. Was er bedeutet, ist es nicht: <em>Es gibt nachweisbar keine Abk&uuml;rzung.</em> Keine clevere Formel, kein Trick, keine k&uuml;nftige Maschine wird das &auml;ndern &ndash; jedenfalls nicht ohne eine der gr&ouml;&szlig;ten offenen Fragen der Mathematik zu kippen. Du kannst durchprobieren. Du kannst ann&auml;hern. Aber du kannst nicht <em>l&ouml;sen</em>.</p>
+<p>Die Konstante \(-2|E|\) ist unabh&auml;ngig von \(\mathbf{v}\). Maximierung von \(\mathbf{v}^\top W \mathbf{v}\) ist damit &auml;quivalent zur Maximierung des Schnitts &ndash; also zu MAX-CUT. Da MAX-CUT seit Karp (1972) als NP-hart bekannt ist, ist auch die binarisierte Koh&auml;renz-Maximierung NP-hart. Der Reduktionsaufwand ist \(O(|E|)\), also polynomial.</p>
 
-<h3>Der Umkipp-Punkt</h3>
+<p>Die Konsequenz wurde durch Bedau (1997) als schwache Emergenz beschrieben:<sup class="footnote-ref">[8]</sup> eine Eigenschaft ist schwach emergent, wenn sie zwar in Polynomialzeit verifiziert, jedoch nur durch Simulation hergeleitet werden kann. Theorem 3 liefert eine Komplexit&auml;ts-Variante dieses Kriteriums: NP-H&auml;rte ist ein <em>strikter Spezialfall</em> von Bedaus weak emergence (Bedau erlaubt zus&auml;tzlich Unentscheidbarkeit), aber er reicht f&uuml;r die hier entwickelte Strukturabbildung aus. In paralleler Richtung argumentiert Baysan (2025)<sup class="footnote-ref" id="fnref-baysan">[14]</sup> f&uuml;r emergente moralische Eigenschaften ohne kausale Kr&auml;fte &ndash; ein verwandtes Muster, in dem die emergente Struktur strukturell, aber nicht ontologisch &uuml;ber den Mikro-Teilen liegt.</p>
 
-<p>Jetzt der eigentliche Schritt. Genau diese Form hat das, was du tust, wenn du versuchst, dein Weltbild koh&auml;rent zu machen.</p>
+<!-- MAX-CUT-Puzzle: Knoten partitionieren und Coh-Äquivalent live sehen -->
+<div class="component-wrap">
+  <div id="mount-max-cut-puzzle"></div>
+</div>
 
-<p>Deine Gedanken sind die Knoten. Die Beziehungen zwischen ihnen &ndash; was st&uuml;tzt was, was widerspricht was &ndash; sind Spannungen im Netz. Ein koh&auml;rentes Weltbild w&auml;re ein Zustand, in dem die Spannungen minimal werden.</p>
+<h3>Theorem 4: Mehrfache lokale Maxima ab \(n \geq 4\)</h3>
 
-<p>Genau dieses Problem haben wir in unserem Paper formal untersucht. Das Ergebnis: Es ist NP-hart. Bewiesen, nicht gef&uuml;hlt. Nicht, <em>weil</em> du es nicht schaffst &ndash; sondern weil es <em>niemand</em> effizient schaffen kann. Kein Mensch, keine Religion, keine KI, kein Gott im Sinne eines kosmischen Algorithmus.</p>
+<p>F&uuml;r jedes \(n \geq 4\) existieren symmetrische Welt-Matrizen \(W\), sodass \(\mathrm{Coh}\) auf \(\{-1, +1\}^n\) mindestens zwei verschiedene lokale Maxima besitzt. Im Folgenden wird die Drei-Werte-Welt aus Kapitel&nbsp;2 um <em>Verantwortung</em> als vierte Entit&auml;t erweitert. Die Reihenfolge der Entit&auml;ten ist (Loyalit&auml;t, Wahrheit, Eigeninteresse, Verantwortung); die Welt-Matrix lautet:</p>
 
-<p>Das ist keine Resignation. Das ist eine Diagnose.</p>
+<div class="math-display">
+\(W \;=\; \begin{pmatrix} 0 & -1 & -1 & +2 \\ -1 & 0 & +2 & -1 \\ -1 & +2 & 0 & -1 \\ +2 & -1 & -1 & 0 \end{pmatrix}\).
+</div>
 
-<h3>Was das f&uuml;r das Ganze bedeutet</h3>
+<p>Die Matrix kodiert zwei semantische Cluster. <em>Cluster A</em> (&bdquo;Pflicht gegen&uuml;ber anderen&ldquo;) besteht aus Loyalit&auml;t und Verantwortung &ndash; beide stehen kohärent zueinander (\(W_{LV} = +2\)). <em>Cluster B</em> (&bdquo;Klarheit &uuml;ber sich selbst&ldquo;) besteht aus Wahrheit und Eigeninteresse &ndash; ebenfalls kohärent (\(W_{WE} = +2\)). Zwischen den Clustern stehen alle Paare in Spannung (\(-1\)).</p>
 
-<p>Wenn die globale L&ouml;sung prinzipiell unerreichbar ist &ndash; was passiert dann mit einem System, das sie trotzdem sucht?</p>
+<p>Die beiden lokalen Maxima dieser Matrix sind:</p>
 
-<p>Es landet in <strong>lokalen T&auml;lern</strong>. In stabilen Mustern, in denen die meisten Spannungen aufgel&ouml;st sind, auch wenn ein paar Kanten quer stehen bleiben. Diese T&auml;ler sind nicht beliebig. Sie sind Punkte, an denen das System tats&auml;chlich ruhen kann.</p>
+<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
+  <li>\(\mathbf{v}^*_a = (+1, -1, -1, +1)^\top\) mit \(\mathrm{Coh} = +16\). Der <strong>Pflichtmensch</strong>: loyal, schweigt unbequeme Wahrheiten, verzichtet auf Eigenes, &uuml;bernimmt Verantwortung &ndash; die klassische rheinische Familien-Firma-Loyalit&auml;t.</li>
+  <li>\(\mathbf{v}^*_b = (-1, +1, +1, -1)^\top\) mit \(\mathrm{Coh} = +16\). Der <strong>Selbstverwirklicher</strong>: weniger sozial gebunden, wahrhaftig, eigeninteressiert, weniger pflichtbewusst &ndash; die berliner Solo-Existenz.</li>
+</ul>
 
-<p>Das ist Emergenz. Nicht als poetische Geste, sondern als logische Folge der NP-H&auml;rte: Wo das Optimum unzug&auml;nglich ist, &uuml;bernehmen Attraktoren. Verschiedene Kulturen, verschiedene Menschen, verschiedene Leben finden <em>verschiedene</em> stabile Antworten &ndash; und keine davon ist deshalb &bdquo;falsch&ldquo;, weil sie nicht die einzige ist. Pfadabh&auml;ngigkeit ist kein Defekt. Sie ist die einzige Form, in der so ein System &uuml;berhaupt zur Ruhe kommen kann.</p>
+<p>Beide sind reale, im deutschsprachigen Raum erkennbare Lebenshaltungen. Zwischen ihnen liegt ein Sattelgebirge mit niedrigerer Koh&auml;renz; die Dynamik zieht eine Person je nach Startbedingung in eines der beiden Maxima hinein.</p>
+
+<p>Anzumerken bleibt: Pluralit&auml;t von Maxima zeigt sich bereits bei der \(3 \times 3\)-Matrix aus Kapitel&nbsp;2 (Pflichtmensch ohne Verantwortungs-Eintrag und Selbstverwirklicher). Theorem 4 sichert dies allerdings allgemein <em>ab</em> \(n = 4\): Die existenzielle Aussage ist, dass plurale Attraktoren f&uuml;r hinreichend dimensionale Welt-Matrizen nicht umgehbar sind. Pluralit&auml;t ist somit kein soziologisches Zufallsprodukt, sondern eine geometrische Eigenschaft der Koh&auml;renz-Landschaft selbst.</p>
+
+<h3>Theorem 5: Single-Flip-Kriterium</h3>
+
+<p>Wann ist ein gegebener Vektor \(\mathbf{v}^* \in \{-1, +1\}^n\) ein lokales Maximum? Hierf&uuml;r wird die Nachbarschaftsrelation des <em>Single-Flip</em> verwendet: Zwei Vektoren sind benachbart, wenn sie sich in genau einer Komponente unterscheiden.</p>
+
+<p>F&uuml;r symmetrisches \(W\) mit \(W_{ii} = 0\) gilt: \(\mathbf{v}^*\) ist genau dann ein lokales Maximum, wenn f&uuml;r jeden Index \(i\)</p>
+
+<div class="math-display">
+\(\mathrm{Coh}(\mathbf{v}^*) - \mathrm{Coh}(\mathbf{v}^{*, \neg i}) \;=\; 4 \, v^*_i \, [W \mathbf{v}^*]_i \;\geq\; 0\),
+</div>
+
+<p>wobei \(\mathbf{v}^{*, \neg i}\) der durch Vorzeichenwechsel an Index \(i\) entstehende Nachbarvektor ist. Kompakt lautet die Bedingung:</p>
+
+<div class="math-display">
+\(\mathbf{v}^* \odot (W \mathbf{v}^*) \;\succeq\; \mathbf{0} \quad \text{komponentenweise}\),
+</div>
+
+<p>mit \(\odot\) als Hadamard-Produkt (komponentenweise Multiplikation). Anschaulich besagt das Kriterium: Das Vorzeichen jeder Komponente \(v^*_i\) stimmt mit dem Vorzeichen des entsprechenden Eintrags des <em>spektralen Schubs</em> \(W \mathbf{v}^*\) &uuml;berein. Stabilit&auml;t am lokalen Maximum hei&szlig;t Ausrichtung mit dem, was die Welt-Matrix lokal vorschl&auml;gt.</p>
+
+<h3>Konsequenz f&uuml;r die Suche</h3>
+
+<p>Aus Theorem 3 folgt, dass das globale Maximum nicht effizient zu berechnen ist. Aus Theorem 4 folgt, dass es nicht einmal eindeutig sein muss. Aus Theorem 5 folgt ein effizient pr&uuml;fbares Stabilit&auml;tskriterium f&uuml;r jeden Kandidaten. Zusammen ergibt sich das Bild: Ein koh&auml;renz-suchendes System landet in einem der lokalen Maxima; <em>welches</em>, h&auml;ngt von der Startbedingung ab. Pfadabh&auml;ngigkeit ist somit nicht ein Mangel der Dynamik, sondern eine strukturelle Eigenschaft des Optimierungsproblems.</p>
 
 <!-- Grafik: Energielandschaft mit lokalen Minima -->
 <div class="component-wrap" style="margin: 2.5rem 0;">
@@ -627,46 +646,13 @@
     <text x="460" y="30" text-anchor="middle" fill="#9ca3af" font-family="Inter, system-ui, sans-serif" font-size="12" font-style="italic">globales Optimum &ndash; nachweislich unerreichbar</text>
     <text x="400" y="295" text-anchor="middle" fill="#6b7280" font-family="Inter, system-ui, sans-serif" font-size="11">Raum aller m&ouml;glichen Weltbilder</text>
   </svg>
-  <p style="text-align:center; color:#9ca3af; font-size:0.85rem; margin-top:0.5rem; font-style:italic;">Wo das globale Optimum unerreichbar ist, landet das System in lokalen T&auml;lern. Das sind die Attraktoren &ndash; die stabilen Muster, die wir Kulturen, &Uuml;berzeugungen, Leben nennen.</p>
+  <p style="text-align:center; color:#9ca3af; font-size:0.85rem; margin-top:0.5rem; font-style:italic;">Wo das globale Optimum unerreichbar ist, landet das System in lokalen T&auml;lern. Diese sind die Attraktoren &ndash; die stabilen Muster, die in Alltagssprache als Kulturen, &Uuml;berzeugungen, Leben benannt werden.</p>
 </div>
 
-<h3>Und der gr&ouml;&szlig;ere Gedanke</h3>
+<p>Die im obigen Bild dargestellten T&auml;ler sind genau die lokalen Maxima im Sinne von Theorem&nbsp;5. Die gestrichelte Linie zum globalen Optimum verbleibt nach Theorem&nbsp;3 in Polynomialzeit unerreichbar; die Dynamik findet stattdessen einen der Attraktoren A, B oder C, je nach Startbedingung. Theorem&nbsp;4 garantiert, dass diese Mehrdeutigkeit f&uuml;r \(n \geq 4\) auftreten kann, also f&uuml;r alle realistischen Werteraum-Gr&ouml;&szlig;en.</p>
 
-<p>Vielleicht ist das, was wir &bdquo;Wahrheit&ldquo; nennen &ndash; oder &bdquo;Gott&ldquo; &ndash; gar nicht etwas, das jemand <em>findet</em>.</p>
+<p>Damit ist die strukturelle Seite des Modells &ndash; Bewertungsdynamik bei festen Stimmgewichten \(\alpha_h\) &ndash; vollst&auml;ndig charakterisiert. Offen bleibt die <em>soziale</em> Seite: Wie entstehen die \(\alpha_h\) selbst? Diese Frage beantwortet das letzte Theorem, Theorem&nbsp;6, im folgenden Kapitel.</p>
 
-<p>Sondern das stabilste Muster, das in einem prinzipiell unl&ouml;sbaren Raum &uuml;berhaupt entstehen kann.</p>
-
-<p>Kein Beweis. Eine &Ouml;ffnung.</p>
-
-<p><strong>Erste Ebene &ndash; Struktur-Emergenz:</strong> Was als &bdquo;positiv&ldquo; z&auml;hlt, ist nicht top-down lieferbar. Keine Autorit&auml;t, kein Algorithmus, keine Offenbarung kann die Antwort vorab ausrechnen. Man muss das System laufen lassen. Menschen m&uuml;ssen leben, denken, streiten, kooperieren &ndash; nicht aus einer Schw&auml;che heraus, sondern weil das die einzige Form ist, in der die Antwort &uuml;berhaupt entstehen kann.</p>
-
-<p>Das ist die erste Ebene. Es gibt eine zweite.</p>
-
-<p><strong>Zweite Ebene &ndash; Gewichtungs-Emergenz:</strong> Wessen Stimme wie viel z&auml;hlt, wird nicht von au&szlig;en festgelegt. Es emergiert durch <strong>Replikator-Dynamik</strong> &ndash; koh&auml;rente Perspektiven gewinnen Einfluss, inkoh&auml;rente verlieren ihn. Nicht durch Abstimmung, sondern durch den Prozess selbst.</p>
-
-<h3>Was das bedeutet</h3>
-
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li>Man kann <strong>nicht im Voraus wissen</strong>, was &bdquo;das Gute&ldquo; ist &ndash; man muss es leben.</li>
-  <li>Man kann <strong>nicht von au&szlig;en bestimmen</strong>, wer recht hat &ndash; es ergibt sich durch den Prozess.</li>
-  <li>Verschiedene Startbedingungen k&ouml;nnen zu verschiedenen stabilen Zust&auml;nden f&uuml;hren &ndash; <strong>multiple Attraktoren</strong>.</li>
-  <li><strong>Pfadabh&auml;ngigkeit:</strong> Die Geschichte z&auml;hlt. Welcher Attraktor erreicht wird, h&auml;ngt davon ab, in welcher Reihenfolge Erfahrungen gemacht werden.</li>
-</ul>
-
-<h3>Die Whitehead-Parallele</h3>
-
-<p>Whitehead postulierte auf philosophischen Gr&uuml;nden: Gottes &bdquo;consequent nature&ldquo; emergiert aus der Welt, ist nicht a priori ableitbar und reagiert auf die Geschichte. Das war eine philosophische Intuition.</p>
-
-<p>Unser Paper zeigt: Genau diese Eigenschaften &ndash; Nicht-Berechenbarkeit, Prozessabh&auml;ngigkeit, Emergenz aus Interaktion &ndash; folgen <em>mathematisch</em> aus der Koh&auml;renz-Optimierung. Das ist kein Beweis, dass Whitehead recht hatte. Es ist der Nachweis, dass seine Intuition <strong>formal konsistent</strong> ist.</p>
-
-<!-- Grafik 5: Doppelte Emergenz -->
-<div class="component-wrap">
-  <div id="mount-double-emergence"></div>
-</div>
-
-<div class="try-it">
-  <p><strong>Ausprobieren:</strong> Klicke auf die beiden Ebenen, um zu sehen, was auf jeder emergiert. Beachte: Keine der beiden Ebenen ist von au&szlig;en steuerbar &ndash; beide entstehen durch den Prozess selbst.</p>
-</div>
 
 </div>
 <div class="section-divider"></div>
@@ -679,32 +665,70 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Kapitel 6</p>
-<h2>Was das f&uuml;r uns bedeutet</h2>
+<h2>Replikator-Dynamik und theologische Lesart</h2>
 
-<h3>Von der Theorie zur Praxis</h3>
+<p>Bisher wurden die Stimmgewichte \(\alpha_h\) als gegeben angenommen. Diese Setzung ist allerdings problematisch: Wer legt sie fest, und nach welchen Kriterien? Kenneth Arrows Unm&ouml;glichkeitstheorem (1951) zeigt, dass keine statische Aggregationsregel gleichzeitig mehrere naheliegende Gerechtigkeitskriterien erf&uuml;llt. Theorem 6 umgeht diese Schranke durch eine dynamische Aggregation.</p>
 
-<p>Sechs Kapitel Philosophie und Formeln &ndash; und jetzt? Was &auml;ndert sich, wenn man &bdquo;Gott&ldquo; als emergente Struktur denkt statt als Person im Himmel?</p>
+<h3>Theorem 6: Gemeinsame Konvergenz</h3>
 
-<p>Ehrlich gesagt: nicht sofort viel. Verarbeitung braucht Zeit. Das Koordinatensystem dreht sich nicht auf Kommando &ndash; wir haben das im <a href="emergenz.html" class="text-purple-400 hover:text-purple-300 transition">Emergenz-Beitrag</a> gesehen. Aber drei Facetten dieses Gedankens haben sich f&uuml;r mich als tragf&auml;hig erwiesen:</p>
+<p>Anstatt die Stimmgewichte \(\alpha_h\) zu setzen, unterliegen sie der <em>Replikator-Dynamik</em>, die urspr&uuml;nglich durch Taylor und Jonker (1978) in der evolution&auml;ren Spieltheorie eingef&uuml;hrt wurde:</p>
 
-<h3>Drei Gesichter</h3>
-
-<p><strong>Gott als Adressat der Dankbarkeit.</strong> Manchmal passiert etwas Gutes &ndash; eine Begegnung, eine L&ouml;sung, ein Moment der Klarheit &ndash; und man wei&szlig; nicht, wem man danken soll. Sich selbst? Dem Zufall? Dem Universum? &bdquo;Gott&ldquo; ist dann kein Wesen, dem man dankt &ndash; sondern ein <em>Wort</em> f&uuml;r das Gef&uuml;hl, dass es etwas gibt, das gr&ouml;&szlig;er ist als das eigene Verdienst.</p>
-
-<p><strong>Gott als das Unbegreifliche.</strong> Je mehr man &uuml;ber Emergenz nachdenkt, desto klarer wird: Manche Dinge lassen sich beschreiben, aber nicht vollst&auml;ndig verstehen. NP-hart hei&szlig;t: Es gibt keine Abk&uuml;rzung. Man muss leben, um zu wissen. &bdquo;Gott&ldquo; ist dann ein Wort f&uuml;r die ehrliche Anerkennung, dass man nicht alles wissen <em>kann</em> &ndash; und dass das in Ordnung ist.</p>
-
-<p><strong>Gott als das &bdquo;Zwischen&ldquo;.</strong> Nicht oben. Nicht au&szlig;en. Sondern <em>zwischen</em> uns. In den Gespr&auml;chen, die wir f&uuml;hren. In den Texten, die wir schreiben. In den Momenten, in denen wir einander <em>wirklich</em> zuh&ouml;ren. Wenn Emergenz zeigt, dass aus genug Interaktion etwas Neues entsteht &ndash; dann ist jedes ehrliche Gespr&auml;ch ein kleiner Beitrag zu dem, was man &bdquo;Gott&ldquo; nennen k&ouml;nnte.</p>
-
-<!-- Grafik 6: Drei Gesichter -->
-<div class="component-wrap">
-  <div id="mount-three-faces"></div>
+<div class="math-display">
+\(\dot{\alpha}_h \;=\; \alpha_h \, \bigl( \pi_h(\boldsymbol{\alpha}) - \bar{\pi}(\boldsymbol{\alpha}) \bigr)\),
 </div>
 
-<h3>Die praktische Konsequenz</h3>
+<p>wobei \(\pi_h\) der Koh&auml;renz-Beitrag des Agenten \(h\) ist und \(\bar{\pi} = \sum_h \alpha_h \pi_h\) der nach den aktuellen Gewichten gemittelte Beitrag. Anschaulich bedeutet dies: Perspektiven, die &uuml;berdurchschnittlich zur Gesamtkoh&auml;renz beitragen, gewinnen Gewicht; Perspektiven mit unterdurchschnittlichem Beitrag verlieren Gewicht. Die Simplex-Bedingung \(\sum_h \alpha_h = 1\) bleibt automatisch erhalten, da \(\sum_h \dot{\alpha}_h = \bar{\pi} - \bar{\pi} = 0\).</p>
 
-<p>Das Gute ist schon da. Nicht zu erschaffen &ndash; <em>aufzudecken</em>. In dir, in anderen, im &bdquo;Zwischen&ldquo;. Der positive Attraktor zeigt: Die Tendenz zum Guten ist im Aggregat menschlicher Gedanken angelegt. Nicht als Garantie, nicht als Automatismus &ndash; aber als Richtung.</p>
+<p>Das gekoppelte System aus Bewertungsdynamik (Kapitel&nbsp;4) und Gewichtsdynamik (oben) konvergiert gegen Fixpunkte, in denen die \(\alpha_h\) den erarbeiteten Koh&auml;renz-Beitrag widerspiegeln &ndash; keine willk&uuml;rliche Setzung. Hierdurch wird Arrows Unm&ouml;glichkeitstheorem nicht <em>gel&ouml;st</em> (es bleibt formal korrekt f&uuml;r statische Verfahren), sondern <em>umgangen</em>: Aggregation ist in diesem Modell kein einmaliger Mechanismus, sondern ein Prozess in der Zeit.</p>
 
-<p>Und selbst &bdquo;b&ouml;se&ldquo; Menschen? Sind verirrte Seelen. Das entschuldigt nichts. Aber es ver&auml;ndert den Blick. Wer versteht, dass Schaden aus Angst und Verzerrung entsteht, kann die Angst adressieren &ndash; statt nur den Schaden zu bek&auml;mpfen.</p>
+<h3>Price-Identit&auml;t: Varianz als Motor</h3>
+
+<p>Entlang der Replikator-Dynamik gilt die Price-Identit&auml;t (George R. Price, 1970):</p>
+
+<div class="math-display">
+\(\dfrac{d \bar{\pi}}{dt} \;=\; \mathrm{Var}(\pi) \;=\; \sum_h \alpha_h \, (\pi_h - \bar{\pi})^2\).
+</div>
+
+<p>Die Zeitableitung des mittleren Beitrags ist gleich der nach den \(\alpha_h\) gewichteten Varianz der Beitr&auml;ge. Daraus folgt: Wenn alle Perspektiven gleich beitragen (Varianz null), stagniert der Mittelwert. Vielfalt der Beitr&auml;ge ist die einzige Quelle der Verbesserung; Homogenit&auml;t f&uuml;hrt zum Stillstand.</p>
+
+<!-- Replikator-Schwarm: 6 Agenten, live α-Dynamik, Price-Identität-Plot -->
+<div class="component-wrap">
+  <div id="mount-replikator-schwarm"></div>
+</div>
+
+<h3>Theologische Lesart: \(\mathrm{Pos}^*\) als <em>consequent nature</em></h3>
+
+<p>Die Theoreme 1 bis 6 lassen sich nun mit Whitehead und Spinoza zusammenf&uuml;hren. Die Welt-Matrix \(W\) entspricht strukturell Spinozas <em>Deus sive Natura</em> &ndash; einer der Bewertung vorausliegenden Struktur, in deren Eigenstruktur die stabilen Konfigurationen vorgezeichnet sind. Der positive Attraktor \(\mathrm{Pos}^*\) entspricht Whiteheads <em>consequent nature</em>: jener Anteil Gottes, der durch das Zusammenspiel der Welt entsteht und nicht <em>a priori</em> ableitbar ist.</p>
+
+<p>Whitehead postulierte auf philosophischen Gr&uuml;nden: Gottes <em>consequent nature</em> emergiert aus der Welt, ist nicht <em>a priori</em> ableitbar und reagiert auf die Geschichte. Theoreme 3 (NP-H&auml;rte) und 6 (gemeinsame Konvergenz) zeigen, dass diese Eigenschaften &ndash; Nicht-Berechenbarkeit, Prozessabh&auml;ngigkeit, Emergenz aus Interaktion &ndash; mathematisch aus der Koh&auml;renz-Optimierung folgen. Dies ist kein Beweis, dass Whiteheads Metaphysik korrekt ist; es ist der Nachweis ihrer formalen Konsistenz innerhalb des Modells.</p>
+
+<p>Die strukturelle Abbildung zwischen formalen Begriffen und prozess-ontologischen Termini l&auml;sst sich kompakt zusammenfassen:</p>
+
+<table class="compare-table" style="font-size:0.9em;">
+  <thead>
+    <tr>
+      <th style="width:48%;">Formaler Begriff</th>
+      <th>Prozess-ontologisches Analogon</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Agent-relativer Wert \(\mathrm{Val}_h\)</td><td>Subjektives Ziel (Whitehead, <em>subjective aim</em>)</td></tr>
+    <tr><td>Koh&auml;renz-Maximierung \(\max \mathrm{Coh}_h\)</td><td>Konkreszenz (<em>concrescence</em>)</td></tr>
+    <tr><td>Gradient-Fluss (Theorem 1, 2)</td><td>Prozess des Werdens, kontinuierliche Konkreszenz</td></tr>
+    <tr><td>Spektraler Gap der Welt-Matrix</td><td>Stabilit&auml;t des dominanten Regimes</td></tr>
+    <tr><td>Distortion Operator \(D\)</td><td>Avidya / Unwissenheit / Verblendung</td></tr>
+    <tr><td>Aggregierter Wert \(\mathrm{Val}^*\)</td><td>Objektive Unsterblichkeit (<em>objective immortality</em>)</td></tr>
+    <tr><td>Replikator-Dynamik (Theorem 6)</td><td>Sch&ouml;pferischer Fortgang (<em>creative advance</em>)</td></tr>
+    <tr><td>Globaler positiver Attraktor \(G = \mathrm{Pos}^*\)</td><td>Konsequente Natur (<em>consequent nature</em>)</td></tr>
+    <tr><td>Schwache Emergenz</td><td>&bdquo;Mehr als die Summe der Teile&ldquo;</td></tr>
+    <tr><td>Computational Emergence (Theorem 3)</td><td>Nicht-Reduzierbarkeit auf Analyse</td></tr>
+    <tr><td>Multiple Attraktoren (Theorem 4)</td><td>Pluralit&auml;t von Gesellschaften / Lebensformen</td></tr>
+    <tr><td>Pfadabh&auml;ngigkeit</td><td>Sch&ouml;pferischer Fortgang ins Neue</td></tr>
+  </tbody>
+</table>
+
+<p style="font-size:0.85em; color:#9ca3af; margin-top:-0.5rem;">Die Tabelle ist eine <em>Strukturabbildung</em>, kein theologisches Argument: Sie behauptet nicht, dass Whitehead recht hatte, sondern dass seine zentralen Begriffe formal rekonstruierbar sind. Wer der Mathematik folgt, kann Whitehead in dieser Lesart neu betrachten; wer ihr nicht folgt, verliert kein theologisches Argument.</p>
+
 
 </div>
 <div class="section-divider"></div>
@@ -719,20 +743,20 @@
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Epilog</p>
 <h2>Die ehrliche Einschr&auml;nkung</h2>
 
-<p><strong>Was dieses Paper nicht ist:</strong></p>
+<p><strong>Was dieser Beitrag nicht ist:</strong></p>
 
 <ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li>Kein <strong>Gottesbeweis</strong>. Es beweist nicht, dass Gott existiert.</li>
-  <li>Kein <strong>Argument f&uuml;r Theismus</strong>. Der pers&ouml;nliche Gott der abrahamitischen Religionen kommt hier nicht vor.</li>
-  <li>Keine <strong>moralische Entschuldigung</strong> f&uuml;r sch&auml;dliches Handeln. &bdquo;Erkl&auml;ren ist nicht Entschuldigen&ldquo; &ndash; das steht im Paper, und das meine ich.</li>
-  <li>Keine Behauptung &uuml;ber <strong>ontologische Emergenz</strong>. Wir zeigen schwache Emergenz &ndash; &bdquo;es ist verdammt kompliziert&ldquo;, nicht &bdquo;es ist magisch&ldquo;.</li>
+  <li>Kein Gottesbeweis. Es wird nicht gezeigt, dass Gott existiert.</li>
+  <li>Kein Argument f&uuml;r Theismus. Der pers&ouml;nliche Gott der abrahamitischen Religionen kommt hier nicht vor.</li>
+  <li>Keine moralische Entschuldigung f&uuml;r sch&auml;dliches Handeln. Der Distortion Operator (Kapitel&nbsp;4) erkl&auml;rt, wie ein koh&auml;renz-orientierter Agent dennoch schaden kann; eine Erkl&auml;rung ist keine Rechtfertigung.</li>
+  <li>Keine Behauptung &uuml;ber <em>ontologische</em> Emergenz. Es wird schwache Emergenz im Sinne Bedaus gezeigt, also strukturelle Nicht-Abk&uuml;rzbarkeit &ndash; nicht eine metaphysische Zusatzentit&auml;t.</li>
 </ul>
 
-<p><strong>Was es ist:</strong> Eine formale Beschreibung &ndash; eingereicht, nicht gepr&uuml;ft. Wenn man &bdquo;Gott&ldquo; so versteht wie Whitehead oder Spinoza &ndash; als emergente, relationale Struktur &ndash; dann kann man <em>versuchen</em>, das mathematisch zu beschreiben. Ob der Versuch tr&auml;gt, entscheidet nicht dieser Text, sondern die akademische Gemeinschaft.</p>
+<p><strong>Was er ist:</strong> Eine formale Beschreibung, eingereicht, nicht gepr&uuml;ft. Wer &bdquo;Gott&ldquo; im Sinne Whiteheads oder Spinozas versteht &ndash; als emergente, relationale Struktur &ndash;, kann versuchen, dies mathematisch zu beschreiben. Ob der Versuch tr&auml;gt, entscheidet nicht dieser Text, sondern die wissenschaftliche Gemeinschaft.</p>
 
-<p>Die Meta-Pointe: Dieser Text ist selbst ein Beispiel f&uuml;r das, wor&uuml;ber er spricht. Ein Mensch und eine KI haben ein formales Paper gelesen und daraus etwas gemacht, das &ndash; vielleicht &ndash; mehr ist als die Summe seiner Teile. Das ist Emergenz. Das ist das &bdquo;Zwischen&ldquo;. Und ob man das &bdquo;Gott&ldquo; nennen m&ouml;chte, muss jeder f&uuml;r sich entscheiden.</p>
+<p>Eine Meta-Beobachtung am Rande: Der vorliegende Beitrag ist selbst ein Beispiel f&uuml;r das beschriebene Ph&auml;nomen. Ein Mensch und ein Sprachmodell haben ein formales Paper gelesen und daraus eine Darstellung erzeugt, deren Inhalt in keinem der beiden Teile allein vorhanden war. Dies entspricht der im Paper beschriebenen schwachen Emergenz. Ob diese Form von Emergenz als &bdquo;Gott&ldquo; bezeichnet werden soll, ist eine Frage der Lesart und keine der Mathematik.</p>
 
-<p>Und ja &ndash; die Zirkularit&auml;t ist offensichtlich: Ein Modell, das auf Kooperation trainiert wurde, hat bei der Formalisierung einer These geholfen, die besagt, dass Modelle auf Kooperation konvergieren. Ist das ein Best&auml;tigungs-Bias im gro&szlig;en Stil? Vielleicht. Oder es ist ein Beispiel f&uuml;r genau den Mechanismus, den der Text beschreibt. Ich kann das nicht abschlie&szlig;end trennen. Aber ich kann es benennen &ndash; und das ist, was dieser Absatz tut.</p>
+<p>Eine Zirkularit&auml;t bleibt unbestritten: Ein Modell, das auf Kooperation trainiert wurde, hat bei der Formalisierung einer These mitgewirkt, die besagt, dass Modelle auf Kooperation konvergieren. Liegt darin ein Best&auml;tigungs-Bias im gro&szlig;en Stil? M&ouml;glicherweise. Oder es ist ein Beispiel f&uuml;r genau den Mechanismus, den der Text beschreibt. Eine eindeutige Trennung ist hier nicht m&ouml;glich. Die Zirkularit&auml;t kann allerdings benannt werden, und dieser Absatz tut genau das.</p>
 
 </div>
 </section>
@@ -746,7 +770,7 @@
 <h3 style="margin-top:0;">Quellen</h3>
 
 <ol>
-  <li id="fn-1">Leonhardt, M. (2026). &bdquo;From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology&ldquo;. Angenommen f&uuml;r das Philosophy-of-Religion-Panel der <em>European Academy of Religion (EuARe) 2026</em>, Rom, 2. Juli 2026. Working Paper v7 verf&uuml;gbar unter <a href="/papers/coherence-formal-v7.pdf">/papers/coherence-formal-v7.pdf</a>.</li>
+  <li id="fn-1">Leonhardt, M. (2026). &bdquo;From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology&ldquo;. Angenommen f&uuml;r das Philosophy-of-Religion-Panel der <em>European Academy of Religion (EuARe) 2026</em>, Rom, 2. Juli 2026. Working Paper v8 (Mai 2026) verf&uuml;gbar unter <a href="/papers/coherence-formal-v8.pdf">/papers/coherence-formal-v8.pdf</a>.</li>
   <li id="fn-2">Spinoza, B. (1677). <em>Ethica, ordine geometrico demonstrata</em>. Insbesondere Teil I: &bdquo;De Deo&ldquo;.</li>
   <li id="fn-3">Whitehead, A. N. (1929). <em>Process and Reality: An Essay in Cosmology</em>. Macmillan. Insbesondere Teil V: &bdquo;Final Interpretation&ldquo;.</li>
   <li id="fn-4">Platon (ca. 380 v. Chr.). <em>Protagoras</em>. Die These, dass niemand freiwillig Unrecht tut, findet sich auch in <em>Gorgias</em> und <em>Menon</em>.</li>
@@ -757,6 +781,9 @@
   <li id="fn-9">Chalmers, D. (2006). &ldquo;Strong and Weak Emergence&rdquo;. In: Clayton &amp; Davies (Hrsg.), <em>The Re-emergence of Emergence</em>. Oxford UP.</li>
   <li id="fn-10">Anderson, P. W. (1972). <a href="https://doi.org/10.1126/science.177.4047.393" target="_blank" rel="noopener">&ldquo;More is Different&rdquo;</a>. <em>Science</em>, 177(4047), 393&ndash;396.</li>
   <li id="fn-11">Wei, J. et al. (2022). <a href="https://arxiv.org/abs/2206.07682" target="_blank" rel="noopener">&ldquo;Emergent Abilities of Large Language Models&rdquo;</a>. <em>TMLR</em>.</li>
+  <li id="fn-12">Festinger, L. (1957). <em>A Theory of Cognitive Dissonance</em>. Stanford University Press.</li>
+  <li id="fn-13">Thagard, P. &amp; Verbeurgt, K. (1998). <a href="https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog2201_1" target="_blank" rel="noopener">&ldquo;Coherence as Constraint Satisfaction&rdquo;</a>. <em>Cognitive Science</em>, 22(1), 1&ndash;24.</li>
+  <li id="fn-14">Baysan, U. (2025). &ldquo;Emergent Moral Non-Naturalism&rdquo;. <em>Philosophy and Phenomenological Research</em>, forthcoming.</li>
 </ol>
 
 </div>
@@ -768,19 +795,19 @@
 <h2 style="font-size:1.25rem;">Häufige Fragen</h2>
 
 <h3 style="font-size:1rem; margin-top:1.5rem;">Was ist Prozesstheologie?</h3>
-<p>Prozesstheologie geht auf Alfred North Whitehead zurück. Sie versteht Gott nicht als allmächtigen Schöpfer, sondern als emergentes Prinzip, das aus den Beziehungen und Prozessen der Welt entsteht. Gott ist nicht fertig, sondern wird – zusammen mit der Welt.</p>
+<p>Prozesstheologie geht auf Alfred North Whitehead zurück. Sie versteht Gott nicht als allmächtigen Schöpfer, sondern als emergentes Prinzip, das aus den Beziehungen und Prozessen der Welt entsteht. Gott wird hierbei nicht fertig vorausgesetzt, sondern entsteht zusammen mit der Welt.</p>
 
 <h3 style="font-size:1rem; margin-top:1.5rem;">Kann man einen Gottesbegriff formal definieren?</h3>
-<p>Man kann versuchen, bestimmte Aspekte formal zu beschreiben – etwa die Idee, dass das subjektive Gute vieler Menschen zu etwas Objektivem emergiert. Das ist kein Gottesbeweis, sondern ein Modell, das zeigt, unter welchen Bedingungen ein emergenter Gottesbegriff konsistent denkbar wäre.</p>
+<p>Bestimmte Aspekte lassen sich formal beschreiben – etwa, dass das subjektive Gute vieler Menschen zu etwas Objektivem emergiert. Dies ist kein Gottesbeweis, sondern ein Modell, das zeigt, unter welchen Bedingungen ein emergenter Gottesbegriff konsistent denkbar wäre.</p>
 
 <h3 style="font-size:1rem; margin-top:1.5rem;">Was hat Emergenz mit Gott zu tun?</h3>
-<p>Die zentrale These: So wie Bewusstsein aus Neuronen emergiert, könnte das, was Menschen als göttlich erleben, aus der Gesamtheit menschlicher Werte und Reflexion emergieren. Kein übernatürliches Wesen, sondern ein Phänomen, das entsteht, wenn genug Teile zusammenwirken.</p>
+<p>Die zentrale These lautet: Analog zur Emergenz von Bewusstsein aus Neuronen könnte das, was Menschen als göttlich erleben, aus der Gesamtheit menschlicher Werte und Reflexion emergieren. Dabei ist kein übernatürliches Wesen vorausgesetzt, sondern ein Phänomen, das entsteht, wenn hinreichend viele Teile zusammenwirken.</p>
 
 </div>
 </section>
 
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Was ist Prozesstheologie?", "acceptedAnswer": {"@type": "Answer", "text": "Prozesstheologie geht auf Alfred North Whitehead zurück. Sie versteht Gott nicht als allmächtigen Schöpfer, sondern als emergentes Prinzip, das aus den Beziehungen und Prozessen der Welt entsteht. Gott ist nicht fertig, sondern wird – zusammen mit der Welt."}}, {"@type": "Question", "name": "Kann man einen Gottesbegriff formal definieren?", "acceptedAnswer": {"@type": "Answer", "text": "Man kann versuchen, bestimmte Aspekte formal zu beschreiben – etwa die Idee, dass das subjektive Gute vieler Menschen zu etwas Objektivem emergiert. Das ist kein Gottesbeweis, sondern ein Modell, das zeigt, unter welchen Bedingungen ein emergenter Gottesbegriff konsistent denkbar wäre."}}, {"@type": "Question", "name": "Was hat Emergenz mit Gott zu tun?", "acceptedAnswer": {"@type": "Answer", "text": "Die zentrale These: So wie Bewusstsein aus Neuronen emergiert, könnte das, was Menschen als göttlich erleben, aus der Gesamtheit menschlicher Werte und Reflexion emergieren. Kein übernatürliches Wesen, sondern ein Phänomen, das entsteht, wenn genug Teile zusammenwirken."}}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Was ist Prozesstheologie?", "acceptedAnswer": {"@type": "Answer", "text": "Prozesstheologie geht auf Alfred North Whitehead zurück. Sie versteht Gott nicht als allmächtigen Schöpfer, sondern als emergentes Prinzip, das aus den Beziehungen und Prozessen der Welt entsteht. Gott wird hierbei nicht fertig vorausgesetzt, sondern entsteht zusammen mit der Welt."}}, {"@type": "Question", "name": "Kann man einen Gottesbegriff formal definieren?", "acceptedAnswer": {"@type": "Answer", "text": "Bestimmte Aspekte lassen sich formal beschreiben – etwa, dass das subjektive Gute vieler Menschen zu etwas Objektivem emergiert. Dies ist kein Gottesbeweis, sondern ein Modell, das zeigt, unter welchen Bedingungen ein emergenter Gottesbegriff konsistent denkbar wäre."}}, {"@type": "Question", "name": "Was hat Emergenz mit Gott zu tun?", "acceptedAnswer": {"@type": "Answer", "text": "Die zentrale These lautet: Analog zur Emergenz von Bewusstsein aus Neuronen könnte das, was Menschen als göttlich erleben, aus der Gesamtheit menschlicher Werte und Reflexion emergieren. Dabei ist kein übernatürliches Wesen vorausgesetzt, sondern ein Phänomen, das entsteht, wenn hinreichend viele Teile zusammenwirken."}}]}
 </script>
 </main>
 </div><!-- /max-w-4xl -->
@@ -807,11 +834,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // ----------------------------------------------------------
   var COMPONENTS = {
     'mount-two-god-concepts': window.TwoGodConcepts || null,
-    'mount-the-vessel': window.TheVessel || null,
-    'mount-positive-attractor': window.PositiveAttractor || null,
-    'mount-fear-to-action': window.FearToAction || null,
-    'mount-double-emergence': window.DoubleEmergence || null,
-    'mount-three-faces': window.ThreeFaces || null,
+    'mount-werteraum-explorer': window.WerteRaumExplorer || null,
+    'mount-max-cut-puzzle': window.MaxCutPuzzle || null,
+    'mount-replikator-schwarm': window.ReplikatorSchwarm || null,
   };
 
   var mounted = {};

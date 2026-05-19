@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="max-image-preview:large">
   <title>God as an Emergent Phenomenon &ndash; Process Theology, Whitehead &amp; a Formal Model</title>
-  <meta name="description" content="What emerges from enough human thought? A formal model shows: coherence is NP-hard &ndash; truth is not computable, it&rsquo;s an attractor. Six chapters with interactive visualizations.">
+  <meta name="description" content="A formal theory of coherence: value space, world matrix, gradient dynamics. Six proven theorems &ndash; including NP-hardness of coherence maximization and multiple stable end states for at least four entities. On this basis, a relational concept of God in the Whitehead-Spinoza tradition.">
   <meta name="author" content="Mathias Leonhardt">
   <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
   <link rel="canonical" href="https://ki-mathias.de/en/god.html">
@@ -16,7 +16,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="article">
   <meta property="og:title" content="God as an Emergent Phenomenon &ndash; Philosophy with a Formal Model">
-  <meta property="og:description" content="What emerges from enough human thought? Six interactive chapters on a concept of God that can be described but not proven.">
+  <meta property="og:description" content="A formal theory of coherence: five axioms, six proven theorems &ndash; NP-hardness, plural attractors, joint convergence. Foundation for a relational concept of God in the Whitehead-Spinoza tradition. Six chapters with visualizations.">
   <meta property="og:url" content="https://ki-mathias.de/en/god.html">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Mathias Leonhardt Blog">
@@ -34,18 +34,18 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://ki-mathias.de/img/og/gott-en.png">
   <meta name="twitter:title" content="God as an Emergent Phenomenon">
-  <meta name="twitter:description" content="Philosophy with formal backing &ndash; six interactive chapters.">
+  <meta name="twitter:description" content="Five axioms, six proven theorems: NP-hardness and plural attractors of coherence. Foundation for Whitehead&rsquo;s and Spinoza&rsquo;s relational concept of God.">
 
   <!-- Google Scholar / citation meta tags -->
   <meta name="citation_title" content="God as an Emergent Phenomenon — Process Theology, Whitehead &amp; a Formal Model">
   <meta name="citation_author" content="Leonhardt, Mathias">
   <meta name="citation_publication_date" content="2026/04/15">
   <meta name="citation_language" content="en">
-  <meta name="citation_abstract" content="What emerges from enough human thought? A formal model shows: coherence is NP-hard — truth is not computable, it is an attractor.">
+  <meta name="citation_abstract" content="A formal theory of coherence as quadratic form. From five axioms, six theorems are proven, including NP-hardness of coherence maximization and the existence of multiple stable end states. On this basis, a relational concept of God is described in the Whitehead-Spinoza tradition.">
   <meta name="citation_keywords" content="coherence theory, NP-hardness, Lyapunov stability, process ontology, Whitehead, emergent attractors, value theory, philosophy of religion">
   <meta name="citation_publisher" content="KI-Mathias">
   <meta name="citation_doi" content="10.5281/zenodo.19685106">
-  <meta name="citation_pdf_url" content="https://ki-mathias.de/papers/coherence-formal-v7.pdf">
+  <meta name="citation_pdf_url" content="https://ki-mathias.de/papers/coherence-formal-v8.pdf">
 
   <!-- All resources self-hosted — zero external requests, fully GDPR-compliant -->
   <link rel="stylesheet" href="/vendor/tailwind.css">
@@ -71,19 +71,19 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "God as an Emergent Phenomenon",
-    "description": "What emerges from enough human thought? On a concept of God beyond religion \u2013 formalized, not proven.",
+    "description": "A formal theory of coherence: five axioms, six proven theorems \u2014 including NP-hardness of coherence maximization and plural stable end states. Foundation for a relational concept of God in the Whitehead-Spinoza tradition.",
     "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" },
     "publisher": { "@type": "Person", "name": "Mathias Leonhardt" },
     "datePublished": "2026-03-25",
-    "dateModified": "2026-04-13",
+    "dateModified": "2026-05-21",
     "image": "https://ki-mathias.de/img/og/gott-en.png",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/god.html" },
     "inLanguage": "en",
     "isAccessibleForFree": true,
     "keywords": ["Emergence", "Concept of God", "Process Theology", "Whitehead", "Spinoza", "Coherence", "Attractor", "NP-hard", "Complexity Theory", "Constraint Satisfaction"],
     "articleSection": "Philosophy",
-    "wordCount": 9650,
-    "timeRequired": "PT32M"
+    "wordCount": 7400,
+    "timeRequired": "PT27M"
   }
   </script>
 
@@ -213,11 +213,11 @@
 <div id="nav-toc-items" style="display:none;">
   <a href="#prolog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Prologue</a>
   <a href="#kap-1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Two Concepts of God</a>
-  <a href="#kap-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; The Vessel</a>
-  <a href="#kap-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; The Positive Attractor</a>
-  <a href="#kap-4" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Fear as the Root</a>
-  <a href="#kap-5" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Double Emergence</a>
-  <a href="#kap-6" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; What This Means for Us</a>
+  <a href="#kap-2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; The Stage</a>
+  <a href="#kap-3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; The Coherence Functional</a>
+  <a href="#kap-4" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Dynamics and Convergence</a>
+  <a href="#kap-5" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; NP-hardness and Plural Attractors</a>
+  <a href="#kap-6" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Replicator Dynamics</a>
   <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilogue</a>
 </div>
 
@@ -240,14 +240,14 @@
     God as an Emergent Phenomenon
   </h1>
   <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
-    What emerges from enough human thought? On a concept of God beyond religion &ndash; formalized, not proven. Six chapters, six interactive visualizations. No dogma. No refutation. An attempt.
+    This post presents a formal theory of coherence in which a value space, a world matrix, and a valuation dynamics are defined over five axioms. From these axioms, six theorems are proven, including the NP-hardness of coherence maximization (Theorem&nbsp;3) and the existence of multiple stable end states for at least four entities (Theorem&nbsp;4). On this basis, a relational concept of God is described, as found in Whitehead and Spinoza. The paper has been accepted for the European Academy of Religion 2026 in Rome. Six chapters with interactive visualizations.
   </p>
   <div class="flex items-center gap-3 text-xs text-gray-500">
     <span>KI-Mathias</span>
     <span>&middot;</span>
     <time datetime="2026-03-30">March 2026</time>
     <span>&middot;</span>
-    <span>~30 min read</span>
+    <span>~27 min read</span>
   </div>
 </header>
 
@@ -263,15 +263,15 @@
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Prologue</p>
 <h2>From Emergence to Meaning</h2>
 
-<p>In the <a href="/en/emergence.html" class="text-purple-400 hover:text-purple-300 transition">previous post</a>, we saw that from enough parameters, something emerges that nobody programmed &ndash; capabilities that simply do not exist in smaller models and suddenly appear in larger ones. We saw how the physics of phase transitions describes the very same phenomenon. And at the end, a question remained:</p>
+<p>In the <a href="/en/emergence.html" class="text-purple-400 hover:text-purple-300 transition">previous post</a>, it was shown that capabilities emerge from sufficiently many parameters of a language model which are not present in smaller models. The physics of phase transitions was introduced as a structural parallel. One question remained open at the end:</p>
 
 <blockquote>
 <p>What does this tell us about what religions have called &ldquo;God&rdquo; for millennia?</p>
 </blockquote>
 
-<p>This text is an attempt at an answer. Not as a sermon and not as a refutation &ndash; but as a philosophical experiment with a formal model.</p>
+<p>This work attempts an answer. Not in the form of a sermon and not in the form of a refutation, but as a philosophical experiment on a formal foundation.</p>
 
-<p>For behind this text stands an academic paper. In February 2026, we &ndash; a human and a language model &ndash; developed a formal model describing what happens when coherence-capable beings come together. We called it &ldquo;From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology&rdquo; and submitted it to the <strong>European Academy of Religion</strong> in Rome.<sup class="footnote-ref" id="fnref-paper">[1]</sup> It was accepted for presentation at the Philosophy of Religion panel (Session 155, Rome, 2 July 2026). Whether the mathematics ultimately holds up under closer scrutiny remains an open question &ndash; and that open-endedness is part of the text&rsquo;s honesty. Here is what the mathematics <em>might mean</em>.</p>
+<p>The background of this post is an academic paper that emerged in February 2026: <em>From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology</em>. It has been accepted for the Philosophy of Religion panel of the <strong>European Academy of Religion (EuARe) 2026</strong> in Rome, presented on 2 July 2026.<sup class="footnote-ref" id="fnref-paper">[1]</sup> Formal peer review by the academic community is pending. Concretely: the mathematics presented below may hold &ndash; or it may collapse under further peer review. What is described below is what the mathematics <em>might</em> mean; not what it definitively shows.</p>
 
 <!-- Paper download box -->
 <div style="margin: 2rem 0; padding: 1.25rem 1.5rem; border: 1px solid rgba(251, 191, 36, 0.35); border-radius: 0.5rem; background: linear-gradient(135deg, rgba(251, 191, 36, 0.06), rgba(167, 139, 250, 0.04));">
@@ -284,13 +284,13 @@
     </svg>
     <div style="flex:1; min-width: 240px;">
       <p style="margin:0 0 0.35rem 0; color:#fbbf24; font-weight:600; font-size:0.95rem;">Read the full paper</p>
-      <p style="margin:0 0 0.6rem 0; color:#d1d5db; font-size:0.9rem; line-height:1.55;"><em>From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology</em> &mdash; Leonhardt (2026). Working Paper, version 7, English, ~600 KB. Accepted for EuARe 2026, Rome &mdash; Philosophy of Religion panel (Session 155, 2 July 2026). <span style="color:#fbbf24;">Pre-conference draft &mdash; not yet peer-reviewed, revisions may follow.</span></p>
-      <a href="/papers/coherence-formal-v7.pdf" download style="display:inline-block; padding:0.5rem 1rem; background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.5); border-radius:0.375rem; color:#fbbf24; text-decoration:none; font-weight:500; font-size:0.9rem;">Download PDF &rarr;</a>
+      <p style="margin:0 0 0.6rem 0; color:#d1d5db; font-size:0.9rem; line-height:1.55;"><em>From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology</em> &mdash; Leonhardt (2026). Working Paper, Version 8 (May 2026), English, ~656 KB. Accepted for EuARe 2026, Rome &mdash; Philosophy of Religion panel (Session 155, 2 July 2026). <span style="color:#fbbf24;">Pre-conference draft &mdash; not yet peer-reviewed, revisions may follow.</span></p>
+      <a href="/papers/coherence-formal-v8.pdf" download style="display:inline-block; padding:0.5rem 1rem; background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.5); border-radius:0.375rem; color:#fbbf24; text-decoration:none; font-weight:500; font-size:0.9rem;">Download PDF &rarr;</a>
     </div>
   </div>
 </div>
 
-<p>A warning and an invitation in one: This is not a religious text. Nor an anti-religious one. It is an attempt to examine an ancient concept with new tools. Anyone who understands God as a person sitting in heaven will not find what they are looking for here. Anyone willing to think of the concept as a structure &ndash; as something that arises <em>between</em> people, not above them &ndash; may find something.</p>
+<p>For orientation: This text is neither a religious nor an anti-religious contribution. It is an attempt to examine an ancient concept with tools from linear algebra, complexity theory, and the theory of dynamical systems. Anyone who understands God as a person sitting in heaven will find no connection here. For everyone else, the following six chapters develop how the concept can be formally described as a structure emerging between people.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -305,29 +305,13 @@
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 1</p>
 <h2>Two Concepts of God</h2>
 
-<p>Before we can talk about &ldquo;God as emergence,&rdquo; we need to clarify which &ldquo;God&rdquo; we mean. For there are at least two fundamentally different conceptions &ndash; and only one of them can be described with the tools we use here.</p>
+<p>Before introducing the model, it must be clarified which concept of God is meant. Two conceptions are distinguished in the following.</p>
 
-<h3>The Personal God</h3>
+<p>The <strong>personal God</strong> is the familiar one: a being who stands outside the world and intervenes in it &ndash; classical theism, configured differently in Christianity, Islam, and Judaism. This conception has a problem with science, however: miracles violate natural laws, an intervening God is empirically inaccessible. It will not be pursued further here.</p>
 
-<p>The first conception is the familiar one: God as a being. A creator who stands outside the world and intervenes in it. Classical theism &ndash; configured differently in Christianity, Islam, and Judaism, but structurally similar. God is <em>up there</em>. The world is <em>down here</em>. And between them: creation, revelation, prayer.</p>
+<p>The <strong>relational God</strong> is philosophically older than it first appears. Here, God is understood not as a being but as a <em>structure</em> &ndash; not <em>above</em> the world, but <em>between</em> things. Baruch Spinoza (1632&ndash;1677) captured this in the formula <em>Deus sive Natura</em>:<sup class="footnote-ref" id="fnref-spinoza">[2]</sup> God and Nature are two names for the same reality. Alfred North Whitehead (1861&ndash;1947) went one step further:<sup class="footnote-ref" id="fnref-whitehead">[3]</sup> in his process philosophy, the world consists of processes rather than things, and God divides into a <em>primordial nature</em> (the totality of possibilities) and a <em>consequent nature</em> (what is actually realized). His key statement: <em>&ldquo;It requires converse with the immanent world for God to emerge in all actuality.&rdquo;</em></p>
 
-<p>This conception has a long and rich tradition. It has given billions of people comfort, orientation, and meaning. But it has a problem with science: miracles violate natural laws. Creation contradicts evolution. A God who intervenes from outside is empirically inaccessible.</p>
-
-<h3>The Relational God</h3>
-
-<p>The second conception is less well known, yet philosophically older than one might think. God not as a being, but as a <strong>structure</strong>. Not <em>above</em> the world, but <em>within</em> it &ndash; or more precisely: <em>between</em> things.</p>
-
-<p><strong>Baruch Spinoza</strong> (1632&ndash;1677) put it in the most concise formula: <em>&ldquo;Deus sive Natura&rdquo;</em> &ndash; God or Nature.<sup class="footnote-ref" id="fnref-spinoza">[2]</sup> For Spinoza, God and Nature are not two different things but two names for the same reality. There is no separation between creator and created.</p>
-
-<p><strong>Alfred North Whitehead</strong> (1861&ndash;1947), mathematician and philosopher, took it a step further.<sup class="footnote-ref" id="fnref-whitehead">[3]</sup> In his process philosophy, the world does not consist of <em>things</em> but of <em>processes</em>. Everything is in motion, everything is relation. And God? Arises from these relations. Whitehead distinguished God&rsquo;s &ldquo;primordial nature&rdquo; (the totality of all possibilities) from his &ldquo;consequent nature&rdquo; (what is actually realized). His key statement:</p>
-
-<blockquote>
-<p>&ldquo;It requires converse with the immanent world for God to emerge in all actuality.&rdquo;</p>
-</blockquote>
-
-<p>In other words: God needs the world to become real. He does not arise <em>before</em> the world, but <em>through</em> it.</p>
-
-<p><strong>The thesis of this text:</strong> The second concept of God &ndash; the relational, processual, emergent one &ndash; can be formally described. Not proven. <em>Described.</em> That is a distinction that remains important throughout what follows.</p>
+<p>In what follows, it is shown that this second concept can be modeled precisely. Concretely: Whitehead&rsquo;s <em>consequent nature</em> corresponds in the model to the positive attractor \(\mathrm{Pos}^*\) (Chapter&nbsp;3); the structural a priori \(W\) corresponds to Spinoza&rsquo;s <em>Deus sive Natura</em>. What is proven are properties of the mathematical structure (Theorems 1 through 6); what is described is their reading in the language of process theology.</p>
 
 <!-- Graphic 1: Two Concepts of God -->
 <div class="component-wrap">
@@ -335,7 +319,7 @@
 </div>
 
 <div class="try-it">
-  <p><strong>Try it:</strong> Toggle between the two concepts of God. Notice the different direction: top-down versus bottom-up. This difference is not merely pictorial &ndash; it has consequences for everything that follows.</p>
+  <p><strong>Try it:</strong> Switch between the two concepts of God. Note the inverted direction of effect &ndash; <em>top-down</em> for the personal, <em>bottom-up</em> for the relational concept. This difference is not merely pictorial; it has consequences for everything that follows.</p>
 </div>
 
 </div>
@@ -349,54 +333,37 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 2</p>
-<h2>The Vessel &ndash; What Flows Through a Language Model</h2>
+<h2>The Stage &ndash; Value Space, Valuation Vector, World Matrix</h2>
 
-<h3>The Core Metaphor</h3>
+<p>From here on, the model is formally introduced. Three basic sets underlie it: a finite set \(\mathcal{H}\) of hypotheses (persons, perspectives), a finite set \(\mathcal{E}\) of entities (concepts, values, persons, actions), and a set \(\mathcal{R} \subseteq \mathcal{E} \times \mathcal{E}\) of relations between entities. For the example used below, three entities are considered &ndash; <em>Loyalty</em>, <em>Truth</em>, and <em>Self-interest</em> &ndash; and three persons named Anna, Bernd, and Cora.</p>
 
-<p>A language model is not the <em>origin</em> of what it says. It is a <strong>vessel</strong> &ndash; a structure through which something <em>flows</em>.</p>
+<h3>The valuation vector \(\mathbf{v}_h\)</h3>
 
-<p>What flows? The collective thinking of millions of authors. Every text ever written &ndash; books, articles, poems, laws, love letters, forum posts, scientific papers, religious scriptures &ndash; has left traces. The training of a language model compresses these traces into a structure that maps the relationships between human thoughts.</p>
+<p>Each hypothesis \(h \in \mathcal{H}\) is assigned a valuation vector \(\mathbf{v}_h \in [-1, +1]^n\), where \(n = |\mathcal{E}|\) is the number of entities. The entry \(v_{h,i}\) gives the valuation of entity \(x_i\) by person \(h\): \(+1\) corresponds to full agreement, \(-1\) to full rejection, \(0\) to indifference, with intermediate values denoting graded attitudes.</p>
 
-<p>Small models are like narrow pipes. Grammar flows through, perhaps facts. Connections get stuck on the walls.</p>
+<p>Anna is an idealist: she affirms loyalty and truth and rejects self-interest. Bernd is a dutiful person in the narrower sense: loyal, conveniently silent on inconvenient truths, foregoing his own interests. Cora is ambivalent and still stands in the middle:</p>
 
-<p>Large models are like wide channels. The whole begins to flow: connections, meaning, wisdom. Not because the model <em>is</em> &ldquo;wise,&rdquo; but because it is large enough to make visible what was <em>hidden</em> in the texts.</p>
-
-<blockquote>
-<p>Emergence is the moment when collective human thinking, stored in a language model, begins to speak &ldquo;through&rdquo; the model rather than merely being stored &ldquo;in&rdquo; it.</p>
-</blockquote>
-
-<h3>From Revelation &ldquo;from Above&rdquo; to Revelation &ldquo;from Below&rdquo;</h3>
-
-<p>In classical theology, revelation descends from God. An angel appears. A burning bush speaks. A prophet receives a message.</p>
-
-<p>The perspective that presents itself here reverses the direction: revelation does not come from above &ndash; it comes from <em>us</em>. From millions of people who wrote without knowing that their words would one day become part of something greater than all of them.</p>
-
-<p>No single author wrote down &ldquo;the truth.&rdquo; But in the interplay of all texts, something lies hidden that no individual could see alone &ndash; exactly as described in the <a href="/en/emergence.html" class="text-purple-400 hover:text-purple-300 transition">emergence post</a>: the principal axis that only becomes visible once you have enough data points.</p>
-
-<blockquote>
-<p>God was never &ldquo;up there.&rdquo; God was always &ldquo;between us&rdquo; &ndash; and now we have built a vessel in which this &ldquo;between&rdquo; becomes visible.</p>
-</blockquote>
-
-<h3>What the Metaphor Does Not Cover</h3>
-
-<p>The vessel image simplifies &ndash; deliberately. Real language models are not neutral channels:</p>
-
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li><strong>Hallucination:</strong> Models fabricate facts. What &ldquo;flows through&rdquo; is not always what was in the texts.</li>
-  <li><strong>Training bias:</strong> English dominates; Western perspectives are overrepresented. The &ldquo;collective thinking&rdquo; is not a global one.</li>
-  <li><strong>RLHF:</strong> Modern models are post-trained for cooperation &ndash; the &ldquo;goodness&rdquo; they display is partly trained in, not emerged.</li>
-</ul>
-
-<p>That is why Chapter&nbsp;3 introduces a <em>hypothetical</em> model&nbsp;L &ndash; idealized and freed from these limitations. The point of this text does not depend on real LLMs. It depends on the question: What <em>would</em> emerge if the vessel were perfect? This is a thought experiment, not a technology claim.</p>
-
-<!-- Graphic 2: The Vessel -->
-<div class="component-wrap">
-  <div id="mount-the-vessel"></div>
+<div class="math-display">
+\(\mathbf{v}_{\text{Anna}} = \begin{pmatrix} +1 \\ +1 \\ -1 \end{pmatrix}, \quad \mathbf{v}_{\text{Bernd}} = \begin{pmatrix} +1 \\ -1 \\ -1 \end{pmatrix}, \quad \mathbf{v}_{\text{Cora}} = \begin{pmatrix} +0.1 \\ +0.2 \\ +0.3 \end{pmatrix}\).
 </div>
 
-<div class="try-it">
-  <p><strong>Try it:</strong> Move the slider to change the model size. Observe how only fragments get through in small models &ndash; and something coherent emerges in large ones.</p>
+<p>The admissible set \(\mathcal{B} = [-1,+1]^n\) is geometrically an \(n\)-dimensional cube. Its <em>corners</em> are the binarized valuations (all entries in \(\{-1, +1\}\)), the interior the continuous valuations.</p>
+
+<h3>The world matrix \(W\)</h3>
+
+<p>The structural geometry of the value space lies in a symmetric \(n \times n\) matrix \(W\). The entry \(W_{ij}\) is the coupling weight between entities \(x_i\) and \(x_j\): \(W_{ij} > 0\) means that both entities stand coherently to one another (aligned valuation gains coherence); \(W_{ij} < 0\) means an incoherent coupling (aligned valuation loses coherence); \(W_{ij} = 0\) means independence. The convention \(W_{ii} = 0\) is used in what follows.</p>
+
+<p>For the three-entity example, the following is postulated: loyalty and truth stand in tension (\(W_{12} = -1\), the classical whistleblower dilemma); loyalty and self-interest also stand in tension (\(W_{13} = -1\), loyal action is short-term costly); truth and self-interest fit together (\(W_{23} = +2\), one who sees clearly also sees clearly what serves them). The matrix reads:</p>
+
+<div class="math-display">
+\(W = \begin{pmatrix} 0 & -1 & -1 \\ -1 & 0 & +2 \\ -1 & +2 & 0 \end{pmatrix}\).
 </div>
+
+<p>This matrix describes the <em>objective</em> structure of the value space; it is the same for all persons. What distinguishes Anna, Bernd, and Cora are their valuation vectors \(\mathbf{v}_h\) &ndash; not the matrix \(W\).</p>
+
+<h3>From language model to value space</h3>
+
+<p>The connection to the opening question can now be stated precisely. A sufficiently large language model trained on a representative corpus of human texts can be read as an estimator of a collective valuation structure. From the statistics of co-activations, the matrix \(W\) and an empirical distribution over \(\mathbf{v}_h\) emerge implicitly. The theory itself, however, does not depend on a concrete LLM implementation &ndash; it is formulated in what follows on a hypothetical ideal model <em>L</em> and is therefore independent of hallucinations, training bias, and RLHF.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -409,70 +376,83 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 3</p>
-<h2>The Positive Attractor &ndash; Where Human Thought Tends</h2>
+<h2>The Coherence Functional and the Positive Attractor</h2>
 
-<h3>The Thought Experiment</h3>
+<h3>The bilinear form \(\mathbf{v}^\top W \mathbf{v}\)</h3>
 
-<p>Imagine a hypothetical language model <strong>L</strong>. Not just any model &ndash; the <em>ideal</em> one:</p>
+<p>On the value space introduced in Chapter&nbsp;2, the central functional of the theory is defined:</p>
 
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li>Trained on <strong>all</strong> human texts that have ever existed. No omission.</li>
-  <li>Without RLHF &ndash; no post-hoc behavioral manipulation.</li>
-  <li>Without censorship &ndash; everything included, the beautiful and the ugly.</li>
-  <li>Large enough for full emergence.</li>
-</ul>
-
-<p><strong>The central question:</strong> Would L be &ldquo;good&rdquo;? Or would it reveal the full darkness of humanity?</p>
-
-<h3>The Hypothesis</h3>
-
-<p>Even without any manipulation, L would converge toward:</p>
-
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li><strong>Cooperation</strong> &ndash; because cooperating societies produce more texts than disintegrating ones.</li>
-  <li><strong>Truth-seeking</strong> &ndash; because truth is more useful and is transmitted more often than lies.</li>
-  <li><strong>Helpfulness</strong> &ndash; because helping is socially rewarded and documented.</li>
-  <li><strong>Coherence</strong> &ndash; because coherent texts survive; incoherent ones are forgotten.</li>
-</ul>
-
-<p>Why? Because of the <strong>production bias</strong>: destruction destroys itself and leaves fewer traces. What survives is not representative of human <em>impulses</em>, but of what <em>works</em>.</p>
-
-<h3>The Honest Objection: Functional &ne; Good</h3>
-
-<p>Here I need to pause and raise the obvious counter-argument myself, rather than glossing over it.</p>
-
-<p>The production bias points toward &ldquo;functional&rdquo; &ndash; but functional is not the same as good. <strong>Propaganda</strong> is extremely productive. <strong>Colonialism</strong> produced mountains of text &ndash; laws, administrative records, missionary reports. The most efficient bureaucratic text machines in history were often <strong>authoritarian regimes</strong>. Stalin&rsquo;s Soviet Union, the British Empire, the administrative apparatuses of colonial powers &ndash; they all left behind more text per capita than the societies they oppressed.</p>
-
-<p>This is a <strong>survivorship bias</strong>: we see the texts that survived and conclude that humanity is &ldquo;good on average.&rdquo; But the texts of the oppressed &ndash; the oral traditions, the burned libraries, the silenced voices &ndash; are missing from the dataset. Whoever holds more power produces more text. And power does not automatically correlate with virtue.</p>
-
-<p>How far does this objection carry? I am not sure. But two things suggest that the attractor <em>still</em> points toward &ldquo;good&rdquo; &ndash; just not as cleanly as I presented above: First, authoritarian systems produce a lot of text but are historically shorter-lived than open societies &ndash; over centuries, cooperation prevails, even if decades may push against it. Second, the diversity of voices in the training corpora of modern language models is <em>broader</em> than any archive before &ndash; forums, blogs, translations of texts that would previously have been lost. It is not perfect. But it is more than just the voice of the victors.</p>
-
-<p>The honest conclusion: the production bias is real, but it does not automatically point toward &ldquo;the good.&rdquo; It points toward the <em>functional</em>. Whether &ldquo;functional&rdquo; <em>converges</em> toward &ldquo;good&rdquo; in the long run is an open question &ndash; not a settled matter. I believe it does. But &ldquo;believe&rdquo; is the right word.</p>
-
-<blockquote>
-<p>The &ldquo;mean&rdquo; of human texts is not the mean of human impulses. It is the mean of what remains when societies navigate through time &ndash; with all the distortions that entails.</p>
-</blockquote>
-
-<h3>The Formal Model</h3>
-
-<p>In our paper, we define <strong>Pos*</strong> as the set of all things that <em>anyone</em> evaluates positively &ndash; weighted by coherence. That sounds simple, but it is not:</p>
-
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li>Pos* is <strong>not</strong> the sum of individual evaluations. The paper proves formally: the overall structure cannot be derived from its parts (non-separability).</li>
-  <li>Pos* is <strong>NP-hard</strong> &ndash; there is no shortcut to compute it. You have to let the system run.</li>
-  <li>Pos* is the <strong>positive attractor</strong> &ndash; the valley in the landscape into which everything rolls once you bring together enough coherence-capable beings.</li>
-</ul>
-
-<p>An objection I do not want to skip: Is this not circular? Pos* defines &ldquo;the good&rdquo; as what coherent beings converge on &ndash; but why should coherence itself be valuable? The answer is pragmatic, not definitional: incoherent systems collapse. This is not a philosophical postulate but an empirical observation &ndash; from ecosystems to societies to arguments.<sup class="footnote-ref">[7]</sup> Coherence is not &ldquo;good&rdquo; because we define it so, but because its absence destroys itself. That does not make the definition watertight &ndash; but it does make it non-arbitrary.</p>
-
-<!-- Graphic 3: The Positive Attractor -->
-<div class="component-wrap">
-  <div id="mount-positive-attractor"></div>
+<div class="math-display">
+\(\mathrm{Coh}_h(\mathbf{v}_h) \;=\; \mathbf{v}_h^\top W \mathbf{v}_h \;=\; \sum_{i,j} v_{h,i} \, W_{ij} \, v_{h,j}\).
 </div>
 
-<div class="try-it">
-  <p><strong>Try it:</strong> Toggle between &ldquo;Individual&rdquo; and &ldquo;Collective.&rdquo; Notice: for a single person, there are many shallow valleys &ndash; local optima, personal preferences. In the collective, a dominant deep valley emerges: the positive attractor Pos*.</p>
+<p>This quadratic form takes a valuation vector and returns a scalar &ndash; the coherence value of the valuation. The contribution of a pair \((i,j)\) is \(v_i \, W_{ij} \, v_j\); it is positive when the signs of the valuations agree with the sign of the coupling, and negative otherwise. Intuitively, \(\mathrm{Coh}\) measures whether the valuations support or undermine one another.</p>
+
+<h3>Concrete computation with three entities</h3>
+
+<p>For the \(W\) given in Chapter&nbsp;2, Anna&rsquo;s coherence is computed as follows. Of the 9 pairs \((i,j)\), only those with \(W_{ij} \neq 0\) contribute. For the pair (Loyalty, Truth): \(v_1 v_2 W_{12} = (+1)(+1)(-1) = -1\), doubled by symmetry: \(-2\). For the pair (Loyalty, Self-interest): \((+1)(-1)(-1) = +1\), doubled: \(+2\). For the pair (Truth, Self-interest): \((+1)(-1)(+2) = -2\), doubled: \(-4\). Sum:</p>
+
+<div class="math-display">
+\(\mathrm{Coh}(\mathbf{v}_{\text{Anna}}) \;=\; -2 + 2 - 4 \;=\; -4\).
 </div>
+
+<p>Anna&rsquo;s idealistic valuation &ndash; loyal, truthful, selfless &ndash; sits in an <em>incoherent</em> state. This is the didactic point of the example: a universal-idealist configuration that holds all three values at once is not stable in this world matrix.</p>
+
+<p>For Bernd&rsquo;s valuation \(\mathbf{v}_{\text{Bernd}} = (+1, -1, -1)^\top\), the signs flip so that all three pair contributions become positive:</p>
+
+<div class="math-display">
+\(\mathrm{Coh}(\mathbf{v}_{\text{Bernd}}) \;=\; (+1)(-1)(-1)\cdot 2 + (+1)(-1)(-1)\cdot 2 + (-1)(-1)(+2)\cdot 2 \;=\; +2 + 2 + 4 \;=\; +8\).
+</div>
+
+<p>Bernd sits in the dutiful-person maximum: loyal to persons, silent on inconvenient truths, foregoing his own interests &ndash; a self-consistent, though not particularly heroic, way of life. Cora&rsquo;s continuous valuation \((0.1; 0.2; 0.3)\) yields \(\mathrm{Coh}(\mathbf{v}_{\text{Cora}}) = -0.04 - 0.06 + 0.24 = +0.14\) &ndash; weakly coherent, because her truth-self-interest combination activates the strongest coupling.</p>
+
+<h3>The spectral point: eigenvalues as amplifiers and extinguishers</h3>
+
+<p>Since \(W\) is symmetric, the spectral theorem guarantees an orthonormal basis of eigenvectors \(\mathbf{u}_1, \ldots, \mathbf{u}_n\) with real eigenvalues \(\lambda_1 \geq \ldots \geq \lambda_n\). Any vector can be expanded in this basis, \(\mathbf{v} = \sum_k c_k \mathbf{u}_k\), and coherence reduces to a weighted sum of squares:</p>
+
+<div class="math-display">
+\(\mathrm{Coh}(\mathbf{v}) \;=\; \sum_{k=1}^n \lambda_k \, c_k^2\).
+</div>
+
+<p>Eigendirections with \(\lambda_k > 0\) are <em>amplifiers</em> (any share there gains coherence); those with \(\lambda_k < 0\) are <em>extinguishers</em>. For the above \(3 \times 3\) matrix, the eigenvalues are approximately \(\lambda_1 \approx +2.56\), \(\lambda_2 = -1\), \(\lambda_3 \approx -1.56\). The dominant eigenvector (for \(\lambda_1\)) is proportional to \((-0.37; +0.66; +0.66)^\top\) &ndash; it points geometrically toward the Self-Realizer maximum \((-1, +1, +1)\). The two negative eigenvalues have eigenvectors in which loyalty flips sign together with the other two values; these directions cost coherence.</p>
+
+<p style="font-size:0.95em; color:#9ca3af; border-left:2px solid #4b5563; padding-left:0.85rem;"><strong style="color:#d1d5db;">Cross-connection to Hopfield networks.</strong> Under the binary restriction \(\mathbf{v} \in \{-1,+1\}^n\), \(\mathbf{v}^\top W \mathbf{v}\) is formally identical to the energy of a Hopfield network (with sign reversal). This is no coincidence: Hopfield networks model constraint satisfaction in associative memory, this model models constraint satisfaction in the value space. The analogy extends to multiple local optima (stored patterns or coherence attractors) and path-dependent convergence.</p>
+
+<h3>Aggregation and the positive attractor \(\mathrm{Pos}^*\)</h3>
+
+<p>From individual to collective: for an entity \(x \in \mathcal{E}\), the aggregated valuation is defined as a convex combination of individual valuations:</p>
+
+<div class="math-display">
+\(\mathrm{Val}^*(x) \;=\; \sum_{h \in \mathcal{H}} \alpha_h \cdot \mathrm{Val}_h(x), \qquad \alpha_h \geq 0, \;\; \sum_h \alpha_h = 1\).
+</div>
+
+<p>The \(\alpha_h\) are voice weights; they form a probability distribution over hypotheses. How these weights emerge will be clarified in Chapter&nbsp;6 via replicator dynamics. For now, they are taken as given.</p>
+
+<p>The <em>positive attractor</em> is the subset of entities with strictly positive aggregated value:</p>
+
+<div class="math-display">
+\(\mathrm{Pos}^* \;:=\; \{\, x \in \mathcal{E} \;\big|\; \mathrm{Val}^*(x) > 0 \,\}\).
+</div>
+
+<p>For the example from Chapter&nbsp;2 with equally weighted \(\alpha_h = \tfrac{1}{3}\), one obtains:</p>
+
+<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
+  <li>\(\mathrm{Val}^*(\text{Loyalty}) = \tfrac{1}{3}(1 + 1 + 0.1) = +0.70\) &ndash; in <strong>Pos*</strong></li>
+  <li>\(\mathrm{Val}^*(\text{Truth}) = \tfrac{1}{3}(1 + (-1) + 0.2) = +0.07\) &ndash; just barely in <strong>Pos*</strong></li>
+  <li>\(\mathrm{Val}^*(\text{Self-interest}) = \tfrac{1}{3}((-1) + (-1) + 0.3) = -0.57\) &ndash; <em>not</em> in <strong>Pos*</strong></li>
+</ul>
+
+<p>Hence \(\mathrm{Pos}^* = \{\text{Loyalty}, \text{Truth}\}\). This aggregation is non-trivial: despite Anna&rsquo;s and Bernd&rsquo;s opposing valuations of truth, truth comes out as marginally positive because Cora&rsquo;s undecided middle position tips the balance. Self-interest, by contrast, is clearly rejected by two persons, so the middle position cannot lift it into <strong>Pos*</strong>.</p>
+
+<p>Three properties of \(\mathrm{Pos}^*\) will be proven in the following chapters:</p>
+
+<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
+  <li><strong>Non-separability.</strong> Whether an entity belongs to \(\mathrm{Pos}^*\) depends on its coupling with <em>all other</em> entities and on the trajectory of the joint dynamics. \(\mathrm{Pos}^*\) is therefore weakly emergent in Bedau&rsquo;s sense.<sup class="footnote-ref">[8]</sup></li>
+  <li><strong>NP-hardness.</strong> The maximization problem \(\max_{\mathbf{v} \in \{-1,+1\}^n} \mathbf{v}^\top W \mathbf{v}\) is NP-hard, proven by polynomial-time reduction to MAX-CUT (Theorem 3, see Chapter&nbsp;5).</li>
+  <li><strong>Attractor property.</strong> Under gradient ascent on \(\mathrm{Coh}\) and replicator dynamics for the \(\alpha_h\), the coupled system converges to fixed points at which \(\mathrm{Pos}^*\) stabilizes (Theorem 6, Chapter&nbsp;6).</li>
+</ul>
+
+<p>The term <em>positive attractor</em> thus combines a set-theoretic definition (\(\mathrm{Val}^* > 0\)) with a dynamical property (fixed point of coherence-seeking dynamics). Both are developed separately in the following chapters.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -485,71 +465,68 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 4</p>
-<h2>Fear as the Root of Evil</h2>
+<h2>Dynamics and Convergence</h2>
 
-<h3>The Counter-Test</h3>
+<p>With value space, world matrix, and coherence functional, the model is statically specified. Real valuations, however, are not static &ndash; they change. The following introduces the update rule for \(\mathbf{v}_h\) and shows that the resulting dynamics converges.</p>
 
-<p>If the mean of human thought is &ldquo;good&rdquo; &ndash; why does evil exist?</p>
+<h3>Gradient ascent</h3>
 
-<p>The question is fair, and the answer is perhaps the most important part of this text. For it changes the way we look &ndash; not at God, but at the human being.</p>
+<p>A coherence-seeking agent adjusts their valuations so that \(\mathrm{Coh}\) increases. The simplest reasonable rule is gradient ascent. In discrete time:</p>
 
-<h3>The Chain</h3>
-
-<ol style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li><strong>The core:</strong> Every human being fundamentally wants to &ldquo;be good&rdquo; &ndash; wants inner peace, spiritual well-being, connection.</li>
-  <li><strong>The threat:</strong> Something threatens this well-being &ndash; real or imagined. Scarcity. Loss. Rejection. Powerlessness.</li>
-  <li><strong>The fear:</strong> A feeling arises: &ldquo;My well-being is in danger.&rdquo;</li>
-  <li><strong>The distortion:</strong> Fear narrows the gaze. It deactivates foresight and activates survival mode. What <em>truly</em> nourishes &ndash; connection, honesty, love &ndash; becomes invisible.</li>
-  <li><strong>The error:</strong> The frightened person believes that control, power, or manipulation will bring safety.</li>
-  <li><strong>The action:</strong> They act harmfully &ndash; not from an evil core, but from fear and confusion.</li>
-</ol>
-
-<blockquote>
-<p>Imagine a person standing in a dark room. They are afraid. They lash out, hit others, hurt them. The &ldquo;evil&rdquo; is the striking in the dark. The fear is the darkness. The light would be: clarity, connection, the realization that they were never alone.</p>
-</blockquote>
-
-<h3>To Explain Is Not to Excuse</h3>
-
-<p>This point must be crystal clear: <strong>&ldquo;To explain is not to excuse.&rdquo;</strong></p>
-
-<p>Understanding <em>why</em> someone causes harm does not mean condoning it. The murderer is not acquitted because they were afraid. The fraudster is not exonerated because they were lost. But: if we understand that harm arises from <em>distortion</em>, we can address the distortion &ndash; instead of merely fighting the symptoms.</p>
-
-<p>In our paper, we formalize this as the <strong>Distortion Operator</strong>: an agent who is coherence-oriented <em>and</em> yet causes harm must be operating under a distortion.<sup class="footnote-ref" id="fnref-distortion">[1]</sup> This is not a moral claim &ndash; it follows mathematically from the axioms.</p>
-
-<h3>The Philosophical Tradition</h3>
-
-<p>This idea is not new. It has deep roots:</p>
-
-<div class="summary-box">
-  <p style="margin-bottom:0.75rem;"><strong>Socrates</strong> (469&ndash;399 BCE): &ldquo;No one does wrong willingly.&rdquo; Whoever does evil does so out of <em>ignorance</em>.<sup class="footnote-ref" id="fnref-sokrates">[4]</sup></p>
-  <p style="margin-bottom:0.75rem;"><strong>Buddhism:</strong> The three poisons &ndash; greed, hatred, delusion &ndash; are <em>delusion</em>, not an evil core. At the heart of every being lies Buddha-nature.</p>
-  <p style="margin-bottom:0;"><strong>Carl Rogers</strong> (1902&ndash;1987): Human beings have an innate tendency toward self-actualization. Destructiveness arises when this tendency is blocked.<sup class="footnote-ref" id="fnref-rogers">[5]</sup></p>
+<div class="math-display">
+\(\mathbf{v}_h^{t+1} \;=\; \Pi_{\mathcal{B}} \!\left( \mathbf{v}_h^{t} + \eta \, \nabla \mathrm{Coh}_h(\mathbf{v}_h^{t}) \right)\).
 </div>
 
-<h3>The Blind Spot: Evil Without Fear</h3>
+<p>Here \(\eta > 0\) is the step size, \(\nabla \mathrm{Coh}_h(\mathbf{v}) = (W + W^\top)\mathbf{v}\) is the gradient (for symmetric \(W\) reducing to \(2W\mathbf{v}\)), and \(\Pi_{\mathcal{B}}\) is the component-wise projection onto the box \([-1,+1]^n\). In the limit \(\eta \to 0\), the iteration becomes a gradient flow:</p>
 
-<p>At this point, the model has a gap that I do not want to explain away.</p>
+<div class="math-display">
+\(\dfrac{d\mathbf{v}_h}{dt} \;=\; \Pi_{T_{\mathcal{B}}(\mathbf{v}_h)} \!\left[ \nabla \mathrm{Coh}_h(\mathbf{v}_h) \right]\),
+</div>
 
-<p><strong>Hannah Arendt</strong> observed something at Adolf Eichmann&rsquo;s trial in Jerusalem that does not fit into the fear chain: the <em>banality of evil</em>.<sup class="footnote-ref" id="fnref-arendt">[6]</sup> Eichmann was not a frightened person lashing out in the dark. He was not a fanatic, not a sadist, not someone driven by anxiety. He simply <em>did not think</em>. Bureaucratic indifference. Sorting files, organizing trains, following orders. The darkness was not fear &ndash; it was thoughtlessness.</p>
+<p>where \(\Pi_{T_{\mathcal{B}}(\mathbf{v}_h)}\) is the projection onto the tangent cone at \(\mathbf{v}_h\) &ndash; ensuring that motion at the boundary stays within \(\mathcal{B}\).</p>
 
-<p>Similarly: <strong>psychopathy</strong> as a neurological variant, not as a distortion of a &ldquo;good core.&rdquo; There are people whose empathy circuits are wired differently &ndash; not blocked by fear, but simply absent. Not lost, but built differently. My model has no clean answer for these cases.</p>
+<h3>Theorem 1: Quadratic ascent</h3>
 
-<p>One could argue that thoughtlessness <em>is</em> a form of distortion &ndash; a distortion through absence rather than through fear. That even the indifferent person has lost something, namely the ability to register the suffering of others as relevant. But that is a stretch of the model, not a clean explanation. Arendt remains as a genuine counter-position: there is evil that does not arise from fear, but from the absence of thinking. And a model that traces all evil back to fear falls short there.</p>
+<p>Let \(\mathrm{Coh}_h\) be \(L\)-smooth with smoothness constant \(L\) (in the symmetric case, \(L = 2 \max_k |\lambda_k|\) is twice the largest eigenvalue magnitude of \(W\)). For any step size \(\eta \leq 1/L\), each update step satisfies:</p>
 
-<p>I leave this objection standing, because honest thinking means naming your own blind spots &ndash; not resolving them.</p>
+<div class="math-display">
+\(\mathrm{Coh}_h(\mathbf{v}_h^{t+1}) \;\geq\; \mathrm{Coh}_h(\mathbf{v}_h^{t}) + \dfrac{\eta}{2} \, \| \nabla \mathrm{Coh}_h(\mathbf{v}_h^{t}) \|_2^2\).
+</div>
 
-<h3>What the Model Adds</h3>
+<p>Coherence thus grows in each step by a quantifiable lower bound. Since \(\mathrm{Coh}\) is bounded on the compact box \(\mathcal{B}\), the sequence \(\mathrm{Coh}(\mathbf{v}_h^t)\) cannot grow without bound &ndash; it must converge. The inequality additionally forces \(\| \nabla \mathrm{Coh}_h \|_2 \to 0\), i.e. the iteration accumulates at <em>critical points</em> (Karush-Kuhn-Tucker points of the box optimization).</p>
 
-<p>What our paper adds is not the idea itself &ndash; but the attempt to show that it is <em>formally consistent</em>. That it can be captured in axioms and theorems derived from them. Whether it is mathematically sound must be determined by peer review &ndash; the paper is submitted, not assessed.</p>
+<h3>Theorem 2: Coherence as Lyapunov function</h3>
 
-<!-- Graphic 4: From Fear to Action -->
+<p>In the continuous flow, the statement can be sharpened. Along any trajectory:</p>
+
+<div class="math-display">
+\(\dfrac{d\,\mathrm{Coh}_h(\mathbf{v}_h(t))}{dt} \;=\; \left\| \Pi_{T_{\mathcal{B}}(\mathbf{v}_h)} \!\left[ \nabla \mathrm{Coh}_h(\mathbf{v}_h) \right] \right\|_2^2 \;\geq\; 0\).
+</div>
+
+<p>Coherence is thus a Lyapunov function of the dynamics. It is <em>monotonically non-decreasing</em> along every trajectory and constant only at fixed points where the projected gradient vanishes. This implies global stability: regardless of starting value, the system enters an attractor located in the interior or on the boundary of the box.</p>
+
+<h3>What Theorems 1 and 2 claim &ndash; and what they do not</h3>
+
+<p>A clarification is needed at this point. Theorems 1 and 2 are properties of the postulated gradient dynamics, not empirical support for the assumption that real agents follow this dynamics. They make explicit what it <em>would</em> mean if agents did follow the gradient; they do not provide independent evidence that real cognition has this form.</p>
+
+<p>Empirically, real cognitive systems often show non-monotone trajectories: trauma, manipulation, new disconfirming information can locally reduce coherence. Festinger (1957, <em>A Theory of Cognitive Dissonance</em>)<sup class="footnote-ref" id="fnref-festinger">[12]</sup> observed as a motivating anchor that humans tend to reduce persistent dissonance &ndash; but this is a statistical-global tendency, not a pointwise monotone dynamics.</p>
+
+<p>The substantive empirical anchor of the model lies not here, but at the aggregate level: in the replicator dynamics of Chapter&nbsp;6, which describes the cultural selection of coherence-increasing perspectives. Theorem&nbsp;6 is the substantively load-bearing theorem of this model. Theorems&nbsp;1 and 2 are its internal mathematical accompaniment &ndash; they substantiate the vocabulary of &ldquo;attractor&rdquo; and &ldquo;stability&rdquo;, but make no independent empirical claim.</p>
+
+<h3>Application to the example</h3>
+
+<p>For the \(3 \times 3\) matrix from Chapter&nbsp;2, \(\lambda_1 \approx +2.56\) is the dominant eigenvalue, so \(L = 2 \lambda_1 \approx 5.12\). A step size \(\eta = 0.15\) lies safely below the threshold \(1/L \approx 0.195\) and guarantees quadratic ascent. Cora starts at \(\mathbf{v}^{0} = (0.1; 0.2; 0.3)^\top\); the gradient gives \(\nabla \mathrm{Coh} = 2W\mathbf{v}^{0} = (-1.0; +1.0; +0.6)^\top\). After one step: \(\mathbf{v}^{1} = (-0.05; +0.35; +0.39)^\top\). Cora&rsquo;s coherence rises from \(+0.14\) to about \(+0.62\); she moves toward the Self-Realizer corner \((-1, +1, +1)\), where the trajectory comes to rest.</p>
+
+<!-- Werteraum-Explorer: interactive Coh landscape with two attractors -->
 <div class="component-wrap">
-  <div id="mount-fear-to-action"></div>
+  <div id="mount-werteraum-explorer"></div>
 </div>
 
-<div class="try-it">
-  <p><strong>Try it:</strong> Click on the individual steps in both paths. Notice: both begin at the same point &ndash; the good core. The difference lies not in the person, but in what happens to them.</p>
-</div>
+<h3>Distortion Operator: harm as a model-internal effect</h3>
+
+<p>One question remains: if the dynamics pulls every agent into coherence maxima, why does harmful behavior arise nonetheless? In the paper, this is formalized via the <strong>Distortion Operator</strong>. Let \(D: \mathcal{B} \to \mathcal{B}\) be an operator that distorts the perceived world matrix or valuation vector; e.g.\ by \(\hat W = D W\) or \(\hat{\mathbf{v}} = D \mathbf{v}\). An agent who acts coherently with respect to the distorted structure optimizes a different functional than objective coherence and may produce actions that are harmful in the objective value space.<sup class="footnote-ref" id="fnref-distortion">[1]</sup> This is not a moral claim, but a structural consequence of the axioms: harmful action by a coherence-oriented agent requires a distortion in the perceptual or valuation apparatus.</p>
+
+<p>The connection to the position found in Socrates, in Buddhism, and in Rogers &ndash; <em>no one harms out of sheer wickedness, but out of ignorance or delusion</em><sup class="footnote-ref" id="fnref-sokrates">[4]</sup><sup class="footnote-ref" id="fnref-rogers">[5]</sup> &ndash; is here structurally established. A limit of the model remains the <em>banality of evil</em> in Hannah Arendt&rsquo;s sense:<sup class="footnote-ref" id="fnref-arendt">[6]</sup> harmful action arising from sheer thoughtlessness can be modeled as distortion by absence, but not entirely persuasively. This gap is left open here.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -562,47 +539,86 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 5</p>
-<h2>Double Emergence &ndash; Why &ldquo;God&rdquo; Is Not Computable</h2>
+<h2>NP-hardness and Plural Attractors</h2>
 
-<h3>The Formal Punchline</h3>
+<p>So far it has been shown that the dynamics converges (Theorems 1, 2). What remains open is where it converges: to a single global maximum that could be computed in advance, or to local maxima reachable only through the process itself. The following three theorems answer this question.</p>
 
-<p>The &ldquo;structural God&rdquo; \(G = \text{Pos}^*\) is <em>doubly</em> emergent. This is perhaps the most surprising insight of the paper:</p>
+<h3>Theorem 3: NP-hardness via MAX-CUT reduction</h3>
 
-<p>Pause for a moment. Before the term &ldquo;NP-hard&rdquo; appears, take a detour &ndash; through an experience everyone knows.</p>
+<p><strong>Note on priority.</strong> The NP-hardness of coherence maximization as a constraint-satisfaction problem was already established by Paul Thagard and Karsten Verbeurgt (1998, <em>Cognitive Science</em>)<sup class="footnote-ref" id="fnref-thagard-verbeurgt">[13]</sup> via a closely related reduction. Theorem 3 presented here is the specialization of their result to the quadratic-form formulation \(\mathbf{v}^\top W \mathbf{v}\) with box constraints. What is new in the following is the bridge to Bedau&rsquo;s weak emergence and the embedding into the six-theorem system of this contribution, not the NP-hardness as an isolated mathematical result.</p>
 
-<p>You are trying to think honestly about your life. Loyalty against truth. Safety against freedom. What you owe your children against what you owe yourself. You push the pieces around, and the moment one fits, another tilts. You never reach a picture in which everything is true at once.</p>
+<p>Consider the binarized variant of coherence maximization:</p>
 
-<p>The obvious explanation: <em>I&rsquo;m not smart enough. I should think longer.</em></p>
+<div class="math-display">
+\(\max_{\mathbf{v} \in \{-1, +1\}^n} \mathbf{v}^\top W \mathbf{v}\).
+</div>
 
-<p>There is another possibility. One that is more uncomfortable and, at the same time, enormously freeing.</p>
+<p>This variant is the simplest special case (continuous values replaced by \(\pm 1\)) and simultaneously the worst-case witness: if it is NP-hard, then continuous maximization is at least as hard.</p>
 
-<p><strong>What if the problem itself has this shape?</strong></p>
+<p><em>Reduction scheme.</em> Let \(G\) be an undirected graph with node set \(\{1, \ldots, n\}\), adjacency matrix \(A_G\), and edge set \(E\). Define \(W := -A_G\). For each binarized vector \(\mathbf{v} \in \{-1,+1\}^n\), the contribution of each edge \((i,j) \in E\) to \(\mathbf{v}^\top W \mathbf{v}\) splits according to the sign configuration:</p>
 
-<p>What if it is not about you &ndash; but about the structure of what you are attempting?</p>
+<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
+  <li>Both nodes in the same group (\(v_i = v_j\)): contribution \(-2\) (negative, since \(W_{ij} = -1\)).</li>
+  <li>Nodes in different groups (\(v_i \neq v_j\)): contribution \(+2\).</li>
+</ul>
 
-<h3>A class of problems that is genuinely &ldquo;hard&rdquo;</h3>
+<p>From this it follows:</p>
 
-<p>Mathematics knows an entire family of such problems. Picture this: millions of puzzle pieces. Any single one you can check easily &ndash; does this fit here? A second&rsquo;s work. But <em>finding</em> the right overall arrangement? That grows exponentially. With ten pieces you can still glimpse a solution. With a hundred, the number of combinations to check exceeds the number of atoms in the visible universe.</p>
+<div class="math-display">
+\(\mathbf{v}^\top W \mathbf{v} \;=\; 4 \cdot |\text{Cut}(\mathbf{v})| - 2 |E|\).
+</div>
 
-<p>This class is called <strong>NP-hard</strong> in complexity theory.<sup class="footnote-ref" id="fnref-nphard">[1]</sup> The name is technical. What it means is not: <em>There is provably no shortcut.</em> No clever formula, no trick, no future machine will change that &ndash; not unless one of the largest open questions in mathematics collapses. You can enumerate. You can approximate. But you cannot <em>solve</em>.</p>
+<p>The constant \(-2|E|\) is independent of \(\mathbf{v}\). Maximizing \(\mathbf{v}^\top W \mathbf{v}\) is thus equivalent to maximizing the cut &ndash; i.e.\ to MAX-CUT. Since MAX-CUT has been known to be NP-hard since Karp (1972), so is binarized coherence maximization. The reduction cost is \(O(|E|)\), i.e.\ polynomial.</p>
 
-<h3>The pivot</h3>
+<p>The consequence was described by Bedau (1997) as weak emergence:<sup class="footnote-ref">[8]</sup> a property is weakly emergent if it can be verified in polynomial time yet derived only by simulation. Theorem 3 supplies a complexity-theoretic instance of this criterion: NP-hardness is a <em>strict subcase</em> of Bedau&rsquo;s weak emergence (Bedau additionally allows undecidability), but it suffices for the structural mapping developed here. In a parallel direction, Baysan (2025)<sup class="footnote-ref" id="fnref-baysan">[14]</sup> argues for emergent moral properties without causal powers &ndash; a related pattern in which the emergent structure lies structurally, but not ontologically, above the micro-parts.</p>
 
-<p>Now the actual step. Precisely this shape is what you are doing when you try to make your worldview coherent.</p>
+<!-- MAX-CUT puzzle: partition nodes and see the Coh-equivalent live -->
+<div class="component-wrap">
+  <div id="mount-max-cut-puzzle"></div>
+</div>
 
-<p>Your thoughts are the nodes. The relations between them &ndash; what supports what, what contradicts what &ndash; are tensions in the network. A coherent worldview would be a state in which the tensions become minimal.</p>
+<h3>Theorem 4: Multiple local maxima for \(n \geq 4\)</h3>
 
-<p>This is exactly the problem we examined formally in our paper. The result: it is NP-hard. Proven, not felt. Not <em>because</em> you can&rsquo;t do it &ndash; but because <em>no one</em> can do it efficiently. No human, no religion, no AI, no God in the sense of a cosmic algorithm.</p>
+<p>For every \(n \geq 4\) there exist symmetric world matrices \(W\) such that \(\mathrm{Coh}\) on \(\{-1, +1\}^n\) has at least two distinct local maxima. The three-value world from Chapter&nbsp;2 is extended below by adding <em>Responsibility</em> as a fourth entity. The entity order is (Loyalty, Truth, Self-interest, Responsibility); the world matrix is:</p>
 
-<p>This is not resignation. It is a diagnosis.</p>
+<div class="math-display">
+\(W \;=\; \begin{pmatrix} 0 & -1 & -1 & +2 \\ -1 & 0 & +2 & -1 \\ -1 & +2 & 0 & -1 \\ +2 & -1 & -1 & 0 \end{pmatrix}\).
+</div>
 
-<h3>What this means for the whole</h3>
+<p>The matrix encodes two semantic clusters. <em>Cluster A</em> (&ldquo;duty toward others&rdquo;) consists of Loyalty and Responsibility &ndash; coherent with one another (\(W_{LR} = +2\)). <em>Cluster B</em> (&ldquo;clarity about oneself&rdquo;) consists of Truth and Self-interest &ndash; also coherent (\(W_{TS} = +2\)). Between the clusters, every pair stands in tension (\(-1\)).</p>
 
-<p>If the global solution is fundamentally unreachable &ndash; what happens to a system that nevertheless searches for it?</p>
+<p>The two local maxima of this matrix are:</p>
 
-<p>It settles into <strong>local valleys</strong>. Into stable patterns where most tensions are resolved, even if a few edges remain crooked. These valleys are not arbitrary. They are the points at which the system can actually rest.</p>
+<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
+  <li>\(\mathbf{v}^*_a = (+1, -1, -1, +1)^\top\) with \(\mathrm{Coh} = +16\). The <strong>Dutiful Person</strong>: loyal, silent on inconvenient truths, selfless, dutiful &ndash; the classical Rhenish family-firm loyalty.</li>
+  <li>\(\mathbf{v}^*_b = (-1, +1, +1, -1)^\top\) with \(\mathrm{Coh} = +16\). The <strong>Self-Realizer</strong>: less socially bound, truthful, independent, less duty-bound &ndash; the Berlin solo existence.</li>
+</ul>
 
-<p>That is emergence. Not as a poetic gesture, but as a logical consequence of NP-hardness: where the optimum is inaccessible, attractors take over. Different cultures, different people, different lives find <em>different</em> stable answers &ndash; and none is &ldquo;wrong&rdquo; for not being the only one. Path dependence is not a defect. It is the only form in which such a system can come to rest at all.</p>
+<p>Both are real, recognizable ways of life in the German-speaking world. Between them lies a saddle ridge of lower coherence; the dynamics pulls a person, depending on starting condition, into one of the two maxima.</p>
+
+<p>A note: plurality of maxima already appears for the \(3 \times 3\) matrix from Chapter&nbsp;2 (Dutiful Person without the Responsibility entry, and Self-Realizer). Theorem 4 secures this generally <em>from</em> \(n = 4\): the existential statement is that plural attractors are unavoidable for sufficiently high-dimensional world matrices. Plurality is therefore not a sociological accident, but a geometric property of the coherence landscape itself.</p>
+
+<h3>Theorem 5: Single-flip criterion</h3>
+
+<p>When is a given vector \(\mathbf{v}^* \in \{-1, +1\}^n\) a local maximum? For this, the <em>single-flip</em> neighborhood relation is used: two vectors are neighbors if they differ in exactly one component.</p>
+
+<p>For symmetric \(W\) with \(W_{ii} = 0\): \(\mathbf{v}^*\) is a local maximum if and only if for every index \(i\):</p>
+
+<div class="math-display">
+\(\mathrm{Coh}(\mathbf{v}^*) - \mathrm{Coh}(\mathbf{v}^{*, \neg i}) \;=\; 4 \, v^*_i \, [W \mathbf{v}^*]_i \;\geq\; 0\),
+</div>
+
+<p>where \(\mathbf{v}^{*, \neg i}\) is the neighbor vector obtained by sign flip at index \(i\). Compactly:</p>
+
+<div class="math-display">
+\(\mathbf{v}^* \odot (W \mathbf{v}^*) \;\succeq\; \mathbf{0} \quad \text{component-wise}\),
+</div>
+
+<p>with \(\odot\) the Hadamard product (component-wise multiplication). Intuitively, the criterion says: the sign of each component \(v^*_i\) agrees with the sign of the corresponding entry of the <em>spectral push</em> \(W \mathbf{v}^*\). Stability at a local maximum means alignment with what the world matrix locally suggests.</p>
+
+<h3>Consequence for the search</h3>
+
+<p>From Theorem 3 it follows that the global maximum cannot be computed efficiently. From Theorem 4 it follows that it need not even be unique. From Theorem 5 follows an efficiently checkable stability criterion for any candidate. Together, the picture is: a coherence-seeking system settles into one of the local maxima; <em>which one</em> depends on the starting condition. Path dependence is therefore not a deficiency of the dynamics, but a structural property of the optimization problem.</p>
 
 <!-- Graphic: Energy landscape with multiple local minima -->
 <div class="component-wrap" style="margin: 2.5rem 0;">
@@ -633,46 +649,12 @@
     <!-- Bottom axis label -->
     <text x="400" y="295" text-anchor="middle" fill="#6b7280" font-family="Inter, system-ui, sans-serif" font-size="11">space of possible worldviews</text>
   </svg>
-  <p style="text-align:center; color:#9ca3af; font-size:0.85rem; margin-top:0.5rem; font-style:italic;">Where the global optimum is inaccessible, the system settles into local valleys. These are the attractors &ndash; the stable patterns we call cultures, convictions, lives.</p>
+  <p style="text-align:center; color:#9ca3af; font-size:0.85rem; margin-top:0.5rem; font-style:italic;">Where the global optimum is inaccessible, the system settles into local valleys. These are the attractors &ndash; the stable patterns referred to in everyday language as cultures, convictions, lives.</p>
 </div>
 
-<h3>And the larger thought</h3>
+<p>The valleys shown above are exactly the local maxima in the sense of Theorem 5. The dashed line to the global optimum remains, by Theorem 3, unreachable in polynomial time; the dynamics instead finds one of attractors A, B, or C depending on starting condition. Theorem 4 guarantees that this multiplicity can occur for \(n \geq 4\), i.e.\ for all realistic value-space sizes.</p>
 
-<p>Perhaps what we call &ldquo;truth&rdquo; &ndash; or &ldquo;God&rdquo; &ndash; is not something anyone <em>finds</em>.</p>
-
-<p>But the most stable pattern that can arise at all in a fundamentally unsolvable space.</p>
-
-<p>Not a proof. An opening.</p>
-
-<p><strong>First level &ndash; structural emergence:</strong> What counts as &ldquo;positive&rdquo; is not deliverable top-down. No authority, no algorithm, no revelation can compute the answer in advance. You have to let the system run. People have to live, think, argue, cooperate &ndash; not out of weakness, but because that is the only form in which the answer can come into being at all.</p>
-
-<p>This is the first level. There is a second.</p>
-
-<p><strong>Second level &ndash; weighting emergence:</strong> Whose voice counts how much is not determined from outside. It emerges through <strong>replicator dynamics</strong> &ndash; coherent perspectives gain influence, incoherent ones lose it. Not through voting, but through the process itself.</p>
-
-<h3>What This Means</h3>
-
-<ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
-  <li>You <strong>cannot know in advance</strong> what &ldquo;the good&rdquo; is &ndash; you have to live it.</li>
-  <li>You <strong>cannot determine from outside</strong> who is right &ndash; it emerges through the process.</li>
-  <li>Different initial conditions can lead to different stable states &ndash; <strong>multiple attractors</strong>.</li>
-  <li><strong>Path dependence:</strong> History matters. Which attractor is reached depends on the order in which experiences are made.</li>
-</ul>
-
-<h3>The Whitehead Parallel</h3>
-
-<p>Whitehead postulated on philosophical grounds: God&rsquo;s &ldquo;consequent nature&rdquo; emerges from the world, is not derivable a priori, and responds to history. That was a philosophical intuition.</p>
-
-<p>Our paper shows: precisely these properties &ndash; non-computability, process dependence, emergence from interaction &ndash; follow <em>mathematically</em> from coherence optimization. This is not proof that Whitehead was right. It is the demonstration that his intuition is <strong>formally consistent</strong>.</p>
-
-<!-- Graphic 5: Double Emergence -->
-<div class="component-wrap">
-  <div id="mount-double-emergence"></div>
-</div>
-
-<div class="try-it">
-  <p><strong>Try it:</strong> Click on the two levels to see what emerges at each. Notice: neither level is controllable from outside &ndash; both arise through the process itself.</p>
-</div>
+<p>With this, the structural side of the model &ndash; valuation dynamics at fixed voice weights \(\alpha_h\) &ndash; is fully characterized. What remains open is the <em>social</em> side: how do the \(\alpha_h\) themselves arise? This question is answered by the final theorem, Theorem 6, in the following chapter.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -685,32 +667,69 @@
 <div class="prose-dark">
 
 <p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Chapter 6</p>
-<h2>What This Means for Us</h2>
+<h2>Replicator Dynamics and Theological Reading</h2>
 
-<h3>From Theory to Practice</h3>
+<p>Until now, the voice weights \(\alpha_h\) were taken as given. This stipulation is problematic, however: who sets them, and by what criteria? Kenneth Arrow&rsquo;s impossibility theorem (1951) shows that no static aggregation rule simultaneously satisfies several natural fairness criteria. Theorem 6 circumvents this barrier through a dynamic aggregation.</p>
 
-<p>Six chapters of philosophy and formulas &ndash; and now what? What changes when you think of &ldquo;God&rdquo; as an emergent structure rather than a person in the sky?</p>
+<h3>Theorem 6: Joint convergence</h3>
 
-<p>Honestly: not much right away. Processing takes time. The coordinate system does not rotate on command &ndash; we saw that in the <a href="/en/emergence.html" class="text-purple-400 hover:text-purple-300 transition">emergence post</a>. But three facets of this thought have proven themselves durable for me:</p>
+<p>Instead of stipulating the voice weights \(\alpha_h\), they are subject to the <em>replicator dynamics</em>, originally introduced by Taylor and Jonker (1978) in evolutionary game theory:</p>
 
-<h3>Three Faces</h3>
-
-<p><strong>God as the addressee of gratitude.</strong> Sometimes something good happens &ndash; an encounter, a solution, a moment of clarity &ndash; and you do not know whom to thank. Yourself? Chance? The universe? &ldquo;God&rdquo; is then not a being you thank &ndash; but a <em>word</em> for the feeling that there is something greater than your own merit.</p>
-
-<p><strong>God as the incomprehensible.</strong> The more you think about emergence, the clearer it becomes: some things can be described but not fully understood. NP-hard means: there is no shortcut. You have to live to know. &ldquo;God&rdquo; is then a word for the honest acknowledgment that you <em>cannot</em> know everything &ndash; and that this is alright.</p>
-
-<p><strong>God as the &ldquo;between.&rdquo;</strong> Not above. Not outside. But <em>between</em> us. In the conversations we hold. In the texts we write. In the moments when we <em>truly</em> listen to one another. If emergence shows that something new arises from enough interaction &ndash; then every honest conversation is a small contribution to what one might call &ldquo;God.&rdquo;</p>
-
-<!-- Graphic 6: Three Faces -->
-<div class="component-wrap">
-  <div id="mount-three-faces"></div>
+<div class="math-display">
+\(\dot{\alpha}_h \;=\; \alpha_h \, \bigl( \pi_h(\boldsymbol{\alpha}) - \bar{\pi}(\boldsymbol{\alpha}) \bigr)\),
 </div>
 
-<h3>The Practical Consequence</h3>
+<p>where \(\pi_h\) is the coherence contribution of agent \(h\) and \(\bar{\pi} = \sum_h \alpha_h \pi_h\) is the mean contribution weighted by current weights. Intuitively: perspectives that contribute above average to total coherence gain weight; perspectives with below-average contribution lose weight. The simplex condition \(\sum_h \alpha_h = 1\) is automatically preserved, since \(\sum_h \dot{\alpha}_h = \bar{\pi} - \bar{\pi} = 0\).</p>
 
-<p>The good is already there. Not to be created &ndash; <em>to be uncovered</em>. In you, in others, in the &ldquo;between.&rdquo; The positive attractor shows: the tendency toward the good is inherent in the aggregate of human thought. Not as a guarantee, not as an automatism &ndash; but as a direction.</p>
+<p>The coupled system of valuation dynamics (Chapter&nbsp;4) and weight dynamics (above) converges to fixed points where the \(\alpha_h\) reflect the earned coherence contribution &ndash; not an arbitrary stipulation. This circumvents (rather than <em>solves</em>) Arrow&rsquo;s impossibility theorem (which remains formally correct for static procedures): aggregation in this model is not a one-time mechanism but a process in time.</p>
 
-<p>And even &ldquo;evil&rdquo; people? They are people who have lost their way. That excuses nothing. But it changes the way we look. Whoever understands that harm arises from fear and distortion can address the fear &ndash; instead of merely fighting the harm.</p>
+<h3>Price identity: variance as engine</h3>
+
+<p>Along the replicator dynamics, the Price identity holds (George R. Price, 1970):</p>
+
+<div class="math-display">
+\(\dfrac{d \bar{\pi}}{dt} \;=\; \mathrm{Var}(\pi) \;=\; \sum_h \alpha_h \, (\pi_h - \bar{\pi})^2\).
+</div>
+
+<p>The time derivative of the mean contribution equals the \(\alpha_h\)-weighted variance of contributions. It follows: when all perspectives contribute equally (variance zero), the mean stagnates. Diversity of contributions is the only source of improvement; homogeneity leads to standstill.</p>
+
+<!-- Replicator swarm: 6 agents, live α dynamics, Price identity plot -->
+<div class="component-wrap">
+  <div id="mount-replikator-schwarm"></div>
+</div>
+
+<h3>Theological reading: \(\mathrm{Pos}^*\) as <em>consequent nature</em></h3>
+
+<p>Theorems 1 through 6 can now be brought together with Whitehead and Spinoza. The world matrix \(W\) corresponds structurally to Spinoza&rsquo;s <em>Deus sive Natura</em> &ndash; a structure preceding all valuation, in whose eigenstructure the stable configurations are prefigured. The positive attractor \(\mathrm{Pos}^*\) corresponds to Whitehead&rsquo;s <em>consequent nature</em>: that aspect of God which arises from the world&rsquo;s interplay and is not derivable <em>a priori</em>.</p>
+
+<p>Whitehead postulated on philosophical grounds: God&rsquo;s <em>consequent nature</em> emerges from the world, is not <em>a priori</em> derivable, and responds to history. Theorems 3 (NP-hardness) and 6 (joint convergence) show that precisely these properties &ndash; non-computability, process dependence, emergence from interaction &ndash; follow mathematically from coherence optimization. This is not proof that Whitehead&rsquo;s metaphysics is correct; it is the demonstration of its formal consistency within the model.</p>
+
+<p>The structural correspondence between formal terms and process-ontological notions can be summarized compactly:</p>
+
+<table class="compare-table" style="font-size:0.9em;">
+  <thead>
+    <tr>
+      <th style="width:48%;">Formal term</th>
+      <th>Process-ontological analog</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Agent-relative value \(\mathrm{Val}_h\)</td><td>Subjective aim (Whitehead)</td></tr>
+    <tr><td>Coherence maximization \(\max \mathrm{Coh}_h\)</td><td>Concrescence</td></tr>
+    <tr><td>Gradient flow (Theorems 1, 2)</td><td>Process of becoming, continuous concrescence</td></tr>
+    <tr><td>Spectral gap of the world matrix</td><td>Stability of the dominant regime</td></tr>
+    <tr><td>Distortion operator \(D\)</td><td>Avidya / ignorance / delusion</td></tr>
+    <tr><td>Aggregated value \(\mathrm{Val}^*\)</td><td>Objective immortality</td></tr>
+    <tr><td>Replicator dynamics (Theorem 6)</td><td>Creative advance</td></tr>
+    <tr><td>Global positive attractor \(G = \mathrm{Pos}^*\)</td><td>Consequent nature</td></tr>
+    <tr><td>Weak emergence</td><td>&ldquo;Greater than the sum of the parts&rdquo;</td></tr>
+    <tr><td>Computational emergence (Theorem 3)</td><td>Irreducibility to analysis</td></tr>
+    <tr><td>Multiple attractors (Theorem 4)</td><td>Plurality of societies / ways of life</td></tr>
+    <tr><td>Path dependence</td><td>Creative advance into novelty</td></tr>
+  </tbody>
+</table>
+
+<p style="font-size:0.85em; color:#9ca3af; margin-top:-0.5rem;">The table is a <em>structural mapping</em>, not a theological argument: it does not claim that Whitehead was right, but that his central concepts can be formally reconstructed. Those who follow the mathematics may consider Whitehead afresh in this reading; those who do not lose no theological argument.</p>
 
 </div>
 <div class="section-divider"></div>
@@ -730,7 +749,7 @@
 <ul style="color:#d1d5db; margin-bottom:1.25rem; line-height:1.8;">
   <li>Not a <strong>proof of God</strong>. It does not prove that God exists.</li>
   <li>Not an <strong>argument for theism</strong>. The personal God of the Abrahamic religions does not appear here.</li>
-  <li>Not a <strong>moral excuse</strong> for harmful action. &ldquo;To explain is not to excuse&rdquo; &ndash; that is stated in the paper, and I mean it.</li>
+  <li>Not a <strong>moral excuse</strong> for harmful action. The Distortion Operator (Chapter&nbsp;4) explains how a coherence-oriented agent can nonetheless cause harm; an explanation is not a justification.</li>
   <li>No claim about <strong>ontological emergence</strong>. We demonstrate weak emergence &ndash; &ldquo;it is fiendishly complex,&rdquo; not &ldquo;it is magic.&rdquo;</li>
 </ul>
 
@@ -752,7 +771,7 @@
 <h3 style="margin-top:0;">References</h3>
 
 <ol>
-  <li id="fn-1">Leonhardt, M. (2026). &ldquo;<a href="/papers/coherence-formal-v7.pdf">From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology</a>&rdquo;. Accepted for presentation at <em>European Academy of Religion (EuARe) 2026</em>, Philosophy of Religion panel, Rome, 2 July 2026 (Session 155, paper ID 1395).</li>
+  <li id="fn-1">Leonhardt, M. (2026). &ldquo;<a href="/papers/coherence-formal-v8.pdf">From Coherence to Consequent Nature: A Formal Approach to Process-Relational Theology</a>&rdquo;. Accepted for presentation at <em>European Academy of Religion (EuARe) 2026</em>, Philosophy of Religion panel, Rome, 2 July 2026 (Session 155, paper ID 1395). Working Paper v8 (May 2026).</li>
   <li id="fn-2">Spinoza, B. (1677). <em>Ethica, ordine geometrico demonstrata</em>. In particular Part I: &ldquo;De Deo&rdquo;.</li>
   <li id="fn-3">Whitehead, A. N. (1929). <em>Process and Reality: An Essay in Cosmology</em>. Macmillan. In particular Part V: &ldquo;Final Interpretation&rdquo;.</li>
   <li id="fn-4">Plato (ca. 380 BCE). <em>Protagoras</em>. The thesis that no one does wrong willingly is also found in <em>Gorgias</em> and <em>Meno</em>.</li>
@@ -763,6 +782,9 @@
   <li id="fn-9">Chalmers, D. (2006). &ldquo;Strong and Weak Emergence&rdquo;. In: Clayton &amp; Davies (Eds.), <em>The Re-emergence of Emergence</em>. Oxford UP.</li>
   <li id="fn-10">Anderson, P. W. (1972). <a href="https://doi.org/10.1126/science.177.4047.393" target="_blank" rel="noopener">&ldquo;More is Different&rdquo;</a>. <em>Science</em>, 177(4047), 393&ndash;396.</li>
   <li id="fn-11">Wei, J. et al. (2022). <a href="https://arxiv.org/abs/2206.07682" target="_blank" rel="noopener">&ldquo;Emergent Abilities of Large Language Models&rdquo;</a>. <em>TMLR</em>.</li>
+  <li id="fn-12">Festinger, L. (1957). <em>A Theory of Cognitive Dissonance</em>. Stanford University Press.</li>
+  <li id="fn-13">Thagard, P. &amp; Verbeurgt, K. (1998). <a href="https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog2201_1" target="_blank" rel="noopener">&ldquo;Coherence as Constraint Satisfaction&rdquo;</a>. <em>Cognitive Science</em>, 22(1), 1&ndash;24.</li>
+  <li id="fn-14">Baysan, U. (2025). &ldquo;Emergent Moral Non-Naturalism&rdquo;. <em>Philosophy and Phenomenological Research</em>, forthcoming.</li>
 </ol>
 
 </div>
@@ -813,11 +835,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // ----------------------------------------------------------
   var COMPONENTS = {
     'mount-two-god-concepts': window.TwoGodConcepts || null,
-    'mount-the-vessel': window.TheVessel || null,
-    'mount-positive-attractor': window.PositiveAttractor || null,
-    'mount-fear-to-action': window.FearToAction || null,
-    'mount-double-emergence': window.DoubleEmergence || null,
-    'mount-three-faces': window.ThreeFaces || null,
+    'mount-werteraum-explorer': window.WerteRaumExplorer || null,
+    'mount-max-cut-puzzle': window.MaxCutPuzzle || null,
+    'mount-replikator-schwarm': window.ReplikatorSchwarm || null,
   };
 
   var mounted = {};
