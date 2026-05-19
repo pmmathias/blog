@@ -306,6 +306,17 @@ $$\text{l&auml;chelnde Frau} - \text{neutrale Frau} + \text{neutraler Mann} = \t
 </main>
 
 <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://ki-mathias.de/"},
+        {"@type": "ListItem", "position": 2, "name": "Deepfakes erklärt – Von Vektoren über Autoencoder bis zum Gesichtertausch", "item": "https://ki-mathias.de/deepfakes.html"}
+    ]
+}
+</script>
+
+<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Wie funktioniert ein Deepfake technisch?","acceptedAnswer":{"@type":"Answer","text":"Ein Deepfake nutzt zwei Autoencoder mit gemeinsamem Encoder, aber unterschiedlichen Decodern. Das Bild von Person A wird durch den gemeinsamen Encoder geschickt und dann durch den Decoder von Person B rekonstruiert."}},
 {"@type":"Question","name":"Was ist der Unterschied zwischen PCA und einem Autoencoder?","acceptedAnswer":{"@type":"Answer","text":"PCA ist eine lineare Dimensionsreduktion. Ein Autoencoder ist die nichtlineare Verallgemeinerung und kann beliebig komplexe Mannigfaltigkeiten lernen."}},

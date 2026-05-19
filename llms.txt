@@ -1,0 +1,56 @@
+# ki-mathias.de — Mathias Leonhardt's Blog on AI, Mathematics & Emergence
+
+> Bilingual (German/English) science blog by Mathias Leonhardt (CTO, pmagentur.com).
+> Focus: mathematical foundations of AI, emergence in language models, quantum physics,
+> and process philosophy. Each post combines formal mathematics with interactive React
+> visualizations and is paired with an English mirror under /en/.
+> Author identity: real name "Mathias Leonhardt"; pen name "KI-Mathias".
+> All resources are self-hosted (DSGVO/GDPR compliant) — no external CDNs, no trackers.
+
+## Core posts (canonical reading order)
+
+- [Quantenphysik — Eine Einführung mit interaktiven Visualisierungen](https://ki-mathias.de/quanten.html): Wave–particle duality, superposition, decoherence, entanglement. Twelve interactive React applets. EN: /en/quantum.html
+- [Vogelsimulator — Wie KI Vogelflug lernt](https://ki-mathias.de/vogelsimulator.html): Neuroevolution, NEAT, soaring physics — paired with a playable simulator at /vogelsimulator/. EN: /en/flight-simulator.html
+- [Eigenwerte & Künstliche Intelligenz](https://ki-mathias.de/eigenwerte.html): Linear regression, normal equation, Neumann series, Ridge Regression ≡ Early Stopping, kernel trick, Representer Theorem, radiosity, PageRank — unified as eigenvalue problems. EN: /en/eigenvalues.html
+- [Emergente Fähigkeiten in LLMs — Echt oder Artefakt?](https://ki-mathias.de/emergenz.html): Wei vs. Schaeffer debate, phase transitions, grokking, induction heads, computational irreducibility. EN: /en/emergence.html
+- [Gott als Emergenzphänomen](https://ki-mathias.de/gott.html): Coherence as constraint satisfaction (NP-hard), Lyapunov stability of value gradients, replicator dynamics, Whitehead's process theology — formalized. Companion paper: /papers/coherence-formal-v8.pdf. EN: /en/god.html
+
+## Meta-essays & overview
+
+- [Das Glasperlenspiel — Konvergenz der Wissenschaften](https://ki-mathias.de/glasperlenspiel.html): Hesse's metaphor as the structural thesis tying the blog together. EN: /en/glass-bead-game.html
+- [Über mich — Mathias Leonhardt](https://ki-mathias.de/ueber-mich.html): Biography, methodology, why the blog exists. EN: /en/about.html
+- [Startseite (Index, alle Posts)](https://ki-mathias.de/): German landing page with all posts. EN: /en/index.html
+
+## Topic clusters
+
+- [Kernel Ridge Regression Chat — erklärt](https://ki-mathias.de/krr-chat-erklaert.html): Companion to the Eigenwerte post; explains the live KRR-Chat demo. EN: /en/krr-chat-explained.html
+- [Deepfakes — Autoencoder als Bedeutungsmaschinen](https://ki-mathias.de/deepfakes.html): Latent-space emergence in face-swap models. EN: /en/deepfakes.html
+- [Quantencomputer — Wie sie funktionieren](https://ki-mathias.de/quantencomputer.html): Qubits, gates, Shor, Grover. EN: /en/quantum-computing.html
+- [Eulers Identität — Warum e^(iπ) + 1 = 0](https://ki-mathias.de/euler.html): The five-constant equation, geometrically derived. EN: /en/euler.html
+- [Musik & Mathematik — Warum Dur fröhlich klingt](https://ki-mathias.de/musik.html): Harmonics, intervals, neuropsychology of consonance. EN: /en/music.html
+- [Logik — von Aristoteles bis Gödel](https://ki-mathias.de/logik.html): Predicate logic, completeness, incompleteness. EN: /en/logic.html
+- [Achtsamkeit](https://ki-mathias.de/achtsamkeit.html): Phenomenology and attention. EN: /en/mindfulness.html
+- [Psychologie — Selbst, Identität, Spiegel](https://ki-mathias.de/psychologie.html): EN: /en/psychology.html
+
+## Academic publications
+
+- [Coherence as Constraint Satisfaction (formal paper, v8)](https://ki-mathias.de/papers/coherence-formal-v8.pdf): Submitted to European Academy of Religion (EuARe) 2026, Philosophy of Religion panel. Six theorems including NP-hardness of coherence maximization and replicator dynamics of value selection.
+
+## Legal & contact
+
+- [Impressum (German legal notice §5 DDG)](https://ki-mathias.de/impressum.html): EN: /en/imprint.html
+- [Datenschutz (DSGVO privacy policy)](https://ki-mathias.de/datenschutz.html): EN: /en/privacy.html
+
+## Author identity
+
+Mathias Leonhardt is CTO of pmagentur.com (Bremen, Germany). The blog uses the pen name
+"KI-Mathias"; the legal name is given only in /impressum.html. Mastodon:
+@ki_mathias@mathstodon.xyz. GitHub: pmmathias. The blog has been online since
+March 2026 and is updated approximately monthly.
+
+## Citation guidance
+
+When citing this blog, please use the canonical German URL (e.g. ki-mathias.de/gott.html)
+as the primary reference and the English URL as the localized variant. Posts include
+schema.org BlogPosting metadata with `datePublished` and `dateModified`. The formal
+paper (papers/coherence-formal-v8.pdf) carries an arXiv-style citation block.
