@@ -25,34 +25,69 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Mathias Leonhardt",
-    "alternateName": "KI-Mathias",
-    "url": "https://ki-mathias.de/en/",
-    "email": "mathias-leonhardt@gmx.de",
-    "image": "https://ki-mathias.de/img/mathias-portrait.jpg",
-    "jobTitle": "Software developer and managing director",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "P&M Agentur Software + Consulting GmbH",
-      "url": "https://pmagentur.com"
-    },
-    "alumniOf": [
-      { "@type": "EducationalOrganization", "name": "Wedel University of Applied Sciences", "url": "https://www.fh-wedel.de/" },
-      { "@type": "EducationalOrganization", "name": "Berufsfachschule Wedel", "url": "https://www.bfs-wedel.de/" }
-    ],
-    "identifier": {
-      "@type": "PropertyValue",
-      "propertyID": "ORCID",
-      "value": "0009-0009-7154-5351",
-      "url": "https://orcid.org/0009-0009-7154-5351"
-    },
-    "sameAs": [
-      "https://mathstodon.xyz/@ki_mathias",
-      "https://orcid.org/0009-0009-7154-5351",
-      "https://philpeople.org/profiles/mathias-leonhardt",
-      "https://github.com/pmmathias",
-      "https://pmagentur.com"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://ki-mathias.de/#mathias",
+        "name": "Mathias Leonhardt",
+        "alternateName": "KI-Mathias",
+        "url": "https://ki-mathias.de/en/about.html",
+        "email": "mathias-leonhardt@gmx.de",
+        "image": "https://ki-mathias.de/img/mathias-portrait.jpg",
+        "description": "Software developer, managing director of P&M Agentur, and author of the blog ki-mathias.de on artificial intelligence, mathematics, and emergence.",
+        "jobTitle": "Software developer and managing director",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "P&M Agentur Software + Consulting GmbH",
+          "url": "https://pmagentur.com"
+        },
+        "alumniOf": [
+          { "@type": "EducationalOrganization", "name": "Wedel University of Applied Sciences", "url": "https://www.fh-wedel.de/" },
+          { "@type": "EducationalOrganization", "name": "Berufsfachschule Wedel", "url": "https://www.bfs-wedel.de/" }
+        ],
+        "knowsAbout": [
+          "Artificial intelligence",
+          "Machine learning",
+          "Large language models",
+          "Eigenvalues and eigenvectors",
+          "Kernel ridge regression",
+          "Emergence in complex systems",
+          "Quantum physics",
+          "Mathematical modelling",
+          "Process philosophy",
+          "Software architecture",
+          "E-commerce development"
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "ORCID",
+          "value": "0009-0009-7154-5351",
+          "url": "https://orcid.org/0009-0009-7154-5351"
+        },
+        "sameAs": [
+          "https://mathstodon.xyz/@ki_mathias",
+          "https://orcid.org/0009-0009-7154-5351",
+          "https://philpeople.org/profiles/mathias-leonhardt",
+          "https://github.com/pmmathias",
+          "https://pmagentur.com"
+        ]
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://ki-mathias.de/en/about.html#profile",
+        "url": "https://ki-mathias.de/en/about.html",
+        "name": "About – Mathias Leonhardt",
+        "inLanguage": "en",
+        "mainEntity": { "@id": "https://ki-mathias.de/#mathias" },
+        "about": { "@id": "https://ki-mathias.de/#mathias" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ki-mathias.de/en/" },
+          { "@type": "ListItem", "position": 2, "name": "About", "item": "https://ki-mathias.de/en/about.html" }
+        ]
+      }
     ]
   }
   </script>

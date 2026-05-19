@@ -44,12 +44,53 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "KI-Mathias",
-    "description": "Notizen aus Gespr\u00e4chen mit einer Maschine \u2013 Quantenphysik, Spieleentwicklung, Eigenwerte, Emergenz und Philosophie.",
-    "url": "https://ki-mathias.de/",
-    "inLanguage": "de",
-    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" }
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://ki-mathias.de/#mathias",
+        "name": "Mathias Leonhardt",
+        "alternateName": "KI-Mathias",
+        "url": "https://ki-mathias.de/ueber-mich.html",
+        "image": "https://ki-mathias.de/img/mathias-portrait.jpg",
+        "description": "Softwareentwickler, Gesch\u00e4ftsf\u00fchrer der P&M Agentur und Autor des Blogs ki-mathias.de \u00fcber K\u00fcnstliche Intelligenz, Mathematik und Emergenz.",
+        "jobTitle": "Softwareentwickler und Gesch\u00e4ftsf\u00fchrer",
+        "worksFor": { "@type": "Organization", "name": "P&M Agentur Software + Consulting GmbH", "url": "https://pmagentur.com" },
+        "knowsAbout": [
+          "K\u00fcnstliche Intelligenz", "Maschinelles Lernen", "Sprachmodelle",
+          "Eigenwerte und Eigenvektoren", "Kernel Ridge Regression",
+          "Emergenz", "Quantenphysik", "Mathematische Modellierung",
+          "Prozessphilosophie"
+        ],
+        "identifier": { "@type": "PropertyValue", "propertyID": "ORCID", "value": "0009-0009-7154-5351", "url": "https://orcid.org/0009-0009-7154-5351" },
+        "sameAs": [
+          "https://mathstodon.xyz/@ki_mathias",
+          "https://orcid.org/0009-0009-7154-5351",
+          "https://philpeople.org/profiles/mathias-leonhardt",
+          "https://github.com/pmmathias",
+          "https://pmagentur.com"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ki-mathias.de/#website",
+        "url": "https://ki-mathias.de/",
+        "name": "ki-mathias.de \u2013 Mathias Leonhardt Blog",
+        "description": "Blog von Mathias Leonhardt \u00fcber K\u00fcnstliche Intelligenz, Mathematik, Emergenz und Quantenphysik \u2013 mit interaktiven React-Visualisierungen.",
+        "inLanguage": "de",
+        "publisher": { "@id": "https://ki-mathias.de/#mathias" },
+        "author": { "@id": "https://ki-mathias.de/#mathias" }
+      },
+      {
+        "@type": "Blog",
+        "@id": "https://ki-mathias.de/#blog",
+        "name": "KI-Mathias",
+        "description": "Notizen aus Gespr\u00e4chen mit einer Maschine \u2013 Quantenphysik, Spieleentwicklung, Eigenwerte, Emergenz und Philosophie.",
+        "url": "https://ki-mathias.de/",
+        "inLanguage": "de",
+        "author": { "@id": "https://ki-mathias.de/#mathias" },
+        "publisher": { "@id": "https://ki-mathias.de/#mathias" }
+      }
+    ]
   }
   </script>
 </head>

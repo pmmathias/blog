@@ -43,12 +43,53 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "KI-Mathias",
-    "description": "Notes from conversations with a machine \u2013 quantum physics, game development, eigenvalues, emergence and philosophy.",
-    "url": "https://ki-mathias.de/en/",
-    "inLanguage": "en",
-    "author": { "@type": "Person", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/" }
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://ki-mathias.de/#mathias",
+        "name": "Mathias Leonhardt",
+        "alternateName": "KI-Mathias",
+        "url": "https://ki-mathias.de/en/about.html",
+        "image": "https://ki-mathias.de/img/mathias-portrait.jpg",
+        "description": "Software developer, managing director of P&M Agentur, and author of the blog ki-mathias.de on artificial intelligence, mathematics, and emergence.",
+        "jobTitle": "Software developer and managing director",
+        "worksFor": { "@type": "Organization", "name": "P&M Agentur Software + Consulting GmbH", "url": "https://pmagentur.com" },
+        "knowsAbout": [
+          "Artificial intelligence", "Machine learning", "Large language models",
+          "Eigenvalues and eigenvectors", "Kernel ridge regression",
+          "Emergence", "Quantum physics", "Mathematical modelling",
+          "Process philosophy"
+        ],
+        "identifier": { "@type": "PropertyValue", "propertyID": "ORCID", "value": "0009-0009-7154-5351", "url": "https://orcid.org/0009-0009-7154-5351" },
+        "sameAs": [
+          "https://mathstodon.xyz/@ki_mathias",
+          "https://orcid.org/0009-0009-7154-5351",
+          "https://philpeople.org/profiles/mathias-leonhardt",
+          "https://github.com/pmmathias",
+          "https://pmagentur.com"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ki-mathias.de/#website",
+        "url": "https://ki-mathias.de/en/",
+        "name": "ki-mathias.de \u2013 Mathias Leonhardt Blog",
+        "description": "Blog by Mathias Leonhardt on artificial intelligence, mathematics, emergence, and quantum physics \u2014 with interactive React visualizations.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://ki-mathias.de/#mathias" },
+        "author": { "@id": "https://ki-mathias.de/#mathias" }
+      },
+      {
+        "@type": "Blog",
+        "@id": "https://ki-mathias.de/en/#blog",
+        "name": "KI-Mathias",
+        "description": "Notes from conversations with a machine \u2013 quantum physics, game development, eigenvalues, emergence and philosophy.",
+        "url": "https://ki-mathias.de/en/",
+        "inLanguage": "en",
+        "author": { "@id": "https://ki-mathias.de/#mathias" },
+        "publisher": { "@id": "https://ki-mathias.de/#mathias" }
+      }
+    ]
   }
   </script>
 </head>
