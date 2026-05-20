@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Das Eigenprinzip &ndash; Warum dieselbe Mathematik &uuml;berall auftaucht</title>
+  <meta name="description" content="Eigenwerte und Eigenfunktionen verbinden Schwingung, Suche, Wahrnehmung und KI. Das Eigenprinzip &ndash; interaktiv erkl&auml;rt mit einem Feuerwerk an Visualisierungen, von der Stimmgabel bis PageRank.">
+  <meta name="author" content="Mathias Leonhardt">
+  <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
+  <link rel="canonical" href="https://ki-mathias.de/eigenprinzip.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/eigenprinzip.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenprinciple.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/eigenprinzip.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Das Eigenprinzip &ndash; Warum dieselbe Mathematik &uuml;berall auftaucht">
+  <meta property="og:description" content="Von der Stimmgabel bis PageRank: Eigenwerte und Eigenfunktionen als das verbindende Prinzip. Interaktiv erkl&auml;rt.">
+  <meta property="og:url" content="https://ki-mathias.de/eigenprinzip.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Eigenwerte">
+  <meta property="article:tag" content="Eigenfunktionen">
+  <meta property="article:tag" content="Spektraltheorie">
+  <meta property="article:tag" content="PCA">
+  <meta property="article:tag" content="Markov-Ketten">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/eigenprinzip-de.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/eigenprinzip-de.png">
+  <meta name="twitter:title" content="Das Eigenprinzip &ndash; Warum dieselbe Mathematik &uuml;berall auftaucht">
+  <meta name="twitter:description" content="Von der Stimmgabel bis PageRank: das verbindende Prinzip hinter Schwingung, Suche und Wahrnehmung.">
+
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script defer src="eigenprinzip-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Das Eigenprinzip – Warum dieselbe Mathematik überall auftaucht",
+    "description": "Eigenwerte und Eigenfunktionen verbinden Schwingung, Suche, Wahrnehmung und KI. Das Eigenprinzip, interaktiv erklärt von der Stimmgabel bis PageRank.",
+    "image": "https://ki-mathias.de/img/og/eigenprinzip-de.png",
+    "author": { "@type": "Person", "@id": "https://ki-mathias.de/#mathias", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/ueber-mich.html", "sameAs": ["https://mathstodon.xyz/@ki_mathias", "https://orcid.org/0009-0009-7154-5351", "https://philpeople.org/profiles/mathias-leonhardt", "https://github.com/pmmathias", "https://pmagentur.com"] },
+    "publisher": { "@id": "https://ki-mathias.de/#mathias" },
+    "datePublished": "2026-05-20",
+    "dateModified": "2026-05-20",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/eigenprinzip.html" },
+    "inLanguage": "de",
+    "isAccessibleForFree": true,
+    "keywords": ["Eigenwerte", "Eigenfunktionen", "Spektraltheorie", "PCA", "Markov-Ketten", "PageRank", "Fourier", "Resonanz"],
+    "articleSection": "Mathematik",
+    "wordCount": 12000,
+    "timeRequired": "PT45M"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://ki-mathias.de/" },
+      { "@type": "ListItem", "position": 2, "name": "Das Eigenprinzip – Warum dieselbe Mathematik überall auftaucht", "item": "https://ki-mathias.de/eigenprinzip.html" }
+    ]
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .prose-dark ul, .prose-dark ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: #d1d5db; }
+    .prose-dark li { margin-bottom: 0.4rem; line-height: 1.7; }
+    .part-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #f59e0b; margin-bottom: 0.25rem; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    figure { margin: 2rem 0; }
+    figcaption { font-size: 0.78rem; color: #94a3b8; margin-top: 0.5rem; text-align: center; }
+    .prose-dark img { border-radius: 0.5rem; border: 1px solid rgba(148,163,184,0.12); max-width: 100%; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog — RSS (Atom)" href="/feed.xml">
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<div id="nav-toc-items" style="display:none;">
+  <a href="#stimmgabel" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Die Stimmgabel</a>
+  <a href="#eigenvektor" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Eigenvektor</a>
+  <a href="#eigenfunktion" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Eigenfunktion</a>
+  <a href="#pca" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Gesichter &amp; PCA</a>
+  <a href="#markov" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Markov &amp; PageRank</a>
+  <a href="#resonanz" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Resonanz</a>
+  <a href="#glocke" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Glockenkurve</a>
+  <a href="#quanten-ki" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; Quanten &amp; KI</a>
+  <a href="#philosophie" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">9 &middot; Entdeckt oder erfunden?</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; Mathematik &middot; Das Glasperlenspiel</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Das Eigenprinzip
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Warum dieselbe Mathematik &uuml;berall auftaucht &ndash; von der schwingenden Stimmgabel &uuml;ber Gesichtserkennung und Google-Suche bis zur Quantenmechanik. Ein Prinzip, neun Kapitel, ein Feuerwerk interaktiver Visualisierungen.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-05-20">Mai 2026</time><span>&middot;</span>
+    <span>~45 Min. Lesezeit</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ================================================================ -->
+<!-- TEIL A — FUNDAMENT -->
+<!-- ================================================================ -->
+
+<!-- 1. DIE STIMMGABEL -->
+<section id="stimmgabel" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil A &middot; Fundament</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 1</p>
+<h2>Die Stimmgabel und die Regel f&uuml;rs n&auml;chste Mal</h2>
+
+<p>Eine angeschlagene Stimmgabel gibt einen einzigen, nahezu reinen Ton ab, und sie tut dies so zuverl&auml;ssig, dass sie &uuml;ber zwei Jahrhunderte als Referenznormal zum Stimmen von Instrumenten diente. Bemerkenswert ist dabei nicht der Ton selbst, sondern seine Stabilit&auml;t: Ob die Gabel sanft oder kr&auml;ftig angeschlagen wird, ob warm oder kalt, die Frequenz bleibt dieselbe. Dieses Verhalten deutet darauf hin, dass das System ein bestimmtes Schwingungsmuster bevorzugt und nach jeder St&ouml;rung zu ihm zur&uuml;ckkehrt.</p>
+
+<p>Im Folgenden wird entwickelt, woher diese Stabilit&auml;t stammt. Die Antwort ist ein Muster, das sich durch den gesamten Beitrag zieht und hier als <em>Eigenprinzip</em> bezeichnet wird: Ein System, das einer einfachen lokalen Regel folgt, entwickelt von selbst charakteristische, stabile Muster. Diese Muster sind dabei keine &auml;u&szlig;ere Vorgabe, sondern eine mathematische Konsequenz der Regel.</p>
+
+<h3>Eine Regel f&uuml;rs n&auml;chste Mal</h3>
+
+<p>Ein Punkt auf dem schwingenden Zinken l&auml;sst sich durch zwei Gr&ouml;&szlig;en vollst&auml;ndig beschreiben. Sei \(x\) die Auslenkung dieses Punktes aus der Ruhelage und \(v\) seine Geschwindigkeit. Die Elastizit&auml;t des Materials legt fest, wie sich diese beiden Gr&ouml;&szlig;en von einem kleinen Zeitschritt \(\Delta t\) zum n&auml;chsten &auml;ndern:</p>
+
+<div class="math-display">
+\[
+\begin{aligned}
+x_{\text{neu}} &= x_{\text{alt}} + v_{\text{alt}}\,\Delta t \\[4pt]
+v_{\text{neu}} &= v_{\text{alt}} - \tfrac{k}{m}\,x_{\text{alt}}\,\Delta t
+\end{aligned}
+\]
+</div>
+
+<p>Die erste Regel beschreibt anschaulich die reine Bewegung: Wer sich mit einer bestimmten Geschwindigkeit fortbewegt, ist nach einem Zeitschritt um das Produkt aus Geschwindigkeit und Zeitschritt weiter. Die zweite Regel beschreibt anschaulich die R&uuml;ckstellkraft des Materials: Je weiter der Punkt ausgelenkt ist, desto st&auml;rker wird er zur Ruhelage zur&uuml;ckgezogen. Dabei bestimmt die Konstante \(k/m\) &ndash; Steifigkeit geteilt durch Masse &ndash; wie heftig diese R&uuml;ckstellung ausf&auml;llt.</p>
+
+<p>Aus diesen beiden Zeilen folgt das gesamte Verhalten der Stimmgabel. Werden sie viele Tausend Mal hintereinander angewendet, entsteht keine beliebige Kurve, sondern eine reine Sinusschwingung, und zwar unabh&auml;ngig von der anf&auml;nglichen Auslenkung. Die folgende Darstellung f&uuml;hrt diese Iteration Schritt f&uuml;r Schritt aus.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Verstelle Steifigkeit \(k/m\) und Zeitschritt \(\Delta t\) und beobachte, wie aus den zwei Update-Regeln eine Schwingung entsteht. Im Phasenraum (rechts) wird das stabile Muster als geschlossene Ellipse sichtbar &ndash; das ist das Eigenmuster des Systems.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-oscillator"></div>
+</div>
+
+<p>Die geschlossene Ellipse im Phasenraum ist der Kern der Sache. Sie bedeutet anschaulich, dass das System nach jedem vollen Umlauf in seinen Ausgangszustand zur&uuml;ckkehrt; genau diese Wiederkehr macht den Ton stabil. Mathematisch betrachtet ist die Update-Regel eine <em>lineare Abbildung</em>, und die Schwingung ist ihr <em>Eigenmuster</em>. Dies bedeutet, dass die Stabilit&auml;t der Stimmgabel und der Begriff des Eigenvektors zwei Beschreibungen desselben Sachverhalts sind &ndash; ein Zusammenhang, der im folgenden Kapitel entwickelt wird.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-400"><em>Das Eigenprinzip in einem Satz:</em> Eine einfache, wiederholt angewandte Regel erzeugt von selbst ein stabiles Muster. Dieses Muster &ndash; das Eigenmuster &ndash; ist keine Eingabe, sondern ein Ergebnis der Regel. Es wird im Verlauf dieses Beitrags unter immer neuen Namen wiederkehren: Eigenvektor, Eigenfunktion, Hauptkomponente, station&auml;re Verteilung.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 2. EIGENVEKTOR -->
+<section id="eigenvektor" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil A &middot; Fundament</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 2</p>
+<h2>Was ein Eigenvektor wirklich ist</h2>
+
+<p>Eine Matrix ist eine lineare Abbildung: Vektor rein, Vektor raus. Die meisten Vektoren &auml;ndern dabei sowohl ihre L&auml;nge als auch ihre Richtung. Einige wenige Vektoren jedoch behalten ihre Richtung und werden nur gestreckt oder gestaucht. Diese richtungstreuen Vektoren werden <em>Eigenvektoren</em> genannt, der zugeh&ouml;rige Streckungsfaktor hei&szlig;t <em>Eigenwert</em>.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Drehe den Eingabevektor im Kreis. Die meiste Zeit zeigt das Ergebnis in eine andere Richtung. An den Eigenrichtungen rasten Eingabe und Ausgabe parallel ein &ndash; dort leuchtet der Vektor auf.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-eigen-transform"></div>
+</div>
+
+<h3>Wie sich die Eigenrichtungen finden lassen</h3>
+
+<p>Gesucht sind Vektoren \(\mathbf{v}\), f&uuml;r die die Abbildung \(A\) lediglich eine Streckung bewirkt, also \(A\mathbf{v} = \lambda\,\mathbf{v}\) mit einem Skalar \(\lambda\) gilt. Diese Gleichung bedeutet anschaulich, dass Eingabe und Ausgabe auf derselben Geraden durch den Ursprung liegen. Umgeschrieben zu \((A - \lambda I)\,\mathbf{v} = \mathbf{0}\) besitzt sie eine nichttriviale L&ouml;sung genau dann, wenn die Determinante \(\det(A - \lambda I)\) verschwindet.</p>
+
+<p>Diese Determinante ist ein Polynom in \(\lambda\), das <em>charakteristische Polynom</em>. Seine Nullstellen sind die Eigenwerte, und zu jedem Eigenwert geh&ouml;rt eine Eigenrichtung. Dabei muss eine reelle Abbildung keine reellen Eigenwerte besitzen: Eine Drehung verschiebt jeden Vektor, sodass keiner richtungstreu bleibt &ndash; die Visualisierung oben zeigt diesen Fall unter dem Preset <em>Drehung</em>.</p>
+
+<p>Damit schlie&szlig;t sich der Bogen zu Kapitel 1. Die Update-Regel der Stimmgabel war eine lineare Abbildung, angewendet in jedem Zeitschritt; die stabile Schwingung entsprach ihrer Eigenrichtung, und die Frequenz war durch den zugeh&ouml;rigen Eigenwert festgelegt. Dies bedeutet, dass Eigenvektoren keine algebraische Kuriosit&auml;t sind, sondern beschreiben, welche Muster ein wiederholt angewandter Prozess bevorzugt.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 3. EIGENFUNKTION -->
+<section id="eigenfunktion" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil A &middot; Fundament</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 3</p>
+<h2>Von Vektoren zu Funktionen: die Eigenfunktion</h2>
+
+<p>Derselbe Gedanke tr&auml;gt, wenn an die Stelle des Vektors eine ganze Funktion tritt. Eine <em>Eigenfunktion</em> ist eine Funktion, die unter einer Operation &ndash; etwa der zweiten Ableitung oder der Fourier-Transformation &ndash; ihre Form beh&auml;lt und nur mit einem Faktor skaliert wird. Diese Definition &uuml;bertr&auml;gt den Begriff des Eigenvektors von endlichen Vektoren auf den unendlichdimensionalen Raum der Funktionen.</p>
+
+<h3>Stehende Wellen auf einer Platte</h3>
+
+<p>Eine eingespannte Platte kann nicht beliebig schwingen. Sie nimmt nur bestimmte Muster an, die <em>Eigenmoden</em>, bei denen gewisse Linien dauerhaft in Ruhe bleiben. Streut man Sand auf die Platte, sammelt er sich entlang dieser Knotenlinien und macht das Muster sichtbar; Ernst Chladni f&uuml;hrte diese Figuren ab 1787 vor.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> W&auml;hle die Modennummern \(m\) und \(n\). Die orangenen Linien sind die Knotenlinien, auf denen die Platte ruht.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-chladni"></div>
+</div>
+
+<p>Erlaubt sind nur ganzzahlige Modennummern. Diese Diskretisierung ist kein Zufall, sondern folgt aus den Randbedingungen: Die Platte ist am Rand fest, und nur Muster mit ganzzahliger Wellenzahl erf&uuml;llen diese Bedingung. Dieselbe Quantisierung erzeugt die diskreten Energieniveaus eines Atoms; Schr&ouml;dinger nannte seine Arbeit von 1926 daher <em>Quantisierung als Eigenwertproblem</em>.</p>
+
+<h3>Jede Kurve als Summe von Eigenfunktionen</h3>
+
+<p>F&uuml;r die schwingende Saite sind die Eigenfunktionen die Sinus-Moden. Hierbei gilt eine Eigenschaft, die weit &uuml;ber die Saite hinaus tr&auml;gt: Jede hinreichend glatte Funktion l&auml;sst sich als Summe dieser Sinus-Eigenfunktionen schreiben, \(f(x) = \sum_n c_n \sin(n\pi x)\). Diese Summe bedeutet anschaulich, dass die Eigenfunktionen eine vollst&auml;ndige Basis bilden &ndash; so wie jeder Vektor sich aus Basisvektoren zusammensetzt.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Erh&ouml;he die Zahl der Sinus-Terme und beobachte, wie sich die Summe der Zielkurve ann&auml;hert.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-fourier-synthesis"></div>
+</div>
+
+<p>Dass &uuml;berhaupt vollst&auml;ndige Eigenfunktions-Basen existieren, ist der Inhalt der Sturm-Liouville-Theorie von 1836. Sie zeigt, dass eine breite Klasse physikalischer Differentialgleichungen ein vollst&auml;ndiges, orthogonales System von Eigenfunktionen besitzt; die jeweilige Randbedingung w&auml;hlt aus, welches. Daher tauchen Sinus-Funktionen bei der Saite auf, Bessel-Funktionen bei zylindrischer Symmetrie und Hermite-Funktionen beim quantenmechanischen Oszillator. Dies bedeutet, dass das Zerlegen in Eigenfunktionen kein Spezialtrick einzelner Gebiete ist, sondern die gemeinsame Struktur hinter Akustik, W&auml;rmeleitung und Quantenmechanik.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- TEIL B — ANWENDUNGEN -->
+<!-- ================================================================ -->
+
+<!-- 4. PCA / EIGENGESICHTER -->
+<section id="pca" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil B &middot; Anwendungen</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 4</p>
+<h2>Gesichter im Datenstrom: Hauptkomponenten</h2>
+
+<p>Bisher waren Eigenvektoren eine Eigenschaft einer gegebenen Abbildung. In der Datenanalyse kehrt sich die Blickrichtung um: Aus den Daten selbst wird eine Matrix gebildet, deren Eigenvektoren die innere Struktur der Daten offenlegen. Dieses Verfahren ist die <em>Hauptkomponentenanalyse</em> (engl. Principal Component Analysis, PCA).</p>
+
+<h3>Die Achsen der gr&ouml;&szlig;ten Streuung</h3>
+
+<p>Sei eine Wolke von Datenpunkten gegeben. Aus ihr wird die <em>Kovarianzmatrix</em> berechnet, deren Eintr&auml;ge beschreiben, wie stark die Koordinaten gemeinsam schwanken. Die Eigenvektoren dieser Matrix bedeuten anschaulich die Richtungen, entlang derer die Daten am st&auml;rksten streuen; der zugeh&ouml;rige Eigenwert gibt an, wie gro&szlig; diese Streuung ist. Die erste Hauptachse erfasst somit den gr&ouml;&szlig;ten Teil der Information, die zweite den zweitgr&ouml;&szlig;ten, und so fort.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Verstelle die Korrelation der Daten und beobachte, wie sich die Hauptachsen ausrichten. Bei starker Korrelation steckt fast die gesamte Streuung in der ersten Achse.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-pca"></div>
+</div>
+
+<p>Hierin liegt der praktische Nutzen: Tr&auml;gt die erste Achse den Gro&szlig;teil der Streuung, l&auml;sst sich die zweite vernachl&auml;ssigen, ohne viel Information zu verlieren. Hochdimensionale Daten werden so auf wenige Achsen verdichtet. Dies bedeutet, dass PCA eine Kompression ist, deren Basis nicht vorgegeben, sondern aus den Daten als deren Eigenstruktur gewonnen wird.</p>
+
+<h3>Eigengesichter</h3>
+
+<p>Werden Gesichtsbilder als Datenpunkte aufgefasst &ndash; jeder Pixel eine Koordinate &ndash; so liefern die Hauptachsen die <em>Eigengesichter</em>. Matthew Turk und Alex Pentland zeigten 1991, dass sich jedes Gesicht als Mittelwertgesicht plus gewichtete Summe weniger Eigengesichter darstellen l&auml;sst. Hierf&uuml;r gen&uuml;gen wenige Dutzend Koeffizienten, um ein Gesicht wiederzuerkennen.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Mische die drei Eigengesichter &uuml;ber ihre Gewichte und beobachte, wie aus wenigen Zahlen eine ganze Familie von Gesichtern entsteht.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-eigenfaces"></div>
+</div>
+
+<p>Dieselbe Idee tr&auml;gt den <a href="deepfakes.html" class="text-cyan-400 hover:text-cyan-300 underline">Deepfakes-Beitrag</a>: Dort ersetzt ein Autoencoder die lineare PCA durch eine nichtlineare Verallgemeinerung, doch das Prinzip bleibt, dass ein Gesicht durch wenige Koordinaten in einer gelernten Basis beschrieben wird. Dies bedeutet, dass Gesichtserkennung im Kern dasselbe Eigenwertproblem l&ouml;st wie die schwingende Stimmgabel &ndash; nur dass die Eigenvektoren hier aus Daten statt aus einer Bewegungsgleichung stammen.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 5. MARKOV & PAGERANK -->
+<section id="markov" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil B &middot; Anwendungen</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 5</p>
+<h2>Das Web als Zufallsprozess: Markov und PageRank</h2>
+
+<p>Eine <em>Markov-Kette</em> beschreibt &Uuml;berg&auml;nge zwischen Zust&auml;nden, bei denen allein der aktuelle Zustand &uuml;ber den n&auml;chsten entscheidet. Die Wahrscheinlichkeiten dieser &Uuml;berg&auml;nge bilden eine Matrix. Sei eine Anfangsverteilung &uuml;ber die Zust&auml;nde gegeben, so liefert die Multiplikation mit dieser Matrix die Verteilung einen Schritt sp&auml;ter.</p>
+
+<h3>Die Verteilung, die sich nicht mehr &auml;ndert</h3>
+
+<p>Wird dieser Schritt wiederholt, konvergiert die Verteilung unter milden Bedingungen gegen einen festen Vektor, die <em>station&auml;re Verteilung</em>. Dieser Vektor &auml;ndert sich unter der &Uuml;bergangsmatrix nicht mehr; er erf&uuml;llt also \(\boldsymbol{\pi} P = \boldsymbol{\pi}\) und ist damit der Eigenvektor zum Eigenwert eins. Das Perron-Frobenius-Theorem sichert, dass dieser Eigenwert bei einer stochastischen Matrix existiert, betragsgr&ouml;&szlig;t und einfach ist.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Starte mit voller Sicherheit im Zustand Sonne und f&uuml;hre Schritte aus. Unabh&auml;ngig vom Start n&auml;hert sich die Verteilung der gestrichelten station&auml;ren L&ouml;sung.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-markov"></div>
+</div>
+
+<h3>PageRank: das Web als Markov-Kette</h3>
+
+<p>Googles urspr&uuml;nglicher Ranking-Algorithmus fasst das Web als Markov-Kette auf. Die Zust&auml;nde sind Webseiten, die &Uuml;berg&auml;nge sind die Links. Ein gedachter Besucher folgt mit Wahrscheinlichkeit \(d\) einem zuf&auml;lligen Link der aktuellen Seite und springt mit Wahrscheinlichkeit \(1-d\) auf eine beliebige Seite des Webs. Dieser <em>D&auml;mpfungsfaktor</em> \(d\), &uuml;blicherweise \(0{,}85\), verhindert, dass der Besucher in verlinkungsfreien Sackgassen h&auml;ngen bleibt.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Beobachte den surfenden Besucher. Die Knoten wachsen mit ihrer Aufenthaltsh&auml;ufigkeit. Verstelle den D&auml;mpfungsfaktor und beobachte, wie sich die Verteilung &auml;ndert.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-pagerank"></div>
+</div>
+
+<p>Der PageRank einer Seite ist ihre Aufenthaltsh&auml;ufigkeit im station&auml;ren Zustand &ndash; erneut der dominante Eigenvektor, diesmal der sogenannten Google-Matrix. Hierbei tritt der D&auml;mpfungsfaktor als Regularisierung auf, die das Problem stabil und eindeutig l&ouml;sbar macht. Im <a href="eigenwerte.html" class="text-cyan-400 hover:text-cyan-300 underline">Eigenwerte-Beitrag</a> wird gezeigt, dass dieser D&auml;mpfungsfaktor strukturell demselben Term entspricht wie der Regularisierungsparameter der Ridge-Regression. Dies bedeutet, dass die Stabilisierung einer Websuche und die Vermeidung von &Uuml;beranpassung beim maschinellen Lernen zwei Auspr&auml;gungen desselben Eingriffs in ein Eigenwertspektrum sind.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 6. RESONANZ -->
+<section id="resonanz" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil B &middot; Anwendungen</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 6</p>
+<h2>Wenn Br&uuml;cken tanzen: Resonanz</h2>
+
+<p>Bisher waren die Eigenmuster erw&uuml;nscht oder n&uuml;tzlich. Dieses Kapitel zeigt ihre gef&auml;hrliche Seite. Jedes mechanische Bauwerk besitzt Eigenfrequenzen, also Schwingungsmuster, die es bevorzugt annimmt. Diese Eigenfrequenzen sind die Eigenwerte der Bewegungsgleichung des Bauwerks. Trifft eine periodische Anregung eine dieser Frequenzen, &uuml;bertr&auml;gt sie ihre Energie besonders wirksam, und die Bewegung schaukelt sich auf &ndash; ein Vorgang, der <em>Resonanz</em> genannt wird.</p>
+
+<h3>Tacoma Narrows, 1940</h3>
+
+<figure>
+  <img src="img/eigenprinzip/tacoma-narrows.jpg" alt="Die Tacoma-Narrows-Br&uuml;cke im US-Bundesstaat Washington, eine schlanke H&auml;ngebr&uuml;cke &uuml;ber dem Meeresarm." loading="lazy" width="768" height="606">
+  <figcaption>Die Tacoma-Narrows-Br&uuml;cke (Washington, 1940). Bild: University of Washington Libraries, gemeinfrei, via Wikimedia Commons.</figcaption>
+</figure>
+
+<p>Wenige Monate nach ihrer Er&ouml;ffnung geriet die Tacoma-Narrows-Br&uuml;cke bei m&auml;&szlig;igem Wind in eine sich aufschaukelnde Torsionsschwingung und brach zusammen. Der Wind lieferte keine periodische Anregung im einfachen Sinne; vielmehr l&ouml;sten sich an der Fahrbahn rhythmisch Wirbel ab, deren Frequenz einer Eigenfrequenz der Br&uuml;cke nahekam. Dieser Mechanismus &ndash; aeroelastisches Flattern &ndash; ist seitdem fester Bestandteil der Br&uuml;ckenstatik.</p>
+
+<h3>Millennium Bridge, 2000</h3>
+
+<figure>
+  <img src="img/eigenprinzip/millennium-bridge.jpg" alt="Die Londoner Millennium Bridge, eine flache Fu&szlig;g&auml;ngerbr&uuml;cke &uuml;ber die Themse." loading="lazy" width="960" height="185">
+  <figcaption>Die Millennium Bridge in London. Bild: Ilgorba, CC&nbsp;BY-SA&nbsp;3.0, via Wikimedia Commons (<a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="noopener" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Lizenz</a>).</figcaption>
+</figure>
+
+<p>Am Er&ouml;ffnungstag der Londoner Millennium Bridge begann diese unter dem Gewicht der Fu&szlig;g&auml;nger seitlich zu schwingen. Hierbei wirkte keine &auml;u&szlig;ere Anregung, sondern eine R&uuml;ckkopplung: Eine kleine seitliche Bewegung brachte die Gehenden dazu, ihren Schritt unbewusst an die Schwingung anzupassen, was die Bewegung verst&auml;rkte und weitere Personen mitzog. Dieser &Uuml;bergang von ungeordnetem zu gleichgeschaltetem Gehen ist ein Beispiel f&uuml;r <em>Synchronisation</em>, die das Kuramoto-Modell beschreibt.</p>
+
+<p>Beide F&auml;lle teilen dieselbe Ursache. Ein System mit ausgepr&auml;gten Eigenmoden wird in der N&auml;he einer Eigenfrequenz angeregt und antwortet mit wachsender Amplitude. Dies bedeutet, dass die Stabilit&auml;t des Stimmgabeltons und der Einsturz einer Br&uuml;cke zwei Seiten derselben Medaille sind: Im einen Fall ist das bevorzugte Eigenmuster erw&uuml;nscht, im anderen zerst&ouml;rerisch.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 7. GLOCKENKURVE -->
+<section id="glocke" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil B &middot; Anwendungen</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 7</p>
+<h2>Die Glockenkurve als bevorzugte Form</h2>
+
+<p>Werden viele unabh&auml;ngige Zufallseinfl&uuml;sse summiert, ergibt sich fast immer dieselbe Verteilung: die Glockenkurve. Der Zentrale Grenzwertsatz beschreibt diese Beobachtung pr&auml;zise. Auf den ersten Blick geh&ouml;rt sie nicht in dieses Kapitel, denn von Eigenwerten ist hier keine Rede. Bei genauerer Betrachtung jedoch tr&auml;gt dasselbe Muster.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Lass Kugeln durch das Galton-Brett fallen. Jede trifft an jedem Nagel eine zuf&auml;llige Entscheidung, und dennoch entsteht in der Summe die Glockenkurve.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-galton"></div>
+</div>
+
+<p>Die mathematische Operation, die zwei unabh&auml;ngige Zufallseinfl&uuml;sse zusammenf&uuml;hrt, ist die <em>Faltung</em> ihrer Verteilungen. Der Zentrale Grenzwertsatz besagt anschaulich, dass die wiederholte Faltung beliebiger Verteilungen gegen eine einzige Form strebt: die Gau&szlig;sche Glockenkurve. Diese Form &auml;ndert sich unter weiterer Faltung nicht mehr in ihrer Gestalt, sondern nur in ihrer Breite.</p>
+
+<p>Damit ist die Glockenkurve ein Fixpunkt der Faltung &ndash; und ein Fixpunkt ist nichts anderes als ein Eigenvektor zum Eigenwert eins, hier im Raum der Wahrscheinlichkeitsverteilungen. Dies bedeutet, dass die Allgegenwart der Normalverteilung dieselbe Ursache hat wie die Stabilit&auml;t des Stimmgabeltons: Sie ist das bevorzugte, sich selbst reproduzierende Muster eines wiederholt angewandten Prozesses.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 8. QUANTEN & KI -->
+<section id="quanten-ki" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil B &middot; Anwendungen</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 8</p>
+<h2>Das wiederkehrende K: Quanten und KI</h2>
+
+<p>Die bisherigen Kapitel haben das Eigenprinzip in der Mechanik, der Datenanalyse und der Wahrscheinlichkeitstheorie aufgesucht. Dieses Kapitel f&uuml;hrt es dorthin zur&uuml;ck, wo die fr&uuml;heren Beitr&auml;ge dieses Blogs es bereits angetroffen haben: in die Quantenmechanik und das maschinelle Lernen.</p>
+
+<p>In der Quantenmechanik beschreibt der Propagator, wie sich ein Teilchen von einem Ort zu einem anderen entwickelt. Er schreibt sich als Summe &uuml;ber Eigenzust&auml;nde, gewichtet mit Phasenfaktoren der Energie-Eigenwerte:</p>
+
+<div class="math-display">
+\[
+K(B, A, t) = \sum_n \phi_n(B)\,\phi_n^*(A)\,e^{-i E_n t/\hbar}
+\]
+</div>
+
+<p>In Kernel-Methoden des maschinellen Lernens beschreibt der Kernel, wie &auml;hnlich zwei Datenpunkte sind. Auch er schreibt sich als Summe &uuml;ber Eigenfunktionen, gewichtet mit ihren Eigenwerten:</p>
+
+<div class="math-display">
+\[
+K(x, x') = \sum_n \lambda_n\,\phi_n(x)\,\phi_n(x')
+\]
+</div>
+
+<p>Beide Ausdr&uuml;cke tragen denselben Buchstaben \(K\), und das ist kein Zufall. Beide sind eine Spektralzerlegung: eine Summe &uuml;ber Eigenfunktionen, jede gewichtet mit ihrem Eigenwert. Dies bedeutet anschaulich, dass die Frage <em>Wie gelangt ein Quantenteilchen von A nach B?</em> und die Frage <em>Wie &auml;hnlich sind sich zwei Datenpunkte?</em> dieselbe mathematische Form besitzen.</p>
+
+<p>Dieselbe Struktur reicht bis in moderne Sprachmodelle. Der Attention-Mechanismus eines Transformers berechnet gewichtete &Auml;hnlichkeiten zwischen Token und l&auml;sst sich als Kernel-Operation lesen, deren Verhalten von einem Eigenwertspektrum bestimmt wird. Wie sich dieses Spektrum &auml;ndert, wenn ein Modell w&auml;chst, ist Gegenstand des Beitrags zur Emergenz.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-400">Ausf&uuml;hrlich entwickelt in den Beitr&auml;gen <a href="quanten.html" class="text-cyan-400 hover:text-cyan-300 underline">Quantenphysik</a>, <a href="eigenwerte.html" class="text-cyan-400 hover:text-cyan-300 underline">Eigenwerte &amp; KI</a> und <a href="emergenz.html" class="text-cyan-400 hover:text-cyan-300 underline">Emergenz in Sprachmodellen</a>.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- TEIL C — PHILOSOPHIE -->
+<!-- ================================================================ -->
+
+<!-- 9. PHILOSOPHIE -->
+<section id="philosophie" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Teil C &middot; Was es &uuml;ber die Natur sagt</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Kapitel 9</p>
+<h2>Entdeckt oder erfunden?</h2>
+
+<p>Die vorangegangenen Kapitel haben dieselbe Struktur in sehr verschiedenen Gebieten angetroffen. Diese Wiederkehr l&auml;sst sich zweifach deuten. Nach der ersten Deutung projizieren wir lediglich ein vertrautes mathematisches Werkzeug auf alles, was wir betrachten; die Eigenstruktur l&auml;ge dann in unserem Blick, nicht in den Dingen. Nach der zweiten Deutung ist die Eigenstruktur ein Zug der Wirklichkeit selbst, den wir entdecken.</p>
+
+<p>Ein Argument spricht f&uuml;r die zweite Deutung. Die Eigenmuster treten in Physik, Biologie und Informatik <em>unabh&auml;ngig voneinander</em> auf, abgeleitet aus v&ouml;llig verschiedenen Ausgangsannahmen. W&auml;ren sie blo&szlig;e Projektion, m&uuml;ssten sie sich an den Stellen brechen, an denen die Gebiete einander nicht kennen. Stattdessen liefern sie dort dieselben Strukturen. Dieser Befund l&auml;sst sich vorsichtig im Sinne eines spektralen Realismus lesen: Die Eigenstrukturen sind nicht erfunden, sondern aufgefunden.</p>
+
+<p>Vorsicht ist dennoch geboten, und hier sei die Annahme offen benannt. Dass ein Werkzeug &uuml;berall passt, kann auch hei&szlig;en, dass es grob genug ist, um &uuml;berall zu passen. Lineare Abbildungen sind die einfachste nichttriviale Klasse von Abbildungen, und Eigenwerte sind ihr nat&uuml;rliches Vokabular. Ein Teil der Allgegenwart d&uuml;rfte daher auf die Einfachheit des Werkzeugs zur&uuml;ckgehen, nicht allein auf eine Tiefe der Natur. Eine abschlie&szlig;ende Entscheidung zwischen beiden Deutungen wird hier nicht beansprucht.</p>
+
+<h3>Stabilit&auml;t als Auswahl</h3>
+
+<p>Ein verbindender Gedanke bleibt unabh&auml;ngig von dieser Frage bestehen. Durch alle Kapitel zog sich dasselbe Prinzip: Stabile Muster bleiben, instabile l&ouml;schen sich aus. Die Stimmgabel kehrt zu ihrem Eigenmuster zur&uuml;ck; die station&auml;re Verteilung ist der Zustand, der sich selbst reproduziert; die Glockenkurve ist die Form, die unter Faltung erhalten bleibt. In jedem Fall ist das Eigenmuster nicht das, was am lautesten beginnt, sondern das, was &uuml;berdauert.</p>
+
+<p>Dasselbe Auswahlprinzip tr&auml;gt zwei fr&uuml;here Beitr&auml;ge dieses Blogs. Im <a href="quanten.html" class="text-cyan-400 hover:text-cyan-300 underline">Quantenbeitrag</a> &uuml;berleben jene Pfade, deren Phasen sich konstruktiv addieren, w&auml;hrend sich die &uuml;brigen durch destruktive Interferenz ausl&ouml;schen. Im <a href="gott.html" class="text-cyan-400 hover:text-cyan-300 underline">Beitrag &uuml;ber Gott als Emergenzph&auml;nomen</a> setzen sich koh&auml;rente Konfigurationen als Attraktoren einer Dynamik durch. Dies bedeutet, dass Eigenmuster, stabile Quantenpfade und koh&auml;rente Weltbilder Beschreibungen desselben Vorgangs sind: Ein Prozess wird wiederholt angewandt, und was ihn unver&auml;ndert &uuml;bersteht, bleibt zur&uuml;ck.</p>
+
+<p>Hierin liegt das Glasperlenspiel dieses Blogs. Nicht in der Behauptung, alles sei dasselbe, sondern in der genaueren Beobachtung, dass sehr verschiedene Gegenst&auml;nde denselben mathematischen Kern teilen. Erwin Schr&ouml;dinger nannte seine Arbeit von 1926 <em>Quantisierung als Eigenwertproblem</em>. Die hier verfolgte Linie f&uuml;gt dem nur hinzu, dass nicht allein die Quantisierung, sondern eine ganze Reihe stabiler Ordnungen sich als Eigenwertproblem schreiben l&auml;sst &ndash; und dass diese Ordnungen entstehen, weil ein Prozess seine eigenen bevorzugten Muster ausw&auml;hlt.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Weiterlesen</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Verwandte Beiträge auf ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/eigenwerte.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenwerte & KI</a> <span class="text-gray-500" style="font-size:0.9em;">— Kernel, PageRank, Neumann-Reihe</span></li>
+    <li><a href="/emergenz.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergenz in Sprachmodellen</a> <span class="text-gray-500" style="font-size:0.9em;">— Phasenübergänge, Grokking, Ising</span></li>
+  </ul>
+</div>
+</section>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600 max-w-4xl mx-auto px-4">
+  <p class="mb-2"><em>&bdquo;Dasselbe Muster, unter immer neuen Namen.&ldquo;</em></p>
+  <p>&copy; 2026 Mathias Leonhardt &middot; Erstellt mit Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="ueber-mich.html" class="hover:text-gray-400">&Uuml;ber mich</a> &middot;
+    <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+    <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+  </p>
+</footer>
+
+</div><!-- /max-w-4xl -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  var COMPONENTS = {
+    'mount-oscillator': window.NextStepOscillator || null,
+    'mount-eigen-transform': window.EigenDirections || null,
+    'mount-chladni': window.ChladniFigures || null,
+    'mount-fourier-synthesis': window.FourierSynthesis || null,
+    'mount-pca': window.PCARotation || null,
+    'mount-eigenfaces': window.EigenfacesExplorer || null,
+    'mount-markov': window.MarkovConvergence || null,
+    'mount-pagerank': window.PageRankSurfer || null,
+    'mount-galton': window.GaltonBoard || null,
+  };
+
+  var mounted = {};
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Komponente konnte nicht geladen werden.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+
+</body>
+</html>

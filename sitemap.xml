@@ -3,11 +3,29 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://ki-mathias.de/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   
     <image:image><image:loc>https://ki-mathias.de/img/header-glasperlenspiel.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/eigenprinzip.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/eigenprinzip.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenprinciple.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/eigenprinzip/tacoma-narrows.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/eigenprinzip/millennium-bridge.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/eigenprinciple.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/eigenprinzip.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenprinciple.html"/>
+  
+    <image:image><image:loc>https://ki-mathias.de/img/eigenprinzip/tacoma-narrows.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/eigenprinzip/millennium-bridge.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://ki-mathias.de/deepfakes.html</loc>

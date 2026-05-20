@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>The Eigenprinciple &ndash; Why the Same Mathematics Appears Everywhere</title>
+  <meta name="description" content="Eigenvalues and eigenfunctions connect vibration, search, perception and AI. The eigenprinciple &ndash; explained interactively with a fireworks of visualizations, from the tuning fork to PageRank.">
+  <meta name="author" content="Mathias Leonhardt">
+  <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
+  <link rel="canonical" href="https://ki-mathias.de/en/eigenprinciple.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/eigenprinzip.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenprinciple.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/eigenprinzip.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Eigenprinciple &ndash; Why the Same Mathematics Appears Everywhere">
+  <meta property="og:description" content="From the tuning fork to PageRank: eigenvalues and eigenfunctions as the connecting principle. Explained interactively.">
+  <meta property="og:url" content="https://ki-mathias.de/en/eigenprinciple.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Eigenvalues">
+  <meta property="article:tag" content="Eigenfunctions">
+  <meta property="article:tag" content="Spectral theory">
+  <meta property="article:tag" content="PCA">
+  <meta property="article:tag" content="Markov chains">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/eigenprinzip-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/eigenprinzip-en.png">
+  <meta name="twitter:title" content="The Eigenprinciple &ndash; Why the Same Mathematics Appears Everywhere">
+  <meta name="twitter:description" content="From the tuning fork to PageRank: the principle behind vibration, search and perception.">
+
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+  <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/auto-render.min.js"></script>
+  <script src="/vendor/react.production.min.js"></script>
+  <script src="/vendor/react-dom.production.min.js"></script>
+  <script defer src="/eigenprinzip-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-500.woff2) format('woff2'), url(/fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Eigenprinciple – Why the Same Mathematics Appears Everywhere",
+    "description": "Eigenvalues and eigenfunctions connect vibration, search, perception and AI. The eigenprinciple, explained interactively from the tuning fork to PageRank.",
+    "image": "https://ki-mathias.de/img/og/eigenprinzip-en.png",
+    "author": { "@type": "Person", "@id": "https://ki-mathias.de/#mathias", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/en/about.html", "sameAs": ["https://mathstodon.xyz/@ki_mathias", "https://orcid.org/0009-0009-7154-5351", "https://philpeople.org/profiles/mathias-leonhardt", "https://github.com/pmmathias", "https://pmagentur.com"] },
+    "publisher": { "@id": "https://ki-mathias.de/#mathias" },
+    "datePublished": "2026-05-20",
+    "dateModified": "2026-05-20",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/eigenprinciple.html" },
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "keywords": ["Eigenvalues", "Eigenfunctions", "Spectral theory", "PCA", "Markov chains", "PageRank", "Fourier", "Resonance"],
+    "articleSection": "Mathematics",
+    "wordCount": 12000,
+    "timeRequired": "PT45M"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ki-mathias.de/en/" },
+      { "@type": "ListItem", "position": 2, "name": "The Eigenprinciple – Why the Same Mathematics Appears Everywhere", "item": "https://ki-mathias.de/en/eigenprinciple.html" }
+    ]
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .prose-dark ul, .prose-dark ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: #d1d5db; }
+    .prose-dark li { margin-bottom: 0.4rem; line-height: 1.7; }
+    .part-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #f59e0b; margin-bottom: 0.25rem; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    figure { margin: 2rem 0; }
+    figcaption { font-size: 0.78rem; color: #94a3b8; margin-top: 0.5rem; text-align: center; }
+    .prose-dark img { border-radius: 0.5rem; border: 1px solid rgba(148,163,184,0.12); max-width: 100%; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog — RSS (Atom, English)" href="/feed-en.xml">
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<div id="nav-toc-items" style="display:none;">
+  <a href="#tuning-fork" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Tuning fork</a>
+  <a href="#eigenvector" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; Eigenvector</a>
+  <a href="#eigenfunction" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Eigenfunction</a>
+  <a href="#pca" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; Faces &amp; PCA</a>
+  <a href="#markov" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Markov &amp; PageRank</a>
+  <a href="#resonance" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; Resonance</a>
+  <a href="#bell-curve" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Bell curve</a>
+  <a href="#quantum-ai" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">8 &middot; Quantum &amp; AI</a>
+  <a href="#philosophy" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">9 &middot; Discovered or invented?</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog post &middot; Mathematics &middot; The Glass Bead Game</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    The Eigenprinciple
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Why the same mathematics appears everywhere &ndash; from the vibrating tuning fork through face recognition and web search to quantum mechanics. One principle, nine chapters, a fireworks of interactive visualizations.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-05-20">May 2026</time><span>&middot;</span>
+    <span>~45 min read</span>
+  </div>
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ================================================================ -->
+<!-- PART A — FOUNDATION -->
+<!-- ================================================================ -->
+
+<!-- 1. TUNING FORK -->
+<section id="tuning-fork" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part A &middot; Foundation</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
+<h2>The Tuning Fork and the Rule for Next Time</h2>
+
+<p>A struck tuning fork emits a single, almost pure tone, and it does so reliably enough that for two centuries it served as the reference standard for tuning instruments. What is remarkable is not the tone itself but its stability: whether the fork is struck gently or hard, whether warm or cold, the frequency stays the same. This behaviour suggests that the system prefers a particular vibration pattern and returns to it after every disturbance.</p>
+
+<p>The following develops where this stability comes from. The answer is a pattern that runs through the entire post and is called here the <em>eigenprinciple</em>: a system that follows a simple local rule develops, on its own, characteristic and stable patterns. These patterns are not an external prescription but a mathematical consequence of the rule.</p>
+
+<h3>A rule for next time</h3>
+
+<p>A point on the vibrating prong can be described completely by two quantities. Let \(x\) be the displacement of this point from its rest position and \(v\) its velocity. The elasticity of the material determines how these two quantities change from one small time step \(\Delta t\) to the next:</p>
+
+<div class="math-display">
+\[
+\begin{aligned}
+x_{\text{new}} &= x_{\text{old}} + v_{\text{old}}\,\Delta t \\[4pt]
+v_{\text{new}} &= v_{\text{old}} - \tfrac{k}{m}\,x_{\text{old}}\,\Delta t
+\end{aligned}
+\]
+</div>
+
+<p>The first rule describes, intuitively, pure motion: whoever moves with a given velocity is, after one time step, further along by the product of velocity and time step. The second rule describes, intuitively, the restoring force of the material: the further the point is displaced, the more strongly it is pulled back towards rest. Here the constant \(k/m\) &ndash; stiffness divided by mass &ndash; determines how vigorous this restoring is.</p>
+
+<p>The entire behaviour of the tuning fork follows from these two lines. Applied many thousands of times in succession, they produce not an arbitrary curve but a pure sine oscillation, and that independently of the initial displacement. The following display carries out this iteration step by step.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Adjust stiffness \(k/m\) and time step \(\Delta t\) and watch an oscillation arise from the two update rules. In phase space (right) the stable pattern appears as a closed ellipse &ndash; the eigenpattern of the system.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-oscillator"></div>
+</div>
+
+<p>The closed ellipse in phase space is the heart of the matter. It means, intuitively, that the system returns to its initial state after every full cycle; precisely this recurrence makes the tone stable. Mathematically the update rule is a <em>linear map</em>, and the oscillation is its <em>eigenpattern</em>. This means that the stability of the tuning fork and the notion of an eigenvector are two descriptions of the same fact &ndash; a connection developed in the next chapter.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-400"><em>The eigenprinciple in one sentence:</em> A simple, repeatedly applied rule generates a stable pattern on its own. This pattern &ndash; the eigenpattern &ndash; is not an input but a result of the rule. It will recur throughout this post under ever new names: eigenvector, eigenfunction, principal component, stationary distribution.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 2. EIGENVECTOR -->
+<section id="eigenvector" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part A &middot; Foundation</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 2</p>
+<h2>What an Eigenvector Really Is</h2>
+
+<p>A matrix is a linear map: vector in, vector out. Most vectors change both their length and their direction in the process. A few vectors, however, keep their direction and are merely stretched or compressed. These direction-preserving vectors are called <em>eigenvectors</em>, the associated stretching factor is the <em>eigenvalue</em>.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Rotate the input vector around the circle. Most of the time the result points in a different direction. Along the eigendirections, input and output lock in parallel &ndash; there the vector lights up.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-eigen-transform"></div>
+</div>
+
+<h3>How the eigendirections are found</h3>
+
+<p>We seek vectors \(\mathbf{v}\) for which the map \(A\) merely produces a stretch, that is \(A\mathbf{v} = \lambda\,\mathbf{v}\) with a scalar \(\lambda\). This equation means, intuitively, that input and output lie on the same line through the origin. Rewritten as \((A - \lambda I)\,\mathbf{v} = \mathbf{0}\), it has a non-trivial solution exactly when the determinant \(\det(A - \lambda I)\) vanishes.</p>
+
+<p>This determinant is a polynomial in \(\lambda\), the <em>characteristic polynomial</em>. Its roots are the eigenvalues, and to each eigenvalue belongs an eigendirection. Here a real map need not possess real eigenvalues: a rotation displaces every vector, so that none stays direction-true &ndash; the visualization above shows this case under the preset <em>Rotation</em>.</p>
+
+<p>This closes the arc back to Chapter 1. The update rule of the tuning fork was a linear map, applied at every time step; the stable oscillation corresponded to its eigendirection, and the frequency was fixed by the associated eigenvalue. This means that eigenvectors are not an algebraic curiosity but describe which patterns a repeatedly applied process prefers.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 3. EIGENFUNCTION -->
+<section id="eigenfunction" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part A &middot; Foundation</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 3</p>
+<h2>From Vectors to Functions: the Eigenfunction</h2>
+
+<p>The same idea carries over when a whole function takes the place of the vector. An <em>eigenfunction</em> is a function that, under an operation &ndash; say the second derivative or the Fourier transform &ndash; keeps its shape and is only scaled by a factor. This definition transfers the notion of an eigenvector from finite vectors to the infinite-dimensional space of functions.</p>
+
+<h3>Standing waves on a plate</h3>
+
+<p>A clamped plate cannot vibrate arbitrarily. It takes on only certain patterns, the <em>eigenmodes</em>, in which certain lines stay permanently at rest. Scatter sand on the plate and it gathers along these nodal lines, making the pattern visible; Ernst Chladni demonstrated these figures from 1787 onward.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Choose the mode numbers \(m\) and \(n\). The orange lines are the nodal lines on which the plate rests.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-chladni"></div>
+</div>
+
+<p>Only integer mode numbers are allowed. This discretisation is no accident but follows from the boundary conditions: the plate is fixed at its edge, and only patterns with an integer wavenumber satisfy that condition. The same quantisation produces the discrete energy levels of an atom; Schr&ouml;dinger therefore titled his 1926 paper <em>Quantization as an Eigenvalue Problem</em>.</p>
+
+<h3>Every curve as a sum of eigenfunctions</h3>
+
+<p>For the vibrating string the eigenfunctions are the sine modes. Here a property holds that carries far beyond the string: every sufficiently smooth function can be written as a sum of these sine eigenfunctions, \(f(x) = \sum_n c_n \sin(n\pi x)\). This sum means, intuitively, that the eigenfunctions form a complete basis &ndash; just as every vector is assembled from basis vectors.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Increase the number of sine terms and watch the sum approach the target curve.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-fourier-synthesis"></div>
+</div>
+
+<p>That complete eigenfunction bases exist at all is the content of Sturm-Liouville theory from 1836. It shows that a broad class of physical differential equations possesses a complete, orthogonal system of eigenfunctions; the particular boundary condition selects which one. Hence sine functions appear for the string, Bessel functions for cylindrical symmetry, and Hermite functions for the quantum-mechanical oscillator. This means that decomposing into eigenfunctions is not a special trick of individual fields but the common structure behind acoustics, heat conduction and quantum mechanics.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- PART B — APPLICATIONS -->
+<!-- ================================================================ -->
+
+<!-- 4. PCA / EIGENFACES -->
+<section id="pca" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part B &middot; Applications</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4</p>
+<h2>Faces in the Data Stream: Principal Components</h2>
+
+<p>So far eigenvectors were a property of a given map. In data analysis the direction of view reverses: from the data themselves a matrix is built, whose eigenvectors reveal the inner structure of the data. This procedure is <em>Principal Component Analysis</em> (PCA).</p>
+
+<h3>The axes of greatest spread</h3>
+
+<p>Let a cloud of data points be given. From it the <em>covariance matrix</em> is computed, whose entries describe how strongly the coordinates vary together. The eigenvectors of this matrix mean, intuitively, the directions along which the data spread most; the associated eigenvalue states how large that spread is. The first principal axis thus captures the largest part of the information, the second the next largest, and so on.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Adjust the correlation of the data and watch how the principal axes align. Under strong correlation almost the entire spread sits in the first axis.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-pca"></div>
+</div>
+
+<p>Herein lies the practical benefit: if the first axis carries most of the spread, the second can be neglected without losing much information. High-dimensional data are thus compressed onto a few axes. This means that PCA is a compression whose basis is not prescribed but obtained from the data as their eigenstructure.</p>
+
+<h3>Eigenfaces</h3>
+
+<p>If face images are taken as data points &ndash; each pixel a coordinate &ndash; the principal axes yield the <em>eigenfaces</em>. Matthew Turk and Alex Pentland showed in 1991 that every face can be represented as a mean face plus a weighted sum of a few eigenfaces. A few dozen coefficients suffice to recognise a face.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Mix the three eigenfaces through their weights and watch a whole family of faces arise from a few numbers.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-eigenfaces"></div>
+</div>
+
+<p>The same idea carries the <a href="/en/deepfakes.html" class="text-cyan-400 hover:text-cyan-300 underline">deepfakes post</a>: there an autoencoder replaces linear PCA with a non-linear generalisation, yet the principle remains that a face is described by a few coordinates in a learned basis. This means that face recognition solves, at its core, the same eigenvalue problem as the vibrating tuning fork &ndash; only that the eigenvectors here come from data rather than from an equation of motion.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 5. MARKOV & PAGERANK -->
+<section id="markov" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part B &middot; Applications</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 5</p>
+<h2>The Web as a Random Process: Markov and PageRank</h2>
+
+<p>A <em>Markov chain</em> describes transitions between states in which the current state alone decides the next. The probabilities of these transitions form a matrix. Let an initial distribution over the states be given, then multiplication by this matrix yields the distribution one step later.</p>
+
+<h3>The distribution that no longer changes</h3>
+
+<p>If this step is repeated, the distribution converges under mild conditions to a fixed vector, the <em>stationary distribution</em>. This vector no longer changes under the transition matrix; it therefore satisfies \(\boldsymbol{\pi} P = \boldsymbol{\pi}\) and is thus the eigenvector for eigenvalue one. The Perron-Frobenius theorem guarantees that for a stochastic matrix this eigenvalue exists, is largest in magnitude, and is simple.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Start with full certainty in the state Sun and carry out steps. Regardless of the start, the distribution approaches the dashed stationary solution.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-markov"></div>
+</div>
+
+<h3>PageRank: the web as a Markov chain</h3>
+
+<p>Google's original ranking algorithm treats the web as a Markov chain. The states are web pages, the transitions are the links. An imagined visitor follows, with probability \(d\), a random link of the current page and jumps, with probability \(1-d\), to an arbitrary page of the web. This <em>damping factor</em> \(d\), usually \(0.85\), prevents the visitor from getting stuck in link-free dead ends.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Watch the surfing visitor. The nodes grow with their visit frequency. Adjust the damping factor and observe how the distribution changes.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-pagerank"></div>
+</div>
+
+<p>The PageRank of a page is its visit frequency in the stationary state &ndash; again the dominant eigenvector, this time of the so-called Google matrix. Here the damping factor acts as a regularisation that makes the problem stable and uniquely solvable. The <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300 underline">eigenvalues post</a> shows that this damping factor corresponds structurally to the same term as the regularisation parameter of ridge regression. This means that stabilising a web search and avoiding overfitting in machine learning are two manifestations of the same intervention into an eigenvalue spectrum.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 6. RESONANCE -->
+<section id="resonance" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part B &middot; Applications</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 6</p>
+<h2>When Bridges Dance: Resonance</h2>
+
+<p>So far the eigenpatterns were desirable or useful. This chapter shows their dangerous side. Every mechanical structure possesses eigenfrequencies, that is, vibration patterns it preferentially takes on. These eigenfrequencies are the eigenvalues of the structure's equation of motion. When a periodic excitation meets one of these frequencies, it transfers its energy especially effectively, and the motion builds up &ndash; a process called <em>resonance</em>.</p>
+
+<h3>Tacoma Narrows, 1940</h3>
+
+<figure>
+  <img src="/img/eigenprinzip/tacoma-narrows.jpg" alt="The Tacoma Narrows Bridge in Washington State, a slender suspension bridge over the sound." loading="lazy" width="768" height="606">
+  <figcaption>The Tacoma Narrows Bridge (Washington, 1940). Image: University of Washington Libraries, public domain, via Wikimedia Commons.</figcaption>
+</figure>
+
+<p>A few months after its opening, the Tacoma Narrows Bridge entered a self-amplifying torsional oscillation in moderate wind and collapsed. The wind supplied no periodic excitation in the simple sense; rather, vortices shed rhythmically from the deck, their frequency close to an eigenfrequency of the bridge. This mechanism &ndash; aeroelastic flutter &ndash; has since been a fixed part of bridge engineering.</p>
+
+<h3>Millennium Bridge, 2000</h3>
+
+<figure>
+  <img src="/img/eigenprinzip/millennium-bridge.jpg" alt="The London Millennium Bridge, a low pedestrian bridge over the Thames." loading="lazy" width="960" height="185">
+  <figcaption>The Millennium Bridge in London. Image: Ilgorba, CC&nbsp;BY-SA&nbsp;3.0, via Wikimedia Commons (<a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="noopener" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">licence</a>).</figcaption>
+</figure>
+
+<p>On the opening day of the London Millennium Bridge, it began to sway sideways under the weight of pedestrians. Here no external excitation acted but a feedback: a small sideways motion led those walking to adjust their step unconsciously to the sway, which amplified the motion and drew in further people. This transition from disordered to synchronised walking is an example of <em>synchronisation</em>, described by the Kuramoto model.</p>
+
+<p>Both cases share the same cause. A system with pronounced eigenmodes is excited near an eigenfrequency and responds with growing amplitude. This means that the stability of the tuning fork's tone and the collapse of a bridge are two sides of the same coin: in the one case the preferred eigenpattern is desirable, in the other destructive.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 7. BELL CURVE -->
+<section id="bell-curve" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part B &middot; Applications</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 7</p>
+<h2>The Bell Curve as a Preferred Shape</h2>
+
+<p>When many independent random influences are summed, the same distribution almost always results: the bell curve. The Central Limit Theorem describes this observation precisely. At first glance it does not belong in this chapter, for there is no talk of eigenvalues here. On closer inspection, however, the same pattern carries.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Let balls fall through the Galton board. Each makes a random decision at every peg, and yet the bell curve emerges in the sum.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-galton"></div>
+</div>
+
+<p>The mathematical operation that combines two independent random influences is the <em>convolution</em> of their distributions. The Central Limit Theorem states, intuitively, that the repeated convolution of arbitrary distributions tends towards a single shape: the Gaussian bell curve. This shape no longer changes its form under further convolution, only its width.</p>
+
+<p>Thus the bell curve is a fixed point of convolution &ndash; and a fixed point is nothing other than an eigenvector for eigenvalue one, here in the space of probability distributions. This means that the ubiquity of the normal distribution has the same cause as the stability of the tuning fork's tone: it is the preferred, self-reproducing pattern of a repeatedly applied process.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- 8. QUANTUM & AI -->
+<section id="quantum-ai" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part B &middot; Applications</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 8</p>
+<h2>The Recurring K: Quantum and AI</h2>
+
+<p>The preceding chapters sought the eigenprinciple in mechanics, data analysis and probability theory. This chapter leads it back to where the earlier posts of this blog have already met it: into quantum mechanics and machine learning.</p>
+
+<p>In quantum mechanics the propagator describes how a particle evolves from one place to another. It is written as a sum over eigenstates, weighted by phase factors of the energy eigenvalues:</p>
+
+<div class="math-display">
+\[
+K(B, A, t) = \sum_n \phi_n(B)\,\phi_n^*(A)\,e^{-i E_n t/\hbar}
+\]
+</div>
+
+<p>In kernel methods of machine learning the kernel describes how similar two data points are. It too is written as a sum over eigenfunctions, weighted by their eigenvalues:</p>
+
+<div class="math-display">
+\[
+K(x, x') = \sum_n \lambda_n\,\phi_n(x)\,\phi_n(x')
+\]
+</div>
+
+<p>Both expressions carry the same letter \(K\), and that is no coincidence. Both are a spectral decomposition: a sum over eigenfunctions, each weighted by its eigenvalue. This means, intuitively, that the question <em>How does a quantum particle get from A to B?</em> and the question <em>How similar are two data points?</em> have the same mathematical form.</p>
+
+<p>The same structure reaches into modern language models. The attention mechanism of a transformer computes weighted similarities between tokens and can be read as a kernel operation whose behaviour is governed by an eigenvalue spectrum. How this spectrum changes when a model grows is the subject of the post on emergence.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-400">Developed in detail in the posts <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300 underline">Quantum Physics</a>, <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300 underline">Eigenvalues &amp; AI</a> and <a href="/en/emergence.html" class="text-cyan-400 hover:text-cyan-300 underline">Emergence in Language Models</a>.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- PART C — PHILOSOPHY -->
+<!-- ================================================================ -->
+
+<!-- 9. PHILOSOPHY -->
+<section id="philosophy" class="pb-16">
+<div class="prose-dark">
+
+<p class="part-label">Part C &middot; What it says about nature</p>
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 9</p>
+<h2>Discovered or Invented?</h2>
+
+<p>The preceding chapters met the same structure in very different fields. This recurrence can be read in two ways. On the first reading we merely project a familiar mathematical tool onto everything we examine; the eigenstructure would then lie in our gaze, not in the things. On the second reading the eigenstructure is a feature of reality itself, which we discover.</p>
+
+<p>One argument speaks for the second reading. The eigenpatterns appear in physics, biology and computer science <em>independently of one another</em>, derived from entirely different starting assumptions. Were they mere projection, they would have to break at the points where the fields do not know each other. Instead they deliver the same structures there. This finding can be read cautiously in the sense of a spectral realism: the eigenstructures are not invented but found.</p>
+
+<p>Caution is nevertheless warranted, and let the assumption be named openly here. That a tool fits everywhere may also mean that it is coarse enough to fit everywhere. Linear maps are the simplest non-trivial class of maps, and eigenvalues are their natural vocabulary. Part of the ubiquity is therefore likely due to the simplicity of the tool, not to a depth of nature alone. A final decision between the two readings is not claimed here.</p>
+
+<h3>Stability as selection</h3>
+
+<p>One connecting thought remains regardless of this question. Through all chapters ran the same principle: stable patterns remain, unstable ones cancel out. The tuning fork returns to its eigenpattern; the stationary distribution is the state that reproduces itself; the bell curve is the shape preserved under convolution. In each case the eigenpattern is not what begins loudest, but what endures.</p>
+
+<p>The same selection principle carries two earlier posts of this blog. In the <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300 underline">quantum post</a>, those paths survive whose phases add constructively, while the rest cancel through destructive interference. In the post on <a href="/en/god.html" class="text-cyan-400 hover:text-cyan-300 underline">God as an emergent phenomenon</a>, coherent configurations prevail as attractors of a dynamic. This means that eigenpatterns, stable quantum paths and coherent world-views are descriptions of the same process: a process is applied repeatedly, and what survives it unchanged remains.</p>
+
+<p>Herein lies the glass bead game of this blog. Not in the claim that everything is the same, but in the more precise observation that very different objects share the same mathematical core. Erwin Schr&ouml;dinger titled his 1926 paper <em>Quantization as an Eigenvalue Problem</em>. The line pursued here adds only that not quantisation alone, but a whole series of stable orders can be written as an eigenvalue problem &ndash; and that these orders arise because a process selects its own preferred patterns.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Read next</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Related posts on ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/en/eigenvalues.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenvalues & AI</a> <span class="text-gray-500" style="font-size:0.9em;">— Kernels, PageRank, Neumann series</span></li>
+    <li><a href="/en/emergence.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergence in Language Models</a> <span class="text-gray-500" style="font-size:0.9em;">— Phase transitions, grokking, Ising</span></li>
+  </ul>
+</div>
+</section>
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600 max-w-4xl mx-auto px-4">
+  <p class="mb-2"><em>&bdquo;The same pattern, under ever new names.&ldquo;</em></p>
+  <p>&copy; 2026 Mathias Leonhardt &middot; Created with Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="/en/about.html" class="hover:text-gray-400">About</a> &middot;
+    <a href="/en/imprint.html" class="hover:text-gray-400">Imprint</a> &middot;
+    <a href="/en/privacy.html" class="hover:text-gray-400">Privacy</a>
+  </p>
+</footer>
+
+</div><!-- /max-w-4xl -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  var COMPONENTS = {
+    'mount-oscillator': window.NextStepOscillator || null,
+    'mount-eigen-transform': window.EigenDirections || null,
+    'mount-chladni': window.ChladniFigures || null,
+    'mount-fourier-synthesis': window.FourierSynthesis || null,
+    'mount-pca': window.PCARotation || null,
+    'mount-eigenfaces': window.EigenfacesExplorer || null,
+    'mount-markov': window.MarkovConvergence || null,
+    'mount-pagerank': window.PageRankSurfer || null,
+    'mount-galton': window.GaltonBoard || null,
+  };
+
+  var mounted = {};
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var Comp = COMPONENTS[id];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Component failed to load.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+
+</body>
+</html>

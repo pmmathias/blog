@@ -134,4 +134,13 @@
     <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
     <summary>Wie funktionieren Deepfakes wirklich? Eine Reise von linearer Algebra über PCA, den Kernel-Trick und neuronale Netze bis zum Decoder-Swap – interaktiv erklärt mit 6 Visualisierungen.</summary>
   </entry>
+  <entry>
+    <title>Das Eigenprinzip – Warum dieselbe Mathematik überall auftaucht</title>
+    <link href="https://ki-mathias.de/eigenprinzip.html"/>
+    <id>https://ki-mathias.de/eigenprinzip.html</id>
+    <published>2026-05-20T12:00:00+02:00</published>
+    <updated>2026-05-20T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Eigenwerte und Eigenfunktionen verbinden Schwingung, Suche, Wahrnehmung und KI. Das Eigenprinzip, interaktiv erklärt von der Stimmgabel bis PageRank.</summary>
+  </entry>
 </feed>

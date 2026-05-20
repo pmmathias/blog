@@ -56,6 +56,11 @@
       en: { title: 'KRR Chat: Under the Hood', subtitle: 'RAG \u00B7 Float64 \u00B7 Three-Color Code', href: '/en/krr-chat-explained.html' }
     },
     {
+      icon: '\uD83C\uDF00',  // \uD83C\uDF00
+      de: { title: 'Das Eigenprinzip', subtitle: 'Stimmgabel \u00B7 PCA \u00B7 Markov \u00B7 PageRank', href: '/eigenprinzip.html' },
+      en: { title: 'The Eigenprinciple', subtitle: 'Tuning fork \u00B7 PCA \u00B7 Markov \u00B7 PageRank', href: '/en/eigenprinciple.html' }
+    },
+    {
       icon: '\uD83E\uDDE0',  // 🧠
       de: { title: 'Emergenz in Sprachmodellen', subtitle: 'Phasen\u00FCberg\u00E4nge \u00B7 Grokking \u00B7 Ising', href: '/emergenz.html' },
       en: { title: 'Emergence in Language Models', subtitle: 'Phase transitions \u00B7 Grokking \u00B7 Ising', href: '/en/emergence.html' }
