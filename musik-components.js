@@ -4,11 +4,36 @@
 
 // ════════════════════════════════════════════════════════════════
 // Shared Audio Context (lazy init on user gesture)
+//
+// iOS note: the Web Audio API plays in the "ambient" session category,
+// which is silenced by the hardware mute switch (while <video> like
+// YouTube plays in "playback" and ignores it). To make Web Audio audible
+// even with the mute switch on, we keep a near-silent looping <audio>
+// element playing — that flips the AVAudioSession to "playback", and the
+// Web Audio output then rides along audibly. The element is started on the
+// first user gesture (required by iOS autoplay rules).
 // ════════════════════════════════════════════════════════════════
 var _audioCtx = null;
+var _keepAlive = null;
+
+function _unlockMobileAudio() {
+  if (!_keepAlive) {
+    _keepAlive = document.createElement('audio');
+    _keepAlive.setAttribute('playsinline', '');
+    _keepAlive.loop = true;
+    _keepAlive.volume = 0.0001; // effectively silent, but non-zero keeps the session alive
+    _keepAlive.src = '/vendor/silence.wav';
+  }
+  if (_keepAlive.paused) {
+    var pk = _keepAlive.play();
+    if (pk && pk.catch) pk.catch(function () {});
+  }
+}
+
 function getAudioCtx() {
   if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  _unlockMobileAudio();
   return _audioCtx;
 }
 
