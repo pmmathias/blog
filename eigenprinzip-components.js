@@ -82,7 +82,7 @@
   //    Links: Zeitreihe x(t). Rechts: Phasenraum (x, v) -> geschlossene Ellipse.
   // =========================================================================
   function NextStepOscillator() {
-    var W = 760, Hh = 340, padL = 360; // padL = x where phase plot begins
+    var W = 760, Hh = 300;
     var canvasRef = useRef(null);
     var stateRef = useRef({ x: 1, v: 0, trail: [], phase: [] });
     var rafRef = useRef(null);
@@ -111,73 +111,84 @@
       canvas.style.width = '100%'; canvas.style.height = 'auto';
       ctx.scale(dpr, dpr);
 
+      // layout: left = time series, right = phase space, clear divider
+      var DIV = 384;                       // divider x-coordinate
+      var tsX0 = 14, tsX1 = DIV - 20, tsW = tsX1 - tsX0, midY = Hh / 2;
+      var AMP = Hh / 2 - 38;               // fixed displacement scale
+      var phX = DIV + (W - DIV) / 2, phY = Hh / 2, phR = Hh / 2 - 34;
+
       function draw() {
         var s = stateRef.current;
         var kmv = kmRef.current, dtv = dtRef.current;
+        var omega = Math.sqrt(kmv);
 
         if (runRef.current) {
-          // one Euler step of the "rule for next time"
-          var xn = s.x + s.v * dtv;
-          var vn = s.v - kmv * s.x * dtv;
-          s.x = xn; s.v = vn;
+          // symplectic (semi-implicit) Euler: update v first, then x with the
+          // new v. This conserves energy, so a normal step gives a closed
+          // ellipse; only a genuinely large Δt makes it spiral out.
+          var steps = 2;                   // a couple of substeps for smoothness
+          for (var st = 0; st < steps; st++) {
+            s.v = s.v - kmv * s.x * (dtv / steps);
+            s.x = s.x + s.v * (dtv / steps);
+          }
           s.trail.push(s.x);
-          if (s.trail.length > 220) s.trail.shift();
+          if (s.trail.length > 240) s.trail.shift();
           s.phase.push([s.x, s.v]);
-          if (s.phase.length > 600) s.phase.shift();
+          if (s.phase.length > 900) s.phase.shift();
         }
 
         // background
         ctx.clearRect(0, 0, W, Hh);
-        ctx.fillStyle = C.bg;
-        ctx.fillRect(0, 0, W, Hh);
+        ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, Hh);
 
-        // ---- left panel: time series ----
-        var tsW = 330, tsX0 = 18, midY = Hh / 2;
+        // divider
         ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(tsX0, midY); ctx.lineTo(tsX0 + tsW, midY); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(DIV, 8); ctx.lineTo(DIV, Hh - 8); ctx.stroke();
+
+        // ===== left panel: time series (clipped) =====
+        ctx.save();
+        ctx.beginPath(); ctx.rect(0, 0, DIV - 1, Hh); ctx.clip();
+        ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(tsX0, midY); ctx.lineTo(tsX1, midY); ctx.stroke();
         ctx.fillStyle = C.dim; ctx.font = '11px Inter, sans-serif';
         ctx.fillText(t('Auslenkung x über die Zeit', 'Displacement x over time'), tsX0, 18);
 
         ctx.strokeStyle = C.cyan; ctx.lineWidth = 2; ctx.beginPath();
-        for (var i = 0; i < s.trail.length; i++) {
-          var px = tsX0 + (i / 220) * tsW;
-          var py = midY - s.trail[i] * (Hh / 2 - 30);
+        var n = s.trail.length;
+        for (var i = 0; i < n; i++) {
+          var px = tsX0 + (i / 240) * tsW;
+          var py = midY - Math.max(-1.6, Math.min(1.6, s.trail[i])) * AMP;
           if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
         }
         ctx.stroke();
+        ctx.restore();
 
-        // ---- right panel: phase space ----
-        var phX = padL + 70, phY = Hh / 2, phR = Hh / 2 - 28;
+        // ===== right panel: phase space (clipped) =====
+        ctx.save();
+        ctx.beginPath(); ctx.rect(DIV + 1, 0, W - DIV, Hh); ctx.clip();
         ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(phX - phR, phY); ctx.lineTo(phX + phR, phY); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(phX, phY - phR); ctx.lineTo(phX, phY + phR); ctx.stroke();
-        ctx.fillStyle = C.dim;
-        ctx.fillText(t('Phasenraum (x, v)', 'Phase space (x, v)'), phX - phR, 18);
+        ctx.fillStyle = C.dim; ctx.font = '11px Inter, sans-serif';
+        ctx.fillText(t('Phasenraum (x, v)', 'Phase space (x, v)'), DIV + 14, 18);
 
-        // phase trail
+        // scale: x -> phR, v/omega -> phR  (so a unit-amplitude orbit is a circle)
+        var sc = phR / 1.55;
         ctx.strokeStyle = C.amber; ctx.lineWidth = 1.5; ctx.beginPath();
         for (var j = 0; j < s.phase.length; j++) {
-          var qx = phX + s.phase[j][0] * (phR / 1.6);
-          var qy = phY - s.phase[j][1] * (phR / (1.6 * Math.sqrt(kmv)));
+          var qx = phX + s.phase[j][0] * sc;
+          var qy = phY - (s.phase[j][1] / omega) * sc;
           if (j === 0) ctx.moveTo(qx, qy); else ctx.lineTo(qx, qy);
         }
         ctx.stroke();
-
-        // current point
         if (s.phase.length) {
           var last = s.phase[s.phase.length - 1];
-          var cx = phX + last[0] * (phR / 1.6);
-          var cy = phY - last[1] * (phR / (1.6 * Math.sqrt(kmv)));
           ctx.fillStyle = C.teal;
-          ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath();
+          ctx.arc(phX + last[0] * sc, phY - (last[1] / omega) * sc, 4.5, 0, Math.PI * 2);
+          ctx.fill();
         }
-
-        // instability hint
-        var energy = s.x * s.x + (s.v * s.v) / kmv;
-        if (energy > 6) {
-          ctx.fillStyle = '#f87171'; ctx.font = '11px Inter, sans-serif';
-          ctx.fillText(t('Zeitschritt zu groß → Spirale statt Ellipse (numerische Instabilität)', 'Time step too large → spiral instead of ellipse (numerical instability)'), tsX0, Hh - 10);
-        }
+        ctx.restore();
 
         rafRef.current = requestAnimationFrame(draw);
       }
@@ -203,10 +214,10 @@
           h(Button, { active: false, onClick: reset }, t('Zurücksetzen', 'Reset'))
         ),
         caption(t(
-          'Zwei Update-Regeln, viele Tausend Mal angewandt: x_neu = x + v·Δt und v_neu = v − (k/m)·x·Δt. ' +
-          'Die geschlossene Ellipse im Phasenraum ist das stabile Eigenmuster. Bei zu großem Δt zerfällt es — ein Artefakt der Diskretisierung, nicht der Physik.',
-          'Two update rules, applied many thousands of times: x_new = x + v·Δt and v_new = v − (k/m)·x·Δt. ' +
-          'The closed ellipse in phase space is the stable eigenpattern. For too large a Δt it falls apart — an artefact of the discretisation, not of the physics.'))
+          'Zwei Update-Regeln, viele Tausend Mal angewandt: v_neu = v − (k/m)·x·Δt, dann x_neu = x + v_neu·Δt. ' +
+          'Die geschlossene Ellipse im Phasenraum ist das stabile Eigenmuster: Nach jedem Umlauf kehrt das System in seinen Ausgangszustand zurück. Eine größere Steifigkeit k/m staucht die Ellipse, ein größerer Zeitschritt Δt macht den Bahnverlauf gröber.',
+          'Two update rules, applied many thousands of times: v_new = v − (k/m)·x·Δt, then x_new = x + v_new·Δt. ' +
+          'The closed ellipse in phase space is the stable eigenpattern: after each cycle the system returns to its initial state. A larger stiffness k/m compresses the ellipse, a larger time step Δt makes the orbit coarser.'))
       )
     );
   }
@@ -422,12 +433,12 @@
       ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(x0, midY); ctx.lineTo(x0 + ww, midY); ctx.stroke();
 
-      function target(t) { // t in [0,1)
-        if (wave === 'square') return t < 0.5 ? 1 : -1;
-        return 1 - 2 * t; // sawtooth
+      function target(u) { // u in [0,1)
+        if (wave === 'square') return u < 0.5 ? 1 : -1;
+        return 1 - 2 * u; // sawtooth
       }
-      function partial(t) {
-        var s = 0, x = 2 * Math.PI * t;
+      function partial(u) {
+        var s = 0, x = 2 * Math.PI * u;
         for (var k = 1; k <= terms; k++) {
           if (wave === 'square') {
             var n = 2 * k - 1; s += (4 / Math.PI) * Math.sin(n * x) / n;
@@ -441,7 +452,7 @@
       // target (faint)
       ctx.strokeStyle = 'rgba(148,163,184,0.35)'; ctx.lineWidth = 1.5; ctx.beginPath();
       for (var i = 0; i <= ww; i++) {
-        var t = i / ww, yy = midY - target(t) * ampPx;
+        var u0 = i / ww, yy = midY - target(u0) * ampPx;
         if (i === 0) ctx.moveTo(x0 + i, yy); else ctx.lineTo(x0 + i, yy);
       }
       ctx.stroke();
