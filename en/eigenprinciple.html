@@ -83,6 +83,35 @@
   }
   </script>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the eigenprinciple?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The eigenprinciple is the observation that a system following a simple local rule develops, on its own, characteristic stable patterns – the eigenpatterns. These patterns are not an external prescription but a mathematical consequence of the rule, and are described by eigenvalues and eigenvectors." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between an eigenvector and an eigenfunction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "An eigenvector keeps its direction under a matrix and is only stretched. An eigenfunction keeps its shape under an operation such as differentiation or the Fourier transform and is only scaled. It is the same idea, once in the finite-dimensional space of vectors, once in the infinite-dimensional space of functions." }
+      },
+      {
+        "@type": "Question",
+        "name": "What do PageRank and Principal Component Analysis have in common?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Both compute a dominant eigenvector. PageRank finds the eigenvector of the Google matrix – the stationary distribution of a random surfer. Principal Component Analysis finds the eigenvectors of the covariance matrix – the directions of greatest spread in the data." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does the same mathematics appear in such different fields?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Because stable patterns are exactly what a repeatedly applied process selects: stable structures persist, unstable ones cancel out. This selection principle leads, in mechanics, data analysis, probability theory and quantum mechanics, to the same eigenvalue structure." }
+      }
+    ]
+  }
+  </script>
+
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', system-ui, sans-serif; }
@@ -492,6 +521,24 @@ K(x, x') = \sum_n \lambda_n\,\phi_n(x)\,\phi_n(x')
 <div class="section-divider"></div>
 </section>
 
+
+<section class="pb-12">
+<div class="prose-dark">
+<h2 style="font-size:1.5rem;">Frequently Asked Questions</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is the eigenprinciple?</h3>
+<p>The eigenprinciple is the observation that a system following a simple local rule develops, on its own, characteristic stable patterns &ndash; the eigenpatterns. These patterns are not an external prescription but a mathematical consequence of the rule, and are described by eigenvalues and eigenvectors.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is the difference between an eigenvector and an eigenfunction?</h3>
+<p>An eigenvector keeps its direction under a matrix and is only stretched. An eigenfunction keeps its shape under an operation such as differentiation or the Fourier transform and is only scaled. It is the same idea, once in the finite-dimensional space of vectors, once in the infinite-dimensional space of functions.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What do PageRank and Principal Component Analysis have in common?</h3>
+<p>Both compute a dominant eigenvector. PageRank finds the eigenvector of the Google matrix &ndash; the stationary distribution of a random surfer. Principal Component Analysis finds the eigenvectors of the covariance matrix &ndash; the directions of greatest spread in the data.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Why does the same mathematics appear in such different fields?</h3>
+<p>Because stable patterns are exactly what a repeatedly applied process selects: stable structures persist, unstable ones cancel out. This selection principle leads, in mechanics, data analysis, probability theory and quantum mechanics, to the same eigenvalue structure.</p>
+</div>
+</section>
 
 <section class="pb-12" data-related-block="1">
 <div class="max-w-4xl mx-auto px-4">
