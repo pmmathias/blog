@@ -56,6 +56,11 @@
       en: { title: 'KRR Chat: Under the Hood', subtitle: 'RAG \u00B7 Float64 \u00B7 Three-Color Code', href: '/en/krr-chat-explained.html' }
     },
     {
+      icon: '\u26F0\uFE0F',  // \u26F0 (mountain)
+      de: { title: 'Hopfield-Netze', subtitle: 'Spinglas \u00B7 Modern Hopfield \u00B7 Attention', href: '/hopfield.html' },
+      en: { title: 'Hopfield Networks', subtitle: 'Spin glass \u00B7 Modern Hopfield \u00B7 Attention', href: '/en/hopfield.html' }
+    },
+    {
       icon: '\uD83C\uDF00',  // \uD83C\uDF00
       de: { title: 'Das Eigenprinzip', subtitle: 'Stimmgabel \u00B7 PCA \u00B7 Markov \u00B7 PageRank', href: '/eigenprinzip.html' },
       en: { title: 'The Eigenprinciple', subtitle: 'Tuning fork \u00B7 PCA \u00B7 Markov \u00B7 PageRank', href: '/en/eigenprinciple.html' }

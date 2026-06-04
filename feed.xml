@@ -5,9 +5,18 @@
   <link href="https://ki-mathias.de/feed.xml" rel="self"/>
   <link href="https://ki-mathias.de/"/>
   <id>https://ki-mathias.de/feed.xml</id>
-  <updated>2026-05-21T12:00:00+02:00</updated>
+  <updated>2026-06-04T12:00:00+02:00</updated>
   <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri><email>mathias-leonhardt@gmx.de</email></author>
   <icon>https://ki-mathias.de/img/mathias-portrait.jpg</icon>
+  <entry>
+    <title>Hopfield-Netze – vom Spinglas zur Aufmerksamkeit</title>
+    <link href="https://ki-mathias.de/hopfield.html"/>
+    <id>https://ki-mathias.de/hopfield.html</id>
+    <published>2026-06-04T12:00:00+02:00</published>
+    <updated>2026-06-04T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Warum jedes Sprachmodell in seinem Kern ein Hopfield-Netz aus dem Jahr 1982 ist. Eine mathematische Kette von Ising und Hebb über Pseudoinverse zur Modern-Hopfield-Identität mit Transformer-Attention – Nobelpreis 2024, sieben Kapitel, fünf interaktive MNIST-Demos.</summary>
+  </entry>
   <entry>
     <title>Wellen, Pfeile und das Doppelspalt-Wunder</title>
     <link href="https://ki-mathias.de/quanten.html"/>

@@ -5,9 +5,18 @@
   <link href="https://ki-mathias.de/feed-en.xml" rel="self"/>
   <link href="https://ki-mathias.de/en/"/>
   <id>https://ki-mathias.de/feed-en.xml</id>
-  <updated>2026-05-21T12:00:00+02:00</updated>
+  <updated>2026-06-04T12:00:00+02:00</updated>
   <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri><email>mathias-leonhardt@gmx.de</email></author>
   <icon>https://ki-mathias.de/img/mathias-portrait.jpg</icon>
+  <entry>
+    <title>Hopfield Networks – From Spin Glass to Attention</title>
+    <link href="https://ki-mathias.de/en/hopfield.html"/>
+    <id>https://ki-mathias.de/en/hopfield.html</id>
+    <published>2026-06-04T12:00:00+02:00</published>
+    <updated>2026-06-04T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Why every language model is, at its core, a Hopfield network from 1982. A mathematical chain from Ising and Hebb through the pseudoinverse to the Modern Hopfield identity with Transformer attention – 2024 Nobel Prize, seven chapters, five interactive MNIST demos.</summary>
+  </entry>
   <entry>
     <title>Waves, Arrows and the Double-Slit Wonder</title>
     <link href="https://ki-mathias.de/en/quantum.html"/>

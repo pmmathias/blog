@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Hopfield Networks Explained &mdash; From Spin Glass to Attention</title>
+  <meta name="description" content="Hopfield networks, Modern Hopfield and Transformer attention are the same mathematics. From the 1925 spin glass through pseudoinverse and the kernel trick to attention in LLMs &ndash; explained interactively.">
+  <meta name="author" content="Mathias Leonhardt">
+  <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
+  <link rel="canonical" href="https://ki-mathias.de/en/hopfield.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/hopfield.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/hopfield.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/hopfield.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Hopfield Networks &mdash; From Spin Glass to Attention">
+  <meta property="og:description" content="Why every Transformer is a Hopfield network. A mathematical line from 1982 to the 2024 Nobel Prize, explained interactively.">
+  <meta property="og:url" content="https://ki-mathias.de/en/hopfield.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-06-04">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Hopfield Network">
+  <meta property="article:tag" content="Modern Hopfield">
+  <meta property="article:tag" content="Transformer">
+  <meta property="article:tag" content="Attention">
+  <meta property="article:tag" content="Kernel Trick">
+
+  <meta property="og:image" content="https://ki-mathias.de/img/og/hopfield-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/hopfield-en.png">
+  <meta name="twitter:title" content="Hopfield Networks &mdash; From Spin Glass to Attention">
+  <meta name="twitter:description" content="A mathematical line from 1982 to 2024. Interactive.">
+
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+  <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/auto-render.min.js"></script>
+  <script src="/vendor/react.production.min.js"></script>
+  <script src="/vendor/react-dom.production.min.js"></script>
+  <script defer src="/hopfield-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-500.woff2) format('woff2'), url(/fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Hopfield Networks &ndash; From Spin Glass to Attention",
+    "description": "Hopfield, Modern Hopfield and Transformer attention are the same mathematics. A chain from 1982 to the 2024 Nobel Prize, explained interactively.",
+    "author": { "@type": "Person", "@id": "https://ki-mathias.de/#mathias", "name": "Mathias Leonhardt", "url": "https://ki-mathias.de/en/about.html", "sameAs": ["https://mathstodon.xyz/@ki_mathias", "https://orcid.org/0009-0009-7154-5351", "https://philpeople.org/profiles/mathias-leonhardt", "https://github.com/pmmathias", "https://www.linkedin.com/in/mathias-leonhardt-96b885100/", "https://scholar.google.com/citations?user=hd8CgpsAAAAJ", "https://pmagentur.com"] },
+    "publisher": { "@id": "https://ki-mathias.de/#mathias" },
+    "datePublished": "2026-06-04",
+    "dateModified": "2026-06-04",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ki-mathias.de/en/hopfield.html" },
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "keywords": ["Hopfield Network", "Modern Hopfield", "Transformer", "Attention", "Kernel Trick", "Pseudoinverse", "Spin Glass", "MNIST", "associative memory"],
+    "articleSection": "Mathematics",
+    "wordCount": 9500,
+    "timeRequired": "PT45M"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ki-mathias.de/en/" },
+      { "@type": "ListItem", "position": 2, "name": "Hopfield Networks &ndash; From Spin Glass to Attention", "item": "https://ki-mathias.de/en/hopfield.html" }
+    ]
+  }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .katex .mord, .katex .mbin, .katex .mrel, .katex .mopen, .katex .mclose, .katex .mpunct, .katex .minner { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .summary-box { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2rem 0; }
+    .glossary { border-bottom: 1px dashed #60a5fa; cursor: help; color: #93c5fd; }
+    .glossary:hover { color: #bfdbfe; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link.active { color: #22d3ee; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog &mdash; RSS (Atom, English)" href="/feed-en.xml">
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Navigation (generated by nav.js) -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<!-- Hidden TOC slot -->
+<div id="nav-toc-items" style="display:none;">
+  <a href="#teaser" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">1 &middot; Three demos in thirty seconds</a>
+  <a href="#original" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">2 &middot; The original: energy that rolls</a>
+  <a href="#bruch" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">3 &middot; Where it breaks</a>
+  <a href="#pseudoinverse" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">4 &middot; First leap: the pseudoinverse</a>
+  <a href="#modern" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">5 &middot; Second leap: Modern Hopfield = Attention</a>
+  <a href="#generalisierung" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">6 &middot; What it tells us about cognition</a>
+  <a href="#anwendungen" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">7 &middot; Where it runs today</a>
+  <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilogue</a>
+  <a href="#faq" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">FAQ</a>
+  <a href="#quellen" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Sources</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-12 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog post &middot; Mathematics &middot; AI</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Hopfield Networks &ndash; From Spin Glass to Attention
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Why every language model is, at its core, a Hopfield network from 1982 &ndash; and what that reveals about memory, pattern recognition and attention. A chain in seven chapters, with interactive MNIST demos.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-06-04">June 2026</time><span>&middot;</span>
+    <span>~45 min read</span>
+  </div>
+
+</header>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+
+<!-- ================================================================ -->
+<!-- 1. THREE DEMOS IN THIRTY SECONDS -->
+<!-- ================================================================ -->
+<section id="teaser" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 1</p>
+<h2>Three demos in thirty seconds</h2>
+
+<p>In October 2024 John Hopfield and Geoffrey Hinton received the <a href="https://www.nobelprize.org/prizes/physics/2024/summary/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Nobel Prize in Physics</a>. The committee's citation: <em>&ldquo;for foundational contributions that led to modern AI&rdquo;</em>. An unusual award. Neither is a physicist in the strict sense &ndash; Hopfield was a solid-state theorist, Hinton a cognitive scientist. The prize was for something both had begun more than forty years earlier: a mathematical model originally intended only to remember images.</p>
+
+<p>Today this very model, in a modernised variant, is the mechanism that drives every language model: every chatbot, every image AI, every long-context Transformer. The underlying operation runs in the world's data centres very frequently &ndash; a quantitative estimate follows in Chapter 7.</p>
+
+<p>Three examples that show why:</p>
+
+<h3>Demo 1: A noisy image becomes legible again</h3>
+
+<p>A vivid example: a photo overlaid with noise &ndash; a QR code with scratches, a digit scribbled too quickly. A Hopfield network from 1982 reconstructs a legible image from it, provided the original pattern was stored in the network.</p>
+
+<p>The next chapter builds this concretely: ten handwritten digits are stored, one of them is corrupted with noise, the network runs &ndash; and after roughly two hundred pixel flips the original has reappeared. The mathematics behind this <em>reconstruction</em> is a <span class="glossary" title="Spin-glass model: a magnetic model from solid-state physics (Ising 1925) in which ±1 variables interact through pairwise couplings. Mathematically identical to the Hopfield model.">spin-glass model</span> that Ernst Ising developed in <a href="https://link.springer.com/article/10.1007/BF02980577" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">1925</a> for magnetic crystals. Hopfield showed in <a href="https://www.pnas.org/doi/10.1073/pnas.79.8.2554" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">1982</a> that the same mathematics can also perform a kind of image memory, as soon as the spins are read as pixels and the magnetic couplings as connection patterns between pixels. An analytic line that led almost unnoticed from the iron magnet to pattern recognition.</p>
+
+<h3>Demo 2: A language model finds the right word</h3>
+
+<p>When a language model answers, it looks back at its context for each individual word it generates: <em>&ldquo;which of the previous 8000 tokens is currently relevant?&rdquo;</em> This is called <em>attention</em>. Vaswani et al. introduced it in 2017 in their paper <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline"><em>&ldquo;Attention Is All You Need&rdquo;</em></a>, and it has been the central operation of every GPT, Claude, Llama or Gemini architecture ever since.</p>
+
+<p>In 2020 Hubert Ramsauer and his team in Linz showed that the attention operation is mathematically <em>identical</em> to a modernised version of Hopfield's model. Not <em>analogous</em> &ndash; but the same equation, written with different letters. Hence the title of their paper: <a href="https://arxiv.org/abs/2008.02217" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline"><em>&ldquo;Hopfield Networks Is All You Need&rdquo;</em></a>. A small provocation aimed at Vaswani, but above all a serious observation.</p>
+
+<p>The consequence: what remembered pixels in the spin glass in 1982 remembers words in the language model today. It is not a comparable but the same architecture &ndash; only with different contents for the stored patterns.</p>
+
+<h3>Demo 3: Memristor chips solve NP-hard problems in a single step</h3>
+
+<p>A third application that shows the broader picture: <a href="https://www.nature.com/articles/s41928-020-0436-6" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">in 2020 engineers at HP Labs demonstrated</a> a chip made of <span class="glossary" title="Memristors: analogue components whose electrical resistance can be set electrically. Arranged as a cross-bar, they implement the Hopfield dynamics directly in the physics of the circuit."><em>memristors</em></span> &ndash; analogue components whose resistance can be tuned electrically. In a cross-bar arrangement, the physics of this circuit is mathematically equivalent to a Hopfield network. The optimisation problem is programmed directly into the memristor values, current flows, and the solution is read off at the voltages. This happens in a single analogue step, without iterative computation.</p>
+
+<p>For NP-hard problems such as VLSI layout routing or the travelling-salesman problem, the resulting energy efficiency reported in the measurements is about four orders of magnitude better than for digital procedures. In September 2024 <a href="https://newsen.pku.edu.cn/news_events/news/research/14498.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">a group at Peking University</a> showed that a column of memristors is <em>mathematically equivalent</em> to a Hopfield attractor network. Hopfield's model thus no longer describes only an algorithm running on a computer, but a physical component.</p>
+
+<h3>The thread</h3>
+
+<p>Three very different scenes: remembering images, generating words, solving NP-hard problems. <em>One</em> mathematics. This post builds the bridge step by step: we start with the 1982 original and its simplest form (Chapter 2), look at where it breaks (Chapter 3), repair it with two leaps (Chapters 4 and 5), and finally see a surprising property that carries the network beyond what we showed it (Chapter 6). Chapter 7 shows where the whole thing is actually used today &ndash; sometimes under the name &ldquo;Hopfield&rdquo;, often under another.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-400"><em>If you have read the <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300 underline">Eigenvalues post</a>:</em> much here is a continuation. Hopfield's network is <em>also</em> an eigenvalue problem &ndash; but one with provable convergence and a non-linear sign step. The pseudoinverse from Chapter 4 is ridge regression with \(\lambda = 0\). The kernel trick from Chapter 6 is mathematically the same as there. Anyone who has read the Eigenvalues post can read this one as the <em>vertical</em> companion.</p>
+</div>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 2. THE ORIGINAL: ENERGY THAT ROLLS -->
+<!-- ================================================================ -->
+<section id="original" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 2</p>
+<h2>The original &ndash; energy that rolls</h2>
+
+<h3>A landscape with valleys</h3>
+
+<p>A useful image for what follows is a hilly landscape with valleys of varying depth. If a marble is dropped into it, it does not roll at random but systematically downhill, and it does not roll forever: it comes to rest in a valley.</p>
+
+<p>A Hopfield network can be described in exactly the same structural way. The geographical landscape is replaced by an <em>energy landscape</em>. The marble is replaced by a state of the network &ndash; an assignment of values to the neurons. The &ldquo;rolling&rdquo; is replaced by an update rule that gradually changes this state so that the energy decreases. And &ldquo;coming to rest in a valley&rdquo; is replaced by <em>fixed points</em> of the update rule, at which the network stays.</p>
+
+<p>The decisive choice lies in the construction of the energy landscape: if the valleys are placed exactly where the <em>stored patterns</em> lie, then the update rule becomes a recognition procedure. A noisy state is led by &ldquo;rolling&rdquo; into the nearest valley &ndash; that is, to the stored pattern closest to the noisy input. <em>Recognition as gravity.</em></p>
+
+<h3>The ingredients, one by one</h3>
+
+<p>More concretely. A Hopfield network has:</p>
+
+<ul class="list-disc list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li><strong>\(N\) neurons</strong>, each taking a value in \(\{-1, +1\}\). In the MNIST demos that follow, \(N = 784\), i.e. \(28 \times 28\) pixels, where \(-1\) = white, \(+1\) = black.</li>
+  <li>A <strong>state</strong> \(\mathbf{v} \in \{-1,+1\}^N\), the current assignment of all neurons. This is the &ldquo;marble&rdquo; in the landscape.</li>
+  <li>A <strong>weight matrix</strong> \(W \in \mathbb{R}^{N\times N}\) that describes the connections between neurons. The energy landscape is built from it; the construction rule follows shortly.</li>
+  <li>An <strong>energy function</strong>:</li>
+</ul>
+
+<div class="math-display">$$E(\mathbf{v}) \;=\; -\tfrac{1}{2}\,\mathbf{v}^\top W\,\mathbf{v}$$</div>
+
+<p>This so-called <em>quadratic form</em> turns the vector and the matrix into a scalar. \(E(\mathbf{v})\) describes how well the state \(\mathbf{v}\) fits the connection structure \(W\): low when it agrees with the couplings laid down in the network, high when it contradicts them.</p>
+
+<h3>The Hebb rule: putting the valleys in the right places</h3>
+
+<p>This raises the construction question: how is \(W\) chosen so that the valleys of the energy landscape lie at the stored patterns \(\boldsymbol{\xi}_1, \ldots, \boldsymbol{\xi}_p\)? Donald Hebb had already given a biologically motivated answer in his book <a href="https://psycnet.apa.org/record/1950-02200-000" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline"><em>The Organization of Behavior</em> (1949)</a>: <em>&ldquo;Neurons that fire together, wire together.&rdquo;</em> When two neurons take the same value in a stored pattern, their connection should be strengthened; otherwise weakened. Mathematically in one line:</p>
+
+<div class="math-display">$$W \;=\; \frac{1}{N}\sum_{\mu=1}^{p}\, \boldsymbol{\xi}_\mu\, \boldsymbol{\xi}_\mu^\top, \qquad W_{ii} = 0$$</div>
+
+<p>This describes a summation: each stored pattern contributes its own outer product to the matrix, and all these outer products are superimposed. Two neurons that carry the same sign across many patterns accumulate a strong positive coupling; two with opposite signs across many patterns accumulate a strong negative one. The diagonal is set to zero so that neurons do not couple with themselves &ndash; a convention without which the dynamics could get stuck in a trivial self-fixed point.</p>
+
+<h3>The update rule: let it roll</h3>
+
+<p>With \(W\) as the landscape, the state is iterated. Per step, exactly <em>one</em> neuron is checked and updated if necessary:</p>
+
+<div class="math-display">$$v_i \;\leftarrow\; \mathrm{sign}\!\left(\sum_{j=1}^{N} W_{ij}\, v_j\right)$$</div>
+
+<p>The sum \(\sum_j W_{ij}\,v_j\) describes the weighted vote of all other neurons for neuron \(i\): every other neuron \(j\) pulls it along its coupling \(W_{ij}\) in one direction. If the sum is positive, \(v_i\) is set to \(+1\); if it is negative, to \(-1\). So each neuron makes a local decision that takes into account the current configuration of the rest.</p>
+
+<p>The order in which neurons are updated is <em>asynchronous</em>: in each micro-step a randomly chosen neuron is updated, then the next, then the next. A full pass over all \(N\) neurons is called a <em>sweep</em>. The network has converged once a full sweep produces no further flip.</p>
+
+<h3>The Lyapunov guarantee: convergence as theorem</h3>
+
+<p>The central mathematical statement of the Hopfield model is this: <em>every accepted flip lowers the energy.</em></p>
+
+<p>This can be shown in a short calculation. Suppose neuron \(i\) is flipped from \(v_i\) to \(v_i' = -v_i\) during a sweep. Then the change in energy is:</p>
+
+<div class="math-display">$$\Delta E \;=\; E(\mathbf{v}') - E(\mathbf{v}) \;=\; (v_i - v_i') \cdot \sum_{j \neq i} W_{ij}\, v_j \;=\; 2\,v_i \cdot \sum_{j \neq i} W_{ij}\, v_j$$</div>
+
+<p>But the update rule says: we flip \(v_i\) precisely when the sign of \(v_i\) <em>no longer</em> agrees with the sign of the sum \(\sum_j W_{ij} v_j\). That is: after the flip they agree; before, they did not. Precisely in this case \(2 v_i \sum_j W_{ij} v_j\) is negative &ndash; and hence \(\Delta E < 0\). The energy falls.</p>
+
+<p>With a bounded energy function on a finite state space (\(2^N\) possible states) and a monotonically decreasing energy, it follows: the network <strong>must</strong> converge. It cannot enter an infinite loop, because that would require an energy value to be assumed twice &ndash; in contradiction with the strict decrease.</p>
+
+<p>This property is called a <em>Lyapunov function</em>, after the Russian mathematician Alexander Lyapunov (1857&ndash;1918), who developed the concept generally for dynamical systems. What Hopfield essentially showed is that the network <em>has</em> a Lyapunov function, namely its own energy. Convergence follows from that.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Interim summary.</strong> We have a network with \(N\) binary neurons, a weight matrix \(W\), an energy function, and an update rule. The update rule lowers the energy monotonically, so the network always comes to rest in a fixed point. If the valleys of the energy lie where our stored patterns are, this is a pattern-recognition machine. That is Hopfield 1982, almost in its entirety.</p>
+</div>
+
+<h3>Watching it: recognition as gravity</h3>
+
+<p>The theoretical apparatus is complete &ndash; and can be observed concretely. In the following demo, ten handwritten MNIST digits (0 through 9, one of each) are stored as patterns in the network. The noisy input is led back step by step, with the energy staircase live alongside.</p>
+
+<div class="try-it">
+  <p><strong>Try it.</strong> Pick a digit, push the noise slider to the right (e.g. to 20&nbsp;%), click &ldquo;Start&rdquo;. Watch the pixels rearrange themselves &ndash; and how the energy slides one little staircase step lower with each flip. At the end: standstill, as soon as the nearest valley has been reached.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-hopfield-recall"></div>
+</div>
+
+<p>What becomes visible here is an ordered sequence of local decisions: noisy state &rarr; one neuron detects its conflict with the rest of the vote &rarr; flip &rarr; energy falls by a small amount &rarr; next neuron. The iteration ends as soon as no neuron detects a conflict any more. The energy staircase on the right is not a didactic prop pasted on afterwards but the Lyapunov function in real time.</p>
+
+<p>This is the idealised picture. The reality of Hopfield networks on real data is harsher, and the next chapter brings that out. The mathematics behind it &ndash; energy, asynchronous update, Lyapunov convergence &ndash; nevertheless remains exactly the one just derived.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 3. WHERE IT BREAKS -->
+<!-- ================================================================ -->
+<section id="bruch" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 3</p>
+<h2>Where it breaks &ndash; the Hebb trap</h2>
+
+<p>The previous chapter ended with a remark: the picture shown was idealised. The following makes concrete what this idealisation runs into. To that end, the Hopfield model is applied to exactly the setting in which it should seemingly do its job &ndash; recovering ten handwritten digits &ndash; and the result is recorded matter-of-factly.</p>
+
+<h3>A test that breaks</h3>
+
+<p>In the demo of Chapter 2, <em>one</em> digit was noised at a time and led back. Everything ran cleanly. The natural next step: store all ten digits in parallel, recall each one from its noisy version, and check whether each finds its own attractor.</p>
+
+<div class="try-it">
+  <p><strong>Try it.</strong> Pick a noise level and click &ldquo;Recall all&rdquo;. In the Hebb mode all ten queries end up in the same final state &ndash; an image that is no longer any of the stored digits. Switching to &ldquo;Pseudoinverse&rdquo; on the right makes the problem disappear; why, is the subject of the next chapter.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-bias-sink"></div>
+</div>
+
+<p>The observation is briefly stated: Hebb produces on this data set <em>not</em> ten distinct attractors but a single one. Every noisy input is drawn into the same state. Visually this state is neither a 0 nor a 1 nor a 2 &ndash; it is a shape that does not appear in any of the stored patterns. In the literature, such a state is called a <em>spurious state</em>: a valley of the energy landscape that arose from the construction without corresponding to any storage intent.</p>
+
+<h3>A diagnosis through the spectrum</h3>
+
+<p>The cause can be read off the world matrix \(W\). For this purpose, the eigenvalues and eigenvectors of \(W_{\mathrm{Hebb}}\) are computed; for the ten first MNIST digits and \(N=784\) the following picture emerges:</p>
+
+<div class="math-display">$$\lambda_1 \approx 6.65, \quad \lambda_2 \approx 0.65, \quad \lambda_3 \approx 0.48, \quad \ldots$$</div>
+
+<p>Between the first and the second eigenvalue there is a factor of about ten. This describes an energy landscape that possesses <em>one</em> dominant direction while all others are comparatively flat. Exactly along this dominant direction the state is asymptotically pulled, independently of where it started.</p>
+
+<p>Which direction this is can be checked concretely. Let</p>
+
+<div class="math-display">$$\bar{\boldsymbol{\xi}} \;=\; \frac{1}{p}\sum_{\mu=1}^{p} \boldsymbol{\xi}_\mu$$</div>
+
+<p>be the mean over all stored patterns. \(\bar{\boldsymbol{\xi}}\) describes an &ldquo;average digit&rdquo; that contains all per-pixel tendencies of the ten originals: background pixels mostly dark, foreground pixels at locations where many digits overlap (such as the centre of the image). The cosine between \(\bar{\boldsymbol{\xi}}\) and the first eigenvector of \(W_{\mathrm{Hebb}}\) is about \(0.9999\). The two vectors are therefore effectively identical. The dominant eigenvector <em>is</em> the mean vector.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Interim summary.</strong> The tenfold spectral gap is not an implementation bug. It arises systematically because Hebb adds each pattern individually and shared pixel tendencies pile up in the sum &ndash; ten roughly parallel bias contributions become a single dominant bias contribution. This is what makes the &ldquo;average digit&rdquo; the deepest valley of the energy landscape. Every query rolls there.</p>
+</div>
+
+<h3>The structural conditions that are violated</h3>
+
+<p>The problem can be made more precise by naming the preconditions under which the Hebb rule provably works. These are two:</p>
+
+<ol class="list-decimal list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li><strong>Orthogonality.</strong> The stored patterns should be approximately pairwise perpendicular, that is, \(\boldsymbol{\xi}_\mu^\top \boldsymbol{\xi}_\nu \approx 0\) for \(\mu \neq \nu\). For MNIST digits the pairwise inner products lie between roughly 400 and 600 (with \(N = 784\)) &ndash; they share about two thirds of their pixels and are anything but orthogonal.</li>
+  <li><strong>Zero mean.</strong> The mean of each individual pattern should be near zero, i.e. each pattern should contain roughly as many \(+1\) as \(-1\) pixels. The ten MNIST digits have mean pixel values between \(-0.63\) and \(-0.90\): in each image there is substantially more background (white, i.e. \(-1\)) than ink (black, i.e. \(+1\)). This deviates considerably from the required zero mean.</li>
+</ol>
+
+<p>Both preconditions are therefore violated, simultaneously and substantially. The failure of the Hebb rule on MNIST is hence not a surprise but expected &ndash; it is part of the mathematically well-understood behaviour of the construction outside its range of validity.</p>
+
+<h3>An attempted repair and its new problem</h3>
+
+<p>A nearby repair attempt is now considered: the patterns are centred before being summed. Concretely, the shared mean vector \(\bar{\boldsymbol{\xi}}\) is subtracted from each pattern, and the Hebb matrix is then formed from the centred patterns \(\tilde{\boldsymbol{\xi}}_\mu = \boldsymbol{\xi}_\mu - \bar{\boldsymbol{\xi}}\):</p>
+
+<div class="math-display">$$W_{\mathrm{centred}} \;=\; \frac{1}{N}\sum_{\mu=1}^{p} \tilde{\boldsymbol{\xi}}_\mu\, \tilde{\boldsymbol{\xi}}_\mu^\top, \qquad W_{ii} = 0$$</div>
+
+<p>This operation describes the removal of the shared bias. In the spectrum it shows up clearly: the ratio \(\lambda_1 / \lambda_2 \approx 10\) becomes roughly \(1.4\). The dominant direction has disappeared, the spectrum is markedly flatter.</p>
+
+<p>However, in place of one defect another now appears. If the same recall experiment is run with the centred matrix, the network now lands at the <em>negations</em> of the stored patterns: the stored 7 becomes the inverted image &ndash; black background with bright blobs where the original 7 had black pixels. This shows in the fact that the reconstructed images have between 507 and 618 bright pixels, while the originals had only 39 to 146.</p>
+
+<p>Behind this behaviour stands a fundamental property of the Hopfield model: the energy function \(E(\mathbf{v}) = -\tfrac{1}{2}\mathbf{v}^\top W \mathbf{v}\) is symmetric under \(\mathbf{v} \to -\mathbf{v}\), i.e. \(E(\mathbf{v}) = E(-\mathbf{v})\). It follows that along with every pattern, its negation is automatically also an attractor. For strongly unbalanced originals with much background and little ink, the negation is assigned the same energy as the original. As long as a bias term had favoured the original, this symmetry existed only formally; after centring it takes full effect. The network therefore snaps just as often onto the negative side.</p>
+
+<p>That is: centring removes the bias sink, but not the actual structural problem. The latter is the strong correlation between the stored patterns, which is invariant under subtraction of the mean. A single defect was traded for another.</p>
+
+<h3>What remains</h3>
+
+<p>The task for the next chapter follows from this finding. A correct construction of \(W\) must compensate for two defects simultaneously: the dominant bias contribution and the correlation between the patterns. The next chapter shows that a single modification of the construction does both &ndash; and that this modification is mathematically exactly a well-known operation from linear regression. Anyone who has read the <a href="/en/eigenvalues.html#regularisierung" class="text-cyan-400 hover:text-cyan-300 underline">Eigenvalues post</a> will recognise it.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 4. FIRST LEAP: THE PSEUDOINVERSE -->
+<!-- ================================================================ -->
+<section id="pseudoinverse" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 4</p>
+<h2>First leap &ndash; the pseudoinverse</h2>
+
+<p>From the previous chapter a precise task remains: the world matrix \(W\) must be constructed so that neither a dominant bias sink can form nor the \(\pm\)-symmetry between patterns and their negations can take effect. The following shows that a single modification of the construction does both. This is a classical result of <a href="https://jphyslet.journaldephysique.org/articles/jphyslet/abs/1985/08/jphyslet_1985__46_8_359_0/jphyslet_1985__46_8_359_0.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Personnaz, Guyon and Dreyfus from 1985</a> &ndash; long before Hopfield's network attained its present status as a precursor of the Transformer.</p>
+
+<h3>The single place of difference</h3>
+
+<p>Let \(X \in \{-1,+1\}^{N \times p}\) be the matrix whose \(p\) columns are the stored patterns \(\boldsymbol{\xi}_1, \ldots, \boldsymbol{\xi}_p\). The two construction formulas can then be placed directly side by side:</p>
+
+<div class="math-display">$$W_{\mathrm{Hebb}} \;=\; \frac{1}{N}\,X\,X^\top$$</div>
+<div class="math-display">$$W_{\mathrm{PI}} \;\;\,= \;X\,(X^\top X)^{-1}\,X^\top$$</div>
+
+<p>The only difference is the factor \((X^\top X)^{-1}\), which is inserted between the two \(X\) factors. In Hebb, the identity matrix (times \(1/N\)) effectively sits there. In the pseudoinverse, the inverse of the Gram matrix of the stored patterns does.</p>
+
+<p>\(X^\top X\) describes the pairwise geometry of the stored patterns: each entry \((X^\top X)_{\mu\nu} = \boldsymbol{\xi}_\mu^\top \boldsymbol{\xi}_\nu\) is the inner product between two patterns and hence a measure of their similarity. For the MNIST sample from Chapter 3 these values lie between 400 and 600 (out of 784) &ndash; the off-diagonal is anything but zero. The inverse \((X^\top X)^{-1}\) corrects exactly this overlap. The correlations are thereby factored out of the world matrix before it becomes the energy landscape.</p>
+
+<h3>The orthogonal special case</h3>
+
+<p>One special case makes the relation between the two rules precise. If the patterns are pairwise orthogonal, \(\boldsymbol{\xi}_\mu^\top \boldsymbol{\xi}_\nu = N\,\delta_{\mu\nu}\), then \(X^\top X = N \cdot I_p\) and hence \((X^\top X)^{-1} = \frac{1}{N}\, I_p\). Both constructions yield <em>the same</em> matrix in that case.</p>
+
+<p>That is: the Hebb rule is the special case of the pseudoinverse rule that arises when the stored patterns are already uncorrelated. The additional factor only acts when it has something to do. Outside this ideal case, it is the only means by which the correlation is removed from the result of the construction.</p>
+
+<h3>The algebraic guarantee</h3>
+
+<p>An identity that explains the entire recall behaviour follows directly from the construction. Let \(\boldsymbol{\xi}_p\) be one of the stored patterns. Then \(\boldsymbol{\xi}_p\) is the \(p\)-th column of \(X\); hence \(X^\top \boldsymbol{\xi}_p\) gives the vector of inner products \((X^\top \boldsymbol{\xi}_p)_\mu = (X^\top X)_{\mu p}\). It follows:</p>
+
+<div class="math-display">$$W_{\mathrm{PI}}\,\boldsymbol{\xi}_p \;=\; X\,(X^\top X)^{-1}\,X^\top \boldsymbol{\xi}_p \;=\; X\,(X^\top X)^{-1}\,(X^\top X)\,\mathbf{e}_p \;=\; X\,\mathbf{e}_p \;=\; \boldsymbol{\xi}_p$$</div>
+
+<p>This means: every stored pattern is mapped to itself by \(W_{\mathrm{PI}}\). \(\boldsymbol{\xi}_p\) is an eigenvector with eigenvalue one. Since the sign function preserves the sign, \(\boldsymbol{\xi}_p\) remains a strict fixed point of the Hopfield iteration. This guarantee holds <em>independently</em> of the correlation among the patterns &ndash; it follows from the construction alone, not from validity assumptions.</p>
+
+<p>For the Hebb rule a comparable statement is only possible under orthogonality of the patterns. For correlated patterns, it leads to cross-talk terms that mix a stored pattern with components of the others.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Interim summary.</strong> With a single change &ndash; inserting the factor \((X^\top X)^{-1}\) into the construction &ndash; a construction with validity assumptions becomes a construction with an algebraic guarantee. The bias-sink question dissolves along with it: without cross-talk there is no amplification of shared pixel tendencies.</p>
+</div>
+
+<h3>Watching it: the Hebb&ndash;PI transition</h3>
+
+<p>The following demo uses a slider \(\alpha \in [0, 1]\) that linearly interpolates between the two world matrices:</p>
+
+<div class="math-display">$$W_\alpha \;=\; (1-\alpha)\,W_{\mathrm{Hebb}} + \alpha\,W_{\mathrm{PI}}$$</div>
+
+<p>At \(\alpha = 0\) we have pure Hebb, at \(\alpha = 1\) pure pseudoinverse. Three quantities are read off live: the largest eigenvalue of \(W_\alpha\), the spectral gap \(\lambda_1/\lambda_2\), and the recall final state of a noisy digit.</p>
+
+<div class="try-it">
+  <p><strong>Try it.</strong> Move the slider slowly from left to right. Watch how the top eigenvalue drops from about 6.7 to 1.0 &ndash; and how the spectral gap collapses from roughly 10&times; to 1&times;. Exactly at the point where the spectral dominance disappears, the recall begins to agree with the stored pattern again.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-spectral-slider"></div>
+</div>
+
+<h3>Connection to the Eigenvalues post</h3>
+
+<p>Anyone who has read the <a href="/en/eigenvalues.html#regularisierung" class="text-cyan-400 hover:text-cyan-300 underline">Eigenvalues post</a> will recognise the formula \(X(X^\top X)^{-1}X^\top\). There it was introduced as the <em>ridge regression operator</em>, in the general form \(X(X^\top X + \lambda I)^{-1}X^\top\) with regularisation parameter \(\lambda \geq 0\). The pseudoinverse special case used here is the limit \(\lambda \to 0\): no regularisation, exact projection onto the subspace spanned by the patterns.</p>
+
+<p>This connection is not merely formal. It shows that the Hopfield model with the pseudoinverse is mathematically the same as a linear regression procedure without regularisation &ndash; applied to the problem of projecting every vector onto the span of the stored patterns. In the Eigenvalues post it was shown that this operation becomes numerically unstable when the column vectors are strongly correlated. Precisely this is the case for MNIST &ndash; and here we see why the pseudoinverse has to put up with a limit in the next section.</p>
+
+<h3>The dynamical capacity limit</h3>
+
+<p>With the algebraic identity \(W_{\mathrm{PI}}\boldsymbol{\xi}_p = \boldsymbol{\xi}_p\) one might assume that arbitrarily many patterns can be stored, as long as \(p \leq N\) and the patterns are linearly independent. Algebraically this is correct &ndash; the identity holds structurally. Dynamically, however, things look different. In practical recall the network is started from a <em>noisy</em> input, and the question is not only whether \(\boldsymbol{\xi}_p\) is a fixed point but how large its <em>basin of attraction</em> is.</p>
+
+<p>A measurable version of this question can be answered empirically on the MNIST example: \(p\) patterns are drawn at random from the training set, each is recalled with 10&nbsp;% pixel noise, and one observes how often the final state again matches the original.</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">\(p\)</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Hebb</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Pseudoinverse</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">10</td><td style="text-align:center;">0&nbsp;%</td><td style="text-align:center;color:#86efac;">100&nbsp;%</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="text-align:center;padding:0.3rem 0.6rem;">100</td><td style="text-align:center;">0&nbsp;%</td><td style="text-align:center;color:#86efac;">100&nbsp;%</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">150</td><td style="text-align:center;">0&nbsp;%</td><td style="text-align:center;color:#86efac;">97&nbsp;%</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="text-align:center;padding:0.3rem 0.6rem;">200</td><td style="text-align:center;">0&nbsp;%</td><td style="text-align:center;color:#fbbf24;">32&nbsp;%</td></tr>
+    <tr><td style="text-align:center;padding:0.3rem 0.6rem;">250</td><td style="text-align:center;">0&nbsp;%</td><td style="text-align:center;color:#f87171;">1&nbsp;%</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="text-align:center;padding:0.3rem 0.6rem;">300</td><td style="text-align:center;">0&nbsp;%</td><td style="text-align:center;color:#f87171;">0&nbsp;%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Between \(p = 150\) and \(p = 250\) a sharp phase transition occurs. Below it, the behaviour lies near the algebraic ideal; above it, the behaviour collapses. Notable is the location of the transition: it occurs well below the theoretical bound \(p = N = 784\), beyond which the patterns can no longer be linearly independent.</p>
+
+<p>The explanation lies in the basins of attraction around the stored patterns. With few patterns they lie far apart, and 10&nbsp;% pixel noise is not enough to push the recall into the basin of another pattern. As \(p\) grows, the basins shrink, and from a critical pattern count onwards the noise is enough to steer the final state to a neighbouring attractor. The identity \(W_{\mathrm{PI}}\boldsymbol{\xi}_p = \boldsymbol{\xi}_p\) holds unchanged &ndash; only the point \(\boldsymbol{\xi}_p\) is no longer reachable from its noisy neighbourhood.</p>
+
+<p>This limit cannot be removed by a cleverer construction within the \(W\) scheme. It is a structural property of the scheme itself: as long as recall is iterated via \(\mathrm{sign}(W\mathbf{v})\), capacity is limited by the geometry of the basins. The next chapter shows that the scheme can be abandoned &ndash; and that in doing so an operation arises that has been deployed worldwide since 2017 under another name.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 5. SECOND LEAP: MODERN HOPFIELD = ATTENTION -->
+<!-- ================================================================ -->
+<section id="modern" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 5</p>
+<h2>Second leap &ndash; Modern Hopfield = Attention</h2>
+
+<p>The previous chapter ended at a barrier that could not be broken within the scheme used so far. The pseudoinverse makes every stored pattern an exact fixed point, but its dynamical capacity remains modest &ndash; about 150 patterns for MNIST, far below the algebraic bound of 784. The problem is not the construction of a better \(W\) but the scheme itself: as long as recall is iterated via \(\mathrm{sign}(W\mathbf{v})\), capacity is tied to the properties of a <em>fixed</em>, timeless operator.</p>
+
+<p>The following shows that this scheme can be abandoned. In place of the world matrix steps an input-dependent activation that aggregates afresh over all stored patterns for every query. <a href="https://arxiv.org/abs/2008.02217" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Hubert Ramsauer and colleagues</a> formalised this step in 2020 under the title <em>Hopfield Networks Is All You Need</em> &ndash; an allusion to Vaswani et al.'s 2017 paper <em>Attention Is All You Need</em>. The title is not accidental: both works describe the same operation.</p>
+
+<h3>What Modern Hopfield no longer has</h3>
+
+<p>In the classical Hopfield model three components are tied together: a world matrix \(W\), a quadratic energy function \(E(\mathbf{v}) = -\tfrac{1}{2}\mathbf{v}^\top W \mathbf{v}\), and a linear update rule \(\mathbf{v} \leftarrow \mathrm{sign}(W\mathbf{v})\). Modern Hopfield breaks with all three at once:</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Component</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Classical Hopfield (Chap. 2&ndash;4)</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Modern Hopfield (Ramsauer 2020)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Operator</td><td>\(W \in \mathbb{R}^{N\times N}\), timeless</td><td style="color:#c4b5fd;">no matrix &ndash; direct lookup via \(X\)</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="padding:0.3rem 0.6rem;">Update</td><td>\(\mathrm{sign}(W\mathbf{v})\), linear in \(\mathbf{v}\)</td><td style="color:#c4b5fd;">\(X\cdot\mathrm{softmax}(\beta X^\top \mathbf{v})\), non-linear</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Energy</td><td>\(-\tfrac{1}{2}\mathbf{v}^\top W\mathbf{v}\), quadratic</td><td style="color:#c4b5fd;">log-sum-exp \(+ \tfrac{1}{2}\|\mathbf{v}\|^2\)</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="padding:0.3rem 0.6rem;">Convergence</td><td>iterative, many sweeps</td><td style="color:#c4b5fd;">in <em>one</em> step (for sufficiently large \(\beta\))</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Capacity</td><td>algebraically \(\leq N\), dynamically much less</td><td style="color:#c4b5fd;">\(\Omega(\exp(N))\) &ndash; exponential</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Three aspects are noteworthy. First: there is no longer a timeless world matrix into which the stored patterns are burnt in. Instead, for every query \(\mathbf{v}\) it is evaluated <em>afresh</em> which of the stored patterns are relevant at all. Second: the update rule is no longer linear &ndash; the softmax brings the central non-linearity into play. Third: capacity scales not linearly but exponentially with \(N\). This puts the theoretical work of <a href="https://arxiv.org/abs/1606.01164" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Krotov and Hopfield (2016)</a> on <em>dense associative memory</em> into concrete form.</p>
+
+<h3>The new update rule, in three steps</h3>
+
+<p>The central formula reads:</p>
+
+<div class="math-display">$$\mathbf{v}_{\mathrm{new}} \;=\; X \cdot \mathrm{softmax}\!\bigl(\beta\,X^\top \mathbf{v}\bigr)$$</div>
+
+<p>Here \(X \in \mathbb{R}^{N \times p}\) is, as before, the matrix of stored patterns (columns are the \(\boldsymbol{\xi}_p\)), and \(\beta > 0\) is a temperature parameter. The operation decomposes into three consecutive steps:</p>
+
+<p><strong>Step 1 &ndash; inner products.</strong> \(X^\top \mathbf{v}\) describes the <em>similarity</em> of the input \(\mathbf{v}\) to each individual stored pattern. The result is a vector with \(p\) entries, where each entry \(\boldsymbol{\xi}_\mu^\top \mathbf{v}\) measures how strongly \(\mathbf{v}\) and \(\boldsymbol{\xi}_\mu\) point in the same direction. High values correspond to similar patterns, low values to dissimilar ones.</p>
+
+<p><strong>Step 2 &ndash; softmax.</strong> The <span class="glossary" title="softmax: turns a real-valued vector into a probability distribution; large entries are amplified exponentially, small ones suppressed.">softmax</span> operation turns this vector into a probability distribution over the \(p\) patterns:</p>
+
+<div class="math-display">$$\mathrm{softmax}(\beta\,X^\top\mathbf{v})_\mu \;=\; \frac{e^{\beta\,\boldsymbol{\xi}_\mu^\top \mathbf{v}}}{\sum_\nu e^{\beta\,\boldsymbol{\xi}_\nu^\top \mathbf{v}}}$$</div>
+
+<p>This distribution describes which patterns are currently <em>relevant</em>. For small \(\beta\) it is approximately uniform &ndash; all patterns are weighted similarly. For large \(\beta\) it concentrates on the single pattern with the highest inner product &ndash; a hard selection, effectively a <em>nearest neighbour</em>. The parameter \(\beta\) therefore continuously controls between <em>soft averaging</em> and <em>sharp choice</em>.</p>
+
+<p><strong>Step 3 &ndash; weighted average.</strong> The final result is a linear combination of the stored patterns, weighted by their softmax probabilities:</p>
+
+<div class="math-display">$$\mathbf{v}_{\mathrm{new}} \;=\; \sum_{\mu=1}^p \boldsymbol{\xi}_\mu \cdot \frac{e^{\beta\,\boldsymbol{\xi}_\mu^\top \mathbf{v}}}{\sum_\nu e^{\beta\,\boldsymbol{\xi}_\nu^\top \mathbf{v}}}$$</div>
+
+<p>In the limit \(\beta \to \infty\) this becomes exactly \(\boldsymbol{\xi}_{\mu^*}\), where \(\mu^*\) is the index of the pattern with the largest inner product with \(\mathbf{v}\). That is: for large \(\beta\), Modern Hopfield becomes a pure 1-nearest-neighbour operation over the stored patterns. For intermediate \(\beta\) it is a softer variant that considers several similar patterns simultaneously.</p>
+
+<h3>Watching it: what the temperature parameter controls</h3>
+
+<p>In the following demo \(\beta\) can be varied interactively. The softmax distribution over the ten stored digits and the resulting recall state become visible. Two extremes mark the scale: for small \(\beta\) the answer merges into an averaged image; for large \(\beta\) it becomes the sharp choice of a single digit.</p>
+
+<div class="try-it">
+  <p><strong>Try it.</strong> Move \(\beta\) upwards from 0.1. Watch how the softmax bars concentrate into a dominant peak &ndash; and how the recall state changes from a mushy average digit into a clear image. From \(\beta \geq 5\) the choice is typically unambiguous.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-beta-slider"></div>
+</div>
+
+<h3>The new energy function</h3>
+
+<p>Modern Hopfield possesses &ndash; like the classical model &ndash; a Lyapunov function, an energy that does not rise under the update step. It is, however, no longer a quadratic form but a <span class="glossary" title="log-sum-exp: a 'soft maximum' function. For β → ∞, log(Σ e^(β·x_i))/β converges to max_i x_i; for β → 0, to the arithmetic mean. The parameter β interpolates continuously between sharp and soft aggregation."><em>log-sum-exp</em></span> construction:</p>
+
+<div class="math-display">$$E(\mathbf{v}) \;=\; -\frac{1}{\beta}\,\log\!\sum_{\mu=1}^p e^{\beta\,\boldsymbol{\xi}_\mu^\top \mathbf{v}} \;+\; \tfrac{1}{2}\|\mathbf{v}\|^2 \;+\; C$$</div>
+
+<p>The first term describes a <em>soft maximum function</em>: for large \(\beta\) it approaches the negative maximum \(-\max_\mu \boldsymbol{\xi}_\mu^\top \mathbf{v}\); for small \(\beta\) it converges to a uniform average over all patterns. The second term is a quadratic regulariser that keeps the recall state on a finite sphere. The constant \(C\) is relevant only for the theoretical analysis.</p>
+
+<p>This energy has two properties that the classical scheme could not achieve. First: every stored pattern \(\boldsymbol{\xi}_\mu\) is a local minimum &ndash; an <em>exponentially sharp</em> one, since the log-sum-exp function creates its own deep dimple around each \(\boldsymbol{\xi}_\mu\). Second: the number of these dimples is not bounded by the eigenvalues of a matrix but solely by the geometry of the stored vectors. This explains the exponential capacity &ndash; up to \(\Omega(\exp(N))\) patterns can in principle be stored separately without their dimples merging.</p>
+
+<div class="summary-box">
+  <p class="text-sm text-gray-300"><strong>Interim summary.</strong> Modern Hopfield replaces the quadratic energy by a log-sum-exp form and the linear update by a softmax lookup. Together, the two properties raise capacity from linear to exponential &ndash; and make iteration unnecessary, because one step suffices. So far, this is a self-consistent generalisation of the Hopfield model. What follows is the unexpected surprise: the same operation has stood since 2017 under a different name at the centre of modern artificial intelligence.</p>
+</div>
+
+<h3>The identity with the Transformer attention mechanism</h3>
+
+<p>In the summer of 2017 <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Ashish Vaswani and colleagues at Google published <em>Attention Is All You Need</em></a>. It introduced the <em>Transformer</em> &ndash; an architecture that today powers essentially every large language model, every vision transformer and every multimodal AI. At the centre of this architecture sits an operation called <em>scaled dot-product attention</em> in the paper:</p>
+
+<div class="math-display">$$\mathrm{Attention}(Q, K, V) \;=\; V \cdot \mathrm{softmax}\!\bigl(K^\top Q / \sqrt{d_k}\bigr)$$</div>
+
+<p>Three input matrices are processed: \(Q\) (<em>queries</em>, the current queries), \(K\) (<em>keys</em>, the addresses of the stored contents), and \(V\) (<em>values</em>, the stored contents themselves). The scaling factor \(\sqrt{d_k}\) normalises the inner products against the dimension. The result is a softmax-weighted linear combination of the value vectors, steered by the similarity between query and keys.</p>
+
+<p>The identity with the Modern Hopfield update rule follows by a single substitution:</p>
+
+<div class="math-display">$$\mathrm{Hopfield:}\quad \mathbf{v} \;\leftarrow\; X \cdot \mathrm{softmax}(\beta\,X^\top \mathbf{v})$$</div>
+<div class="math-display">$$\mathrm{Attention:}\;\;\;\; V \cdot \mathrm{softmax}(K^\top Q / \sqrt{d_k})$$</div>
+
+<p>Set \(Q = \mathbf{v}\), \(K = X\), \(V = X\), and \(\beta = 1/\sqrt{d_k}\). Both equations become identical. This is not an analogy, not a structural similarity &ndash; but the <em>same</em> operation, expressed in two different notations.</p>
+
+<p>In the Transformer case, \(K\) and \(V\) are usually different projections of the input, not the same matrix as in Hopfield. \(Q\) is generated by yet another projection. These variations extend the Modern Hopfield form by additional learnable transformations &ndash; they leave the fundamental operation in the middle (softmax-weighted lookup) untouched. Anyone who accepts the simplified special case \(K = V\) and \(Q\) as the raw input has the Modern Hopfield update in front of them.</p>
+
+<h3>What this identity means in practice</h3>
+
+<p>Three observations follow from the identity that would not be possible without it:</p>
+
+<ol class="list-decimal list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li><strong>Every Transformer is an associative memory.</strong> When a language model predicts a token, it asks in each attention layer: <em>which of my earlier tokens are currently relevant?</em> This question is answered by a Modern Hopfield update. In a typical LLM with context length 8000, every generated token triggers a Hopfield update over up to 8000 stored vectors in every attention layer.</li>
+  <li><strong>The capacity question dissolves differently.</strong> Classical Hopfield had a capacity limit that on MNIST already kicked in well below \(N = 784\). Modern Hopfield has exponential capacity &ndash; for \(N = 768\) (a typical embedding dimension in Transformers) these are enough patterns to address effectively unlimited context. This is part of the reason the Transformer architecture proved so successful.</li>
+  <li><strong>Interpretability returns.</strong> What was known as a black-box mechanism can now be analysed with the tools of Hopfield theory: convergence guarantees, energy landscapes, metastable states. Ramsauer and colleagues showed in their work that Transformer heads in early layers often perform a global averaging (corresponding to small \(\beta\)), whereas in deeper layers they access individual tokens sharply (large \(\beta\)). This characterisation had not been possible before.</li>
+</ol>
+
+<h3>A historical loop</h3>
+
+<p>The order of the discoveries is remarkable. Krotov and Hopfield published their dense-associative-memory theory in 2016 &ndash; one year <em>before</em> Vaswani's Transformer. The exponential capacity and the log-sum-exp energy construction were already worked out, without any visible link to a practical language-model architecture. Vaswani and colleagues in turn arrived at their attention form in 2017 by iteration on concrete translation problems, without reference to Krotov-Hopfield. Only Ramsauer 2020 recognised: both paths lead to the same operation.</p>
+
+<p>Such an independent rediscovery is not uncommon in mathematics. It is an indication that the underlying structure is not a design decision but a forced consequence of the requirements. What Hopfield formulated in 1982 as a model for biological memory, what Krotov in 2016 formalised as a theoretical generalisation, and what Vaswani in 2017 built as a practical mechanism for language translation &ndash; it is a single mathematical operation that appeared as the natural solution in three different contexts.</p>
+
+<p>The next chapter shows that this operation has a further property that classical Hopfield did not possess: under suitable assumptions on the data, it <em>generalises</em> &ndash; meaning, it attracts not only stored patterns but also unseen configurations from their neighbourhood. This property is the reason language models do not only memorise but also produce.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 6. WHAT IT TELLS US ABOUT COGNITION -->
+<!-- ================================================================ -->
+<section id="generalisierung" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 6</p>
+<h2>What it tells us about cognition</h2>
+
+<p>So far it has been shown that Modern Hopfield recovers stored patterns with virtually arbitrary capacity. The open question that the previous chapter only hinted at is a different one: what happens when the network sees an input that is <em>not</em> a stored pattern? Does it recognise something it never directly learned? Does it generalise?</p>
+
+<p>This question is not academic. A language model that only memorises would be worthless; its usefulness lies precisely in formulating answers to questions no one has posed before. If the attention operation behind these models is mathematically identical to Hopfield, then Hopfield must also be capable of producing something that goes beyond rote learning. The following shows under which conditions this succeeds &ndash; and under which it does not.</p>
+
+<h3>An honest preliminary diagnosis: on MNIST it does not succeed</h3>
+
+<p>First a factual inventory. Ten handwritten digits from the MNIST training set are stored, and ten <em>unseen</em> digits from the test set are then used as inputs &ndash; how often does the network recognise the correct class?</p>
+
+<p>Our own experimental values (with 100 stored patterns, 500 unseen test images and 5&nbsp;% pixel noise, documented in detail in the scientific companion notes to this post):</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Procedure</th>
+    <th style="text-align:right;padding:0.4rem 0.6rem;color:#6b7280;">Class hit rate on unseen test images</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Random classifier (10 classes)</td><td style="text-align:right;">10.0&nbsp;%</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="padding:0.3rem 0.6rem;">1-nearest neighbour on the 100 stored patterns</td><td style="text-align:right;">69.6&nbsp;%</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Hebb Hopfield</td><td style="text-align:right;color:#f87171;">11.6&nbsp;% (≈ random, bias sink)</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="padding:0.3rem 0.6rem;">Pseudoinverse Hopfield</td><td style="text-align:right;">65.2&nbsp;%</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Modern Hopfield</td><td style="text-align:right;">67.2&nbsp;%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The picture is unambiguous: neither pseudoinverse nor Modern Hopfield beats the trivial 1-nearest-neighbour classifier. They sit close together, slightly below it. The class of procedures studied here therefore produces no genuine generalisation on MNIST &ndash; it produces a soft-lookup variant of nearest neighbour. This is an important, sober finding that the rest of the discussion must not forget.</p>
+
+<h3>Reframing the question</h3>
+
+<p>This result could be read as an endpoint &ndash; Hopfield is simply not a classifier. It can also be read differently: perhaps the problem lies not with the learning rule but with the data. MNIST digits possess no explicitly accessible structure; each is its own pixel pattern, without the network knowing the underlying geometry (strokes, loops, arcs) as such.</p>
+
+<p>What if the world were built differently? What if every pattern were not a self-contained image but a sparse composition from a manageable number of components that the network could, in principle, identify? Precisely this case was studied by <a href="https://arxiv.org/abs/2407.05658" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Matteo Negri, Carlo Lucibello and collaborators in a 2024 paper</a> titled <em>Random Features Hopfield Networks generalize retrieval to previously unseen examples</em>. Their finding: under this structural assumption a Hopfield network can genuinely generalise &ndash; and a three-stage phase diagram appears.</p>
+
+<h3>The setup: patterns as feature mixtures</h3>
+
+<p>The construction principle is simple. Let \(F \in \{-1, +1\}^{N \times D}\) be a random <em>feature matrix</em> whose \(D\) columns are the <em>components</em> of the world. Each pattern is built as a sparse mixture of these components: a coefficient vector \(\mathbf{c} \in \mathbb{R}^D\) has exactly \(L\) entries equal to one, the rest are zero. This produces the pattern</p>
+
+<div class="math-display">$$\boldsymbol{\xi} \;=\; \mathrm{sign}\bigl(F\,\mathbf{c}\bigr) \;\in\; \{-1, +1\}^N$$</div>
+
+<p>\(F\,\mathbf{c}\) describes the superposition of the chosen \(L\) component columns; \(\mathrm{sign}(\cdot)\) reduces the result back to a binary configuration. A <em>pattern</em> in this setup is thus always a binary function of an explicit, small selection of components. The decisive parameter is \(L\): for \(L = 1\) each pattern is exactly one component; for larger \(L\) it is an increasingly dense mixture.</p>
+
+<p>For the following investigation, three different sets of patterns are generated on the <em>same</em> feature matrix \(F\):</p>
+
+<ul class="list-disc list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li>A <strong>training set</strong> of \(p\) patterns whose coefficient vectors are chosen at random. These are stored in the network.</li>
+  <li>A <strong>features set</strong> consisting of the \(D\) individual components \(F_{:,d}\). These are <em>not</em> stored &ndash; they are what the network should ideally <em>discover</em>.</li>
+  <li>A <strong>test set</strong> of further patterns from the same distribution, but with new coefficient vectors that did not appear in training.</li>
+</ul>
+
+<p>For each of these three sets the <span class="glossary" title="Magnetisation m(ξ): a term borrowed from the spin-glass tradition for ⟨sign(W·ξ)·ξ⟩/N — it measures how stable ξ is under the Hopfield update. Value 1 = hard fixed point, 0 = random output, negative = anti-attractor."><em>magnetisation</em></span> is measured:</p>
+
+<div class="math-display">$$m(\boldsymbol{\xi}) \;=\; \frac{1}{N}\,\mathrm{sign}(W\boldsymbol{\xi})^\top \boldsymbol{\xi}$$</div>
+
+<p>\(m\) describes how strongly the network throws the vector \(\boldsymbol{\xi}\) back onto itself: a value of one means a hard fixed point (every pixel preserved), zero means random output, negative values mean anti-attractors. A magnetisation of order 0.9 or above is referred to as <em>stable</em> in the literature.</p>
+
+<h3>Three phases</h3>
+
+<p>As the training set grows &ndash; expressed by the ratio \(\alpha = p/N\) &ndash; three qualitatively different behaviours appear in order:</p>
+
+<p><strong>Storage phase</strong> &nbsp;(\(\alpha\) small). Only the training patterns are stable. The features lie outside the stored attractors, the test patterns likewise. This is the classical Hopfield behaviour: the network has memorised concrete points.</p>
+
+<p><strong>Learning phase</strong> &nbsp;(\(\alpha\) medium). As the pattern set grows, the magnetisation of the individual training patterns falls, while that of the <em>features</em> rises. At a transition point the two curves cross. Here the decisive phase change takes place: the network no longer stores the individual examples but discovers the common components from which they are built. A sparse world becomes visible.</p>
+
+<p><strong>Generalisation phase</strong> &nbsp;(\(\alpha\) large). At even higher values of \(\alpha\) the test magnetisation also becomes positive. In other words: <em>unseen</em> mixtures of the same components likewise become attractors of the network &ndash; without ever having been stored. The network has grasped the components so completely that it accepts any reasonable combination of them as a legitimate world configuration.</p>
+
+<div class="try-it">
+  <p><strong>Try it.</strong> Move the slider for the storage load \(\alpha\) and watch the three curves. For small \(\alpha\) only Train (blue) is high; for medium \(\alpha\) Features (green) take over; for large \(\alpha\) Test (red) also begins to stabilise. The Hebb&hairsp;/&hairsp;Pseudoinverse toggle reveals a surprise: the same learning rule that achieved nothing on MNIST generalises perfectly here &ndash; as soon as the world has the right structure.</p>
+</div>
+
+<div class="component-wrap">
+  <div id="mount-three-phases"></div>
+</div>
+
+<h3>The surprise: pseudoinverse generalises <em>hard</em></h3>
+
+<p>What was visible as a soft, slowly rising generalisation in pure Hebb becomes a hard jump with the pseudoinverse rule. For sufficiently large \(\alpha\), test patterns are stabilised <em>exactly</em> &ndash; their magnetisation reaches one.</p>
+
+<p>This is mathematically tractable. The pseudoinverse projects onto the subspace spanned by the training patterns. As soon as this subspace is large enough to contain <em>all</em> possible feature mixtures of \(F\), every such mixture &ndash; whether seen in training or not &ndash; becomes an eigenvector of \(W_{\mathrm{PI}}\) with eigenvalue one. \(\mathrm{sign}(W_{\mathrm{PI}}\,\boldsymbol{\xi}_{\mathrm{test}}) = \boldsymbol{\xi}_{\mathrm{test}}\) then follows algebraically by necessity.</p>
+
+<p>This is therefore not an empirical success story but a structural result: when the data geometry and the learning-rule geometry fit together, generalisation is a mathematical consequence, not a learning achievement.</p>
+
+<h3>What this says about cognition</h3>
+
+<p>From this finding follows a fundamental inversion of the usual view of the relation between learning rule and data. In ML practice one often speaks as if learning rules possessed an <em>ability</em> to generalise &ndash; some regularise better, some worse, some are more expressive. The random-features-Hopfield setup shows something else: the same learning rule (pseudoinverse) that reached only 1-NN-like performance on MNIST delivers perfect generalisation in the strict sense here. It was not the learning rule. It was the data.</p>
+
+<p>More generally: generalisation is not an internal property of a procedure. It arises from the compatibility of two geometries &ndash; the geometry of the world matrix and the geometry of the stored patterns. When the world consists of a few explicitly composable components, a Hopfield network can discover these components and accept every new mixture of them as a legitimate world configuration. When the world does not do that &ndash; like MNIST with its implicit, hard-to-access components &ndash; even the best learning rule remains a memory lookup.</p>
+
+<p>This statement has a counterpart in epistemology: <em>only that which has a sparse architecture becomes knowable</em>. A world in which every point is a unique, irreducible point cannot be <em>understood</em>, it can only be memorised. A world made of a few deep structures, in which every concrete case is a composition of these structures, lends itself to abstraction &ndash; and hence to transfer to unseen cases.</p>
+
+<p>Read from this perspective, the fact that language models generalise so successfully is no proof that their architecture carries any special property. It is rather a hint that natural language has a sparse structure: its concepts, idioms and constructions are a finite set of components from which infinitely many concrete sentences are composed. Language is Hopfield-friendly because it itself consists of features.</p>
+
+<p>The next chapter shows where this observation becomes practically effective &ndash; in which industrial applications the Modern Hopfield architecture is actually used, and which property of the respective domain makes this possible.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- 7. WHERE IT RUNS TODAY -->
+<!-- ================================================================ -->
+<section id="anwendungen" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-2">Chapter 7</p>
+<h2>Where it runs today</h2>
+
+<p>The previous chapters traced the theoretical development: from the spin glass to classical Hopfield, from there via the pseudoinverse to the Modern Hopfield form, and finally to the identity with Transformer attention. Anyone who, with this theoretical apparatus in hand, asks <em>where</em> any of this is actually deployed in today's industry encounters a situation that may perhaps be summarised as follows: the classical Hopfield model has largely become obsolete as a general-purpose ML architecture; the Modern Hopfield procedure is ubiquitous under the name &ldquo;attention&rdquo;; and in some specialist domains the Hopfield reading is kept explicit because there the memory view is closest to the task.</p>
+
+<p>The following describes five concrete application fields in which the Hopfield architecture &ndash; classical or modern &ndash; is actively used today. A summary table follows, together with the academic acknowledgement of this line through the 2024 Nobel Prize.</p>
+
+<h3>(1) Drug discovery &ndash; few-shot learning for new drug properties</h3>
+
+<p>In the pharmaceutical area a problem arises that overwhelms classical deep-learning pipelines: when a new drug class is investigated, often only a few dozen known example molecules are available. Classical classifiers need thousands of training examples to reach acceptable accuracy. Few-shot learning is the only practicable strategy here.</p>
+
+<p>A working group around Sepp Hochreiter and Günter Klambauer at the University of Linz developed between 2020 and 2023 under the name <a href="https://arxiv.org/abs/2305.09481" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline"><em>MHNfs</em></a> an architecture in which a Modern Hopfield layer holds a library of more than 100,000 context molecules as memory. For a new drug query a softmax lookup is aggregated over this library, and the resulting weighted mixture serves as an enriched representation. MHNfs achieves state of the art on the FS-Mol benchmark for few-shot property prediction. A related application in retrosynthesis prediction (which reaction produces a given target molecule?) also reaches top results and is several orders of magnitude faster than the previously usual methods.</p>
+
+<p>Why does Hopfield win here in particular? The task is not primarily a classification but a <em>memory</em> operation: compare the new molecule with the 100,000 known ones, weight them by similarity, derive a representation from the weighted average. That is mathematically what Modern Hopfield does &ndash; and what the attention mechanism in a Transformer does with its context. Without the Hopfield perspective the exponential capacity would be hard to justify.</p>
+
+<h3>(2) Immune repertoire classification &ndash; COVID antibodies from millions of sequences</h3>
+
+<p>A human immune repertoire contains about a million different B-cell receptor sequences. The diagnostically important question is: did this person carry a particular infection &ndash; recognisable in a few rare, disease-specific sequences among millions of irrelevant ones? This <span class="glossary" title="Multi-instance learning: an ML task in which an input consists of many (often thousands of) instances and only the whole bundle is classified — not each instance individually.">multi-instance-learning</span> task with a very low <span class="glossary" title="Witness rate: the fraction of genuinely relevant instances in a multi-instance input. For immune repertoires it is extremely low — a few disease-specific sequences among millions of unremarkable ones."><em>witness rate</em></span> was classically virtually unsolvable.</p>
+
+<p>In 2020 <a href="https://arxiv.org/abs/2007.13505" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Michael Widrich and colleagues from the same Linz group published the procedure <em>DeepRC</em></a> (deep repertoire classification). The core: a Modern Hopfield attention layer over the entire repertoire, capable of attending over millions of sequences at once. On simulated and real data on SARS-CoV-2 infection, DeepRC clearly outperformed previous methods. Practical added value: the procedure extracts the sequence motifs associated with a particular disease &ndash; direct support for the design of new vaccines and therapeutics.</p>
+
+<p>Here the exponential capacity of Modern Hopfield is not a theoretical luxury but a precondition: a classical attention procedure would no longer be computationally manageable with \(10^6\) input sequences.</p>
+
+<h3>(3) Combinatorial optimisation on memristor hardware</h3>
+
+<p>NP-hard optimisation problems such as VLSI chip layout routing, the travelling-salesman problem in logistics, or graph partitioning in distributed systems are classical application fields for Hopfield networks, since Hopfield and Tank propagated the idea in the 1980s. For a long time this idea remained theoretical &ndash; Hopfield solvers were slower than specialised heuristics like simulated annealing or genetic algorithms.</p>
+
+<p>A turn came from the hardware side. Memristors are analogue components whose electrical resistance can be programmed by an applied voltage. Connected in a cross-bar arrangement, they form a lattice that <em>naturally</em> implements the Hopfield dynamics: the current through each column computes the inner product of an entire matrix row with the current state, in a single analogue step. What in a digital computer runs as a sequence of multiplications happens here through the electrical properties of the circuit itself.</p>
+
+<p>In 2020 a <a href="https://www.nature.com/articles/s41928-020-0436-6" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">group at HP Labs demonstrated a memristor Hopfield chip</a> that solves MAX-CUT problems in analogue (published in <em>Nature Electronics</em>). The reported energy efficiency: four orders of magnitude better than digital procedures on comparable problem sizes. In September 2024 a <a href="https://newsen.pku.edu.cn/news_events/news/research/14498.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">group at Peking University published in <em>Nature Communications</em></a> a formal proof that a column of memristors is mathematically equivalent to a Hopfield attractor network &ndash; not analogous, not approximately, but exactly.</p>
+
+<p>This line is remarkable. What in most of this post was presented as a <em>model</em> &ndash; a mathematical abstraction simulated on a computer &ndash; is here <em>physically realised</em>. The circuit <em>is</em> the Hopfield network, not a simulation of it.</p>
+
+<h3>(4) Transformer attention &ndash; everywhere, without being called that</h3>
+
+<p>From Chapter 5 follows directly the most important application of all: every Transformer forward pass, every token, every attention head of a modern AI is a Modern Hopfield iteration. When a large language model such as GPT, Claude, Gemini or Llama generates a response, in each of its dozens of attention layers a Hopfield update is computed for every token over up to tens of thousands of context vectors. The analogous statement holds for vision Transformers (ViT, DINOv2, Swin), for multimodal models and for diffusion models with cross-attention.</p>
+
+<p>As to the quantitative order of magnitude, precise numbers are missing because the operators do not publish them. What can be said with confidence: the Modern Hopfield operation is with high probability the most-executed mathematical operation on today's compute infrastructure &ndash; carried out in the GPU data centres of OpenAI, Anthropic, Google, Meta and a dozen other providers. Under the name &ldquo;attention&rdquo;, not under the name &ldquo;Hopfield&rdquo;.</p>
+
+<h3>(5) Hopfield layers as a module in PyTorch models</h3>
+
+<p>For ML practitioners the Linz group has offered since 2020 a PyTorch library <a href="https://github.com/ml-jku/hopfield-layers" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline"><em>ml-jku/hopfield-layers</em></a> that wraps the Modern Hopfield operation as a directly usable module. Three variants are distinguished: <em>Hopfield</em> for the association of two sets (query and memory), <em>HopfieldPooling</em> for aggregating operations in place of classical pooling, and <em>HopfieldLayer</em> for learning learnable memory slots.</p>
+
+<p>These modules replace existing components such as LSTM, GRU or simple attention in existing architectures, without having to rebuild the connection topology. The published application areas range from tabular ML on UCI benchmarks through time-series forecasting and reinforcement learning with episodic memory to the drug and immune applications discussed above.</p>
+
+<h3>Synthesis</h3>
+
+<p>The five fields together give a clear picture: in every domain in which a concrete memory task has to be solved &ndash; and the precondition of exponential capacity is met &ndash; Modern Hopfield is today state of the art. Classical Hopfield is reduced to its specialised hardware niches.</p>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Domain</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Work / group</th>
+    <th style="text-align:center;padding:0.4rem 0.6rem;color:#6b7280;">Year</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Measured or empirical statement</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Drug discovery</td><td>MHNfs (Klambauer, Hochreiter et al.)</td><td style="text-align:center;">2023</td><td>SOTA on FS-Mol; 100k+ context molecules as memory</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="padding:0.3rem 0.6rem;">Immune repertoire</td><td>DeepRC (Widrich et al.)</td><td style="text-align:center;">2020</td><td>SARS-CoV-2 classification from 10⁶ sequences; SOTA</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Combinatorial optimisation</td><td>Memristor Hopfield (HP Labs / Peking U.)</td><td style="text-align:center;">2020, 2024</td><td>4 orders of magnitude energy advantage vs. digital</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="padding:0.3rem 0.6rem;">Transformer attention</td><td>every LLM, every ViT, every multimodal model</td><td style="text-align:center;">since 2017</td><td>likely the most-executed operation in the world's GPU fleet</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">PyTorch module</td><td>ml-jku/hopfield-layers</td><td style="text-align:center;">since 2020</td><td>drop-in for LSTM, pooling, attention</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>The confirmation: Nobel Prize 2024</h3>
+
+<p>In October 2024 the <a href="https://www.nobelprize.org/prizes/physics/2024/summary/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Nobel Prize in Physics</a> was awarded to John J. Hopfield and Geoffrey E. Hinton, with the citation &ldquo;for foundational discoveries and inventions that enable machine learning with artificial neural networks&rdquo;. The choice of category &ndash; physics, not economics or computer science &ndash; reflects the historical origin of the Hopfield model in spin-glass theory.</p>
+
+<p>The prize reads like a belated academic confirmation of what the preceding five fields demonstrate technically: Hopfield's 1982 model is not just one historical model among many but an architecture whose mathematical substance enabled the AI revolution of the second half of the 2010s &ndash; even though this substance was marketed under another name.</p>
+
+<p>The epilogue shows what this line means for the understanding of memory, attention and cognition in general &ndash; and where this post deliberately refrains from going beyond what the mathematics actually supports.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- EPILOGUE -->
+<!-- ================================================================ -->
+<section id="epilog" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Epilogue</p>
+<h2>The one operation that carries the century</h2>
+
+<p>What was followed across seven chapters can be summed up in one observation: <em>one</em> mathematical operation &ndash; a quadratic energy function with its monotone update rule &ndash; suffices to remember digits, solve NP-hard problems, classify antibodies and model language. The applications differ; the operator does not.</p>
+
+<h3>Four domains, the same mathematics</h3>
+
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:#d1d5db;margin:1rem 0;">
+  <thead><tr style="border-bottom:1px solid #374151;">
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Application</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Variant</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">What is remembered</th>
+    <th style="text-align:left;padding:0.4rem 0.6rem;color:#6b7280;">Where the energy lives</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:0.3rem 0.6rem;">Image memory (1982)</td><td>classical (Hebb / PI)</td><td>pixel patterns</td><td>quadratic over pixel couplings</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="padding:0.3rem 0.6rem;">Combinatorial optimisation</td><td>classical, in memristor hardware</td><td>spin configuration of the solution</td><td>negative cost function of the problem</td></tr>
+    <tr><td style="padding:0.3rem 0.6rem;">Multi-instance learning</td><td>Modern Hopfield</td><td>repertoire elements</td><td>log-sum-exp over similarities</td></tr>
+    <tr style="background:rgba(34,211,238,0.04);"><td style="padding:0.3rem 0.6rem;">LLM token prediction</td><td>Transformer attention (= Modern Hopfield)</td><td>context tokens</td><td>softmax-weighted average</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The last column shows where the mathematics changes: not in its substance but in the functional form of the energy. The quadratic form from Chapter 2 is the historically first, simplest case. The log-sum-exp form from Chapter 5 is the continuous generalisation. Both belong to the same family of Lyapunov functions with guaranteed convergence.</p>
+
+<h3>What this line shows</h3>
+
+<p>When the same mathematical structure is discovered independently in four disparate disciplines &ndash; solid-state physics in 1925, pattern recognition in 1982, language processing in 2017 and hardware optimisation in 2020 &ndash; this is no longer a design coincidence. It is an indication that the structure is not an invention but a discovery. It waits to be rediscovered in every setting whose task is the same: to relate a finite set of states to one another such that an input-dependent answer falls out.</p>
+
+<p>This is also what the 2024 Nobel Prize implicitly acknowledges. It went to Hopfield and Hinton not for a particular technical application but for the mathematical substrate from which today's AI grew. It is the rare constellation in which an award honours less a single piece of work than an entire tradition.</p>
+
+<h3>What this post does <em>not</em> say</h3>
+
+<p>Three explicit limits, so that nothing is over-interpreted:</p>
+
+<p><strong>First:</strong> Hopfield is not a universal ML tool. For many tasks &ndash; image classification on large balanced data sets, generative modelling, audio-to-text &ndash; specialised architectures (ConvNets, diffusion, Conformer) are clearly superior. Where the Hopfield architecture wins, it does not win through its own universality but through the fit of its memory view to the task structure.</p>
+
+<p><strong>Second:</strong> the generalisation property in Chapter 6 was shown on synthetic data with explicit feature structure. On real data such as MNIST it does not hold without further steps. Anyone who wants to carry it over must first extract a feature basis (PCA, dictionary learning, embeddings). The picture shown here is a theoretical possibility statement, not a direct MNIST trick.</p>
+
+<p><strong>Third:</strong> the identity between Modern Hopfield and Transformer attention does not mean that every classical ML algorithm is &ldquo;in truth&rdquo; a Hopfield network. It holds very precisely between the Modern Hopfield update rule and the scaled dot-product attention mechanism. Other architectures (diffusion, state-space models, ConvNets) have their own mathematical structures that do not coincide with Hopfield.</p>
+
+<h3>Cross-references to other posts</h3>
+
+<p>Several places in this post connect to earlier work on this blog:</p>
+
+<ul class="list-disc list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li><strong>Eigenvalues &amp; AI</strong> &ndash; the pseudoinverse from Chapter 4 is mathematically identical to <em>ridge regression with \(\lambda = 0\)</em>. Anyone who has read the <a href="/en/eigenvalues.html#regularisierung" class="text-cyan-400 hover:text-cyan-300 underline">Eigenvalues post</a> in depth already knows this connection &ndash; here it is the bridge from the Hopfield scheme of Chapter 4 to the generalisation in Chapter 6. The exponential kernel from Chapter 5 also appears there in the kernel-trick section in a related form.</li>
+  <li><strong>KRR Chat: under the hood</strong> &ndash; in the <a href="/en/krr-chat-explained.html" class="text-cyan-400 hover:text-cyan-300 underline">KRR-Chat post</a> a language model is shown as a kernel ridge regression lookup. With the tools of the present post the same lookup can also be read as a Modern Hopfield recall: the stored training tokens as memory, the query as query, the softmax weighting as activation profile. The two posts describe the same procedure from two different mathematical angles.</li>
+  <li><strong>God as emergence</strong> &ndash; in the <a href="/en/god.html" class="text-cyan-400 hover:text-cyan-300 underline">God post</a> the same \(W\) is read philosophically as the <em>world matrix</em>. The point of Chapter 6 here &ndash; <em>cognition is a property of the shared geometry of world and cognitive apparatus</em> &ndash; is the formal sister of Whitehead's <em>consequent nature</em>. Anyone who has read both posts has the two halves of the same observation.</li>
+  <li><strong>Quantum physics with arrows</strong> &ndash; in the <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300 underline">quantum post</a> the propagator was introduced as a sum over eigenstates. This Mercer-like kernel structure reappears in this post in the log-sum-exp energy. The same mathematics in three disciplines is no coincidence but a recurring structural answer.</li>
+</ul>
+
+<h3>Closing remark</h3>
+
+<p>What Hopfield formulated in 1982 as a model of a biological memory is today the architecture that drives every language model. Anyone who knows the arc sees, in every chatbot answer, an iteration of a spin-glass model originally only able to recognise digits. The past is not closed; it is still running.</p>
+
+</div>
+<div class="section-divider"></div>
+</section>
+
+
+<!-- ================================================================ -->
+<!-- FAQ -->
+<!-- ================================================================ -->
+<section id="faq" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">FAQ</p>
+<h2>Frequently asked questions</h2>
+
+<h3>Why is it called attention and not Hopfield?</h3>
+
+<p>The terms were coined independently. Ashish Vaswani and colleagues introduced the attention mechanism in 2017 as a practical solution for machine translation and chose the name in reference to intuitions from the psychology of attention. The mathematical kinship to Hopfield's model was first formalised by Ramsauer and colleagues in 2020 &ndash; at a point at which the Transformer name had already been established. In the ML community the name <em>attention</em> has therefore prevailed, even though the name <em>Hopfield layer</em> would be mathematically more appropriate.</p>
+
+<h3>Is it worth building Hopfield layers into one's own models?</h3>
+
+<p>It depends on the task. For standard classification on large balanced data sets a conventional architecture (ConvNet, simple MLP, gradient boosting) almost always beats Hopfield layers. For memory-centric tasks &ndash; few-shot learning, multi-instance learning, episodic memory in reinforcement learning &ndash; it is often worth building a Hopfield layer into the architecture, and ready-made PyTorch components exist for it (see sources below). A small rule of thumb: if the question &ldquo;which of my stored items is currently relevant?&rdquo; is central to the problem, Hopfield is a natural candidate.</p>
+
+<h3>Where is the boundary to diffusion models?</h3>
+
+<p>Both architectures use energy functions, but for different tasks. Hopfield stores a finite set of discrete attractors and pulls an input onto the nearest attractor &ndash; a memory operation. Diffusion models learn a continuous probability distribution over all possible outputs and sample from it &ndash; a generative operation. For image generation diffusion models are clearly better suited; for exact recall of stored contents Modern Hopfield is better. The two can be combined &ndash; in practice this is rarely done.</p>
+
+<h3>Why did Hopfield receive the physics Nobel and not the one for computer science?</h3>
+
+<p>There is no Nobel Prize for computer science (the Turing Award fills this role, without being a Nobel Prize). But regardless of that, the choice of the physics category is substantively consistent: Hopfield's model originates formally from the spin-glass theory of solid-state physics; the Lyapunov stability analysis is a physical standard method; and the memristor hardware line from Chapter 7 is even, in the concrete sense, a physical component. Anyone who classifies Hopfield as computer science overlooks the physical substance; the committee did not.</p>
+
+<h3>Does this also work without MNIST &ndash; on text, audio, video?</h3>
+
+<p>Yes, in two flavours. First: Modern Hopfield works on any vector space in which similarity is definable as an inner product. For text, token embeddings serve as stored patterns; for audio, spectral representations; for video, frame features. That is what every Transformer does anyway. Second: classical Hopfield with a \(\pm 1\) state space is only suitable for discrete tasks like QR-code restoration or MAX-CUT &ndash; not directly for continuous modalities.</p>
+
+<h3>What is the difference to Boltzmann machines?</h3>
+
+<p>Boltzmann machines are the <em>stochastic</em> sister of Hopfield networks. They have the same energy function, but a probabilistic state change with probability \(\propto e^{-\Delta E / T}\) instead of the deterministic sign update. It follows: Boltzmann machines learn probability distributions instead of fixed patterns, can sample from these distributions, and are generative models. Hopfield networks are their deterministic simplification. Hinton, who received the 2024 Nobel Prize together with Hopfield, essentially contributed the Boltzmann side to Hopfield's.</p>
+
+<h3>What about the bias sink on MNIST &ndash; is that an implementation bug?</h3>
+
+<p>No. The behaviour is mathematically expected and well understood. Hebb learning works only under two conditions &ndash; orthogonal patterns and a zero-mean distribution &ndash; and MNIST violates both. In the scientific companion repository for this post this was checked in detail: dtype check, comparison with a hand-computed reference, test with orthogonal synthetic patterns (3/3 perfect), bias elimination by centring. Hebb works as specified; MNIST simply lies outside its range of validity.</p>
+
+</div>
+<div class="section-divider"></div>
+
+
+<!-- ================================================================ -->
+<!-- SOURCES -->
+<!-- ================================================================ -->
+<section id="quellen" class="pb-16">
+<div class="prose-dark">
+
+<p class="text-xs uppercase tracking-widest text-amber-400/60 mb-2">Sources</p>
+<h2>Literature</h2>
+
+<h3>Original works</h3>
+
+<ul class="list-disc list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li>E. Ising. <em>Beitrag zur Theorie des Ferromagnetismus</em>. Z. Phys. 31, 253&ndash;258 (1925). <a href="https://link.springer.com/article/10.1007/BF02980577" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Springer</a></li>
+  <li>D. O. Hebb. <em>The Organization of Behavior: A Neuropsychological Theory</em>. John Wiley &amp; Sons, New York (1949). <a href="https://psycnet.apa.org/record/1950-02200-000" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">APA PsycNet</a></li>
+  <li>J. J. Hopfield. <em>Neural networks and physical systems with emergent collective computational abilities</em>. PNAS 79(8): 2554&ndash;2558 (1982). <a href="https://www.pnas.org/doi/10.1073/pnas.79.8.2554" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">PNAS</a></li>
+  <li>L. Personnaz, I. Guyon, G. Dreyfus. <em>Information storage and retrieval in spin-glass like neural networks</em>. J. Phys. Lett. 46, 359&ndash;365 (1985). <a href="https://jphyslet.journaldephysique.org/articles/jphyslet/abs/1985/08/jphyslet_1985__46_8_359_0/jphyslet_1985__46_8_359_0.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">EDP Sciences</a></li>
+  <li>D. Krotov, J. J. Hopfield. <em>Dense Associative Memory for Pattern Recognition</em>. NeurIPS 2016. <a href="https://arxiv.org/abs/1606.01164" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">arXiv:1606.01164</a></li>
+  <li>A. Vaswani, N. Shazeer, N. Parmar et al. <em>Attention Is All You Need</em>. NeurIPS 2017. <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">arXiv:1706.03762</a></li>
+  <li>H. Ramsauer, B. Sch&auml;fl, J. Lehner et al. <em>Hopfield Networks is All You Need</em>. ICLR 2021. <a href="https://arxiv.org/abs/2008.02217" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">arXiv:2008.02217</a></li>
+  <li>M. Negri, F. Tudisco, C. Lucibello et al. <em>Random Features Hopfield Networks generalize retrieval to previously unseen examples</em> (2024). <a href="https://arxiv.org/abs/2407.05658" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">arXiv:2407.05658</a></li>
+</ul>
+
+<h3>Applications</h3>
+
+<ul class="list-disc list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li>M. Widrich, B. Sch&auml;fl, M. Pavlović et al. <em>Modern Hopfield Networks and Attention for Immune Repertoire Classification</em>. NeurIPS 2020. <a href="https://arxiv.org/abs/2007.13505" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">arXiv:2007.13505</a></li>
+  <li>F. Cai, S. Kumar, T. Van Vaerenbergh et al. <em>Power-efficient combinatorial optimization using intrinsic noise in memristor Hopfield neural networks</em>. Nature Electronics 3, 409&ndash;418 (2020). <a href="https://www.nature.com/articles/s41928-020-0436-6" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Nature Electronics</a></li>
+  <li>J. Schimunek, P. Seidl, L. Friedrich et al. <em>Context-enriched molecule representations improve few-shot drug discovery</em> (2023). <a href="https://arxiv.org/abs/2305.09481" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">arXiv:2305.09481</a></li>
+  <li>Z. Sun et al. <em>Memristor attractor network model</em>. Nature Communications (September 2024). <a href="https://newsen.pku.edu.cn/news_events/news/research/14498.html" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">Peking University press release</a></li>
+</ul>
+
+<h3>Tools and code</h3>
+
+<ul class="list-disc list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li>ml-jku Linz. <em>hopfield-layers</em> &ndash; PyTorch implementation of the Modern Hopfield layers. <a href="https://github.com/ml-jku/hopfield-layers" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">GitHub</a></li>
+</ul>
+
+<h3>Academic recognition</h3>
+
+<ul class="list-disc list-outside ml-6 mb-6 space-y-2 text-gray-300">
+  <li>Nobel Prize in Physics 2024 &ndash; J. J. Hopfield, G. E. Hinton. <em>For foundational discoveries and inventions that enable machine learning with artificial neural networks</em>. <a href="https://www.nobelprize.org/prizes/physics/2024/summary/" target="_blank" rel="noopener" class="text-cyan-400 hover:text-cyan-300 underline">nobelprize.org</a></li>
+</ul>
+
+<h3>Scientific companion material for this post</h3>
+
+<p>The experiments and findings on which Chapter 3 (bias sink), Chapter 4 (capacity limit of PI) and Chapter 6 (random-features generalisation) rest were carried out and documented independently in preparation for this post. The full code repository with all detailed analyses will eventually be made public; until then, access is available on request.</p>
+
+</div>
+</section>
+
+<!-- FAQPage JSON-LD for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is it called attention and not Hopfield?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The terms were coined independently. Vaswani et al. introduced attention in 2017 as a practical solution for machine translation. The mathematical kinship to Hopfield was first formalised by Ramsauer in 2020 — at a point when the Transformer name had already been established."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it worth building Hopfield layers into one's own models?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For memory-centric tasks — few-shot learning, multi-instance learning, episodic memory in RL — it is worth it; ready-made PyTorch components exist (ml-jku/hopfield-layers). For standard classification, ConvNets or MLPs usually beat Hopfield layers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is the boundary to diffusion models?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hopfield stores a finite set of discrete attractors (memory). Diffusion learns a continuous probability distribution and samples from it (generation). For image generation diffusion is better; for exact recall of stored contents, Modern Hopfield is."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why did Hopfield receive the physics Nobel and not the one for computer science?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no Nobel Prize in computer science. But regardless: Hopfield's model originates in the spin-glass theory of solid-state physics; Lyapunov stability is a physical standard method; and the memristor hardware line is concretely a physical component."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this also work without MNIST — on text, audio, video?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Modern Hopfield works on any vector space with an inner product. For text, token embeddings serve as memory; for audio, spectral representations; for video, frame features. That is what every Transformer does anyway."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference to Boltzmann machines?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Boltzmann machines are the stochastic sister of Hopfield networks: the same energy function, but a probabilistic state change. They therefore learn probability distributions and are generative models. Hopfield networks are the deterministic simplification."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Hebb failure on MNIST an implementation bug?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The behaviour is mathematically expected. Hebb learning works only under two conditions — orthogonal patterns and a zero-mean distribution — and MNIST violates both. The implementation was independently verified on orthogonal synthetic patterns (3/3 perfect)."
+      }
+    }
+  ]
+}
+</script>
+</section>
+
+
+<!-- Footer -->
+<footer class="border-t border-gray-800 mt-16 py-8 px-4 sm:px-6 text-sm text-gray-500">
+  <div class="flex flex-wrap gap-6 justify-between max-w-4xl">
+    <div>
+      <p>&copy; 2026 Mathias Leonhardt &middot; <a href="/en/imprint.html" class="hover:text-cyan-400">Imprint</a> &middot; <a href="/en/privacy.html" class="hover:text-cyan-400">Privacy</a></p>
+    </div>
+    <div>
+      <a href="/en/" class="hover:text-cyan-400">Back to home</a>
+    </div>
+  </div>
+</footer>
+
+</main>
+</div>
+
+<script>
+  // KaTeX auto-render
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.renderMathInElement) {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
+    }
+    // Progress bar
+    var bar = document.getElementById('progress-bar');
+    function update() {
+      var h = document.documentElement;
+      var scrolled = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      bar.style.width = scrolled + '%';
+    }
+    document.addEventListener('scroll', update);
+    update();
+  });
+</script>
+
+</body>
+</html>
