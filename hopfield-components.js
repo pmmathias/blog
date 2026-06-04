@@ -52,7 +52,8 @@
       bs_noise_per_query: 'Rauschen pro Anfrage: ',
       bs_btn_recall_all: 'Alle zurückrufen',
       bs_btn_busy: 'Rechne …',
-      bs_results_prefix: 'Endzustände nach Recall (',
+      bs_row_noisy: 'Verrauschte Eingaben ({p} % Rauschen):',
+      bs_row_endstate: 'Endzustände nach Recall ({matrix}):',
       bs_hebb_matrix: 'Hebb-Matrix',
       bs_pi_matrix: 'Pseudoinverse-Matrix',
       bs_results_empty: 'Noch keine Resultate. „Alle zurückrufen“ drücken.',
@@ -133,7 +134,8 @@
       bs_noise_per_query: 'Noise per query: ',
       bs_btn_recall_all: 'Recall all',
       bs_btn_busy: 'Computing …',
-      bs_results_prefix: 'Final states after recall (',
+      bs_row_noisy: 'Noisy inputs ({p} % noise):',
+      bs_row_endstate: 'Final states after recall ({matrix}):',
       bs_hebb_matrix: 'Hebb matrix',
       bs_pi_matrix: 'Pseudoinverse matrix',
       bs_results_empty: 'No results yet. Press “Recall all”.',
@@ -806,8 +808,16 @@
     var seed = seedState[0], setSeed = seedState[1];
     var resultsState = React.useState(null);  // null | Array of Float32Array
     var results = resultsState[0], setResults = resultsState[1];
+    // Noisy inputs are stored alongside the results so the user can see the
+    // exact starting points all ten queries were launched from — without
+    // this, the Pseudoinverse mode looks like an identity pass and the
+    // Hebb collapse loses half its visual punch.
+    var noisyState = React.useState(null);  // null | Array of Float32Array
+    var noisyInputs = noisyState[0], setNoisyInputs = noisyState[1];
     var busyState = React.useState(false);
     var busy = busyState[0], setBusy = busyState[1];
+
+    function clearOutputs() { setResults(null); setNoisyInputs(null); }
 
     var weightsRef = React.useRef({});
     React.useEffect(function() {
@@ -816,7 +826,7 @@
         hebb: buildHebbWeights(data.patterns, data.N),
         pi: buildPseudoInverseWeights(data.patterns, data.N),
       };
-      setResults(null);
+      clearOutputs();
     }, [data]);
 
     function handleRecallAll() {
@@ -827,9 +837,9 @@
         var N = data.N;
         var W = weightsRef.current[rule];
         var nFlip = Math.round(noise * N);
-        var rng = makeRng(seed);
         var idx = []; for (var i = 0; i < N; i++) idx.push(i);
 
+        var noisy = [];
         var out = [];
         for (var d = 0; d < data.patterns.length; d++) {
           // Per-digit noise: shuffle a fresh index list with a derived seed
@@ -838,16 +848,18 @@
           var rng2 = makeRng(seed + d * 17);
           shuffle(idx, rng2);
           for (var f = 0; f < nFlip; f++) v0[idx[f]] *= -1;
+          noisy.push(new Float32Array(v0));   // snapshot before recall mutates it
           var v_end = recallSync(W, v0, N, 30, seed + d * 31 + 100);
           out.push(v_end);
         }
+        setNoisyInputs(noisy);
         setResults(out);
         setBusy(false);
       }, 30);
     }
 
     function handleReset() {
-      setResults(null);
+      clearOutputs();
     }
 
     if (!data) {
@@ -925,7 +937,7 @@
             [['hebb', 'Hebb'], ['pi', 'Pseudoinverse']].map(function(r) {
               return h('button', {
                 key: r[0],
-                onClick: function() { setRule(r[0]); setResults(null); },
+                onClick: function() { setRule(r[0]); clearOutputs(); },
                 className: 'px-3 py-1.5 text-xs rounded transition ' +
                   (rule === r[0]
                     ? 'bg-cyan-500/20 text-cyan-300 ring-1 ring-cyan-500'
@@ -942,7 +954,7 @@
           h('input', {
             type: 'range', min: 0, max: 30, step: 1,
             value: Math.round(noise * 100),
-            onChange: function(e) { setNoise(parseInt(e.target.value, 10) / 100); setResults(null); },
+            onChange: function(e) { setNoise(parseInt(e.target.value, 10) / 100); clearOutputs(); },
             className: 'w-full',
             style: { accentColor: '#22d3ee' }
           })
@@ -959,7 +971,7 @@
               : 'bg-cyan-600 hover:bg-cyan-500 text-white')
         }, busy ? t('bs_btn_busy') : t('bs_btn_recall_all')),
         h('button', {
-          onClick: function() { setSeed(seed + 1); setResults(null); },
+          onClick: function() { setSeed(seed + 1); clearOutputs(); },
           className: 'px-4 py-2 text-sm font-medium rounded bg-gray-800 hover:bg-gray-700 text-gray-300 transition'
         }, t('btn_reseed')),
         h('button', {
@@ -968,12 +980,19 @@
         }, t('btn_reset'))
       ),
 
+      // Noisy-input row (only shown after a recall has been triggered):
+      // makes the comparison Original → Noisy → Final state evident,
+      // which is the whole point of the demo.
+      noisyInputs && h('div', { className: 'mb-3' },
+        h('div', { className: 'text-xs text-gray-400 mb-2' },
+          t('bs_row_noisy', { p: Math.round(noise * 100) })),
+        patternRow(noisyInputs, '#64748b')
+      ),
+
       // Results row
       h('div', { className: 'mb-2' },
         h('div', { className: 'text-xs text-gray-400 mb-2' },
-          t('bs_results_prefix')
-            + (rule === 'hebb' ? t('bs_hebb_matrix') : t('bs_pi_matrix'))
-            + '):'),
+          t('bs_row_endstate', { matrix: rule === 'hebb' ? t('bs_hebb_matrix') : t('bs_pi_matrix') })),
         results
           ? patternRow(results, rule === 'hebb' ? '#f59e0b' : '#22d3ee')
           : h('div', { className: 'text-xs text-gray-500 py-6 text-center border border-dashed border-gray-700 rounded' },
