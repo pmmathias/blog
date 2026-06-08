@@ -10,24 +10,34 @@
   var CX = W / 2, CY = 220, R = 170;
 
   var NODES = [
-    { id: 'quanten',   label: 'Quanten',        icon: '\u03C8', color: '#22d3ee', angle: 0,
-      title: 'Quantenphysik', summary: 'Superposition, Verschr\u00E4nkung und die Wellenfunktion \u2014 die Grundlage der Realit\u00E4t.' },
-    { id: 'eigenwerte', label: 'Eigenwerte',     icon: '\u03BB', color: '#f59e0b', angle: 40,
-      title: 'Eigenwerte & KI', summary: 'Wie lineare Algebra KI-Modelle und Quantenmechanik verbindet.' },
-    { id: 'emergenz',   label: 'Emergenz',       icon: '\uD83E\uDDE0', color: '#a78bfa', angle: 80,
-      title: 'Emergenz in LLMs', summary: 'Wenn das Ganze mehr wird als die Summe seiner Teile.' },
-    { id: 'gott',       label: 'Gott',           icon: '\u2728', color: '#f472b6', angle: 120,
-      title: 'Gott als Emergenz', summary: 'Selbstreferenz, Bewusstsein und die ultimative Frage.' },
-    { id: 'musik',      label: 'Musik',          icon: '\uD83C\uDFB5', color: '#34d399', angle: 200,
+    { id: 'quanten', label: 'Quanten', icon: 'ψ', color: '#22d3ee', angle: 0,
+      title: 'Quantenphysik', summary: 'Superposition, Verschränkung und die Wellenfunktion — die Grundlage der Realität.' },
+    { id: 'quantencomputer', label: 'Quantencomputer', icon: '⚛', color: '#38bdf8', angle: 26,
+      title: 'Quantencomputer', summary: 'Qubits, Bloch-Kugel, Gatter — Drehungen auf der Kugel, derselbe e^{iθ}-Faden wie die Quantenphysik.' },
+    { id: 'euler', label: 'Euler', icon: 'e', color: '#2dd4bf', angle: 51,
+      title: 'Eulersche Zahl', summary: 'e^{iθ}: Rotation auf dem Einheitskreis — die Sprache, in der jede Schwingung spricht.' },
+    { id: 'musik', label: 'Musik', icon: '🎵', color: '#34d399', angle: 77,
       title: 'Musik & Mathematik', summary: 'Fourier, Obertöne und die Mathematik der Harmonie.' },
-    { id: 'logik',      label: 'Logik',          icon: '\uD83E\uDDE9', color: '#fb923c', angle: 240,
-      title: 'Logik & Selbstreferenz', summary: 'G\u00F6del, Hofstadter und die Grenzen formaler Systeme.' },
-    { id: 'vogel',      label: 'Vogelsimulator', icon: '\uD83E\uDD85', color: '#60a5fa', angle: 280,
-      title: 'Vogelsimulator', summary: 'Neuronale Netze lernen fliegen \u2014 spielbar im Browser.' },
-    { id: 'krr',        label: 'KRR Chat',       icon: '\u03BB', color: '#e879f9', angle: 320,
+    { id: 'eigenwerte', label: 'Eigenwerte', icon: 'λ', color: '#f59e0b', angle: 103,
+      title: 'Eigenwerte & KI', summary: 'Wie lineare Algebra KI-Modelle und Quantenmechanik verbindet.' },
+    { id: 'krr', label: 'KRR Chat', icon: 'λ', color: '#e879f9', angle: 129,
       title: 'KRR Chat', summary: 'Kernel Ridge Regression als interaktiver Chat.' },
-    { id: 'hopfield',   label: 'Hopfield',       icon: '\uD83E\uDDF2', color: '#818cf8', angle: 160,
-      title: 'Hopfield-Netze', summary: 'Spinglas, modernes Hopfield und Attention \u2014 die Energie-Landschaft hinter jedem Sprachmodell. Dieselbe Mathematik wie der Koh\u00E4renz-Attraktor im Gott-Beitrag.' }
+    { id: 'eigenprinzip', label: 'Eigenprinzip', icon: '📖', color: '#c084fc', angle: 154,
+      title: 'Das Eigenprinzip', summary: 'Eigenwerte als durchgehendes Prinzip — von PageRank bis zur Wahrnehmung.' },
+    { id: 'deepfakes', label: 'Deepfakes', icon: '🎭', color: '#fb7185', angle: 180,
+      title: 'Deepfakes erklärt', summary: 'PCA, Autoencoder, Kernel-Trick — Eigenvektoren im Gesichtsraum.' },
+    { id: 'hopfield', label: 'Hopfield', icon: '🧲', color: '#818cf8', angle: 206,
+      title: 'Hopfield-Netze', summary: 'Spinglas, modernes Hopfield und Attention — die Energie-Landschaft hinter jedem Sprachmodell. Dieselbe Mathematik wie der Kohärenz-Attraktor im Gott-Beitrag.' },
+    { id: 'emergenz', label: 'Emergenz', icon: '🧠', color: '#a78bfa', angle: 231,
+      title: 'Emergenz in LLMs', summary: 'Wenn das Ganze mehr wird als die Summe seiner Teile.' },
+    { id: 'gott', label: 'Gott', icon: '✨', color: '#f472b6', angle: 257,
+      title: 'Gott als Emergenz', summary: 'Selbstreferenz, Bewusstsein und die ultimative Frage.' },
+    { id: 'achtsamkeit', label: 'Achtsamkeit', icon: '🧘', color: '#86efac', angle: 283,
+      title: 'Im Augenblick verweilen', summary: 'Der Beobachter hinter den Gedanken — Selbstreferenz von innen.' },
+    { id: 'logik', label: 'Logik', icon: '🧩', color: '#fb923c', angle: 309,
+      title: 'Logik & Selbstreferenz', summary: 'Gödel, Hofstadter und die Grenzen formaler Systeme.' },
+    { id: 'vogel', label: 'Vogelsimulator', icon: '🦅', color: '#60a5fa', angle: 334,
+      title: 'Vogelsimulator', summary: 'Neuronale Netze lernen fliegen — spielbar im Browser.' }
   ];
 
   // Edge definitions: [fromId, toId, conceptType]
@@ -40,31 +50,33 @@
   };
 
   var EDGES = [
-    // Cyan: Fourier/Frequency
-    ['quanten', 'musik',      'fourier'],
+    ['quanten', 'musik', 'fourier'],
     ['quanten', 'eigenwerte', 'fourier'],
-    ['musik',   'eigenwerte', 'fourier'],
-    // Amber: Eigenwerte
+    ['musik', 'eigenwerte', 'fourier'],
+    ['euler', 'quanten', 'fourier'],
+    ['euler', 'musik', 'fourier'],
+    ['euler', 'eigenwerte', 'fourier'],
+    ['quantencomputer', 'quanten', 'fourier'],
     ['eigenwerte', 'quanten', 'eigenwerte'],
-    ['eigenwerte', 'musik',   'eigenwerte'],
-    ['eigenwerte', 'krr',     'eigenwerte'],
-    ['eigenwerte', 'logik',   'eigenwerte'],
-    // Purple: Selbstreferenz
-    ['logik', 'quanten',      'selbstreferenz'],
-    ['logik', 'gott',         'selbstreferenz'],
-    ['logik', 'eigenwerte',   'selbstreferenz'],
-    // Rose: Emergenz
-    ['emergenz', 'gott',      'emergenz'],
-    ['emergenz', 'logik',     'emergenz'],
-    ['emergenz', 'quanten',   'emergenz'],
-    // Green: Kohaerenz
-    ['quanten', 'gott',       'kohaerenz'],
-    ['musik',   'gott',       'kohaerenz'],
-    // Indigo reuse: Hopfield ties coherence (gott), ridge (eigenwerte), Wick/path-integral (quanten), generalization (emergenz)
-    ['hopfield', 'gott',       'kohaerenz'],
+    ['eigenwerte', 'musik', 'eigenwerte'],
+    ['eigenwerte', 'krr', 'eigenwerte'],
+    ['eigenwerte', 'logik', 'eigenwerte'],
+    ['deepfakes', 'eigenwerte', 'eigenwerte'],
+    ['eigenprinzip', 'eigenwerte', 'eigenwerte'],
+    ['logik', 'quanten', 'selbstreferenz'],
+    ['logik', 'gott', 'selbstreferenz'],
+    ['logik', 'eigenwerte', 'selbstreferenz'],
+    ['achtsamkeit', 'logik', 'selbstreferenz'],
+    ['achtsamkeit', 'gott', 'selbstreferenz'],
+    ['emergenz', 'gott', 'emergenz'],
+    ['emergenz', 'logik', 'emergenz'],
+    ['emergenz', 'quanten', 'emergenz'],
+    ['quanten', 'gott', 'kohaerenz'],
+    ['musik', 'gott', 'kohaerenz'],
+    ['hopfield', 'gott', 'kohaerenz'],
     ['hopfield', 'eigenwerte', 'eigenwerte'],
-    ['hopfield', 'quanten',    'kohaerenz'],
-    ['hopfield', 'emergenz',   'emergenz']
+    ['hopfield', 'quanten', 'kohaerenz'],
+    ['hopfield', 'emergenz', 'emergenz']
   ];
 
   // Deduplicate edges (A→B and B→A for same type = one line)
