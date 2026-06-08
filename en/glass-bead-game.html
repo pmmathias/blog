@@ -158,7 +158,7 @@
     The Glass Bead Game
   </h1>
   <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
-    A Meta-Journey Through Science, Mindfulness &amp; Self-Reference &ndash; or: how eight blog posts form a pattern that none of them contains alone.
+    A Meta-Journey Through Science, Mindfulness &amp; Self-Reference &ndash; or: how nine blog posts form a pattern that none of them contains alone.
   </p>
   <div class="flex items-center gap-3 text-xs text-gray-500">
     <span>KI-Mathias</span><span>&middot;</span>
@@ -207,7 +207,7 @@
   <cite>&mdash; Hermann Hesse, <em>Demian</em> (1919)</cite>
 </blockquote>
 
-<p>This blog post is a Glass Bead Game. It weaves together the threads of all previous posts &ndash; <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum physics</a>, <a href="/en/eigenvalues.html">eigenvalues</a>, <a href="/en/emergence.html">emergence</a>, <a href="/en/god.html">God</a>, <a href="/en/music.html">music</a>, <a href="/en/logic.html">logic</a> &ndash; and adds a new thread: <strong>mindfulness</strong>. And in the end, like Knecht, it will reach its own limit.</p>
+<p>This blog post is a Glass Bead Game. It weaves together the threads of all previous posts &ndash; <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum physics</a>, <a href="/en/eigenvalues.html">eigenvalues</a>, <a href="/en/emergence.html">emergence</a>, <a href="/en/god.html">God</a>, <a href="/en/hopfield.html">Hopfield</a>, <a href="/en/music.html">music</a>, <a href="/en/logic.html">logic</a> &ndash; and adds a new thread: <strong>mindfulness</strong>. And in the end, like Knecht, it will reach its own limit.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300"><strong>What lies ahead:</strong> Where the same mathematics appears in different fields &ndash; and where the analogy ends (Chapter 2). The mathematics behind the commonality: \(e^{i\theta}\) (3). Emergence on three levels (4). Self-reference seen from the outside &ndash; with a pointer to the inner view in the sister piece <a href="/en/mindfulness.html" class="text-cyan-400 hover:text-cyan-300">&ldquo;Dwelling in the Moment&rdquo;</a> (5). G&ouml;del&rsquo;s limit (6). Two personal experiences (7). Hesse&rsquo;s path through four novels (8). At the end, this sentence describes itself.</p>
@@ -263,6 +263,20 @@
 <p>In <a href="/en/god.html" class="text-cyan-400 hover:text-cyan-300">God as an Emergent Phenomenon</a>, we argue that coherence &ndash; the internal consistency of an entire worldview &ndash; is a selection principle. What contradicts itself erodes. What fits together persists.</p>
 
 <p>The same <em>form</em>: what is incoherent cancels. What is coherent persists. In physics, this is a theorem (Feynman&rsquo;s path integral). In philosophy, it is an observation. But the structure &ndash; <strong>destructive interference as a selection mechanism</strong> &ndash; appears in both. This may be the deepest cross-connection in this blog.</p>
+
+<h3>Addendum: Hopfield closes the loop</h3>
+
+<p>Since this chapter was written, a post has appeared that docks in exactly here: <a href="/en/hopfield.html" class="text-cyan-400 hover:text-cyan-300">Hopfield Networks</a>. In one place it turns the connection just described into <em>real</em> mathematics &ndash; not merely a shared form.</p>
+
+<p><strong>First layer &ndash; an identity.</strong> The coherence model in the <a href="/en/god.html" class="text-cyan-400 hover:text-cyan-300">God post</a> minimizes an energy over a valuation matrix \(W\), has a Lyapunov function, and settles into plural attractors &ndash; and maximizing it is NP-hard. That is, symbol for symbol, a <strong>Hopfield network</strong>. &ldquo;Psychic coherence&rdquo; and the energy landscape of a Hopfield network are not similar; they are <em>the same</em>. Hopfield is the engine under the hood of the God model.</p>
+
+<p><strong>Second layer &ndash; the bridge to quantum mechanics.</strong> Modern Hopfield networks &ndash; and therefore the attention inside every Transformer &ndash; weight states by softmax, i.e. by Boltzmann: \(p \propto e^{-\beta E}\). Feynman&rsquo;s path integral sums over paths with \(e^{iS/\hbar}\). The two expressions look related &ndash; and they literally are: via the <strong>Wick rotation</strong> (making time imaginary, \(t \to -i\tau\)), the oscillating \(e^{iS/\hbar}\) becomes the damped \(e^{-S_E/\hbar}\) &ndash; the partition function of statistical mechanics.</p>
+
+$$\underbrace{\sum_{\text{paths}} e^{\,iS/\hbar}}_{\text{quantum path integral}} \;\xrightarrow{\;t\,\to\,-i\tau\;}\; \underbrace{\sum_{\text{states}} e^{-\beta E}}_{\text{Boltzmann / Hopfield}}$$
+
+<p>This lets the part I cautiously called &ldquo;neither pure mathematics nor pure metaphor&rdquo; be upgraded to a theorem on the physics side: &ldquo;the incoherent cancels, the coherent remains&rdquo; is the <em>stationary phase</em> in the path integral and the <em>convergence to the energy ground state</em> in a Hopfield network &ndash; the same calculation, once in real and once in imaginary time.</p>
+
+<p><strong>Third layer &ndash; and this one honestly stays an observation.</strong> That <em>worldview</em> coherence behaves like this energy minimization is an analogy, not a proof &ndash; and certainly not the claim that the mind is &ldquo;quantum.&rdquo; &ldquo;Quantum coherence&rdquo; (phase relationships between amplitudes) and &ldquo;psychic coherence&rdquo; (internal consistency) share only the word. What they really share is the mathematical <em>form</em> of the exponential weight &ndash; and that they demonstrably share.</p>
 
 <div class="try-it">
   <p><strong>Try it yourself</strong></p>
@@ -351,7 +365,7 @@
 
 <h3>Level 2: Posts Become the Glass Bead Game</h3>
 
-<p>This blog has ten posts. Each treats its own subject. But the <em>pattern</em> they form together &ndash; the cross-connections from the previous chapter &ndash; is contained in no single post. It emerges from the totality. In the <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum post</a>, an arrow rotates. In the <a href="/en/music.html" class="text-cyan-400 hover:text-cyan-300">music post</a>, a string vibrates. In the <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">eigenvalues post</a>, a vector survives a transformation. Only when you lay all three side by side do you see: it is <strong>the same arrow</strong>. Three descriptions of the same mathematical object. That is emergence at the level of ideas.</p>
+<p>This blog has eleven posts. Each treats its own subject. But the <em>pattern</em> they form together &ndash; the cross-connections from the previous chapter &ndash; is contained in no single post. It emerges from the totality. In the <a href="/en/quantum.html" class="text-cyan-400 hover:text-cyan-300">quantum post</a>, an arrow rotates. In the <a href="/en/music.html" class="text-cyan-400 hover:text-cyan-300">music post</a>, a string vibrates. In the <a href="/en/eigenvalues.html" class="text-cyan-400 hover:text-cyan-300">eigenvalues post</a>, a vector survives a transformation. Only when you lay all three side by side do you see: it is <strong>the same arrow</strong>. Three descriptions of the same mathematical object. That is emergence at the level of ideas.</p>
 
 <p>Just as a major chord is more than three frequencies (the <a href="/en/music.html">consonance emerges</a> from the interplay of the overtone series), these posts are more than ten HTML files. At least, I hope so.</p>
 
@@ -666,6 +680,7 @@
   <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Related posts on ki-mathias.de:</p>
   <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
     <li><a href="/en/god.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">God as Emergent Phenomenon</a> <span class="text-gray-500" style="font-size:0.9em;">— Whitehead, Spinoza, coherence</span></li>
+    <li><a href="/en/hopfield.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Hopfield Networks</a> <span class="text-gray-500" style="font-size:0.9em;">— spin glass, attention, the same energy as the coherence attractor</span></li>
     <li><a href="/en/mindfulness.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Dwelling in the Moment</a> <span class="text-gray-500" style="font-size:0.9em;">— Mindfulness, Hardy, Husserl</span></li>
   </ul>
 </div>

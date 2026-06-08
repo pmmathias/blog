@@ -158,7 +158,7 @@
     Das Glasperlenspiel
   </h1>
   <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
-    Eine Meta-Reise durch Wissenschaft, Achtsamkeit und Selbstbez&uuml;glichkeit &ndash; oder: wie acht Blogposts ein Muster bilden, das keiner von ihnen allein enth&auml;lt.
+    Eine Meta-Reise durch Wissenschaft, Achtsamkeit und Selbstbez&uuml;glichkeit &ndash; oder: wie neun Blogposts ein Muster bilden, das keiner von ihnen allein enth&auml;lt.
   </p>
   <div class="flex items-center gap-3 text-xs text-gray-500">
     <span>KI-Mathias</span><span>&middot;</span>
@@ -207,7 +207,7 @@
   <cite>&mdash; Hermann Hesse, <em>Demian</em> (1919)</cite>
 </blockquote>
 
-<p>Dieser Blogpost ist ein Glasperlenspiel. Er verbindet die F&auml;den aller bisherigen Beitr&auml;ge &ndash; <a href="quanten.html" class="text-cyan-400 hover:text-cyan-300">Quantenphysik</a>, <a href="eigenwerte.html">Eigenwerte</a>, <a href="emergenz.html">Emergenz</a>, <a href="gott.html">Gott</a>, <a href="musik.html">Musik</a>, <a href="logik.html">Logik</a> &ndash; und f&uuml;gt einen neuen Faden hinzu: <strong>Achtsamkeit</strong>. Und am Ende wird er, wie Knecht, seine eigene Grenze erreichen.</p>
+<p>Dieser Blogpost ist ein Glasperlenspiel. Er verbindet die F&auml;den aller bisherigen Beitr&auml;ge &ndash; <a href="quanten.html" class="text-cyan-400 hover:text-cyan-300">Quantenphysik</a>, <a href="eigenwerte.html">Eigenwerte</a>, <a href="emergenz.html">Emergenz</a>, <a href="gott.html">Gott</a>, <a href="hopfield.html">Hopfield</a>, <a href="musik.html">Musik</a>, <a href="logik.html">Logik</a> &ndash; und f&uuml;gt einen neuen Faden hinzu: <strong>Achtsamkeit</strong>. Und am Ende wird er, wie Knecht, seine eigene Grenze erreichen.</p>
 
 <div class="summary-box">
   <p class="text-sm text-gray-300"><strong>Was kommt:</strong> Wo dieselbe Mathematik in verschiedenen Gebieten auftaucht &ndash; und wo die Analogie endet (Kapitel 2). Die Mathematik hinter der Gemeinsamkeit: \(e^{i\theta}\) (3). Emergenz auf drei Ebenen (4). Selbstreferenz von au&szlig;en betrachtet &ndash; und ein Querverweis zur Innensicht im Schwesterbeitrag <a href="achtsamkeit.html" class="text-cyan-400 hover:text-cyan-300">&bdquo;Im Augenblick verweilen&ldquo;</a> (5). G&ouml;dels Grenze (6). Zwei pers&ouml;nliche Erfahrungen (7). Hesses Weg durch vier Romane (8). Am Ende beschreibt sich dieser Satz selbst.</p>
@@ -263,6 +263,20 @@
 <p>In <a href="gott.html" class="text-cyan-400 hover:text-cyan-300">Gott als Emergenzph&auml;nomen</a> argumentieren wir, dass Koh&auml;renz &ndash; die Widerspruchsfreiheit eines Weltbilds &ndash; ein Selektionsprinzip ist. Was sich widerspricht, erodiert. Was zusammenpasst, bleibt.</p>
 
 <p>Dieselbe <em>Form</em>: Inkoh&auml;rentes cancelt. Koh&auml;rentes persistiert. In der Physik ist das ein Theorem (Feynmans Pfadintegral). In der Philosophie ist es eine Beobachtung. Aber die Struktur &ndash; <strong>destruktive Interferenz als Selektionsmechanismus</strong> &ndash; taucht in beiden auf. Das ist vielleicht die tiefste Querverbindung in diesem Blog.</p>
+
+<h3>Nachtrag: Hopfield schlie&szlig;t den Kreis</h3>
+
+<p>Seit diesem Kapitel ist ein Beitrag dazugekommen, der genau hier andockt: <a href="hopfield.html" class="text-cyan-400 hover:text-cyan-300">Hopfield-Netze</a>. Er macht aus der eben beschriebenen Querverbindung an einer Stelle <em>echte</em> Mathematik &ndash; nicht nur eine geteilte Form.</p>
+
+<p><strong>Erste Schicht &ndash; eine Identit&auml;t.</strong> Das Koh&auml;renz-Modell im <a href="gott.html" class="text-cyan-400 hover:text-cyan-300">Gott-Beitrag</a> minimiert eine Energie &uuml;ber eine Bewertungsmatrix \(W\), besitzt eine Lyapunov-Funktion und l&auml;uft in plurale Attraktoren &ndash; und seine Maximierung ist NP-hart. Das ist, Zeichen f&uuml;r Zeichen, ein <strong>Hopfield-Netz</strong>. Die „psychische Koh&auml;renz“ und die Energie-Landschaft eines Hopfield-Netzes sind nicht &auml;hnlich, sie sind <em>dasselbe</em>. Hopfield ist die Maschine unter der Motorhaube des Gottes-Modells.</p>
+
+<p><strong>Zweite Schicht &ndash; der Br&uuml;ckenschlag zur Quantenmechanik.</strong> Moderne Hopfield-Netze &ndash; und damit die Attention jedes Transformers &ndash; gewichten Zust&auml;nde per Softmax, also nach Boltzmann: \(p \propto e^{-\beta E}\). Feynmans Pfadintegral summiert &uuml;ber Wege mit \(e^{iS/\hbar}\). Beide Ausdr&uuml;cke sehen verwandt aus &ndash; und sie sind es buchst&auml;blich: &Uuml;ber die <strong>Wick-Rotation</strong> (die Zeit imagin&auml;r gemacht, \(t \to -i\tau\)) wird aus dem oszillierenden \(e^{iS/\hbar}\) das ged&auml;mpfte \(e^{-S_E/\hbar}\) &ndash; die Zustandssumme der statistischen Mechanik.</p>
+
+$$\underbrace{\sum_{\text{Pfade}} e^{\,iS/\hbar}}_{\text{Quanten-Pfadintegral}} \;\xrightarrow{\;t\,\to\,-i\tau\;}\; \underbrace{\sum_{\text{Zust\"ande}} e^{-\beta E}}_{\text{Boltzmann / Hopfield}}$$
+
+<p>Damit l&auml;sst sich der Teil, den ich oben vorsichtig „weder reine Mathematik noch reine Metapher“ genannt habe, f&uuml;r die Physik-Seite zum Theorem aufwerten: „Inkoh&auml;rentes cancelt, Koh&auml;rentes bleibt“ ist im Pfadintegral die <em>station&auml;re Phase</em> und im Hopfield-Netz die <em>Konvergenz in den Energie-Grundzustand</em> &ndash; dieselbe Rechnung, einmal in realer, einmal in imagin&auml;rer Zeit.</p>
+
+<p><strong>Dritte Schicht &ndash; und die bleibt ehrlich eine Beobachtung.</strong> Dass <em>Weltbild</em>-Koh&auml;renz sich verh&auml;lt wie diese Energieminimierung, ist eine Analogie, kein Beweis &ndash; und schon gar nicht die Behauptung, der Geist sei „quantenhaft“. „Quantenkoh&auml;renz“ (Phasenbeziehungen von Amplituden) und „psychische Koh&auml;renz“ (Widerspruchsfreiheit) teilen nur das Wort. Was sie wirklich teilen, ist die mathematische <em>Form</em> des Exponential-Gewichts &ndash; und die teilen sie nachweisbar.</p>
 
 <div class="try-it">
   <p><strong>Probier es selbst</strong></p>
@@ -351,7 +365,7 @@
 
 <h3>Ebene 2: Posts werden zum Glasperlenspiel</h3>
 
-<p>Dieser Blog hat zehn Posts. Jeder behandelt sein Thema. Aber das <em>Muster</em>, das sie zusammen bilden &ndash; die Querverbindungen aus dem letzten Kapitel &ndash; ist in keinem einzelnen Post enthalten. Es emergiert aus der Gesamtheit. Im <a href="quanten.html" class="text-cyan-400 hover:text-cyan-300">Quanten-Post</a> dreht sich ein Pfeil. Im <a href="musik.html" class="text-cyan-400 hover:text-cyan-300">Musik-Post</a> schwingt eine Saite. Im <a href="eigenwerte.html" class="text-cyan-400 hover:text-cyan-300">Eigenwerte-Post</a> &uuml;berlebt ein Vektor eine Transformation. Erst wenn du alle drei nebeneinander legst, siehst du: Es ist <strong>derselbe Pfeil</strong>. Drei Beschreibungen desselben mathematischen Objekts. Das ist Emergenz auf der Ebene von Ideen.</p>
+<p>Dieser Blog hat elf Posts. Jeder behandelt sein Thema. Aber das <em>Muster</em>, das sie zusammen bilden &ndash; die Querverbindungen aus dem letzten Kapitel &ndash; ist in keinem einzelnen Post enthalten. Es emergiert aus der Gesamtheit. Im <a href="quanten.html" class="text-cyan-400 hover:text-cyan-300">Quanten-Post</a> dreht sich ein Pfeil. Im <a href="musik.html" class="text-cyan-400 hover:text-cyan-300">Musik-Post</a> schwingt eine Saite. Im <a href="eigenwerte.html" class="text-cyan-400 hover:text-cyan-300">Eigenwerte-Post</a> &uuml;berlebt ein Vektor eine Transformation. Erst wenn du alle drei nebeneinander legst, siehst du: Es ist <strong>derselbe Pfeil</strong>. Drei Beschreibungen desselben mathematischen Objekts. Das ist Emergenz auf der Ebene von Ideen.</p>
 
 <p>So wie ein Dur-Akkord mehr ist als drei Frequenzen (die <a href="musik.html">Konsonanz emergiert</a> aus dem Zusammenspiel der Oberton-Reihen), sind diese Posts mehr als zehn HTML-Dateien. Zumindest hoffe ich das.</p>
 
@@ -666,6 +680,7 @@
   <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Verwandte Beiträge auf ki-mathias.de:</p>
   <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
     <li><a href="/gott.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Gott als Emergenzphänomen</a> <span class="text-gray-500" style="font-size:0.9em;">— Whitehead, Spinoza, Kohärenz</span></li>
+<li><a href="/hopfield.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Hopfield-Netze</a> <span class="text-gray-500" style="font-size:0.9em;">— Spinglas, Attention, dieselbe Energie wie der Kohärenz-Attraktor</span></li>
     <li><a href="/achtsamkeit.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Im Augenblick verweilen</a> <span class="text-gray-500" style="font-size:0.9em;">— Achtsamkeit, Hardy, Husserl</span></li>
   </ul>
 </div>

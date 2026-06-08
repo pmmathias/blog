@@ -12,20 +12,22 @@
   var NODES = [
     { id: 'quanten',   label: 'Quanten',        icon: '\u03C8', color: '#22d3ee', angle: 0,
       title: 'Quantenphysik', summary: 'Superposition, Verschr\u00E4nkung und die Wellenfunktion \u2014 die Grundlage der Realit\u00E4t.' },
-    { id: 'eigenwerte', label: 'Eigenwerte',     icon: '\u03BB', color: '#f59e0b', angle: 45,
+    { id: 'eigenwerte', label: 'Eigenwerte',     icon: '\u03BB', color: '#f59e0b', angle: 40,
       title: 'Eigenwerte & KI', summary: 'Wie lineare Algebra KI-Modelle und Quantenmechanik verbindet.' },
-    { id: 'emergenz',   label: 'Emergenz',       icon: '\uD83E\uDDE0', color: '#a78bfa', angle: 90,
+    { id: 'emergenz',   label: 'Emergenz',       icon: '\uD83E\uDDE0', color: '#a78bfa', angle: 80,
       title: 'Emergenz in LLMs', summary: 'Wenn das Ganze mehr wird als die Summe seiner Teile.' },
-    { id: 'gott',       label: 'Gott',           icon: '\u2728', color: '#f472b6', angle: 135,
+    { id: 'gott',       label: 'Gott',           icon: '\u2728', color: '#f472b6', angle: 120,
       title: 'Gott als Emergenz', summary: 'Selbstreferenz, Bewusstsein und die ultimative Frage.' },
-    { id: 'musik',      label: 'Musik',          icon: '\uD83C\uDFB5', color: '#34d399', angle: 180,
+    { id: 'musik',      label: 'Musik',          icon: '\uD83C\uDFB5', color: '#34d399', angle: 200,
       title: 'Musik & Mathematik', summary: 'Fourier, Obertöne und die Mathematik der Harmonie.' },
-    { id: 'logik',      label: 'Logik',          icon: '\uD83E\uDDE9', color: '#fb923c', angle: 225,
+    { id: 'logik',      label: 'Logik',          icon: '\uD83E\uDDE9', color: '#fb923c', angle: 240,
       title: 'Logik & Selbstreferenz', summary: 'G\u00F6del, Hofstadter und die Grenzen formaler Systeme.' },
-    { id: 'vogel',      label: 'Vogelsimulator', icon: '\uD83E\uDD85', color: '#60a5fa', angle: 270,
+    { id: 'vogel',      label: 'Vogelsimulator', icon: '\uD83E\uDD85', color: '#60a5fa', angle: 280,
       title: 'Vogelsimulator', summary: 'Neuronale Netze lernen fliegen \u2014 spielbar im Browser.' },
-    { id: 'krr',        label: 'KRR Chat',       icon: '\u03BB', color: '#e879f9', angle: 315,
-      title: 'KRR Chat', summary: 'Kernel Ridge Regression als interaktiver Chat.' }
+    { id: 'krr',        label: 'KRR Chat',       icon: '\u03BB', color: '#e879f9', angle: 320,
+      title: 'KRR Chat', summary: 'Kernel Ridge Regression als interaktiver Chat.' },
+    { id: 'hopfield',   label: 'Hopfield',       icon: '\uD83E\uDDF2', color: '#818cf8', angle: 160,
+      title: 'Hopfield-Netze', summary: 'Spinglas, modernes Hopfield und Attention \u2014 die Energie-Landschaft hinter jedem Sprachmodell. Dieselbe Mathematik wie der Koh\u00E4renz-Attraktor im Gott-Beitrag.' }
   ];
 
   // Edge definitions: [fromId, toId, conceptType]
@@ -57,7 +59,12 @@
     ['emergenz', 'quanten',   'emergenz'],
     // Green: Kohaerenz
     ['quanten', 'gott',       'kohaerenz'],
-    ['musik',   'gott',       'kohaerenz']
+    ['musik',   'gott',       'kohaerenz'],
+    // Indigo reuse: Hopfield ties coherence (gott), ridge (eigenwerte), Wick/path-integral (quanten), generalization (emergenz)
+    ['hopfield', 'gott',       'kohaerenz'],
+    ['hopfield', 'eigenwerte', 'eigenwerte'],
+    ['hopfield', 'quanten',    'kohaerenz'],
+    ['hopfield', 'emergenz',   'emergenz']
   ];
 
   // Deduplicate edges (A→B and B→A for same type = one line)
