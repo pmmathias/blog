@@ -498,7 +498,7 @@
 
 <div class="math-display">$$\lambda \approx \frac{1}{n}$$</div>
 
-<p>Mehr Iterationen entsprechen kleinerem \(\lambda\) und damit schw&auml;cherer Regularisierung; weniger Iterationen entsprechen gr&ouml;&szlig;erem \(\lambda\) und damit glatterer L&ouml;sung. <em>(Die Beziehung ist nicht exakt; die Filterkurven beider Verfahren haben jedoch f&uuml;r praktische Zwecke dieselbe Form.)</em></p>
+<p>Mehr Iterationen entsprechen kleinerem \(\lambda\) und damit schw&auml;cherer Regularisierung; weniger Iterationen entsprechen gr&ouml;&szlig;erem \(\lambda\) und damit glatterer L&ouml;sung. <em>(Die Beziehung ist nicht exakt; die Filterkurven beider Verfahren haben jedoch f&uuml;r praktische Zwecke dieselbe Form.)</em> Genau diese Pseudoinverse &ndash; Ridge Regression mit \(\lambda = 0\) &ndash; konstruiert &uuml;brigens die Gewichtsmatrix eines <a href="hopfield.html" class="text-cyan-400 hover:text-cyan-300 underline">Hopfield-Netzes</a>, also eines assoziativen Ged&auml;chtnisses, das jeder Transformer im Kern verwendet.</p>
 
 <div class="try-it">
   <p><strong>Selbst nachvollziehen.</strong> Durch Schieben von \(n\) wird sichtbar: Die Filterkurve der Iteration (links, cyan) und jene von Ridge Regression (rechts, gelb) haben dieselbe Form. Fr&uuml;hes Aufh&ouml;ren und Ridge Regression bewirken in der Filterung dasselbe.</p>
@@ -811,6 +811,7 @@
   <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
     <li><a href="/emergenz.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergenz in Sprachmodellen</a> <span class="text-gray-500" style="font-size:0.9em;">— Phasenübergänge, Grokking, Ising</span></li>
     <li><a href="/krr-chat-erklaert.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">KRR Chat: Unter der Haube</a> <span class="text-gray-500" style="font-size:0.9em;">— RAG, Float64, Drei-Farben-Code</span></li>
+    <li><a href="/hopfield.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Jedes Sprachmodell ein Hopfield-Netz</a> <span class="text-gray-500" style="font-size:0.9em;">— Energie, Attraktoren, Attention</span></li>
   </ul>
 </div>
 </section>

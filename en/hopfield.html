@@ -338,7 +338,7 @@
 
 <div class="math-display">$$\lambda_1 \approx 6.65, \quad \lambda_2 \approx 0.65, \quad \lambda_3 \approx 0.48, \quad \ldots$$</div>
 
-<p>Between the first and the second eigenvalue there is a factor of about ten. This describes an energy landscape that possesses <em>one</em> dominant direction while all others are comparatively flat. Exactly along this dominant direction the state is asymptotically pulled, independently of where it started.</p>
+<p>Between the first and the second eigenvalue there is a factor of about ten. This describes an energy landscape that possesses <em>one</em> dominant direction while all others are comparatively flat. Exactly along this dominant direction the state is asymptotically pulled, independently of where it started. That the largest eigen-direction swallows everything else is the very same <a href="/en/eigenprinciple.html" class="text-cyan-400 hover:text-cyan-300 underline">eigenprinciple</a> that governs PCA, PageRank and Markov chains.</p>
 
 <p>Which direction this is can be checked concretely. Let</p>
 
@@ -472,7 +472,7 @@
 </table>
 </div>
 
-<p>Between \(p = 150\) and \(p = 250\) a sharp phase transition occurs. Below it, the behaviour lies near the algebraic ideal; above it, the behaviour collapses. Notable is the location of the transition: it occurs well below the theoretical bound \(p = N = 784\), beyond which the patterns can no longer be linearly independent.</p>
+<p>Between \(p = 150\) and \(p = 250\) a sharp phase transition occurs. Below it, the behaviour lies near the algebraic ideal; above it, the behaviour collapses. Notable is the location of the transition: it occurs well below the theoretical bound \(p = N = 784\), beyond which the patterns can no longer be linearly independent. Such sharp transitions are the very same mathematics that underlies the debate over the <a href="/en/emergence.html" class="text-cyan-400 hover:text-cyan-300 underline">emergent abilities of language models</a>.</p>
 
 <p>The explanation lies in the basins of attraction around the stored patterns. With few patterns they lie far apart, and 10&nbsp;% pixel noise is not enough to push the recall into the basin of another pattern. As \(p\) grows, the basins shrink, and from a critical pattern count onwards the noise is enough to steer the final state to a neighbouring attractor. The identity \(W_{\mathrm{PI}}\boldsymbol{\xi}_p = \boldsymbol{\xi}_p\) holds unchanged &ndash; only the point \(\boldsymbol{\xi}_p\) is no longer reachable from its noisy neighbourhood.</p>
 
@@ -1040,6 +1040,17 @@
   </div>
 </footer>
 
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Read next</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Related posts on ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/en/eigenvalues.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenvalues & AI</a> <span class="text-gray-500" style="font-size:0.9em;">— Kernels, PageRank, Neumann series</span></li>
+    <li><a href="/en/eigenprinciple.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">The Eigenprinciple</a> <span class="text-gray-500" style="font-size:0.9em;">— Tuning fork, PCA, Markov, PageRank</span></li>
+    <li><a href="/en/emergence.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergence in Language Models</a> <span class="text-gray-500" style="font-size:0.9em;">— Phase transitions, grokking, Ising</span></li>
+  </ul>
+</div>
+</section>
 </main>
 </div>
 

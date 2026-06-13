@@ -338,7 +338,7 @@
 
 <div class="math-display">$$\lambda_1 \approx 6{,}65, \quad \lambda_2 \approx 0{,}65, \quad \lambda_3 \approx 0{,}48, \quad \ldots$$</div>
 
-<p>Hier liegt zwischen dem ersten und dem zweiten Eigenwert ein Faktor von etwa zehn. Dies bedeutet anschaulich, dass die Energie-Landschaft <em>eine</em> dominante Richtung besitzt und alle &uuml;brigen vergleichsweise flach sind. Genau in diese dominante Richtung wird der Zustand asymptotisch gezogen, unabh&auml;ngig vom Startpunkt.</p>
+<p>Hier liegt zwischen dem ersten und dem zweiten Eigenwert ein Faktor von etwa zehn. Dies bedeutet anschaulich, dass die Energie-Landschaft <em>eine</em> dominante Richtung besitzt und alle &uuml;brigen vergleichsweise flach sind. Genau in diese dominante Richtung wird der Zustand asymptotisch gezogen, unabh&auml;ngig vom Startpunkt. Dass die gr&ouml;&szlig;te Eigenrichtung alles &uuml;brige verschluckt, ist dasselbe <a href="eigenprinzip.html" class="text-cyan-400 hover:text-cyan-300 underline">Eigenprinzip</a>, das auch PCA, PageRank und Markov-Ketten regiert.</p>
 
 <p>Welche Richtung das ist, l&auml;sst sich konkret pr&uuml;fen. Sei</p>
 
@@ -472,7 +472,7 @@
 </table>
 </div>
 
-<p>Zwischen \(p = 150\) und \(p = 250\) tritt ein scharfer Phasen&uuml;bergang ein. Davor liegt das Verhalten nahe der algebraischen Idealit&auml;t, danach kollabiert es. Bemerkenswert ist die Lage des &Uuml;bergangs: er findet weit unterhalb der theoretischen Grenze \(p = N = 784\) statt, ab der die Muster nicht mehr linear unabh&auml;ngig sein k&ouml;nnen.</p>
+<p>Zwischen \(p = 150\) und \(p = 250\) tritt ein scharfer Phasen&uuml;bergang ein. Davor liegt das Verhalten nahe der algebraischen Idealit&auml;t, danach kollabiert es. Bemerkenswert ist die Lage des &Uuml;bergangs: er findet weit unterhalb der theoretischen Grenze \(p = N = 784\) statt, ab der die Muster nicht mehr linear unabh&auml;ngig sein k&ouml;nnen. Solche scharfen &Uuml;berg&auml;nge sind dieselbe Mathematik, die auch dem Streit um die <a href="emergenz.html" class="text-cyan-400 hover:text-cyan-300 underline">emergenten F&auml;higkeiten von Sprachmodellen</a> zugrunde liegt.</p>
 
 <p>Die Erkl&auml;rung dieses Verhaltens liegt in den Einzugsbereichen der gespeicherten Muster. Bei wenig Mustern liegen sie weit auseinander, und 10&nbsp;% Pixel-Rauschen reichen nicht aus, um den Recall in das Anziehungsgebiet eines anderen Musters zu f&uuml;hren. Mit zunehmendem \(p\) schrumpfen die Einzugsbereiche, und ab einer kritischen Mustermenge reicht das Rauschen, um den Endzustand zu einem benachbarten Attraktor zu lenken. Die Identit&auml;t \(W_{\mathrm{PI}}\boldsymbol{\xi}_p = \boldsymbol{\xi}_p\) gilt unver&auml;ndert &ndash; nur ist der Punkt \(\boldsymbol{\xi}_p\) nicht mehr aus seiner verrauschten Umgebung erreichbar.</p>
 
@@ -1040,6 +1040,17 @@
   </div>
 </footer>
 
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Weiterlesen</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Verwandte Beiträge auf ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/eigenwerte.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenwerte & KI</a> <span class="text-gray-500" style="font-size:0.9em;">— Kernel, PageRank, Neumann-Reihe</span></li>
+    <li><a href="/eigenprinzip.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Das Eigenprinzip</a> <span class="text-gray-500" style="font-size:0.9em;">— Stimmgabel, PCA, Markov, PageRank</span></li>
+    <li><a href="/emergenz.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergenz in Sprachmodellen</a> <span class="text-gray-500" style="font-size:0.9em;">— Phasenübergänge, Grokking, Ising</span></li>
+  </ul>
+</div>
+</section>
 </main>
 </div>
 

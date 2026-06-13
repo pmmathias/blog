@@ -428,7 +428,7 @@
 <p>Compare with our iteration factor \(1 - (1-\mu_i)^n\). Both have <em>the same effect</em>: pass large \(\mu_i\), dampen small ones. As a rule of thumb (for moderate \(n\) and small \(\mu_i\)):</p>
 <div class="math-display">$$\lambda \approx \frac{1}{n}$$</div>
 
-<p>More iterations = smaller \(\lambda\) = less regularization. Fewer iterations = larger \(\lambda\) = smoother solution. <em>(The relationship is not exact, but both filter curves have the same shape for practical purposes.)</em></p>
+<p>More iterations = smaller \(\lambda\) = less regularization. Fewer iterations = larger \(\lambda\) = smoother solution. <em>(The relationship is not exact, but both filter curves have the same shape for practical purposes.)</em> Incidentally, this very pseudoinverse &ndash; Ridge Regression with \(\lambda = 0\) &ndash; builds the weight matrix of a <a href="/en/hopfield.html" class="text-cyan-400 hover:text-cyan-300 underline">Hopfield network</a>, the associative memory that every Transformer uses at its core.</p>
 
 <div class="try-it">
   <p><strong>Try it yourself.</strong> By sliding \(n\), one sees that the iteration filter (left, cyan) and the Ridge filter (right, yellow) take the same shape. Early stopping and Ridge Regression act equivalently in filtering.</p>
@@ -700,6 +700,7 @@
   <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
     <li><a href="/en/emergence.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Emergence in Language Models</a> <span class="text-gray-500" style="font-size:0.9em;">— Phase transitions, grokking, Ising</span></li>
     <li><a href="/en/krr-chat-explained.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">KRR Chat: Under the Hood</a> <span class="text-gray-500" style="font-size:0.9em;">— RAG, Float64, three-color code</span></li>
+    <li><a href="/en/hopfield.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Every Language Model Is a Hopfield Network</a> <span class="text-gray-500" style="font-size:0.9em;">— Energy, attractors, attention</span></li>
   </ul>
 </div>
 </section>
