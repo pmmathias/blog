@@ -52,5 +52,8 @@ Thumbs.db
 .vscode/
 *.swp
 projektmanagement/
-client_secret.json
-.youtube_token.json
+client_secret*.json
+*token*.json
+.seo_token.json
+.yta_token.json
+.gsc_write_token.json
