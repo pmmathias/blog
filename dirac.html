@@ -220,6 +220,7 @@
     .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
     .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; overflow-y: hidden; }
     .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    .component-wrap > [id^="mount-"]:empty { min-height: 520px; }   /* Platz reservieren, bis das Widget gemountet ist */
     figure { margin: 2rem 0; }
     figcaption { font-size: 0.78rem; color: #94a3b8; margin-top: 0.5rem; text-align: center; }
     figcaption a { color: #6b7280; text-decoration: underline; }
@@ -1292,15 +1293,51 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
+  // KaTeX abschnittsweise rendern (statt ~300 Formeln auf einmal beim Laden):
+  // Kopfbereich sofort, jede <section> erst, wenn sie in die Nähe des Sichtbereichs kommt.
   if (typeof renderMathInElement === 'function') {
-    renderMathInElement(document.body, {
+    var KOPTS = {
       delimiters: [
         { left: '$$', right: '$$', display: true },
         { left: '\\[', right: '\\]', display: true },
         { left: '\\(', right: '\\)', display: false }
       ],
       throwOnError: false
-    });
+    };
+    var hero = document.getElementById('hero');
+    if (hero) renderMathInElement(hero, KOPTS);
+    var mathDone = new WeakSet();
+    var mathObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !mathDone.has(entry.target)) {
+          mathDone.add(entry.target);
+          renderMathInElement(entry.target, KOPTS);
+          mathObs.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '1200px 0px' });
+    var secs = Array.prototype.slice.call(document.querySelectorAll('main section'));
+    // Sprunglink (#abschnitt): alles bis zum Ziel sofort rendern und danach erneut springen,
+    // sonst verschiebt das nachträgliche Rendern das Ziel nach unten.
+    var target = null;
+    try { target = location.hash ? document.querySelector(decodeURIComponent(location.hash)) : null; } catch (e) { target = null; }
+    if (target) {
+      var tsec = target.closest('section') || target;
+      for (var i = 0; i < secs.length; i++) {
+        mathDone.add(secs[i]); renderMathInElement(secs[i], KOPTS);
+        if (secs[i] === tsec) break;
+      }
+      target.scrollIntoView();
+      // Widgets weiter oben mounten nach dem Sprung und schieben das Ziel nach unten:
+      // nach dem Laden erneut springen, sofern der Leser nicht selbst gescrollt hat.
+      var userMoved = false;
+      ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) {
+        window.addEventListener(ev, function () { userMoved = true; }, { once: true, passive: true });
+      });
+      var rejump = function () { if (!userMoved) target.scrollIntoView(); };
+      window.addEventListener('load', function () { rejump(); setTimeout(rejump, 400); setTimeout(rejump, 1200); });
+    }
+    secs.forEach(function (s) { if (!mathDone.has(s)) mathObs.observe(s); });
   }
 });
 </script>

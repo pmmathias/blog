@@ -1010,11 +1010,17 @@
     var sr = useState(true), run = sr[0], setRun = sr[1];
     var st = useState(0), tt = st[0], setT = st[1];
     var rafRef = useRef(null), runRef = useRef(run); runRef.current = run;
+    var visRef = useRef(true);
+    useEffect(function () {   // Animation nur, solange das Widget sichtbar ist
+      var el = wrapRef.current; if (!el || typeof IntersectionObserver === 'undefined') return;
+      var io = new IntersectionObserver(function (es) { visRef.current = es[0].isIntersecting; });
+      io.observe(el); return function () { io.disconnect(); };
+    }, []);
 
     useEffect(function () {
       var last = null;
       function loop(ts) {
-        if (last !== null && runRef.current) { var dt = Math.min(0.05, (ts - last) / 1000); setT(function (x) { return x + dt; }); }
+        if (last !== null && runRef.current && visRef.current && !document.hidden) { var dt = Math.min(0.05, (ts - last) / 1000); setT(function (x) { return x + dt; }); }
         last = ts; rafRef.current = requestAnimationFrame(loop);
       }
       rafRef.current = requestAnimationFrame(loop);
