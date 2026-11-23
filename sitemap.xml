@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://ki-mathias.de/</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   
@@ -49,7 +49,7 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/en/</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/"/>
   
@@ -57,7 +57,7 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/quanten.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/quanten.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum.html"/>
   
@@ -81,7 +81,7 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/en/quantum.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/quanten.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum.html"/>
   
@@ -105,7 +105,7 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/quantencomputer.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/quantencomputer.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum-computing.html"/>
   
@@ -114,7 +114,7 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/en/quantum-computing.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/quantencomputer.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/quantum-computing.html"/>
   
@@ -173,13 +173,13 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/eigenwerte.html</loc>
-    <lastmod>2026-06-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/eigenwerte.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenvalues.html"/>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/eigenvalues.html</loc>
-    <lastmod>2026-06-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/eigenwerte.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/eigenvalues.html"/>
   </url>
@@ -333,13 +333,13 @@
   </url>
   <url>
     <loc>https://ki-mathias.de/euler.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/euler.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/euler.html"/>
   </url>
   <url>
     <loc>https://ki-mathias.de/en/euler.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/euler.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/euler.html"/>
   </url>
@@ -394,5 +394,27 @@
     <lastmod>2026-05-20</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/datenschutz.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/dirac.html</loc>
+    <lastmod>2026-11-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/dirac.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/dirac-equation.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/dirac.html"/>
+    <image:image><image:loc>https://ki-mathias.de/img/dirac/anderson-positron-1932.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/dirac/pet-scanner.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/dirac/hamilton-plakette-broom-bridge.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/dirac/dirac-gedenkstein-westminster.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ki-mathias.de/en/dirac-equation.html</loc>
+    <lastmod>2026-11-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ki-mathias.de/dirac.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/dirac-equation.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/dirac.html"/>
+    <image:image><image:loc>https://ki-mathias.de/img/dirac/anderson-positron-1932.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/dirac/pet-scanner.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/dirac/hamilton-plakette-broom-bridge.jpg</image:loc></image:image>
+    <image:image><image:loc>https://ki-mathias.de/img/dirac/dirac-gedenkstein-westminster.jpg</image:loc></image:image>
   </url>
 </urlset>

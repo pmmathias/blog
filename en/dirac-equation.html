@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>From Arrow to Positron &ndash; Understanding the Dirac Equation</title>
+  <meta name="description" content="The Dirac equation without a physics degree: how spin &frac12; and antimatter follow from vectors, rotations and path sums &ndash; explained interactively, all the way to Feynman&rsquo;s checkerboard.">
+  <meta name="author" content="Mathias Leonhardt">
+  <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
+  <link rel="canonical" href="https://ki-mathias.de/en/dirac-equation.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/dirac.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/dirac-equation.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/dirac.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="From Arrow to Positron – Understanding the Dirac Equation">
+  <meta property="og:description" content="From two arrows to antimatter: geometric algebra, path sums and Dirac’s square root – every step justified, with interactive visualisations.">
+  <meta property="og:url" content="https://ki-mathias.de/en/dirac-equation.html">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-11-23">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Dirac equation">
+  <meta property="article:tag" content="Geometric algebra">
+  <meta property="article:tag" content="Spin">
+  <meta property="article:tag" content="Antimatter">
+  <meta property="article:tag" content="Path integral">
+  <meta property="article:tag" content="Quaternions">
+  <meta property="og:image" content="https://ki-mathias.de/img/og/dirac-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/dirac-en.png">
+  <meta name="twitter:title" content="From Arrow to Positron – Understanding the Dirac Equation">
+  <meta name="twitter:description" content="From two arrows to antimatter: geometric algebra, path sums and Dirac’s square root – every step justified, with interactive visualisations.">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "From Arrow to Positron – Understanding the Dirac Equation",
+  "description": "The Dirac equation without a physics degree: how spin ½ and antimatter follow from vectors, rotations and path sums – explained interactively, all the way to Feynman’s checkerboard.",
+  "image": "https://ki-mathias.de/img/og/dirac-en.png",
+  "author": {
+    "@type": "Person",
+    "@id": "https://ki-mathias.de/#mathias",
+    "name": "Mathias Leonhardt",
+    "url": "https://ki-mathias.de/ueber-mich.html",
+    "sameAs": [
+      "https://mathstodon.xyz/@ki_mathias",
+      "https://orcid.org/0009-0009-7154-5351",
+      "https://philpeople.org/profiles/mathias-leonhardt",
+      "https://github.com/pmmathias",
+      "https://www.linkedin.com/in/mathias-leonhardt-96b885100/",
+      "https://scholar.google.com/citations?user=hd8CgpsAAAAJ"
+    ]
+  },
+  "publisher": {
+    "@id": "https://ki-mathias.de/#mathias"
+  },
+  "datePublished": "2026-11-23",
+  "dateModified": "2026-11-23",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ki-mathias.de/en/dirac-equation.html"
+  },
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "keywords": [
+    "Dirac equation",
+    "Geometric algebra",
+    "Spin",
+    "Antimatter",
+    "Path integral",
+    "Quaternions"
+  ],
+  "articleSection": "Physics",
+  "wordCount": 16606,
+  "timeRequired": "PT70M"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ki-mathias.de/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "From Arrow to Positron – Understanding the Dirac Equation",
+      "item": "https://ki-mathias.de/en/dirac-equation.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does the Dirac equation say?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Dirac equation describes how the state of an electron evolves in time, and does so in a way that satisfies both quantum mechanics and the special theory of relativity. Intuitively, it states that the energy-momentum arrow of spacetime, applied to the state ψ, gives the mass. From it follow the spin of the electron, its magnetic moment with g = 2, the fine structure of the hydrogen spectrum and the existence of antimatter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the Dirac equation predict antimatter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dirac needed a square root of Einstein’s energy formula E² = p²c² + m²c⁴, and every square root has two signs. The equation therefore has, for every momentum, solutions with positive and with negative energy. In 1930 Dirac interpreted the negative-energy states as a completely filled “sea”, and a hole in it as a particle with the mass of the electron and positive charge. Carl Anderson found this positron in 1932. Today’s quantum field theory does without the sea but confirms the result: for every particle there is an antiparticle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does an electron have to turn twice to be the same again?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rotations can be described by rotors, which contain half the angle of rotation, because a rotation through θ arises from two reflections in mirrors with the angle θ/2 between them. For a full turn the rotor is therefore -1. Vectors are multiplied by the rotor from both sides and notice nothing of this. The state of an electron, by contrast, is multiplied by the rotor from one side only and passes into its negative after 360°, and into itself only after 720°. Neutron interference experiments confirmed this in 1975."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the gamma matrices?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The four gamma matrices γ⁰, …, γ³ are an orthonormal basis of four-dimensional spacetime, represented as 4×4 matrices. They obey the same rules as the basis vectors of geometric algebra: each squares to the squared length of its direction (+1 for time, -1 for space), and any two different ones anticommute. Precisely for this reason their combination is a square root of the sum of squares in Einstein’s energy formula."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is geometric algebra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Geometric algebra is a way of calculating with vectors in which vectors can be multiplied with one another without losing information. The product of two vectors consists of the scalar product and an oriented area, the bivector. If one requires only that the product be associative and distributive and that a vector squared gives its squared length, then the complex numbers, Hamilton’s quaternions and the description of rotations in any dimension follow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How are complex numbers, quaternions and rotations related?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The imaginary unit i can be understood as the oriented unit square of a plane: it squares to -1, and multiplying by it rotates every vector of the plane by 90°. Complex numbers are number plus area and describe rotations in the plane. In space there are three basis areas, and number plus three areas gives Hamilton’s quaternions, which describe rotations in space."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Feynman’s checkerboard?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Feynman’s checkerboard is a path-integral representation of the Dirac equation in one spatial dimension. A particle moves on a lattice, in every time step at the speed of light, to the left or to the right; every change of direction brings with it a factor proportional to the mass. The sum over all zigzag paths gives the solution of the Dirac equation. Intuitively, mass is thus the amplitude for changing direction."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Zitterbewegung?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In 1930 Erwin Schrödinger noticed that, according to the Dirac equation, the position of a free electron would have to oscillate back and forth with an angular frequency of about 1.6·10²¹ s⁻¹ and an amplitude of about 2·10⁻¹³ metres. This Zitterbewegung arises from the interference of positive- and negative-energy parts. It has never been observed directly in free electrons; in 2010 it was simulated with a trapped ion whose motion obeys the Dirac equation."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link rel="stylesheet" href="/vendor/tailwind.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+  <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/auto-render.min.js"></script>
+  <script src="/vendor/react.production.min.js"></script>
+  <script src="/vendor/react-dom.production.min.js"></script>
+  <script defer src="/dirac-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-400.woff2) format('woff2'), url(/fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-500.woff2) format('woff2'), url(/fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-600.woff2) format('woff2'), url(/fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/inter-700.woff2) format('woff2'), url(/fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .prose-dark ul, .prose-dark ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: #d1d5db; }
+    .prose-dark li { margin-bottom: 0.4rem; line-height: 1.7; }
+    .prose-dark a { color: #22d3ee; text-decoration: underline; }
+    .part-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #f59e0b; margin-bottom: 0.25rem; }
+    .sec-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(34,211,238,0.6); margin-bottom: 0.5rem; }
+    .leitfrage { border: 1px solid rgba(245,158,11,0.35); background: rgba(245,158,11,0.06); border-radius: 0.75rem; padding: 1rem 1.25rem; margin: 1.5rem 0 2rem; }
+    .leitfrage p { margin: 0; color: #fcd34d; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .merke { border-left: 3px solid #f59e0b; padding: 1rem 1.25rem; background: rgba(245, 158, 11, 0.06); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .merke p { margin-bottom: 0.25rem; }
+    .recap { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2.5rem 0; }
+    .recap h4, .recap .recap-title { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #94a3b8; margin-bottom: 0.75rem; }
+    .history { font-size: 0.95rem; border-left: 2px solid #475569; padding-left: 1rem; color: #cbd5e1; margin: 1.5rem 0; }
+    details.deep { border: 1px solid #1f2937; border-radius: 0.75rem; padding: 0.75rem 1.1rem; margin: 2rem 0; background: rgba(15,23,42,0.6); }
+    details.deep summary { cursor: pointer; color: #93c5fd; font-weight: 500; }
+    .placeholder { border: 1px dashed #475569; color: #64748b; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.85rem; margin: 1rem 0; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; overflow-y: hidden; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    figure { margin: 2rem 0; }
+    figcaption { font-size: 0.78rem; color: #94a3b8; margin-top: 0.5rem; text-align: center; }
+    figcaption a { color: #6b7280; text-decoration: underline; }
+    .prose-dark img { border-radius: 0.5rem; border: 1px solid rgba(148,163,184,0.12); max-width: 100%; }
+    #eqmap-slot { position: sticky; top: 3.5rem; z-index: 30; }
+    .chip { display: inline-block; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em; border: 1px solid; border-radius: 999px; padding: 0.05rem 0.5rem; margin-right: 0.35rem; vertical-align: 0.12em; white-space: nowrap; }
+    .chip.z { color: #4ade80; border-color: rgba(74,222,128,0.6); }
+    .chip.e { color: #f59e0b; border-color: rgba(245,158,11,0.6); }
+    .chip.k { color: #94a3b8; border-color: rgba(148,163,184,0.5); }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog — RSS (Atom, English)" href="/feed-en.xml">
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<div id="nav-toc-items" style="display:none;">
+  <a href="#prolog" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">Prologue &middot; Antimatter in the hospital</a>
+  <a href="#akt1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">I &middot; Multiplication can rotate</a>
+  <a href="#akt2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">II &middot; Rotating and summing</a>
+  <a href="#akt3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">III &middot; Dirac&rsquo;s square root</a>
+  <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilogue &middot; It is geometry</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-10 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blog post &middot; Physics &middot; Mathematics &middot; The Glass Bead Game</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    From Arrow to Positron
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Understanding the Dirac equation without having studied physics &ndash; by a route through geometry, rotations and path sums. Three acts, one common thread, and by the end every symbol of a single line written in 1928 has been earned.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-11-23">November 2026</time><span>&middot;</span>
+    <span>~70 min read</span>
+  </div>
+</header>
+
+<!-- Widget 0: Gleichungs-Landkarte (sticky) — D-10 -->
+<div id="eqmap-slot" class="px-4 sm:px-6"><div id="mount-eqmap"></div></div>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ================================================================ -->
+<!-- PROLOG — D-10 -->
+<!-- ================================================================ -->
+<section id="prolog" class="pb-16">
+<div class="prose-dark">
+<p class="part-label">Prologue</p>
+<h2>Antimatter in the hospital</h2>
+<p>Anyone who undergoes a PET scan in a hospital is first injected with a weakly radioactive sugar solution. The sugar is labelled with the isotope fluorine-18, which is produced in a cyclotron and has a half-life of just under two hours. Inside the body, the solution accumulates wherever a great deal of sugar is consumed &ndash; in active regions of the brain, in the heart muscle, in fast-growing tumours. And there, in the patient&rsquo;s tissue, something remarkable happens: when a fluorine-18 nucleus decays, it emits a <em>positron</em>, a particle of antimatter. On average it travels less than a millimetre, meets an electron, and both disappear. What remains are two quanta of light, each carrying 511&nbsp;kiloelectronvolts of energy, which fly off in opposite directions. The scanner&rsquo;s detector ring registers them simultaneously, and from millions of such pairs a computer assembles the image.</p>
+
+<figure>
+  <img src="/img/dirac/pet-scanner.jpg" alt="A patient lies on the bed of a PET scanner whose detector ring surrounds the body" loading="lazy" width="1200" height="874">
+  <figcaption>PET scanner: the detector ring registers the pairs of light quanta produced when positrons annihilate inside the body. <a href="https://commons.wikimedia.org/wiki/File:US_Navy_030819-N-9593R-151_A_patient_goes_through_Positiron_Emission_Tomography_(PET)_at_the_National_Naval_Medical_Center_in_Bethesda,_Maryland.jpg">U.S. Navy / Seth Rossman</a> / Wikimedia Commons / public domain</figcaption>
+</figure>
+
+<p>The existence of antimatter was predicted in 1931, before anyone had seen it. The prediction came not from an experiment but from an equation that Paul Dirac, then 25 years old, had written down in January 1928. He was looking for an equation for the electron that would satisfy both quantum mechanics and Einstein&rsquo;s theory of relativity, and in the process he ran into a mathematical problem: he had to take a square root that cannot be taken with ordinary numbers. The solution he found fits on a single line:</p>
+
+<div class="math-display" style="font-size:1.25rem;">\[ \big(i\hbar\,\gamma^\mu\partial_\mu - mc\big)\,\psi = 0 \]</div>
+
+<p>Three things followed from this line that nobody had asked for. First, the electron carries an internal angular momentum, its <em>spin</em>, which until then had been known only from experiment and had to be built into the theory by hand. Second, this spin has a property that seems to contradict all intuition: an electron must turn around twice before it is back in its initial state. Third, for every solution with positive energy the equation has a second one with negative energy &ndash; and Dirac, after some false starts, concluded that this second solution describes a particle with the mass of the electron but the opposite charge.</p>
+
+<figure>
+  <img src="/img/dirac/anderson-positron-1932.jpg" alt="Cloud chamber photograph from 1932: a curved particle track crosses a horizontal lead plate and is more strongly curved above the plate" loading="lazy" width="1200" height="1200" style="max-width:min(420px, 100%); display:block; margin:0 auto;">
+  <figcaption>Carl Anderson&rsquo;s photograph of 2&nbsp;August 1932: a cosmic-ray particle crosses a lead plate 6&nbsp;mm thick. Above the plate the track is more strongly curved, so the particle lost energy in the plate and therefore came from below. The direction of curvature in the magnetic field implies a positive charge, and the length of the track a mass like that of the electron. <a href="https://commons.wikimedia.org/wiki/File:PositronDiscovery.jpg">Carl D. Anderson (1932)</a> / Wikimedia Commons / public domain</figcaption>
+</figure>
+
+<p>On 2&nbsp;August 1932, at the California Institute of Technology, Carl Anderson photographed the track of such a particle in a cloud chamber. He knew of Dirac&rsquo;s theory, but it played no part in the discovery; he had come across the track while studying cosmic rays. Dirac received the Nobel Prize in 1933, Anderson in 1936. Today the positron is put to use every day in hospitals all over the world.</p>
+
+<p>This post leads to Dirac&rsquo;s line without assuming a physics degree. What is needed is vectors, matrices and school mathematics. The aim is more than a retelling: every symbol of the equation is to be <em>earned</em> in the course of the text, which means that it should become clear why it stands where it does and why it cannot look any different. The bar along the top edge shows which symbols have already been earned.</p>
+
+<p>The route has three acts, and each one answers a question.</p>
+
+<ul>
+  <li><strong>Act I &middot; Geometry.</strong> Is there a product of vectors that throws nothing away? The answer leads to oriented areas, to the imaginary unit as a rotation, and to a curious half angle.</li>
+  <li><strong>Act II &middot; Quantum mechanics.</strong> What does nature do between two measurements? The answer is that it rotates phasors and adds them up, and matrix multiplication turns out to be exactly that: the summing of all possibilities of one step.</li>
+  <li><strong>Act III &middot; Relativity.</strong> How does one take the square root of \(E^2 = p^2c^2 + m^2c^4\)? The answer is supplied by the geometry of Act&nbsp;I, and from it follow spin, antimatter and a surprisingly intuitive picture of mass.</li>
+</ul>
+
+<p>The common thread that connects the three acts is rotation.</p>
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- AKT I — MULTIPLIZIEREN KANN DREHEN -->
+<!-- ================================================================ -->
+<section id="akt1" class="pb-4">
+<div class="prose-dark">
+<p class="part-label">Act I &middot; Geometry</p>
+<h2>Multiplication can rotate</h2>
+<div class="leitfrage"><p><strong>Guiding question:</strong> Is there a product of vectors that throws nothing away?</p></div>
+</div>
+</section>
+
+<section id="problem" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 1</p>
+<h3>Vectors cannot be divided</h3>
+
+<p>With numbers one can answer a question so self-evident that it hardly registers: by what must 3 be multiplied to obtain 6? The answer is \(6/3 = 2\), and it exists because one can divide by every number except zero. The same question can be asked of arrows. Let two vectors \(u\) and \(v\) in the plane be given. By what object must \(u\) be multiplied so that \(v\) comes out? Intuitively the answer is clear: \(u\) must be stretched to the length of \(v\) and turned into the direction of \(v\). So there is a well-defined operation that carries \(u\) into \(v\) &ndash; a <em>rotation-scaling</em>. The only question is whether it can be written as a quotient \(u^{-1}v\), in the way one writes \(6/3\) for numbers.</p>
+
+<p>School mathematics knows two products of vectors, and both fail at this question. The <em>dot product</em> \(u\cdot v = |u|\,|v|\cos\theta\) turns two vectors into a single number. In doing so, information is lost: infinitely many vectors \(v\) have the same dot product with \(u\), and from the number alone it is impossible to work back to which one it was. The <em>cross product</em> \(u \times v\) does return a vector, but it has three shortcomings at once: it exists only in three-dimensional space; it is not associative, which means that \((u\times v)\times w\) and \(u \times (v \times w)\) are in general different; and it, too, cannot be inverted, since all vectors \(v + \lambda u\) give the same cross product with \(u\).</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Drag the tips of \(u\) and \(v\). Step&nbsp;1 shows all vectors that have the same dot product with \(u\), step&nbsp;2 all those that span the same area with \(u\). Step&nbsp;3 overlays the two.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-product-loss"></div></div>
+
+<p>The experiment shows two things. First, each of the two measures on its own throws away exactly the information that the other one contains: the dot product measures how far \(v\) reaches in the direction of \(u\) and forgets how far \(v\) deviates sideways from it; the area measures the sideways deviation and forgets the component along \(u\). Second, the two <em>together</em> determine the vector \(v\) uniquely. This means that the combination of dot product and area contains everything that characterises \(v\) relative to \(u\).</p>
+
+<p>This proves nothing yet, however; it only gives grounds for a suspicion. One could write the two numbers down as a pair and declare the pair to be the &ldquo;product&rdquo; &ndash; that would be exactly the kind of arbitrary stipulation this post sets out to avoid. The next two sections therefore proceed differently. They do not ask which product one would like to have, but which minimum requirements any product must meet if one is to calculate with it at all, and then derive what <em>necessarily</em> follows from these requirements. The dot product and the area are not introduced along the way. They fall out.</p>
+
+<details class="deep">
+<summary>How reasoning is marked in this post</summary>
+<p style="margin-top:0.75rem;">Every step in this post is of one of three kinds, and at the decisive points a small label stands in front of it:</p>
+<p><span class="chip z">follows necessarily</span> The step results logically from what has been said before. There is no other choice.</p>
+<p><span class="chip e">input</span> Here something is put in &ndash; a requirement or an experimental fact. For every input, the text gives reasons why it is this one in particular.</p>
+<p><span class="chip k">convention</span> Here a choice may be made, and a different choice would be just as good. Such places are explicitly named as conventions.</p>
+<p>At the end of the post, the epilogue takes stock: how few inputs were needed, and how much followed from them necessarily.</p>
+</details>
+</div></section>
+
+<section id="keilprodukt" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 2</p>
+<h3>Two requirements &ndash; and the dot product falls out</h3>
+
+<p>What we are looking for is a product \(uv\) of vectors with which one can calculate as with numbers. Exactly two requirements are placed on this product.</p>
+
+<p><span class="chip e">input</span> <strong>First: brackets and multiplying out.</strong> The product is to be <em>associative</em>, \((uv)w = u(vw)\), and <em>distributive</em>, \(u(v+w) = uv + uw\). These two rules are not a matter of taste. Without associativity one may not move a bracket in a product of three factors, without distributivity one may not multiply out a single term &ndash; and without these two moves not a single equation can be rearranged. What is <em>not</em> required is worth noting: that \(uv = vu\). Whether the product is commutative is left open; Section&nbsp;3 will show that it <em>cannot</em> be.</p>
+
+<p><span class="chip e">input</span> <strong>Second: a vector times itself gives its squared length.</strong></p>
+
+<div class="math-display">\[ vv = |v|^2 \]</div>
+
+<p>This is the only place where geometry enters the calculation, and it therefore deserves a justification. For numbers, \(3 \cdot 3 = 9\) is the area of a square with side length 3; squaring is the point at which multiplication and length are connected. If one demands the same of vectors, the product is tied to the measurement of lengths &ndash; otherwise it would have nothing to do with the geometry of arrows. In the interest of honesty it should be noted that one could also require \(vv = -|v|^2\); that yields a different, equally consistent algebra. This freedom of sign is not a flaw; it will play a decisive role in the third act, where physics will determine which sign applies to space and which to time.</p>
+
+<p><span class="chip z">follows necessarily</span> These two requirements already imply the dot product. To see this, the second requirement is applied to the sum vector \(u + v\), and the product is multiplied out using the first requirement:</p>
+
+<div class="math-display">\[ |u+v|^2 = (u+v)(u+v) = uu + uv + vu + vv = |u|^2 + uv + vu + |v|^2 \]</div>
+
+<p>Rearranging gives</p>
+
+<div class="math-display">\[ uv + vu = |u+v|^2 - |u|^2 - |v|^2 \]</div>
+
+<p>The right-hand side is a pure number, and a familiar one. By the law of cosines, \(|u+v|^2 = |u|^2 + |v|^2 + 2|u|\,|v|\cos\theta\), so the right-hand side equals \(2|u|\,|v|\cos\theta = 2\,u\cdot v\). Hence</p>
+
+<div class="math-display">\[ \tfrac12\,(uv + vu) = u \cdot v \]</div>
+
+<figure>
+<svg viewBox="0 0 360 170" width="100%" style="max-width:360px;display:block;margin:0 auto;" role="img" aria-label="Parallelogram spanned by u and v with the diagonal u plus v">
+  <polygon points="40,140 220,110 320,30 140,60" fill="rgba(245,158,11,0.08)" stroke="#334155" stroke-width="1"/>
+  <line x1="40" y1="140" x2="214" y2="111" stroke="#22d3ee" stroke-width="2.5"/><polygon points="220,110 206,107 209,118" fill="#22d3ee"/>
+  <line x1="40" y1="140" x2="135" y2="64" stroke="#2dd4bf" stroke-width="2.5"/><polygon points="140,60 126,64 134,72" fill="#2dd4bf"/>
+  <line x1="40" y1="140" x2="313" y2="35" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="6 4"/><polygon points="320,30 305,30 310,41" fill="#e2e8f0"/>
+  <text x="135" y="138" fill="#22d3ee" font-size="14" font-family="Inter,sans-serif">u</text>
+  <text x="70" y="90" fill="#2dd4bf" font-size="14" font-family="Inter,sans-serif">v</text>
+  <text x="250" y="80" fill="#e2e8f0" font-size="14" font-family="Inter,sans-serif">u + v</text>
+</svg>
+<figcaption>By the law of cosines, the squared length of the diagonal \(u+v\) exceeds \(|u|^2+|v|^2\) by \(2|u|\,|v|\cos\theta\). Exactly this excess is \(uv + vu\), that is, twice the symmetric part of \(uv\).</figcaption>
+</figure>
+
+<p>Pictured intuitively, this means: the part of \(uv\) that stays the same when the factors are swapped is nothing new; it is the familiar dot product. It was neither defined nor introduced, but is a consequence of the requirement that squaring measures lengths. With that, however, only half of the product is understood. The other half is the part that changes sign when the factors are swapped &ndash; and it leads to an object that does not appear in school mathematics.</p>
+</div></section>
+
+<section id="geometrisches-produkt" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 3</p>
+<h3>The remainder is an area</h3>
+
+<p><span class="chip z">follows necessarily</span> Every product can be split into a symmetric and an antisymmetric part, just as every matrix can be split into a symmetric and an antisymmetric component:</p>
+
+<div class="math-display">\[ uv = \underbrace{\tfrac12(uv + vu)}_{=\;u\cdot v} \;+\; \underbrace{\tfrac12(uv - vu)}_{=:\;u\wedge v} \]</div>
+
+<p>We denote the second part by \(u \wedge v\) (read &ldquo;u wedge v&rdquo;) and call it the <em>wedge product</em>. The decomposition is not a definition but an identity: it holds because the two summands add up to \(uv\). This also disposes of an obvious objection. A number and an arrow are not being added here arbitrarily; rather, an object that already exists, the product \(uv\), is being split into two components. The only question is what the second component is.</p>
+
+<p>Three of its properties can be read off directly. <strong>First</strong>, \(u\wedge v\) changes sign when the factors are swapped: \(v \wedge u = -\,u\wedge v\). <strong>Second</strong>, it vanishes for parallel vectors. For if \(v = \lambda u\), then \(uv = \lambda\,uu = \lambda |u|^2 = vu\), and the antisymmetric part is zero. In particular, \(u\wedge u = 0\). <strong>Third</strong>, it does not change when \(v\) is sheared along \(u\), because by distributivity \(u\wedge(v + \lambda u) = u\wedge v + \lambda\, u\wedge u = u \wedge v\). An object that changes sign when its sides are swapped, vanishes for parallel sides and stays the same under shearing is familiar from geometry: it is the <em>oriented area</em> of the parallelogram spanned by \(u\) and \(v\).</p>
+
+<p><span class="chip z">follows necessarily</span> That \(u \wedge v\) actually measures this area, and does not merely share its symmetries, can be calculated. To do so, the product \((uv)(vu)\) is computed in two ways. Using associativity and the second requirement, one obtains on the one hand</p>
+
+<div class="math-display">\[ (uv)(vu) = u\,(vv)\,u = |v|^2\, uu = |u|^2\,|v|^2 . \]</div>
+
+<p>On the other hand, \(uv = a + B\) and \(vu = a - B\), with the abbreviations \(a = u\cdot v\) and \(B = u \wedge v\). Since \(a\) is an ordinary number and commutes with everything, it follows that \((a+B)(a-B) = a^2 - B^2\). Equating the two gives</p>
+
+<div class="math-display">\[ B^2 = a^2 - |u|^2|v|^2 = |u|^2|v|^2\,(\cos^2\theta - 1) = -\,\big(|u|\,|v|\sin\theta\big)^2 . \]</div>
+
+<p>The expression \(|u|\,|v|\sin\theta\) is exactly the area of the parallelogram formed by \(u\) and \(v\). Pictured intuitively, this means: <strong>the antisymmetric part of the product squares to minus the square of the area it spans.</strong> Something more fundamental follows from this result. No real number has a negative square, and by the second requirement no vector has one either. Consequently, \(u\wedge v\) is neither a number nor a vector but an object of its own kind. It carries the size of the area, its position in space (the plane in which \(u\) and \(v\) lie) and its sense of rotation (from \(u\) to \(v\)). It is called a <em>bivector</em>, an oriented piece of area.</p>
+
+<p class="history">The area as a calculational object in its own right was introduced by <strong>Hermann Grassmann</strong> in 1844 in his <em>Ausdehnungslehre</em> (&ldquo;theory of extension&rdquo;), written while he was a grammar-school teacher in Stettin and largely ignored by the experts of his time. In 1878, <strong>William Kingdon Clifford</strong> combined Grassmann&rsquo;s areas with Hamilton&rsquo;s quaternions into exactly the product derived here. He called it the &ldquo;geometric product&rdquo;. What differs in the presentation of this post is that the area is not introduced as a new object but recognised as what remains of \(uv\) once the dot product is subtracted.</p>
+
+<p>In coordinates the result can be checked directly. With a basis of two perpendicular unit vectors \(e_1, e_2\) and \(u = u_1e_1 + u_2e_2\), \(v = v_1e_1+v_2e_2\), one obtains</p>
+
+<div class="math-display">\[ u\wedge v = (u_1v_2 - u_2v_1)\; e_1 e_2 . \]</div>
+
+<p>The coefficient is the determinant familiar from linear algebra, the signed area of the parallelogram. In space there are three basis areas, \(e_1e_2\), \(e_2e_3\) and \(e_3e_1\), and the three coefficients \(u_1v_2 - u_2v_1\), \(u_2v_3 - u_3v_2\) and \(u_3v_1 - u_1v_3\) are exactly the components of the cross product. The cross product is therefore an area disguised as a vector; Section&nbsp;6 returns to this.</p>
+
+<h3 style="margin-top:2rem;">Perpendicular means: anticommuting</h3>
+
+<p><span class="chip z">follows necessarily</span> For two perpendicular vectors the dot product is zero, and the product consists of the area alone. With the result of Section&nbsp;2, this means \(uv + vu = 0\), and hence</p>
+
+<div class="math-display">\[ u \perp v \quad\Longrightarrow\quad uv = -\,vu . \]</div>
+
+<p>Perpendicular vectors <em>anticommute</em>: swapping them reverses the sign. This, too, was not chosen. It also shows that the product <em>cannot</em> be commutative. For if \(e_1e_2 = e_2e_1\), then together with \(e_1e_2 = -e_2e_1\) it would follow that \(e_1e_2 = 0\). But then \(e_2 = (e_1e_1)\,e_2 = e_1\,(e_1e_2) = 0\) as well &ndash; a contradiction. Commutativity is therefore not something one gives up, but something that is incompatible with the two requirements.</p>
+
+<div class="merke">
+  <p><strong>Key point:</strong> For a basis of perpendicular unit vectors,</p>
+  <div class="math-display" style="margin:0.5rem 0;">\[ e_1e_1 = e_2e_2 = 1, \qquad e_1e_2 = -\,e_2e_1 . \]</div>
+  <p><em>Normalised</em> means: squares to 1. <em>Perpendicular</em> means: anticommutes. Both rules follow from the two requirements of Section&nbsp;2. They are the entire grammar of this post &ndash; all the way to the Dirac equation.</p>
+</div>
+
+<h3 style="margin-top:2rem;">Dividing by vectors</h3>
+
+<p><span class="chip z">follows necessarily</span> The original question can now be answered. From \(vv = |v|^2\) it follows directly that \(v\) has an inverse as soon as \(v \neq 0\):</p>
+
+<div class="math-display">\[ v^{-1} = \frac{v}{|v|^2}, \qquad \text{since}\quad v\,\frac{v}{|v|^2} = \frac{|v|^2}{|v|^2} = 1 . \]</div>
+
+<p>A concrete example makes the gain visible. Let \(u = 3e_1 + e_2\) and \(v = e_1 + 2e_2\), the starting vectors of the experiment above. Then \(u\cdot v = 5\) and \(u\wedge v = (3\cdot 2 - 1\cdot 1)\,e_1e_2 = 5\,e_1e_2\), so \(uv = 5 + 5\,e_1e_2\). With \(u^{-1} = u/10\), \(v\) can be recovered from \(u\) and the product:</p>
+
+<div class="math-display">\[ u^{-1}(uv) = \tfrac{1}{10}\,(3e_1 + e_2)(5 + 5\,e_1e_2) = \tfrac{1}{2}\,(3e_1 + e_2) + \tfrac12\,(3e_2 - e_1) = e_1 + 2e_2 = v . \]</div>
+
+<p>(In the second summand, \(e_1e_1e_2 = e_2\) and \(e_2e_1e_2 = -e_1e_2e_2 = -e_1\) were used &ndash; each time only the two rules from the key-point box.) This means that the geometric product loses no information: from \(u\) and \(uv\), \(v\) can be reconstructed uniquely, just as the experiment in Section&nbsp;1 suggested.</p>
+
+<p>Finally, it is worth noting <em>what</em> the quotient we were looking for actually is. The object by which \(u\) must be multiplied to obtain \(v\) is \(u^{-1}v = (u\cdot v + u\wedge v)/|u|^2\) &ndash; a number plus an area. In the example it is \(\tfrac12 + \tfrac12\,e_1e_2\). By the preliminary reasoning of Section&nbsp;1, this object must be a rotation-scaling. The next section shows that it is, and along the way an old acquaintance appears whose origin seemed mysterious for centuries.</p>
+</div></section>
+
+<section id="i" class="pb-12" data-earns="i"><div class="prose-dark">
+<p class="sec-label">Section 4</p>
+<h3>An area whose square is \(-1\)</h3>
+
+<p>According to the previous sections, the plane contains exactly four kinds of basic building blocks: the number \(1\), the two basis vectors \(e_1\) and \(e_2\), and the product \(e_1e_2\). Since \(e_1\) and \(e_2\) are perpendicular, their dot product is zero, and \(e_1e_2 = e_1\wedge e_2\) is a pure area: the oriented unit square, traversed from \(e_1\) to \(e_2\). Everything that can be formed in the plane by adding and multiplying is a combination of these four building blocks.</p>
+
+<p><span class="chip z">follows necessarily</span> What does this unit square give when multiplied by itself? The result of Section&nbsp;3 already supplies the answer: a bivector squares to minus the square of its area, and the area of the unit square is 1. The same answer can also be obtained without any formula, using only the two rules from the key-point box. The following puzzle does exactly that.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Simplify \((e_1e_2)(e_1e_2)\) using only two moves: two different neighbours may be swapped, which costs a minus sign. Two equal neighbours merge into their square, here \(+1\).</p>
+</div>
+
+<div class="component-wrap"><div id="mount-swap-i"></div></div>
+
+<p>Written out, the calculation reads</p>
+
+<div class="math-display">\[ (e_1e_2)(e_1e_2) = e_1\,(e_2e_1)\,e_2 = -\,e_1\,(e_1e_2)\,e_2 = -\,(e_1e_1)(e_2e_2) = -1 . \]</div>
+
+<p>A single swap, a single minus sign, and two squares that each give 1. This means: <strong>the oriented unit square of the plane squares to \(-1\).</strong> An object with this property is familiar from school, namely the imaginary unit \(i\). Sharing the same equation, however, is not yet enough to speak of &ldquo;the same object&rdquo;. What matters is whether \(e_1e_2\) also <em>behaves</em> like \(i\) &ndash; and for that one has to look at what it does to vectors.</p>
+
+<h3 style="margin-top:2rem;">What \(e_1e_2\) does to an arrow</h3>
+
+<p><span class="chip z">follows necessarily</span> Multiplying the two basis vectors from the right by \(e_1e_2\), the same two rules give</p>
+
+<div class="math-display">\[ e_1\,(e_1e_2) = (e_1e_1)\,e_2 = e_2, \qquad e_2\,(e_1e_2) = -\,e_2\,(e_2e_1) = -\,(e_2e_2)\,e_1 = -\,e_1 . \]</div>
+
+<p>\(e_1\) becomes \(e_2\), and \(e_2\) becomes \(-e_1\). Pictured intuitively, this is a rotation by 90&deg; anticlockwise, and since the product is distributive, not only every basis vector but every vector of the plane is rotated in this way. The unit square is therefore not only an area but at the same time a <em>rotation instruction</em>: &ldquo;Rotate by a quarter turn in my plane, in my sense of rotation.&rdquo;</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Multiply the arrow by \(e_1e_2\) several times and watch what happens after two steps. The slider shows the rotation by an arbitrary angle.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-quarter-turn"></div></div>
+
+<p>With this, the most mysterious equation of school mathematics acquires an intuitive meaning. Rotated twice by 90&deg;, every arrow points in the opposite direction, and &ldquo;pointing in the opposite direction&rdquo; is exactly multiplication by \(-1\). Pictured intuitively, the statement \(i^2 = -1\) means: <strong>two quarter turns make a half turn.</strong> After four quarter turns one is back where one started, which is why \(i^4 = 1\).</p>
+
+<p><span class="chip k">convention</span> That the rotation runs anticlockwise is because we multiplied from the right and wrote \(e_1\) to the left of \(e_2\). Multiplied from the left, \(e_1e_2\) rotates clockwise, as can be switched in the widget: \((e_1e_2)\,e_1 = -e_2\). Which side and which sense of rotation count as &ldquo;positive&rdquo; is an agreement that mathematics has made uniformly for centuries; it changes nothing about the geometry.</p>
+
+<h3 style="margin-top:2rem;">Rotation by any angle &ndash; and the quotient from Section 1</h3>
+
+<p><span class="chip z">follows necessarily</span> A rotation by an arbitrary angle \(\theta\) is obtained by multiplying the vector by a mixture of number and area:</p>
+
+<div class="math-display">\[ e_1\,(\cos\theta + e_1e_2\sin\theta) = \cos\theta\; e_1 + \sin\theta\; e_2 . \]</div>
+
+<p>On the right stands exactly the unit vector rotated by \(\theta\) relative to \(e_1\), and because of distributivity the same holds for every vector. The factor \(\cos\theta + e_1e_2\sin\theta\) is therefore the rotation instruction for the angle \(\theta\). How it is written as an exponential function, and why that makes sense, is shown in Section&nbsp;7.</p>
+
+<p>This makes it possible to keep the promise of Section&nbsp;1. There, for \(u = 3e_1 + e_2\) and \(v = e_1 + 2e_2\), the quotient came out as</p>
+
+<div class="math-display">\[ u^{-1}v = \tfrac12 + \tfrac12\,e_1e_2 = \tfrac{1}{\sqrt2}\,\big(\cos 45^\circ + e_1e_2 \sin 45^\circ\big) . \]</div>
+
+<p>It rotates by 45&deg; and scales by the factor \(1/\sqrt2\). That is exactly what is needed, because \(u\) and \(v\) enclose an angle of 45&deg;, and \(v\), with length \(\sqrt5\), is shorter by the factor \(1/\sqrt2\) than \(u\), with length \(\sqrt{10}\). The quotient of two vectors is therefore indeed a rotation-scaling.</p>
+
+<h3 style="margin-top:2rem;">Complex numbers are number plus area</h3>
+
+<p><span class="chip z">follows necessarily</span> Objects of the form \(a + b\,e_1e_2\) can be added and multiplied, and their multiplication follows from \((e_1e_2)^2 = -1\) alone:</p>
+
+<div class="math-display">\[ (a + b\,e_1e_2)(c + d\,e_1e_2) = (ac - bd) + (ad + bc)\,e_1e_2 . \]</div>
+
+<p>Symbol for symbol, this is the multiplication rule of complex numbers, with \(e_1e_2\) in place of \(i\). This is not an analogy but the same structure: complex numbers <em>are</em> number plus oriented area of the plane, and multiplying by them means rotating and scaling.</p>
+
+<p>One distinction deserves attention here, because school mathematics usually blurs it. The <em>vector</em> with coordinates \((a, b)\) is \(a\,e_1 + b\,e_2\), an arrow. The <em>complex number</em> \(a + b\,i\) is \(a + b\,e_1e_2\), a rotation-scaling. Both have two components, and in the complex plane (the Gaussian plane) they are drawn as the same point, but they are different objects. The bridge between them is a single multiplication:</p>
+
+<div class="math-display">\[ e_1\,(a\,e_1 + b\,e_2) = a + b\,e_1e_2 . \]</div>
+
+<p>Pictured intuitively, this means: the complex number is the rotation-scaling that carries the reference arrow \(e_1\) into the vector \((a, b)\). <span class="chip k">convention</span> Which arrow serves as the reference is a choice &ndash; the complex plane makes it tacitly by fixing the real axis. Because this choice is so self-evident in the plane, vector and complex number seem to coincide there. In space this will no longer work, and that is precisely why space needs more than the complex numbers.</p>
+
+<p class="history">The square root of \(-1\) first appeared in 1545 in <strong>Gerolamo Cardano&rsquo;s</strong> <em>Ars Magna</em>, as an intermediate result that Cardano himself considered meaningless. In 1637 <strong>Ren&eacute; Descartes</strong> called such quantities &ldquo;imaginaires&rdquo;, imaginary, and the name has stuck. Only <strong>Caspar Wessel</strong> (1799), <strong>Jean-Robert Argand</strong> (1806) and <strong>Carl Friedrich Gauss</strong> (1831) interpreted multiplication by \(i\) as a rotation in the plane. Yet even for them, \(i\) remains a symbol whose property \(i^2 = -1\) is postulated. The route taken here reverses the order: all that was required is that squaring measures lengths. That there is an object with square \(-1\), that it is the plane itself and that it rotates &ndash; all of this follows.</p>
+
+<div class="merke">
+  <p><strong>Interim result:</strong> \(i\) is not an invented number but the oriented unit square of the plane. Multiplying by it means rotating by 90&deg;. Complex numbers are number plus area &ndash; and therefore rotation-scalings.</p>
+</div>
+</div></section>
+
+<section id="quaternionen" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 5</p>
+<h3>Three dimensions: mirrors, rotors and Hamilton&rsquo;s quaternions</h3>
+
+<p>In space a third basis vector \(e_3\) is added, and with it three basis areas instead of one: \(e_1e_2\), \(e_2e_3\) and \(e_3e_1\). They are the oriented unit squares in the three coordinate planes. <span class="chip z">follows necessarily</span> The same calculation as in Section&nbsp;4 applies to each of them, so each squares to \(-1\). Moreover, any two of them anticommute; for instance, \(e_1e_2\,e_2e_3 = e_1e_3\), whereas \(e_2e_3\,e_1e_2 = -\,e_1e_3\). In space, therefore, there is not one but three quantities with square \(-1\), and each belongs to a plane.</p>
+
+<h3 style="margin-top:2rem;">Why one-sided multiplication no longer suffices in space</h3>
+
+<p>The obvious idea would be to treat rotations in space exactly as in the plane: to multiply a vector from the right by \(\cos\theta + B\sin\theta\), where \(B\) is the plane of rotation. <span class="chip z">follows necessarily</span> This fails, and visibly so. Suppose \(e_1\) is to be rotated in the plane \(e_2e_3\) &ndash; a plane to which \(e_1\) is perpendicular. Then \(e_1\) ought to stay unchanged, because an arrow perpendicular to the plane of rotation is the axis of rotation. The one-sided calculation, however, gives</p>
+
+<div class="math-display">\[ e_1\,(\cos\theta + e_2e_3\sin\theta) = \cos\theta\; e_1 + \sin\theta\; e_1e_2e_3 . \]</div>
+
+<p>The second summand is a product of three perpendicular vectors, an oriented piece of volume. What has come out is no longer a vector. In the plane this was not a problem, because there every vector lies in the plane of rotation; in space there are directions that do not lie in it, and for these, one-sided multiplication is the wrong operation. Another route to rotations is therefore needed &ndash; and this route leads through mirrors.</p>
+
+<h3 style="margin-top:2rem;">Reflections</h3>
+
+<p><span class="chip z">follows necessarily</span> Let \(n\) be a unit vector. Every vector \(v\) can be split into a component \(v_\parallel\) parallel to \(n\) and a component \(v_\perp\) perpendicular to it. By Section&nbsp;3, the parallel component commutes with \(n\), while the perpendicular one anticommutes. This gives</p>
+
+<div class="math-display">\[ -\,n\,v\,n = -\,n\,v_\parallel\, n - n\,v_\perp\, n = -\,v_\parallel\,(nn) + v_\perp\,(nn) = -\,v_\parallel + v_\perp . \]</div>
+
+<p>The component along \(n\) is reversed, the component perpendicular to it stays. This is exactly the reflection in the plane perpendicular to \(n\) &ndash; a mirror whose position is fixed by its normal vector \(n\). A reflection can therefore be written as a sandwich, and the result is guaranteed to be a vector again.</p>
+
+<p><span class="chip z">follows necessarily</span> Now a fact from elementary geometry comes into play, one that can be observed with any pair of mirrors: <strong>two reflections in succession produce a rotation, namely by twice the angle between the two mirrors.</strong> If \(v\) is reflected first in the mirror with normal \(m\), then in the mirror with normal \(n\), the result is</p>
+
+<div class="math-display">\[ v'' = -\,n\,(-\,m\,v\,m)\,n = (nm)\; v\; (mn) = R\,v\,\tilde R, \qquad R = nm, \quad \tilde R = mn . \]</div>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Change the angle \(\alpha\) between the two mirrors and observe by what angle \(v''\) is rotated relative to \(v\). The dial on the right shows two hands: the rotation of the vector and the rotor \(R\). What happens at \(\alpha = 180^\circ\)?</p>
+</div>
+
+<div class="component-wrap"><div id="mount-rotor"></div></div>
+
+<p>The object \(R = nm\) is called a <em>rotor</em>. As the product of two unit vectors it is, by Section&nbsp;3, a number plus an area: \(R = n\cdot m + n\wedge m\). If the mirrors enclose the angle \(\alpha\), then \(n\cdot m = \cos\alpha\) and \(n \wedge m = -\,B\sin\alpha\), where \(B\) is the unit area of the plane, traversed from \(m\) to \(n\). Since the rotation has the angle \(\theta = 2\alpha\), the rotor reads</p>
+
+<div class="math-display">\[ R = \cos\tfrac{\theta}{2} - B\,\sin\tfrac{\theta}{2}, \qquad v' = R\,v\,\tilde R . \]</div>
+
+<p><span class="chip z">follows necessarily</span> Here the <strong>half angle</strong> appears, and it is not a computational convention. It arises because two mirrors that produce a rotation by \(\theta\) enclose only the angle \(\theta/2\). Nor is the sandwich a choice: it is the form in which reflections occur, and it guarantees that a vector turns into a vector again. The problem from above is solved as well. If \(e_1\) is perpendicular to the plane of rotation \(e_2e_3\), it commutes with \(R\), and \(R\,e_1\tilde R = e_1 R\tilde R = e_1\): the axis of rotation stays where it is.</p>
+
+<h3 style="margin-top:2rem;">A full turn, and yet \(R = -1\)</h3>
+
+<p><span class="chip z">follows necessarily</span> At \(\alpha = 180^\circ\) the widget shows a peculiarity that will be decisive for the rest of this post. If the second mirror is turned a further 180&deg;, it lies in the same plane as before &ndash; a mirror has no front and back. Its normal vector, however, now points in the opposite direction, \(n \to -n\), and therefore \(R \to -R\). Nothing changes for the vector, because \(R\) appears twice in the sandwich, and the two minus signs cancel. Consequently \(R\) and \(-R\) describe the same rotation, and a full turn through \(\theta = 360^\circ\) has the rotor</p>
+
+<div class="math-display">\[ R = \cos 180^\circ - B\sin 180^\circ = -1 . \]</div>
+
+<p>Only after \(720^\circ\) is the rotor \(+1\) again. For vectors this difference is invisible. Whether there are objects for which it is visible &ndash; objects that are rotated not by the sandwich but one-sidedly by \(R\) &ndash; is a question that Act&nbsp;III will answer. The answer is yes, and every electron is such an object.</p>
+
+<h3 style="margin-top:2rem;">Hamilton&rsquo;s quaternions</h3>
+
+<p>A rotor in space consists of a number and an area, and an arbitrary area is a combination of the three basis areas. A rotor therefore has four components:</p>
+
+<div class="math-display">\[ R = a + b\,e_3e_2 + c\,e_1e_3 + d\,e_2e_1 . \]</div>
+
+<p>Exactly these objects were found by <strong>William Rowan Hamilton</strong> on 16&nbsp;October 1843, on a walk along the Royal Canal in Dublin. For years he had been searching for &ldquo;numbers for space&rdquo; that would do for three dimensions what the complex numbers do for the plane, and he had always calculated with three components. At Broom Bridge he realised that he needed four, and he carved the rule into a stone of the bridge:</p>
+
+<div class="math-display">\[ i^2 = j^2 = k^2 = ijk = -1 . \]</div>
+
+<figure>
+  <img src="/img/dirac/hamilton-plakette-broom-bridge.jpg" alt="Commemorative plaque at Broom Bridge in Dublin with Hamilton&rsquo;s formula i² = j² = k² = ijk = −1 and a relief portrait of Hamilton" loading="lazy" width="1200" height="900">
+  <figcaption>Commemorative plaque at Broom Bridge in Dublin; Hamilton&rsquo;s original carving has not survived. <a href="https://commons.wikimedia.org/wiki/File:Broombridge_Hamilton_Plaque.jpg">Brendan Ward</a> / Wikimedia Commons / <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0 1.0</a></figcaption>
+</figure>
+
+<p>In retrospect, geometry explains why three components could not suffice: a rotation in space is determined by a plane (three components) and an angle, and in the rotor the angle appears as an additional number part \(\cos(\theta/2)\). Hamilton&rsquo;s \(i\), \(j\), \(k\) are the three basis areas of space. <span class="chip k">convention</span> The assignment does, however, involve a choice. With \(i = e_3e_2\), \(j = e_1e_3\) and \(k = e_2e_1\), Hamilton&rsquo;s rules hold exactly; the assignment that seems more natural at first glance, \(i = e_2e_3\), \(j = e_3e_1\), \(k = e_1e_2\), gives \(ij = -k\) instead, that is, the mirror-image variant. Both algebras are equivalent; Hamilton opted for one of them.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> The same two moves as in Section&nbsp;4 are enough to verify Hamilton&rsquo;s bridge formula.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-swap-ijk"></div></div>
+
+<p>To this day, quaternions are the standard whenever rotations in space have to be computed reliably: in the attitude control of space probes and satellites, in drones, in robots and in almost every 3D engine for computer games. The reason is the same one that produced them here. A rotor describes a rotation by a plane and an angle, without the detour of three successive rotations about fixed axes, and thereby avoids the singularities that arise with such angle decompositions.</p>
+</div></section>
+
+<section id="kreuzprodukt" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 6</p>
+<h3>The cross product unmasked</h3>
+
+<p>At the beginning of this act, the cross product stood as the second unsatisfactory product. With the concepts of the previous sections it is now possible to say exactly what it is. <span class="chip z">follows necessarily</span> The product of the three basis vectors, \(I = e_1e_2e_3\), is an oriented unit volume. Using the two familiar rules one can verify that \(I^2 = -1\) and that \(I\) commutes with every vector. Multiplying a basis area by \(I\) produces the vector perpendicular to it; for example, \(-\,I\,e_1e_2 = e_3\). Hence, in general,</p>
+
+<div class="math-display">\[ u \times v = -\,I\,(u \wedge v) . \]</div>
+
+<p>Pictured intuitively, this means: <strong>the cross product is the area \(u\wedge v\), replaced by its normal vector.</strong> This replacement is possible only in three-dimensional space, because only there does a plane have exactly one perpendicular direction. In the plane there is none, in four dimensions a whole plane of them. Here, too, lies the reason for the shortcomings from Section&nbsp;1: the cross product exists only in three dimensions because it disguises an area as an arrow, and it loses information because it omits the scalar part of the geometric product. <span class="chip k">convention</span> Which of the two possible normal directions the arrow points in is fixed by the right-hand rule &ndash; an agreement that is reflected in the sign of \(I\).</p>
+
+<p>This has physical consequences. Quantities traditionally written as cross products, such as angular momentum \(L = r \times p\) or torque, are by their nature areas: they describe in which plane and in which sense something rotates. That they react differently under reflection from &ldquo;genuine&rdquo; arrows &ndash; in physics they are called axial vectors &ndash; is, from this point of view, not a curiosity but the consequence of their not being arrows at all. And in four-dimensional spacetime, where Act&nbsp;III takes place, there are \(4\cdot 3/2 = 6\) basis areas &ndash; exactly as many components as the electric and magnetic fields have together. The electromagnetic field is an area of spacetime.</p>
+
+<div class="recap">
+  <p class="recap-title">Looking back: Act I</p>
+  <p class="text-sm" style="color:#d1d5db;">Two inputs were enough: the product is to allow multiplying out and rebracketing, and a vector times itself is to give its squared length. From these followed necessarily the dot product, the oriented area, the anticommutation of perpendicular vectors, division by vectors, the object \(i\) as the unit square of the plane, rotation by multiplication, reflections as sandwiches, the rotor with its half angle, and the fact that a full turn has the rotor \(-1\). The only things chosen were the sense of rotation, the assignment of the quaternions and the right-hand rule.</p>
+  <div style="overflow-x:auto;">
+  <table style="width:100%; font-size:0.85rem; color:#d1d5db; border-collapse:collapse; margin-top:0.75rem;">
+    <thead><tr style="color:#94a3b8; text-align:left;"><th style="padding:0.3rem 0.5rem;">Space</th><th style="padding:0.3rem 0.5rem;">Building blocks (number &middot; vectors &middot; areas &middot; volume &hellip;)</th><th style="padding:0.3rem 0.5rem;">Rotations by</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:0.3rem 0.5rem;">Plane (2D)</td><td style="padding:0.3rem 0.5rem;">1 &middot; 2 &middot; 1</td><td style="padding:0.3rem 0.5rem;">number + one area = complex number</td></tr>
+      <tr><td style="padding:0.3rem 0.5rem;">Space (3D)</td><td style="padding:0.3rem 0.5rem;">1 &middot; 3 &middot; 3 &middot; 1</td><td style="padding:0.3rem 0.5rem;">number + three areas = quaternion</td></tr>
+      <tr><td style="padding:0.3rem 0.5rem;">Spacetime (4D)</td><td style="padding:0.3rem 0.5rem;">1 &middot; 4 &middot; 6 &middot; 4 &middot; 1</td><td style="padding:0.3rem 0.5rem;">number + six areas (+ 4D volume) &rarr; Act III</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="text-sm" style="color:#94a3b8; margin-top:0.75rem;">The numbers in the middle column are binomial coefficients: every building block is a selection of basis vectors; a vector selects one, an area two, a volume three. The same binomial coefficients will reappear in Act&nbsp;II, when paths are counted.</p>
+</div>
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- ACT II — ROTATING AND SUMMING -->
+<!-- ================================================================ -->
+<section id="akt2" class="pb-4">
+<div class="prose-dark">
+<p class="part-label">Act II &middot; Quantum Mechanics</p>
+<h2>Rotating and Summing</h2>
+<div class="leitfrage"><p><strong>Guiding question:</strong> What does nature do between two measurements?</p></div>
+</div>
+</section>
+
+<section id="zeiger" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 7</p>
+<h3>Phasors that rotate and add</h3>
+
+<p>Act&nbsp;I was pure mathematics. With Act&nbsp;II nature enters the stage, and with it the kind of justification changes. From two requirements on a product it was possible to derive that areas square to a negative number; that the world behaves quantum-mechanically, by contrast, cannot be derived but only observed. The following sections therefore mark with particular care which steps come from experiments and which follow necessarily from them.</p>
+
+<p><span class="chip e">input</span> <strong>The experiment.</strong> If electrons are sent one at a time, one after another, through a screen with two slits, a striped pattern builds up point by point on the detector behind it. There are places where hardly any electron arrives, even though electrons do arrive there as soon as one of the two slits is closed. In 1989 Akira Tonomura and colleagues at Hitachi filmed how this pattern builds up from individual impacts; with light, the effect had been known since Thomas Young&rsquo;s experiments around 1801.</p>
+
+<p><span class="chip z">follows necessarily</span> This observation has a far-reaching consequence. If the two slits were two routes, each with its own probability, then opening the second slit would have to increase the probability of arriving at a given point, not decrease it. Probabilities are numbers between 0 and 1, and two such numbers can never cancel each other when added. Consequently each route must be assigned something that <em>can</em> cancel: a quantity with a direction, for which two opposite copies add up to zero.</p>
+
+<p><span class="chip e">input</span> <strong>Feynman&rsquo;s rule.</strong> Richard Feynman described quantum mechanics in a form that needs exactly one such quantity, and in his book <em>QED</em> (1985) he explained it without a single formula. Every way in which an event can come about is assigned a <em>phasor</em>, an arrow in a plane. If a possibility consists of several steps in succession, the phasors of the steps are <em>multiplied</em> &ndash; in the sense of Act&nbsp;I, that is, angles of rotation are added and lengths multiplied. If there are several possibilities, their phasors are <em>added</em>, head to tail. The probability of the event is the square of the length of the resulting phasor. This rule is a summary of experiments, not a derivation, and it is named here as an input. That the phasors are precisely the rotation-scalings of the plane &ndash; complex numbers, that is, number plus area &ndash; is likewise a fact of experience. The last part of the rule, probability equals length squared, was formulated by Max Born in 1926; in 1957 Andrew Gleason showed that, under very weak assumptions, it is the only consistent possibility.</p>
+
+<p>How this rule explains the double slit, diffraction and the refraction of light is shown in detail in the <a href="/en/quantum.html">post on quantum physics with arrows</a>. Here only one property of the phasors is needed, and it was already laid down in Act&nbsp;I: multiplying means rotating.</p>
+
+<h3 style="margin-top:2rem;">Many small rotations</h3>
+
+<p><span class="chip z">follows necessarily</span> A rotation through a very small angle \(\theta/N\) is approximately multiplication by \(1 + i\,\theta/N\): the phasor keeps almost all of its length and gains a small increment turned through 90&deg;. Performing \(N\) such steps one after another gives \((1 + i\theta/N)^N\). For \(\theta = 2\), for example, one obtains:</p>
+
+<div style="overflow-x:auto;">
+<table style="margin:1rem auto; font-size:0.9rem; color:#d1d5db; border-collapse:collapse; font-variant-numeric:tabular-nums;">
+  <tr style="color:#94a3b8;"><td style="padding:0.25rem 1rem;">\(N\)</td><td style="padding:0.25rem 1rem;">\((1 + 2i/N)^N\)</td></tr>
+  <tr><td style="padding:0.25rem 1rem;">10</td><td style="padding:0.25rem 1rem;">\(-0.477 + 1.119\,i\)</td></tr>
+  <tr><td style="padding:0.25rem 1rem;">1000</td><td style="padding:0.25rem 1rem;">\(-0.417 + 0.911\,i\)</td></tr>
+  <tr><td style="padding:0.25rem 1rem;">100,000</td><td style="padding:0.25rem 1rem;">\(-0.416 + 0.909\,i\)</td></tr>
+  <tr style="color:#f59e0b;"><td style="padding:0.25rem 1rem;">Limit</td><td style="padding:0.25rem 1rem;">\(\cos 2 + i \sin 2 = -0.416 + 0.909\,i\)</td></tr>
+</table>
+</div>
+
+<p>For finite \(N\) the phasor grows slightly longer in the process, because \(|1 + i\theta/N|\) is minimally greater than 1; in the limit this error vanishes, and what remains is a pure rotation through \(\theta\). It is the same limit that Jakob Bernoulli found in 1683 when studying compound interest, and which leads to the number \(e\) (see the <a href="/en/euler.html#bernoulli">post on Euler&rsquo;s number</a>). This is why one writes</p>
+
+<div class="math-display">\[ e^{i\theta} = \lim_{N\to\infty}\Big(1 + \frac{i\theta}{N}\Big)^N = \cos\theta + i\sin\theta . \]</div>
+
+<p>This also redeems the notation from Section&nbsp;4: the rotation instruction \(\cos\theta + e_1e_2\sin\theta\) is \(e^{e_1e_2\theta}\), a rotation composed of infinitely many infinitely small rotations. This pattern &ndash; many small steps that multiply together into an exponential function &ndash; will return in Section&nbsp;11, then with matrices instead of numbers.</p>
+</div></section>
+
+<section id="drehgeschwindigkeit" class="pb-12" data-earns="hbar,d,psi"><div class="prose-dark">
+<p class="sec-label">Section 8</p>
+<h3>Energy and momentum are rates of rotation</h3>
+
+<p>The simplest conceivable quantum system has only a single state and therefore only a single phasor. According to Feynman&rsquo;s rule, the only thing that can be measured about it is its length squared, and if nothing happens, that length stays the same. Such a state is called <em>stationary</em>. The only freedom left to it is the direction of its phasor.</p>
+
+<p><span class="chip z">follows necessarily</span> How this direction can change over time is fixed by a single assumption that hardly anyone will dispute: no moment in time is distinguished from any other. Then a time step of duration \(s\) must always turn the phasor on by the same factor \(z(s)\), regardless of when it takes place, and two time steps in succession give \(z(t + s) = z(t)\,z(s)\). The only continuous functions with this property are exponential functions, and since the length is preserved, only a uniform rotation comes into question:</p>
+
+<div class="math-display">\[ z(t) = e^{-i\omega t} . \]</div>
+
+<p>This means, as a picture: the phasor of a stationary state runs round a circle at constant speed \(\omega\). <span class="chip k">convention</span> That the exponent carries a minus sign, so that the phasor runs clockwise, is an agreement within physics; the other sign yields the same physics.</p>
+
+<p><span class="chip z">follows necessarily</span> Differentiating this phasor with respect to time gives</p>
+
+<div class="math-display">\[ \frac{dz}{dt} = -\,i\,\omega\, z . \]</div>
+
+<p>The change of the phasor is the phasor itself, turned through 90&deg; and stretched by the rate of rotation. This is the core of what will be needed from here on: <strong>differentiating extracts the rate of rotation.</strong></p>
+
+<p><span class="chip e">input</span> Which physical quantity this rate of rotation is, only experiment can reveal. Max Planck found in 1900, in thermal radiation, and Albert Einstein in 1905, in the photoelectric effect, that energy and frequency are proportional to each other. The constant of proportionality is the reduced Planck constant \(\hbar \approx 1.055 \cdot 10^{-34}\,\text{J\,s}\):</p>
+
+<div class="math-display">\[ E = \hbar\,\omega . \]</div>
+
+<p>This means, as a picture: <strong>energy is rate of rotation</strong>, and \(\hbar\) is the conversion factor between the unit &ldquo;revolutions per second&rdquo; and the unit joule. Substituting this, the differentiation rule becomes \(i\hbar\,dz/dt = E\,z\). That is the Schr&ouml;dinger equation, for a system with only a single state.</p>
+
+<h3 style="margin-top:2rem;">Phasors along space</h3>
+
+<p>A particle that moves has not just one phasor but one at every location. If it has a definite energy and a definite momentum, each of these phasors rotates with \(\omega = E/\hbar\), and at a fixed moment the phasors along space are turned evenly against one another, with a &ldquo;spatial rate of rotation&rdquo; \(k\):</p>
+
+<div class="math-display">\[ \psi(x, t) = e^{\,i(kx - \omega t)} . \]</div>
+
+<p><span class="chip z">follows necessarily</span> That \(k\) is related to momentum in exactly the way \(\omega\) is related to energy, namely \(p = \hbar k\), was recognised by Louis de Broglie in 1924 with an argument resting on relativity alone. The position of a phasor counts how often it has turned, and a count must be the same for every observer. A moving observer, however, mixes time and place, and mixes energy and momentum in exactly the same way &ndash; Act&nbsp;III will show why. For the counts to agree, the two rates of rotation must stand in the same ratio as energy and momentum: if the temporal one is \(E/\hbar\), the spatial one must be \(p/\hbar\). In 1927 Clinton Davisson and Lester Germer confirmed the prediction by diffracting electrons off a nickel crystal.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> The row of phasors shows \(\psi(x,t)\) at different locations. Change energy and momentum, and display what differentiating with respect to time and to position does to the phasors.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-plane-wave"></div></div>
+
+<p><span class="chip z">follows necessarily</span> The widget shows the two derivatives side by side. Differentiated with respect to time, each phasor is turned 90&deg; clockwise and stretched by \(E/\hbar\); differentiated with respect to position, it is turned 90&deg; anticlockwise and stretched by \(p/\hbar\):</p>
+
+<div class="math-display">\[ i\hbar\,\frac{\partial\psi}{\partial t} = E\,\psi, \qquad -\,i\hbar\,\frac{\partial\psi}{\partial x} = p\,\psi . \]</div>
+
+<p>These two lines are the famous &ldquo;translation rule&rdquo; of quantum mechanics: energy corresponds to the time derivative, momentum to the spatial derivative. Textbooks usually introduce it as a postulate. Here it is earned &ndash; it follows from the fact that energy and momentum are rates of rotation and that differentiating extracts rates of rotation. For a state that has no single \(E\) and \(p\), it holds component by component, because every state can be written as a superposition of such rows of phasors &ndash; this is the Fourier decomposition, which is treated at length in the <a href="/en/quantum.html#teil-4a">quantum post</a>.</p>
+
+<p>With this, three symbols of Dirac&rsquo;s line are earned. \(\hbar\) is the conversion factor between rate of rotation and energy. \(\partial_\mu\) stands for the derivatives with respect to time and place, which extract the rates of rotation. And \(\psi\) is the state: an assignment that gives every location a phasor. This phasor does not point in a direction of space but lives in a plane of its own; only its length is measurable, and a common rotation of all phasors through the same angle changes not a single prediction.</p>
+</div></section>
+
+<section id="matrix" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 9</p>
+<h3>A time step is a matrix</h3>
+
+<p>Let a system now have several states, for example three locations at which a particle can be found. Its state is then a list of three phasors, \(\psi = (\psi_1, \psi_2, \psi_3)\), one per location. What happens in a small time step? The particle can stay where it is or move to another location, and every such transition &ldquo;from \(j\) to \(i\)&rdquo; is assigned a phasor, denoted \(U_{ij}\).</p>
+
+<p><span class="chip z">follows necessarily</span> Feynman&rsquo;s rule determines how the new state follows from this. To be at location \(i\) after one step, the particle must have come from some location \(j\). The possibility &ldquo;first at \(j\), then to \(i\)&rdquo; consists of two steps, so their phasors are multiplied: \(U_{ij}\,\psi_j\). The different places of origin are different possibilities, so their phasors are added:</p>
+
+<div class="math-display">\[ \psi_i' = \sum_j U_{ij}\,\psi_j \qquad\text{in short:}\qquad \psi' = U\psi . \]</div>
+
+<p>The formula on the left is, word for word, the definition of the product of a matrix and a vector. Matrix multiplication is therefore not brought in here as a tool; it <em>emerges</em> from the rule &ldquo;multiply along, add over alternatives&rdquo;.</p>
+
+<div class="merke">
+  <p><strong>Key point:</strong> Matrix multiplication is the summing over all possibilities of a step.</p>
+</div>
+
+<p class="history">Historically the discovery ran in the opposite direction. In 1925, on Heligoland, <strong>Werner Heisenberg</strong> set up a calculational rule for the lines in atomic spectra without knowing that it already existed in mathematics. <strong>Max Born</strong> recognised shortly afterwards that Heisenberg&rsquo;s curious multiplication, in which the order matters, is the multiplication of matrices. Quantum mechanics began as matrix mechanics.</p>
+
+<p><span class="chip z">follows necessarily</span> \(U\) must satisfy one condition. By Born&rsquo;s rule the probabilities are the squared lengths of the phasors, and they must add up to 1 at every moment. Consequently \(U\) must not change the total length of the list of phasors, for any initial state. Matrices with this property are called <em>unitary</em>. In the space of phasor lists they are what the rotations of Act&nbsp;I are in ordinary space: length-preserving maps.</p>
+
+<h3 style="margin-top:2rem;">The path route</h3>
+
+<p><span class="chip z">follows necessarily</span> After \(N\) time steps, \(\psi(N) = U^N\psi(0)\). Writing out the matrix power, each of its entries is a sum:</p>
+
+<div class="math-display">\[ (U^N)_{ij} = \sum_{a,\,b,\,\dots,\,c} U_{ia}\,U_{ab}\cdots U_{cj} . \]</div>
+
+<p>Each term belongs to a chain \(j \to c \to \dots \to b \to a \to i\), that is, to a <em>path</em> through the states, and its value is the product of the phasors along that path. The sum runs over all conceivable paths. This is the <em>path integral</em> in its simplest form: matrix multiplication, carried out \(N\) times in succession. In the limit of infinitely many, infinitely small time steps and infinitely many locations, it becomes Feynman&rsquo;s sum over all histories, which he published in 1948.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> On the left, all paths from location&nbsp;1 to location&nbsp;3 are drawn. Add the paths one by one and watch where the chain of their phasors ends.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-path-sum"></div></div>
+
+<p>For three locations and three time steps there are already nine paths, for four time steps 27, and their number grows exponentially. Each individual path contributes a phasor, and only the sum of all the phasors gives the amplitude. The tip of the chain always lands exactly on the entry of the matrix power &ndash; not approximately but exactly, because both calculations merely arrange the same sum differently.</p>
+</div></section>
+
+<section id="zwei-mulden" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 10</p>
+<h3>Two routes, one result</h3>
+
+<p>There is a second way to compute \(U^N\), and it goes back to Section&nbsp;8. There, a single phasor rotating uniformly was the simplest of all systems. Are there states that \(U\) does not mix up but only rotates? Such states are called <em>eigenstates</em>, and for them \(Uv = \lambda v\) holds with a number \(\lambda\). <span class="chip z">follows necessarily</span> Since \(U\) preserves length, \(|\lambda| = 1\): the eigenvalue is a pure rotation. For an eigenstate, applying \(U\) \(N\) times is trivial, \(U^Nv = \lambda^Nv\). If an arbitrary state is decomposed into eigenstates, each component rotates at its own rate, and at the end the components are put back together.</p>
+
+<p>That the path route and the eigenvalue route must give the same result is clear, since both compute \(U^N\). How the two fit together in detail is less obvious. The quantum post on this blog sets the two viewpoints side by side as <a href="/en/quantum.html#teil-4c">two languages of the same physics</a>; in an example with only two states, the agreement can be checked completely by hand.</p>
+
+<h3 style="margin-top:2rem;">A particle between two wells</h3>
+
+<p>The ammonia molecule \(\text{NH}_3\) has the shape of a flat pyramid: three hydrogen atoms form the base, the nitrogen atom the apex. The apex can lie above or below the base, and both positions are energetically equivalent &ndash; two wells of equal depth. Classically, the nitrogen atom would have to climb over an energy barrier to get from one position to the other; quantum-mechanically it tunnels through. This back-and-forth is the basis of the ammonia maser, with which Charles Townes built the forerunner of the laser in 1954.</p>
+
+<p><span class="chip z">follows necessarily</span> In each time step the system stays in its well with the phasor \(a\) or hops into the other with the phasor \(b\). Since both wells are equivalent, the same holds in both directions, and the time step is</p>
+
+<div class="math-display">\[ U = \begin{pmatrix} a & b \\ b & a \end{pmatrix} . \]</div>
+
+<p><span class="chip z">follows necessarily</span> Unitarity constrains \(a\) and \(b\) severely. The total length is preserved only if \(|a|^2 + |b|^2 = 1\) and if the phasors \(a\) and \(b\) are perpendicular to each other. The hop phasor is therefore necessarily turned through 90&deg; relative to the stay phasor. <span class="chip k">convention</span> Since a common rotation of all phasors changes nothing, \(a\) may be chosen real; then</p>
+
+<div class="math-display">\[ a = \cos\varphi, \qquad b = -\,i\sin\varphi . \]</div>
+
+<p><strong>The path route.</strong> A path of \(N\) steps with exactly \(k\) hops has the phasor \(a^{N-k}b^k\), and there are \(\binom{N}{k}\) such paths, because out of \(N\) steps one chooses the \(k\) at which a hop occurs. The system ends up back in well&nbsp;1 when \(k\) is even. The amplitude is therefore</p>
+
+<div class="math-display">\[ \psi_1(N) = \sum_{k\ \text{even}} \binom{N}{k}\, a^{N-k}\, b^k . \]</div>
+
+<p>Here the binomial coefficients from the look back at Act&nbsp;I reappear, and for the same reason: what is being counted are choices.</p>
+
+<p><strong>The eigenvalue route.</strong> Which states does \(U\) not mix? The symmetric combination \((1, 1)\) &ndash; &ldquo;equal in both wells&rdquo; &ndash; turns into \((a+b)\,(1,1)\), the antisymmetric one \((1,-1)\) into \((a-b)\,(1,-1)\). These are the two eigenstates, with eigenvalues \(a+b\) and \(a-b\). The initial state \((1, 0)\) is half the sum of the two, and after \(N\) steps the amplitude in well&nbsp;1 is therefore</p>
+
+<div class="math-display">\[ \psi_1(N) = \tfrac12\big[(a+b)^N + (a-b)^N\big] . \]</div>
+
+<p><span class="chip z">follows necessarily</span> That the two expressions are equal is shown by the binomial theorem. \((a+b)^N\) contains all the terms \(\binom{N}{k}a^{N-k}b^k\), and \((a-b)^N\) the same ones, but with a minus sign for odd \(k\). In half the sum the odd terms cancel, and the even ones remain. <strong>Counting paths and diagonalising are two readings of the same formula.</strong></p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> On the left, the paths are grouped by their number of hops and added up; on the right, only the two eigen-components. Change \(\varphi\) and \(N\).</p>
+</div>
+
+<div class="component-wrap"><div id="mount-two-wells"></div></div>
+
+<p>With \(a = \cos\varphi\) and \(b = -i\sin\varphi\), the eigenvalues are \(a \pm b = e^{\mp i\varphi}\): two phasors rotating at different rates. This gives \(\psi_1(N) = \cos(N\varphi)\), and the probability of finding the system in well&nbsp;2 is \(\sin^2(N\varphi)\). The system thus oscillates back and forth between the wells. The oscillation frequency is the difference between the two rates of rotation and hence, by Section&nbsp;8, the energy difference between the two eigenstates. For ammonia it corresponds to a frequency of 23.87&nbsp;gigahertz, and the maser operates at precisely this frequency. This small \(2\times 2\) matrix, incidentally, will return at the end of Act&nbsp;III in a role that cannot be seen in it here.</p>
+</div></section>
+
+<section id="zeitentwicklung" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 11</p>
+<h3>Multiplying out or diagonalising</h3>
+
+<p>For very small time steps of duration \(\varepsilon\), \(U\) differs only slightly from the identity matrix. One writes</p>
+
+<div class="math-display">\[ U \approx 1 - \frac{i\varepsilon}{\hbar}\,H \]</div>
+
+<p>with a matrix \(H\) called the <em>Hamiltonian</em>. <span class="chip z">follows necessarily</span> The \(i\) in this formula is not decoration. For \(U\) to be unitary, \(U^\dagger U = 1\) must hold, and with this ansatz one obtains \(U^\dagger U \approx 1 + \tfrac{i\varepsilon}{\hbar}(H^\dagger - H)\). This equals 1 only if \(H = H^\dagger\), that is, if \(H\) is a so-called Hermitian matrix. Hermitian matrices have real eigenvalues, and these eigenvalues are the measurable energies of the system. Without the \(i\), the energies would not be real numbers.</p>
+
+<p><span class="chip z">follows necessarily</span> After \(N = t/\varepsilon\) steps the time evolution is \(U^N = (1 - i\varepsilon H/\hbar)^N\), and in the limit of small steps the same limit as in Section&nbsp;7 results, only with a matrix instead of a number:</p>
+
+<div class="math-display">\[ U(t) = e^{-iHt/\hbar} . \]</div>
+
+<p>The eigenstates of \(H\) are the states that only rotate, and the eigenvalue equation</p>
+
+<div class="math-display">\[ H\varphi = E\,\varphi \]</div>
+
+<p>is the time-independent Schr&ouml;dinger equation. Erwin Schr&ouml;dinger published it in 1926 under the title <em>Quantisierung als Eigenwertproblem</em> (&ldquo;Quantisation as an Eigenvalue Problem&rdquo;) &ndash; the allowed energies of an atom are the eigenvalues of a matrix or, for infinitely many locations, of a differential operator. How eigenvalues turn up far beyond physics is shown in the <a href="/en/eigenvalues.html">post on eigenvalues and AI</a>.</p>
+
+<div class="merke">
+  <p><strong>Key point:</strong> The path integral multiplies \(e^{-iHt/\hbar}\) out. The eigenvalue calculation diagonalises it. Both compute the same object.</p>
+</div>
+
+<div class="recap">
+  <p class="recap-title">Looking back: Act II</p>
+  <p class="text-sm" style="color:#d1d5db;"><strong>Inputs from experiment:</strong> probabilities can cancel (double slit); every possibility is assigned a phasor, phasors are multiplied along a route and added over alternatives; probability is length squared (Born); energy is proportional to frequency (Planck, Einstein).</p>
+  <p class="text-sm" style="color:#d1d5db;"><strong>Followed necessarily:</strong> stationary states rotate uniformly; differentiating extracts the rate of rotation; momentum is spatial rate of rotation (de Broglie); from this the translation rule \(E \leftrightarrow i\hbar\,\partial_t\), \(p \leftrightarrow -i\hbar\,\partial_x\); a time step is a matrix, and it must be unitary; matrix powers are sums over paths; eigenstates only rotate; path route and eigenvalue route agree; the \(i\) in \(e^{-iHt/\hbar}\) ensures real energies.</p>
+  <p class="text-sm" style="color:#94a3b8;"><strong>Conventions:</strong> the minus sign in \(e^{-i\omega t}\); the choice of a real stay phasor \(a\).</p>
+  <p class="text-sm" style="color:#94a3b8;">What is still missing is relativity. It will demand that time and space be treated on an equal footing &ndash; and that leads to a square root that can only be taken with the geometry of Act&nbsp;I.</p>
+</div>
+</div>
+<div class="section-divider"></div>
+</section>
+<!-- ================================================================ -->
+<!-- ACT III — DIRAC'S SQUARE ROOT -->
+<!-- ================================================================ -->
+<section id="akt3" class="pb-4">
+<div class="prose-dark">
+<p class="part-label">Act III &middot; Relativity</p>
+<h2>Dirac&rsquo;s Square Root</h2>
+<div class="leitfrage"><p><strong>Guiding question:</strong> How does one take the square root of \(E^2 = p^2c^2 + m^2c^4\)?</p></div>
+</div>
+</section>
+
+<section id="gleichberechtigt" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 12</p>
+<h3>Space and time must be on an equal footing</h3>
+
+<p>With the translation rule from Act&nbsp;II, a quantum equation can be written down for every energy formula of classical physics. In 1926 Erwin Schr&ouml;dinger did exactly that with the energy of a free particle, \(E = p^2/2m\). <span class="chip z">follows necessarily</span> Replacing \(E\) by \(i\hbar\,\partial_t\) and \(p\) by \(-i\hbar\,\partial_x\) yields</p>
+
+<div class="math-display">\[ i\hbar\,\frac{\partial\psi}{\partial t} = -\,\frac{\hbar^2}{2m}\,\frac{\partial^2\psi}{\partial x^2} . \]</div>
+
+<p>Because the energy appears to the first power in the formula and the momentum is squared, the equation differentiates once with respect to time and twice with respect to position. For slow particles this equation is superbly confirmed; the whole of chemistry rests on it. For fast particles, however, it cannot be right, and the reason is an experiment.</p>
+
+<p><span class="chip e">input</span> <strong>Light travels at the same speed for everyone.</strong> In 1887 Albert Michelson and Edward Morley found no difference whatsoever in the speed of light, regardless of the direction in which the Earth happened to be moving along its orbit. In 1905 Einstein turned this into a principle: every observer measures the same speed \(c\) for light, no matter how fast he himself is moving.</p>
+
+<p><span class="chip z">follows necessarily</span> It follows that observers in motion relative to one another must divide up time and position differently &ndash; much as two maps that are rotated against each other divide up east and north differently. For the map, rotation leaves the distance from the origin unchanged, that is \(x^2 + y^2\). In spacetime something else must stay unchanged. A flash of light that starts at time \(0\) at position \(0\) is at position \(x = ct\) at time \(t\), and because all observers measure the same speed for it, \((ct)^2 - x^2 = 0\) holds for all of them. The quantity that is the same for every observer is therefore not \((ct)^2 + x^2\) but</p>
+
+<div class="math-display">\[ (ct)^2 - x^2 . \]</div>
+
+<p>Where the map has a plus sign, spacetime has a minus sign. This means, intuitively: when one switches to a different observer, the coordinates of an event do not move along a circle but along a <em>hyperbola</em>.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Compare how the coordinates of a fixed point move when you rotate a map and when you change the velocity of an observer. The third mode shows the same for the energy and momentum of a particle.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-spacetime"></div></div>
+
+<p>The widget makes clear what an equation has to achieve if it is to hold for all observers. When a map is rotated, the expression \(x^2 + y^2\) survives every rotation, whereas the expression \(x + y^2\) does not, because it treats one direction differently from the other. <span class="chip z">follows necessarily</span> Schr&ouml;dinger&rsquo;s equation is of the type \(x + y^2\): it differentiates once with respect to time and twice with respect to position. In another frame of reference it therefore looks different, and it cannot hold for all observers at once.</p>
+
+<p><span class="chip z">follows necessarily</span> What holds for time and position holds equally for energy and momentum. An observer in motion measures a different energy and a different momentum for the same particle, but the combination \(E^2 - (pc)^2\) is the same for everyone. For a particle at rest, \(p = 0\) and \(E = mc^2\), and so Einstein&rsquo;s energy formula holds in general:</p>
+
+<div class="math-display">\[ E^2 = p^2c^2 + m^2c^4 . \]</div>
+
+<p>This means, intuitively: energy and momentum form an arrow in spacetime, and the mass is its &ldquo;length&rdquo; &ndash; measured with the minus sign of spacetime. Unlike Schr&ouml;dinger&rsquo;s formula, this equation treats energy and momentum alike: both appear squared. With this, the symbol \(c\) is already half earned. It is the conversion factor that makes time and position measurable in the same unit, so that \(ct\) is a length and \(pc\) is an energy.</p>
+</div></section>
+
+<section id="klein-gordon" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 13</p>
+<h3>Schr&ouml;dinger&rsquo;s discarded equation</h3>
+
+<p>The obvious next step is to translate Einstein&rsquo;s formula directly. With the rule from Act&nbsp;II, \(E^2\) becomes the second time derivative and \(p^2\) the second spatial derivative:</p>
+
+<div class="math-display">\[ -\,\hbar^2\,\frac{\partial^2\psi}{\partial t^2} = -\,\hbar^2c^2\,\frac{\partial^2\psi}{\partial x^2} + m^2c^4\,\psi . \]</div>
+
+<p>Here time and position are treated alike; each is differentiated twice. Today the equation is called the <em>Klein&ndash;Gordon equation</em>, after Oskar Klein and Walter Gordon, who published it in 1926. The first to find it, however, was Schr&ouml;dinger himself, before he wrote down his famous equation. He set it aside at first because it predicted the wrong fine structure of the spectral lines for the hydrogen atom, and he published instead the non-relativistic version, which matched the measurements.</p>
+
+<p><span class="chip z">follows necessarily</span> As an equation for the electron, the Klein&ndash;Gordon equation has a fundamental problem, and Act&nbsp;II allows us to name it precisely. There it turned out that a time step is a matrix: \(\psi' = U\psi\). The state at one moment therefore fixes the state at every later moment, and for that an equation that differentiates once with respect to time is sufficient. An equation that differentiates twice with respect to time, by contrast, needs two starting values &ndash; the state and its rate of change &ndash;, just as a thrown ball is fixed only by its position <em>and</em> its velocity. The state alone then no longer determines the future. If one works out what plays the role of the probability of finding the particle in this equation, one obtains, moreover, a quantity that becomes negative for solutions with negative energy. A negative probability makes no sense.</p>
+
+<p>In fairness it should be said that this does not make the Klein&ndash;Gordon equation wrong. It correctly describes particles without spin, such as pions; in 1934 Wolfgang Pauli and Victor Weisskopf showed that the problematic quantity is to be read as an electric charge density, which may perfectly well take either sign. As an equation for a single electron in the sense of Act&nbsp;II, however, it will not do.</p>
+
+<p>This outlines Dirac&rsquo;s problem of 1928, and each of its conditions has a reason:</p>
+
+<ul>
+  <li><span class="chip z">follows necessarily</span> <strong>First order in time</strong>, because the state alone is to determine the future (Act&nbsp;II).</li>
+  <li><span class="chip z">follows necessarily</span> <strong>First order in space</strong>, because time and position must be treated alike (Section&nbsp;12).</li>
+  <li><span class="chip z">follows necessarily</span> <strong>Linear in \(\psi\)</strong>, because phasors must be able to superpose (Feynman&rsquo;s rule).</li>
+  <li><span class="chip z">follows necessarily</span> <strong>Compatible with Einstein</strong>: every solution must satisfy \(E^2 = p^2c^2 + m^2c^4\), because this holds for every free particle.</li>
+</ul>
+
+<p>What is wanted, then, is an equation in which the energy appears to the first power but which nevertheless satisfies Einstein&rsquo;s quadratic formula. Formally this means \(E = \sqrt{p^2c^2 + m^2c^4}\). Writing the square root down as it stands does not help. It can indeed be defined with the help of the Fourier decomposition, but then the change of \(\psi\) at one point depends on the values of \(\psi\) throughout all of space &ndash; an action without time delay across arbitrary distances, which is exactly what the theory of relativity forbids. What is needed is a square root without a root sign.</p>
+</div></section>
+
+<section id="wurzel" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 14</p>
+<h3>The square root of a sum of squares</h3>
+
+<p>Dirac&rsquo;s problem can be reduced to a question that this post has already answered once. For simplicity, first with only two quantities: we seek two objects \(a\) and \(b\) such that for all numbers \(x\) and \(y\)</p>
+
+<div class="math-display">\[ (ax + by)^2 = x^2 + y^2 \]</div>
+
+<p>holds. Then \(ax + by\) would be a square root of \(x^2 + y^2\), and indeed one in which \(x\) and \(y\) appear only to the first power. Multiplying out, without assuming that \(a\) and \(b\) commute, gives</p>
+
+<div class="math-display">\[ (ax+by)^2 = a^2\,x^2 + (ab + ba)\,xy + b^2\,y^2 . \]</div>
+
+<p><span class="chip z">follows necessarily</span> For this to equal \(x^2+y^2\) for all \(x, y\), three conditions must hold: \(a^2 = 1\), \(b^2 = 1\) and \(ab + ba = 0\). With ordinary numbers this is impossible, because for them \(ab + ba = 2ab\), and that vanishes only if \(a\) or \(b\) is zero.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> First try to satisfy the three conditions with numbers. Then with matrices. And then: is there a fourth?</p>
+</div>
+
+<div class="component-wrap"><div id="mount-root"></div></div>
+
+<p><span class="chip z">follows necessarily</span> The three conditions, however, are exactly the rules from the key-point box in Section&nbsp;3: a unit vector squares to 1, and two perpendicular ones anticommute. The problem has therefore long since been solved, and the solution is \(a = e_1\), \(b = e_2\):</p>
+
+<div class="math-display">\[ (x\,e_1 + y\,e_2)^2 = x^2 + y^2 . \]</div>
+
+<p>This is precisely the second requirement from Section&nbsp;2, applied to the vector with components \(x\) and \(y\): a vector times itself gives its squared length. This means, intuitively: <strong>the square root of a sum of squares is a vector.</strong> What is impossible with numbers succeeds with the geometric product without any additional assumption.</p>
+
+<h3 style="margin-top:2rem;">Four directions for spacetime</h3>
+
+<p>For Einstein&rsquo;s formula, four such objects are needed instead of two, one for time and three for space. They are denoted \(\gamma^0, \gamma^1, \gamma^2, \gamma^3\). <span class="chip z">follows necessarily</span> We seek a square root of \(E^2/c^2 - p_x^2 - p_y^2 - p_z^2\), the squared length of the energy-momentum arrow from Section&nbsp;12. By the second requirement, every basis vector must square to the squared length of its direction, and in spacetime that is \(+1\) for time and \(-1\) for space. Different basis vectors anticommute, as before. Written compactly:</p>
+
+<div class="math-display">\[ \gamma^\mu\gamma^\nu + \gamma^\nu\gamma^\mu = 2\,\eta^{\mu\nu}, \qquad \eta = \operatorname{diag}(+1,-1,-1,-1) . \]</div>
+
+<p>Here a circle closes that was opened in Section&nbsp;2. It was remarked there that one could equally well have required \(vv = -|v|^2\), and that this freedom of sign would later be decided by physics. That has now happened: in spacetime the time direction squares positively and the space directions negatively, because the squared length of spacetime has these signs. <strong>The \(\gamma\) matrices are an orthonormal basis of spacetime</strong> &ndash; the same rules as for \(e_1, e_2, e_3\), only with the metric that the theory of relativity prescribes. <span class="chip k">convention</span> Whether one gives time the plus and space the minus or the other way round is an agreement; physically, only the difference between the signs matters.</p>
+
+<p><span class="chip z">follows necessarily</span> These rules also explain why observers in motion see coordinates move along hyperbolas rather than circles. The swap puzzle from Act&nbsp;I works with the \(\gamma\) just as it does with the \(e\) &ndash; except that the squares are now partly \(+1\) and partly \(-1\).</p>
+
+<div class="component-wrap"><div id="mount-swap-gamma"></div></div>
+
+<p>An area that connects two space directions squares to \(-1\), as in Act&nbsp;I, and generates ordinary rotations with cosine and sine. An area that connects time and space, by contrast, squares to \(+1\). For it, the rotation instruction from Section&nbsp;4 becomes \(\cosh\varphi + \gamma^0\gamma^1\sinh\varphi\), with the hyperbolic functions in place of the circular ones, and the points move along hyperbolas. Switching to an observer in motion is therefore a rotation in a time&ndash;space plane &ndash; the same algebra as the rotation of a map, only with the other sign.</p>
+
+<h3 style="margin-top:2rem;">Why they must be matrices &ndash; and why four by four</h3>
+
+<p><span class="chip z">follows necessarily</span> Ordinary numbers are out of the question for the \(\gamma^\mu\), because they commute. Dirac therefore needed objects that anticommute, and he found them in matrices. For three space directions they already existed: in 1927 Wolfgang Pauli had introduced three \(2\times2\) matrices \(\sigma_x, \sigma_y, \sigma_z\) to describe the spin of the electron, and they satisfy exactly the rules for \(e_1, e_2, e_3\). The Pauli matrices are a representation of the space from Act&nbsp;I.</p>
+
+<p><span class="chip z">follows necessarily</span> For spacetime, however, a fourth direction is needed, and the widget shows that in \(2\times 2\) there is no fourth matrix that anticommutes with all three Pauli matrices. \(3 \times 3\) is ruled out as well: from \(A^2 = 1\) and \(BAB^{-1} = -A\) it follows that \(A\) has trace zero, and hence equally many eigenvalues \(+1\) and \(-1\) &ndash; the size of the matrix must be even. The smallest possibility is \(4 \times 4\). And because the \(\gamma\) matrices must act on something, \(\psi\) can no longer be a single number: <strong>the state of an electron is a list of four phasors.</strong></p>
+
+<details class="deep">
+<summary>The \(\gamma\) matrices written out</summary>
+<p style="margin-top:0.75rem;">In the representation that Dirac himself used, the four matrices, written in \(2\times2\) blocks, are</p>
+<div class="math-display">\[ \gamma^0 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \qquad \gamma^k = \begin{pmatrix} 0 & \sigma_k \\ -\sigma_k & 0 \end{pmatrix} \quad (k = 1,2,3), \]</div>
+<p>where \(1\) is the \(2\times2\) identity matrix and \(\sigma_k\) are the Pauli matrices. One checks that \((\gamma^0)^2 = +1\), \((\gamma^k)^2 = -1\), and that any two different ones anticommute. <span class="chip k">convention</span> This particular choice is a convention. There are other, equivalent representations &ndash; named after Weyl or after Majorana &ndash; that arise from one another by a change of basis, just as two coordinate systems rotated against each other describe the same space. What counts physically are only the rules \(\gamma^\mu\gamma^\nu + \gamma^\nu\gamma^\mu = 2\eta^{\mu\nu}\), not the numbers in the matrices.</p>
+</details>
+</div></section>
+
+<section id="gleichung" class="pb-12" data-earns="gamma,m,c"><div class="prose-dark">
+<p class="sec-label">Section 15</p>
+<h3>Reading the equation</h3>
+
+<p>Now Dirac&rsquo;s line can be read symbol by symbol. With \(x^0 = ct\) and \(\partial_0 = \partial/\partial(ct)\), the expression</p>
+
+<div class="math-display">\[ \gamma^\mu\partial_\mu = \gamma^0\,\partial_0 + \gamma^1\,\partial_1 + \gamma^2\,\partial_2 + \gamma^3\,\partial_3 \]</div>
+
+<p>stands for a sum of four derivatives, each multiplied by its basis vector &ndash; time and space treated entirely alike, each direction differentiated only once. By the translation rule from Act&nbsp;II, \(i\hbar\,\partial_\mu\) extracts the rotation speeds, that is, energy and momentum. <span class="chip z">follows necessarily</span> The expression \(i\hbar\,\gamma^\mu\partial_\mu\) is therefore the energy-momentum arrow of spacetime, written out with its four basis vectors, and the equation</p>
+
+<div class="math-display">\[ \big(i\hbar\,\gamma^\mu\partial_\mu - mc\big)\,\psi = 0 \]</div>
+
+<p>says, intuitively: <strong>the energy-momentum arrow, applied to \(\psi\), gives the mass.</strong> Applying it twice yields, by the rules for the \(\gamma\) matrices, its squared length, and the equation becomes \(E^2/c^2 - p^2 = m^2c^2\), which is Einstein&rsquo;s formula. Every solution of the Dirac equation thus satisfies Einstein&rsquo;s energy formula, as the fourth condition from Section&nbsp;13 demands &ndash; yet the equation itself differentiates only once with respect to time.</p>
+
+<p>With this, the last symbols are earned. \(\gamma^\mu\) are the four basis vectors of spacetime, the square root that Dirac was looking for. \(m\) is the length of the energy-momentum arrow. And \(c\) is the conversion factor that turns time into length, so that all four directions have the same unit. The equation bar at the top of the page is complete.</p>
+
+<p>One remark on the symbol \(i\) still deserves space. In the equation it stands as the imaginary unit, which commutes with all the matrices. In 1966, in his <em>Space-Time Algebra</em>, David Hestenes showed that the Dirac equation can be written entirely in the geometric algebra of spacetime, without complex numbers, and that the role of \(i\) is then taken over by a particular area of spacetime &ndash; entirely in the spirit of Act&nbsp;I. (For the details the reader is referred to Hestenes&rsquo; work; what follows does not need this reformulation.)</p>
+</div></section>
+
+<section id="spin" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 16</p>
+<h3>Spin &frac12;: the half angle pays off</h3>
+
+<p>In Section&nbsp;5 a question remained open. The rotor of a full turn is \(R = -1\), but vectors notice nothing of this, because they are rotated with the sandwich \(R\,v\,\tilde R\). Are there objects that are rotated with \(R\) from one side only, and for which the minus sign therefore remains visible? The Dirac equation answers this question, and it does so without anyone having to ask it.</p>
+
+<p><span class="chip z">follows necessarily</span> If one rotates the laboratory, that is, the coordinate system, the equation must have the same form in the new system; no direction in space is singled out. In the equation the \(\gamma^\mu\) appear as basis vectors of spacetime, and vectors rotate with the sandwich. For the equation to take on the same shape again after the rotation, \(\psi\) must compensate for this rotation, and the calculation shows that this succeeds precisely when \(\psi\) is multiplied by the rotor from one side:</p>
+
+<div class="math-display">\[ \psi \;\longrightarrow\; R\,\psi . \]</div>
+
+<p>This means: the state of an electron does not rotate like an arrow but like a rotor &ndash; with the half angle. After a full turn through \(360^\circ\), \(R = -1\), and the electron has passed into the state \(-\psi\). Only after \(720^\circ\) is it back in the state \(\psi\). Objects with this behaviour are called <em>spinors</em>, and this is the meaning of <strong>spin&nbsp;&frac12;</strong>: the &ldquo;half&rdquo; is the half angle from Section&nbsp;5.</p>
+
+<p><span class="chip e">input</span> A minus sign in front of the entire state is not measurable on its own, because by Born&rsquo;s rule only squared lengths count. It does become measurable, however, as soon as a rotated and an unrotated part of a state interfere with each other. Exactly this was achieved in 1975 by two groups independently of each other, led by Helmut Rauch in Vienna and by Samuel Werner in Missouri respectively. They split a neutron beam into two halves, let the spin of one half precess in a magnetic field and brought both halves back together. The interference pattern did not repeat after a rotation through \(360^\circ\), but only after \(720^\circ\).</p>
+
+<p>That a rotation through \(360^\circ\) is not always &ldquo;nothing&rdquo; can also be experienced without quantum mechanics. Dirac is said to have demonstrated it to his students with a belt fastened at one end to an object and at the other to a wall.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Rotate the plate through \(360^\circ\) and try to untangle the band. Then through \(720^\circ\).</p>
+</div>
+
+<div class="component-wrap"><div id="mount-belt"></div></div>
+
+<p>After one turn the band is twisted, and no movement of the band that keeps the wall and the plate fixed can remove the twist. After two turns the band is twisted twice over, yet it can be pulled smooth. The reason is the same as for spin. The state of the band at every height is a rotation, and the path of these rotations from the wall to the plate can be described as a chain of rotors. At \(360^\circ\) the chain begins at \(R = +1\) and ends at \(R = -1\). A continuous deformation cannot flip this sign at the end &ndash; there is no continuous transition from \(-1\) to \(+1\) as long as the plate stays still. At \(720^\circ\) the chain ends at \(+1\), and then it can be contracted continuously to &ldquo;\(+1\)&nbsp;everywhere&rdquo;. (The construction that the widget uses rests on the fact that a rotor of the form \(\cos 180^\circ - B\sin 180^\circ\) equals \(-1\) for <em>every</em> plane \(B\); two such factors give \(+1\), however the plane of the second is swung round.) The same can be demonstrated with a plate on the flat of one&rsquo;s hand: after one turn the arm is twisted, after a second turn in the same direction it is relaxed again.</p>
+
+<p class="history">Before Dirac, spin was a foreign body. <strong>George Uhlenbeck</strong> and <strong>Samuel Goudsmit</strong> proposed it in 1925 to explain the splitting of spectral lines, and <strong>Pauli</strong> built it by hand into the Schr&ouml;dinger equation in 1927. In Dirac&rsquo;s work it follows from the equation itself. One qualification is in order here: <strong>Jean-Marc L&eacute;vy-Leblond</strong> showed in 1967 that even a <em>non</em>-relativistic first-order equation, &ldquo;square-rooted&rdquo; in the same way, yields spin&nbsp;&frac12;. Spin therefore arises not from the theory of relativity as such, but from taking the square root with the geometric product &ndash; which strengthens rather than weakens the thesis of this post.</p>
+</div></section>
+
+<section id="psi" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 17</p>
+<h3>What \(\psi\) really is</h3>
+
+<p>According to Section&nbsp;14, the state of an electron is a list of four phasors at every point. What do these four mean? To find out, the Dirac equation is rearranged so that it takes the form from Act&nbsp;II, \(i\hbar\,\partial_t\psi = H\psi\). The Hamiltonian is then</p>
+
+<div class="math-display">\[ H = c\,\boldsymbol\alpha\cdot\mathbf p + \beta\,mc^2, \qquad \alpha_k = \gamma^0\gamma^k, \quad \beta = \gamma^0 . \]</div>
+
+<p><span class="chip z">follows necessarily</span> The \(\alpha_k\) and \(\beta\) square to 1 and anticommute in pairs &ndash; once again the rules from Act&nbsp;I, this time for four objects with positive square. Squaring therefore gives</p>
+
+<div class="math-display">\[ H^2 = \big(p^2c^2 + m^2c^4\big)\cdot 1 . \]</div>
+
+<p>According to Section&nbsp;11, the eigenvalues of \(H\) are the possible energies. Since \(H^2\) is a multiple of the identity matrix, every eigenvalue must satisfy \(E = \pm\sqrt{p^2c^2 + m^2c^4}\), and a short calculation shows that each of the two signs occurs exactly twice. <strong>The four components of \(\psi\) are two signs of energy times two directions of spin.</strong></p>
+
+<p>What &ldquo;direction of spin&rdquo; means deserves a sentence of caution. The electron is not a spinning sphere. In 1925 Hendrik Lorentz showed Uhlenbeck and Goudsmit by calculation that the surface of such a sphere would have to rotate faster than light. Spin is rather the way \(\psi\) behaves under rotations, namely with the half angle, and its measurable consequence is an angular momentum that, along any chosen axis, takes exactly one of two values: \(+\hbar/2\) or \(-\hbar/2\). In 1922 Otto Stern and Walther Gerlach had seen a beam of silver atoms split into exactly two partial beams in an inhomogeneous magnetic field. <span class="chip k">convention</span> Which axis one chooses for the description is free; customarily it is the \(z\) axis.</p>
+
+<p><span class="chip z">follows necessarily</span> One of the problems from Section&nbsp;13 is solved as well. The Dirac equation yields as the probability of finding the particle the sum of the squared lengths of all four phasors, \(|\psi_1|^2 + |\psi_2|^2 + |\psi_3|^2 + |\psi_4|^2\), and this quantity is never negative. Dirac&rsquo;s insistence on a first-order equation has thus paid off. What remains, however, is the second sign of the energy, and it leads to the most astonishing prediction of the equation.</p>
+</div></section>
+
+<section id="antimaterie" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 18</p>
+<h3>The second sign: antimatter</h3>
+
+<p><span class="chip z">follows necessarily</span> Every square root has two signs, and the Dirac equation cannot throw either of them away: according to Section&nbsp;17, it has for every momentum two solutions with positive energy \(E = +\sqrt{p^2c^2+m^2c^4}\) and two with negative energy, \(E = -\sqrt{p^2c^2+m^2c^4}\). The two energy branches are separated by a gap of width \(2mc^2\), which for the electron is about 1.02&nbsp;megaelectronvolts.</p>
+
+<p>The negative branch came as a shock. An electron at rest would have available to it not only \(E = +mc^2\) but also states with \(E = -mc^2\), and below that the energy ladder would continue without end. According to everything that was known about atoms, an electron drops into a state of lower energy as soon as one is free, and emits the difference as light. Every electron in the universe would accordingly have to plunge into a bottomless abyss under constant radiation, and no atom would be stable.</p>
+
+<p><span class="chip e">input</span> Dirac&rsquo;s way out, in 1930, was bold, and it must be marked explicitly as an <em>interpretation</em>, not as a deduction. He took seriously Pauli&rsquo;s exclusion principle of 1925, according to which every state can be occupied by at most one electron, and concluded: if all states of negative energy are already occupied, no electron can fall into them. The vacuum would then be not empty space but a completely filled <em>sea</em> of negative-energy electrons, which is the same everywhere and therefore remains invisible. Only a disturbance of this sea would be visible.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> Send a photon into the sea. How much energy does it need for something to happen? Then apply an electric field and observe in which direction the hole moves.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-dirac-sea"></div></div>
+
+<p><span class="chip z">follows necessarily</span> If a light quantum lifts an electron out of the sea onto the positive branch, a hole is left behind. To do so, the light quantum must bridge at least the gap \(2mc^2\). The hole is the absence of an electron with negative energy and negative charge, and the absence of something negative acts like something positive &ndash; just as an air bubble rises in water while the water falls. The hole therefore behaves like a particle with positive energy and positive charge. And since it is a gap in the electron sea, it must have the same mass as the electron.</p>
+
+<p class="history">Dirac needed a detour to reach this conclusion. In 1930 he at first took the hole to be the <strong>proton</strong>, the only positively charged particle known at the time, and hoped that the large difference in mass could be explained later. <strong>Robert Oppenheimer</strong> objected in the same year that every hydrogen atom would then have to annihilate almost instantly, because electron and &ldquo;hole&rdquo; could destroy each other. <strong>Hermann Weyl</strong> showed in 1931, from considerations of symmetry, that the hole must have the same mass as the electron. Dirac adopted the argument and in the same year predicted a new particle, the &ldquo;anti-electron&rdquo;. Carl Anderson found it in August 1932 in cosmic radiation, and in 1933 Patrick Blackett and Giuseppe Occhialini observed in cloud-chamber photographs how electron and positron are created in pairs.</p>
+
+<p><span class="chip z">follows necessarily</span> The reverse process is <em>annihilation</em>: an electron falls back into the hole, and both disappear. The energy \(2mc^2\) is released, for particles at rest as two light quanta of \(mc^2 = 511\) kiloelectronvolts each, which, because of the conservation of momentum, fly off in opposite directions. This is exactly the signal that the PET scanner from the prologue registers. The circle back to the beginning of this post is thereby closed.</p>
+
+<p>The Dirac sea is no longer the way physicists talk about antimatter today. Ernst St&uuml;ckelberg (1941) and Richard Feynman (1949) interpreted the negative-energy solutions in quantum field theory as antiparticles with positive energy, without an infinite sea of occupied states. The result that Dirac had obtained from his square root, however, has remained and holds generally: <strong>for every particle there is an antiparticle</strong> with the same mass and opposite charge. The antiproton was detected in Berkeley in 1955.</p>
+</div></section>
+
+<section id="lohn" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 19</p>
+<h3>What the equation explains &ndash; and where it ends</h3>
+
+<p>Antimatter and spin are the most famous consequences of the Dirac equation, but not the only ones. Two further ones show how much the line of 1928 explained at a single stroke.</p>
+
+<p><strong>The magnetic moment.</strong> An electron behaves like a tiny magnet. A classically rotating charge would have a magnetic moment whose ratio to the angular momentum is described by the so-called \(g\)-factor \(g = 1\). The spectral lines, however, demanded \(g = 2\) for spin, and before Dirac this value had to be inserted by hand. <span class="chip z">follows necessarily</span> If the Dirac equation is placed in a magnetic field, \(g = 2\) results without any further assumption. (The calculation is not carried out here; it can be found in every textbook of relativistic quantum mechanics.)</p>
+
+<p><strong>The fine structure of hydrogen.</strong> In 1928 Charles Galton Darwin and Walter Gordon solved the Dirac equation exactly for the hydrogen atom. The energy levels that result agree exactly with a formula that Arnold Sommerfeld had already found in 1916 with a semi-classical model of the atom, and which describes the fine splitting of the spectral lines. What Sommerfeld had obtained from a fortunate combination of approximations now followed from an equation with clean foundations &ndash; including the effects that stem from spin and relativity.</p>
+
+<p>It is just as honest to say where the equation ends. In 1947 Willis Lamb and Robert Retherford measured that two levels of the hydrogen atom which, according to Dirac, ought to be exactly equal lie about 1&nbsp;gigahertz apart. In the same year Polykarp Kusch and Henry Foley found that the \(g\)-factor of the electron is not exactly 2 but about \(2.0023\). In 1948 Julian Schwinger explained the deviation with quantum electrodynamics, in which the electron constantly interacts with its own electromagnetic field; the first correction term gives \(g = 2\,(1 + \alpha/2\pi) \approx 2.00232\). Today \(g = 2.002\,319\,304\,36\ldots\) is one of the most precisely measured quantities in physics, and theory agrees with it to more than ten digits.</p>
+
+<p>The Dirac equation is thus not the last word. It is, however, the foundation on which quantum electrodynamics stands: the electron field of today&rsquo;s theory obeys it, and everything that came afterwards consists of corrections to it, not a replacement for it.</p>
+</div></section>
+
+<section id="schachbrett" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Section 20</p>
+<h3>Feynman&rsquo;s checkerboard: mass as zigzag</h3>
+
+<p>Finally, the circle closes back to Act&nbsp;II. There it turned out that every time evolution can be calculated in two ways: by diagonalising or by summing over all paths. For the Dirac equation only the first way has been used so far &ndash; the eigenvalues \(\pm E\) are the result of a diagonalisation. In the 1940s Richard Feynman also found the second, for a world with only one direction in space, and it is so simple that one can almost play it through with a pencil on squared paper.</p>
+
+<p>In one direction of space two components suffice, and the matrices become \(2 \times 2\). The Hamiltonian from Section&nbsp;17 is then \(H = c\,\alpha\,p + \beta\,mc^2\). <span class="chip z">follows necessarily</span> Because \(\alpha^2 = 1\), \(\alpha\) has only the eigenvalues \(+1\) and \(-1\), and if these are chosen as the basis, \(\alpha = \operatorname{diag}(1, -1)\). The motion described by \(c\,\alpha\,p\) proceeds with velocity \(+c\) or \(-c\): the first component runs to the right at the speed of light, the second to the left. <span class="chip z">follows necessarily</span> And because \(\beta\) must anticommute with \(\alpha\), \(\beta\) can have no diagonal entries in this basis. It is the matrix that swaps the two components. The mass therefore couples the right-moving component to the left-moving one &ndash; it makes the particle change direction.</p>
+
+<p><span class="chip z">follows necessarily</span> For a small time step \(\varepsilon\), according to Section&nbsp;11, \(U \approx 1 - i\varepsilon H/\hbar\). The part with \(\alpha\) lets the two components fly straight on, one lattice cell per step. The part with \(\beta\) produces a <em>corner</em>: it turns a right-moving component into a left-moving one and vice versa, and does so with the phasor \(-i\,mc^2\varepsilon/\hbar\). Combining staying and turning back into an exactly length-preserving matrix gives</p>
+
+<div class="math-display">\[ \begin{pmatrix} \cos\varphi & -i\sin\varphi \\ -i\sin\varphi & \cos\varphi \end{pmatrix}, \qquad \varphi = \frac{mc^2\,\varepsilon}{\hbar} \]</div>
+
+<p>&ndash; symbol for symbol the two-well matrix from Section&nbsp;10. The two &ldquo;wells&rdquo; are now the two directions of flight, and the hop phasor is once again rotated by 90&deg;, because unitarity forces it. If one multiplies out \(N\) such steps, then, according to Section&nbsp;9, every term of the sum is a path: a zigzag at the speed of light whose phasor is rotated by 90&deg; and shrunk by \(\sin\varphi\) at every corner. The sum over all such zigzag paths gives, in the limit of small steps, exactly the solution of the Dirac equation. Feynman presented this construction in 1965, together with Albert Hibbs, as an exercise; that it really converges to the Dirac equation was proved by Theodore Jacobson and Lawrence Schulman in 1984.</p>
+
+<div class="try-it">
+  <p><strong>Try it:</strong> The picture shows where the particle is to be found after each time step; it is calculated exactly with the matrix above. Start with zero mass and then increase it.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-checkerboard"></div></div>
+
+<p>This gives mass an intuitive meaning that is not to be found in any textbook sentence about &ldquo;inertial mass&rdquo;. A massless particle never turns back and always flies at the speed of light. A massive particle carries, at every possible corner, a factor proportional to its mass, and the sum over all zigzag paths makes it advance, on average, more slowly than light &ndash; like a sailing boat tacking against the wind. <strong>Mass is the amplitude for changing direction.</strong> Stated precisely, this does not mean that the electron &ldquo;really&rdquo; travels along one particular zigzag path; as in Act&nbsp;II, the individual paths are terms in a calculation, and only their sum is measurable.</p>
+
+<p>It is remarkable that the same matrix \(\beta\) plays the same role in both pictures, only in a different language. In the eigenvalue picture it opens the gap between \(+mc^2\) and \(-mc^2\), from which antimatter followed in Section&nbsp;18. In the path picture it is the corner. A trace of this trembling can also be found in the full Dirac equation: in 1930 Schr&ouml;dinger noticed that, according to the equation, the position of a free electron would have to oscillate back and forth with an angular frequency of about \(1.6\cdot10^{21}\,\text{s}^{-1}\) and an amplitude of about \(2\cdot10^{-13}\) metres &ndash; several hundred times less than the diameter of an atom. He called this <em>Zitterbewegung</em> (&ldquo;trembling motion&rdquo;). It has never been observed directly in electrons; in 2010, however, a group in Innsbruck led by Rainer Blatt and Christian Roos succeeded in <em>simulating</em> it with a single trapped ion whose motion obeys exactly the Dirac equation.</p>
+
+<p>Two limitations belong to an honest account. The checkerboard works with this simplicity only for one direction of space; for three, no equally simple version exists to this day. And the electrons in graphene, which are often cited as an example of massless Dirac particles (Novoselov, Geim and colleagues, 2005), live in a two-dimensional plane. They are relatives of the massless checkerboard, not the same thing.</p>
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- EPILOGUE, FAQ, LITERATURE — D-35 -->
+<!-- ================================================================ -->
+<section id="epilog" class="pb-16"><div class="prose-dark">
+<p class="part-label">Epilogue</p>
+<h2>It Is Geometry</h2>
+
+<p>At the beginning of this post stood a line whose symbols were unfamiliar. At the end, every single one of them can be justified, and it is worth looking back at what these justifications rest on. The post has marked every step as following necessarily, as an input or as a convention. Added up, the balance sheet reads as follows.</p>
+
+<div class="recap">
+  <p class="recap-title">What was put in</p>
+  <ul class="text-sm" style="color:#d1d5db;">
+    <li><strong>Two requirements on a product</strong>: calculate as with numbers (brackets, multiplying out), and a vector times itself gives its squared length. <span style="color:#94a3b8;">(Section 2)</span></li>
+    <li><strong>Four empirical facts of quantum mechanics</strong>: probabilities can cancel; Feynman&rsquo;s rule for phasors; Born&rsquo;s rule; energy is proportional to frequency. <span style="color:#94a3b8;">(Sections 7&ndash;8)</span></li>
+    <li><strong>One empirical fact of relativity</strong>: light travels at the same speed for everyone. <span style="color:#94a3b8;">(Section 12)</span></li>
+    <li><strong>One interpretation</strong>, explicitly marked as such: Dirac&rsquo;s sea. <span style="color:#94a3b8;">(Section 18)</span></li>
+  </ul>
+  <p class="recap-title" style="margin-top:1.25rem;">What followed necessarily</p>
+  <p class="text-sm" style="color:#d1d5db;">The scalar product. The oriented area, and the fact that it squares negatively. That perpendicular vectors anticommute and commutativity is impossible. The imaginary unit as the unit square of the plane, and multiplication as rotation. Reflections, rotors and the half angle. The uniform rotation of stationary states, energy and momentum as rotation speeds, the translation rule. Matrix multiplication as a sum over possibilities, unitarity, the path integral, the equivalence of the path route and the eigenvalue route, the \(i\) in \(e^{-iHt/\hbar}\). The hyperbola of spacetime and Einstein&rsquo;s energy formula. The conditions on Dirac&rsquo;s equation, the \(\gamma\) matrices as an orthonormal basis of spacetime, their size \(4\times4\), spin&nbsp;&frac12;, the four components of \(\psi\), the positive probability of finding the particle, the two energy branches, pair creation from \(2mc^2\) upwards, and mass as the amplitude for changing direction.</p>
+  <p class="recap-title" style="margin-top:1.25rem;">What was chosen freely</p>
+  <p class="text-sm" style="color:#94a3b8;">The positive sense of rotation, the assignment of Hamilton&rsquo;s \(i, j, k\), the right-hand rule, the sign in \(e^{-i\omega t}\), a real stay phasor, the overall sign of the metric, the concrete form of the \(\gamma\) matrices and the axis along which one describes spin. None of these choices changes a single prediction.</p>
+</div>
+
+<p>The common thread that connects all of this is rotation. In Act&nbsp;I it emerged that multiplication can rotate as soon as vectors are multiplied in such a way that nothing is lost, and that rotations carry a half angle within them. In Act&nbsp;II it emerged that quantum mechanics consists of phasors that rotate and are summed, and that matrix multiplication is exactly this summing. In Act&nbsp;III relativity demanded the square root of a sum of squares, and the geometry from Act&nbsp;I supplied it. The half angle became spin, the second sign of the square root became antimatter, and the matrix that made the square root possible in the first place became the corner in the zigzag of mass.</p>
+
+<figure>
+  <img src="/img/dirac/dirac-gedenkstein-westminster.jpg" alt="Diamond-shaped memorial stone for Paul Dirac set into the floor of Westminster Abbey, bearing the inscription i&gamma;&middot;&part;&psi; = m&psi;" loading="lazy" width="1200" height="1102" style="max-width:min(420px, 100%); display:block; margin:0 auto;">
+  <figcaption>Memorial stone for Paul Dirac in the nave of Westminster Abbey, unveiled on 13 November 1995, near Isaac Newton&rsquo;s tomb. The equation is written in natural units, \(\hbar = c = 1\). <a href="https://commons.wikimedia.org/wiki/File:Dirac%27s_commemorative_marker.jpg">Stanislav Kozlovskiy</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC BY-SA 4.0</a></figcaption>
+</figure>
+
+<p>Since 1995 a memorial stone for Dirac has lain in the floor of Westminster Abbey, not far from Newton&rsquo;s tomb. It bears no biography, only his name, his dates and the equation in its shortest form, \(i\gamma\cdot\partial\psi = m\psi\). Dirac himself said, in essence, that a physical equation must possess mathematical beauty. What this post has tried to show is one concrete reading of this beauty: the equation is the inevitable answer to a question that begins with two arrows.</p>
+
+<p>Herein also lies this blog&rsquo;s Glass Bead Game. The same structure &ndash; the product that generates areas and rotations &ndash; carries Hamilton&rsquo;s quaternions, the attitude control of space probes, the phasors of quantum mechanics and the square root from which antimatter came. Dirac&rsquo;s line is, in the end, no formula out of nowhere. It is geometry.</p>
+</div></section>
+
+<section id="faq" class="pb-12"><div class="prose-dark">
+<h2 style="font-size:1.5rem;">Frequently Asked Questions</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What does the Dirac equation say?</h3>
+<p>The Dirac equation describes how the state of an electron evolves in time, and does so in a way that satisfies both quantum mechanics and the special theory of relativity. Intuitively, it states that the energy-momentum arrow of spacetime, applied to the state \(\psi\), gives the mass. From it follow the spin of the electron, its magnetic moment with \(g = 2\), the fine structure of the hydrogen spectrum and the existence of antimatter.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Why does the Dirac equation predict antimatter?</h3>
+<p>Dirac needed a square root of Einstein&rsquo;s energy formula \(E^2 = p^2c^2 + m^2c^4\), and every square root has two signs. The equation therefore has, for every momentum, solutions with positive and with negative energy. In 1930 Dirac interpreted the negative-energy states as a completely filled &ldquo;sea&rdquo;, and a hole in it as a particle with the mass of the electron and positive charge. Carl Anderson found this positron in 1932. Today&rsquo;s quantum field theory does without the sea but confirms the result: for every particle there is an antiparticle.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Why does an electron have to turn twice to be the same again?</h3>
+<p>Rotations can be described by rotors, which contain half the angle of rotation, because a rotation through \(\theta\) arises from two reflections in mirrors with the angle \(\theta/2\) between them. For a full turn the rotor is therefore \(-1\). Vectors are multiplied by the rotor from both sides and notice nothing of this. The state of an electron, by contrast, is multiplied by the rotor from one side only and passes into its negative after \(360^\circ\), and into itself only after \(720^\circ\). Neutron interference experiments confirmed this in 1975.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What are the gamma matrices?</h3>
+<p>The four gamma matrices \(\gamma^0, \dots, \gamma^3\) are an orthonormal basis of four-dimensional spacetime, represented as \(4\times4\) matrices. They obey the same rules as the basis vectors of geometric algebra: each squares to the squared length of its direction (\(+1\) for time, \(-1\) for space), and any two different ones anticommute. Precisely for this reason their combination is a square root of the sum of squares in Einstein&rsquo;s energy formula.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is geometric algebra?</h3>
+<p>Geometric algebra is a way of calculating with vectors in which vectors can be multiplied with one another without losing information. The product of two vectors consists of the scalar product and an oriented area, the bivector. If one requires only that the product be associative and distributive and that a vector squared gives its squared length, then the complex numbers, Hamilton&rsquo;s quaternions and the description of rotations in any dimension follow.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">How are complex numbers, quaternions and rotations related?</h3>
+<p>The imaginary unit \(i\) can be understood as the oriented unit square of a plane: it squares to \(-1\), and multiplying by it rotates every vector of the plane by \(90^\circ\). Complex numbers are number plus area and describe rotations in the plane. In space there are three basis areas, and number plus three areas gives Hamilton&rsquo;s quaternions, which describe rotations in space.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is Feynman&rsquo;s checkerboard?</h3>
+<p>Feynman&rsquo;s checkerboard is a path-integral representation of the Dirac equation in one spatial dimension. A particle moves on a lattice, in every time step at the speed of light, to the left or to the right; every change of direction brings with it a factor proportional to the mass. The sum over all zigzag paths gives the solution of the Dirac equation. Intuitively, mass is thus the amplitude for changing direction.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">What is Zitterbewegung?</h3>
+<p>In 1930 Erwin Schr&ouml;dinger noticed that, according to the Dirac equation, the position of a free electron would have to oscillate back and forth with an angular frequency of about \(1.6\cdot10^{21}\,\text{s}^{-1}\) and an amplitude of about \(2\cdot10^{-13}\) metres. This <em>Zitterbewegung</em> arises from the interference of positive- and negative-energy parts. It has never been observed directly in free electrons; in 2010 it was simulated with a trapped ion whose motion obeys the Dirac equation.</p>
+</div></section>
+
+<section id="literatur" class="pb-12"><div class="prose-dark">
+<h2 style="font-size:1.5rem;">Literature</h2>
+<p class="text-sm" style="color:#94a3b8;">Original works, in the order in which they appear in the text.</p>
+<ul class="text-sm" style="color:#cbd5e1; line-height:1.6;">
+  <li>P. A. M. Dirac: The Quantum Theory of the Electron. <em>Proc. R. Soc. Lond. A</em> 117 (1928), 610&ndash;624. <a href="https://doi.org/10.1098/rspa.1928.0023">doi:10.1098/rspa.1928.0023</a></li>
+  <li>C. D. Anderson: The Positive Electron. <em>Phys. Rev.</em> 43 (1933), 491&ndash;494. <a href="https://doi.org/10.1103/PhysRev.43.491">doi:10.1103/PhysRev.43.491</a></li>
+  <li>C. D. Anderson: Early Work on the Positron and Muon. <em>Am. J. Phys.</em> 29 (1961), 825&ndash;830. <a href="https://doi.org/10.1119/1.1937627">doi:10.1119/1.1937627</a></li>
+  <li>H. Gra&szlig;mann: <em>Die lineale Ausdehnungslehre</em>. Leipzig: Wigand 1844.</li>
+  <li>W. R. Hamilton: On Quaternions; or on a New System of Imaginaries in Algebra. <em>Phil. Mag.</em> 25 (1844), 10&ndash;13. <a href="https://doi.org/10.1080/14786444408644923">doi:10.1080/14786444408644923</a></li>
+  <li>W. K. Clifford: Applications of Grassmann's Extensive Algebra. <em>Amer. J. Math.</em> 1 (1878), 350&ndash;358. <a href="https://doi.org/10.2307/2369379">doi:10.2307/2369379</a></li>
+  <li>A. Tonomura, J. Endo, T. Matsuda, T. Kawasaki, H. Ezawa: Demonstration of single-electron buildup of an interference pattern. <em>Am. J. Phys.</em> 57 (1989), 117&ndash;120.</li>
+  <li>R. P. Feynman: <em>QED. The Strange Theory of Light and Matter</em>. Princeton University Press 1985.</li>
+  <li>R. P. Feynman: Space-Time Approach to Non-Relativistic Quantum Mechanics. <em>Rev. Mod. Phys.</em> 20 (1948), 367&ndash;387.</li>
+  <li>E. Schr&ouml;dinger: Quantisierung als Eigenwertproblem (Vierte Mitteilung). <em>Ann. Phys.</em> 386 (1926), 109&ndash;139. <a href="https://doi.org/10.1002/andp.19263861802">doi:10.1002/andp.19263861802</a></li>
+  <li>O. Klein: Quantentheorie und f&uuml;nfdimensionale Relativit&auml;tstheorie. <em>Z. Phys.</em> 37 (1926), 895&ndash;906. <a href="https://doi.org/10.1007/BF01397481">doi:10.1007/BF01397481</a></li>
+  <li>W. Gordon: Der Comptoneffekt nach der Schr&ouml;dingerschen Theorie. <em>Z. Phys.</em> 40 (1926), 117&ndash;133. <a href="https://doi.org/10.1007/BF01390840">doi:10.1007/BF01390840</a></li>
+  <li>W. Pauli: Zur Quantenmechanik des magnetischen Elektrons. <em>Z. Phys.</em> 43 (1927), 601&ndash;623. <a href="https://doi.org/10.1007/BF01397326">doi:10.1007/BF01397326</a></li>
+  <li>D. Hestenes: <em>Space-Time Algebra</em>. New York: Gordon and Breach 1966; 2nd ed. Birkh&auml;user 2015. <a href="https://doi.org/10.1007/978-3-319-18413-5">doi:10.1007/978-3-319-18413-5</a></li>
+  <li>H. Rauch, A. Zeilinger, G. Badurek, A. Wilfing, W. Bauspiess, U. Bonse: Verification of Coherent Spinor Rotation of Fermions. <em>Phys. Lett. A</em> 54 (1975), 425&ndash;427.</li>
+  <li>S. A. Werner, R. Colella, A. W. Overhauser, C. F. Eagen: Observation of the Phase Shift of a Neutron Due to Precession in a Magnetic Field. <em>Phys. Rev. Lett.</em> 35 (1975), 1053&ndash;1055. <a href="https://doi.org/10.1103/PhysRevLett.35.1053">doi:10.1103/PhysRevLett.35.1053</a></li>
+  <li>M. H. A. Newman: On a String Problem of Dirac. <em>J. London Math. Soc.</em> 17 (1942), 173&ndash;177. <a href="https://doi.org/10.1112/jlms/s1-17.3.173">doi:10.1112/jlms/s1-17.3.173</a></li>
+  <li>J.-M. L&eacute;vy-Leblond: Nonrelativistic Particles and Wave Equations. <em>Commun. Math. Phys.</em> 6 (1967), 286&ndash;311. <a href="https://doi.org/10.1007/BF01646020">doi:10.1007/BF01646020</a></li>
+  <li>P. A. M. Dirac: A Theory of Electrons and Protons. <em>Proc. R. Soc. Lond. A</em> 126 (1930), 360&ndash;365. <a href="https://doi.org/10.1098/rspa.1930.0013">doi:10.1098/rspa.1930.0013</a></li>
+  <li>J. R. Oppenheimer: On the Theory of Electrons and Protons. <em>Phys. Rev.</em> 35 (1930), 562&ndash;563. <a href="https://doi.org/10.1103/PhysRev.35.562">doi:10.1103/PhysRev.35.562</a></li>
+  <li>P. A. M. Dirac: Quantised Singularities in the Electromagnetic Field. <em>Proc. R. Soc. Lond. A</em> 133 (1931), 60&ndash;72. <a href="https://doi.org/10.1098/rspa.1931.0130">doi:10.1098/rspa.1931.0130</a></li>
+  <li>C. G. Darwin: The Wave Equations of the Electron. <em>Proc. R. Soc. Lond. A</em> 118 (1928), 654&ndash;680. <a href="https://doi.org/10.1098/rspa.1928.0076">doi:10.1098/rspa.1928.0076</a></li>
+  <li>W. Gordon: Die Energieniveaus des Wasserstoffatoms nach der Diracschen Quantentheorie des Elektrons. <em>Z. Phys.</em> 48 (1928), 11&ndash;14. <a href="https://doi.org/10.1007/BF01351570">doi:10.1007/BF01351570</a></li>
+  <li>W. E. Lamb, R. C. Retherford: Fine Structure of the Hydrogen Atom by a Microwave Method. <em>Phys. Rev.</em> 72 (1947), 241&ndash;243. <a href="https://doi.org/10.1103/PhysRev.72.241">doi:10.1103/PhysRev.72.241</a></li>
+  <li>P. Kusch, H. M. Foley: The Magnetic Moment of the Electron. <em>Phys. Rev.</em> 74 (1948), 250&ndash;263. <a href="https://doi.org/10.1103/PhysRev.74.250">doi:10.1103/PhysRev.74.250</a></li>
+  <li>J. Schwinger: On Quantum-Electrodynamics and the Magnetic Moment of the Electron. <em>Phys. Rev.</em> 73 (1948), 416&ndash;417. <a href="https://doi.org/10.1103/PhysRev.73.416">doi:10.1103/PhysRev.73.416</a></li>
+  <li>R. P. Feynman, A. R. Hibbs: <em>Quantum Mechanics and Path Integrals</em>. New York: McGraw-Hill 1965, problem 2-6.</li>
+  <li>T. Jacobson, L. S. Schulman: Quantum Stochastics: The Passage from a Relativistic to a Non-relativistic Path Integral. <em>J. Phys. A</em> 17 (1984), 375&ndash;383.</li>
+  <li>R. Gerritsma, G. Kirchmair, F. Z&auml;hringer, E. Solano, R. Blatt, C. F. Roos: Quantum Simulation of the Dirac Equation. <em>Nature</em> 463 (2010), 68&ndash;71. <a href="https://doi.org/10.1038/nature08688">doi:10.1038/nature08688</a></li>
+  <li>K. S. Novoselov, A. K. Geim et al.: Two-dimensional gas of massless Dirac fermions in graphene. <em>Nature</em> 438 (2005), 197&ndash;200.</li>
+</ul>
+</div></section>
+
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Read next</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Related posts on ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/en/quantum.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Quantum Physics with Arrows</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; Feynman&rsquo;s phasors, the double slit, three languages</span></li>
+    <li><a href="/en/quantum-computing.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">What Quantum Computers Really Do</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; qubit, Bloch sphere, gates as rotations</span></li>
+    <li><a href="/en/euler.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Euler&rsquo;s Number</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; Bernoulli&rsquo;s limit and why \(e\) is waiting everywhere</span></li>
+    <li><a href="/en/eigenvalues.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenvalues &amp; AI</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; diagonalisation, kernels, PageRank</span></li>
+    <li><a href="/en/eigenprinciple.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">The Eigenprinciple</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; why the same mathematics appears everywhere</span></li>
+  </ul>
+</div>
+</section>
+
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600 max-w-4xl mx-auto px-4">
+  <p class="mb-2"><em>&ldquo;Dirac&rsquo;s line is no formula out of nowhere. It is geometry.&rdquo;</em></p>
+  <p>&copy; 2026 Mathias Leonhardt &middot; Created with Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="/en/about.html" class="hover:text-gray-400">About</a> &middot;
+    <a href="/en/imprint.html" class="hover:text-gray-400">Imprint</a> &middot;
+    <a href="/en/privacy.html" class="hover:text-gray-400">Privacy</a>
+  </p>
+</footer>
+
+</div><!-- /max-w-4xl -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // mount-id -> [window component name, props]
+  var COMPONENTS = {
+    'mount-product-loss':  ['DiracProductLoss'],
+    'mount-swap-i':        ['DiracSwapPuzzle', { level: 'i' }],
+    'mount-quarter-turn':  ['DiracQuarterTurn'],
+    'mount-swap-ijk':      ['DiracSwapPuzzle', { level: 'ijk' }],
+    'mount-rotor':         ['DiracRotor'],
+    'mount-plane-wave':    ['DiracPlaneWave'],
+    'mount-path-sum':      ['DiracPathSum'],
+    'mount-two-wells':     ['DiracPathSum', { initialMode: 'two' }],
+    'mount-spacetime':     ['DiracSpacetime'],
+    'mount-root':          ['DiracRoot'],
+    'mount-swap-gamma':    ['DiracSwapPuzzle', { level: 'gamma' }],
+    'mount-belt':          ['DiracBelt'],
+    'mount-dirac-sea':     ['DiracSea'],
+    'mount-checkerboard':  ['DiracCheckerboard']
+  };
+
+  var mounted = {};
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var spec = COMPONENTS[id];
+    var Comp = spec && window[spec[0]];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp, spec[1] || {}));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Component could not be loaded.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '300px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // Mount widget 0 (equation map) immediately
+  var eq = document.getElementById('mount-eqmap');
+  if (eq && window.DiracEquationMap) {
+    ReactDOM.createRoot(eq).render(React.createElement(window.DiracEquationMap));
+  }
+
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((window.scrollY / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+</body>
+</html>

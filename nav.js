@@ -41,6 +41,11 @@
       en: { title: 'What Quantum Computers Do', subtitle: 'Qubit \u00B7 Bloch sphere \u00B7 Qiskit', href: '/en/quantum-computing.html' }
     },
     {
+      icon: 'e\u207A',  // e⁺ (Positron)
+      de: { title: 'Vom Pfeil zum Positron', subtitle: 'Geometrische Algebra \u00B7 Spin \u00BD \u00B7 Antimaterie', href: '/dirac.html' },
+      en: { title: 'From Arrow to Positron', subtitle: 'Geometric algebra \u00B7 Spin \u00BD \u00B7 Antimatter', href: '/en/dirac-equation.html' }
+    },
+    {
       icon: '\uD83E\uDD85',  // 🦅
       de: { title: 'Fourier & Ozeanwellen', subtitle: 'FFT \u00B7 Ocean4 \u00B7 WebGPU', href: '/vogelsimulator.html' },
       en: { title: 'Fourier & Ocean Waves', subtitle: 'FFT \u00B7 Ocean4 \u00B7 WebGPU', href: '/en/flight-simulator.html' }

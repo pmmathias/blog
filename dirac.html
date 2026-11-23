@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
+  <title>Vom Pfeil zum Positron &ndash; Die Dirac-Gleichung verstehen</title>
+  <meta name="description" content="Die Dirac-Gleichung ohne Physikstudium: Wie aus Vektoren, Drehungen und Pfadsummen Spin &frac12; und Antimaterie folgen &ndash; interaktiv erkl&auml;rt, bis zu Feynmans Schachbrett.">
+  <meta name="author" content="Mathias Leonhardt">
+  <meta name="fediverse:creator" content="@ki_mathias@mathstodon.xyz">
+  <link rel="canonical" href="https://ki-mathias.de/dirac.html">
+  <link rel="alternate" hreflang="de" href="https://ki-mathias.de/dirac.html">
+  <link rel="alternate" hreflang="en" href="https://ki-mathias.de/en/dirac-equation.html">
+  <link rel="alternate" hreflang="x-default" href="https://ki-mathias.de/dirac.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Vom Pfeil zum Positron – Die Dirac-Gleichung verstehen">
+  <meta property="og:description" content="Von zwei Pfeilen zur Antimaterie: geometrische Algebra, Pfadsummen und Diracs Wurzel – jeder Schritt begründet, mit interaktiven Visualisierungen.">
+  <meta property="og:url" content="https://ki-mathias.de/dirac.html">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mathias Leonhardt Blog">
+  <meta property="article:published_time" content="2026-11-23">
+  <meta property="article:author" content="Mathias Leonhardt">
+  <meta property="article:tag" content="Dirac-Gleichung">
+  <meta property="article:tag" content="Geometrische Algebra">
+  <meta property="article:tag" content="Spin">
+  <meta property="article:tag" content="Antimaterie">
+  <meta property="article:tag" content="Pfadintegral">
+  <meta property="article:tag" content="Quaternionen">
+  <meta property="og:image" content="https://ki-mathias.de/img/og/dirac-de.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ki-mathias.de/img/og/dirac-de.png">
+  <meta name="twitter:title" content="Vom Pfeil zum Positron – Die Dirac-Gleichung verstehen">
+  <meta name="twitter:description" content="Von zwei Pfeilen zur Antimaterie: geometrische Algebra, Pfadsummen und Diracs Wurzel – jeder Schritt begründet, mit interaktiven Visualisierungen.">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Vom Pfeil zum Positron – Die Dirac-Gleichung verstehen",
+  "description": "Die Dirac-Gleichung ohne Physikstudium: Wie aus Vektoren, Drehungen und Pfadsummen Spin ½ und Antimaterie folgen – interaktiv erklärt, bis zu Feynmans Schachbrett.",
+  "image": "https://ki-mathias.de/img/og/dirac-de.png",
+  "author": {
+    "@type": "Person",
+    "@id": "https://ki-mathias.de/#mathias",
+    "name": "Mathias Leonhardt",
+    "url": "https://ki-mathias.de/ueber-mich.html",
+    "sameAs": [
+      "https://mathstodon.xyz/@ki_mathias",
+      "https://orcid.org/0009-0009-7154-5351",
+      "https://philpeople.org/profiles/mathias-leonhardt",
+      "https://github.com/pmmathias",
+      "https://www.linkedin.com/in/mathias-leonhardt-96b885100/",
+      "https://scholar.google.com/citations?user=hd8CgpsAAAAJ"
+    ]
+  },
+  "publisher": {
+    "@id": "https://ki-mathias.de/#mathias"
+  },
+  "datePublished": "2026-11-23",
+  "dateModified": "2026-11-23",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ki-mathias.de/dirac.html"
+  },
+  "inLanguage": "de",
+  "isAccessibleForFree": true,
+  "keywords": [
+    "Dirac-Gleichung",
+    "Geometrische Algebra",
+    "Spin",
+    "Antimaterie",
+    "Pfadintegral",
+    "Quaternionen"
+  ],
+  "articleSection": "Physik",
+  "wordCount": 15167,
+  "timeRequired": "PT70M"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Startseite",
+      "item": "https://ki-mathias.de/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Vom Pfeil zum Positron – Die Dirac-Gleichung verstehen",
+      "item": "https://ki-mathias.de/dirac.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was sagt die Dirac-Gleichung aus?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Dirac-Gleichung beschreibt, wie sich der Zustand eines Elektrons in der Zeit entwickelt, und zwar so, dass sie sowohl der Quantenmechanik als auch der speziellen Relativitätstheorie genügt. Anschaulich besagt sie, dass der Energie-Impuls-Pfeil der Raumzeit, angewandt auf den Zustand ψ, die Masse ergibt. Aus ihr folgen der Spin des Elektrons, sein magnetisches Moment mit g = 2, die Feinstruktur des Wasserstoffspektrums und die Existenz von Antimaterie."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum sagt die Dirac-Gleichung Antimaterie voraus?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dirac brauchte eine Wurzel aus Einsteins Energieformel E² = p²c² + m²c⁴, und jede Wurzel hat zwei Vorzeichen. Die Gleichung besitzt deshalb zu jedem Impuls Lösungen mit positiver und mit negativer Energie. Dirac deutete 1930 die Zustände negativer Energie als voll besetzten „See“ und ein Loch darin als Teilchen mit der Masse des Elektrons und positiver Ladung. Carl Anderson fand dieses Positron 1932. Die heutige Quantenfeldtheorie kommt ohne den See aus, bestätigt aber das Ergebnis: Zu jedem Teilchen gibt es ein Antiteilchen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum muss sich ein Elektron zweimal drehen, um wieder gleich zu sein?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Drehungen lassen sich durch Rotoren beschreiben, die den halben Drehwinkel enthalten, weil eine Drehung um θ aus zwei Spiegelungen an Spiegeln mit dem Zwischenwinkel θ/2 entsteht. Bei einer vollen Umdrehung ist der Rotor deshalb -1. Vektoren werden mit dem Rotor von beiden Seiten multipliziert und merken davon nichts. Der Zustand eines Elektrons wird dagegen nur einseitig mit dem Rotor multipliziert und geht nach 360° in sein Negatives über, erst nach 720° in sich selbst. Neutronen-Interferenzexperimente haben das 1975 bestätigt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was sind die Gamma-Matrizen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die vier Gamma-Matrizen γ⁰, …, γ³ sind eine Orthonormalbasis der vierdimensionalen Raumzeit, dargestellt als 4×4-Matrizen. Sie erfüllen dieselben Regeln wie die Basisvektoren der geometrischen Algebra: Jede quadriert zum Längenquadrat ihrer Richtung (+1 für die Zeit, -1 für den Raum), und je zwei verschiedene antikommutieren. Gerade deshalb ist ihre Kombination eine Wurzel aus der Quadratsumme in Einsteins Energieformel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist geometrische Algebra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Geometrische Algebra ist eine Rechenweise für Vektoren, in der Vektoren miteinander multipliziert werden können, ohne dass Information verloren geht. Das Produkt zweier Vektoren besteht aus dem Skalarprodukt und einer orientierten Fläche, dem Bivektor. Fordert man nur, dass das Produkt assoziativ und distributiv ist und dass ein Vektor zum Quadrat sein Längenquadrat ergibt, folgen daraus die komplexen Zahlen, Hamiltons Quaternionen und die Beschreibung von Drehungen in jeder Dimension."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie hängen komplexe Zahlen, Quaternionen und Drehungen zusammen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die imaginäre Einheit i lässt sich als orientiertes Einheitsquadrat einer Ebene verstehen: Es quadriert zu -1, und mit ihm zu multiplizieren dreht jeden Vektor der Ebene um 90°. Komplexe Zahlen sind Zahl plus Fläche und beschreiben Drehungen in der Ebene. Im Raum gibt es drei Basisflächen, und Zahl plus drei Flächen ergibt Hamiltons Quaternionen, die Drehungen im Raum beschreiben."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist Feynmans Schachbrett?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Feynmans Schachbrett ist eine Pfadintegral-Darstellung der Dirac-Gleichung in einer Raumdimension. Ein Teilchen bewegt sich auf einem Gitter in jedem Zeitschritt mit Lichtgeschwindigkeit nach links oder rechts; jede Richtungsänderung bringt einen Faktor proportional zur Masse mit sich. Die Summe über alle Zickzackwege ergibt die Lösung der Dirac-Gleichung. Anschaulich ist Masse damit die Amplitude für den Richtungswechsel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist die Zitterbewegung?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Erwin Schrödinger bemerkte 1930, dass die Position eines freien Elektrons nach der Dirac-Gleichung mit einer Kreisfrequenz von etwa 1,6·10²¹ s⁻¹ und einer Amplitude von rund 2·10⁻¹³ Metern hin und her schwanken müsste. Sie entsteht aus der Interferenz von Anteilen positiver und negativer Energie. An freien Elektronen wurde sie nie direkt beobachtet; 2010 wurde sie mit einem gefangenen Ion simuliert, dessen Bewegung der Dirac-Gleichung gehorcht."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link rel="stylesheet" href="vendor/tailwind.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script defer src="dirac-components.js"></script>
+
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-400.woff2) format('woff2'), url(fonts/inter-400.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-500.woff2) format('woff2'), url(fonts/inter-500.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/inter-600.woff2) format('woff2'), url(fonts/inter-600.ttf) format('truetype'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/inter-700.woff2) format('woff2'), url(fonts/inter-700.ttf) format('truetype'); }
+  </style>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    section[id] { scroll-margin-top: 4.5rem; }
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); transition: width 50ms linear; }
+    .katex { color: #e2e8f0; }
+    .prose-dark p { margin-bottom: 1.25rem; line-height: 1.8; color: #d1d5db; }
+    .prose-dark h2 { font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; background: linear-gradient(90deg, #22d3ee, #60a5fa, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prose-dark h3 { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose-dark strong { color: #f1f5f9; font-weight: 600; }
+    .prose-dark em { color: #94a3b8; font-style: italic; }
+    .prose-dark ul, .prose-dark ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: #d1d5db; }
+    .prose-dark li { margin-bottom: 0.4rem; line-height: 1.7; }
+    .prose-dark a { color: #22d3ee; text-decoration: underline; }
+    .part-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #f59e0b; margin-bottom: 0.25rem; }
+    .sec-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(34,211,238,0.6); margin-bottom: 0.5rem; }
+    .leitfrage { border: 1px solid rgba(245,158,11,0.35); background: rgba(245,158,11,0.06); border-radius: 0.75rem; padding: 1rem 1.25rem; margin: 1.5rem 0 2rem; }
+    .leitfrage p { margin: 0; color: #fcd34d; }
+    .try-it { border-left: 3px solid #22d3ee; padding: 1rem 1.25rem; background: rgba(34, 211, 238, 0.05); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .try-it p { color: #94a3b8; margin-bottom: 0.5rem; }
+    .try-it strong { color: #22d3ee; }
+    .merke { border-left: 3px solid #f59e0b; padding: 1rem 1.25rem; background: rgba(245, 158, 11, 0.06); border-radius: 0 0.75rem 0.75rem 0; margin: 2rem 0; }
+    .merke p { margin-bottom: 0.25rem; }
+    .recap { border: 1px solid #374151; padding: 1.25rem 1.5rem; border-radius: 0.75rem; background: rgba(55, 65, 81, 0.2); margin: 2.5rem 0; }
+    .recap h4, .recap .recap-title { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #94a3b8; margin-bottom: 0.75rem; }
+    .history { font-size: 0.95rem; border-left: 2px solid #475569; padding-left: 1rem; color: #cbd5e1; margin: 1.5rem 0; }
+    details.deep { border: 1px solid #1f2937; border-radius: 0.75rem; padding: 0.75rem 1.1rem; margin: 2rem 0; background: rgba(15,23,42,0.6); }
+    details.deep summary { cursor: pointer; color: #93c5fd; font-weight: 500; }
+    .placeholder { border: 1px dashed #475569; color: #64748b; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.85rem; margin: 1rem 0; }
+    .section-divider { width: 60px; height: 2px; margin: 3rem auto; background: linear-gradient(90deg, #22d3ee, #f59e0b); border-radius: 1px; }
+    .math-display { text-align: center; margin: 1.5rem 0; overflow-x: auto; overflow-y: hidden; }
+    .component-wrap { margin: 2.5rem -0.5rem; padding: 0; }
+    figure { margin: 2rem 0; }
+    figcaption { font-size: 0.78rem; color: #94a3b8; margin-top: 0.5rem; text-align: center; }
+    figcaption a { color: #6b7280; text-decoration: underline; }
+    .prose-dark img { border-radius: 0.5rem; border: 1px solid rgba(148,163,184,0.12); max-width: 100%; }
+    #eqmap-slot { position: sticky; top: 3.5rem; z-index: 30; }
+    .chip { display: inline-block; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em; border: 1px solid; border-radius: 999px; padding: 0.05rem 0.5rem; margin-right: 0.35rem; vertical-align: 0.12em; white-space: nowrap; }
+    .chip.z { color: #4ade80; border-color: rgba(74,222,128,0.6); }
+    .chip.e { color: #f59e0b; border-color: rgba(245,158,11,0.6); }
+    .chip.k { color: #94a3b8; border-color: rgba(148,163,184,0.5); }
+    @media (min-width: 640px) { .component-wrap { margin: 2.5rem -2rem; } }
+    @media (min-width: 1024px) { .component-wrap { margin: 2.5rem -4rem; } }
+  </style>
+  <link rel="alternate" type="application/atom+xml" title="Mathias Leonhardt Blog — RSS (Atom)" href="/feed.xml">
+</head>
+
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<div id="progress-bar" style="width: 0%"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md">
+  <div id="nav-bar"></div>
+</nav>
+<div id="nav-dropdown" class="fixed top-14 left-0 right-0 z-40 hidden"></div>
+
+<div id="nav-toc-items" style="display:none;">
+  <a href="#prolog" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">Prolog &middot; Antimaterie im Krankenhaus</a>
+  <a href="#akt1" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">I &middot; Multiplizieren kann drehen</a>
+  <a href="#akt2" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">II &middot; Drehen und Summieren</a>
+  <a href="#akt3" class="toc-link block text-sm py-1.5 px-3 text-gray-300 rounded-lg hover:bg-gray-800/60 transition">III &middot; Diracs Wurzel</a>
+  <a href="#epilog" class="toc-link block text-sm py-1.5 px-3 text-gray-500 italic rounded-lg hover:bg-gray-800/60 transition">Epilog &middot; Es ist Geometrie</a>
+</div>
+<script src="/nav.js"></script>
+
+<div class="max-w-4xl mx-auto">
+
+<header id="hero" class="pt-24 pb-10 px-4 sm:px-6">
+  <p class="text-xs uppercase tracking-widest text-cyan-400/60 mb-3">Blogbeitrag &middot; Physik &middot; Mathematik &middot; Das Glasperlenspiel</p>
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-400 bg-clip-text text-transparent leading-tight" style="-webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+    Vom Pfeil zum Positron
+  </h1>
+  <p class="text-gray-400 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+    Die Dirac-Gleichung verstehen, ohne Physik studiert zu haben &ndash; auf einem Weg &uuml;ber Geometrie, Drehungen und Pfadsummen. Drei Akte, ein roter Faden, und am Ende ist jedes Symbol einer Zeile von 1928 verdient.
+  </p>
+  <div class="flex items-center gap-3 text-xs text-gray-500">
+    <span>KI-Mathias</span><span>&middot;</span>
+    <time datetime="2026-11-23">November 2026</time><span>&middot;</span>
+    <span>~70 Min. Lesezeit</span>
+  </div>
+</header>
+
+<!-- Widget 0: Gleichungs-Landkarte (sticky) — D-10 -->
+<div id="eqmap-slot" class="px-4 sm:px-6"><div id="mount-eqmap"></div></div>
+
+<main class="max-w-4xl px-4 sm:px-6">
+
+<!-- ================================================================ -->
+<!-- PROLOG — D-10 -->
+<!-- ================================================================ -->
+<section id="prolog" class="pb-16">
+<div class="prose-dark">
+<p class="part-label">Prolog</p>
+<h2>Antimaterie im Krankenhaus</h2>
+<p>Wer sich in einer Klinik einer PET-Untersuchung unterzieht, bekommt vorher eine schwach radioaktive Zuckerl&ouml;sung gespritzt. Der Zucker ist mit dem Isotop Fluor-18 markiert, das in einem Zyklotron hergestellt wird und eine Halbwertszeit von knapp zwei Stunden hat. Im K&ouml;rper reichert sich die L&ouml;sung dort an, wo viel Zucker verbraucht wird &ndash; in arbeitenden Hirnarealen, im Herzmuskel, in schnell wachsenden Tumoren. Und dort, im Gewebe des Patienten, geschieht etwas Bemerkenswertes: Beim Zerfall eines Fluor-18-Kerns entsteht ein <em>Positron</em>, ein Teilchen Antimaterie. Es legt im Mittel weniger als einen Millimeter zur&uuml;ck, trifft auf ein Elektron, und beide verschwinden. &Uuml;brig bleiben zwei Lichtquanten mit je 511&nbsp;Kiloelektronenvolt Energie, die in entgegengesetzte Richtungen davonfliegen. Der Detektorring des Scanners registriert sie gleichzeitig, und aus Millionen solcher Paare setzt ein Rechner das Bild zusammen.</p>
+
+<figure>
+  <img src="img/dirac/pet-scanner.jpg" alt="Ein Patient liegt auf der Liege eines PET-Scanners, dessen Detektorring den K&ouml;rper umschlie&szlig;t" loading="lazy" width="1200" height="874">
+  <figcaption>PET-Scanner: Der Detektorring registriert die Lichtquanten-Paare, die bei der Vernichtung von Positronen im K&ouml;rper entstehen. <a href="https://commons.wikimedia.org/wiki/File:US_Navy_030819-N-9593R-151_A_patient_goes_through_Positiron_Emission_Tomography_(PET)_at_the_National_Naval_Medical_Center_in_Bethesda,_Maryland.jpg">U.S. Navy / Seth Rossman</a> / Wikimedia Commons / gemeinfrei</figcaption>
+</figure>
+
+<p>Dass es Antimaterie gibt, wurde 1931 vorhergesagt, bevor irgendjemand sie gesehen hatte. Die Vorhersage stammt nicht aus einem Experiment, sondern aus einer Gleichung, die der damals 25-j&auml;hrige Paul Dirac im Januar 1928 aufgeschrieben hatte. Er suchte eine Gleichung f&uuml;r das Elektron, die sowohl der Quantenmechanik als auch Einsteins Relativit&auml;tstheorie gen&uuml;gt, und stie&szlig; dabei auf ein mathematisches Problem: Er musste eine Wurzel ziehen, die sich mit gew&ouml;hnlichen Zahlen nicht ziehen l&auml;sst. Die L&ouml;sung, die er fand, passt in eine Zeile:</p>
+
+<div class="math-display" style="font-size:1.25rem;">\[ \big(i\hbar\,\gamma^\mu\partial_\mu - mc\big)\,\psi = 0 \]</div>
+
+<p>Aus dieser Zeile folgten drei Dinge, die niemand bestellt hatte. Erstens tr&auml;gt das Elektron einen inneren Drehimpuls, den <em>Spin</em>, der zuvor nur experimentell bekannt war und von Hand in die Theorie eingebaut werden musste. Zweitens hat dieser Spin eine Eigenschaft, die jeder Anschauung zu widersprechen scheint: Ein Elektron muss sich zweimal um sich selbst drehen, um wieder in seinem Ausgangszustand zu sein. Drittens hat die Gleichung zu jeder L&ouml;sung mit positiver Energie eine zweite mit negativer &ndash; und Dirac kam nach einigen Irrwegen zu dem Schluss, dass diese zweite L&ouml;sung ein Teilchen mit der Masse des Elektrons, aber entgegengesetzter Ladung beschreibt.</p>
+
+<figure>
+  <img src="img/dirac/anderson-positron-1932.jpg" alt="Nebelkammeraufnahme von 1932: eine gekr&uuml;mmte Teilchenspur durchquert eine waagerechte Bleiplatte und ist oberhalb der Platte st&auml;rker gekr&uuml;mmt" loading="lazy" width="1200" height="1200" style="max-width:min(420px, 100%); display:block; margin:0 auto;">
+  <figcaption>Carl Andersons Aufnahme vom 2. August 1932: Ein Teilchen der kosmischen Strahlung durchquert eine 6&nbsp;mm dicke Bleiplatte. Oberhalb ist die Spur st&auml;rker gekr&uuml;mmt, das Teilchen hat in der Platte Energie verloren und kam also von unten. Aus der Kr&uuml;mmungsrichtung im Magnetfeld folgt eine positive Ladung, aus der L&auml;nge der Spur eine Masse wie die des Elektrons. <a href="https://commons.wikimedia.org/wiki/File:PositronDiscovery.jpg">Carl D. Anderson (1932)</a> / Wikimedia Commons / gemeinfrei</figcaption>
+</figure>
+
+<p>Am 2. August 1932 fotografierte Carl Anderson am California Institute of Technology in einer Nebelkammer die Spur eines solchen Teilchens. Diracs Theorie war ihm bekannt, spielte bei der Entdeckung aber keine Rolle; er war auf die Spur gesto&szlig;en, als er kosmische Strahlung untersuchte. 1933 erhielt Dirac den Nobelpreis, 1936 Anderson. Heute wird das Positron jeden Tag in Kliniken auf der ganzen Welt genutzt.</p>
+
+<p>Dieser Beitrag f&uuml;hrt zu Diracs Zeile, ohne dass ein Physikstudium vorausgesetzt wird. Ben&ouml;tigt werden Vektoren, Matrizen und Schulmathematik. Das Ziel ist dabei mehr als eine Nacherz&auml;hlung: Jedes Symbol der Gleichung soll im Verlauf des Textes <em>verdient</em> werden, das hei&szlig;t, es soll klar werden, warum es dort steht und warum es nicht anders aussehen kann. Die Leiste am oberen Rand zeigt, welche Symbole bereits verdient sind.</p>
+
+<p>Der Weg hat drei Akte, und jeder beantwortet eine Frage.</p>
+
+<ul>
+  <li><strong>Akt I &middot; Geometrie.</strong> Gibt es ein Produkt von Vektoren, das nichts wegwirft? Die Antwort f&uuml;hrt auf orientierte Fl&auml;chen, auf die imagin&auml;re Einheit als Drehung und auf einen merkw&uuml;rdigen halben Winkel.</li>
+  <li><strong>Akt II &middot; Quantenmechanik.</strong> Was tut die Natur zwischen zwei Messungen? Die Antwort lautet: Sie dreht Zeiger und addiert sie, und Matrixmultiplikation erweist sich als genau das: das Aufsummieren aller M&ouml;glichkeiten eines Schritts.</li>
+  <li><strong>Akt III &middot; Relativit&auml;t.</strong> Wie zieht man die Wurzel aus \(E^2 = p^2c^2 + m^2c^4\)? Die Antwort liefert die Geometrie aus Akt&nbsp;I, und aus ihr folgen Spin, Antimaterie und ein &uuml;berraschend anschauliches Bild der Masse.</li>
+</ul>
+
+<p>Der rote Faden, der die drei Akte verbindet, ist die Drehung.</p>
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- AKT I — MULTIPLIZIEREN KANN DREHEN -->
+<!-- ================================================================ -->
+<section id="akt1" class="pb-4">
+<div class="prose-dark">
+<p class="part-label">Akt I &middot; Geometrie</p>
+<h2>Multiplizieren kann drehen</h2>
+<div class="leitfrage"><p><strong>Leitfrage:</strong> Gibt es ein Produkt von Vektoren, das nichts wegwirft?</p></div>
+</div>
+</section>
+
+<section id="problem" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 1</p>
+<h3>Vektoren lassen sich nicht teilen</h3>
+
+<p>Mit Zahlen l&auml;sst sich eine Frage beantworten, die so selbstverst&auml;ndlich ist, dass sie kaum auff&auml;llt: Womit muss man 3 multiplizieren, um 6 zu erhalten? Die Antwort ist \(6/3 = 2\), und sie existiert, weil man durch jede Zahl au&szlig;er null teilen kann. Dieselbe Frage l&auml;sst sich f&uuml;r Pfeile stellen. Gegeben seien zwei Vektoren \(u\) und \(v\) in der Ebene. Mit welchem Objekt muss man \(u\) multiplizieren, damit \(v\) herauskommt? Anschaulich ist die Antwort klar: Man muss \(u\) auf die L&auml;nge von \(v\) strecken und in die Richtung von \(v\) drehen. Es gibt also eine wohldefinierte Operation, die \(u\) in \(v\) &uuml;berf&uuml;hrt &ndash; eine <em>Drehstreckung</em>. Die Frage ist nur, ob man sie als Quotient \(u^{-1}v\) schreiben kann, so wie man bei Zahlen \(6/3\) schreibt.</p>
+
+<p>Die Schulmathematik kennt zwei Produkte von Vektoren, und beide scheitern an dieser Frage. Das <em>Skalarprodukt</em> \(u\cdot v = |u|\,|v|\cos\theta\) macht aus zwei Vektoren eine einzelne Zahl. Dabei geht Information verloren: Unendlich viele Vektoren \(v\) haben mit \(u\) dasselbe Skalarprodukt, und aus der Zahl allein l&auml;sst sich nicht zur&uuml;ckrechnen, welcher es war. Das <em>Kreuzprodukt</em> \(u \times v\) liefert zwar wieder einen Vektor, hat aber gleich drei M&auml;ngel: Es existiert nur im dreidimensionalen Raum, es ist nicht assoziativ, das hei&szlig;t \((u\times v)\times w\) und \(u \times (v \times w)\) sind im Allgemeinen verschieden, und es ist ebenfalls nicht umkehrbar, denn alle Vektoren \(v + \lambda u\) liefern mit \(u\) dasselbe Kreuzprodukt.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Ziehe an den Spitzen von \(u\) und \(v\). Schritt&nbsp;1 zeigt alle Vektoren, die mit \(u\) dasselbe Skalarprodukt haben, Schritt&nbsp;2 alle, die mit \(u\) dieselbe Fl&auml;che aufspannen. Schritt&nbsp;3 legt beide &uuml;bereinander.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-product-loss"></div></div>
+
+<p>Das Experiment zeigt zweierlei. Erstens wirft jedes der beiden Ma&szlig;e f&uuml;r sich genau die Information weg, die das andere enth&auml;lt: Das Skalarprodukt misst, wie weit \(v\) in Richtung \(u\) reicht, und vergisst, wie weit \(v\) seitlich davon abweicht; die Fl&auml;che misst die seitliche Abweichung und vergisst den Anteil entlang \(u\). Zweitens legen beide <em>zusammen</em> den Vektor \(v\) eindeutig fest. Dies bedeutet, dass in der Kombination aus Skalarprodukt und Fl&auml;che alles steckt, was \(v\) relativ zu \(u\) ausmacht.</p>
+
+<p>Damit ist allerdings noch nichts bewiesen, sondern nur ein Verdacht begr&uuml;ndet. Man k&ouml;nnte die beiden Zahlen einfach als Paar notieren und das Paar zum &bdquo;Produkt&ldquo; erkl&auml;ren &ndash; das w&auml;re genau die Art willk&uuml;rlicher Setzung, die hier vermieden werden soll. Die folgenden zwei Abschnitte gehen deshalb anders vor. Sie fragen nicht, welches Produkt man gerne h&auml;tte, sondern welche Mindestanforderungen jedes Produkt erf&uuml;llen muss, mit dem man &uuml;berhaupt rechnen kann, und leiten dann ab, was aus diesen Anforderungen <em>zwangsl&auml;ufig</em> folgt. Skalarprodukt und Fl&auml;che werden dabei nicht eingef&uuml;hrt. Sie fallen heraus.</p>
+
+<details class="deep">
+<summary>Wie in diesem Beitrag Begr&uuml;ndungen markiert sind</summary>
+<p style="margin-top:0.75rem;">Jeder Schritt dieses Beitrags ist von einer von drei Sorten, und an den entscheidenden Stellen steht ein kleines Etikett davor:</p>
+<p><span class="chip z">folgt zwingend</span> Der Schritt ergibt sich logisch aus dem, was vorher gesagt wurde. Eine andere Wahl gibt es nicht.</p>
+<p><span class="chip e">Eingabe</span> Hier wird etwas hineingesteckt &ndash; eine Forderung oder eine experimentelle Tatsache. Zu jeder Eingabe wird begr&uuml;ndet, warum gerade diese.</p>
+<p><span class="chip k">Konvention</span> Hier darf gew&auml;hlt werden, und eine andere Wahl w&auml;re genauso gut. Solche Stellen werden ausdr&uuml;cklich als Konvention benannt.</p>
+<p>Am Ende des Beitrags zieht der Epilog Bilanz: wie wenige Eingaben n&ouml;tig waren und wie viel aus ihnen zwangsl&auml;ufig folgte.</p>
+</details>
+</div></section>
+
+<section id="keilprodukt" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 2</p>
+<h3>Zwei Forderungen &ndash; und das Skalarprodukt f&auml;llt heraus</h3>
+
+<p>Gesucht ist ein Produkt \(uv\) von Vektoren, mit dem man rechnen kann wie mit Zahlen. An dieses Produkt werden genau zwei Forderungen gestellt.</p>
+
+<p><span class="chip e">Eingabe</span> <strong>Erstens: Klammern und Ausmultiplizieren.</strong> Das Produkt soll <em>assoziativ</em> sein, \((uv)w = u(vw)\), und <em>distributiv</em>, \(u(v+w) = uv + uw\). Diese beiden Regeln sind keine Geschmacksfrage. Ohne Assoziativit&auml;t darf man in einem Produkt aus drei Faktoren keine Klammer verschieben, ohne Distributivit&auml;t keinen Term ausmultiplizieren &ndash; und ohne diese beiden Handgriffe l&auml;sst sich keine einzige Gleichung umformen. Bemerkenswert ist, was <em>nicht</em> gefordert wird: dass \(uv = vu\) gilt. Ob das Produkt kommutativ ist, bleibt offen; es wird sich in Abschnitt&nbsp;3 zeigen, dass es das gar nicht sein <em>kann</em>.</p>
+
+<p><span class="chip e">Eingabe</span> <strong>Zweitens: Ein Vektor mal sich selbst ergibt sein L&auml;ngenquadrat.</strong></p>
+
+<div class="math-display">\[ vv = |v|^2 \]</div>
+
+<p>Dies ist die einzige Stelle, an der die Geometrie in die Rechnung eingeht, und deshalb verdient sie eine Begr&uuml;ndung. Bei Zahlen ist \(3 \cdot 3 = 9\) der Fl&auml;cheninhalt eines Quadrats mit Seitenl&auml;nge 3; das Quadrieren ist der Punkt, an dem Multiplikation und L&auml;nge zusammenh&auml;ngen. Verlangt man dasselbe von Vektoren, so ist das Produkt an das Messen von L&auml;ngen gebunden &ndash; andernfalls h&auml;tte es mit der Geometrie der Pfeile nichts zu tun. Der Ehrlichkeit halber sei angemerkt, dass man auch \(vv = -|v|^2\) fordern k&ouml;nnte; das ergibt eine andere, ebenso widerspruchsfreie Algebra. Diese Vorzeichenfreiheit ist kein Makel, sondern wird im dritten Akt eine entscheidende Rolle spielen: Dort wird die Physik festlegen, welches Vorzeichen f&uuml;r Raum und welches f&uuml;r Zeit gilt.</p>
+
+<p><span class="chip z">folgt zwingend</span> Aus diesen zwei Forderungen folgt bereits das Skalarprodukt. Dazu wird die zweite Forderung auf den Summenvektor \(u + v\) angewandt und das Produkt mit der ersten Forderung ausmultipliziert:</p>
+
+<div class="math-display">\[ |u+v|^2 = (u+v)(u+v) = uu + uv + vu + vv = |u|^2 + uv + vu + |v|^2 \]</div>
+
+<p>Umgestellt ergibt sich</p>
+
+<div class="math-display">\[ uv + vu = |u+v|^2 - |u|^2 - |v|^2 \]</div>
+
+<p>Die rechte Seite ist eine reine Zahl, und zwar eine bekannte. Nach dem Kosinussatz ist \(|u+v|^2 = |u|^2 + |v|^2 + 2|u|\,|v|\cos\theta\), also steht rechts \(2|u|\,|v|\cos\theta = 2\,u\cdot v\). Damit gilt</p>
+
+<div class="math-display">\[ \tfrac12\,(uv + vu) = u \cdot v \]</div>
+
+<figure>
+<svg viewBox="0 0 360 170" width="100%" style="max-width:360px;display:block;margin:0 auto;" role="img" aria-label="Parallelogramm aus u und v mit der Diagonalen u plus v">
+  <polygon points="40,140 220,110 320,30 140,60" fill="rgba(245,158,11,0.08)" stroke="#334155" stroke-width="1"/>
+  <line x1="40" y1="140" x2="214" y2="111" stroke="#22d3ee" stroke-width="2.5"/><polygon points="220,110 206,107 209,118" fill="#22d3ee"/>
+  <line x1="40" y1="140" x2="135" y2="64" stroke="#2dd4bf" stroke-width="2.5"/><polygon points="140,60 126,64 134,72" fill="#2dd4bf"/>
+  <line x1="40" y1="140" x2="313" y2="35" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="6 4"/><polygon points="320,30 305,30 310,41" fill="#e2e8f0"/>
+  <text x="135" y="138" fill="#22d3ee" font-size="14" font-family="Inter,sans-serif">u</text>
+  <text x="70" y="90" fill="#2dd4bf" font-size="14" font-family="Inter,sans-serif">v</text>
+  <text x="250" y="80" fill="#e2e8f0" font-size="14" font-family="Inter,sans-serif">u + v</text>
+</svg>
+<figcaption>Nach dem Kosinussatz ist das L&auml;ngenquadrat der Diagonalen \(u+v\) um \(2|u|\,|v|\cos\theta\) gr&ouml;&szlig;er als \(|u|^2+|v|^2\). Genau dieser &Uuml;berschuss ist \(uv + vu\), also das Doppelte des symmetrischen Teils von \(uv\).</figcaption>
+</figure>
+
+<p>Dies bedeutet anschaulich: Der Anteil von \(uv\), der beim Vertauschen der Faktoren gleich bleibt, ist nichts Neues, sondern das vertraute Skalarprodukt. Es wurde nicht definiert und nicht eingef&uuml;hrt, sondern ist eine Folge der Forderung, dass Quadrieren L&auml;ngen misst. Damit ist allerdings erst die H&auml;lfte des Produkts verstanden. Die andere H&auml;lfte ist der Anteil, der beim Vertauschen sein Vorzeichen wechselt &ndash; und er f&uuml;hrt auf ein Objekt, das in der Schulmathematik nicht vorkommt.</p>
+</div></section>
+
+<section id="geometrisches-produkt" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 3</p>
+<h3>Der Rest ist eine Fl&auml;che</h3>
+
+<p><span class="chip z">folgt zwingend</span> Jedes Produkt l&auml;sst sich in einen symmetrischen und einen antisymmetrischen Teil zerlegen, so wie sich jede Matrix in einen symmetrischen und einen antisymmetrischen Anteil zerlegen l&auml;sst:</p>
+
+<div class="math-display">\[ uv = \underbrace{\tfrac12(uv + vu)}_{=\;u\cdot v} \;+\; \underbrace{\tfrac12(uv - vu)}_{=:\;u\wedge v} \]</div>
+
+<p>Den zweiten Teil bezeichnen wir mit \(u \wedge v\) (gelesen &bdquo;u Keil v&ldquo;). Die Zerlegung ist keine Definition, sondern eine Identit&auml;t: Sie gilt, weil sich die beiden Summanden zu \(uv\) addieren. Damit erledigt sich auch ein naheliegender Einwand. Es wird hier nicht etwa eine Zahl und ein Pfeil willk&uuml;rlich addiert; vielmehr wird ein bereits vorhandenes Objekt, das Produkt \(uv\), in zwei Bestandteile zerlegt. Die Frage ist nur, was der zweite Bestandteil ist.</p>
+
+<p>Drei seiner Eigenschaften lassen sich unmittelbar ablesen. <strong>Erstens</strong> wechselt \(u\wedge v\) beim Vertauschen der Faktoren das Vorzeichen: \(v \wedge u = -\,u\wedge v\). <strong>Zweitens</strong> verschwindet er f&uuml;r parallele Vektoren. Ist n&auml;mlich \(v = \lambda u\), so ist \(uv = \lambda\,uu = \lambda |u|^2 = vu\), und der antisymmetrische Teil ist null. Insbesondere gilt \(u\wedge u = 0\). <strong>Drittens</strong> &auml;ndert er sich nicht, wenn man \(v\) entlang \(u\) schert, denn mit der Distributivit&auml;t gilt \(u\wedge(v + \lambda u) = u\wedge v + \lambda\, u\wedge u = u \wedge v\). Ein Objekt, das beim Vertauschen der Seiten das Vorzeichen wechselt, f&uuml;r parallele Seiten verschwindet und beim Scheren gleich bleibt, kennt man aus der Geometrie: den <em>orientierten Fl&auml;cheninhalt</em> des Parallelogramms, das \(u\) und \(v\) aufspannen.</p>
+
+<p><span class="chip z">folgt zwingend</span> Dass \(u \wedge v\) tats&auml;chlich diese Fl&auml;che misst und nicht blo&szlig; dieselben Symmetrien hat, l&auml;sst sich ausrechnen. Dazu wird das Produkt \((uv)(vu)\) auf zwei Arten berechnet. Mit der Assoziativit&auml;t und der zweiten Forderung ergibt sich einerseits</p>
+
+<div class="math-display">\[ (uv)(vu) = u\,(vv)\,u = |v|^2\, uu = |u|^2\,|v|^2 . \]</div>
+
+<p>Andererseits ist \(uv = a + B\) und \(vu = a - B\), wobei \(a = u\cdot v\) und \(B = u \wedge v\) abgek&uuml;rzt werden. Da \(a\) eine gew&ouml;hnliche Zahl ist und mit allem vertauscht, folgt \((a+B)(a-B) = a^2 - B^2\). Gleichsetzen liefert</p>
+
+<div class="math-display">\[ B^2 = a^2 - |u|^2|v|^2 = |u|^2|v|^2\,(\cos^2\theta - 1) = -\,\big(|u|\,|v|\sin\theta\big)^2 . \]</div>
+
+<p>Der Ausdruck \(|u|\,|v|\sin\theta\) ist genau der Fl&auml;cheninhalt des Parallelogramms aus \(u\) und \(v\). Dies bedeutet anschaulich: <strong>Der antisymmetrische Teil des Produkts quadriert zu minus dem Quadrat der aufgespannten Fl&auml;che.</strong> Aus diesem Ergebnis folgt noch etwas Grunds&auml;tzlicheres. Keine reelle Zahl hat ein negatives Quadrat, und nach der zweiten Forderung hat auch kein Vektor eines. Folglich ist \(u\wedge v\) weder eine Zahl noch ein Vektor, sondern ein Objekt eigener Art. Es tr&auml;gt die Gr&ouml;&szlig;e der Fl&auml;che, ihre Lage im Raum (die Ebene, in der \(u\) und \(v\) liegen) und ihren Drehsinn (von \(u\) nach \(v\)). Man nennt es einen <em>Bivektor</em>, ein orientiertes Fl&auml;chenst&uuml;ck.</p>
+
+<p class="history">Die Fl&auml;che als eigenst&auml;ndiges Rechenobjekt hat <strong>Hermann Grassmann</strong> 1844 in seiner <em>Ausdehnungslehre</em> eingef&uuml;hrt, als Gymnasiallehrer in Stettin und von der Fachwelt seiner Zeit weitgehend ignoriert. <strong>William Kingdon Clifford</strong> verband 1878 Grassmanns Fl&auml;chen mit Hamiltons Quaternionen zu genau dem Produkt, das hier hergeleitet wurde. Er nannte es &bdquo;geometrisches Produkt&ldquo;. Der Unterschied in der Darstellung dieses Beitrags: Die Fl&auml;che wird nicht als neues Objekt eingef&uuml;hrt, sondern als das erkannt, was von \(uv\) &uuml;brig bleibt, wenn man das Skalarprodukt abzieht.</p>
+
+<p>In Koordinaten l&auml;sst sich das Ergebnis direkt nachrechnen. Mit einer Basis aus zwei senkrechten Einheitsvektoren \(e_1, e_2\) und \(u = u_1e_1 + u_2e_2\), \(v = v_1e_1+v_2e_2\) ergibt sich</p>
+
+<div class="math-display">\[ u\wedge v = (u_1v_2 - u_2v_1)\; e_1 e_2 . \]</div>
+
+<p>Der Koeffizient ist die aus der linearen Algebra bekannte Determinante, die vorzeichenbehaftete Fl&auml;che des Parallelogramms. Im Raum gibt es drei Basisfl&auml;chen, \(e_1e_2\), \(e_2e_3\) und \(e_3e_1\), und die drei Koeffizienten \(u_1v_2 - u_2v_1\), \(u_2v_3 - u_3v_2\) und \(u_3v_1 - u_1v_3\) sind genau die Komponenten des Kreuzprodukts. Das Kreuzprodukt ist also eine Fl&auml;che, die sich als Vektor verkleidet hat; Abschnitt&nbsp;6 kommt darauf zur&uuml;ck.</p>
+
+<h3 style="margin-top:2rem;">Senkrecht hei&szlig;t: antikommutiert</h3>
+
+<p><span class="chip z">folgt zwingend</span> F&uuml;r zwei senkrechte Vektoren ist das Skalarprodukt null, und das Produkt besteht nur noch aus der Fl&auml;che. Mit dem Ergebnis aus Abschnitt&nbsp;2 hei&szlig;t das: \(uv + vu = 0\), also</p>
+
+<div class="math-display">\[ u \perp v \quad\Longrightarrow\quad uv = -\,vu . \]</div>
+
+<p>Senkrechte Vektoren <em>antikommutieren</em>: Vertauscht man sie, kehrt sich das Vorzeichen um. Auch das wurde nicht gew&auml;hlt. Es zeigt zudem, dass das Produkt gar nicht kommutativ sein <em>kann</em>. W&auml;re n&auml;mlich \(e_1e_2 = e_2e_1\), so folgte zusammen mit \(e_1e_2 = -e_2e_1\), dass \(e_1e_2 = 0\) ist. Dann w&auml;re aber auch \(e_2 = (e_1e_1)\,e_2 = e_1\,(e_1e_2) = 0\) &ndash; ein Widerspruch. Die Kommutativit&auml;t ist also nicht etwas, auf das man verzichtet, sondern etwas, das mit den beiden Forderungen unvereinbar ist.</p>
+
+<div class="merke">
+  <p><strong>Merke:</strong> F&uuml;r eine Basis aus senkrechten Einheitsvektoren gilt</p>
+  <div class="math-display" style="margin:0.5rem 0;">\[ e_1e_1 = e_2e_2 = 1, \qquad e_1e_2 = -\,e_2e_1 . \]</div>
+  <p><em>Normiert</em> hei&szlig;t: quadriert zu 1. <em>Senkrecht</em> hei&szlig;t: antikommutiert. Beide Regeln folgen aus den zwei Forderungen von Abschnitt&nbsp;2. Sie sind die gesamte Grammatik dieses Beitrags &ndash; bis hin zur Dirac-Gleichung.</p>
+</div>
+
+<h3 style="margin-top:2rem;">Teilen durch Vektoren</h3>
+
+<p><span class="chip z">folgt zwingend</span> Die Ausgangsfrage l&auml;sst sich nun beantworten. Aus \(vv = |v|^2\) folgt unmittelbar, dass \(v\) ein Inverses besitzt, sobald \(v \neq 0\) ist:</p>
+
+<div class="math-display">\[ v^{-1} = \frac{v}{|v|^2}, \qquad \text{denn}\quad v\,\frac{v}{|v|^2} = \frac{|v|^2}{|v|^2} = 1 . \]</div>
+
+<p>Ein konkretes Beispiel macht den Gewinn sichtbar. Seien \(u = 3e_1 + e_2\) und \(v = e_1 + 2e_2\), die Ausgangsvektoren des Experiments oben. Dann ist \(u\cdot v = 5\) und \(u\wedge v = (3\cdot 2 - 1\cdot 1)\,e_1e_2 = 5\,e_1e_2\), also \(uv = 5 + 5\,e_1e_2\). Mit \(u^{-1} = u/10\) l&auml;sst sich \(v\) aus \(u\) und dem Produkt zur&uuml;ckgewinnen:</p>
+
+<div class="math-display">\[ u^{-1}(uv) = \tfrac{1}{10}\,(3e_1 + e_2)(5 + 5\,e_1e_2) = \tfrac{1}{2}\,(3e_1 + e_2) + \tfrac12\,(3e_2 - e_1) = e_1 + 2e_2 = v . \]</div>
+
+<p>(Im zweiten Summanden wurde \(e_1e_1e_2 = e_2\) und \(e_2e_1e_2 = -e_1e_2e_2 = -e_1\) verwendet &ndash; jedes Mal nur die beiden Regeln aus dem Merkkasten.) Dies bedeutet, dass das geometrische Produkt keine Information verliert: Aus \(u\) und \(uv\) l&auml;sst sich \(v\) eindeutig rekonstruieren, genau wie das Experiment in Abschnitt&nbsp;1 vermuten lie&szlig;.</p>
+
+<p>Bemerkenswert ist schlie&szlig;lich, <em>was</em> der gesuchte Quotient ist. Das Objekt, mit dem man \(u\) multiplizieren muss, um \(v\) zu erhalten, ist \(u^{-1}v = (u\cdot v + u\wedge v)/|u|^2\) &ndash; eine Zahl plus eine Fl&auml;che. Im Beispiel ist das \(\tfrac12 + \tfrac12\,e_1e_2\). Nach der Vorüberlegung aus Abschnitt&nbsp;1 muss dieses Objekt eine Drehstreckung sein. Der n&auml;chste Abschnitt zeigt, dass das stimmt, und dabei taucht ein alter Bekannter auf, dessen Herkunft jahrhundertelang r&auml;tselhaft schien.</p>
+</div></section>
+
+<section id="i" class="pb-12" data-earns="i"><div class="prose-dark">
+<p class="sec-label">Abschnitt 4</p>
+<h3>Eine Fl&auml;che, deren Quadrat \(-1\) ist</h3>
+
+<p>In der Ebene gibt es nach den vorigen Abschnitten genau vier Sorten von Grundbausteinen: die Zahl \(1\), die beiden Basisvektoren \(e_1\) und \(e_2\) und das Produkt \(e_1e_2\). Da \(e_1\) und \(e_2\) senkrecht stehen, ist ihr Skalarprodukt null, und \(e_1e_2 = e_1\wedge e_2\) ist eine reine Fl&auml;che: das orientierte Einheitsquadrat, das von \(e_1\) nach \(e_2\) umlaufen wird. Alles, was sich in der Ebene durch Addieren und Multiplizieren bilden l&auml;sst, ist eine Kombination dieser vier Bausteine.</p>
+
+<p><span class="chip z">folgt zwingend</span> Was ergibt dieses Einheitsquadrat, mit sich selbst multipliziert? Das Ergebnis von Abschnitt&nbsp;3 liefert die Antwort bereits: Ein Bivektor quadriert zu minus dem Quadrat seiner Fl&auml;che, und die Fl&auml;che des Einheitsquadrats ist 1. Dieselbe Antwort l&auml;sst sich aber auch ohne jede Formel erhalten, allein mit den beiden Regeln aus dem Merkkasten. Das folgende Puzzle tut genau das.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Vereinfache \((e_1e_2)(e_1e_2)\) nur mit zwei Handgriffen: Zwei verschiedene Nachbarn d&uuml;rfen getauscht werden, das kostet ein Minuszeichen. Zwei gleiche Nachbarn verschmelzen zu ihrem Quadrat, hier \(+1\).</p>
+</div>
+
+<div class="component-wrap"><div id="mount-swap-i"></div></div>
+
+<p>Ausgeschrieben lautet die Rechnung</p>
+
+<div class="math-display">\[ (e_1e_2)(e_1e_2) = e_1\,(e_2e_1)\,e_2 = -\,e_1\,(e_1e_2)\,e_2 = -\,(e_1e_1)(e_2e_2) = -1 . \]</div>
+
+<p>Ein einziger Tausch, ein einziges Minuszeichen, und zwei Quadrate, die jeweils 1 ergeben. Dies bedeutet: <strong>Das orientierte Einheitsquadrat der Ebene quadriert zu \(-1\).</strong> Ein Objekt mit dieser Eigenschaft ist aus der Schule bekannt, n&auml;mlich die imaginäre Einheit \(i\). Allerdings gen&uuml;gt die gleiche Gleichung noch nicht, um von &bdquo;demselben Objekt&ldquo; zu sprechen. Entscheidend ist, ob \(e_1e_2\) sich auch so <em>verh&auml;lt</em> wie \(i\) &ndash; und dazu muss man ansehen, was es mit Vektoren macht.</p>
+
+<h3 style="margin-top:2rem;">Was \(e_1e_2\) mit einem Pfeil macht</h3>
+
+<p><span class="chip z">folgt zwingend</span> Multipliziert man die beiden Basisvektoren von rechts mit \(e_1e_2\), so ergibt sich mit denselben zwei Regeln</p>
+
+<div class="math-display">\[ e_1\,(e_1e_2) = (e_1e_1)\,e_2 = e_2, \qquad e_2\,(e_1e_2) = -\,e_2\,(e_2e_1) = -\,(e_2e_2)\,e_1 = -\,e_1 . \]</div>
+
+<p>Aus \(e_1\) wird \(e_2\), aus \(e_2\) wird \(-e_1\). Anschaulich ist das eine Drehung um 90&deg; gegen den Uhrzeigersinn, und da das Produkt distributiv ist, wird nicht nur jeder Basisvektor, sondern jeder Vektor der Ebene auf diese Weise gedreht. Das Einheitsquadrat ist also nicht nur eine Fl&auml;che, sondern zugleich ein <em>Drehbefehl</em>: &bdquo;Drehe in meiner Ebene um eine Vierteldrehung, in meinem Umlaufsinn.&ldquo;</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Multipliziere den Pfeil mehrmals mit \(e_1e_2\) und achte darauf, was nach zwei Schritten passiert. Der Schieberegler zeigt die Drehung um einen beliebigen Winkel.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-quarter-turn"></div></div>
+
+<p>Damit erh&auml;lt die r&auml;tselhafteste Gleichung der Schulmathematik einen anschaulichen Sinn. Zweimal um 90&deg; gedreht zeigt jeder Pfeil in die Gegenrichtung, und &bdquo;in die Gegenrichtung zeigen&ldquo; ist genau die Multiplikation mit \(-1\). Die Aussage \(i^2 = -1\) bedeutet anschaulich: <strong>Zwei Vierteldrehungen ergeben eine halbe Drehung.</strong> Nach vier Vierteldrehungen ist man zur&uuml;ck, deshalb gilt \(i^4 = 1\).</p>
+
+<p><span class="chip k">Konvention</span> Dass die Drehung gegen den Uhrzeigersinn l&auml;uft, liegt daran, dass von rechts multipliziert und \(e_1\) links von \(e_2\) geschrieben wurde. Von links multipliziert dreht \(e_1e_2\) im Uhrzeigersinn, wie sich im Widget umschalten l&auml;sst: \((e_1e_2)\,e_1 = -e_2\). Welche Seite und welcher Umlaufsinn als &bdquo;positiv&ldquo; gilt, ist eine Vereinbarung, die die Mathematik seit Jahrhunderten einheitlich trifft; an der Geometrie &auml;ndert sie nichts.</p>
+
+<h3 style="margin-top:2rem;">Drehung um jeden Winkel &ndash; und der Quotient aus Abschnitt 1</h3>
+
+<p><span class="chip z">folgt zwingend</span> Eine Drehung um einen beliebigen Winkel \(\theta\) erh&auml;lt man, indem man den Vektor mit einer Mischung aus Zahl und Fl&auml;che multipliziert:</p>
+
+<div class="math-display">\[ e_1\,(\cos\theta + e_1e_2\sin\theta) = \cos\theta\; e_1 + \sin\theta\; e_2 . \]</div>
+
+<p>Rechts steht genau der Einheitsvektor, der um \(\theta\) gegen \(e_1\) gedreht ist, und wegen der Distributivit&auml;t gilt dasselbe f&uuml;r jeden Vektor. Der Faktor \(\cos\theta + e_1e_2\sin\theta\) ist also der Drehbefehl f&uuml;r den Winkel \(\theta\). Wie man ihn als Exponentialfunktion schreibt und warum das sinnvoll ist, zeigt Abschnitt&nbsp;7.</p>
+
+<p>Damit l&auml;sst sich das Versprechen aus Abschnitt&nbsp;1 einl&ouml;sen. Dort ergab sich f&uuml;r \(u = 3e_1 + e_2\) und \(v = e_1 + 2e_2\) der Quotient</p>
+
+<div class="math-display">\[ u^{-1}v = \tfrac12 + \tfrac12\,e_1e_2 = \tfrac{1}{\sqrt2}\,\big(\cos 45^\circ + e_1e_2 \sin 45^\circ\big) . \]</div>
+
+<p>Er dreht um 45&deg; und streckt um den Faktor \(1/\sqrt2\). Genau das ist n&ouml;tig, denn \(u\) und \(v\) schlie&szlig;en einen Winkel von 45&deg; ein, und \(v\) ist mit der L&auml;nge \(\sqrt5\) um den Faktor \(1/\sqrt2\) k&uuml;rzer als \(u\) mit der L&auml;nge \(\sqrt{10}\). Der Quotient zweier Vektoren ist also tats&auml;chlich eine Drehstreckung.</p>
+
+<h3 style="margin-top:2rem;">Komplexe Zahlen sind Zahl plus Fl&auml;che</h3>
+
+<p><span class="chip z">folgt zwingend</span> Objekte der Form \(a + b\,e_1e_2\) lassen sich addieren und multiplizieren, und ihre Multiplikation folgt allein aus \((e_1e_2)^2 = -1\):</p>
+
+<div class="math-display">\[ (a + b\,e_1e_2)(c + d\,e_1e_2) = (ac - bd) + (ad + bc)\,e_1e_2 . \]</div>
+
+<p>Das ist Zeichen f&uuml;r Zeichen die Multiplikationsregel der komplexen Zahlen, mit \(e_1e_2\) an der Stelle von \(i\). Es handelt sich dabei nicht um eine Analogie, sondern um dieselbe Struktur: Komplexe Zahlen <em>sind</em> Zahl plus orientierte Fl&auml;che der Ebene, und mit ihnen zu multiplizieren hei&szlig;t drehen und strecken.</p>
+
+<p>Eine Unterscheidung verdient dabei Aufmerksamkeit, weil sie in der Schulmathematik meist verwischt wird. Der <em>Vektor</em> mit den Koordinaten \((a, b)\) ist \(a\,e_1 + b\,e_2\), ein Pfeil. Die <em>komplexe Zahl</em> \(a + b\,i\) ist \(a + b\,e_1e_2\), eine Drehstreckung. Beide haben zwei Komponenten, und in der Gau&szlig;schen Zahlenebene werden sie als derselbe Punkt gezeichnet, aber es sind verschiedene Objekte. Die Br&uuml;cke zwischen ihnen ist eine einzige Multiplikation:</p>
+
+<div class="math-display">\[ e_1\,(a\,e_1 + b\,e_2) = a + b\,e_1e_2 . \]</div>
+
+<p>Dies bedeutet anschaulich: Die komplexe Zahl ist die Drehstreckung, die den Bezugspfeil \(e_1\) in den Vektor \((a, b)\) &uuml;berf&uuml;hrt. <span class="chip k">Konvention</span> Welcher Pfeil als Bezug dient, ist eine Wahl &ndash; die Gau&szlig;sche Zahlenebene trifft sie stillschweigend, indem sie die reelle Achse festlegt. Weil diese Wahl in der Ebene so selbstverst&auml;ndlich ist, fallen Vektor und komplexe Zahl dort scheinbar zusammen. Im Raum wird das nicht mehr funktionieren, und genau deshalb braucht es dort mehr als die komplexen Zahlen.</p>
+
+<p class="history">Die Wurzel aus \(-1\) tauchte erstmals 1545 in <strong>Gerolamo Cardanos</strong> <em>Ars Magna</em> auf, als Zwischenergebnis, das Cardano selbst f&uuml;r sinnlos hielt. <strong>Ren&eacute; Descartes</strong> nannte solche Gr&ouml;&szlig;en 1637 &bdquo;imaginaires&ldquo;, eingebildet, und der Name ist geblieben. Erst <strong>Caspar Wessel</strong> (1799), <strong>Jean-Robert Argand</strong> (1806) und <strong>Carl Friedrich Gau&szlig;</strong> (1831) deuteten die Multiplikation mit \(i\) als Drehung in der Ebene. Doch auch bei ihnen bleibt \(i\) ein Symbol, dessen Eigenschaft \(i^2 = -1\) gefordert wird. Der hier gegangene Weg kehrt die Reihenfolge um: Gefordert wurde nur, dass Quadrieren L&auml;ngen misst. Dass es ein Objekt mit Quadrat \(-1\) gibt, dass es die Ebene selbst ist und dass es dreht, folgt daraus.</p>
+
+<div class="merke">
+  <p><strong>Zwischenergebnis:</strong> \(i\) ist keine erfundene Zahl, sondern das orientierte Einheitsquadrat der Ebene. Mit ihm zu multiplizieren hei&szlig;t, um 90&deg; zu drehen. Komplexe Zahlen sind Zahl plus Fl&auml;che &ndash; und damit Drehstreckungen.</p>
+</div>
+</div></section>
+
+<section id="quaternionen" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 5</p>
+<h3>Drei Dimensionen: Spiegel, Rotoren und Hamiltons Quaternionen</h3>
+
+<p>Im Raum kommt ein dritter Basisvektor \(e_3\) hinzu, und mit ihm drei Basisfl&auml;chen statt einer: \(e_1e_2\), \(e_2e_3\) und \(e_3e_1\). Sie sind die orientierten Einheitsquadrate in den drei Koordinatenebenen. <span class="chip z">folgt zwingend</span> F&uuml;r jede von ihnen gilt dieselbe Rechnung wie in Abschnitt&nbsp;4, also quadriert jede zu \(-1\). Zudem antikommutieren je zwei von ihnen; so ist etwa \(e_1e_2\,e_2e_3 = e_1e_3\), w&auml;hrend \(e_2e_3\,e_1e_2 = -\,e_1e_3\) ergibt. Im Raum gibt es also nicht eine, sondern drei Gr&ouml;&szlig;en mit Quadrat \(-1\), und jede geh&ouml;rt zu einer Ebene.</p>
+
+<h3 style="margin-top:2rem;">Warum einseitiges Multiplizieren im Raum nicht mehr gen&uuml;gt</h3>
+
+<p>Naheliegend w&auml;re, Drehungen im Raum genauso zu behandeln wie in der Ebene: einen Vektor einfach von rechts mit \(\cos\theta + B\sin\theta\) zu multiplizieren, wobei \(B\) die Drehebene ist. <span class="chip z">folgt zwingend</span> Das scheitert, und zwar sichtbar. Soll etwa \(e_1\) in der Ebene \(e_2e_3\) gedreht werden &ndash; einer Ebene, zu der \(e_1\) senkrecht steht &ndash;, so m&uuml;sste \(e_1\) unver&auml;ndert bleiben, denn ein Pfeil senkrecht zur Drehebene ist die Drehachse. Die einseitige Rechnung liefert aber</p>
+
+<div class="math-display">\[ e_1\,(\cos\theta + e_2e_3\sin\theta) = \cos\theta\; e_1 + \sin\theta\; e_1e_2e_3 . \]</div>
+
+<p>Der zweite Summand ist ein Produkt aus drei senkrechten Vektoren, ein orientiertes Volumenst&uuml;ck. Ein Vektor ist dabei nicht mehr herausgekommen. In der Ebene war das kein Problem, weil dort jeder Vektor in der Drehebene liegt; im Raum gibt es Richtungen, die nicht in ihr liegen, und f&uuml;r diese ist die einseitige Multiplikation die falsche Operation. Es braucht deshalb einen anderen Weg zu den Drehungen &ndash; und dieser Weg f&uuml;hrt &uuml;ber Spiegel.</p>
+
+<h3 style="margin-top:2rem;">Spiegelungen</h3>
+
+<p><span class="chip z">folgt zwingend</span> Sei \(n\) ein Einheitsvektor. Jeder Vektor \(v\) l&auml;sst sich in einen Anteil \(v_\parallel\) parallel zu \(n\) und einen Anteil \(v_\perp\) senkrecht dazu zerlegen. Nach Abschnitt&nbsp;3 kommutiert der parallele Anteil mit \(n\), w&auml;hrend der senkrechte antikommutiert. Damit ergibt sich</p>
+
+<div class="math-display">\[ -\,n\,v\,n = -\,n\,v_\parallel\, n - n\,v_\perp\, n = -\,v_\parallel\,(nn) + v_\perp\,(nn) = -\,v_\parallel + v_\perp . \]</div>
+
+<p>Der Anteil entlang \(n\) wird umgedreht, der Anteil senkrecht dazu bleibt. Dies ist genau die Spiegelung an der Ebene, die senkrecht auf \(n\) steht &ndash; ein Spiegel, dessen Lage durch seinen Normalenvektor \(n\) festgelegt ist. Eine Spiegelung l&auml;sst sich also als Sandwich schreiben, und das Ergebnis ist garantiert wieder ein Vektor.</p>
+
+<p><span class="chip z">folgt zwingend</span> Nun kommt ein Sachverhalt aus der Elementargeometrie ins Spiel, der sich an jedem Paar von Spiegeln beobachten l&auml;sst: <strong>Zwei Spiegelungen hintereinander ergeben eine Drehung, und zwar um den doppelten Winkel zwischen den beiden Spiegeln.</strong> Wird \(v\) erst am Spiegel mit Normale \(m\), dann am Spiegel mit Normale \(n\) gespiegelt, so ist das Ergebnis</p>
+
+<div class="math-display">\[ v'' = -\,n\,(-\,m\,v\,m)\,n = (nm)\; v\; (mn) = R\,v\,\tilde R, \qquad R = nm, \quad \tilde R = mn . \]</div>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Ver&auml;ndere den Winkel \(\alpha\) zwischen den beiden Spiegeln und beobachte, um welchen Winkel \(v''\) gegen&uuml;ber \(v\) gedreht ist. Das Zifferblatt rechts zeigt zwei Zeiger: die Drehung des Vektors und den Rotor \(R\). Was passiert bei \(\alpha = 180^\circ\)?</p>
+</div>
+
+<div class="component-wrap"><div id="mount-rotor"></div></div>
+
+<p>Das Objekt \(R = nm\) hei&szlig;t <em>Rotor</em>. Als Produkt zweier Einheitsvektoren ist es nach Abschnitt&nbsp;3 eine Zahl plus eine Fl&auml;che: \(R = n\cdot m + n\wedge m\). Schlie&szlig;en die Spiegel den Winkel \(\alpha\) ein, so ist \(n\cdot m = \cos\alpha\) und \(n \wedge m = -\,B\sin\alpha\), wobei \(B\) die Einheitsfl&auml;che der Ebene ist, die von \(m\) nach \(n\) umlaufen wird. Da die Drehung den Winkel \(\theta = 2\alpha\) hat, lautet der Rotor</p>
+
+<div class="math-display">\[ R = \cos\tfrac{\theta}{2} - B\,\sin\tfrac{\theta}{2}, \qquad v' = R\,v\,\tilde R . \]</div>
+
+<p><span class="chip z">folgt zwingend</span> Hier steht der <strong>halbe Winkel</strong>, und er ist keine Rechenkonvention. Er kommt daher, dass zwei Spiegel, die eine Drehung um \(\theta\) erzeugen, nur den Winkel \(\theta/2\) einschlie&szlig;en. Das Sandwich ist ebenso wenig eine Wahl: Es ist die Form, in der Spiegelungen auftreten, und es garantiert, dass aus einem Vektor wieder ein Vektor wird. Auch das Problem von oben ist damit gel&ouml;st. Liegt \(e_1\) senkrecht zur Drehebene \(e_2e_3\), so vertauscht es mit \(R\), und es gilt \(R\,e_1\tilde R = e_1 R\tilde R = e_1\): Die Drehachse bleibt, wo sie ist.</p>
+
+<h3 style="margin-top:2rem;">Eine volle Umdrehung, und trotzdem \(R = -1\)</h3>
+
+<p><span class="chip z">folgt zwingend</span> Das Widget zeigt bei \(\alpha = 180^\circ\) eine Besonderheit, die f&uuml;r den Rest dieses Beitrags entscheidend sein wird. Dreht man den zweiten Spiegel um 180&deg; weiter, so steht er wieder in derselben Ebene wie vorher &ndash; ein Spiegel hat keine Vorder- und R&uuml;ckseite. Sein Normalenvektor zeigt jetzt aber in die Gegenrichtung, \(n \to -n\), und damit wird \(R \to -R\). Am Vektor &auml;ndert sich nichts, denn \(R\) steht im Sandwich zweimal, und die beiden Minuszeichen heben sich auf. Folglich beschreiben \(R\) und \(-R\) dieselbe Drehung, und eine volle Umdrehung um \(\theta = 360^\circ\) hat den Rotor</p>
+
+<div class="math-display">\[ R = \cos 180^\circ - B\sin 180^\circ = -1 . \]</div>
+
+<p>Erst nach \(720^\circ\) ist der Rotor wieder \(+1\). F&uuml;r Vektoren ist dieser Unterschied unsichtbar. Ob es Objekte gibt, f&uuml;r die er sichtbar ist &ndash; Objekte, die sich nicht mit dem Sandwich, sondern nur einseitig mit \(R\) drehen &ndash;, ist eine Frage, die Akt&nbsp;III beantworten wird. Die Antwort lautet: ja, und jedes Elektron ist ein solches Objekt.</p>
+
+<h3 style="margin-top:2rem;">Hamiltons Quaternionen</h3>
+
+<p>Ein Rotor im Raum besteht aus einer Zahl und einer Fl&auml;che, und eine beliebige Fl&auml;che ist eine Kombination der drei Basisfl&auml;chen. Ein Rotor hat also vier Bestandteile:</p>
+
+<div class="math-display">\[ R = a + b\,e_3e_2 + c\,e_1e_3 + d\,e_2e_1 . \]</div>
+
+<p>Genau diese Objekte fand <strong>William Rowan Hamilton</strong> am 16. Oktober 1843 auf einem Spaziergang entlang des Royal Canal in Dublin. Er hatte jahrelang nach &bdquo;Zahlen f&uuml;r den Raum&ldquo; gesucht, die das f&uuml;r drei Dimensionen leisten sollten, was die komplexen Zahlen f&uuml;r die Ebene leisten, und dabei stets mit drei Bestandteilen gerechnet. An der Broom Bridge wurde ihm klar, dass er vier braucht, und er ritzte die Regel in einen Stein der Br&uuml;cke:</p>
+
+<div class="math-display">\[ i^2 = j^2 = k^2 = ijk = -1 . \]</div>
+
+<figure>
+  <img src="img/dirac/hamilton-plakette-broom-bridge.jpg" alt="Gedenktafel an der Broom Bridge in Dublin mit Hamiltons Formel i² = j² = k² = ijk = −1 und einem Relief-Porträt Hamiltons" loading="lazy" width="1200" height="900">
+  <figcaption>Gedenktafel an der Broom Bridge in Dublin; Hamiltons urspr&uuml;ngliche Ritzung ist nicht erhalten. <a href="https://commons.wikimedia.org/wiki/File:Broombridge_Hamilton_Plaque.jpg">Brendan Ward</a> / Wikimedia Commons / <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.de">CC0 1.0</a></figcaption>
+</figure>
+
+<p>Die Geometrie erkl&auml;rt im R&uuml;ckblick, warum drei Bestandteile nicht reichen konnten: Eine Drehung im Raum ist durch eine Ebene (drei Komponenten) und einen Winkel festgelegt, und im Rotor erscheint der Winkel als zus&auml;tzlicher Zahlanteil \(\cos(\theta/2)\). Hamiltons \(i\), \(j\), \(k\) sind die drei Basisfl&auml;chen des Raums. <span class="chip k">Konvention</span> Die Zuordnung ist allerdings mit einer Wahl verbunden. Mit \(i = e_3e_2\), \(j = e_1e_3\) und \(k = e_2e_1\) gelten Hamiltons Regeln exakt; die auf den ersten Blick naheliegendere Zuordnung \(i = e_2e_3\), \(j = e_3e_1\), \(k = e_1e_2\) liefert dagegen \(ij = -k\), also die spiegelbildliche Variante. Beide Algebren sind gleichwertig, Hamilton hat sich f&uuml;r eine davon entschieden.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Dieselben zwei Handgriffe wie in Abschnitt&nbsp;4 gen&uuml;gen, um Hamiltons Br&uuml;ckenformel nachzurechnen.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-swap-ijk"></div></div>
+
+<p>Quaternionen sind bis heute der Standard, wenn Drehungen im Raum zuverl&auml;ssig berechnet werden m&uuml;ssen: in der Lageregelung von Raumsonden und Satelliten, in Drohnen, in Robotern und in nahezu jeder 3D-Engine f&uuml;r Computerspiele. Der Grund ist derselbe, der sie hier hervorgebracht hat. Ein Rotor beschreibt eine Drehung durch eine Ebene und einen Winkel, ohne Umweg &uuml;ber drei nacheinander ausgef&uuml;hrte Drehungen um feste Achsen, und vermeidet damit die Singularit&auml;ten, die bei solchen Winkelzerlegungen auftreten.</p>
+</div></section>
+
+<section id="kreuzprodukt" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 6</p>
+<h3>Das Kreuzprodukt entlarvt</h3>
+
+<p>Am Anfang dieses Akts stand das Kreuzprodukt als zweites unbefriedigendes Produkt. Mit den Begriffen der vorigen Abschnitte l&auml;sst sich nun genau sagen, was es ist. <span class="chip z">folgt zwingend</span> Das Produkt der drei Basisvektoren \(I = e_1e_2e_3\) ist ein orientiertes Einheitsvolumen. Mit den beiden bekannten Regeln rechnet man nach, dass \(I^2 = -1\) gilt und dass \(I\) mit jedem Vektor vertauscht. Multipliziert man eine Basisfl&auml;che mit \(I\), so entsteht der Vektor, der auf ihr senkrecht steht; beispielsweise ist \(-\,I\,e_1e_2 = e_3\). Damit gilt allgemein</p>
+
+<div class="math-display">\[ u \times v = -\,I\,(u \wedge v) . \]</div>
+
+<p>Dies bedeutet anschaulich: <strong>Das Kreuzprodukt ist die Fl&auml;che \(u\wedge v\), ersetzt durch ihren Normalenvektor.</strong> Diese Ersetzung ist nur im dreidimensionalen Raum m&ouml;glich, denn nur dort hat eine Ebene genau eine senkrechte Richtung. In der Ebene gibt es keine, in vier Dimensionen gleich eine ganze Ebene davon. Hier liegt auch der Grund f&uuml;r die M&auml;ngel aus Abschnitt&nbsp;1: Das Kreuzprodukt existiert nur in drei Dimensionen, weil es eine Fl&auml;che als Pfeil verkleidet, und es verliert Information, weil es den Skalarteil des geometrischen Produkts weglässt. <span class="chip k">Konvention</span> In welche der beiden m&ouml;glichen Normalenrichtungen der Pfeil zeigt, legt die Rechte-Hand-Regel fest &ndash; eine Vereinbarung, die sich im Vorzeichen von \(I\) niederschl&auml;gt.</p>
+
+<p>Physikalisch hat das Folgen. Gr&ouml;&szlig;en, die traditionell als Kreuzprodukte geschrieben werden, wie der Drehimpuls \(L = r \times p\) oder das Drehmoment, sind ihrem Wesen nach Fl&auml;chen: Sie beschreiben, in welcher Ebene und in welchem Sinn sich etwas dreht. Dass sie beim Spiegeln anders reagieren als &bdquo;echte&ldquo; Pfeile &ndash; man nennt sie in der Physik axiale Vektoren &ndash;, ist in dieser Sicht keine Kuriosit&auml;t, sondern die Folge davon, dass sie gar keine Pfeile sind. Und in der vierdimensionalen Raumzeit, in der Akt&nbsp;III spielt, gibt es \(4\cdot 3/2 = 6\) Basisfl&auml;chen &ndash; genau so viele Komponenten, wie das elektrische und das magnetische Feld zusammen haben. Das elektromagnetische Feld ist eine Fl&auml;che der Raumzeit.</p>
+
+<div class="recap">
+  <p class="recap-title">R&uuml;ckblick Akt I</p>
+  <p class="text-sm" style="color:#d1d5db;">Zwei Eingaben haben gen&uuml;gt: Das Produkt soll sich ausmultiplizieren und umklammern lassen, und ein Vektor mal sich selbst soll sein L&auml;ngenquadrat ergeben. Daraus folgten zwingend das Skalarprodukt, die orientierte Fl&auml;che, die Antikommutation senkrechter Vektoren, das Teilen durch Vektoren, das Objekt \(i\) als Einheitsquadrat der Ebene, die Drehung durch Multiplikation, Spiegelungen als Sandwich, der Rotor mit dem halben Winkel und die Tatsache, dass eine volle Umdrehung den Rotor \(-1\) hat. Gew&auml;hlt wurden nur der Umlaufsinn, die Zuordnung der Quaternionen und die Rechte-Hand-Regel.</p>
+  <div style="overflow-x:auto;">
+  <table style="width:100%; font-size:0.85rem; color:#d1d5db; border-collapse:collapse; margin-top:0.75rem;">
+    <thead><tr style="color:#94a3b8; text-align:left;"><th style="padding:0.3rem 0.5rem;">Raum</th><th style="padding:0.3rem 0.5rem;">Bausteine (Zahl &middot; Vektoren &middot; Fl&auml;chen &middot; Volumen &hellip;)</th><th style="padding:0.3rem 0.5rem;">Drehungen durch</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:0.3rem 0.5rem;">Ebene (2D)</td><td style="padding:0.3rem 0.5rem;">1 &middot; 2 &middot; 1</td><td style="padding:0.3rem 0.5rem;">Zahl + eine Fl&auml;che = komplexe Zahl</td></tr>
+      <tr><td style="padding:0.3rem 0.5rem;">Raum (3D)</td><td style="padding:0.3rem 0.5rem;">1 &middot; 3 &middot; 3 &middot; 1</td><td style="padding:0.3rem 0.5rem;">Zahl + drei Fl&auml;chen = Quaternion</td></tr>
+      <tr><td style="padding:0.3rem 0.5rem;">Raumzeit (4D)</td><td style="padding:0.3rem 0.5rem;">1 &middot; 4 &middot; 6 &middot; 4 &middot; 1</td><td style="padding:0.3rem 0.5rem;">Zahl + sechs Fl&auml;chen (+ 4D-Volumen) &rarr; Akt III</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="text-sm" style="color:#94a3b8; margin-top:0.75rem;">Die Anzahlen in der mittleren Spalte sind Binomialkoeffizienten: Jeder Baustein ist eine Auswahl von Basisvektoren, ein Vektor w&auml;hlt einen aus, eine Fl&auml;che zwei, ein Volumen drei. Dieselben Binomialkoeffizienten werden in Akt&nbsp;II wieder auftauchen, wenn Wege gez&auml;hlt werden.</p>
+</div>
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- AKT II — DREHEN UND SUMMIEREN -->
+<!-- ================================================================ -->
+<section id="akt2" class="pb-4">
+<div class="prose-dark">
+<p class="part-label">Akt II &middot; Quantenmechanik</p>
+<h2>Drehen und Summieren</h2>
+<div class="leitfrage"><p><strong>Leitfrage:</strong> Was tut die Natur zwischen zwei Messungen?</p></div>
+</div>
+</section>
+
+<section id="zeiger" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 7</p>
+<h3>Zeiger, die sich drehen und addieren</h3>
+
+<p>Akt&nbsp;I war reine Mathematik. Mit Akt&nbsp;II kommt die Natur ins Spiel, und damit &auml;ndert sich die Art der Begr&uuml;ndung. Aus zwei Forderungen an ein Produkt lie&szlig; sich ableiten, dass Fl&auml;chen negativ quadrieren; dass die Welt sich quantenmechanisch verh&auml;lt, l&auml;sst sich dagegen nicht ableiten, sondern nur beobachten. Die folgenden Abschnitte kennzeichnen deshalb besonders sorgf&auml;ltig, welche Schritte aus Experimenten stammen und welche daraus zwingend folgen.</p>
+
+<p><span class="chip e">Eingabe</span> <strong>Das Experiment.</strong> Schickt man Elektronen einzeln, eines nach dem anderen, durch eine Blende mit zwei Spalten, so entsteht auf dem Schirm dahinter Punkt f&uuml;r Punkt ein Streifenmuster. Es gibt Stellen, an denen kaum ein Elektron ankommt, obwohl dort Elektronen ankommen, sobald einer der beiden Spalte verschlossen wird. Akira Tonomura und Kollegen haben 1989 bei Hitachi gefilmt, wie sich dieses Muster aus einzelnen Einschl&auml;gen aufbaut; mit Licht kannte man den Effekt seit Thomas Youngs Versuchen um 1801.</p>
+
+<p><span class="chip z">folgt zwingend</span> Aus dieser Beobachtung folgt eine weitreichende Konsequenz. W&auml;ren die beiden Spalte zwei Wege mit je einer Wahrscheinlichkeit, so m&uuml;sste sich die Wahrscheinlichkeit, mit offenem zweitem Spalt anzukommen, vergr&ouml;&szlig;ern, nicht verkleinern. Wahrscheinlichkeiten sind Zahlen zwischen 0 und 1, und zwei solche Zahlen k&ouml;nnen sich beim Addieren niemals gegenseitig ausl&ouml;schen. Folglich muss jedem Weg etwas zugeordnet sein, das sich ausl&ouml;schen <em>kann</em>: eine Gr&ouml;&szlig;e mit Richtung, bei der zwei entgegengesetzte Exemplare zusammen null ergeben.</p>
+
+<p><span class="chip e">Eingabe</span> <strong>Feynmans Regel.</strong> Richard Feynman hat die Quantenmechanik in einer Form beschrieben, die mit genau einer solchen Gr&ouml;&szlig;e auskommt, und sie in seinem Buch <em>QED</em> (1985) ohne jede Formel erkl&auml;rt. Jeder M&ouml;glichkeit, wie ein Ereignis zustande kommen kann, geh&ouml;rt ein <em>Zeiger</em>, ein Pfeil in einer Ebene. Besteht eine M&ouml;glichkeit aus mehreren Schritten nacheinander, werden die Zeiger der Schritte <em>multipliziert</em> &ndash; im Sinne von Akt&nbsp;I, also Drehwinkel addiert und L&auml;ngen multipliziert. Gibt es mehrere M&ouml;glichkeiten, werden ihre Zeiger <em>addiert</em>, Kopf an Schwanz. Die Wahrscheinlichkeit des Ereignisses ist das Quadrat der L&auml;nge des Summenzeigers. Diese Regel ist eine Zusammenfassung von Experimenten, keine Herleitung, und sie wird hier als Eingabe benannt. Dass die Zeiger genau die Drehstreckungen der Ebene sind &ndash; komplexe Zahlen, also Zahl plus Fl&auml;che &ndash;, ist ebenfalls eine Erfahrungstatsache. Die letzte Teilregel, Wahrscheinlichkeit gleich L&auml;nge im Quadrat, formulierte Max Born 1926; Andrew Gleason zeigte 1957, dass sie unter sehr schwachen Annahmen die einzig widerspruchsfreie M&ouml;glichkeit ist.</p>
+
+<p>Wie diese Regel den Doppelspalt, die Beugung und die Lichtbrechung erkl&auml;rt, zeigt ausf&uuml;hrlich der <a href="quanten.html">Beitrag &uuml;ber Quantenphysik mit Pfeilen</a>. Hier wird nur eine Eigenschaft der Zeiger gebraucht, die in Akt&nbsp;I bereits angelegt wurde: Multiplizieren hei&szlig;t drehen.</p>
+
+<h3 style="margin-top:2rem;">Viele kleine Drehungen</h3>
+
+<p><span class="chip z">folgt zwingend</span> Eine Drehung um einen sehr kleinen Winkel \(\theta/N\) ist n&auml;herungsweise die Multiplikation mit \(1 + i\,\theta/N\): Der Zeiger beh&auml;lt fast seine L&auml;nge und bekommt einen kleinen, um 90&deg; gedrehten Zuwachs. F&uuml;hrt man \(N\) solche Schritte hintereinander aus, erh&auml;lt man \((1 + i\theta/N)^N\). F&uuml;r \(\theta = 2\) ergibt sich beispielsweise:</p>
+
+<div style="overflow-x:auto;">
+<table style="margin:1rem auto; font-size:0.9rem; color:#d1d5db; border-collapse:collapse; font-variant-numeric:tabular-nums;">
+  <tr style="color:#94a3b8;"><td style="padding:0.25rem 1rem;">\(N\)</td><td style="padding:0.25rem 1rem;">\((1 + 2i/N)^N\)</td></tr>
+  <tr><td style="padding:0.25rem 1rem;">10</td><td style="padding:0.25rem 1rem;">\(-0{,}477 + 1{,}119\,i\)</td></tr>
+  <tr><td style="padding:0.25rem 1rem;">1000</td><td style="padding:0.25rem 1rem;">\(-0{,}417 + 0{,}911\,i\)</td></tr>
+  <tr><td style="padding:0.25rem 1rem;">100&nbsp;000</td><td style="padding:0.25rem 1rem;">\(-0{,}416 + 0{,}909\,i\)</td></tr>
+  <tr style="color:#f59e0b;"><td style="padding:0.25rem 1rem;">Grenzwert</td><td style="padding:0.25rem 1rem;">\(\cos 2 + i \sin 2 = -0{,}416 + 0{,}909\,i\)</td></tr>
+</table>
+</div>
+
+<p>Bei endlichem \(N\) wird der Zeiger dabei ein wenig l&auml;nger, denn \(|1 + i\theta/N|\) ist minimal gr&ouml;&szlig;er als 1; im Grenzfall verschwindet dieser Fehler, und es bleibt eine reine Drehung um \(\theta\). Es ist derselbe Grenzwert, den Jakob Bernoulli 1683 beim Zinseszins fand und der zur Zahl \(e\) f&uuml;hrt (siehe den <a href="euler.html#bernoulli">Beitrag &uuml;ber die Eulersche Zahl</a>). Deshalb schreibt man</p>
+
+<div class="math-display">\[ e^{i\theta} = \lim_{N\to\infty}\Big(1 + \frac{i\theta}{N}\Big)^N = \cos\theta + i\sin\theta . \]</div>
+
+<p>Damit ist auch die Schreibweise aus Abschnitt&nbsp;4 eingel&ouml;st: Der Drehbefehl \(\cos\theta + e_1e_2\sin\theta\) ist \(e^{e_1e_2\theta}\), eine Drehung, die aus unendlich vielen unendlich kleinen Drehungen zusammengesetzt ist. Dieses Muster &ndash; viele kleine Schritte, die sich zu einer Exponentialfunktion multiplizieren &ndash; wird in Abschnitt&nbsp;11 wiederkehren, dann mit Matrizen statt Zahlen.</p>
+</div></section>
+
+<section id="drehgeschwindigkeit" class="pb-12" data-earns="hbar,d,psi"><div class="prose-dark">
+<p class="sec-label">Abschnitt 8</p>
+<h3>Energie und Impuls sind Drehgeschwindigkeiten</h3>
+
+<p>Das einfachste denkbare Quantensystem hat nur einen einzigen Zustand und damit nur einen Zeiger. Gemessen werden kann an ihm nach Feynmans Regel nur die L&auml;nge im Quadrat, und wenn nichts geschieht, bleibt diese gleich. Ein solcher Zustand hei&szlig;t <em>station&auml;r</em>. Die einzige Freiheit, die ihm bleibt, ist die Richtung seines Zeigers.</p>
+
+<p><span class="chip z">folgt zwingend</span> Wie sich diese Richtung mit der Zeit &auml;ndern kann, ist durch eine einzige Annahme festgelegt, die kaum jemand bestreiten wird: Kein Zeitpunkt ist vor einem anderen ausgezeichnet. Dann muss ein Zeitschritt der Dauer \(s\) den Zeiger immer um denselben Faktor \(z(s)\) weiterdrehen, gleichg&uuml;ltig wann er stattfindet, und zwei Zeitschritte hintereinander ergeben \(z(t + s) = z(t)\,z(s)\). Die einzigen stetigen Funktionen mit dieser Eigenschaft sind Exponentialfunktionen, und da die L&auml;nge erhalten bleibt, kommt nur eine gleichm&auml;&szlig;ige Drehung in Frage:</p>
+
+<div class="math-display">\[ z(t) = e^{-i\omega t} . \]</div>
+
+<p>Dies bedeutet anschaulich: Der Zeiger eines station&auml;ren Zustands l&auml;uft mit konstanter Geschwindigkeit \(\omega\) im Kreis. <span class="chip k">Konvention</span> Dass der Exponent ein Minuszeichen tr&auml;gt, der Zeiger also im Uhrzeigersinn l&auml;uft, ist eine Vereinbarung der Physik; mit dem anderen Vorzeichen ergibt sich dieselbe Physik.</p>
+
+<p><span class="chip z">folgt zwingend</span> Leitet man diesen Zeiger nach der Zeit ab, so ergibt sich</p>
+
+<div class="math-display">\[ \frac{dz}{dt} = -\,i\,\omega\, z . \]</div>
+
+<p>Die &Auml;nderung des Zeigers ist der Zeiger selbst, um 90&deg; gedreht und mit der Drehgeschwindigkeit gestreckt. Das ist der Kern dessen, was im Folgenden gebraucht wird: <strong>Ableiten holt die Drehgeschwindigkeit heraus.</strong></p>
+
+<p><span class="chip e">Eingabe</span> Welche physikalische Gr&ouml;&szlig;e diese Drehgeschwindigkeit ist, verr&auml;t erst das Experiment. Max Planck fand 1900 bei der W&auml;rmestrahlung und Albert Einstein 1905 beim Photoeffekt, dass Energie und Frequenz zueinander proportional sind. Der Proportionalit&auml;tsfaktor ist die reduzierte Planck-Konstante \(\hbar \approx 1{,}055 \cdot 10^{-34}\,\text{J\,s}\):</p>
+
+<div class="math-display">\[ E = \hbar\,\omega . \]</div>
+
+<p>Dies bedeutet anschaulich: <strong>Energie ist Drehgeschwindigkeit</strong>, und \(\hbar\) ist der Umrechnungsfaktor zwischen der Einheit &bdquo;Umdrehungen pro Sekunde&ldquo; und der Einheit Joule. Setzt man das ein, wird die Ableitungsregel zu \(i\hbar\,dz/dt = E\,z\). Das ist die Schr&ouml;dinger-Gleichung, f&uuml;r ein System mit nur einem einzigen Zustand.</p>
+
+<h3 style="margin-top:2rem;">Zeiger entlang des Raums</h3>
+
+<p>Ein Teilchen, das sich bewegt, hat nicht nur einen Zeiger, sondern einen an jedem Ort. Hat es eine feste Energie und einen festen Impuls, so dreht sich jeder dieser Zeiger mit \(\omega = E/\hbar\), und zu einem festen Zeitpunkt sind die Zeiger entlang des Raums gleichm&auml;&szlig;ig gegeneinander verdreht, mit einer &bdquo;r&auml;umlichen Drehgeschwindigkeit&ldquo; \(k\):</p>
+
+<div class="math-display">\[ \psi(x, t) = e^{\,i(kx - \omega t)} . \]</div>
+
+<p><span class="chip z">folgt zwingend</span> Dass \(k\) mit dem Impuls genauso zusammenh&auml;ngt wie \(\omega\) mit der Energie, n&auml;mlich \(p = \hbar k\), erkannte Louis de Broglie 1924 mit einem Argument, das allein auf der Relativit&auml;tstheorie beruht. Die Stellung eines Zeigers z&auml;hlt, wie oft er sich gedreht hat, und eine Z&auml;hlung muss f&uuml;r jeden Beobachter dieselbe sein. Ein bewegter Beobachter mischt aber Zeit und Ort, und er mischt Energie und Impuls auf genau dieselbe Weise &ndash; Akt&nbsp;III wird zeigen, warum. Damit die Z&auml;hlung &uuml;bereinstimmt, m&uuml;ssen die beiden Drehgeschwindigkeiten im selben Verh&auml;ltnis stehen wie Energie und Impuls: Ist die zeitliche \(E/\hbar\), so muss die r&auml;umliche \(p/\hbar\) sein. Clinton Davisson und Lester Germer best&auml;tigten 1927 die Vorhersage, indem sie Elektronen an einem Nickelkristall beugten.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Die Zeigerreihe zeigt \(\psi(x,t)\) an verschiedenen Orten. Ver&auml;ndere Energie und Impuls und lass dir anzeigen, was das Ableiten nach der Zeit und nach dem Ort aus den Zeigern macht.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-plane-wave"></div></div>
+
+<p><span class="chip z">folgt zwingend</span> Das Widget zeigt die beiden Ableitungen nebeneinander. Nach der Zeit abgeleitet wird jeder Zeiger um 90&deg; im Uhrzeigersinn gedreht und mit \(E/\hbar\) gestreckt, nach dem Ort abgeleitet um 90&deg; gegen den Uhrzeigersinn gedreht und mit \(p/\hbar\) gestreckt:</p>
+
+<div class="math-display">\[ i\hbar\,\frac{\partial\psi}{\partial t} = E\,\psi, \qquad -\,i\hbar\,\frac{\partial\psi}{\partial x} = p\,\psi . \]</div>
+
+<p>Diese beiden Zeilen sind die ber&uuml;hmte &bdquo;&Uuml;bersetzungsregel&ldquo; der Quantenmechanik: Energie entspricht der Zeitableitung, Impuls der Ortsableitung. In Lehrb&uuml;chern wird sie meist als Postulat eingef&uuml;hrt. Hier ist sie verdient &ndash; sie folgt daraus, dass Energie und Impuls Drehgeschwindigkeiten sind und Ableiten Drehgeschwindigkeiten herausholt. F&uuml;r einen Zustand, der kein einzelnes \(E\) und \(p\) hat, gilt sie Anteil f&uuml;r Anteil, denn jeder Zustand l&auml;sst sich als &Uuml;berlagerung solcher Zeigerreihen schreiben &ndash; das ist die Fourier-Zerlegung, die im <a href="quanten.html#teil-4a">Quantenbeitrag</a> ausf&uuml;hrlich vorkommt.</p>
+
+<p>Damit sind drei Symbole von Diracs Zeile verdient. \(\hbar\) ist der Umrechnungsfaktor zwischen Drehgeschwindigkeit und Energie. \(\partial_\mu\) steht f&uuml;r die Ableitungen nach Zeit und Ort, die die Drehgeschwindigkeiten herausholen. Und \(\psi\) ist der Zustand: eine Zuordnung, die jedem Ort einen Zeiger zuweist. Dieser Zeiger zeigt nicht in eine Richtung des Raums, sondern lebt in einer eigenen Ebene; messbar ist nur seine L&auml;nge, und eine gemeinsame Drehung aller Zeiger um denselben Winkel &auml;ndert keine einzige Vorhersage.</p>
+</div></section>
+
+<section id="matrix" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 9</p>
+<h3>Ein Zeitschritt ist eine Matrix</h3>
+
+<p>Ein System habe nun mehrere Zust&auml;nde, beispielsweise drei Orte, an denen sich ein Teilchen aufhalten kann. Sein Zustand ist dann eine Liste von drei Zeigern, \(\psi = (\psi_1, \psi_2, \psi_3)\), einer pro Ort. Was geschieht in einem kleinen Zeitschritt? Das Teilchen kann an seinem Ort bleiben oder an einen anderen wechseln, und jedem solchen &Uuml;bergang &bdquo;von \(j\) nach \(i\)&ldquo; geh&ouml;rt ein Zeiger, der mit \(U_{ij}\) bezeichnet wird.</p>
+
+<p><span class="chip z">folgt zwingend</span> Feynmans Regel legt fest, wie sich daraus der neue Zustand ergibt. Um nach einem Schritt am Ort \(i\) zu sein, muss das Teilchen von irgendeinem Ort \(j\) gekommen sein. Die M&ouml;glichkeit &bdquo;erst bei \(j\), dann nach \(i\)&ldquo; besteht aus zwei Schritten, ihre Zeiger werden also multipliziert: \(U_{ij}\,\psi_j\). Die verschiedenen Herkunftsorte sind verschiedene M&ouml;glichkeiten, ihre Zeiger werden also addiert:</p>
+
+<div class="math-display">\[ \psi_i' = \sum_j U_{ij}\,\psi_j \qquad\text{kurz:}\qquad \psi' = U\psi . \]</div>
+
+<p>Die linke Formel ist Wort f&uuml;r Wort die Definition des Produkts aus einer Matrix und einem Vektor. Die Matrixmultiplikation wird hier also nicht als Werkzeug herangezogen, sondern sie <em>ergibt sich</em> aus der Regel &bdquo;entlang multiplizieren, &uuml;ber Alternativen addieren&ldquo;.</p>
+
+<div class="merke">
+  <p><strong>Merke:</strong> Matrixmultiplikation ist das Aufsummieren &uuml;ber alle M&ouml;glichkeiten eines Schritts.</p>
+</div>
+
+<p class="history">Historisch verlief die Entdeckung in umgekehrter Richtung. <strong>Werner Heisenberg</strong> stellte 1925 auf Helgoland eine Rechenregel f&uuml;r die Linien in Atomspektren auf, ohne zu wissen, dass es sie in der Mathematik bereits gab. <strong>Max Born</strong> erkannte kurz darauf, dass Heisenbergs merkw&uuml;rdige Multiplikation, bei der es auf die Reihenfolge ankommt, die Multiplikation von Matrizen ist. Die Quantenmechanik begann als Matrizenmechanik.</p>
+
+<p><span class="chip z">folgt zwingend</span> Eine Bedingung muss \(U\) erf&uuml;llen. Nach Borns Regel sind die Wahrscheinlichkeiten die L&auml;ngenquadrate der Zeiger, und sie m&uuml;ssen sich zu jedem Zeitpunkt zu 1 addieren. Folglich darf \(U\) die Gesamtl&auml;nge der Zeigerliste nicht ver&auml;ndern, f&uuml;r keinen Ausgangszustand. Matrizen mit dieser Eigenschaft hei&szlig;en <em>unit&auml;r</em>. Sie sind im Raum der Zeigerlisten das, was die Drehungen aus Akt&nbsp;I im gew&ouml;hnlichen Raum sind: l&auml;ngenerhaltende Abbildungen.</p>
+
+<h3 style="margin-top:2rem;">Der Pfadweg</h3>
+
+<p><span class="chip z">folgt zwingend</span> Nach \(N\) Zeitschritten ist \(\psi(N) = U^N\psi(0)\). Schreibt man die Matrixpotenz aus, so ist jeder ihrer Eintr&auml;ge eine Summe:</p>
+
+<div class="math-display">\[ (U^N)_{ij} = \sum_{a,\,b,\,\dots,\,c} U_{ia}\,U_{ab}\cdots U_{cj} . \]</div>
+
+<p>Jeder Summand geh&ouml;rt zu einer Kette \(j \to c \to \dots \to b \to a \to i\), also zu einem <em>Weg</em> durch die Zust&auml;nde, und sein Wert ist das Produkt der Zeiger entlang dieses Weges. Summiert wird &uuml;ber alle denkbaren Wege. Dies ist das <em>Pfadintegral</em> in seiner einfachsten Form: die Matrixmultiplikation, \(N\)-mal hintereinander ausgef&uuml;hrt. Im Grenzfall unendlich vieler, unendlich kleiner Zeitschritte und unendlich vieler Orte wird daraus Feynmans Summe &uuml;ber alle Bahnen, die er 1948 ver&ouml;ffentlichte.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Links sind alle Wege von Ort&nbsp;1 nach Ort&nbsp;3 eingezeichnet. Addiere die Wege einzeln und beobachte, wo die Kette ihrer Zeiger endet.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-path-sum"></div></div>
+
+<p>F&uuml;r drei Orte und drei Zeitschritte sind es bereits neun Wege, f&uuml;r vier Zeitschritte 27, und ihre Zahl w&auml;chst exponentiell. Jeder einzelne Weg tr&auml;gt einen Zeiger bei, und erst die Summe aller Zeiger ergibt die Amplitude. Die Spitze der Kette landet dabei stets genau auf dem Eintrag der Matrixpotenz &ndash; nicht n&auml;herungsweise, sondern exakt, weil beide Rechnungen dieselbe Summe nur verschieden anordnen.</p>
+</div></section>
+
+<section id="zwei-mulden" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 10</p>
+<h3>Zwei Wege, ein Ergebnis</h3>
+
+<p>Es gibt einen zweiten Weg, \(U^N\) zu berechnen, und er greift auf Abschnitt&nbsp;8 zur&uuml;ck. Dort war ein einzelner Zeiger, der sich gleichm&auml;&szlig;ig dreht, das einfachste aller Systeme. Gibt es Zust&auml;nde, die \(U\) nicht durcheinandermischt, sondern nur dreht? Solche Zust&auml;nde hei&szlig;en <em>Eigenzust&auml;nde</em>, und f&uuml;r sie gilt \(Uv = \lambda v\) mit einer Zahl \(\lambda\). <span class="chip z">folgt zwingend</span> Da \(U\) die L&auml;nge erh&auml;lt, ist \(|\lambda| = 1\): Der Eigenwert ist eine reine Drehung. F&uuml;r einen Eigenzustand ist \(N\)-mal Anwenden trivial, \(U^Nv = \lambda^Nv\). Zerlegt man einen beliebigen Zustand in Eigenzust&auml;nde, dreht sich jeder Anteil mit seiner eigenen Geschwindigkeit, und am Ende setzt man die Anteile wieder zusammen.</p>
+
+<p>Dass der Pfadweg und der Eigenwertweg dasselbe Ergebnis liefern m&uuml;ssen, ist klar, denn beide berechnen \(U^N\). Wie das im Einzelnen zusammengeht, ist weniger offensichtlich. Der Quantenbeitrag dieses Blogs stellt die beiden Sichtweisen als <a href="quanten.html#teil-4c">zwei Sprachen derselben Physik</a> nebeneinander; an einem Beispiel mit nur zwei Zust&auml;nden l&auml;sst sich die &Uuml;bereinstimmung vollst&auml;ndig nachrechnen.</p>
+
+<h3 style="margin-top:2rem;">Ein Teilchen zwischen zwei Mulden</h3>
+
+<p>Das Ammoniakmolek&uuml;l \(\text{NH}_3\) hat die Form einer flachen Pyramide: drei Wasserstoffatome bilden die Grundfl&auml;che, das Stickstoffatom die Spitze. Die Spitze kann &uuml;ber oder unter der Grundfl&auml;che liegen, und beide Lagen sind energetisch gleichwertig &ndash; zwei gleich tiefe Mulden. Klassisch m&uuml;sste das Stickstoffatom einen Energieberg &uuml;berwinden, um von einer Lage in die andere zu gelangen; quantenmechanisch tunnelt es hindurch. Auf diesem Hin und Her beruht der Ammoniak-Maser, mit dem Charles Townes 1954 den Vorl&auml;ufer des Lasers baute.</p>
+
+<p><span class="chip z">folgt zwingend</span> Pro Zeitschritt bleibt das System mit dem Zeiger \(a\) in seiner Mulde oder springt mit dem Zeiger \(b\) in die andere. Da beide Mulden gleichwertig sind, gilt dasselbe in beide Richtungen, und der Zeitschritt ist</p>
+
+<div class="math-display">\[ U = \begin{pmatrix} a & b \\ b & a \end{pmatrix} . \]</div>
+
+<p><span class="chip z">folgt zwingend</span> Die Unitarit&auml;t schr&auml;nkt \(a\) und \(b\) stark ein. Die Gesamtl&auml;nge bleibt nur erhalten, wenn \(|a|^2 + |b|^2 = 1\) gilt und wenn die Zeiger \(a\) und \(b\) senkrecht aufeinander stehen. Der Sprungzeiger ist also gegen&uuml;ber dem Bleibezeiger zwangsl&auml;ufig um 90&deg; gedreht. <span class="chip k">Konvention</span> Da eine gemeinsame Drehung aller Zeiger nichts &auml;ndert, darf man \(a\) reell w&auml;hlen; dann ist</p>
+
+<div class="math-display">\[ a = \cos\varphi, \qquad b = -\,i\sin\varphi . \]</div>
+
+<p><strong>Der Pfadweg.</strong> Ein Weg aus \(N\) Schritten mit genau \(k\) Spr&uuml;ngen hat den Zeiger \(a^{N-k}b^k\), und es gibt \(\binom{N}{k}\) solche Wege, weil man aus \(N\) Schritten diejenigen \(k\) ausw&auml;hlt, bei denen gesprungen wird. Das System landet wieder in Mulde&nbsp;1, wenn \(k\) gerade ist. Die Amplitude ist also</p>
+
+<div class="math-display">\[ \psi_1(N) = \sum_{k\ \text{gerade}} \binom{N}{k}\, a^{N-k}\, b^k . \]</div>
+
+<p>Hier tauchen die Binomialkoeffizienten aus dem R&uuml;ckblick zu Akt&nbsp;I wieder auf, und zwar aus demselben Grund: Gez&auml;hlt werden Auswahlen.</p>
+
+<p><strong>Der Eigenwertweg.</strong> Welche Zust&auml;nde mischt \(U\) nicht? Die symmetrische Kombination \((1, 1)\) &ndash; &bdquo;in beiden Mulden gleich&ldquo; &ndash; geht in \((a+b)\,(1,1)\) &uuml;ber, die antisymmetrische \((1,-1)\) in \((a-b)\,(1,-1)\). Das sind die beiden Eigenzust&auml;nde, mit den Eigenwerten \(a+b\) und \(a-b\). Der Startzustand \((1, 0)\) ist die halbe Summe beider, und nach \(N\) Schritten ist die Amplitude in Mulde&nbsp;1 deshalb</p>
+
+<div class="math-display">\[ \psi_1(N) = \tfrac12\big[(a+b)^N + (a-b)^N\big] . \]</div>
+
+<p><span class="chip z">folgt zwingend</span> Dass beide Ausdr&uuml;cke gleich sind, zeigt der binomische Lehrsatz. \((a+b)^N\) enth&auml;lt alle Terme \(\binom{N}{k}a^{N-k}b^k\), \((a-b)^N\) dieselben, aber mit Minuszeichen bei ungeradem \(k\). In der halben Summe heben sich die ungeraden Terme weg, und die geraden bleiben &uuml;brig. <strong>Wege z&auml;hlen und diagonalisieren sind zwei Lesarten derselben Formel.</strong></p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Links werden die Wege nach der Zahl ihrer Spr&uuml;nge gruppiert und aufaddiert, rechts nur die beiden Eigenanteile. Ver&auml;ndere \(\varphi\) und \(N\).</p>
+</div>
+
+<div class="component-wrap"><div id="mount-two-wells"></div></div>
+
+<p>Mit \(a = \cos\varphi\) und \(b = -i\sin\varphi\) sind die Eigenwerte \(a \pm b = e^{\mp i\varphi}\): zwei Zeiger, die sich verschieden schnell drehen. Damit ergibt sich \(\psi_1(N) = \cos(N\varphi)\), und die Wahrscheinlichkeit, das System in Mulde&nbsp;2 zu finden, ist \(\sin^2(N\varphi)\). Das System pendelt also zwischen den Mulden hin und her. Die Pendelfrequenz ist der Unterschied der beiden Drehgeschwindigkeiten und damit nach Abschnitt&nbsp;8 der Energieunterschied der beiden Eigenzust&auml;nde. Beim Ammoniak entspricht er einer Frequenz von 23,87&nbsp;Gigahertz, und genau bei dieser Frequenz arbeitet der Maser. Diese kleine \(2\times 2\)-Matrix wird &uuml;brigens am Ende von Akt&nbsp;III in einer Rolle zur&uuml;ckkehren, die man ihr hier nicht ansieht.</p>
+</div></section>
+
+<section id="zeitentwicklung" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 11</p>
+<h3>Ausmultiplizieren oder diagonalisieren</h3>
+
+<p>F&uuml;r sehr kleine Zeitschritte der Dauer \(\varepsilon\) unterscheidet sich \(U\) nur wenig von der Einheitsmatrix. Man schreibt</p>
+
+<div class="math-display">\[ U \approx 1 - \frac{i\varepsilon}{\hbar}\,H \]</div>
+
+<p>mit einer Matrix \(H\), die <em>Hamilton-Operator</em> hei&szlig;t. <span class="chip z">folgt zwingend</span> Das \(i\) in dieser Formel ist keine Verzierung. Damit \(U\) unit&auml;r ist, muss \(U^\dagger U = 1\) gelten, und mit dem Ansatz ergibt sich \(U^\dagger U \approx 1 + \tfrac{i\varepsilon}{\hbar}(H^\dagger - H)\). Das ist nur dann gleich 1, wenn \(H = H^\dagger\) ist, wenn also \(H\) eine sogenannte hermitesche Matrix ist. Hermitesche Matrizen haben reelle Eigenwerte, und diese Eigenwerte sind die messbaren Energien des Systems. Ohne das \(i\) w&auml;ren die Energien keine reellen Zahlen.</p>
+
+<p><span class="chip z">folgt zwingend</span> Nach \(N = t/\varepsilon\) Schritten ist die Zeitentwicklung \(U^N = (1 - i\varepsilon H/\hbar)^N\), und im Grenzfall kleiner Schritte ergibt sich derselbe Grenzwert wie in Abschnitt&nbsp;7, nur mit einer Matrix statt einer Zahl:</p>
+
+<div class="math-display">\[ U(t) = e^{-iHt/\hbar} . \]</div>
+
+<p>Die Eigenzust&auml;nde von \(H\) sind die Zust&auml;nde, die sich nur drehen, und die Eigenwertgleichung</p>
+
+<div class="math-display">\[ H\varphi = E\,\varphi \]</div>
+
+<p>ist die station&auml;re Schr&ouml;dinger-Gleichung. Erwin Schr&ouml;dinger ver&ouml;ffentlichte sie 1926 unter dem Titel <em>Quantisierung als Eigenwertproblem</em> &ndash; die erlaubten Energien eines Atoms sind die Eigenwerte einer Matrix, beziehungsweise, f&uuml;r unendlich viele Orte, eines Differentialoperators. Wie Eigenwerte weit &uuml;ber die Physik hinaus auftauchen, zeigt der <a href="eigenwerte.html">Beitrag &uuml;ber Eigenwerte und KI</a>.</p>
+
+<div class="merke">
+  <p><strong>Merke:</strong> Das Pfadintegral multipliziert \(e^{-iHt/\hbar}\) aus. Die Eigenwertrechnung diagonalisiert es. Beide berechnen dasselbe Objekt.</p>
+</div>
+
+<div class="recap">
+  <p class="recap-title">R&uuml;ckblick Akt II</p>
+  <p class="text-sm" style="color:#d1d5db;"><strong>Eingaben aus dem Experiment:</strong> Wahrscheinlichkeiten k&ouml;nnen sich ausl&ouml;schen (Doppelspalt); jeder M&ouml;glichkeit geh&ouml;rt ein Zeiger, entlang wird multipliziert, &uuml;ber Alternativen addiert; Wahrscheinlichkeit ist L&auml;nge im Quadrat (Born); Energie ist proportional zur Frequenz (Planck, Einstein).</p>
+  <p class="text-sm" style="color:#d1d5db;"><strong>Zwingend gefolgt:</strong> Station&auml;re Zust&auml;nde drehen sich gleichm&auml;&szlig;ig; Ableiten holt die Drehgeschwindigkeit heraus; Impuls ist r&auml;umliche Drehgeschwindigkeit (de Broglie); daraus die &Uuml;bersetzungsregel \(E \leftrightarrow i\hbar\,\partial_t\), \(p \leftrightarrow -i\hbar\,\partial_x\); ein Zeitschritt ist eine Matrix, und sie muss unit&auml;r sein; Matrixpotenzen sind Summen &uuml;ber Wege; Eigenzust&auml;nde drehen sich nur; Pfadweg und Eigenwertweg stimmen &uuml;berein; das \(i\) in \(e^{-iHt/\hbar}\) sorgt f&uuml;r reelle Energien.</p>
+  <p class="text-sm" style="color:#94a3b8;"><strong>Konventionen:</strong> das Minuszeichen in \(e^{-i\omega t}\); die Wahl eines reellen Bleibezeigers \(a\).</p>
+  <p class="text-sm" style="color:#94a3b8;">Was noch fehlt, ist die Relativit&auml;tstheorie. Sie wird verlangen, dass Zeit und Raum gleich behandelt werden &ndash; und das f&uuml;hrt auf eine Wurzel, die sich nur mit der Geometrie aus Akt&nbsp;I ziehen l&auml;sst.</p>
+</div>
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- AKT III — DIRACS WURZEL -->
+<!-- ================================================================ -->
+<section id="akt3" class="pb-4">
+<div class="prose-dark">
+<p class="part-label">Akt III &middot; Relativit&auml;t</p>
+<h2>Diracs Wurzel</h2>
+<div class="leitfrage"><p><strong>Leitfrage:</strong> Wie zieht man die Wurzel aus \(E^2 = p^2c^2 + m^2c^4\)?</p></div>
+</div>
+</section>
+
+<section id="gleichberechtigt" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 12</p>
+<h3>Raum und Zeit m&uuml;ssen gleichberechtigt sein</h3>
+
+<p>Mit der &Uuml;bersetzungsregel aus Akt&nbsp;II l&auml;sst sich zu jeder Energieformel der klassischen Physik eine Quantengleichung aufschreiben. Erwin Schr&ouml;dinger tat 1926 genau das mit der Energie eines freien Teilchens, \(E = p^2/2m\). <span class="chip z">folgt zwingend</span> Ersetzt man \(E\) durch \(i\hbar\,\partial_t\) und \(p\) durch \(-i\hbar\,\partial_x\), ergibt sich</p>
+
+<div class="math-display">\[ i\hbar\,\frac{\partial\psi}{\partial t} = -\,\frac{\hbar^2}{2m}\,\frac{\partial^2\psi}{\partial x^2} . \]</div>
+
+<p>Weil die Energie in der Formel einfach vorkommt und der Impuls quadriert, wird nach der Zeit einmal und nach dem Ort zweimal abgeleitet. F&uuml;r langsame Teilchen ist diese Gleichung hervorragend best&auml;tigt; die gesamte Chemie beruht auf ihr. F&uuml;r schnelle Teilchen kann sie aber nicht stimmen, und der Grund ist ein Experiment.</p>
+
+<p><span class="chip e">Eingabe</span> <strong>Licht ist f&uuml;r alle gleich schnell.</strong> Albert Michelson und Edward Morley fanden 1887 keinerlei Unterschied in der Lichtgeschwindigkeit, gleichg&uuml;ltig in welche Richtung sich die Erde auf ihrer Bahn gerade bewegte. Einstein machte 1905 daraus ein Prinzip: Jeder Beobachter misst f&uuml;r Licht dieselbe Geschwindigkeit \(c\), egal wie schnell er sich selbst bewegt.</p>
+
+<p><span class="chip z">folgt zwingend</span> Daraus folgt, dass bewegte Beobachter Zeit und Ort unterschiedlich einteilen m&uuml;ssen &ndash; &auml;hnlich wie zwei Karten, die gegeneinander verdreht sind, Ost und Nord unterschiedlich einteilen. Bei der Karte bleibt beim Drehen der Abstand zum Ursprung gleich, also \(x^2 + y^2\). In der Raumzeit muss etwas anderes gleich bleiben: Ein Lichtblitz, der zur Zeit \(0\) am Ort \(0\) startet, ist zur Zeit \(t\) am Ort \(x = ct\), und weil alle Beobachter f&uuml;r ihn dieselbe Geschwindigkeit messen, gilt f&uuml;r alle \((ct)^2 - x^2 = 0\). Die Gr&ouml;&szlig;e, die f&uuml;r alle Beobachter dieselbe ist, ist deshalb nicht \((ct)^2 + x^2\), sondern</p>
+
+<div class="math-display">\[ (ct)^2 - x^2 . \]</div>
+
+<p>Wo bei der Karte ein Plus steht, steht in der Raumzeit ein Minus. Dies bedeutet anschaulich: Wechselt man den Beobachter, so wandern die Koordinaten eines Ereignisses nicht auf einem Kreis, sondern auf einer <em>Hyperbel</em>.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Vergleiche, wie die Koordinaten eines festen Punkts wandern, wenn man eine Karte dreht und wenn man die Geschwindigkeit eines Beobachters &auml;ndert. Der dritte Modus zeigt dasselbe f&uuml;r Energie und Impuls eines Teilchens.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-spacetime"></div></div>
+
+<p>Das Widget macht deutlich, was eine Gleichung leisten muss, die f&uuml;r alle Beobachter gelten soll. Beim Drehen einer Karte &uuml;bersteht der Ausdruck \(x^2 + y^2\) jede Drehung, der Ausdruck \(x + y^2\) dagegen nicht, weil er eine Richtung anders behandelt als die andere. <span class="chip z">folgt zwingend</span> Schr&ouml;dingers Gleichung ist vom Typ \(x + y^2\): Sie leitet nach der Zeit einmal und nach dem Ort zweimal ab. In einem anderen Bezugssystem sieht sie deshalb anders aus, und sie kann nicht f&uuml;r alle Beobachter zugleich gelten.</p>
+
+<p><span class="chip z">folgt zwingend</span> F&uuml;r Energie und Impuls gilt dasselbe wie f&uuml;r Zeit und Ort. Ein bewegter Beobachter misst f&uuml;r dasselbe Teilchen eine andere Energie und einen anderen Impuls, aber die Kombination \(E^2 - (pc)^2\) ist f&uuml;r alle gleich. F&uuml;r ein ruhendes Teilchen ist \(p = 0\) und \(E = mc^2\), also gilt allgemein Einsteins Energieformel</p>
+
+<div class="math-display">\[ E^2 = p^2c^2 + m^2c^4 . \]</div>
+
+<p>Dies bedeutet anschaulich: Energie und Impuls bilden einen Pfeil in der Raumzeit, und die Masse ist seine &bdquo;L&auml;nge&ldquo; &ndash; gemessen mit dem Minuszeichen der Raumzeit. Anders als Schr&ouml;dingers Formel behandelt diese Gleichung Energie und Impuls gleich: Beide stehen im Quadrat. Damit ist das Symbol \(c\) bereits halb verdient. Es ist der Umrechnungsfaktor, der Zeit und Ort in derselben Einheit messbar macht, so dass \(ct\) eine L&auml;nge ist und \(pc\) eine Energie.</p>
+</div></section>
+
+<section id="klein-gordon" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 13</p>
+<h3>Schr&ouml;dingers verworfene Gleichung</h3>
+
+<p>Der naheliegende n&auml;chste Schritt ist, Einsteins Formel direkt zu &uuml;bersetzen. Mit der Regel aus Akt&nbsp;II wird aus \(E^2\) die zweite Zeitableitung und aus \(p^2\) die zweite Ortsableitung:</p>
+
+<div class="math-display">\[ -\,\hbar^2\,\frac{\partial^2\psi}{\partial t^2} = -\,\hbar^2c^2\,\frac{\partial^2\psi}{\partial x^2} + m^2c^4\,\psi . \]</div>
+
+<p>Zeit und Ort werden hier gleich behandelt, jede wird zweimal abgeleitet. Die Gleichung hei&szlig;t heute <em>Klein-Gordon-Gleichung</em>, nach Oskar Klein und Walter Gordon, die sie 1926 ver&ouml;ffentlichten. Gefunden hatte sie zuerst Schr&ouml;dinger selbst, noch bevor er seine ber&uuml;hmte Gleichung aufschrieb. Er legte sie zun&auml;chst beiseite, weil sie f&uuml;r das Wasserstoffatom die Feinstruktur der Spektrallinien falsch vorhersagte, und ver&ouml;ffentlichte die nichtrelativistische Fassung, die zu den Messungen passte.</p>
+
+<p><span class="chip z">folgt zwingend</span> Als Gleichung f&uuml;r das Elektron hat die Klein-Gordon-Gleichung ein grunds&auml;tzliches Problem, und es l&auml;sst sich mit Akt&nbsp;II genau benennen. Dort ergab sich, dass ein Zeitschritt eine Matrix ist: \(\psi' = U\psi\). Der Zustand zu einem Zeitpunkt legt also den Zustand zu jedem sp&auml;teren Zeitpunkt fest, und daf&uuml;r reicht eine Gleichung, die einmal nach der Zeit ableitet. Eine Gleichung, die zweimal nach der Zeit ableitet, braucht dagegen zwei Startwerte &ndash; den Zustand und seine &Auml;nderungsrate &ndash;, so wie ein geworfener Ball erst durch Ort <em>und</em> Geschwindigkeit festgelegt ist. Der Zustand allein bestimmt dann nicht mehr die Zukunft. Rechnet man nach, was in dieser Gleichung die Rolle der Aufenthaltswahrscheinlichkeit spielt, so ergibt sich zudem eine Gr&ouml;&szlig;e, die f&uuml;r L&ouml;sungen mit negativer Energie negativ wird. Eine negative Wahrscheinlichkeit hat keinen Sinn.</p>
+
+<p>Der Ehrlichkeit halber sei angemerkt, dass die Klein-Gordon-Gleichung damit nicht falsch ist. Sie beschreibt Teilchen ohne Spin, beispielsweise Pionen, korrekt; Wolfgang Pauli und Victor Weisskopf zeigten 1934, dass die problematische Gr&ouml;&szlig;e als elektrische Ladungsdichte zu deuten ist, die durchaus beide Vorzeichen haben darf. Als Gleichung f&uuml;r ein einzelnes Elektron im Sinne von Akt&nbsp;II taugt sie aber nicht.</p>
+
+<p>Damit ist Diracs Aufgabe von 1928 umrissen, und jede ihrer Bedingungen ist begr&uuml;ndet:</p>
+
+<ul>
+  <li><span class="chip z">folgt zwingend</span> <strong>Erste Ordnung in der Zeit</strong>, weil der Zustand allein die Zukunft bestimmen soll (Akt&nbsp;II).</li>
+  <li><span class="chip z">folgt zwingend</span> <strong>Erste Ordnung im Raum</strong>, weil Zeit und Ort gleich behandelt werden m&uuml;ssen (Abschnitt&nbsp;12).</li>
+  <li><span class="chip z">folgt zwingend</span> <strong>Linear in \(\psi\)</strong>, weil sich Zeiger &uuml;berlagern lassen m&uuml;ssen (Feynmans Regel).</li>
+  <li><span class="chip z">folgt zwingend</span> <strong>Vertr&auml;glich mit Einstein</strong>: Jede L&ouml;sung muss \(E^2 = p^2c^2 + m^2c^4\) erf&uuml;llen, weil das f&uuml;r jedes freie Teilchen gilt.</li>
+</ul>
+
+<p>Gesucht ist also eine Gleichung, in der die Energie einfach vorkommt, die aber trotzdem Einsteins quadratische Formel erf&uuml;llt. Formal hei&szlig;t das: \(E = \sqrt{p^2c^2 + m^2c^4}\). Die Wurzel einfach hinzuschreiben hilft dabei nicht. Man kann sie zwar mit Hilfe der Fourier-Zerlegung definieren, doch dann h&auml;ngt die &Auml;nderung von \(\psi\) an einem Ort von den Werten von \(\psi\) im ganzen Raum ab &ndash; eine Wirkung ohne Zeitverz&ouml;gerung &uuml;ber beliebige Entfernungen, die der Relativit&auml;tstheorie gerade widerspricht. Gebraucht wird eine Wurzel ohne Wurzelzeichen.</p>
+</div></section>
+
+<section id="wurzel" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 14</p>
+<h3>Die Wurzel aus einer Quadratsumme</h3>
+
+<p>Diracs Aufgabe l&auml;sst sich auf eine Frage zur&uuml;ckf&uuml;hren, die in diesem Beitrag schon einmal beantwortet wurde. Der Einfachheit halber zun&auml;chst mit nur zwei Gr&ouml;&szlig;en: Gesucht sind zwei Objekte \(a\) und \(b\), so dass f&uuml;r alle Zahlen \(x\) und \(y\)</p>
+
+<div class="math-display">\[ (ax + by)^2 = x^2 + y^2 \]</div>
+
+<p>gilt. Dann w&auml;re \(ax + by\) eine Wurzel aus \(x^2 + y^2\), und zwar eine, in der \(x\) und \(y\) nur einfach vorkommen. Ausmultipliziert ergibt sich, ohne vorauszusetzen, dass \(a\) und \(b\) vertauschen,</p>
+
+<div class="math-display">\[ (ax+by)^2 = a^2\,x^2 + (ab + ba)\,xy + b^2\,y^2 . \]</div>
+
+<p><span class="chip z">folgt zwingend</span> Damit das f&uuml;r alle \(x, y\) gleich \(x^2+y^2\) ist, m&uuml;ssen drei Bedingungen gelten: \(a^2 = 1\), \(b^2 = 1\) und \(ab + ba = 0\). Mit gew&ouml;hnlichen Zahlen ist das unm&ouml;glich, denn f&uuml;r sie ist \(ab + ba = 2ab\), und das verschwindet nur, wenn \(a\) oder \(b\) null ist.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Versuche zuerst, die drei Bedingungen mit Zahlen zu erf&uuml;llen. Dann mit Matrizen. Und dann: Gibt es eine vierte?</p>
+</div>
+
+<div class="component-wrap"><div id="mount-root"></div></div>
+
+<p><span class="chip z">folgt zwingend</span> Die drei Bedingungen sind aber genau die Regeln aus dem Merkkasten von Abschnitt&nbsp;3: Ein Einheitsvektor quadriert zu 1, zwei senkrechte antikommutieren. Die Aufgabe ist also l&auml;ngst gel&ouml;st, und die L&ouml;sung lautet \(a = e_1\), \(b = e_2\):</p>
+
+<div class="math-display">\[ (x\,e_1 + y\,e_2)^2 = x^2 + y^2 . \]</div>
+
+<p>Das ist genau die zweite Forderung aus Abschnitt&nbsp;2, angewandt auf den Vektor mit den Komponenten \(x\) und \(y\): Ein Vektor mal sich selbst ergibt sein L&auml;ngenquadrat. Dies bedeutet anschaulich: <strong>Die Wurzel aus einer Summe von Quadraten ist ein Vektor.</strong> Was mit Zahlen unm&ouml;glich ist, gelingt mit dem geometrischen Produkt ohne jede Zusatzannahme.</p>
+
+<h3 style="margin-top:2rem;">Vier Richtungen f&uuml;r die Raumzeit</h3>
+
+<p>F&uuml;r Einsteins Formel werden statt zwei vier solche Objekte gebraucht, eines f&uuml;r die Zeit und drei f&uuml;r den Raum. Man bezeichnet sie mit \(\gamma^0, \gamma^1, \gamma^2, \gamma^3\). <span class="chip z">folgt zwingend</span> Gesucht ist eine Wurzel aus \(E^2/c^2 - p_x^2 - p_y^2 - p_z^2\), dem L&auml;ngenquadrat des Energie-Impuls-Pfeils aus Abschnitt&nbsp;12. Nach der zweiten Forderung muss jeder Basisvektor zum L&auml;ngenquadrat seiner Richtung quadrieren, und das ist in der Raumzeit f&uuml;r die Zeit \(+1\) und f&uuml;r den Raum \(-1\). Verschiedene Basisvektoren antikommutieren wie zuvor. Kompakt geschrieben:</p>
+
+<div class="math-display">\[ \gamma^\mu\gamma^\nu + \gamma^\nu\gamma^\mu = 2\,\eta^{\mu\nu}, \qquad \eta = \operatorname{diag}(+1,-1,-1,-1) . \]</div>
+
+<p>Hier schlie&szlig;t sich ein Kreis, der in Abschnitt&nbsp;2 ge&ouml;ffnet wurde. Dort wurde angemerkt, dass man ebenso gut \(vv = -|v|^2\) h&auml;tte fordern k&ouml;nnen und dass diese Vorzeichenfreiheit sp&auml;ter von der Physik entschieden wird. Das ist jetzt geschehen: In der Raumzeit quadriert die Zeitrichtung positiv und die Raumrichtungen negativ, weil das L&auml;ngenquadrat der Raumzeit diese Vorzeichen hat. <strong>Die \(\gamma\)-Matrizen sind eine Orthonormalbasis der Raumzeit</strong> &ndash; dieselben Regeln wie f&uuml;r \(e_1, e_2, e_3\), nur mit der Metrik, die die Relativit&auml;tstheorie vorschreibt. <span class="chip k">Konvention</span> Ob man der Zeit das Plus und dem Raum das Minus gibt oder umgekehrt, ist eine Vereinbarung; physikalisch ist nur der Unterschied der Vorzeichen.</p>
+
+<p><span class="chip z">folgt zwingend</span> Mit diesen Regeln l&auml;sst sich auch erkl&auml;ren, warum bewegte Beobachter Koordinaten auf Hyperbeln statt auf Kreisen sehen. Das Tausch-Puzzle aus Akt&nbsp;I funktioniert mit den \(\gamma\) genauso wie mit den \(e\) &ndash; nur dass die Quadrate jetzt teils \(+1\), teils \(-1\) sind.</p>
+
+<div class="component-wrap"><div id="mount-swap-gamma"></div></div>
+
+<p>Eine Fl&auml;che, die zwei Raumrichtungen verbindet, quadriert wie in Akt&nbsp;I zu \(-1\) und erzeugt gew&ouml;hnliche Drehungen mit Kosinus und Sinus. Eine Fl&auml;che, die Zeit und Raum verbindet, quadriert dagegen zu \(+1\). Der Drehbefehl aus Abschnitt&nbsp;4 wird f&uuml;r sie zu \(\cosh\varphi + \gamma^0\gamma^1\sinh\varphi\), mit den Hyperbelfunktionen statt der Kreisfunktionen, und die Punkte wandern auf Hyperbeln. Der Wechsel zu einem bewegten Beobachter ist demnach eine Drehung in einer Zeit-Raum-Ebene &ndash; dieselbe Algebra wie die Drehung einer Karte, nur mit dem anderen Vorzeichen.</p>
+
+<h3 style="margin-top:2rem;">Warum es Matrizen sein m&uuml;ssen &ndash; und warum vier mal vier</h3>
+
+<p><span class="chip z">folgt zwingend</span> Gew&ouml;hnliche Zahlen kommen f&uuml;r die \(\gamma^\mu\) nicht in Frage, weil sie kommutieren. Dirac brauchte also Objekte, die antikommutieren, und er fand sie in Matrizen. F&uuml;r drei Raumrichtungen gab es sie bereits: Wolfgang Pauli hatte 1927 drei \(2\times2\)-Matrizen \(\sigma_x, \sigma_y, \sigma_z\) eingef&uuml;hrt, um den Spin des Elektrons zu beschreiben, und sie erf&uuml;llen genau die Regeln f&uuml;r \(e_1, e_2, e_3\). Die Pauli-Matrizen sind eine Darstellung des Raums aus Akt&nbsp;I.</p>
+
+<p><span class="chip z">folgt zwingend</span> F&uuml;r die Raumzeit wird aber eine vierte Richtung gebraucht, und das Widget zeigt, dass es in \(2\times 2\) keine vierte Matrix gibt, die mit allen drei Pauli-Matrizen antikommutiert. Auch \(3 \times 3\) scheidet aus: Aus \(A^2 = 1\) und \(BAB^{-1} = -A\) folgt, dass \(A\) die Spur null hat, also gleich viele Eigenwerte \(+1\) und \(-1\) &ndash; die Gr&ouml;&szlig;e der Matrix muss gerade sein. Die kleinste M&ouml;glichkeit ist \(4 \times 4\). Und weil die \(\gamma\)-Matrizen auf etwas wirken m&uuml;ssen, kann \(\psi\) keine einzelne Zahl mehr sein: <strong>Der Zustand eines Elektrons ist eine Liste aus vier Zeigern.</strong></p>
+
+<details class="deep">
+<summary>Die \(\gamma\)-Matrizen ausgeschrieben</summary>
+<p style="margin-top:0.75rem;">In der Darstellung, die Dirac selbst benutzte, lauten die vier Matrizen, in \(2\times2\)-Bl&ouml;cken geschrieben,</p>
+<div class="math-display">\[ \gamma^0 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \qquad \gamma^k = \begin{pmatrix} 0 & \sigma_k \\ -\sigma_k & 0 \end{pmatrix} \quad (k = 1,2,3), \]</div>
+<p>wobei \(1\) die \(2\times2\)-Einheitsmatrix ist und \(\sigma_k\) die Pauli-Matrizen. Man rechnet nach: \((\gamma^0)^2 = +1\), \((\gamma^k)^2 = -1\), und je zwei verschiedene antikommutieren. <span class="chip k">Konvention</span> Diese konkrete Wahl ist eine Konvention. Es gibt andere, gleichwertige Darstellungen &ndash; nach Weyl oder nach Majorana benannt &ndash;, die durch einen Basiswechsel auseinander hervorgehen, so wie zwei gegeneinander verdrehte Koordinatensysteme denselben Raum beschreiben. Physikalisch zu Buche schlagen nur die Regeln \(\gamma^\mu\gamma^\nu + \gamma^\nu\gamma^\mu = 2\eta^{\mu\nu}\), nicht die Zahlen in den Matrizen.</p>
+</details>
+</div></section>
+
+<section id="gleichung" class="pb-12" data-earns="gamma,m,c"><div class="prose-dark">
+<p class="sec-label">Abschnitt 15</p>
+<h3>Die Gleichung lesen</h3>
+
+<p>Nun l&auml;sst sich Diracs Zeile Symbol f&uuml;r Symbol lesen. Mit \(x^0 = ct\) und \(\partial_0 = \partial/\partial(ct)\) steht der Ausdruck</p>
+
+<div class="math-display">\[ \gamma^\mu\partial_\mu = \gamma^0\,\partial_0 + \gamma^1\,\partial_1 + \gamma^2\,\partial_2 + \gamma^3\,\partial_3 \]</div>
+
+<p>f&uuml;r eine Summe aus vier Ableitungen, jede mit ihrem Basisvektor multipliziert &ndash; Zeit und Raum v&ouml;llig gleich behandelt, jede Richtung nur einmal abgeleitet. Nach der &Uuml;bersetzungsregel aus Akt&nbsp;II holt \(i\hbar\,\partial_\mu\) die Drehgeschwindigkeiten heraus, also Energie und Impuls. <span class="chip z">folgt zwingend</span> Der Ausdruck \(i\hbar\,\gamma^\mu\partial_\mu\) ist deshalb der Energie-Impuls-Pfeil der Raumzeit, geschrieben mit seinen vier Basisvektoren, und die Gleichung</p>
+
+<div class="math-display">\[ \big(i\hbar\,\gamma^\mu\partial_\mu - mc\big)\,\psi = 0 \]</div>
+
+<p>sagt anschaulich: <strong>Der Energie-Impuls-Pfeil, angewandt auf \(\psi\), ergibt die Masse.</strong> Wendet man ihn zweimal an, so ergibt sich nach den Regeln f&uuml;r die \(\gamma\)-Matrizen sein L&auml;ngenquadrat, und die Gleichung wird zu \(E^2/c^2 - p^2 = m^2c^2\), also zu Einsteins Formel. Jede L&ouml;sung der Dirac-Gleichung erf&uuml;llt damit Einsteins Energieformel, so wie es die vierte Bedingung aus Abschnitt&nbsp;13 verlangt &ndash; aber die Gleichung selbst leitet nach der Zeit nur einmal ab.</p>
+
+<p>Damit sind die letzten Symbole verdient. \(\gamma^\mu\) sind die vier Basisvektoren der Raumzeit, die Wurzel, die Dirac suchte. \(m\) ist die L&auml;nge des Energie-Impuls-Pfeils. Und \(c\) ist der Umrechnungsfaktor, der Zeit in L&auml;nge verwandelt, so dass alle vier Richtungen dieselbe Einheit haben. Die Leiste am oberen Rand ist vollst&auml;ndig.</p>
+
+<p>Eine Bemerkung zum Symbol \(i\) verdient noch Platz. In der Gleichung steht es als imagin&auml;re Einheit, die mit allen Matrizen vertauscht. David Hestenes zeigte 1966 in seiner <em>Space-Time Algebra</em>, dass man die Dirac-Gleichung vollst&auml;ndig in der geometrischen Algebra der Raumzeit schreiben kann, ohne komplexe Zahlen, und dass die Rolle von \(i\) dann eine bestimmte Fl&auml;che der Raumzeit &uuml;bernimmt &ndash; ganz im Sinne von Akt&nbsp;I. (F&uuml;r die Einzelheiten sei auf Hestenes' Arbeit verwiesen; f&uuml;r das Folgende wird diese Umschreibung nicht gebraucht.)</p>
+</div></section>
+
+<section id="spin" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 16</p>
+<h3>Spin &frac12;: der halbe Winkel l&ouml;st sich ein</h3>
+
+<p>In Abschnitt&nbsp;5 blieb eine Frage offen. Der Rotor einer vollen Umdrehung ist \(R = -1\), aber Vektoren merken davon nichts, weil sie mit dem Sandwich \(R\,v\,\tilde R\) gedreht werden. Gibt es Objekte, die sich nur einseitig mit \(R\) drehen und f&uuml;r die das Minuszeichen deshalb sichtbar bleibt? Die Dirac-Gleichung beantwortet diese Frage, und zwar ohne dass man danach fragen m&uuml;sste.</p>
+
+<p><span class="chip z">folgt zwingend</span> Dreht man das Labor, also das Koordinatensystem, so muss die Gleichung im neuen System dieselbe Form haben; keine Raumrichtung ist ausgezeichnet. In der Gleichung stehen die \(\gamma^\mu\) als Basisvektoren der Raumzeit, und Vektoren drehen sich mit dem Sandwich. Damit die Gleichung nach der Drehung wieder dieselbe Gestalt annimmt, muss \(\psi\) diese Drehung ausgleichen, und die Rechnung zeigt, dass das genau dann gelingt, wenn \(\psi\) einseitig mit dem Rotor multipliziert wird:</p>
+
+<div class="math-display">\[ \psi \;\longrightarrow\; R\,\psi . \]</div>
+
+<p>Dies bedeutet: Der Zustand eines Elektrons dreht sich nicht wie ein Pfeil, sondern wie ein Rotor &ndash; mit dem halben Winkel. Nach einer vollen Umdrehung um \(360^\circ\) ist \(R = -1\), und das Elektron ist in den Zustand \(-\psi\) &uuml;bergegangen. Erst nach \(720^\circ\) ist es wieder im Zustand \(\psi\). Objekte mit diesem Verhalten hei&szlig;en <em>Spinoren</em>, und das ist die Bedeutung von <strong>Spin&nbsp;&frac12;</strong>: Das &bdquo;halb&ldquo; ist der halbe Winkel aus Abschnitt&nbsp;5.</p>
+
+<p><span class="chip e">Eingabe</span> Ein Minuszeichen vor dem gesamten Zustand ist f&uuml;r sich allein nicht messbar, denn nach Borns Regel z&auml;hlen nur L&auml;ngenquadrate. Es wird aber messbar, sobald ein gedrehter und ein ungedrehter Teil eines Zustands miteinander interferieren. Genau das gelang 1975 zwei Gruppen unabh&auml;ngig voneinander, um Helmut Rauch in Wien beziehungsweise Samuel Werner in Missouri. Sie teilten einen Neutronenstrahl in zwei H&auml;lften, lie&szlig;en den Spin der einen H&auml;lfte in einem Magnetfeld kreiseln und f&uuml;hrten beide H&auml;lften wieder zusammen. Das Interferenzmuster wiederholte sich nicht nach einer Drehung um \(360^\circ\), sondern erst nach \(720^\circ\).</p>
+
+<p>Dass eine Drehung um \(360^\circ\) nicht immer &bdquo;nichts&ldquo; ist, l&auml;sst sich auch ohne Quantenmechanik erleben. Dirac soll es seinen Studenten mit einem G&uuml;rtel vorgef&uuml;hrt haben, der an einem Ende an einem Gegenstand befestigt ist und am anderen an einer Wand.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Drehe die Platte um \(360^\circ\) und versuche, das Band zu entwirren. Dann um \(720^\circ\).</p>
+</div>
+
+<div class="component-wrap"><div id="mount-belt"></div></div>
+
+<p>Nach einer Umdrehung ist das Band verdrillt, und keine Bewegung des Bandes, bei der Wand und Platte festbleiben, kann die Verdrillung beseitigen. Nach zwei Umdrehungen ist das Band zwar doppelt verdrillt, l&auml;sst sich aber glatt ziehen. Der Grund ist derselbe wie beim Spin. Der Zustand des Bandes in jeder H&ouml;he ist eine Drehung, und den Weg dieser Drehungen von der Wand bis zur Platte kann man als Kette von Rotoren beschreiben. Bei \(360^\circ\) beginnt die Kette bei \(R = +1\) und endet bei \(R = -1\). Eine stetige Verformung kann dieses Vorzeichen am Ende nicht umklappen lassen &ndash; es gibt keinen stetigen &Uuml;bergang von \(-1\) zu \(+1\), solange die Platte stillsteht. Bei \(720^\circ\) endet die Kette bei \(+1\), und dann l&auml;sst sie sich stetig auf &bdquo;&uuml;berall&nbsp;\(+1\)&ldquo; zusammenziehen. (Die Konstruktion, die das Widget benutzt, beruht darauf, dass ein Rotor der Form \(\cos 180^\circ - B\sin 180^\circ\) f&uuml;r <em>jede</em> Ebene \(B\) gleich \(-1\) ist; zwei solche Faktoren ergeben \(+1\), egal wie man die Ebene des zweiten verschwenkt.) Mit einem Teller auf der flachen Hand l&auml;sst sich dasselbe vorf&uuml;hren: Nach einer Umdrehung ist der Arm verdreht, nach einer zweiten in gleicher Richtung wieder entspannt.</p>
+
+<p class="history">Vor Dirac war der Spin ein Fremdk&ouml;rper. <strong>George Uhlenbeck</strong> und <strong>Samuel Goudsmit</strong> schlugen ihn 1925 vor, um die Aufspaltung von Spektrallinien zu erkl&auml;ren, und <strong>Pauli</strong> baute ihn 1927 von Hand in die Schr&ouml;dinger-Gleichung ein. Bei Dirac folgt er aus der Gleichung selbst. Eine Pr&auml;zisierung ist dabei angebracht: <strong>Jean-Marc L&eacute;vy-Leblond</strong> zeigte 1967, dass bereits eine <em>nicht</em>relativistische Gleichung erster Ordnung, auf dieselbe Weise &bdquo;gewurzelt&ldquo;, Spin&nbsp;&frac12; liefert. Der Spin entsteht also nicht durch die Relativit&auml;tstheorie an sich, sondern durch das Ziehen der Wurzel mit dem geometrischen Produkt &ndash; was die These dieses Beitrags eher st&auml;rkt als schw&auml;cht.</p>
+</div></section>
+
+<section id="psi" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 17</p>
+<h3>Was \(\psi\) eigentlich ist</h3>
+
+<p>Nach Abschnitt&nbsp;14 ist der Zustand eines Elektrons eine Liste aus vier Zeigern an jedem Ort. Was bedeuten diese vier? Dazu wird die Dirac-Gleichung so umgestellt, dass sie die Form aus Akt&nbsp;II annimmt, \(i\hbar\,\partial_t\psi = H\psi\). Der Hamilton-Operator lautet dann</p>
+
+<div class="math-display">\[ H = c\,\boldsymbol\alpha\cdot\mathbf p + \beta\,mc^2, \qquad \alpha_k = \gamma^0\gamma^k, \quad \beta = \gamma^0 . \]</div>
+
+<p><span class="chip z">folgt zwingend</span> Die \(\alpha_k\) und \(\beta\) quadrieren zu 1 und antikommutieren paarweise &ndash; es sind wieder die Regeln aus Akt&nbsp;I, diesmal f&uuml;r vier Objekte mit positivem Quadrat. Deshalb ergibt sich beim Quadrieren</p>
+
+<div class="math-display">\[ H^2 = \big(p^2c^2 + m^2c^4\big)\cdot 1 . \]</div>
+
+<p>Nach Abschnitt&nbsp;11 sind die Eigenwerte von \(H\) die m&ouml;glichen Energien. Da \(H^2\) ein Vielfaches der Einheitsmatrix ist, muss jeder Eigenwert \(E = \pm\sqrt{p^2c^2 + m^2c^4}\) erf&uuml;llen, und eine kurze Rechnung zeigt, dass jedes der beiden Vorzeichen genau zweimal vorkommt. <strong>Die vier Komponenten von \(\psi\) sind zwei Energievorzeichen mal zwei Spinrichtungen.</strong></p>
+
+<p>Was &bdquo;Spinrichtung&ldquo; hei&szlig;t, verdient einen Satz der Vorsicht. Das Elektron ist keine sich drehende Kugel. Hendrik Lorentz rechnete Uhlenbeck und Goudsmit 1925 vor, dass die Oberfl&auml;che einer solchen Kugel schneller als das Licht rotieren m&uuml;sste. Der Spin ist vielmehr die Art, wie sich \(\psi\) bei Drehungen verh&auml;lt, n&auml;mlich mit dem halben Winkel, und seine messbare Folge ist ein Drehimpuls, der entlang jeder gew&auml;hlten Achse genau einen von zwei Werten annimmt: \(+\hbar/2\) oder \(-\hbar/2\). Otto Stern und Walther Gerlach hatten 1922 gesehen, wie ein Strahl von Silberatomen in einem inhomogenen Magnetfeld in genau zwei Teilstrahlen zerf&auml;llt. <span class="chip k">Konvention</span> Welche Achse man zur Beschreibung w&auml;hlt, ist frei; &uuml;blich ist die \(z\)-Achse.</p>
+
+<p><span class="chip z">folgt zwingend</span> Auch eines der Probleme aus Abschnitt&nbsp;13 ist gel&ouml;st. Als Aufenthaltswahrscheinlichkeit ergibt sich aus der Dirac-Gleichung die Summe der L&auml;ngenquadrate aller vier Zeiger, \(|\psi_1|^2 + |\psi_2|^2 + |\psi_3|^2 + |\psi_4|^2\), und diese Gr&ouml;&szlig;e ist niemals negativ. Diracs Forderung nach einer Gleichung erster Ordnung hat sich damit ausgezahlt. Geblieben ist allerdings das zweite Vorzeichen der Energie, und es f&uuml;hrt auf die erstaunlichste Vorhersage der Gleichung.</p>
+</div></section>
+
+<section id="antimaterie" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 18</p>
+<h3>Das zweite Vorzeichen: Antimaterie</h3>
+
+<p><span class="chip z">folgt zwingend</span> Jede Wurzel hat zwei Vorzeichen, und die Dirac-Gleichung kann keines davon wegwerfen: Nach Abschnitt&nbsp;17 hat sie zu jedem Impuls zwei L&ouml;sungen mit positiver Energie \(E = +\sqrt{p^2c^2+m^2c^4}\) und zwei mit negativer, \(E = -\sqrt{p^2c^2+m^2c^4}\). Die beiden Energiezweige sind durch eine L&uuml;cke der Breite \(2mc^2\) getrennt, f&uuml;r das Elektron also durch rund 1,02&nbsp;Megaelektronenvolt.</p>
+
+<p>Der negative Zweig war ein Schock. Ein ruhendes Elektron h&auml;tte neben \(E = +mc^2\) auch Zust&auml;nde mit \(E = -mc^2\) zur Verf&uuml;gung, und darunter ginge die Energieleiter ohne Ende weiter. Nach allem, was man &uuml;ber Atome wusste, f&auml;llt ein Elektron in einen Zustand niedrigerer Energie, sobald einer frei ist, und gibt die Differenz als Licht ab. Jedes Elektron im Universum m&uuml;sste demnach unter st&auml;ndiger Abstrahlung ins Bodenlose st&uuml;rzen, und kein Atom w&auml;re stabil.</p>
+
+<p><span class="chip e">Eingabe</span> Diracs Ausweg von 1930 war k&uuml;hn und ist ausdr&uuml;cklich als <em>Deutung</em> zu kennzeichnen, nicht als Folgerung. Er nahm Paulis Ausschlie&szlig;ungsprinzip von 1925 ernst, nach dem jeder Zustand von h&ouml;chstens einem Elektron besetzt sein kann, und folgerte: Wenn alle Zust&auml;nde negativer Energie bereits besetzt sind, kann kein Elektron hineinfallen. Das Vakuum w&auml;re dann kein leerer Raum, sondern ein vollst&auml;ndig gef&uuml;llter <em>See</em> von Elektronen negativer Energie, der &uuml;berall gleich ist und deshalb unsichtbar bleibt. Sichtbar w&uuml;rde nur eine St&ouml;rung dieses Sees.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Strahle ein Photon in den See. Wie viel Energie braucht es, damit etwas geschieht? Lege dann ein elektrisches Feld an und beobachte, in welche Richtung das Loch wandert.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-dirac-sea"></div></div>
+
+<p><span class="chip z">folgt zwingend</span> Hebt ein Lichtquant ein Elektron aus dem See auf den positiven Zweig, so bleibt ein Loch zur&uuml;ck. Daf&uuml;r muss das Lichtquant mindestens die L&uuml;cke \(2mc^2\) &uuml;berbr&uuml;cken. Das Loch ist das Fehlen eines Elektrons mit negativer Energie und negativer Ladung, und ein Fehlen von etwas Negativem wirkt wie etwas Positives &ndash; so wie eine Luftblase im Wasser aufsteigt, w&auml;hrend Wasser nach unten f&auml;llt. Das Loch verh&auml;lt sich deshalb wie ein Teilchen mit positiver Energie und positiver Ladung. Und da es eine L&uuml;cke im Elektronensee ist, muss es dieselbe Masse haben wie das Elektron.</p>
+
+<p class="history">Bis zu diesem Schluss brauchte Dirac einen Umweg. 1930 hielt er das Loch zun&auml;chst f&uuml;r das <strong>Proton</strong>, das einzige damals bekannte positiv geladene Teilchen, und hoffte, der gro&szlig;e Massenunterschied lie&szlig;e sich sp&auml;ter erkl&auml;ren. <strong>Robert Oppenheimer</strong> wandte noch im selben Jahr ein, dass dann jedes Wasserstoffatom fast augenblicklich zerstrahlen m&uuml;sste, weil Elektron und &bdquo;Loch&ldquo; einander vernichten k&ouml;nnten. <strong>Hermann Weyl</strong> zeigte 1931 aus Symmetriegr&uuml;nden, dass das Loch dieselbe Masse wie das Elektron haben muss. Dirac &uuml;bernahm das Argument und sagte im selben Jahr ein neues Teilchen voraus, das &bdquo;Anti-Elektron&ldquo;. Carl Anderson fand es im August 1932 in der kosmischen Strahlung, und Patrick Blackett und Giuseppe Occhialini beobachteten 1933 in Nebelkammeraufnahmen, wie Elektron und Positron paarweise entstehen.</p>
+
+<p><span class="chip z">folgt zwingend</span> Der umgekehrte Vorgang ist die <em>Annihilation</em>: Ein Elektron f&auml;llt in das Loch zur&uuml;ck, und beide verschwinden. Die Energie \(2mc^2\) wird frei, f&uuml;r ruhende Teilchen als zwei Lichtquanten von je \(mc^2 = 511\) Kiloelektronenvolt, die wegen der Impulserhaltung in entgegengesetzte Richtungen fliegen. Das ist genau das Signal, das der PET-Scanner aus dem Prolog registriert. Der Kreis zum Anfang dieses Beitrags ist damit geschlossen.</p>
+
+<p>Der Dirac-See ist heute nicht mehr die Art, wie Physiker &uuml;ber Antimaterie sprechen. Ernst St&uuml;ckelberg (1941) und Richard Feynman (1949) deuteten die L&ouml;sungen negativer Energie in der Quantenfeldtheorie als Antiteilchen mit positiver Energie, ohne einen unendlichen See besetzter Zust&auml;nde. Das Ergebnis, das Dirac aus seiner Wurzel gewonnen hatte, ist aber geblieben und gilt allgemein: <strong>Zu jedem Teilchen gibt es ein Antiteilchen</strong> mit gleicher Masse und entgegengesetzter Ladung. Das Antiproton wurde 1955 in Berkeley nachgewiesen.</p>
+</div></section>
+
+<section id="lohn" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 19</p>
+<h3>Was die Gleichung erkl&auml;rt &ndash; und wo sie endet</h3>
+
+<p>Antimaterie und Spin sind die ber&uuml;hmtesten Folgen der Dirac-Gleichung, aber nicht die einzigen. Zwei weitere zeigen, wie viel die Zeile von 1928 auf einen Schlag erkl&auml;rte.</p>
+
+<p><strong>Das magnetische Moment.</strong> Ein Elektron verh&auml;lt sich wie ein winziger Magnet. Eine klassisch rotierende Ladung h&auml;tte ein magnetisches Moment, dessen Verh&auml;ltnis zum Drehimpuls durch den sogenannten \(g\)-Faktor \(g = 1\) beschrieben wird. Die Spektrallinien verlangten f&uuml;r den Spin aber \(g = 2\), und vor Dirac musste man diesen Wert von Hand einsetzen. <span class="chip z">folgt zwingend</span> Bringt man die Dirac-Gleichung in ein Magnetfeld, so ergibt sich \(g = 2\) ohne jede weitere Annahme. (Die Rechnung wird hier nicht ausgef&uuml;hrt; sie steht in jedem Lehrbuch der relativistischen Quantenmechanik.)</p>
+
+<p><strong>Die Feinstruktur des Wasserstoffs.</strong> Charles Galton Darwin und Walter Gordon l&ouml;sten 1928 die Dirac-Gleichung f&uuml;r das Wasserstoffatom exakt. Die Energieniveaus, die sich ergeben, stimmen genau mit einer Formel &uuml;berein, die Arnold Sommerfeld bereits 1916 mit einem halbklassischen Atommodell gefunden hatte und die die feine Aufspaltung der Spektrallinien beschreibt. Was Sommerfeld aus einer gl&uuml;cklichen Kombination von N&auml;herungen erhalten hatte, folgte nun aus einer Gleichung mit sauberen Grundlagen &ndash; einschlie&szlig;lich der Effekte, die von Spin und Relativit&auml;t herr&uuml;hren.</p>
+
+<p>Ebenso ehrlich ist zu sagen, wo die Gleichung endet. Willis Lamb und Robert Retherford ma&szlig;en 1947, dass zwei Niveaus des Wasserstoffatoms, die nach Dirac exakt gleich sein m&uuml;ssten, um etwa 1&nbsp;Gigahertz auseinanderliegen. Im selben Jahr fanden Polykarp Kusch und Henry Foley, dass der \(g\)-Faktor des Elektrons nicht genau 2 ist, sondern etwa \(2{,}0023\). Julian Schwinger erkl&auml;rte die Abweichung 1948 mit der Quantenelektrodynamik, in der das Elektron st&auml;ndig mit seinem eigenen elektromagnetischen Feld wechselwirkt; der erste Korrekturterm ergibt \(g = 2\,(1 + \alpha/2\pi) \approx 2{,}00232\). Heute ist \(g = 2{,}002\,319\,304\,36\ldots\) eine der am genauesten gemessenen Gr&ouml;&szlig;en der Physik, und die Theorie stimmt mit ihr auf mehr als zehn Stellen &uuml;berein.</p>
+
+<p>Die Dirac-Gleichung ist damit nicht das letzte Wort. Sie ist aber das Fundament, auf dem die Quantenelektrodynamik steht: Das Elektronenfeld der heutigen Theorie gehorcht ihr, und alles, was danach kam, sind Korrekturen an ihr, nicht ihr Ersatz.</p>
+</div></section>
+
+<section id="schachbrett" class="pb-12"><div class="prose-dark">
+<p class="sec-label">Abschnitt 20</p>
+<h3>Feynmans Schachbrett: Masse als Zickzack</h3>
+
+<p>Zum Schluss schlie&szlig;t sich der Kreis zu Akt&nbsp;II. Dort ergab sich, dass jede Zeitentwicklung auf zwei Arten berechnet werden kann: durch Diagonalisieren oder durch Aufsummieren aller Wege. F&uuml;r die Dirac-Gleichung wurde bisher nur die erste Art benutzt &ndash; die Eigenwerte \(\pm E\) sind das Ergebnis einer Diagonalisierung. Richard Feynman fand in den 1940er-Jahren auch die zweite, f&uuml;r eine Welt mit nur einer Raumrichtung, und sie ist so einfach, dass man sie fast mit Bleistift auf kariertem Papier durchspielen kann.</p>
+
+<p>In einer Raumrichtung gen&uuml;gen zwei Komponenten, und die Matrizen werden \(2 \times 2\). Der Hamilton-Operator aus Abschnitt&nbsp;17 lautet dann \(H = c\,\alpha\,p + \beta\,mc^2\). <span class="chip z">folgt zwingend</span> Weil \(\alpha^2 = 1\) ist, hat \(\alpha\) nur die Eigenwerte \(+1\) und \(-1\), und w&auml;hlt man diese als Basis, so ist \(\alpha = \operatorname{diag}(1, -1)\). Die Bewegung, die \(c\,\alpha\,p\) beschreibt, l&auml;uft mit der Geschwindigkeit \(+c\) oder \(-c\): Die erste Komponente l&auml;uft mit Lichtgeschwindigkeit nach rechts, die zweite nach links. <span class="chip z">folgt zwingend</span> Und weil \(\beta\) mit \(\alpha\) antikommutieren muss, kann \(\beta\) in dieser Basis keine Diagonaleintr&auml;ge haben. Es ist die Matrix, die die beiden Komponenten vertauscht. Die Masse koppelt also die rechtslaufende an die linkslaufende Komponente &ndash; sie l&auml;sst das Teilchen die Richtung wechseln.</p>
+
+<p><span class="chip z">folgt zwingend</span> F&uuml;r einen kleinen Zeitschritt \(\varepsilon\) gilt nach Abschnitt&nbsp;11 \(U \approx 1 - i\varepsilon H/\hbar\). Der Anteil mit \(\alpha\) l&auml;sst die beiden Komponenten geradeaus weiterfliegen, eine Gitterzelle pro Schritt. Der Anteil mit \(\beta\) erzeugt eine <em>Ecke</em>: Er macht aus einer rechtslaufenden eine linkslaufende Komponente und umgekehrt, und zwar mit dem Zeiger \(-i\,mc^2\varepsilon/\hbar\). Fasst man Bleiben und Umkehren zu einer exakt l&auml;ngenerhaltenden Matrix zusammen, so ergibt sich</p>
+
+<div class="math-display">\[ \begin{pmatrix} \cos\varphi & -i\sin\varphi \\ -i\sin\varphi & \cos\varphi \end{pmatrix}, \qquad \varphi = \frac{mc^2\,\varepsilon}{\hbar} \]</div>
+
+<p>&ndash; Zeichen f&uuml;r Zeichen die Zwei-Mulden-Matrix aus Abschnitt&nbsp;10. Die beiden &bdquo;Mulden&ldquo; sind jetzt die beiden Flugrichtungen, und der Sprungzeiger ist wieder um 90&deg; gedreht, weil die Unitarit&auml;t es erzwingt. Multipliziert man \(N\) solcher Schritte aus, so ist jeder Summand nach Abschnitt&nbsp;9 ein Weg: ein Zickzack mit Lichtgeschwindigkeit, dessen Zeiger an jeder Ecke um 90&deg; gedreht und mit \(\sin\varphi\) gestaucht wird. Die Summe &uuml;ber alle solchen Zickzackwege ergibt im Grenzfall kleiner Schritte exakt die L&ouml;sung der Dirac-Gleichung. Feynman stellte diese Konstruktion 1965 zusammen mit Albert Hibbs als &Uuml;bungsaufgabe vor; dass sie tats&auml;chlich gegen die Dirac-Gleichung konvergiert, bewiesen Theodore Jacobson und Lawrence Schulman 1984.</p>
+
+<div class="try-it">
+  <p><strong>Ausprobieren:</strong> Das Bild zeigt, wo das Teilchen nach jedem Zeitschritt anzutreffen ist; berechnet wird es exakt mit der Matrix oben. Beginne mit der Masse null und erh&ouml;he sie dann.</p>
+</div>
+
+<div class="component-wrap"><div id="mount-checkerboard"></div></div>
+
+<p>Damit bekommt die Masse eine anschauliche Bedeutung, die sich in keinem Lehrbuchsatz &uuml;ber &bdquo;tr&auml;ge Masse&ldquo; findet. Ein masseloses Teilchen kehrt nie um und fliegt immer mit Lichtgeschwindigkeit. Ein massives Teilchen tr&auml;gt an jeder m&ouml;glichen Ecke einen Faktor, der proportional zu seiner Masse ist, und die Summe &uuml;ber alle Zickzackwege l&auml;sst es im Mittel langsamer vorankommen als das Licht &ndash; wie ein Segelboot, das gegen den Wind kreuzt. <strong>Masse ist die Amplitude f&uuml;r den Richtungswechsel.</strong> Pr&auml;zise formuliert hei&szlig;t das nicht, dass das Elektron &bdquo;in Wirklichkeit&ldquo; einen bestimmten Zickzackweg flie&szlig;t; die einzelnen Wege sind wie in Akt&nbsp;II Summanden einer Rechnung, und erst ihre Summe ist messbar.</p>
+
+<p>Bemerkenswert ist, dass dieselbe Matrix \(\beta\) in beiden Bildern dieselbe Rolle spielt, nur in verschiedener Sprache. Im Eigenwertbild &ouml;ffnet sie die L&uuml;cke zwischen \(+mc^2\) und \(-mc^2\), aus der in Abschnitt&nbsp;18 die Antimaterie folgte. Im Pfadbild ist sie die Ecke. Eine Spur dieses Zitterns findet sich auch in der vollen Dirac-Gleichung: Schr&ouml;dinger bemerkte 1930, dass die Position eines freien Elektrons nach der Gleichung mit einer Kreisfrequenz von rund \(1{,}6\cdot10^{21}\,\text{s}^{-1}\) und einer Amplitude von etwa \(2\cdot10^{-13}\) Metern hin und her schwanken m&uuml;sste &ndash; einige hundert Mal weniger als der Durchmesser eines Atoms. Er nannte das <em>Zitterbewegung</em>. Direkt beobachtet wurde sie an Elektronen nie; 2010 gelang es aber einer Innsbrucker Gruppe um Rainer Blatt und Christian Roos, sie mit einem einzelnen gefangenen Ion zu <em>simulieren</em>, dessen Bewegung genau der Dirac-Gleichung gehorcht.</p>
+
+<p>Zwei Einschr&auml;nkungen geh&ouml;ren zur Ehrlichkeit. Das Schachbrett funktioniert in dieser Einfachheit nur f&uuml;r eine Raumrichtung; f&uuml;r drei gibt es bis heute keine ebenso einfache Version. Und die Elektronen in Graphen, die oft als Beispiel f&uuml;r masselose Dirac-Teilchen genannt werden (Novoselov, Geim und Kollegen, 2005), leben in einer zweidimensionalen Ebene. Sie sind Verwandte des masselosen Schachbretts, nicht dasselbe.</p>
+</div>
+<div class="section-divider"></div>
+</section>
+
+<!-- ================================================================ -->
+<!-- EPILOG, FAQ, LITERATUR — D-35 -->
+<!-- ================================================================ -->
+<section id="epilog" class="pb-16"><div class="prose-dark">
+<p class="part-label">Epilog</p>
+<h2>Es ist Geometrie</h2>
+
+<p>Am Anfang dieses Beitrags stand eine Zeile, deren Symbole fremd waren. Am Ende l&auml;sst sich jedes einzelne begr&uuml;nden, und es lohnt sich, zur&uuml;ckzublicken, worauf diese Begr&uuml;ndungen beruhen. Der Beitrag hat jeden Schritt als zwingend, als Eingabe oder als Konvention gekennzeichnet. Zusammengez&auml;hlt ergibt sich folgende Bilanz.</p>
+
+<div class="recap">
+  <p class="recap-title">Was hineingesteckt wurde</p>
+  <ul class="text-sm" style="color:#d1d5db;">
+    <li><strong>Zwei Forderungen an ein Produkt</strong>: rechnen wie mit Zahlen (Klammern, Ausmultiplizieren), und ein Vektor mal sich selbst ergibt sein L&auml;ngenquadrat. <span style="color:#94a3b8;">(Abschnitt 2)</span></li>
+    <li><strong>Vier Erfahrungstatsachen der Quantenmechanik</strong>: Wahrscheinlichkeiten k&ouml;nnen sich ausl&ouml;schen; Feynmans Regel f&uuml;r Zeiger; Borns Regel; Energie ist proportional zur Frequenz. <span style="color:#94a3b8;">(Abschnitte 7&ndash;8)</span></li>
+    <li><strong>Eine Erfahrungstatsache der Relativit&auml;t</strong>: Licht ist f&uuml;r alle gleich schnell. <span style="color:#94a3b8;">(Abschnitt 12)</span></li>
+    <li><strong>Eine Deutung</strong>, ausdr&uuml;cklich als solche gekennzeichnet: Diracs See. <span style="color:#94a3b8;">(Abschnitt 18)</span></li>
+  </ul>
+  <p class="recap-title" style="margin-top:1.25rem;">Was daraus zwingend folgte</p>
+  <p class="text-sm" style="color:#d1d5db;">Das Skalarprodukt. Die orientierte Fl&auml;che und dass sie negativ quadriert. Dass senkrechte Vektoren antikommutieren und Kommutativit&auml;t unm&ouml;glich ist. Die imagin&auml;re Einheit als Einheitsquadrat der Ebene und das Multiplizieren als Drehen. Spiegelungen, Rotoren und der halbe Winkel. Die gleichm&auml;&szlig;ige Drehung station&auml;rer Zust&auml;nde, Energie und Impuls als Drehgeschwindigkeiten, die &Uuml;bersetzungsregel. Die Matrixmultiplikation als Summe &uuml;ber M&ouml;glichkeiten, die Unitarit&auml;t, das Pfadintegral, die Gleichwertigkeit von Pfadweg und Eigenwertweg, das \(i\) in \(e^{-iHt/\hbar}\). Die Hyperbel der Raumzeit und Einsteins Energieformel. Die Bedingungen an Diracs Gleichung, die \(\gamma\)-Matrizen als Orthonormalbasis der Raumzeit, ihre Gr&ouml;&szlig;e \(4\times4\), der Spin&nbsp;&frac12;, die vier Komponenten von \(\psi\), die positive Aufenthaltswahrscheinlichkeit, die zwei Energiezweige, die Paarerzeugung ab \(2mc^2\) und die Masse als Amplitude des Richtungswechsels.</p>
+  <p class="recap-title" style="margin-top:1.25rem;">Was frei gew&auml;hlt wurde</p>
+  <p class="text-sm" style="color:#94a3b8;">Der positive Drehsinn, die Zuordnung von Hamiltons \(i, j, k\), die Rechte-Hand-Regel, das Vorzeichen in \(e^{-i\omega t}\), ein reeller Bleibezeiger, das Gesamtvorzeichen der Metrik, die konkrete Form der \(\gamma\)-Matrizen und die Achse, entlang der man den Spin beschreibt. Keine dieser Wahlen &auml;ndert eine einzige Vorhersage.</p>
+</div>
+
+<p>Der rote Faden, der das alles verbindet, ist die Drehung. In Akt&nbsp;I zeigte sich, dass Multiplizieren drehen kann, sobald man Vektoren so multipliziert, dass nichts verloren geht, und dass Drehungen einen halben Winkel in sich tragen. In Akt&nbsp;II zeigte sich, dass die Quantenmechanik aus Zeigern besteht, die sich drehen und aufsummiert werden, und dass Matrixmultiplikation genau dieses Aufsummieren ist. In Akt&nbsp;III verlangte die Relativit&auml;t eine Wurzel aus einer Quadratsumme, und die Geometrie aus Akt&nbsp;I lieferte sie. Aus dem halben Winkel wurde der Spin, aus dem zweiten Vorzeichen der Wurzel die Antimaterie, und aus der Matrix, die die Wurzel erst m&ouml;glich machte, die Ecke im Zickzack der Masse.</p>
+
+<figure>
+  <img src="img/dirac/dirac-gedenkstein-westminster.jpg" alt="Rautenf&ouml;rmiger Gedenkstein f&uuml;r Paul Dirac im Boden der Westminster Abbey mit der Inschrift i&gamma;&middot;&part;&psi; = m&psi;" loading="lazy" width="1200" height="1102" style="max-width:min(420px, 100%); display:block; margin:0 auto;">
+  <figcaption>Gedenkstein f&uuml;r Paul Dirac im Hauptschiff der Westminster Abbey, enth&uuml;llt am 13. November 1995, in der N&auml;he von Isaac Newtons Grabmal. Die Gleichung ist in nat&uuml;rlichen Einheiten geschrieben, \(\hbar = c = 1\). <a href="https://commons.wikimedia.org/wiki/File:Dirac%27s_commemorative_marker.jpg">Stanislav Kozlovskiy</a> / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a></figcaption>
+</figure>
+
+<p>In der Westminster Abbey liegt seit 1995 ein Gedenkstein f&uuml;r Dirac im Boden, nicht weit von Newtons Grabmal. Er tr&auml;gt keine Lebensbeschreibung, nur Namen, Jahreszahlen und die Gleichung in ihrer k&uuml;rzesten Form, \(i\gamma\cdot\partial\psi = m\psi\). Dirac selbst sagte sinngem&auml;&szlig;, eine physikalische Gleichung m&uuml;sse mathematische Sch&ouml;nheit besitzen. Was dieser Beitrag zu zeigen versucht hat, ist eine konkrete Lesart dieser Sch&ouml;nheit: Die Gleichung ist die zwangsl&auml;ufige Antwort auf eine Frage, die mit zwei Pfeilen beginnt.</p>
+
+<p>Hierin liegt auch das Glasperlenspiel dieses Blogs. Dieselbe Struktur &ndash; das Produkt, das Fl&auml;chen und Drehungen erzeugt &ndash; tr&auml;gt Hamiltons Quaternionen, die Lageregelung von Raumsonden, die Zeiger der Quantenmechanik und die Wurzel, aus der die Antimaterie kam. Diracs Zeile ist am Ende keine Formel aus dem Nichts. Sie ist Geometrie.</p>
+</div></section>
+
+<section id="faq" class="pb-12"><div class="prose-dark">
+<h2 style="font-size:1.5rem;">H&auml;ufige Fragen</h2>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was sagt die Dirac-Gleichung aus?</h3>
+<p>Die Dirac-Gleichung beschreibt, wie sich der Zustand eines Elektrons in der Zeit entwickelt, und zwar so, dass sie sowohl der Quantenmechanik als auch der speziellen Relativit&auml;tstheorie gen&uuml;gt. Anschaulich besagt sie, dass der Energie-Impuls-Pfeil der Raumzeit, angewandt auf den Zustand \(\psi\), die Masse ergibt. Aus ihr folgen der Spin des Elektrons, sein magnetisches Moment mit \(g = 2\), die Feinstruktur des Wasserstoffspektrums und die Existenz von Antimaterie.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Warum sagt die Dirac-Gleichung Antimaterie voraus?</h3>
+<p>Dirac brauchte eine Wurzel aus Einsteins Energieformel \(E^2 = p^2c^2 + m^2c^4\), und jede Wurzel hat zwei Vorzeichen. Die Gleichung besitzt deshalb zu jedem Impuls L&ouml;sungen mit positiver und mit negativer Energie. Dirac deutete 1930 die Zust&auml;nde negativer Energie als voll besetzten &bdquo;See&ldquo; und ein Loch darin als Teilchen mit der Masse des Elektrons und positiver Ladung. Carl Anderson fand dieses Positron 1932. Die heutige Quantenfeldtheorie kommt ohne den See aus, best&auml;tigt aber das Ergebnis: Zu jedem Teilchen gibt es ein Antiteilchen.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Warum muss sich ein Elektron zweimal drehen, um wieder gleich zu sein?</h3>
+<p>Drehungen lassen sich durch Rotoren beschreiben, die den halben Drehwinkel enthalten, weil eine Drehung um \(\theta\) aus zwei Spiegelungen an Spiegeln mit dem Zwischenwinkel \(\theta/2\) entsteht. Bei einer vollen Umdrehung ist der Rotor deshalb \(-1\). Vektoren werden mit dem Rotor von beiden Seiten multipliziert und merken davon nichts. Der Zustand eines Elektrons wird dagegen nur einseitig mit dem Rotor multipliziert und geht nach \(360^\circ\) in sein Negatives &uuml;ber, erst nach \(720^\circ\) in sich selbst. Neutronen-Interferenzexperimente haben das 1975 best&auml;tigt.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was sind die Gamma-Matrizen?</h3>
+<p>Die vier Gamma-Matrizen \(\gamma^0, \dots, \gamma^3\) sind eine Orthonormalbasis der vierdimensionalen Raumzeit, dargestellt als \(4\times4\)-Matrizen. Sie erf&uuml;llen dieselben Regeln wie die Basisvektoren der geometrischen Algebra: Jede quadriert zum L&auml;ngenquadrat ihrer Richtung (\(+1\) f&uuml;r die Zeit, \(-1\) f&uuml;r den Raum), und je zwei verschiedene antikommutieren. Gerade deshalb ist ihre Kombination eine Wurzel aus der Quadratsumme in Einsteins Energieformel.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was ist geometrische Algebra?</h3>
+<p>Geometrische Algebra ist eine Rechenweise f&uuml;r Vektoren, in der Vektoren miteinander multipliziert werden k&ouml;nnen, ohne dass Information verloren geht. Das Produkt zweier Vektoren besteht aus dem Skalarprodukt und einer orientierten Fl&auml;che, dem Bivektor. Fordert man nur, dass das Produkt assoziativ und distributiv ist und dass ein Vektor zum Quadrat sein L&auml;ngenquadrat ergibt, folgen daraus die komplexen Zahlen, Hamiltons Quaternionen und die Beschreibung von Drehungen in jeder Dimension.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Wie h&auml;ngen komplexe Zahlen, Quaternionen und Drehungen zusammen?</h3>
+<p>Die imagin&auml;re Einheit \(i\) l&auml;sst sich als orientiertes Einheitsquadrat einer Ebene verstehen: Es quadriert zu \(-1\), und mit ihm zu multiplizieren dreht jeden Vektor der Ebene um \(90^\circ\). Komplexe Zahlen sind Zahl plus Fl&auml;che und beschreiben Drehungen in der Ebene. Im Raum gibt es drei Basisfl&auml;chen, und Zahl plus drei Fl&auml;chen ergibt Hamiltons Quaternionen, die Drehungen im Raum beschreiben.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was ist Feynmans Schachbrett?</h3>
+<p>Feynmans Schachbrett ist eine Pfadintegral-Darstellung der Dirac-Gleichung in einer Raumdimension. Ein Teilchen bewegt sich auf einem Gitter in jedem Zeitschritt mit Lichtgeschwindigkeit nach links oder rechts; jede Richtungs&auml;nderung bringt einen Faktor proportional zur Masse mit sich. Die Summe &uuml;ber alle Zickzackwege ergibt die L&ouml;sung der Dirac-Gleichung. Anschaulich ist Masse damit die Amplitude f&uuml;r den Richtungswechsel.</p>
+
+<h3 style="font-size:1rem; margin-top:1.5rem;">Was ist die Zitterbewegung?</h3>
+<p>Erwin Schr&ouml;dinger bemerkte 1930, dass die Position eines freien Elektrons nach der Dirac-Gleichung mit einer Kreisfrequenz von etwa \(1{,}6\cdot10^{21}\,\text{s}^{-1}\) und einer Amplitude von rund \(2\cdot10^{-13}\) Metern hin und her schwanken m&uuml;sste. Sie entsteht aus der Interferenz von Anteilen positiver und negativer Energie. An freien Elektronen wurde sie nie direkt beobachtet; 2010 wurde sie mit einem gefangenen Ion simuliert, dessen Bewegung der Dirac-Gleichung gehorcht.</p>
+</div></section>
+
+<section id="literatur" class="pb-12"><div class="prose-dark">
+<h2 style="font-size:1.5rem;">Literatur</h2>
+<p class="text-sm" style="color:#94a3b8;">Originalarbeiten, in der Reihenfolge, in der sie im Text vorkommen.</p>
+<ul class="text-sm" style="color:#cbd5e1; line-height:1.6;">
+  <li>P. A. M. Dirac: The Quantum Theory of the Electron. <em>Proc. R. Soc. Lond. A</em> 117 (1928), 610&ndash;624. <a href="https://doi.org/10.1098/rspa.1928.0023">doi:10.1098/rspa.1928.0023</a></li>
+  <li>C. D. Anderson: The Positive Electron. <em>Phys. Rev.</em> 43 (1933), 491&ndash;494. <a href="https://doi.org/10.1103/PhysRev.43.491">doi:10.1103/PhysRev.43.491</a></li>
+  <li>C. D. Anderson: Early Work on the Positron and Muon. <em>Am. J. Phys.</em> 29 (1961), 825&ndash;830. <a href="https://doi.org/10.1119/1.1937627">doi:10.1119/1.1937627</a></li>
+  <li>H. Gra&szlig;mann: <em>Die lineale Ausdehnungslehre</em>. Leipzig: Wigand 1844.</li>
+  <li>W. R. Hamilton: On Quaternions; or on a New System of Imaginaries in Algebra. <em>Phil. Mag.</em> 25 (1844), 10&ndash;13. <a href="https://doi.org/10.1080/14786444408644923">doi:10.1080/14786444408644923</a></li>
+  <li>W. K. Clifford: Applications of Grassmann's Extensive Algebra. <em>Amer. J. Math.</em> 1 (1878), 350&ndash;358. <a href="https://doi.org/10.2307/2369379">doi:10.2307/2369379</a></li>
+  <li>A. Tonomura, J. Endo, T. Matsuda, T. Kawasaki, H. Ezawa: Demonstration of single-electron buildup of an interference pattern. <em>Am. J. Phys.</em> 57 (1989), 117&ndash;120.</li>
+  <li>R. P. Feynman: <em>QED. The Strange Theory of Light and Matter</em>. Princeton University Press 1985.</li>
+  <li>R. P. Feynman: Space-Time Approach to Non-Relativistic Quantum Mechanics. <em>Rev. Mod. Phys.</em> 20 (1948), 367&ndash;387.</li>
+  <li>E. Schr&ouml;dinger: Quantisierung als Eigenwertproblem (Vierte Mitteilung). <em>Ann. Phys.</em> 386 (1926), 109&ndash;139. <a href="https://doi.org/10.1002/andp.19263861802">doi:10.1002/andp.19263861802</a></li>
+  <li>O. Klein: Quantentheorie und f&uuml;nfdimensionale Relativit&auml;tstheorie. <em>Z. Phys.</em> 37 (1926), 895&ndash;906. <a href="https://doi.org/10.1007/BF01397481">doi:10.1007/BF01397481</a></li>
+  <li>W. Gordon: Der Comptoneffekt nach der Schr&ouml;dingerschen Theorie. <em>Z. Phys.</em> 40 (1926), 117&ndash;133. <a href="https://doi.org/10.1007/BF01390840">doi:10.1007/BF01390840</a></li>
+  <li>W. Pauli: Zur Quantenmechanik des magnetischen Elektrons. <em>Z. Phys.</em> 43 (1927), 601&ndash;623. <a href="https://doi.org/10.1007/BF01397326">doi:10.1007/BF01397326</a></li>
+  <li>D. Hestenes: <em>Space-Time Algebra</em>. New York: Gordon and Breach 1966; 2. Aufl. Birkh&auml;user 2015. <a href="https://doi.org/10.1007/978-3-319-18413-5">doi:10.1007/978-3-319-18413-5</a></li>
+  <li>H. Rauch, A. Zeilinger, G. Badurek, A. Wilfing, W. Bauspiess, U. Bonse: Verification of Coherent Spinor Rotation of Fermions. <em>Phys. Lett. A</em> 54 (1975), 425&ndash;427.</li>
+  <li>S. A. Werner, R. Colella, A. W. Overhauser, C. F. Eagen: Observation of the Phase Shift of a Neutron Due to Precession in a Magnetic Field. <em>Phys. Rev. Lett.</em> 35 (1975), 1053&ndash;1055. <a href="https://doi.org/10.1103/PhysRevLett.35.1053">doi:10.1103/PhysRevLett.35.1053</a></li>
+  <li>M. H. A. Newman: On a String Problem of Dirac. <em>J. London Math. Soc.</em> 17 (1942), 173&ndash;177. <a href="https://doi.org/10.1112/jlms/s1-17.3.173">doi:10.1112/jlms/s1-17.3.173</a></li>
+  <li>J.-M. L&eacute;vy-Leblond: Nonrelativistic Particles and Wave Equations. <em>Commun. Math. Phys.</em> 6 (1967), 286&ndash;311. <a href="https://doi.org/10.1007/BF01646020">doi:10.1007/BF01646020</a></li>
+  <li>P. A. M. Dirac: A Theory of Electrons and Protons. <em>Proc. R. Soc. Lond. A</em> 126 (1930), 360&ndash;365. <a href="https://doi.org/10.1098/rspa.1930.0013">doi:10.1098/rspa.1930.0013</a></li>
+  <li>J. R. Oppenheimer: On the Theory of Electrons and Protons. <em>Phys. Rev.</em> 35 (1930), 562&ndash;563. <a href="https://doi.org/10.1103/PhysRev.35.562">doi:10.1103/PhysRev.35.562</a></li>
+  <li>P. A. M. Dirac: Quantised Singularities in the Electromagnetic Field. <em>Proc. R. Soc. Lond. A</em> 133 (1931), 60&ndash;72. <a href="https://doi.org/10.1098/rspa.1931.0130">doi:10.1098/rspa.1931.0130</a></li>
+  <li>C. G. Darwin: The Wave Equations of the Electron. <em>Proc. R. Soc. Lond. A</em> 118 (1928), 654&ndash;680. <a href="https://doi.org/10.1098/rspa.1928.0076">doi:10.1098/rspa.1928.0076</a></li>
+  <li>W. Gordon: Die Energieniveaus des Wasserstoffatoms nach der Diracschen Quantentheorie des Elektrons. <em>Z. Phys.</em> 48 (1928), 11&ndash;14. <a href="https://doi.org/10.1007/BF01351570">doi:10.1007/BF01351570</a></li>
+  <li>W. E. Lamb, R. C. Retherford: Fine Structure of the Hydrogen Atom by a Microwave Method. <em>Phys. Rev.</em> 72 (1947), 241&ndash;243. <a href="https://doi.org/10.1103/PhysRev.72.241">doi:10.1103/PhysRev.72.241</a></li>
+  <li>P. Kusch, H. M. Foley: The Magnetic Moment of the Electron. <em>Phys. Rev.</em> 74 (1948), 250&ndash;263. <a href="https://doi.org/10.1103/PhysRev.74.250">doi:10.1103/PhysRev.74.250</a></li>
+  <li>J. Schwinger: On Quantum-Electrodynamics and the Magnetic Moment of the Electron. <em>Phys. Rev.</em> 73 (1948), 416&ndash;417. <a href="https://doi.org/10.1103/PhysRev.73.416">doi:10.1103/PhysRev.73.416</a></li>
+  <li>R. P. Feynman, A. R. Hibbs: <em>Quantum Mechanics and Path Integrals</em>. New York: McGraw-Hill 1965, Aufgabe 2-6.</li>
+  <li>T. Jacobson, L. S. Schulman: Quantum Stochastics: The Passage from a Relativistic to a Non-relativistic Path Integral. <em>J. Phys. A</em> 17 (1984), 375&ndash;383.</li>
+  <li>R. Gerritsma, G. Kirchmair, F. Z&auml;hringer, E. Solano, R. Blatt, C. F. Roos: Quantum Simulation of the Dirac Equation. <em>Nature</em> 463 (2010), 68&ndash;71. <a href="https://doi.org/10.1038/nature08688">doi:10.1038/nature08688</a></li>
+  <li>K. S. Novoselov, A. K. Geim et al.: Two-dimensional gas of massless Dirac fermions in graphene. <em>Nature</em> 438 (2005), 197&ndash;200.</li>
+</ul>
+</div></section>
+
+<section class="pb-12" data-related-block="1">
+<div class="max-w-4xl mx-auto px-4">
+  <h2 style="font-size:1.15rem; color:#f1f5f9; margin-top:1.5rem; margin-bottom:0.75rem;">Weiterlesen</h2>
+  <p class="text-sm text-gray-400" style="margin-bottom:0.5rem;">Verwandte Beitr&auml;ge auf ki-mathias.de:</p>
+  <ul style="list-style:disc; padding-left:1.5rem; color:#d1d5db;">
+    <li><a href="/quanten.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Quantenphysik mit Pfeilen</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; Feynmans Zeiger, Doppelspalt, drei Sprachen</span></li>
+    <li><a href="/quantencomputer.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Was Quantencomputer wirklich k&ouml;nnen</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; Qubit, Bloch-Kugel, Gatter als Drehungen</span></li>
+    <li><a href="/euler.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Die Eulersche Zahl</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; Bernoullis Grenzwert und warum \(e\) &uuml;berall wartet</span></li>
+    <li><a href="/eigenwerte.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Eigenwerte &amp; KI</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; Diagonalisieren, Kernel, PageRank</span></li>
+    <li><a href="/eigenprinzip.html" class="text-amber-400 hover:text-amber-300" style="font-weight:500;">Das Eigenprinzip</a> <span class="text-gray-500" style="font-size:0.9em;">&mdash; warum dieselbe Mathematik &uuml;berall auftaucht</span></li>
+  </ul>
+</div>
+</section>
+
+</main>
+
+<footer class="border-t border-gray-800/50 py-8 text-center text-xs text-gray-600 max-w-4xl mx-auto px-4">
+  <p class="mb-2"><em>&bdquo;Diracs Zeile ist keine Formel aus dem Nichts. Sie ist Geometrie.&ldquo;</em></p>
+  <p>&copy; 2026 Mathias Leonhardt &middot; Erstellt mit Claude Code (Anthropic)</p>
+  <p class="mt-1">
+    <a href="ueber-mich.html" class="hover:text-gray-400">&Uuml;ber mich</a> &middot;
+    <a href="impressum.html" class="hover:text-gray-400">Impressum</a> &middot;
+    <a href="datenschutz.html" class="hover:text-gray-400">Datenschutz</a>
+  </p>
+</footer>
+
+</div><!-- /max-w-4xl -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  // mount-id -> [window-Komponentenname, props]
+  var COMPONENTS = {
+    'mount-product-loss':  ['DiracProductLoss'],
+    'mount-swap-i':        ['DiracSwapPuzzle', { level: 'i' }],
+    'mount-quarter-turn':  ['DiracQuarterTurn'],
+    'mount-swap-ijk':      ['DiracSwapPuzzle', { level: 'ijk' }],
+    'mount-rotor':         ['DiracRotor'],
+    'mount-plane-wave':    ['DiracPlaneWave'],
+    'mount-path-sum':      ['DiracPathSum'],
+    'mount-two-wells':     ['DiracPathSum', { initialMode: 'two' }],
+    'mount-spacetime':     ['DiracSpacetime'],
+    'mount-root':          ['DiracRoot'],
+    'mount-swap-gamma':    ['DiracSwapPuzzle', { level: 'gamma' }],
+    'mount-belt':          ['DiracBelt'],
+    'mount-dirac-sea':     ['DiracSea'],
+    'mount-checkerboard':  ['DiracCheckerboard']
+  };
+
+  var mounted = {};
+  function mountComponent(id) {
+    if (mounted[id]) return;
+    var el = document.getElementById(id);
+    var spec = COMPONENTS[id];
+    var Comp = spec && window[spec[0]];
+    if (!el || !Comp) return;
+    mounted[id] = true;
+    try {
+      ReactDOM.createRoot(el).render(React.createElement(Comp, spec[1] || {}));
+    } catch (err) {
+      console.error('Failed to mount', id, err);
+      el.innerHTML = '<p style="color:#f87171;padding:1rem;">Komponente konnte nicht geladen werden.</p>';
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        mountComponent(entry.target.id);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '300px' });
+
+  Object.keys(COMPONENTS).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // Widget 0 (Gleichungs-Landkarte) sofort mounten
+  var eq = document.getElementById('mount-eqmap');
+  if (eq && window.DiracEquationMap) {
+    ReactDOM.createRoot(eq).render(React.createElement(window.DiracEquationMap));
+  }
+
+  var progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((window.scrollY / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+</body>
+</html>

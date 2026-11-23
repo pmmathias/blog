@@ -5,18 +5,9 @@
   <link href="https://ki-mathias.de/feed.xml" rel="self"/>
   <link href="https://ki-mathias.de/"/>
   <id>https://ki-mathias.de/feed.xml</id>
-  <updated>2026-06-04T12:00:00+02:00</updated>
+  <updated>2026-11-23T12:00:00+02:00</updated>
   <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri><email>mathias-leonhardt@gmx.de</email></author>
   <icon>https://ki-mathias.de/img/mathias-portrait.jpg</icon>
-  <entry>
-    <title>Hopfield-Netze – vom Spinglas zur Aufmerksamkeit</title>
-    <link href="https://ki-mathias.de/hopfield.html"/>
-    <id>https://ki-mathias.de/hopfield.html</id>
-    <published>2026-06-04T12:00:00+02:00</published>
-    <updated>2026-06-04T12:00:00+02:00</updated>
-    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
-    <summary>Warum jedes Sprachmodell in seinem Kern ein Hopfield-Netz aus dem Jahr 1982 ist. Eine mathematische Kette von Ising und Hebb über Pseudoinverse zur Modern-Hopfield-Identität mit Transformer-Attention – Nobelpreis 2024, sieben Kapitel, fünf interaktive MNIST-Demos.</summary>
-  </entry>
   <entry>
     <title>Wellen, Pfeile und das Doppelspalt-Wunder</title>
     <link href="https://ki-mathias.de/quanten.html"/>
@@ -151,5 +142,14 @@
     <updated>2026-05-20T12:00:00+02:00</updated>
     <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
     <summary>Eigenwerte und Eigenfunktionen verbinden Schwingung, Suche, Wahrnehmung und KI. Das Eigenprinzip, interaktiv erklärt von der Stimmgabel bis PageRank.</summary>
+  </entry>
+  <entry>
+    <title>Vom Pfeil zum Positron – Die Dirac-Gleichung verstehen</title>
+    <link href="https://ki-mathias.de/dirac.html"/>
+    <id>https://ki-mathias.de/dirac.html</id>
+    <published>2026-11-23T12:00:00+02:00</published>
+    <updated>2026-11-23T12:00:00+02:00</updated>
+    <author><name>Mathias Leonhardt</name><uri>https://ki-mathias.de/</uri></author>
+    <summary>Die Dirac-Gleichung ohne Physikstudium: Wie aus Vektoren, Drehungen und Pfadsummen Spin ½ und Antimaterie folgen – interaktiv erklärt, bis zu Feynmans Schachbrett.</summary>
   </entry>
 </feed>
